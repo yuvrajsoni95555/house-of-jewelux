@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>House of Jewelux | Haute Joaillerie & Bespoke Fine Jewellery</title>
+  <meta name="description" content="House of Jewelux - Purveyors of rare diamonds, high jewellery, and bespoke bridal masterpieces handcrafted to transcend generations.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+
+  <!-- Tailwind CSS CDN with configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5C8',
+              400: '#EAD8AE',
+              500: '#D4AF37',
+              600: '#C5A059',
+              700: '#A17D36',
+              800: '#835F20',
+              900: '#5C4112',
+            },
+            noir: {
+              DEFAULT: '#141210',
+              surface: '#1C1917',
+              deep: '#0C0A09'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Montserrat"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#FAF9F6] text-stone-900 selection:bg-amber-200 selection:text-stone-900">
+
+  <!-- 1. VIP Top Announcement & Currency Bar -->
+  <div class="bg-stone-950 text-stone-300 text-[11px] tracking-widest uppercase border-b border-amber-500/20 py-2.5 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5 text-amber-300 font-medium">
+          <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2z"/>
+          </svg>
+          Complimentary Insured Global White-Glove Delivery
+        </span>
+        <span class="hidden md:inline text-stone-600">|</span>
+        <span class="hidden md:inline text-stone-400">Geneva • Paris • London • New York • Dubai</span>
+      </div>
+
+      <div class="flex items-center gap-5">
+        <button onclick="openAppointmentModal()" class="text-stone-300 hover:text-amber-300 transition-colors underline underline-offset-4">
+          Book Private Atelier
+        </button>
+
+        <!-- Currency Selector -->
+        <div class="flex items-center gap-1.5 bg-stone-900/90 border border-stone-800 rounded px-2 py-0.5">
+          <label for="currency-select" class="text-stone-400 text-[10px]">CURRENCY:</label>
+          <select id="currency-select" class="bg-transparent text-amber-300 font-medium outline-none cursor-pointer text-xs">
+            <option value="USD" class="bg-stone-900 text-stone-200">USD ($)</option>
+            <option value="EUR" class="bg-stone-900 text-stone-200">EUR (€)</option>
+            <option value="GBP" class="bg-stone-900 text-stone-200">GBP (£)</option>
+            <option value="INR" class="bg-stone-900 text-stone-200">INR (₹)</option>
+            <option value="AED" class="bg-stone-900 text-stone-200">AED (د.إ)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Main Luxury Header & Navigation -->
+  <header id="main-header" class="sticky top-0 z-40 bg-stone-950/85 backdrop-blur-md border-b border-amber-500/20 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Mobile Hamburger Button -->
+      <button onclick="toggleMobileMenu()" class="lg:hidden text-stone-300 hover:text-amber-300 p-2" aria-label="Toggle navigation">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <!-- Brand Identity / Logo -->
+      <a href="#" class="flex flex-col items-center group">
+        <div class="flex items-center gap-2">
+          <!-- Gold Monogram Icon -->
+          <svg class="w-6 h-6 text-amber-400 transform group-hover:scale-110 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" stroke="currentColor"/>
+            <polygon points="12 6 18 10 18 14 12 18 6 14 6 10 12 6" fill="currentColor" fill-opacity="0.2"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
+          <span class="font-serif text-2xl sm:text-3xl tracking-[0.22em] text-white font-light uppercase">
+            HOUSE <span class="text-amber-400 font-normal">OF</span> JEWELUX
+          </span>
+        </div>
+        <span class="text-[9px] tracking-[0.38em] uppercase text-amber-200/75 -mt-1 font-sans">
+          Haute Joaillerie • Genève
+        </span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-[12px] uppercase tracking-[0.16em] font-medium text-stone-300">
+        <a href="#collections" class="hover:text-amber-300 transition-colors py-2">Masterpieces</a>
+        <a href="#bespoke-studio" class="hover:text-amber-300 transition-colors py-2 flex items-center gap-1">
+          <span>Bespoke Studio</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+        </a>
+        <a href="#heritage" class="hover:text-amber-300 transition-colors py-2">The Heritage</a>
+        <a href="#lookbook" class="hover:text-amber-300 transition-colors py-2">Lookbook</a>
+        <a href="#boutiques" class="hover:text-amber-300 transition-colors py-2">Boutiques</a>
+      </nav>
+
+      <!-- Action Utilities -->
+      <div class="flex items-center gap-3 sm:gap-4 text-stone-200">
+        <!-- Search Trigger -->
+        <button onclick="openSearchModal()" class="p-2 hover:text-amber-300 transition-colors" title="Search Catalogue" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+
+        <!-- Wishlist Trigger -->
+        <button onclick="openWishlistDrawer()" class="p-2 hover:text-amber-300 transition-colors relative" title="Wishlist" aria-label="Wishlist">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span id="wishlist-badge" class="hidden absolute top-1 right-1 bg-amber-500 text-stone-950 font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Shopping Bag Trigger -->
+        <button onclick="openCartDrawer()" class="p-2 hover:text-amber-300 transition-colors relative" title="Shopping Bag" aria-label="Shopping Bag">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span id="cart-badge" class="hidden absolute top-1 right-1 bg-amber-400 text-stone-950 font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Book Consultation CTA (Desktop) -->
+        <button onclick="openAppointmentModal()" class="hidden md:inline-flex btn-luxury-gold py-2 px-4 text-[11px] rounded">
+          Consult Concierge
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-stone-950/95 border-b border-amber-500/20 px-6 py-6 transition-all">
+      <nav class="flex flex-col gap-4 text-sm tracking-widest uppercase text-stone-300">
+        <a href="#collections" onclick="toggleMobileMenu()" class="hover:text-amber-300 py-2 border-b border-stone-800">Masterpieces</a>
+        <a href="#bespoke-studio" onclick="toggleMobileMenu()" class="hover:text-amber-300 py-2 border-b border-stone-800 text-amber-400">Bespoke Studio & Customizer</a>
+        <a href="#heritage" onclick="toggleMobileMenu()" class="hover:text-amber-300 py-2 border-b border-stone-800">The Heritage</a>
+        <a href="#lookbook" onclick="toggleMobileMenu()" class="hover:text-amber-300 py-2 border-b border-stone-800">Lookbook</a>
+        <a href="#boutiques" onclick="toggleMobileMenu()" class="hover:text-amber-300 py-2 border-b border-stone-800">Boutiques & Salons</a>
+        <button onclick="toggleMobileMenu(); openAppointmentModal();" class="btn-luxury-gold w-full text-center py-3 mt-2 text-xs">
+          Schedule Private Atelier
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 3. Cinematic Hero Section -->
+  <section class="relative min-h-[90vh] bg-stone-950 text-white flex items-center overflow-hidden">
+    <!-- Ambient Canvas Particles -->
+    <canvas id="hero-ambient-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-70"></canvas>
+
+    <!-- Background Imagery with Radial Vignette -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="images/jewelux_hero_necklace.jpg" 
+        alt="House of Jewelux Haute Joaillerie" 
+        class="w-full h-full object-cover object-center opacity-40 filter brightness-90 scale-105 transition-transform duration-[10000ms] hover:scale-110"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-stone-950/70 to-stone-950"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 lg:py-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <div class="lg:col-span-8 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-amber-500/30 bg-stone-900/60 backdrop-blur-md mb-6">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-amber-300 font-medium">
+            2026 Haute Joaillerie Collection Unveiled
+          </span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-light tracking-tight leading-[1.08] text-stone-100 mb-6 hero-headline">
+          The Art of <br />
+          <span class="gold-gradient-text font-normal italic">Eternal Radiance</span> & <br />
+          Bespoke Splendor
+        </h1>
+
+        <p class="text-stone-300 text-sm sm:text-base md:text-lg max-w-2xl font-light leading-relaxed mb-10 tracking-wide">
+          Curating the world’s rarest conflict-free diamonds, certified Colombian emeralds, and royal Ceylon sapphires. Handcrafted in our ateliers to transcend generations as wearable legacies.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+          <a href="#collections" class="btn-luxury-gold w-full sm:w-auto text-center rounded">
+            Explore Masterpieces
+          </a>
+          <a href="#bespoke-studio" class="btn-luxury-outline w-full sm:w-auto text-center rounded">
+            Customise In Atelier Studio
+          </a>
+        </div>
+
+        <!-- Accreditations & Trust Pillars -->
+        <div class="mt-14 pt-8 border-t border-stone-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6 text-stone-400 text-left">
+          <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <div>
+              <p class="text-xs font-semibold text-white">GIA Certified</p>
+              <p class="text-[10px] text-stone-400">100% Conflict-Free</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div>
+              <p class="text-xs font-semibold text-white">18K & 950 Platinum</p>
+              <p class="text-[10px] text-stone-400">Solid Fairmined Metals</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+            <div>
+              <p class="text-xs font-semibold text-white">Lifetime Warranty</p>
+              <p class="text-[10px] text-stone-400">Annual Spa & Polishing</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+            </svg>
+            <div>
+              <p class="text-xs font-semibold text-white">Private Concierge</p>
+              <p class="text-[10px] text-stone-400">Bespoke Commissioning</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero Visual Card Focus -->
+      <div class="lg:col-span-4 hidden lg:block">
+        <div class="glass-card-dark p-6 rounded-xl relative border border-amber-500/25">
+          <div class="absolute -top-3 -right-3 bg-amber-500 text-stone-950 text-[10px] tracking-widest uppercase font-bold py-1 px-3 rounded-full shadow-lg">
+            Atelier Featured
+          </div>
+          <div class="aspect-[4/5] rounded-lg overflow-hidden relative group">
+            <img 
+              src="images/jewelux_solitaire_ring.jpg" 
+              alt="The Sovereign Radiant Solitaire" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-5">
+              <span class="text-[10px] uppercase tracking-widest text-amber-300 font-medium">Bespoke Bridal</span>
+              <h4 class="font-serif text-xl text-white">The Sovereign Radiant Solitaire</h4>
+              <p class="text-xs text-stone-300 mt-1">3.20 ct D-Flawless • Platinum 950</p>
+              <button onclick="openQuickView('HJ-001')" class="mt-4 w-full py-2 bg-white/10 hover:bg-white text-white hover:text-stone-950 backdrop-blur-md rounded text-xs uppercase tracking-wider transition-colors">
+                Inspect GIA Dossier
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. Interactive "Bespoke Ring & Gem Studio" (Signature Feature) -->
+  <section id="bespoke-studio" class="py-24 bg-stone-950 text-white relative border-y border-amber-500/20 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-[11px] uppercase tracking-[0.3em] text-amber-400 font-semibold block mb-2">
+          Atelier Interactive Customizer
+        </span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-light text-white leading-tight">
+          Design Your <span class="italic gold-gradient-text">Bespoke Masterpiece</span>
+        </h2>
+        <p class="text-stone-400 text-sm mt-4 font-light">
+          Experience our digital goldsmith workbench. Select your precious metal, center gemstone, cut, and carat weight with real-time artisan rendering and instant atelier price appraisal.
+        </p>
+      </div>
+
+      <!-- Studio Interactive Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-stone-900/60 p-6 sm:p-10 rounded-2xl border border-amber-500/20 backdrop-blur-xl">
+        
+        <!-- Left: Interactive Vector Ring Visualizer -->
+        <div class="lg:col-span-6 flex flex-col items-center">
+          <div class="ring-studio-viewport relative w-full flex items-center justify-center p-4">
+            <div id="bespoke-ring-visualizer" class="w-full max-w-[320px] aspect-square flex items-center justify-center">
+              <!-- Dynamically rendered by app.js -->
+            </div>
+
+            <!-- Viewport Overlay Badges -->
+            <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded text-[10px] uppercase tracking-wider text-amber-300 border border-amber-500/20">
+              Interactive 360° Studio View
+            </div>
+
+            <div class="absolute top-4 right-4 flex items-center gap-1 text-[10px] text-stone-400">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Live Price Calibrated
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-between w-full px-2 text-xs text-stone-400">
+            <span>✓ Eight-Prong Cathedral Setting</span>
+            <span>✓ Comfort-Fit Interior Contour</span>
+            <span>✓ Hand-Engraving Complimentary</span>
+          </div>
+        </div>
+
+        <!-- Right: Customizer Control Panel -->
+        <div class="lg:col-span-6 space-y-6">
+          
+          <!-- 1. Metal Selection -->
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-amber-300 font-semibold mb-3">
+              1. Choose Precious Metal
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <button onclick="setBespokeMetal('yellow-gold')" data-bespoke-metal="yellow-gold" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-[#D4AF37] border border-stone-600 shadow-sm"></span>
+                <span class="text-xs font-medium text-stone-200">18K Yellow</span>
+              </button>
+              <button onclick="setBespokeMetal('rose-gold')" data-bespoke-metal="rose-gold" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-[#E8A798] border border-stone-600 shadow-sm"></span>
+                <span class="text-xs font-medium text-stone-200">18K Rose</span>
+              </button>
+              <button onclick="setBespokeMetal('white-gold')" data-bespoke-metal="white-gold" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-[#E5E7EB] border border-stone-600 shadow-sm"></span>
+                <span class="text-xs font-medium text-stone-200">18K White</span>
+              </button>
+              <button onclick="setBespokeMetal('platinum')" data-bespoke-metal="platinum" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-[#CBD5E1] border border-stone-600 shadow-sm"></span>
+                <span class="text-xs font-medium text-stone-200">Platinum 950</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Gemstone Selection -->
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-amber-300 font-semibold mb-3">
+              2. Select Center Gemstone
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <button onclick="setBespokeGem('diamond')" data-bespoke-gem="diamond" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-sky-100 border border-sky-300"></span>
+                <span class="text-xs font-medium text-stone-200">D-Diamond</span>
+              </button>
+              <button onclick="setBespokeGem('emerald')" data-bespoke-gem="emerald" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-emerald-400"></span>
+                <span class="text-xs font-medium text-stone-200">Emerald</span>
+              </button>
+              <button onclick="setBespokeGem('sapphire')" data-bespoke-gem="sapphire" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-blue-700 border border-blue-400"></span>
+                <span class="text-xs font-medium text-stone-200">Sapphire</span>
+              </button>
+              <button onclick="setBespokeGem('ruby')" data-bespoke-gem="ruby" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-left transition flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-rose-700 border border-rose-400"></span>
+                <span class="text-xs font-medium text-stone-200">Ruby</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Cut & Facet Style -->
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-amber-300 font-semibold mb-3">
+              3. Gemstone Cut & Silhouette
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">Round Brilliant</span>
+              </button>
+              <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">Emerald Cut</span>
+              </button>
+              <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">Royal Oval</span>
+              </button>
+              <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">Teardrop Pear</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Carat Weight -->
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-amber-300 font-semibold mb-3">
+              4. Carat Weight
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <button onclick="setBespokeCarat(1.0)" data-bespoke-carat="1" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">1.00 Carat</span>
+              </button>
+              <button onclick="setBespokeCarat(1.75)" data-bespoke-carat="1.75" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">1.75 Carat</span>
+              </button>
+              <button onclick="setBespokeCarat(2.5)" data-bespoke-carat="2.5" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">2.50 Carat</span>
+              </button>
+              <button onclick="setBespokeCarat(4.0)" data-bespoke-carat="4" class="p-2.5 rounded-lg border border-stone-700 bg-stone-800/80 hover:border-amber-500 text-center transition">
+                <span class="block text-xs font-medium text-stone-200">4.00 Carat</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Atelier Valuation & CTA -->
+          <div class="pt-6 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-stone-400 block">Estimated Atelier Commission</span>
+              <span id="bespoke-calc-price" class="font-serif text-3xl font-semibold text-amber-300">$10,400</span>
+              <span class="text-[10px] text-stone-400 block">Includes GIA dossier & custom ring box</span>
+            </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+              <button onclick="orderBespokePiece()" class="btn-luxury-gold py-3 px-6 text-xs rounded w-full sm:w-auto">
+                Commission Creation
+              </button>
+              <button onclick="consultBespokePiece()" class="btn-luxury-outline py-3 px-4 text-xs rounded" title="Discuss with Master Goldsmith">
+                Consult
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. Curated Signature Collections Showcase -->
+  <section id="collections" class="py-24 max-w-7xl mx-auto px-4 sm:px-8">
+    
+    <!-- Title & Category Tabs -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div>
+        <span class="text-[11px] uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-2">
+          Curated Vault
+        </span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-light text-stone-900 leading-tight">
+          Iconic <span class="italic text-amber-800">Masterpieces</span>
+        </h2>
+        <p class="text-stone-500 text-sm mt-2 max-w-xl">
+          Each creation is conceived as a singular testament to natural rarity, certified with full gemological provenance.
+        </p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div id="category-filters" class="flex flex-wrap gap-2">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      <!-- Dynamically populated by app.js -->
+    </div>
+
+  </section>
+
+  <!-- 6. The Jewelux Heritage & Savoir-Faire (Editorial Story) -->
+  <section id="heritage" class="py-24 bg-stone-900 text-stone-100 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Visual Collage -->
+      <div class="lg:col-span-6 relative">
+        <div class="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
+          <img 
+            src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85" 
+            alt="Artisanal Haute Joaillerie Craftsmanship" 
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="hidden sm:block absolute -bottom-8 -right-8 w-64 aspect-square rounded-lg overflow-hidden shadow-2xl border-2 border-stone-800">
+          <img 
+            src="https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=600&q=85" 
+            alt="Master Goldsmith setting rare diamonds" 
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Editorial Narrative -->
+      <div class="lg:col-span-6 space-y-6">
+        <span class="text-[11px] uppercase tracking-[0.3em] text-amber-400 font-semibold block">
+          Our Savoir-Faire Since 1994
+        </span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-light leading-tight text-white">
+          Where Old-World Mastery Meets <br />
+          <span class="italic gold-gradient-text">Eternal Perfection</span>
+        </h2>
+        <p class="text-stone-300 text-sm sm:text-base font-light leading-relaxed">
+          For over thirty years, House of Jewelux has guarded the sanctum of haute joaillerie. Every jewel begins with a singular rare stone personally sourced by our gemological council from ethical mines across Colombia, Sri Lanka, and South Africa.
+        </p>
+        <p class="text-stone-400 text-sm font-light leading-relaxed">
+          In our private Geneva workshop, master setters spend up to 250 hours meticulously setting microscopically calibrated claws, sculpting solid platinum and 18-karat fairmined gold to breathe light into unyielding stone.
+        </p>
+
+        <!-- 4 Core Tenets Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+          <div class="border-l-2 border-amber-500/40 pl-4">
+            <h4 class="font-serif text-lg text-amber-300">Conflict-Free Provenance</h4>
+            <p class="text-xs text-stone-400 mt-1">Kimberley Process compliant with full origin transparency.</p>
+          </div>
+          <div class="border-l-2 border-amber-500/40 pl-4">
+            <h4 class="font-serif text-lg text-amber-300">D-Flawless Standards</h4>
+            <p class="text-xs text-stone-400 mt-1">Top 0.01% of global diamond yields certified by GIA & Gübelin.</p>
+          </div>
+          <div class="border-l-2 border-amber-500/40 pl-4">
+            <h4 class="font-serif text-lg text-amber-300">Bespoke Architecture</h4>
+            <p class="text-xs text-stone-400 mt-1">Custom mountings engineered specifically to the gem’s optical axis.</p>
+          </div>
+          <div class="border-l-2 border-amber-500/40 pl-4">
+            <h4 class="font-serif text-lg text-amber-300">Generational Legacy</h4>
+            <p class="text-xs text-stone-400 mt-1">Lifetime complimentary cleaning, prong tightening & insurance valuation.</p>
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <button onclick="openAppointmentModal('Heritage & Atelier Tour Request')" class="btn-luxury-outline rounded text-xs">
+            Inquire About Our Atelier
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. Interactive Lookbook & Virtual Styling -->
+  <section id="lookbook" class="py-24 bg-stone-100 max-w-7xl mx-auto px-4 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-[11px] uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-2">
+        Curated Occasion Styling
+      </span>
+      <h2 class="font-serif text-3xl sm:text-5xl font-light text-stone-900 leading-tight">
+        The Lookbook <span class="italic text-amber-800">Archive</span>
+      </h2>
+      <p class="text-stone-500 text-sm mt-2">
+        Witness how Jewelux creations transform sovereign moments into everlasting memories.
+      </p>
+
+      <!-- Occasion Selectors -->
+      <div class="flex items-center justify-center gap-3 mt-6">
+        <button onclick="switchLookbook(0)" data-lookbook-index="0" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-amber-500 text-black">
+          Gala Opulence
+        </button>
+        <button onclick="switchLookbook(1)" data-lookbook-index="1" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-stone-800 text-stone-400 hover:text-white">
+          Bridal Sanctuary
+        </button>
+        <button onclick="switchLookbook(2)" data-lookbook-index="2" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-stone-800 text-stone-400 hover:text-white">
+          Everyday Fine
+        </button>
+      </div>
+    </div>
+
+    <!-- Lookbook Interactive Card -->
+    <div class="relative bg-white rounded-2xl overflow-hidden shadow-lg border border-stone-200 grid grid-cols-1 lg:grid-cols-12 items-center">
+      <div class="lg:col-span-7 h-[420px] sm:h-[500px] overflow-hidden bg-stone-900">
+        <img 
+          id="lookbook-image" 
+          src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=85" 
+          alt="House of Jewelux Gala Lookbook" 
+          class="w-full h-full object-cover transition-opacity duration-300"
+        />
+      </div>
+
+      <div class="lg:col-span-5 p-8 sm:p-12 space-y-5">
+        <span class="text-[10px] uppercase tracking-widest text-amber-700 font-semibold">Featured Styling</span>
+        <h3 id="lookbook-title" class="font-serif text-2xl sm:text-3xl text-stone-900">
+          The Black Tie Gala & Opulence
+        </h3>
+        <p id="lookbook-subtitle" class="text-stone-600 text-sm leading-relaxed">
+          Sculptural diamonds and vivid emeralds made for dramatic grand entrances.
+        </p>
+
+        <div class="p-4 bg-stone-50 rounded-lg border border-stone-200 mt-4 flex items-center justify-between">
+          <div>
+            <span class="text-[10px] text-stone-400 uppercase tracking-wider block">Featured Piece</span>
+            <span id="lookbook-prod-title" class="font-serif text-stone-900 text-base font-medium">Empress Emerald Cascade</span>
+          </div>
+          <button id="lookbook-prod-btn" onclick="openQuickView('HJ-002')" class="px-3 py-1.5 bg-stone-900 hover:bg-amber-800 text-white rounded text-xs tracking-wider uppercase transition">
+            Inspect
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. VIP Testimonials & Press Accolades -->
+  <section class="py-24 bg-stone-950 text-white border-t border-amber-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      
+      <!-- Press Quotes -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 pb-16 border-b border-stone-800 text-center">
+        <div class="px-4">
+          <p class="font-serif italic text-lg text-amber-200">"The benchmark of contemporary high fine jewellery."</p>
+          <span class="text-[11px] tracking-[0.2em] uppercase text-stone-400 font-sans mt-2 block">— VOGUE JOAILLERIE</span>
+        </div>
+        <div class="px-4">
+          <p class="font-serif italic text-lg text-amber-200">"Master craftsmanship that will define heirlooms of tomorrow."</p>
+          <span class="text-[11px] tracking-[0.2em] uppercase text-stone-400 font-sans mt-2 block">— ROBB REPORT</span>
+        </div>
+        <div class="px-4">
+          <p class="font-serif italic text-lg text-amber-200">"Unmatched gemological pedigree and bespoke intimacy."</p>
+          <span class="text-[11px] tracking-[0.2em] uppercase text-stone-400 font-sans mt-2 block">— HARPER'S BAZAAR</span>
+        </div>
+      </div>
+
+      <!-- Client Stories -->
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-[11px] uppercase tracking-[0.25em] text-amber-400 font-semibold block mb-2">
+          Client Testimonials
+        </span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-light text-white">
+          Beloved by Discerning Collectors
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glass-card-dark p-6 sm:p-8 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 mb-4 text-xs gap-1">★★★★★</div>
+            <p class="font-serif text-base text-stone-300 italic leading-relaxed">
+              "House of Jewelux doesn't merely sell jewellery; they curate wearable sculptures that will be whispered about for centuries. My custom bridal ring exceeded all imagination."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-800 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Lady Charlotte V." class="w-10 h-10 rounded-full object-cover border border-amber-500/40" />
+            <div>
+              <p class="text-xs font-semibold text-white">Lady Charlotte V.</p>
+              <p class="text-[10px] text-amber-300">London & Monaco • Bespoke 3.5ct Solitaire</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card-dark p-6 sm:p-8 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 mb-4 text-xs gap-1">★★★★★</div>
+            <p class="font-serif text-base text-stone-300 italic leading-relaxed">
+              "The gemological knowledge and quiet discretion of their bespoke atelier team in Paris is unmatched. The Colombian emerald necklace is now our family's proudest heirloom."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-800 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Henri & Delphine Laurent" class="w-10 h-10 rounded-full object-cover border border-amber-500/40" />
+            <div>
+              <p class="text-xs font-semibold text-white">Henri & Delphine Laurent</p>
+              <p class="text-[10px] text-amber-300">Paris, Place Vendôme • Empress Emerald</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card-dark p-6 sm:p-8 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 mb-4 text-xs gap-1">★★★★★</div>
+            <p class="font-serif text-base text-stone-300 italic leading-relaxed">
+              "From initial sketch to hand-delivery in Dubai with full GIA and Gübelin certification, every detail was orchestrated with utmost nobility and perfection."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-800 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="H.E. Amira Al-Maktoum" class="w-10 h-10 rounded-full object-cover border border-amber-500/40" />
+            <div>
+              <p class="text-xs font-semibold text-white">H.E. Amira Al-Maktoum</p>
+              <p class="text-[10px] text-amber-300">Dubai DIFC • Bespoke Sapphire Parure</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. Global Boutiques & Private Salons -->
+  <section id="boutiques" class="py-24 max-w-7xl mx-auto px-4 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-[11px] uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-2">
+        Flagship Locations
+      </span>
+      <h2 class="font-serif text-3xl sm:text-5xl font-light text-stone-900 leading-tight">
+        Private Salons & <span class="italic text-amber-800">Boutiques</span>
+      </h2>
+      <p class="text-stone-500 text-sm mt-2">
+        Experience our high jewellery collections in person with private Champagne service.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="p-6 bg-white rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between hover:border-amber-500/50 transition">
+        <div>
+          <span class="text-xs font-semibold text-amber-700 tracking-wider uppercase">United Kingdom</span>
+          <h4 class="font-serif text-xl text-stone-900 mt-1">London Mayfair</h4>
+          <p class="text-xs text-stone-500 mt-2">14 New Bond Street, Mayfair, London W1S 3PF</p>
+          <p class="text-xs text-stone-600 mt-3 font-medium">+44 20 7946 0912</p>
+          <p class="text-[11px] text-stone-400 mt-1">Mon–Sat: 10:00 – 18:30</p>
+        </div>
+        <button onclick="openAppointmentModal('Appointment at London Mayfair Boutique')" class="mt-6 w-full py-2 bg-stone-900 hover:bg-amber-800 text-white rounded text-xs uppercase tracking-wider transition">
+          Book Mayfair Salon
+        </button>
+      </div>
+
+      <div class="p-6 bg-white rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between hover:border-amber-500/50 transition">
+        <div>
+          <span class="text-xs font-semibold text-amber-700 tracking-wider uppercase">France</span>
+          <h4 class="font-serif text-xl text-stone-900 mt-1">Paris Place Vendôme</h4>
+          <p class="text-xs text-stone-500 mt-2">22 Place Vendôme, 75001 Paris</p>
+          <p class="text-xs text-stone-600 mt-3 font-medium">+33 1 42 68 55 00</p>
+          <p class="text-[11px] text-stone-400 mt-1">Mon–Sat: 10:30 – 19:00</p>
+        </div>
+        <button onclick="openAppointmentModal('Appointment at Paris Place Vendôme Boutique')" class="mt-6 w-full py-2 bg-stone-900 hover:bg-amber-800 text-white rounded text-xs uppercase tracking-wider transition">
+          Book Paris Salon
+        </button>
+      </div>
+
+      <div class="p-6 bg-white rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between hover:border-amber-500/50 transition">
+        <div>
+          <span class="text-xs font-semibold text-amber-700 tracking-wider uppercase">United States</span>
+          <h4 class="font-serif text-xl text-stone-900 mt-1">New York Fifth Avenue</h4>
+          <p class="text-xs text-stone-500 mt-2">742 Fifth Avenue, New York, NY 10019</p>
+          <p class="text-xs text-stone-600 mt-3 font-medium">+1 212 555 0199</p>
+          <p class="text-[11px] text-stone-400 mt-1">Mon–Sat: 10:00 – 19:00</p>
+        </div>
+        <button onclick="openAppointmentModal('Appointment at New York Fifth Avenue Boutique')" class="mt-6 w-full py-2 bg-stone-900 hover:bg-amber-800 text-white rounded text-xs uppercase tracking-wider transition">
+          Book Fifth Ave Salon
+        </button>
+      </div>
+
+      <div class="p-6 bg-white rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between hover:border-amber-500/50 transition">
+        <div>
+          <span class="text-xs font-semibold text-amber-700 tracking-wider uppercase">United Arab Emirates</span>
+          <h4 class="font-serif text-xl text-stone-900 mt-1">Dubai Fashion Avenue</h4>
+          <p class="text-xs text-stone-500 mt-2">The Fashion Avenue, The Dubai Mall</p>
+          <p class="text-xs text-stone-600 mt-3 font-medium">+971 4 362 7500</p>
+          <p class="text-[11px] text-stone-400 mt-1">Daily: 10:00 – 23:00</p>
+        </div>
+        <button onclick="openAppointmentModal('Appointment at Dubai Mall Fashion Avenue')" class="mt-6 w-full py-2 bg-stone-900 hover:bg-amber-800 text-white rounded text-xs uppercase tracking-wider transition">
+          Book Dubai Salon
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. VIP Newsletter Subscription ("The Jewelux Salon") -->
+  <section class="py-20 bg-stone-950 text-white border-t border-amber-500/20 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+      <span class="text-[11px] uppercase tracking-[0.3em] text-amber-400 font-semibold block mb-2">
+        Exclusive Invitation
+      </span>
+      <h2 class="font-serif text-3xl sm:text-5xl font-light text-white mb-4">
+        Join The <span class="italic gold-gradient-text">Jewelux Salon</span>
+      </h2>
+      <p class="text-stone-400 text-sm max-w-xl mx-auto mb-8 font-light">
+        Receive private previews of rare gemstone acquisitions, invitation-only gala viewings, and a complimentary 10% privilege towards your inaugural bespoke commission.
+      </p>
+
+      <form onsubmit="event.preventDefault(); showToast('Welcome to The Jewelux Salon. Your VIP welcome privilege code is JEWELUX10', '💎'); this.reset();" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+        <input 
+          type="email" 
+          required 
+          placeholder="Enter your private email address" 
+          class="flex-grow px-5 py-3.5 bg-stone-900 border border-stone-700 rounded text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-400 transition"
+        />
+        <button type="submit" class="btn-luxury-gold py-3.5 px-6 rounded text-xs whitespace-nowrap">
+          Request Invitation
+        </button>
+      </form>
+      <p class="text-[10px] text-stone-500 mt-3">We respect your complete discretion. You may withdraw at any time.</p>
+    </div>
+  </section>
+
+  <!-- 11. Luxury Footer -->
+  <footer class="bg-black text-stone-400 text-xs pt-16 pb-12 border-t border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+      
+      <!-- Brand & Mission -->
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+          </svg>
+          <span class="font-serif text-xl tracking-[0.2em] text-white uppercase">HOUSE OF JEWELUX</span>
+        </div>
+        <p class="text-stone-400 leading-relaxed font-light text-xs pr-6">
+          Purveyors of rare conflict-free diamonds, certified Colombian emeralds, and bespoke bridal masterpieces. Designed in Geneva and crafted to be cherished across millennia.
+        </p>
+        <div class="pt-2 flex items-center gap-3 text-stone-400 text-xs">
+          <span>• RJC Certified Member</span>
+          <span>• GIA Alumnus Council</span>
+          <span>• Swiss Gem Lab Verified</span>
+        </div>
+      </div>
+
+      <!-- Navigation Column 1 -->
+      <div>
+        <h5 class="text-white uppercase tracking-widest text-[11px] font-semibold mb-4">High Collections</h5>
+        <ul class="space-y-2.5">
+          <li><a href="#collections" class="hover:text-amber-300 transition">Haute Joaillerie Collars</a></li>
+          <li><a href="#collections" class="hover:text-amber-300 transition">Solitaire Engagement Rings</a></li>
+          <li><a href="#collections" class="hover:text-amber-300 transition">Rare Colombian Emeralds</a></li>
+          <li><a href="#collections" class="hover:text-amber-300 transition">Royal Ceylon Sapphires</a></li>
+          <li><a href="#collections" class="hover:text-amber-300 transition">Articulated Tennis Bracelets</a></li>
+        </ul>
+      </div>
+
+      <!-- Navigation Column 2 -->
+      <div>
+        <h5 class="text-white uppercase tracking-widest text-[11px] font-semibold mb-4">The Atelier</h5>
+        <ul class="space-y-2.5">
+          <li><a href="#bespoke-studio" class="hover:text-amber-300 transition">Bespoke Customizer</a></li>
+          <li><a href="#heritage" class="hover:text-amber-300 transition">Ethical Sourcing Charter</a></li>
+          <li><a href="#heritage" class="hover:text-amber-300 transition">The 4Cs Diamond Education</a></li>
+          <li><a href="#lookbook" class="hover:text-amber-300 transition">Virtual Styling Room</a></li>
+          <li><button onclick="openAppointmentModal()" class="hover:text-amber-300 transition text-left">Book Salon Consultation</button></li>
+        </ul>
+      </div>
+
+      <!-- Navigation Column 3 -->
+      <div>
+        <h5 class="text-white uppercase tracking-widest text-[11px] font-semibold mb-4">Private Concierge</h5>
+        <ul class="space-y-2.5">
+          <li><span class="text-stone-300 font-medium">Concierge Toll-Free:</span></li>
+          <li><span class="text-amber-300 font-mono">+1 (800) 539-3589</span></li>
+          <li><span class="text-stone-500">concierge@houseofjewelux.com</span></li>
+          <li class="pt-2"><span class="text-stone-300">White-Glove Courier:</span></li>
+          <li><span class="text-stone-400">Fully Insured Worldwide Delivery</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Legal -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-8 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between text-stone-500 text-[11px] gap-4">
+      <p>© 2026 HOUSE OF JEWELUX S.A. All Rights Reserved. Geneva • London • Paris • New York • Dubai.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-stone-300 transition">Privacy Policy</a>
+        <a href="#" class="hover:text-stone-300 transition">Discretion & Security</a>
+        <a href="#" class="hover:text-stone-300 transition">Ethical Trading Guarantee</a>
+        <a href="#" class="hover:text-stone-300 transition">Terms of Sale</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= DRAWERS & MODALS ================= -->
+
+  <!-- 1. Slide-Over Shopping Cart Drawer -->
+  <div id="cart-drawer-backdrop" class="drawer-backdrop fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex justify-end" onclick="closeCartDrawer()">
+    <div id="cart-drawer-panel" class="drawer-panel w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between" onclick="event.stopPropagation()">
+      
+      <!-- Drawer Header -->
+      <div class="p-6 border-b border-stone-200 flex items-center justify-between bg-[#FAF9F6]">
+        <div>
+          <h3 class="font-serif text-xl text-stone-900">Your Shopping Bag</h3>
+          <p class="text-[11px] text-stone-500 uppercase tracking-wider">House of Jewelux Acquisition</p>
+        </div>
+        <button onclick="closeCartDrawer()" class="text-stone-400 hover:text-stone-900 p-2" aria-label="Close cart">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Insured Delivery Progress Bar -->
+      <div class="px-6 py-3 bg-stone-100 border-b border-stone-200 text-xs">
+        <div class="w-full bg-stone-200 h-1.5 rounded-full overflow-hidden mb-1.5">
+          <div id="shipping-progress-fill" class="bg-amber-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p id="shipping-progress-text" class="text-[11px] text-stone-600">Complimentary Insured Courier Progress</p>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cart-items" class="p-6 overflow-y-auto flex-grow divide-y divide-stone-100">
+        <!-- Injected by app.js -->
+      </div>
+
+      <!-- Drawer Footer & Checkout -->
+      <div class="p-6 border-t border-stone-200 bg-[#FAF9F6] space-y-4">
+        
+        <!-- Promo Code Field -->
+        <div class="flex gap-2">
+          <input 
+            id="promo-input" 
+            type="text" 
+            placeholder="Privilege Code (e.g. JEWELUX10)" 
+            class="flex-grow px-3 py-2 text-xs border border-stone-300 rounded uppercase placeholder:normal-case focus:outline-none focus:border-amber-500"
+          />
+          <button onclick="applyPromoCode()" class="px-3 py-2 bg-stone-800 text-stone-100 hover:bg-stone-900 rounded text-xs tracking-wider uppercase font-medium">
+            Apply
+          </button>
+        </div>
+
+        <!-- Totals Breakdown -->
+        <div class="space-y-1.5 text-xs text-stone-600">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span id="cart-subtotal" class="font-medium text-stone-900">$0</span>
+          </div>
+          <div id="cart-discount-row" class="flex justify-between text-emerald-600 hidden">
+            <span>VIP Privilege Discount</span>
+            <span id="cart-discount-amount">-$0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Insured Courier Delivery</span>
+            <span class="text-emerald-700 font-medium">Complimentary</span>
+          </div>
+          <div class="flex justify-between pt-2 border-t border-stone-200 text-base font-serif text-stone-900 font-semibold">
+            <span>Total Acquisition</span>
+            <span id="cart-total">$0</span>
+          </div>
+        </div>
+
+        <button onclick="simulateCheckout()" class="btn-luxury-gold w-full py-3.5 rounded text-xs">
+          Proceed to Insured Acquisition
+        </button>
+        <p class="text-[10px] text-center text-stone-400">Encrypted 256-bit Swiss bank-grade acquisition security</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. Slide-Over Wishlist Drawer -->
+  <div id="wishlist-drawer-backdrop" class="drawer-backdrop fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex justify-end" onclick="closeWishlistDrawer()">
+    <div id="wishlist-drawer-panel" class="drawer-panel w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between" onclick="event.stopPropagation()">
+      
+      <!-- Drawer Header -->
+      <div class="p-6 border-b border-stone-200 flex items-center justify-between bg-[#FAF9F6]">
+        <div>
+          <h3 class="font-serif text-xl text-stone-900">Your Saved Heirlooms</h3>
+          <p class="text-[11px] text-stone-500 uppercase tracking-wider">Cherished Wishlist</p>
+        </div>
+        <button onclick="closeWishlistDrawer()" class="text-stone-400 hover:text-stone-900 p-2" aria-label="Close wishlist">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Wishlist Items -->
+      <div id="wishlist-items" class="p-6 overflow-y-auto flex-grow divide-y divide-stone-100">
+        <!-- Injected by app.js -->
+      </div>
+
+      <div class="p-6 border-t border-stone-200 bg-[#FAF9F6]">
+        <button onclick="closeWishlistDrawer(); openAppointmentModal('Requesting viewing for all Wishlist pieces');" class="btn-luxury-outline w-full py-3 rounded text-xs">
+          Schedule Private Viewing for Wishlist
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. Quick View Modal with Full Gemological Specs -->
+  <div id="quick-view-modal" class="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onclick="closeQuickView()">
+    <div class="modal-content bg-white rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-stone-200 relative max-h-[90vh] flex flex-col md:flex-row" onclick="event.stopPropagation()">
+      
+      <!-- Close Button -->
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-stone-800 flex items-center justify-center shadow" aria-label="Close modal">
+        ✕
+      </button>
+
+      <!-- Image Half -->
+      <div class="md:w-1/2 bg-stone-100 relative min-h-[300px] md:min-h-full">
+        <img id="qv-img" src="" alt="Gemstone Inspection" class="w-full h-full object-cover" />
+        <span id="qv-badge" class="absolute top-4 left-4 bg-stone-950 text-amber-300 text-[10px] tracking-widest uppercase font-semibold px-3 py-1 rounded-full border border-amber-500/30">
+          Badge
+        </span>
+      </div>
+
+      <!-- Content Half -->
+      <div class="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+        <div>
+          <span id="qv-metal" class="text-xs uppercase tracking-widest text-amber-700 font-semibold block mb-1">Metal</span>
+          <h3 id="qv-title" class="font-serif text-2xl sm:text-3xl text-stone-900 font-normal leading-tight">Masterpiece Name</h3>
+          <p id="qv-price" class="font-serif text-2xl font-semibold text-stone-900 mt-2">$0</p>
+          <p id="qv-description" class="text-xs text-stone-600 mt-3 leading-relaxed">Description</p>
+
+          <!-- Specifications Table -->
+          <div class="mt-6 border border-stone-200 rounded-lg p-3 bg-stone-50 text-xs space-y-2">
+            <div class="flex justify-between border-b border-stone-200 pb-1">
+              <span class="text-stone-500">Primary Stone</span>
+              <span id="qv-stone" class="font-medium text-stone-900 text-right">-</span>
+            </div>
+            <div class="flex justify-between border-b border-stone-200 pb-1">
+              <span class="text-stone-500">Cut & Shape</span>
+              <span id="qv-cut" class="font-medium text-stone-900 text-right">-</span>
+            </div>
+            <div class="flex justify-between border-b border-stone-200 pb-1">
+              <span class="text-stone-500">Clarity Grade</span>
+              <span id="qv-clarity" class="font-medium text-stone-900 text-right">-</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-stone-500">Lab Certification</span>
+              <span id="qv-certificate" class="font-medium text-amber-800 text-right">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-stone-200 flex gap-3">
+          <button id="qv-add-btn" class="btn-luxury-gold flex-grow py-3 rounded text-xs">
+            Add to Shopping Bag
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 4. Private Atelier Appointment Modal -->
+  <div id="appointment-modal" class="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onclick="closeAppointmentModal()">
+    <div class="modal-content bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      
+      <button onclick="closeAppointmentModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800 p-2" aria-label="Close appointment modal">
+        ✕
+      </button>
+
+      <div class="text-center mb-6">
+        <span class="text-[10px] uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-1">Exclusive Salon Experience</span>
+        <h3 class="font-serif text-2xl sm:text-3xl text-stone-900">Book Private Atelier Consultation</h3>
+        <p class="text-stone-500 text-xs mt-1">Meet with a Senior Gemologist & Master Goldsmith.</p>
+      </div>
+
+      <form onsubmit="submitAppointment(event)" class="space-y-4 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-stone-700 mb-1">Full Name *</label>
+            <input type="text" required placeholder="e.g. Victoria Sterling" class="w-full px-3 py-2.5 border border-stone-300 rounded focus:border-amber-600 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-medium text-stone-700 mb-1">Email Address *</label>
+            <input type="email" required placeholder="name@domain.com" class="w-full px-3 py-2.5 border border-stone-300 rounded focus:border-amber-600 focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-stone-700 mb-1">Phone / WhatsApp *</label>
+            <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2.5 border border-stone-300 rounded focus:border-amber-600 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-medium text-stone-700 mb-1">Preferred Salon Location *</label>
+            <select required class="w-full px-3 py-2.5 border border-stone-300 rounded focus:border-amber-600 focus:outline-none bg-white">
+              <option value="london">London (Mayfair, New Bond St)</option>
+              <option value="paris">Paris (Place Vendôme)</option>
+              <option value="newyork">New York (Fifth Avenue)</option>
+              <option value="dubai">Dubai (Fashion Avenue)</option>
+              <option value="virtual">Virtual Video Salon (Global)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-stone-700 mb-1">Preferred Date</label>
+            <input type="date" class="w-full px-3 py-2.5 border border-stone-300 rounded focus:border-amber-600 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-medium text-stone-700 mb-1">Consultation Interest</label>
+            <select class="w-full px-3 py-2.5 border border-stone-300 rounded focus:border-amber-600 focus:outline-none bg-white">
+              <option value="bespoke">Bespoke Ring Commission</option>
+              <option value="highjewellery">Haute Joaillerie Viewing</option>
+              <option value="bridal">Bridal & Solitaire Selection</option>
+              <option value="investment">Rare Investment Gemstones</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium text-stone-700 mb-1">Special Notes or Commission Details</label>
+          <textarea id="appointment-notes" rows="3" placeholder="Tell us about desired diamond specs, heirloom stones to reset, or celebration occasion..." class="w-full px-3 py-2 border border-stone-300 rounded focus:border-amber-600 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="btn-luxury-gold w-full py-3.5 rounded text-xs">
+          Confirm Private Consultation Request
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- 5. Search Catalogue Modal -->
+  <div id="search-modal" class="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-start justify-center p-4 pt-20" onclick="closeSearchModal()">
+    <div class="modal-content bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl border border-stone-200" onclick="event.stopPropagation()">
+      <div class="p-4 border-b border-stone-200 flex items-center gap-3">
+        <svg class="w-5 h-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="Search diamonds, emeralds, solitaires, tennis bracelets..." 
+          class="flex-grow text-stone-900 placeholder-stone-400 outline-none text-sm font-sans"
+        />
+        <button onclick="closeSearchModal()" class="text-stone-400 hover:text-stone-800 text-sm px-2">
+          ✕
+        </button>
+      </div>
+
+      <!-- Live Search Results -->
+      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4 divide-y divide-stone-100">
+        <!-- Injected by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Simulated Checkout Confirmation Modal -->
+  <div id="checkout-modal" class="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onclick="closeCheckoutModal()">
+    <div class="modal-content bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-stone-200 text-center" onclick="event.stopPropagation()">
+      <div class="w-16 h-16 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+
+      <span class="text-[10px] uppercase tracking-widest text-amber-700 font-semibold">White-Glove Acquisition Protocol</span>
+      <h3 class="font-serif text-2xl text-stone-900 mt-1">Complete Insured Inquiry</h3>
+      <p class="text-xs text-stone-500 mt-2 leading-relaxed">
+        Due to the extraordinary rarity and insured value of House of Jewelux creations, our private client concierge will finalize your wire transfer or encrypted checkout protocol directly with you.
+      </p>
+
+      <form onsubmit="confirmCheckout(event)" class="mt-6 space-y-3 text-left text-xs">
+        <div>
+          <label class="block text-stone-700 font-medium mb-1">Principal Name</label>
+          <input type="text" required placeholder="Full Legal Name" class="w-full px-3 py-2 border border-stone-300 rounded focus:border-amber-600 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-stone-700 font-medium mb-1">Secure Delivery Address</label>
+          <input type="text" required placeholder="Suite, Street Address, City, Postal Code, Country" class="w-full px-3 py-2 border border-stone-300 rounded focus:border-amber-600 focus:outline-none" />
+        </div>
+        <button type="submit" class="btn-luxury-gold w-full py-3.5 rounded text-xs mt-2">
+          Place Insured Concierge Request
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
