@@ -1,0 +1,388 @@
+/* House of Jewelux - Luxury Haute Joaillerie Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@200;300;400;500;600;700&display=swap');
+
+:root {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Color Palette */
+  --gold-primary: #C5A059;
+  --gold-light: #EAD8AE;
+  --gold-dark: #967232;
+  --gold-gradient: linear-gradient(135deg, #DFBE7D 0%, #C5A059 50%, #9B7635 100%);
+  --gold-gradient-hover: linear-gradient(135deg, #F0D59E 0%, #D4AF37 50%, #B3893F 100%);
+  
+  --obsidian: #0C0A09;
+  --noir: #141210;
+  --noir-card: #1C1917;
+  --noir-border: rgba(214, 185, 126, 0.18);
+  
+  --cream-bg: #FAF9F6;
+  --warm-ivory: #F4F1EA;
+  --alabaster-card: #FFFFFF;
+  --border-subtle: #E7E5E4;
+  
+  --text-dark: #1C1917;
+  --text-muted: #78716C;
+  --text-light: #F5F5F4;
+  
+  --glass-bg: rgba(28, 25, 23, 0.85);
+  --glass-border: rgba(223, 190, 125, 0.22);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  
+  --gold-glow: 0 0 35px rgba(197, 160, 89, 0.35);
+  --card-hover-shadow: 0 25px 45px -10px rgba(12, 10, 9, 0.12), 0 0 20px rgba(197, 160, 89, 0.1);
+}
+
+/* Base resets & typography */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  color: var(--text-dark);
+  background-color: var(--cream-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #141210;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5A059;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #DFBE7D;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #F3E5C8 0%, #D4AF37 40%, #B8860B 80%, #946911 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: var(--gold-gradient);
+}
+.gold-gradient-bg:hover {
+  background: var(--gold-gradient-hover);
+}
+
+/* Luxury Glass Effects */
+.glass-header {
+  background: rgba(20, 18, 16, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--noir-border);
+  transition: all 0.4s ease;
+}
+
+.glass-card-dark {
+  background: rgba(28, 25, 23, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(214, 185, 126, 0.16);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+/* Shimmer & Glow Animations */
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(197, 160, 89, 0.55);
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+@keyframes gemFacetGlint {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8) rotate(360deg);
+  }
+}
+
+.floating-gem {
+  animation: subtleFloat 6s ease-in-out infinite;
+}
+
+.sparkle-effect {
+  animation: gemFacetGlint 3s ease-in-out infinite;
+}
+
+/* Luxury Button Styling */
+.btn-luxury-gold {
+  background: var(--gold-gradient);
+  color: #0C0A09;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0.95rem 2.2rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(197, 160, 89, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxury-gold::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-luxury-gold:hover::before {
+  left: 100%;
+}
+
+.btn-luxury-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(197, 160, 89, 0.45);
+}
+
+.btn-luxury-outline {
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0.95rem 2.2rem;
+  transition: all 0.35s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-luxury-outline:hover {
+  background: rgba(197, 160, 89, 0.12);
+  color: #E8D8A6;
+  border-color: #E8D8A6;
+  transform: translateY(-2px);
+}
+
+/* Product Card Styling */
+.product-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid #EAE7E1;
+  background: #FFFFFF;
+}
+
+.product-card:hover {
+  border-color: rgba(197, 160, 89, 0.4);
+  box-shadow: var(--card-hover-shadow);
+  transform: translateY(-6px);
+}
+
+.product-image-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.product-image-container img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.product-card:hover .product-image-container img.main-img {
+  transform: scale(1.06);
+}
+
+/* Bespoke Interactive Ring Visualizer */
+.ring-studio-viewport {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: radial-gradient(circle at center, #1e1b18 0%, #0c0a09 85%);
+  border-radius: 12px;
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ring-studio-viewport::before {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Light beam over ring visualizer */
+.light-beam {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Slide-over Drawer Animations */
+.drawer-backdrop {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-panel {
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-panel.active {
+  transform: translateX(0);
+}
+
+/* Modal Animations */
+.modal-backdrop {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  transform: scale(0.92) translateY(20px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-backdrop.active .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Custom Checkbox / Radio styling for luxury feel */
+.luxury-radio:checked + label {
+  border-color: var(--gold-primary);
+  background-color: rgba(197, 160, 89, 0.08);
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.luxury-toast {
+  pointer-events: auto;
+  background: rgba(20, 18, 16, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--gold-primary);
+  color: #FFFFFF;
+  padding: 14px 20px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toastIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .hero-headline {
+    font-size: 2.5rem !important;
+    line-height: 1.15 !important;
+  }
+  .ring-studio-viewport {
+    height: 300px;
+  }
+}
