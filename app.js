@@ -1438,97 +1438,298 @@ Could we schedule a private atelier consultation to commission this creation?`;
       this.ringGroup.add(this.shankMesh);
     }
 
+    getCaratScale(carat = this.currentCarat) {
+      const c = parseFloat(carat) || 2.5;
+      // Authentic GIA millimeter proportion scaling relative to 2.50ct (8.8mm base)
+      if (Math.abs(c - 1.00) < 0.05) return 0.74;   // 1.00ct: 6.5mm
+      if (Math.abs(c - 1.75) < 0.05) return 0.888;  // 1.75ct: 7.8mm
+      if (Math.abs(c - 2.50) < 0.05) return 1.00;   // 2.50ct: 8.8mm
+      if (Math.abs(c - 4.00) < 0.05) return 1.172;  // 4.00ct: 10.3mm
+      return Math.pow(c / 2.5, 0.34);
+    }
+
     buildSettingHead() {
       if (this.headGroup) {
         this.ringGroup.remove(this.headGroup);
+        this.headGroup.traverse(child => {
+          if (child.isMesh && child.geometry) child.geometry.dispose();
+        });
       }
 
       this.headGroup = new THREE.Group();
 
-      // Gallery Collar
-      const collarY = 11.2;
-      const collarGeom = new THREE.TorusGeometry(2.6, 0.44, 16, 32);
-      collarGeom.rotateX(Math.PI / 2);
-      const collar = new THREE.Mesh(collarGeom, this.materials.head);
-      collar.position.y = collarY;
-      this.headGroup.add(collar);
+      const scale = this.getCaratScale(this.currentCarat);
+      const baseRadius = 3.55;
+      const stoneRadius = baseRadius * scale;
+      const girdleY = 14.1 + (scale - 1.0) * 1.25;
 
-      // Micro-pavé diamonds on collar
+      // 1. Dynamic Gallery Collar / Basket Ring
+      const collarY = 11.25 + (scale - 1.0) * 0.45;
+      const collarRadius = stoneRadius * 0.72;
+      const collarTube = 0.38 + (scale - 1.0) * 0.12;
+
+      let collarMesh;
+      if (this.currentCut === 'emerald-cut') {
+        const ew = 3.2 * scale * 0.72;
+        const el = 4.2 * scale * 0.72;
+        const egc = 0.65 * scale * 0.72;
+        const curvePoints = [
+          new THREE.Vector3(-ew + egc, collarY, -el),
+          new THREE.Vector3(ew - egc, collarY, -el),
+          new THREE.Vector3(ew, collarY, -el + egc),
+          new THREE.Vector3(ew, collarY, el - egc),
+          new THREE.Vector3(ew - egc, collarY, el),
+          new THREE.Vector3(-ew + egc, collarY, el),
+          new THREE.Vector3(-ew, collarY, el - egc),
+          new THREE.Vector3(-ew, collarY, -el + egc)
+        ];
+        const closedCurve = new THREE.CatmullRomCurve3(curvePoints, true, 'catmullrom', 0.1);
+        const collarGeom = new THREE.TubeGeometry(closedCurve, 32, collarTube, 12, true);
+        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
+      } else if (this.currentCut === 'oval') {
+        const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
+        collarGeom.rotateX(Math.PI / 2);
+        collarGeom.scale(1.28, 1.0, 0.88);
+        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
+        collarMesh.position.y = collarY;
+      } else {
+        const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
+        collarGeom.rotateX(Math.PI / 2);
+        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
+        collarMesh.position.y = collarY;
+      }
+      this.headGroup.add(collarMesh);
+
+      // Micro-pavé diamonds on gallery collar (follow collar diameter and height)
       const paveCount = 10;
-      const paveGeom = new THREE.SphereGeometry(0.32, 10, 10);
+      const paveRadius = collarRadius + collarTube * 0.22;
+      const paveGeom = new THREE.SphereGeometry(0.28 + (scale - 1.0) * 0.08, 10, 10);
       for (let i = 0; i < paveCount; i++) {
         const ang = (i / paveCount) * Math.PI * 2;
-        const px = Math.cos(ang) * 2.6;
-        const pz = Math.sin(ang) * 2.6;
+        let px = Math.cos(ang) * paveRadius;
+        let pz = Math.sin(ang) * paveRadius;
+        if (this.currentCut === 'oval') {
+          px *= 1.28;
+          pz *= 0.88;
+        } else if (this.currentCut === 'emerald-cut') {
+          px = Math.sign(Math.cos(ang)) * Math.min(Math.abs(px * 1.15), 3.2 * scale * 0.65);
+          pz = Math.sign(Math.sin(ang)) * Math.min(Math.abs(pz * 1.15), 4.2 * scale * 0.65);
+        }
         const paveStone = new THREE.Mesh(paveGeom, this.materials.pave || this.materials.gem);
         paveStone.position.set(px, collarY, pz);
         this.headGroup.add(paveStone);
       }
 
-      // Cathedral Bridge under collar
+      // Cathedral Bridge connecting shank shoulders
       const bridgeGeom = new THREE.CylinderGeometry(0.55, 0.65, 4.8, 16);
       bridgeGeom.rotateZ(Math.PI / 2);
       this.bridgeMesh = new THREE.Mesh(bridgeGeom, this.materials.shank);
       this.bridgeMesh.position.set(0, 10.45, 0);
       this.headGroup.add(this.bridgeMesh);
 
-      // 6 Cathedral Prongs
-      const prongCount = 6;
-      const prongBaseY = 10.8;
-      const prongGirdleY = 14.1;
-      const prongTipY = 15.35;
-
-      const rBase = 2.0;
-      const rGirdle = 3.65;
-      const rTip = 3.25;
-
+      // Prongs Group
       this.prongsMeshGroup = new THREE.Group();
+      const prongRadius = 0.32 * (1.0 + (scale - 1.0) * 0.45);
+      const tipRadius = prongRadius * 1.06;
 
-      for (let i = 0; i < prongCount; i++) {
-        const ang = (i / prongCount) * Math.PI * 2 + Math.PI / 6;
-        const cosA = Math.cos(ang);
-        const sinA = Math.sin(ang);
-
-        const p0 = new THREE.Vector3(cosA * rBase, prongBaseY, sinA * rBase);
-        const p1 = new THREE.Vector3(cosA * (rBase * 0.55 + rGirdle * 0.45), (prongBaseY + prongGirdleY) / 2, sinA * (rBase * 0.55 + rGirdle * 0.45));
-        const p2 = new THREE.Vector3(cosA * rGirdle, prongGirdleY, sinA * rGirdle);
-        const p3 = new THREE.Vector3(cosA * rTip, prongTipY, sinA * rTip);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, 0.36, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        // Rounded claw tip
-        const tipGeom = new THREE.SphereGeometry(0.38, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
+      if (this.currentCut === 'emerald-cut') {
+        this.buildEmeraldCutProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'oval') {
+        this.buildOvalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'pear') {
+        this.buildPearProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
+      } else {
+        this.buildRoundProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
       }
 
       this.headGroup.add(this.prongsMeshGroup);
       this.ringGroup.add(this.headGroup);
     }
 
+    buildRoundProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const prongCount = 6;
+      const crownH = stoneRadius * 0.34;
+      const collarRadius = stoneRadius * 0.72;
+
+      for (let i = 0; i < prongCount; i++) {
+        const ang = (i / prongCount) * Math.PI * 2 + Math.PI / 6;
+        const cosA = Math.cos(ang);
+        const sinA = Math.sin(ang);
+
+        const rBase = collarRadius * 0.90;
+        const p0 = new THREE.Vector3(cosA * rBase, collarY - 0.20, sinA * rBase);
+
+        const rMid = (rBase + stoneRadius) * 0.50 + prongRadius * 0.35;
+        const p1 = new THREE.Vector3(cosA * rMid, (collarY + girdleY) * 0.52, sinA * rMid);
+
+        const rGirdle = stoneRadius + prongRadius * 0.65;
+        const p2 = new THREE.Vector3(cosA * rGirdle, girdleY, sinA * rGirdle);
+
+        const rTip = stoneRadius - prongRadius * 0.28;
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(cosA * rTip, tipY, sinA * rTip);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        // Rounded claw tip securely clamping upper crown facet
+        const tipGeom = new THREE.SphereGeometry(tipRadius, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
+    buildOvalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const crownH = stoneRadius * 0.34;
+      const a = stoneRadius * 1.28;
+      const b = stoneRadius * 0.88;
+
+      const angles = [
+        Math.PI * 0.20,
+        Math.PI * 0.50,
+        Math.PI * 0.80,
+        Math.PI * 1.20,
+        Math.PI * 1.50,
+        Math.PI * 1.80
+      ];
+
+      for (let i = 0; i < angles.length; i++) {
+        const phi = angles[i];
+        const cosP = Math.cos(phi);
+        const sinP = Math.sin(phi);
+
+        const gx = a * cosP;
+        const gz = b * sinP;
+
+        const nxRaw = b * cosP;
+        const nzRaw = a * sinP;
+        const nLen = Math.sqrt(nxRaw * nxRaw + nzRaw * nzRaw) || 1;
+        const nx = nxRaw / nLen;
+        const nz = nzRaw / nLen;
+
+        const p0 = new THREE.Vector3(gx * 0.62, collarY - 0.20, gz * 0.62);
+        const p1 = new THREE.Vector3(gx * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, gz * 0.82 + nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(gx + nx * prongRadius * 0.65, girdleY, gz + nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(gx - nx * prongRadius * 0.28, tipY, gz - nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        const tipGeom = new THREE.SphereGeometry(tipRadius, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
+    buildEmeraldCutProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const w = 3.2 * scale;
+      const l = 4.2 * scale;
+      const gc = 0.8 * scale;
+      const crownH = 1.1 * scale;
+
+      const corners = [
+        { x: w - gc * 0.5, z: l - gc * 0.5 },
+        { x: -w + gc * 0.5, z: l - gc * 0.5 },
+        { x: -w + gc * 0.5, z: -l + gc * 0.5 },
+        { x: w - gc * 0.5, z: -l + gc * 0.5 }
+      ];
+
+      for (let i = 0; i < corners.length; i++) {
+        const c = corners[i];
+        const nx = Math.sign(c.x) * 0.7071;
+        const nz = Math.sign(c.z) * 0.7071;
+
+        const p0 = new THREE.Vector3(c.x * 0.60, collarY - 0.20, c.z * 0.60);
+        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(c.x + nx * prongRadius * 0.65, girdleY, c.z + nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(c.x - nx * prongRadius * 0.28, tipY, c.z - nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius * 1.08, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        // Classic French corner claw tab
+        const tipGeom = new THREE.SphereGeometry(tipRadius * 1.15, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(1.15, 0.70, 1.15);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
+    buildPearProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const crownH = stoneRadius * 0.34;
+      const r = stoneRadius;
+      const w = r * 0.95;
+
+      const pointsConfig = [
+        // Pointed Tip V-Prong
+        { x: 0, z: r * 1.25, nx: 0, nz: 1.0, isVTip: true },
+        // Upper Shoulders
+        { x: w * 0.72, z: r * 0.45, nx: 0.86, nz: 0.50 },
+        { x: -w * 0.72, z: r * 0.45, nx: -0.86, nz: 0.50 },
+        // Mid Belly
+        { x: w * 0.92, z: -r * 0.28, nx: 0.86, nz: -0.50 },
+        { x: -w * 0.92, z: -r * 0.28, nx: -0.86, nz: -0.50 },
+        // Rounded Bottom Lobe
+        { x: 0, z: -r * 0.95, nx: 0, nz: -1.0 }
+      ];
+
+      for (let i = 0; i < pointsConfig.length; i++) {
+        const pt = pointsConfig[i];
+        const p0 = new THREE.Vector3(pt.x * 0.62, collarY - 0.20, pt.z * 0.62);
+        const p1 = new THREE.Vector3(pt.x * 0.82 + pt.nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, pt.z * 0.82 + pt.nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(pt.x + pt.nx * prongRadius * 0.65, girdleY, pt.z + pt.nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(pt.x - pt.nx * prongRadius * 0.28, tipY, pt.z - pt.nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        const tipGeom = new THREE.SphereGeometry(pt.isVTip ? tipRadius * 1.25 : tipRadius, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(pt.isVTip ? 1.3 : 1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
     buildCenterGemstone() {
       if (this.centerGemGroup) {
         this.ringGroup.remove(this.centerGemGroup);
+        this.centerGemGroup.traverse(child => {
+          if (child.isMesh && child.geometry) child.geometry.dispose();
+        });
       }
 
       this.centerGemGroup = new THREE.Group();
 
+      const scale = this.getCaratScale(this.currentCarat);
       const baseRadius = 3.55;
+      const stoneRadius = baseRadius * scale;
       let geom;
 
       if (this.currentCut === 'emerald-cut') {
-        geom = this.createEmeraldCutGeometry(baseRadius * 0.9, baseRadius * 1.2);
+        geom = this.createEmeraldCutGeometry(3.2 * scale, 4.2 * scale);
       } else if (this.currentCut === 'oval') {
-        geom = this.createOvalCutGeometry(baseRadius);
+        geom = this.createOvalCutGeometry(stoneRadius);
       } else if (this.currentCut === 'pear') {
-        geom = this.createPearCutGeometry(baseRadius);
+        geom = this.createPearCutGeometry(stoneRadius);
       } else {
-        geom = this.createRoundBrilliantGeometry(baseRadius);
+        geom = this.createRoundBrilliantGeometry(stoneRadius);
       }
 
       const gemMesh = new THREE.Mesh(geom, this.materials.gem);
@@ -1539,11 +1740,8 @@ Could we schedule a private atelier consultation to commission this creation?`;
       const wire = new THREE.LineSegments(edgesGeom, this.materials.wire);
       this.centerGemGroup.add(wire);
 
-      this.centerGemGroup.position.y = 14.1;
-
-      // Carat scale
-      const caratScale = Math.sqrt(this.currentCarat / 2.5);
-      this.centerGemGroup.scale.set(caratScale, caratScale, caratScale);
+      const girdleY = 14.1 + (scale - 1.0) * 1.25;
+      this.centerGemGroup.position.set(0, girdleY, 0);
 
       this.ringGroup.add(this.centerGemGroup);
     }
@@ -1670,8 +1868,9 @@ Could we schedule a private atelier consultation to commission this creation?`;
     }
 
     createEmeraldCutGeometry(w = 3.2, l = 4.2) {
-      const hCrown = 1.1;
-      const hPav = 2.8;
+      const sRef = w / 3.2;
+      const hCrown = 1.1 * sRef;
+      const hPav = 2.8 * sRef;
       const yTable = hCrown;
       const yGirdle = 0;
       const yCulet = -hPav;
@@ -1683,7 +1882,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
 
       const tw = w * 0.6;
       const tl = l * 0.6;
-      const tc = 0.5;
+      const tc = 0.5 * sRef;
       const tablePts = [
         { x: -tw + tc, y: yTable, z: -tl },
         { x: tw - tc, y: yTable, z: -tl },
@@ -1695,7 +1894,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
         { x: -tw, y: yTable, z: -tl + tc }
       ];
 
-      const gc = 0.8;
+      const gc = 0.8 * sRef;
       const girdlePts = [
         { x: -w + gc, y: yGirdle, z: -l },
         { x: w - gc, y: yGirdle, z: -l },
@@ -1815,14 +2014,15 @@ Could we schedule a private atelier consultation to commission this creation?`;
     setCut(cutId) {
       this.currentCut = cutId;
       this.buildCenterGemstone();
+      this.buildSettingHead();
+      this.setMetal(this.currentMetal);
     }
 
     setCarat(caratVal) {
       this.currentCarat = parseFloat(caratVal) || 2.5;
-      if (this.centerGemGroup) {
-        const caratScale = Math.sqrt(this.currentCarat / 2.5);
-        this.centerGemGroup.scale.set(caratScale, caratScale, caratScale);
-      }
+      this.buildCenterGemstone();
+      this.buildSettingHead();
+      this.setMetal(this.currentMetal);
     }
 
     onResize() {
