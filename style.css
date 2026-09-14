@@ -231,22 +231,22 @@ body {
   border-bottom: 1px solid var(--border-gold-medium);
 }
 
-/* Dropdown Mega-Menu */
+/* Dropdown Mega-Menu (Dedicated Full-Width Desktop Luxury Ceiling Panel) */
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  width: 820px;
-  max-width: 95vw;
-  background: #FAF9F5;
-  border: 1px solid rgba(197, 166, 116, 0.35);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(42, 34, 28, 0.18), 0 0 30px rgba(197, 166, 116, 0.08);
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #FAF9F5 !important;
+  border-top: 1px solid rgba(197, 166, 116, 0.25);
+  border-bottom: 1px solid rgba(197, 166, 116, 0.35);
+  box-shadow: 0 30px 60px -15px rgba(29, 24, 21, 0.18), 0 0 30px rgba(197, 166, 116, 0.08);
   opacity: 0;
   visibility: hidden;
+  transform: translateY(6px);
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
-  z-index: 50;
+  z-index: 100;
   pointer-events: none;
 }
 .dropdown-menu::before {
@@ -260,7 +260,7 @@ body {
 .dropdown-group:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 

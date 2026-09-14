@@ -54,7 +54,7 @@
   </div>
 
   <!-- MAIN NAVIGATION HEADER -->
-  <header class="sticky top-0 z-40 bg-[#FAF9F5]/95 backdrop-blur-md border-b border-[#C5A674]/25 transition-all">
+  <header class="sticky relative top-0 z-50 bg-[#FAF9F5]/95 backdrop-blur-md border-b border-[#C5A674]/25 transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
       
       <div class="flex items-center gap-4">
@@ -84,51 +84,124 @@
         <a href="/" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Home</a>
         
         <!-- Jewellery Category Dropdown -->
-        <div class="relative dropdown-group py-3">
+        <div class="dropdown-group py-3">
           <a href="/shop" class="flex items-center gap-1 hover:text-[#8A6B38] transition-colors">
-            <span>Catalogue (Shop)</span>
+            <span>Catalogue</span>
             <svg class="w-3 h-3 text-[#C5A674]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </a>
 
+          <!-- Dropdown Mega Menu Panel (Full-Width Ceiling Panel) -->
           <div class="dropdown-menu">
-            <div class="p-8 grid grid-cols-12 gap-6 text-left">
-              <div class="col-span-4 space-y-3 border-r border-[#C5A674]/20 pr-4">
-                <p class="text-[10px] tracking-[0.25em] uppercase text-[#8A6B38] font-semibold whitespace-nowrap">The 5 Collections</p>
-                <ul class="space-y-2 text-xs normal-case tracking-normal font-normal text-[#766B5E]">
-                  <li><a href="/shop/rings" class="hover:text-[#1D1815] transition-colors block py-1 font-medium whitespace-nowrap">Rings & Solitaires (10 Pieces)</a></li>
-                  <li><a href="/shop/earrings" class="hover:text-[#1D1815] transition-colors block py-1 font-medium whitespace-nowrap">Earrings & Drops (10 Pieces)</a></li>
-                  <li><a href="/shop/bracelets" class="hover:text-[#1D1815] transition-colors block py-1 font-medium whitespace-nowrap">Bracelets & Cuffs (10 Pieces)</a></li>
-                  <li><a href="/shop/necklaces" class="hover:text-[#1D1815] transition-colors block py-1 font-medium whitespace-nowrap">Necklaces & Collars (10 Pieces)</a></li>
-                  <li><a href="/shop/brooches" class="hover:text-[#1D1815] transition-colors block py-1 font-medium whitespace-nowrap">Haute Brooches & Pins (10 Pieces)</a></li>
-                </ul>
-              </div>
-
-              <div class="col-span-3 space-y-3 border-r border-[#C5A674]/20 pr-4">
-                <p class="text-[10px] tracking-[0.25em] uppercase text-[#8A6B38] font-semibold whitespace-nowrap">Curated Salons</p>
-                <ul class="space-y-2 text-xs normal-case tracking-normal font-normal text-[#766B5E]">
-                  <li><a href="/#silver" class="hover:text-[#1D1815] transition-colors block py-1 font-medium text-[#8A6B38] whitespace-nowrap">The 925 Silver Edit</a></li>
-                  <li><a href="/#couples" class="hover:text-[#1D1815] transition-colors block py-1 whitespace-nowrap">Newlywed Sanctuary</a></li>
-                  <li><a href="/#bespoke-studio" class="hover:text-[#1D1815] transition-colors block py-1 whitespace-nowrap">3D Bespoke Studio</a></li>
-                  <li><a href="/shop" class="hover:text-[#1D1815] transition-colors block py-1 font-semibold text-[#1D1815] whitespace-nowrap">View Entire 50 Pieces →</a></li>
-                </ul>
-              </div>
-
-              <div class="col-span-5 flex flex-col justify-between bg-white p-5 rounded-xl border border-[#C5A674]/25 shadow-sm">
-                <div class="flex gap-4 items-center">
-                  <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg border border-[#C5A674]/20">
-                    <img src="/images/jewelux_editorial_hero.jpg" alt="House of Jewelux Editorial" class="w-full h-full object-cover">
-                  </div>
-                  <div class="space-y-1 text-left">
-                    <span class="text-[9px] tracking-[0.25em] uppercase text-[#8A6B38] font-semibold">Haute Joaillerie 2026</span>
-                    <h4 class="font-serif text-base text-[#1D1815] font-normal leading-snug">Where Italian Elegance Becomes Eternal</h4>
-                    <p class="text-[10px] text-[#766B5E] font-sans font-light leading-relaxed">Solid 925 fine silver and champagne gold masterpieces.</p>
+            <div class="max-w-7xl mx-auto px-6 sm:px-8 py-10">
+              <div class="grid grid-cols-12 gap-8 lg:gap-10 items-stretch">
+                
+                <!-- COLUMN 1 — THE 5 COLLECTIONS -->
+                <div class="col-span-4 space-y-4 border-r border-[#C5A674]/25 pr-6 text-left">
+                  <p class="text-[10px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold">THE 5 COLLECTIONS</p>
+                  <ul class="space-y-3 font-sans">
+                    <li>
+                      <a href="/shop/rings" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Rings & Solitaires</span>
+                        <span class="text-[10px] text-[#9E9386] tracking-wider uppercase font-light whitespace-nowrap">10 Pieces</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/shop/earrings" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Earrings & Drops</span>
+                        <span class="text-[10px] text-[#9E9386] tracking-wider uppercase font-light whitespace-nowrap">10 Pieces</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/shop/bracelets" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Bracelets & Cuffs</span>
+                        <span class="text-[10px] text-[#9E9386] tracking-wider uppercase font-light whitespace-nowrap">10 Pieces</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/shop/necklaces" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Necklaces & Collars</span>
+                        <span class="text-[10px] text-[#9E9386] tracking-wider uppercase font-light whitespace-nowrap">10 Pieces</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/shop/brooches" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Haute Brooches & Pins</span>
+                        <span class="text-[10px] text-[#9E9386] tracking-wider uppercase font-light whitespace-nowrap">10 Pieces</span>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="pt-2">
+                    <a href="/shop" class="inline-flex items-center gap-1.5 text-[10px] tracking-[0.2em] uppercase font-semibold text-[#8A6B38] hover:text-[#1D1815] transition-colors">
+                      <span>View Complete 50-Piece Catalogue</span>
+                      <span>→</span>
+                    </a>
                   </div>
                 </div>
-                <a href="/shop" class="btn-luxury-primary w-full py-2.5 text-center text-[9px] mt-4 tracking-widest uppercase">
-                  Explore 50-Piece Catalogue →
-                </a>
+
+                <!-- COLUMN 2 — EXCLUSIVE EDITS -->
+                <div class="col-span-4 space-y-4 border-r border-[#C5A674]/25 pr-6 text-left">
+                  <p class="text-[10px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold">EXCLUSIVE EDITS</p>
+                  <ul class="space-y-3.5 font-sans">
+                    <li>
+                      <a href="/#temple" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Sacred Temple Jewellery</span>
+                        <span class="text-[10px] text-[#C5A674] tracking-wider uppercase font-medium whitespace-nowrap">Heirloom</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/#silver" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <div>
+                          <span class="font-medium text-sm text-[#8A6B38] group-hover/item:text-[#1D1815] transition-colors block whitespace-nowrap">The Silver Edit</span>
+                          <span class="text-[10px] text-[#766B5E] block font-light whitespace-nowrap">925 Sterling</span>
+                        </div>
+                        <span class="text-[10px] text-[#10B981] tracking-wider uppercase font-medium whitespace-nowrap">✓ Rhodium</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/#bespoke-studio" class="group/item flex items-line justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <div>
+                          <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors block whitespace-nowrap">Interactive Bespoke Studio</span>
+                          <span class="text-[10px] text-[#766B5E] block font-light whitespace-nowrap">3D Goldsmith Workbench</span>
+                        </div>
+                        <span class="text-[10px] text-[#8A6B38] tracking-wider uppercase font-medium whitespace-nowrap">Realtime</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/#best-sellers" class="group/item flex items-baseline justify-between py-1 border-b border-transparent hover:border-[#C5A674]/30 transition-all">
+                        <span class="font-medium text-sm text-[#1D1815] group-hover/item:text-[#8A6B38] transition-colors whitespace-nowrap">Most Coveted Masterpieces</span>
+                        <span class="text-[10px] text-[#9E9386] tracking-wider uppercase font-light whitespace-nowrap">Iconic</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- COLUMN 3 — FEATURED COLLECTION -->
+                <div class="col-span-4 flex flex-col justify-between bg-white p-6 rounded-2xl border border-[#C5A674]/30 shadow-sm text-left">
+                  <div>
+                    <div class="flex gap-4 items-center mb-4">
+                      <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-xl border border-[#C5A674]/25 shadow-sm">
+                        <img src="/images/jewelux_editorial_hero.jpg" alt="House of Jewelux Haute Joaillerie 2026" class="w-full h-full object-cover">
+                      </div>
+                      <div class="space-y-1 text-left">
+                        <span class="text-[9px] tracking-[0.28em] uppercase text-[#8A6B38] font-semibold block whitespace-nowrap">HAUTE JOAILLERIE 2026</span>
+                        <h4 class="font-display text-sm sm:text-base text-[#1D1815] font-normal leading-snug tracking-wider">
+                          WHERE ITALIAN<br>ELEGANCE<br>BECOMES<br>ETERNAL
+                        </h4>
+                      </div>
+                    </div>
+                    <p class="text-xs text-[#766B5E] font-sans font-light leading-relaxed">
+                      Explore the 2026 parures sculpted with rare Muzo emeralds, Ceylon sapphires, and D-Flawless diamonds.
+                    </p>
+                  </div>
+                  <div class="pt-4 mt-4 border-t border-[#F4F1EA]">
+                    <a href="/shop" class="btn-luxury-primary w-full py-3 text-center text-[10px] tracking-[0.2em] uppercase whitespace-nowrap">
+                      DISCOVER COLLECTIONS →
+                    </a>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
