@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'earrings': 'earrings',
       'necklaces': 'necklaces',
       'bracelets': 'bracelets',
-      'bangles': 'bangles',
+      'brooches': 'brooches',
       'temple': 'temple',
       'gold-vault': 'gold-vault',
       'new-arrivals': 'new-arrivals',
@@ -341,16 +341,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function renderCategoryPageView() {
+    const container = document.getElementById('category-product-grid');
+    if (!container) return;
+    const cards = container.querySelectorAll('.product-card');
+    cards.forEach(card => {
+      const prodId = card.getAttribute('data-product-id');
+      const prod = STORE.products.find(p => p.id === prodId);
+      if (prod) {
+        const priceEl = card.querySelector('.font-sans');
+        if (priceEl) priceEl.textContent = formatPrice(prod.priceUSD);
+      }
+    });
+  }
+
   function renderAllProductGrids() {
     renderHomeSilverShowcase();
     renderShopView();
+    renderCategoryPageView();
   }
 
   window.navigateToProduct = (id) => {
-    window.location.hash = `#product-${id}`;
+    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+      window.location.href = `/#product-${id}`;
+    } else {
+      window.location.hash = `#product-${id}`;
+    }
   };
   window.openProductPage = (id) => {
-    window.location.hash = `#product-${id}`;
+    window.navigateToProduct(id);
+  };
+
+  window.filterShopCategory = (cat) => {
+    state.activeCategory = cat;
+    renderShopView();
+    // Also highlight button in filter bar
+    document.querySelectorAll('[data-cat-pill]').forEach(btn => {
+      const pill = btn.getAttribute('data-cat-pill');
+      if (pill === cat) {
+        btn.classList.add('bg-[#1D1815]', 'text-white');
+        btn.classList.remove('bg-white', 'text-[#766B5E]');
+      } else {
+        btn.classList.remove('bg-[#1D1815]', 'text-white');
+        btn.classList.add('bg-white', 'text-[#766B5E]');
+      }
+    });
   };
 
   window.handleSortChange = (sortVal) => {
