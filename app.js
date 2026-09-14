@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="relative product-image-container aspect-square overflow-hidden cursor-pointer" onclick="openProductPage('${product.id}')">
           <!-- Badge -->
           <div class="absolute top-3 left-3 z-10">
-            <span class="px-2.5 py-1 text-[9px] uppercase font-semibold tracking-widest bg-white/95 text-[#8F6E3B] border border-[#C5A674]/30 rounded-full shadow-sm">
+            <span class="px-2.5 py-1 text-[9px] uppercase font-semibold tracking-widest bg-white/95 text-[#8A6B38] border border-[#C5A674]/30 rounded-full shadow-sm">
               ${product.badge}
             </span>
           </div>
@@ -180,11 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Wishlist Toggle -->
           <button 
             onclick="event.stopPropagation(); toggleWishlist('${product.id}')"
-            class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/85 hover:bg-white text-[#2A221C] flex items-center justify-center transition-all duration-300 shadow-sm hover:scale-110"
+            class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/85 hover:bg-white text-[#1D1815] flex items-center justify-center transition-all duration-300 shadow-sm hover:scale-110"
             title="${isWishlisted ? 'Remove from Wishlist' : 'Save to Wishlist'}"
             aria-label="Toggle Wishlist"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ${isWishlisted ? 'fill-[#BE123C] text-[#BE123C]' : 'text-[#756A5E]'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ${isWishlisted ? 'fill-[#BE123C] text-[#BE123C]' : 'text-[#766B5E]'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
             </svg>
           </button>
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="absolute bottom-3 inset-x-3 opacity-0 group-hover:opacity-100 transition-all duration-300 flex justify-center">
             <button 
               onclick="event.stopPropagation(); openQuickView('${product.id}')"
-              class="px-3.5 py-1.5 text-[10px] tracking-widest uppercase bg-white/95 text-[#2A221C] hover:bg-[#2A221C] hover:text-white rounded border border-[#C5A674]/40 shadow-sm transition"
+              class="px-3.5 py-1.5 text-[10px] tracking-widest uppercase bg-white/95 text-[#1D1815] hover:bg-[#1D1815] hover:text-white rounded border border-[#C5A674]/40 shadow-sm transition"
             >
               Quick Inspect
             </button>
@@ -217,21 +217,21 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Card Body -->
         <div class="p-5 flex flex-col flex-grow justify-between bg-white">
           <div>
-            <p class="text-[10px] uppercase tracking-widest text-[#8F6E3B] font-semibold mb-1">${product.metal}</p>
-            <h4 onclick="openProductPage('${product.id}')" class="font-display text-base sm:text-lg text-[#2A221C] font-normal leading-snug cursor-pointer hover:text-[#8F6E3B] transition-colors">
+            <p class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-1">${product.metal}</p>
+            <h4 onclick="openProductPage('${product.id}')" class="font-display text-base sm:text-lg text-[#1D1815] font-normal leading-snug cursor-pointer hover:text-[#8A6B38] transition-colors">
               ${product.name}
             </h4>
-            <p class="text-[11px] text-[#756A5E] font-sans font-light mt-1 line-clamp-1">${product.stone}</p>
+            <p class="text-[11px] text-[#766B5E] font-sans font-light mt-1 line-clamp-1">${product.stone}</p>
           </div>
 
-          <div class="mt-4 pt-3 border-t border-[#F5F0E6] flex items-center justify-between">
+          <div class="mt-4 pt-3 border-t border-[#F4F1EA] flex items-center justify-between">
             <div>
-              <span class="text-[9px] text-[#A4988B] block uppercase tracking-wider">Acquisition</span>
-              <span class="font-display text-lg font-semibold text-[#2A221C]">${formatPrice(product.priceUSD)}</span>
+              <span class="text-[9px] text-[#9E9386] block uppercase tracking-wider">Acquisition</span>
+              <span class="font-display text-lg font-semibold text-[#1D1815]">${formatPrice(product.priceUSD)}</span>
             </div>
             <button 
               onclick="addToCart('${product.id}')" 
-              class="px-3.5 py-2 bg-[#FAF8F5] hover:bg-[#2A221C] text-[#2A221C] hover:text-white border border-[#C5A674]/40 rounded text-[10px] tracking-wider uppercase font-medium transition flex items-center gap-1.5"
+              class="px-3.5 py-2 bg-[#FAF9F5] hover:bg-[#1D1815] text-[#1D1815] hover:text-white border border-[#C5A674]/40 rounded text-[10px] tracking-wider uppercase font-medium transition flex items-center gap-1.5"
               title="Add to Shopping Bag"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -283,10 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (products.length === 0) {
       container.innerHTML = `
-        <div class="col-span-full py-16 text-center text-[#756A5E]">
+        <div class="col-span-full py-16 text-center text-[#766B5E]">
           <span class="star-emblem text-2xl block mb-2">✦</span>
-          <p class="font-display text-xl text-[#2A221C]">No Masterpieces in this Selection</p>
-          <p class="text-xs text-[#A4988B] mt-1">Our Bespoke Atelier can handcraft this creation to your exact gemological criteria.</p>
+          <p class="font-display text-xl text-[#1D1815]">No Masterpieces in this Selection</p>
+          <p class="text-xs text-[#9E9386] mt-1">Our Bespoke Atelier can handcraft this creation to your exact gemological criteria.</p>
           <button onclick="openAppointmentModal('Bespoke inquiry for ' + '${state.activeCategory}')" class="btn-luxury-primary py-2.5 px-6 text-[10px] mt-4">
             Commission Custom Creation
           </button>
@@ -347,8 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
           onclick="setShopCategory('${cat.id}')"
           class="px-4 py-1.5 text-xs tracking-wider uppercase font-medium transition-all rounded-full border ${
             isActive 
-              ? 'bg-[#2A221C] text-white border-[#2A221C] shadow-sm' 
-              : 'bg-white text-[#756A5E] border-[#C5A674]/30 hover:border-[#8F6E3B] hover:text-[#2A221C]'
+              ? 'bg-[#1D1815] text-white border-[#1D1815] shadow-sm' 
+              : 'bg-white text-[#766B5E] border-[#C5A674]/30 hover:border-[#8A6B38] hover:text-[#1D1815]'
           }"
         >
           ${cat.name}
@@ -393,10 +393,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="p-6 space-y-3 bg-white flex-grow flex flex-col justify-between">
-            <p class="font-serif text-sm text-[#756A5E] italic leading-relaxed">"${col.tagline}"</p>
-            <p class="text-xs text-[#756A5E] font-light leading-relaxed">${col.description}</p>
+            <p class="font-serif text-sm text-[#766B5E] italic leading-relaxed">"${col.tagline}"</p>
+            <p class="text-xs text-[#766B5E] font-light leading-relaxed">${col.description}</p>
             <div class="pt-2">
-              <button onclick="navigateToCategory('${col.category}')" class="text-[10px] uppercase tracking-[0.2em] text-[#8F6E3B] font-semibold hover:text-[#2A221C] transition-colors flex items-center gap-1.5">
+              <button onclick="navigateToCategory('${col.category}')" class="text-[10px] uppercase tracking-[0.2em] text-[#8A6B38] font-semibold hover:text-[#1D1815] transition-colors flex items-center gap-1.5">
                 <span>Explore Line</span>
                 <span>→</span>
               </button>
@@ -417,10 +417,10 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${col.image}" alt="${col.name}" class="w-full h-full object-cover">
             </div>
             <div class="lg:col-span-5 ${isReverse ? 'lg:order-1' : ''} space-y-4">
-              <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold">Collection 0${idx + 1}</span>
-              <h3 class="font-display text-3xl text-[#2A221C] font-light">${col.name}</h3>
-              <p class="font-serif text-base text-[#8F6E3B] italic">"${col.tagline}"</p>
-              <p class="text-xs sm:text-sm text-[#756A5E] font-light leading-relaxed">${col.description}</p>
+              <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold">Collection 0${idx + 1}</span>
+              <h3 class="font-display text-3xl text-[#1D1815] font-light">${col.name}</h3>
+              <p class="font-serif text-base text-[#8A6B38] italic">"${col.tagline}"</p>
+              <p class="text-xs sm:text-sm text-[#766B5E] font-light leading-relaxed">${col.description}</p>
               <div class="pt-2">
                 <button onclick="navigateToCategory('${col.category}')" class="btn-luxury-primary py-3 px-6 text-[10px]">
                   Shop ${col.name}
@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
       thumbContainer.innerHTML = gallery.map((imgUrl, i) => `
         <button 
           onclick="setPDPMainImage('${imgUrl}', this)" 
-          class="w-16 h-16 rounded border ${i === 0 ? 'border-[#C5A674] ring-2 ring-[#C5A674]/30' : 'border-[#E8E2D5]'} overflow-hidden flex-shrink-0 bg-[#FAF8F5] transition"
+          class="w-16 h-16 rounded border ${i === 0 ? 'border-[#C5A674] ring-2 ring-[#C5A674]/30' : 'border-[#E8E3D8]'} overflow-hidden flex-shrink-0 bg-[#FAF9F5] transition"
         >
           <img src="${imgUrl}" alt="${product.name} Thumbnail" class="w-full h-full object-cover">
         </button>
@@ -512,9 +512,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnEl && btnEl.parentElement) {
       Array.from(btnEl.parentElement.children).forEach(child => {
-        child.className = 'w-16 h-16 rounded border border-[#E8E2D5] overflow-hidden flex-shrink-0 bg-[#FAF8F5] transition';
+        child.className = 'w-16 h-16 rounded border border-[#E8E3D8] overflow-hidden flex-shrink-0 bg-[#FAF9F5] transition';
       });
-      btnEl.className = 'w-16 h-16 rounded border border-[#C5A674] ring-2 ring-[#C5A674]/30 overflow-hidden flex-shrink-0 bg-[#FAF8F5] transition';
+      btnEl.className = 'w-16 h-16 rounded border border-[#C5A674] ring-2 ring-[#C5A674]/30 overflow-hidden flex-shrink-0 bg-[#FAF9F5] transition';
     }
   };
 
@@ -577,9 +577,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="md:col-span-6 ${isEven ? 'md:order-1' : ''} space-y-3">
             <span class="font-display text-4xl text-[#C5A674]/60 font-light block">${step.step}</span>
-            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block">${step.subtitle}</span>
-            <h3 class="font-display text-2xl text-[#2A221C] font-normal">${step.title}</h3>
-            <p class="font-serif text-base text-[#756A5E] font-light leading-relaxed">${step.desc}</p>
+            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block">${step.subtitle}</span>
+            <h3 class="font-display text-2xl text-[#1D1815] font-normal">${step.title}</h3>
+            <p class="font-serif text-base text-[#766B5E] font-light leading-relaxed">${step.desc}</p>
           </div>
         </div>
       `;
@@ -592,11 +592,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = JEWELUX_DATA.faqs.map(faq => `
       <div class="accordion-item border border-[#C5A674]/30 rounded-lg bg-white overflow-hidden shadow-sm">
-        <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-4 text-left flex items-center justify-between font-display text-sm sm:text-base text-[#2A221C]">
+        <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-4 text-left flex items-center justify-between font-display text-sm sm:text-base text-[#1D1815]">
           <span>${faq.q}</span>
           <span class="accordion-icon text-xl text-[#C5A674]">+</span>
         </button>
-        <div class="accordion-content px-6 py-4 text-xs sm:text-sm text-[#756A5E] border-t border-[#F5F0E6] bg-[#FAF8F5] leading-relaxed">
+        <div class="accordion-content px-6 py-4 text-xs sm:text-sm text-[#766B5E] border-t border-[#F4F1EA] bg-[#FAF9F5] leading-relaxed">
           <p>${faq.a}</p>
         </div>
       </div>
@@ -609,11 +609,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = JEWELUX_DATA.boutiques.map(b => `
       <div class="p-5 bg-white rounded-lg border border-[#C5A674]/25 shadow-sm space-y-2">
-        <h4 class="font-display text-base text-[#2A221C] font-medium">${b.city}</h4>
-        <p class="text-xs text-[#756A5E] font-light">${b.address}</p>
-        <p class="text-xs text-[#8F6E3B] font-medium font-sans">${b.phone}</p>
-        <p class="text-[10px] text-[#A4988B]">${b.hours}</p>
-        <button onclick="openAppointmentModal('Appointment request for ${b.city}')" class="text-[10px] uppercase tracking-wider text-[#8F6E3B] font-semibold underline underline-offset-4 hover:text-[#2A221C] pt-1 block">
+        <h4 class="font-display text-base text-[#1D1815] font-medium">${b.city}</h4>
+        <p class="text-xs text-[#766B5E] font-light">${b.address}</p>
+        <p class="text-xs text-[#8A6B38] font-medium font-sans">${b.phone}</p>
+        <p class="text-[10px] text-[#9E9386]">${b.hours}</p>
+        <button onclick="openAppointmentModal('Appointment request for ${b.city}')" class="text-[10px] uppercase tracking-wider text-[#8A6B38] font-semibold underline underline-offset-4 hover:text-[#1D1815] pt-1 block">
           Schedule Appointment Here →
         </button>
       </div>
@@ -649,17 +649,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-bespoke-gem]').forEach(el => {
       const match = el.dataset.bespokeGem === state.bespoke.gemId;
       el.classList.toggle('border-[#C5A674]', match);
-      el.classList.toggle('bg-[#F5F0E6]', match);
+      el.classList.toggle('bg-[#F4F1EA]', match);
     });
     document.querySelectorAll('[data-bespoke-cut]').forEach(el => {
       const match = el.dataset.bespokeCut === state.bespoke.cutId;
       el.classList.toggle('border-[#C5A674]', match);
-      el.classList.toggle('bg-[#F5F0E6]', match);
+      el.classList.toggle('bg-[#F4F1EA]', match);
     });
     document.querySelectorAll('[data-bespoke-carat]').forEach(el => {
       const match = parseFloat(el.dataset.bespokeCarat) === state.bespoke.caratWeight;
       el.classList.toggle('border-[#C5A674]', match);
-      el.classList.toggle('bg-[#F5F0E6]', match);
+      el.classList.toggle('bg-[#F4F1EA]', match);
     });
 
     updateBespokePrice();
@@ -868,10 +868,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.cart.length === 0) {
       container.innerHTML = `
-        <div class="py-16 text-center text-[#756A5E]">
+        <div class="py-16 text-center text-[#766B5E]">
           <span class="star-emblem text-2xl block mb-2">✦</span>
-          <p class="font-display text-lg text-[#2A221C]">Your Shopping Bag is Empty</p>
-          <p class="text-xs text-[#A4988B] mt-1">Discover our certified creations to begin your collection.</p>
+          <p class="font-display text-lg text-[#1D1815]">Your Shopping Bag is Empty</p>
+          <p class="text-xs text-[#9E9386] mt-1">Discover our certified creations to begin your collection.</p>
         </div>
       `;
       if (subtotalEl) subtotalEl.textContent = formatPrice(0);
@@ -887,17 +887,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = state.cart.map(item => `
       <div class="flex gap-4 py-4 items-center">
-        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded bg-[#FAF8F5] border border-[#E8E2D5] flex-shrink-0">
+        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded bg-[#FAF9F5] border border-[#E8E3D8] flex-shrink-0">
         <div class="flex-grow min-w-0">
-          <h4 class="font-display text-[#2A221C] text-sm truncate">${item.name}</h4>
-          <p class="text-[10px] text-[#8F6E3B] truncate">${item.metal} ${item.size ? '• ' + item.size : ''}</p>
-          <p class="font-semibold text-[#2A221C] text-xs mt-1">${formatPrice(item.priceUSD)}</p>
+          <h4 class="font-display text-[#1D1815] text-sm truncate">${item.name}</h4>
+          <p class="text-[10px] text-[#8A6B38] truncate">${item.metal} ${item.size ? '• ' + item.size : ''}</p>
+          <p class="font-semibold text-[#1D1815] text-xs mt-1">${formatPrice(item.priceUSD)}</p>
           
           <div class="flex items-center gap-2 mt-2">
-            <button onclick="updateCartQuantity('${item.id}', -1)" class="w-5 h-5 rounded border border-[#C5A674]/40 text-[#2A221C] flex items-center justify-center text-xs hover:bg-[#F5F0E6]">-</button>
-            <span class="text-xs text-[#2A221C] font-medium px-1">${item.quantity}</span>
-            <button onclick="updateCartQuantity('${item.id}', 1)" class="w-5 h-5 rounded border border-[#C5A674]/40 text-[#2A221C] flex items-center justify-center text-xs hover:bg-[#F5F0E6]">+</button>
-            <button onclick="removeFromCart('${item.id}')" class="text-[10px] text-[#A4988B] hover:text-[#BE123C] ml-auto underline">Remove</button>
+            <button onclick="updateCartQuantity('${item.id}', -1)" class="w-5 h-5 rounded border border-[#C5A674]/40 text-[#1D1815] flex items-center justify-center text-xs hover:bg-[#F4F1EA]">-</button>
+            <span class="text-xs text-[#1D1815] font-medium px-1">${item.quantity}</span>
+            <button onclick="updateCartQuantity('${item.id}', 1)" class="w-5 h-5 rounded border border-[#C5A674]/40 text-[#1D1815] flex items-center justify-center text-xs hover:bg-[#F4F1EA]">+</button>
+            <button onclick="removeFromCart('${item.id}')" class="text-[10px] text-[#9E9386] hover:text-[#BE123C] ml-auto underline">Remove</button>
           </div>
         </div>
       </div>
@@ -951,10 +951,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.wishlist.length === 0) {
       container.innerHTML = `
-        <div class="py-16 text-center text-[#756A5E]">
+        <div class="py-16 text-center text-[#766B5E]">
           <span class="star-emblem text-2xl block mb-2">✦</span>
-          <p class="font-display text-lg text-[#2A221C]">Your Wishlist is Empty</p>
-          <p class="text-xs text-[#A4988B] mt-1">Save pieces you cherish while exploring our archives.</p>
+          <p class="font-display text-lg text-[#1D1815]">Your Wishlist is Empty</p>
+          <p class="text-xs text-[#9E9386] mt-1">Save pieces you cherish while exploring our archives.</p>
         </div>
       `;
       return;
@@ -963,15 +963,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = JEWELUX_DATA.products.filter(p => state.wishlist.includes(p.id));
     container.innerHTML = items.map(product => `
       <div class="flex gap-4 py-4 items-center">
-        <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded bg-[#FAF8F5] border border-[#E8E2D5] flex-shrink-0">
+        <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded bg-[#FAF9F5] border border-[#E8E3D8] flex-shrink-0">
         <div class="flex-grow min-w-0">
-          <h4 class="font-display text-[#2A221C] text-sm truncate">${product.name}</h4>
-          <p class="text-[10px] text-[#8F6E3B] truncate">${product.metal}</p>
-          <p class="font-semibold text-[#2A221C] text-xs mt-1">${formatPrice(product.priceUSD)}</p>
+          <h4 class="font-display text-[#1D1815] text-sm truncate">${product.name}</h4>
+          <p class="text-[10px] text-[#8A6B38] truncate">${product.metal}</p>
+          <p class="font-semibold text-[#1D1815] text-xs mt-1">${formatPrice(product.priceUSD)}</p>
           
           <div class="flex items-center gap-2 mt-2">
-            <button onclick="addToCart('${product.id}'); toggleWishlist('${product.id}');" class="px-2.5 py-1 bg-[#2A221C] text-white text-[10px] uppercase tracking-wider rounded">Move to Bag</button>
-            <button onclick="toggleWishlist('${product.id}')" class="text-[10px] text-[#A4988B] hover:text-[#BE123C] ml-auto underline">Remove</button>
+            <button onclick="addToCart('${product.id}'); toggleWishlist('${product.id}');" class="px-2.5 py-1 bg-[#1D1815] text-white text-[10px] uppercase tracking-wider rounded">Move to Bag</button>
+            <button onclick="toggleWishlist('${product.id}')" class="text-[10px] text-[#9E9386] hover:text-[#BE123C] ml-auto underline">Remove</button>
           </div>
         </div>
       </div>
@@ -1142,7 +1142,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!query) {
       searchResults.innerHTML = `
-        <div class="p-6 text-center text-[#756A5E] text-xs">
+        <div class="p-6 text-center text-[#766B5E] text-xs">
           Search diamonds, emeralds, solitaires, tennis bracelets, temple jewellery...
         </div>
       `;
@@ -1160,9 +1160,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (matches.length === 0) {
       searchResults.innerHTML = `
-        <div class="p-8 text-center text-[#756A5E]">
-          <p class="font-display text-base text-[#2A221C]">No pieces found for "${query}"</p>
-          <p class="text-xs text-[#A4988B] mt-1">Our Bespoke Atelier can handcraft any design to your exact specification.</p>
+        <div class="p-8 text-center text-[#766B5E]">
+          <p class="font-display text-base text-[#1D1815]">No pieces found for "${query}"</p>
+          <p class="text-xs text-[#9E9386] mt-1">Our Bespoke Atelier can handcraft any design to your exact specification.</p>
           <button onclick="closeSearchModal(); openAppointmentModal('Custom creation inquiry for ' + '${query}')" class="mt-3 btn-luxury-primary py-2 px-4 text-[10px]">
             Request Bespoke Design
           </button>
@@ -1172,12 +1172,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     searchResults.innerHTML = matches.map(p => `
-      <div class="flex items-center gap-4 p-3 hover:bg-[#FAF8F5] rounded cursor-pointer transition" onclick="closeSearchModal(); openProductPage('${p.id}')">
-        <img src="${p.image}" alt="${p.name}" class="w-14 h-14 object-cover rounded bg-[#FAF8F5] border border-[#E8E2D5]">
+      <div class="flex items-center gap-4 p-3 hover:bg-[#FAF9F5] rounded cursor-pointer transition" onclick="closeSearchModal(); openProductPage('${p.id}')">
+        <img src="${p.image}" alt="${p.name}" class="w-14 h-14 object-cover rounded bg-[#FAF9F5] border border-[#E8E3D8]">
         <div class="flex-grow">
-          <h5 class="font-display text-[#2A221C] text-sm font-medium">${p.name}</h5>
-          <p class="text-[10px] text-[#8F6E3B]">${p.stone} • ${p.metal}</p>
-          <p class="text-xs font-semibold text-[#2A221C] mt-0.5">${formatPrice(p.priceUSD)}</p>
+          <h5 class="font-display text-[#1D1815] text-sm font-medium">${p.name}</h5>
+          <p class="text-[10px] text-[#8A6B38]">${p.stone} • ${p.metal}</p>
+          <p class="text-xs font-semibold text-[#1D1815] mt-0.5">${formatPrice(p.priceUSD)}</p>
         </div>
         <span class="text-xs text-[#C5A674]">Inspect →</span>
       </div>
@@ -1211,10 +1211,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('[data-lookbook-index]').forEach(tab => {
       const active = parseInt(tab.dataset.lookbookIndex, 10) === index;
-      tab.classList.toggle('bg-[#2A221C]', active);
+      tab.classList.toggle('bg-[#1D1815]', active);
       tab.classList.toggle('text-white', active);
       tab.classList.toggle('bg-white', !active);
-      tab.classList.toggle('text-[#756A5E]', !active);
+      tab.classList.toggle('text-[#766B5E]', !active);
     });
   };
 

@@ -19,28 +19,35 @@
       theme: {
         extend: {
           colors: {
+            warmwhite: {
+              50: '#FDFCF9',
+              100: '#FAF9F5',
+              200: '#F4F1EA',
+              300: '#EBE5D9',
+              400: '#DFD8C9',
+            },
             vanilla: {
-              50: '#FFFDFB',
-              100: '#FAF8F5',
-              200: '#F5F0E6',
-              300: '#EDE6D8',
-              400: '#E0D6C3',
+              50: '#FDFCF9',
+              100: '#FAF9F5',
+              200: '#F4F1EA',
+              300: '#EBE5D9',
+              400: '#DFD8C9',
             },
             champagne: {
-              100: '#F5EBDA',
+              100: '#F6EEDA',
               200: '#DECCA8',
               300: '#D2B585',
               400: '#C5A674',
               500: '#B6925B',
-              600: '#8F6E3B',
+              600: '#8A6B38',
               700: '#6E5329',
             },
             truffle: {
-              DEFAULT: '#2A221C',
-              dark: '#1E1814',
-              espresso: '#3D3229',
-              taupe: '#756A5E',
-              muted: '#A4988B'
+              DEFAULT: '#1D1815',
+              dark: '#14100D',
+              espresso: '#332B25',
+              taupe: '#766B5E',
+              muted: '#9E9386'
             }
           },
           fontFamily: {
@@ -56,29 +63,29 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#FAF8F5] text-[#2A221C] selection:bg-[#DECCA8]/40 selection:text-[#2A221C]">
+<body class="bg-[#FAF9F5] text-[#1D1815] selection:bg-[#DECCA8]/40 selection:text-[#1D1815]">
 
   <!-- ================= TOP VIP ANNOUNCEMENT BAR ================= -->
-  <div class="bg-[#F5F0E6] text-[#756A5E] text-[11px] tracking-[0.2em] uppercase border-b border-[#C5A674]/25 py-2.5 px-4 sm:px-8">
+  <div class="bg-[#F4F1EA] text-[#766B5E] text-[11px] tracking-[0.2em] uppercase border-b border-[#C5A674]/25 py-2.5 px-4 sm:px-8">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="flex items-center gap-3">
-        <span class="text-[#8F6E3B] font-medium flex items-center gap-1.5">
+        <span class="text-[#8A6B38] font-medium flex items-center gap-1.5">
           <span class="star-emblem">✦</span>
           Complimentary Insured Global White-Glove Delivery
         </span>
         <span class="hidden md:inline text-[#C5A674]/50">|</span>
-        <span class="hidden md:inline text-[#756A5E] text-[10px]">Geneva • Milan • London • Paris • New York • Dubai</span>
+        <span class="hidden md:inline text-[#766B5E] text-[10px]">Geneva • Milan • London • Paris • New York • Dubai</span>
       </div>
 
       <div class="flex items-center gap-6">
-        <a href="#contact" class="hover:text-[#8F6E3B] transition-colors underline underline-offset-4 text-[10px] tracking-widest">
+        <a href="#contact" class="hover:text-[#8A6B38] transition-colors underline underline-offset-4 text-[10px] tracking-widest">
           Book Private Atelier
         </a>
 
         <!-- Global Currency Switcher -->
-        <div class="flex items-center gap-1.5 bg-[#FAF8F5] border border-[#C5A674]/30 rounded px-2.5 py-0.5 shadow-sm">
-          <label for="currency-select" class="text-[#756A5E] text-[9px] font-semibold">CURRENCY:</label>
-          <select id="currency-select" class="bg-transparent text-[#8F6E3B] font-medium outline-none cursor-pointer text-xs font-sans">
+        <div class="flex items-center gap-1.5 bg-[#FAF9F5] border border-[#C5A674]/30 rounded px-2.5 py-0.5 shadow-sm">
+          <label for="currency-select" class="text-[#766B5E] text-[9px] font-semibold">CURRENCY:</label>
+          <select id="currency-select" class="bg-transparent text-[#8A6B38] font-medium outline-none cursor-pointer text-xs font-sans">
             <option value="USD">USD ($)</option>
             <option value="EUR">EUR (€)</option>
             <option value="GBP">GBP (£)</option>
@@ -95,7 +102,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-8 h-24 flex items-center justify-between">
       
       <!-- Mobile Navigation Hamburger -->
-      <button onclick="toggleMobileMenu()" class="lg:hidden text-[#2A221C] hover:text-[#8F6E3B] p-2" aria-label="Toggle Navigation">
+      <button onclick="toggleMobileMenu()" class="lg:hidden text-[#1D1815] hover:text-[#8A6B38] p-2" aria-label="Toggle Navigation">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
@@ -113,25 +120,25 @@
         </div>
 
         <div class="flex flex-col text-left">
-          <span class="text-[9px] sm:text-[10px] tracking-[0.45em] uppercase text-[#756A5E] font-sans font-light leading-tight">HOUSE OF</span>
+          <span class="text-[9px] sm:text-[10px] tracking-[0.45em] uppercase text-[#766B5E] font-sans font-light leading-tight">HOUSE OF</span>
           <span class="font-display text-2xl sm:text-3xl tracking-[0.24em] champagne-gold-text font-medium uppercase leading-tight -mt-0.5">
             JEWELUX
           </span>
-          <span class="text-[7.5px] sm:text-[8px] tracking-[0.36em] uppercase text-[#8F6E3B] font-sans font-light -mt-0.5 hidden sm:block">
+          <span class="text-[7.5px] sm:text-[8px] tracking-[0.36em] uppercase text-[#8A6B38] font-sans font-light -mt-0.5 hidden sm:block">
             WHERE ELEGANCE BECOMES ETERNAL
           </span>
         </div>
       </a>
 
       <!-- Desktop Editorial Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-7 text-[11px] uppercase tracking-[0.22em] font-medium text-[#2A221C]">
-        <a href="#new-arrivals" class="nav-link hover:text-[#8F6E3B] transition-colors py-3 relative">New Arrivals</a>
-        <a href="#shop" class="nav-link hover:text-[#8F6E3B] transition-colors py-3">Shop</a>
-        <a href="#collections" class="nav-link hover:text-[#8F6E3B] transition-colors py-3">Collections</a>
+      <nav class="hidden lg:flex items-center gap-7 text-[11px] uppercase tracking-[0.22em] font-medium text-[#1D1815]">
+        <a href="#new-arrivals" class="nav-link hover:text-[#8A6B38] transition-colors py-3 relative">New Arrivals</a>
+        <a href="#shop" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Shop</a>
+        <a href="#collections" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Collections</a>
 
         <!-- Jewellery Category Mega-Dropdown -->
         <div class="relative dropdown-group py-3">
-          <a href="#shop" class="flex items-center gap-1 hover:text-[#8F6E3B] transition-colors">
+          <a href="#shop" class="flex items-center gap-1 hover:text-[#8A6B38] transition-colors">
             <span>Jewellery</span>
             <svg class="w-3 h-3 text-[#C5A674]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -144,36 +151,36 @@
               
               <!-- Category Columns -->
               <div class="col-span-3 space-y-3 border-r border-[#C5A674]/20 pr-6">
-                <p class="text-[10px] tracking-[0.3em] uppercase text-[#8F6E3B] font-semibold">Fine Jewellery</p>
-                <ul class="space-y-2 text-xs normal-case tracking-normal font-normal text-[#756A5E]">
-                  <li><a href="#rings" class="hover:text-[#2A221C] transition-colors block py-1">Solitaires & Bridal Rings</a></li>
-                  <li><a href="#earrings" class="hover:text-[#2A221C] transition-colors block py-1">Chandelier & Pear Earrings</a></li>
-                  <li><a href="#necklaces" class="hover:text-[#2A221C] transition-colors block py-1">Haute Joaillerie Collars</a></li>
-                  <li><a href="#bracelets" class="hover:text-[#2A221C] transition-colors block py-1">Articulated Tennis Bracelets</a></li>
-                  <li><a href="#bangles" class="hover:text-[#2A221C] transition-colors block py-1">Champagne Gold Bangles & Kada</a></li>
+                <p class="text-[10px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold">Fine Jewellery</p>
+                <ul class="space-y-2 text-xs normal-case tracking-normal font-normal text-[#766B5E]">
+                  <li><a href="#rings" class="hover:text-[#1D1815] transition-colors block py-1">Solitaires & Bridal Rings</a></li>
+                  <li><a href="#earrings" class="hover:text-[#1D1815] transition-colors block py-1">Chandelier & Pear Earrings</a></li>
+                  <li><a href="#necklaces" class="hover:text-[#1D1815] transition-colors block py-1">Haute Joaillerie Collars</a></li>
+                  <li><a href="#bracelets" class="hover:text-[#1D1815] transition-colors block py-1">Articulated Tennis Bracelets</a></li>
+                  <li><a href="#bangles" class="hover:text-[#1D1815] transition-colors block py-1">Champagne Gold Bangles & Kada</a></li>
                 </ul>
               </div>
 
               <div class="col-span-3 space-y-3 border-r border-[#C5A674]/20 pr-6">
-                <p class="text-[10px] tracking-[0.3em] uppercase text-[#8F6E3B] font-semibold">Exclusive Edits</p>
-                <ul class="space-y-2 text-xs normal-case tracking-normal font-normal text-[#756A5E]">
-                  <li><a href="#temple" class="hover:text-[#2A221C] transition-colors block py-1 font-medium text-[#8F6E3B]">Sacred Temple Jewellery</a></li>
-                  <li><a href="#silver" class="hover:text-[#2A221C] transition-colors block py-1">The Silver Edit (925 Sterling)</a></li>
-                  <li><a href="#bespoke-studio" class="hover:text-[#2A221C] transition-colors block py-1">Interactive Bespoke Studio</a></li>
-                  <li><a href="#best-sellers" class="hover:text-[#2A221C] transition-colors block py-1">Most Coveted Masterpieces</a></li>
+                <p class="text-[10px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold">Exclusive Edits</p>
+                <ul class="space-y-2 text-xs normal-case tracking-normal font-normal text-[#766B5E]">
+                  <li><a href="#temple" class="hover:text-[#1D1815] transition-colors block py-1 font-medium text-[#8A6B38]">Sacred Temple Jewellery</a></li>
+                  <li><a href="#silver" class="hover:text-[#1D1815] transition-colors block py-1">The Silver Edit (925 Sterling)</a></li>
+                  <li><a href="#bespoke-studio" class="hover:text-[#1D1815] transition-colors block py-1">Interactive Bespoke Studio</a></li>
+                  <li><a href="#best-sellers" class="hover:text-[#1D1815] transition-colors block py-1">Most Coveted Masterpieces</a></li>
                 </ul>
               </div>
 
               <!-- Editorial Feature Spotlight -->
-              <div class="col-span-6 flex gap-6 items-center bg-[#FAF8F5] p-5 rounded-lg border border-[#C5A674]/25">
+              <div class="col-span-6 flex gap-6 items-center bg-[#FAF9F5] p-5 rounded-lg border border-[#C5A674]/25">
                 <div class="w-36 h-28 overflow-hidden rounded">
                   <img src="images/jewelux_editorial_hero.jpg" alt="House of Jewelux Editorial" class="w-full h-full object-cover">
                 </div>
                 <div class="space-y-1.5">
-                  <span class="text-[9px] tracking-[0.25em] uppercase text-[#8F6E3B] font-semibold">Haute Joaillerie 2026</span>
-                  <h4 class="font-serif text-lg text-[#2A221C] font-normal leading-snug">Where Italian Elegance Becomes Eternal</h4>
-                  <p class="text-[11px] text-[#756A5E] font-sans font-light normal-case">Explore the 2026 parures sculpted with rare Muzo emeralds, Ceylon sapphires, and D-Flawless diamonds.</p>
-                  <a href="#collections" class="inline-block text-[10px] uppercase tracking-widest text-[#8F6E3B] font-medium hover:underline pt-1">
+                  <span class="text-[9px] tracking-[0.25em] uppercase text-[#8A6B38] font-semibold">Haute Joaillerie 2026</span>
+                  <h4 class="font-serif text-lg text-[#1D1815] font-normal leading-snug">Where Italian Elegance Becomes Eternal</h4>
+                  <p class="text-[11px] text-[#766B5E] font-sans font-light normal-case">Explore the 2026 parures sculpted with rare Muzo emeralds, Ceylon sapphires, and D-Flawless diamonds.</p>
+                  <a href="#collections" class="inline-block text-[10px] uppercase tracking-widest text-[#8A6B38] font-medium hover:underline pt-1">
                     Discover Collections →
                   </a>
                 </div>
@@ -183,22 +190,22 @@
           </div>
         </div>
 
-        <a href="#about" class="nav-link hover:text-[#8F6E3B] transition-colors py-3">About</a>
-        <a href="#craftsmanship" class="nav-link hover:text-[#8F6E3B] transition-colors py-3">Craftsmanship</a>
+        <a href="#about" class="nav-link hover:text-[#8A6B38] transition-colors py-3">About</a>
+        <a href="#craftsmanship" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Craftsmanship</a>
       </nav>
 
       <!-- Right Action Utilities -->
-      <div class="flex items-center gap-3 sm:gap-5 text-[#2A221C]">
+      <div class="flex items-center gap-3 sm:gap-5 text-[#1D1815]">
         
         <!-- Search Button -->
-        <button onclick="openSearchModal()" class="p-2 hover:text-[#8F6E3B] transition-colors" title="Search Catalogue" aria-label="Search Catalogue">
+        <button onclick="openSearchModal()" class="p-2 hover:text-[#8A6B38] transition-colors" title="Search Catalogue" aria-label="Search Catalogue">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </button>
 
         <!-- Wishlist Button -->
-        <button onclick="openWishlistDrawer()" class="p-2 hover:text-[#8F6E3B] transition-colors relative" title="Wishlist" aria-label="Saved Heirlooms">
+        <button onclick="openWishlistDrawer()" class="p-2 hover:text-[#8A6B38] transition-colors relative" title="Wishlist" aria-label="Saved Heirlooms">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
           </svg>
@@ -206,11 +213,11 @@
         </button>
 
         <!-- Shopping Bag Button -->
-        <button onclick="openCartDrawer()" class="p-2 hover:text-[#8F6E3B] transition-colors relative" title="Shopping Bag" aria-label="Shopping Bag">
+        <button onclick="openCartDrawer()" class="p-2 hover:text-[#8A6B38] transition-colors relative" title="Shopping Bag" aria-label="Shopping Bag">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
           </svg>
-          <span id="cart-badge" class="hidden absolute top-1 right-1 bg-[#8F6E3B] text-white font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+          <span id="cart-badge" class="hidden absolute top-1 right-1 bg-[#8A6B38] text-white font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
         </button>
 
         <!-- Book Consultation CTA (Desktop) -->
@@ -222,22 +229,22 @@
     </div>
 
     <!-- Mobile Drawer Navigation -->
-    <div id="mobile-menu" class="hidden lg:hidden bg-[#FAF8F5] border-b border-[#C5A674]/25 px-6 py-6 transition-all">
-      <nav class="flex flex-col gap-3 text-xs tracking-widest uppercase text-[#2A221C]">
-        <a href="#new-arrivals" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">New Arrivals</a>
-        <a href="#shop" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Full Catalogue (Shop)</a>
-        <a href="#collections" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">The 6 Collections</a>
-        <a href="#rings" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Rings & Solitaires</a>
-        <a href="#earrings" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Earrings</a>
-        <a href="#necklaces" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Necklaces & Collars</a>
-        <a href="#bracelets" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Bracelets</a>
-        <a href="#bangles" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Champagne Gold Bangles</a>
-        <a href="#temple" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] text-[#8F6E3B] font-semibold">Temple Jewellery</a>
-        <a href="#silver" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">The Silver Edit</a>
-        <a href="#bespoke-studio" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Bespoke Goldsmith Studio</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">About Us</a>
-        <a href="#craftsmanship" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Our Craftsmanship</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E2D5] hover:text-[#8F6E3B]">Contact & Concierge</a>
+    <div id="mobile-menu" class="hidden lg:hidden bg-[#FAF9F5] border-b border-[#C5A674]/25 px-6 py-6 transition-all">
+      <nav class="flex flex-col gap-3 text-xs tracking-widest uppercase text-[#1D1815]">
+        <a href="#new-arrivals" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">New Arrivals</a>
+        <a href="#shop" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Full Catalogue (Shop)</a>
+        <a href="#collections" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">The 6 Collections</a>
+        <a href="#rings" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Rings & Solitaires</a>
+        <a href="#earrings" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Earrings</a>
+        <a href="#necklaces" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Necklaces & Collars</a>
+        <a href="#bracelets" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Bracelets</a>
+        <a href="#bangles" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Champagne Gold Bangles</a>
+        <a href="#temple" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] text-[#8A6B38] font-semibold">Temple Jewellery</a>
+        <a href="#silver" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">The Silver Edit</a>
+        <a href="#bespoke-studio" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Bespoke Goldsmith Studio</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">About Us</a>
+        <a href="#craftsmanship" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Our Craftsmanship</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38]">Contact & Concierge</a>
         <button onclick="toggleMobileMenu(); openAppointmentModal();" class="btn-luxury-gold w-full text-center py-3 mt-4 text-[10px]">
           Schedule Private Atelier
         </button>
@@ -252,7 +259,7 @@
     <div id="view-home" class="page-view active">
       
       <!-- 1. Hero Section (Minimal, Dramatic, Warm Ivory Surrounded) -->
-      <section class="relative min-h-[85vh] sm:min-h-[90vh] bg-[#FAF8F5] flex items-center overflow-hidden border-b border-[#C5A674]/25">
+      <section class="relative min-h-[85vh] sm:min-h-[90vh] bg-[#FAF9F5] flex items-center overflow-hidden border-b border-[#C5A674]/25">
         
         <!-- Background Editorial Image with Warm Ivory Blend -->
         <div class="absolute inset-0 z-0">
@@ -262,29 +269,29 @@
             class="w-full h-full object-cover object-[center_35%] filter brightness-[0.98] contrast-[1.02]"
           />
           <!-- Refined Warm Vanilla Ivory Vignettes (Soft Lighting, Never Black) -->
-          <div class="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/75 sm:via-[#FAF8F5]/60 to-transparent"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-[#FAF8F5]/30"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#FAF9F5] via-[#FAF9F5]/75 sm:via-[#FAF9F5]/60 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#FAF9F5] via-transparent to-[#FAF9F5]/30"></div>
         </div>
 
         <!-- Hero Editorial Content -->
         <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div class="lg:col-span-8 text-left max-w-2xl">
             
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#C5A674]/40 bg-[#FAF8F5]/90 backdrop-blur-md mb-6 shadow-sm">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#C5A674]/40 bg-[#FAF9F5]/90 backdrop-blur-md mb-6 shadow-sm">
               <span class="star-emblem text-xs">✦</span>
-              <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold">
+              <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold">
                 Haute Joaillerie • Milano • Genève
               </span>
             </div>
 
             <!-- Exact Hero Headline -->
-            <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight leading-[1.08] text-[#2A221C] mb-6">
+            <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight leading-[1.08] text-[#1D1815] mb-6">
               WHERE ELEGANCE <br />
               <span class="italic champagne-gold-text font-serif font-normal">BECOMES ETERNAL</span>
             </h1>
 
             <!-- Exact Supporting Text -->
-            <p class="text-[#756A5E] text-base sm:text-lg md:text-xl font-serif font-light leading-relaxed mb-10 max-w-xl">
+            <p class="text-[#766B5E] text-base sm:text-lg md:text-xl font-serif font-light leading-relaxed mb-10 max-w-xl">
               Timeless jewellery, thoughtfully crafted to become part of your story.
             </p>
 
@@ -299,22 +306,22 @@
             </div>
 
             <!-- Accreditations & Trust Pillars -->
-            <div class="mt-14 pt-8 border-t border-[#C5A674]/30 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[#756A5E]">
+            <div class="mt-14 pt-8 border-t border-[#C5A674]/30 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[#766B5E]">
               <div class="space-y-1">
-                <p class="text-xs font-semibold text-[#2A221C] tracking-wider uppercase">GIA Certified</p>
-                <p class="text-[10px] text-[#A4988B]">Conflict-Free Natural Provenance</p>
+                <p class="text-xs font-semibold text-[#1D1815] tracking-wider uppercase">GIA Certified</p>
+                <p class="text-[10px] text-[#9E9386]">Conflict-Free Natural Provenance</p>
               </div>
               <div class="space-y-1">
-                <p class="text-xs font-semibold text-[#2A221C] tracking-wider uppercase">18K Champagne Gold</p>
-                <p class="text-[10px] text-[#A4988B]">Proprietary Italian Alloy</p>
+                <p class="text-xs font-semibold text-[#1D1815] tracking-wider uppercase">18K Champagne Gold</p>
+                <p class="text-[10px] text-[#9E9386]">Proprietary Italian Alloy</p>
               </div>
               <div class="space-y-1">
-                <p class="text-xs font-semibold text-[#2A221C] tracking-wider uppercase">Temple Nakshi</p>
-                <p class="text-[10px] text-[#A4988B]">Indian Artisanal Legacy</p>
+                <p class="text-xs font-semibold text-[#1D1815] tracking-wider uppercase">Temple Nakshi</p>
+                <p class="text-[10px] text-[#9E9386]">Indian Artisanal Legacy</p>
               </div>
               <div class="space-y-1">
-                <p class="text-xs font-semibold text-[#2A221C] tracking-wider uppercase">Lifetime Warranty</p>
-                <p class="text-[10px] text-[#A4988B]">Complimentary Annual Spa</p>
+                <p class="text-xs font-semibold text-[#1D1815] tracking-wider uppercase">Lifetime Warranty</p>
+                <p class="text-[10px] text-[#9E9386]">Complimentary Annual Spa</p>
               </div>
             </div>
 
@@ -333,35 +340,35 @@
           />
         </div>
         <span class="star-emblem block mb-3 text-base">✦</span>
-        <span class="text-[10px] uppercase tracking-[0.35em] text-[#8F6E3B] font-semibold block mb-3">
+        <span class="text-[10px] uppercase tracking-[0.35em] text-[#8A6B38] font-semibold block mb-3">
           The House Philosophy
         </span>
-        <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C] tracking-tight leading-tight mb-8">
+        <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815] tracking-tight leading-tight mb-8">
           Elegance, Designed to Endure.
         </h2>
         <div class="w-16 h-[1px] bg-[#C5A674] mx-auto mb-8"></div>
-        <p class="font-serif text-lg sm:text-xl text-[#756A5E] font-light leading-relaxed max-w-3xl mx-auto mb-6">
+        <p class="font-serif text-lg sm:text-xl text-[#766B5E] font-light leading-relaxed max-w-3xl mx-auto mb-6">
           At HOUSE OF JEWELUX, we believe high jewellery is not merely an ornament of vanity, but a sacred covenant of memory. Founded at the crossroads of Milanese high-fashion minimalism and centuries of generational Indian craftsmanship, every creation is sculpted with reverent intention.
         </p>
-        <p class="font-sans text-xs sm:text-sm text-[#756A5E] leading-relaxed max-w-2xl mx-auto font-light">
+        <p class="font-sans text-xs sm:text-sm text-[#766B5E] leading-relaxed max-w-2xl mx-auto font-light">
           From unheated Basra pearls and vivid Colombian emeralds to D-Flawless diamonds set in proprietary 18-karat champagne gold, we craft singular heirlooms conceived to transcend the transient whims of seasons and be cherished for a lifetime.
         </p>
       </section>
 
       <!-- 3. Curated Collections Grid (The 6 Signature Lines) -->
-      <section id="collections-section" class="py-20 bg-[#F5F0E6]/60 border-y border-[#C5A674]/25">
+      <section id="collections-section" class="py-20 bg-[#F4F1EA]/60 border-y border-[#C5A674]/25">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
           
           <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
-              <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">
+              <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
                 Haute Curations
               </span>
-              <h3 class="font-display text-2xl sm:text-4xl font-light text-[#2A221C]">
+              <h3 class="font-display text-2xl sm:text-4xl font-light text-[#1D1815]">
                 The Signature <span class="italic champagne-gold-text font-serif">Collections</span>
               </h3>
             </div>
-            <a href="#collections" class="text-xs uppercase tracking-[0.2em] text-[#8F6E3B] hover:text-[#2A221C] transition-colors font-medium">
+            <a href="#collections" class="text-xs uppercase tracking-[0.2em] text-[#8A6B38] hover:text-[#1D1815] transition-colors font-medium">
               View All 6 Collections →
             </a>
           </div>
@@ -378,13 +385,13 @@
       <section class="py-24 max-w-7xl mx-auto px-4 sm:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
               Curated Vault
             </span>
-            <h3 class="font-display text-2xl sm:text-4xl font-light text-[#2A221C]">
+            <h3 class="font-display text-2xl sm:text-4xl font-light text-[#1D1815]">
               Iconic <span class="italic champagne-gold-text font-serif">Masterpieces</span>
             </h3>
-            <p class="text-xs text-[#756A5E] mt-1 font-light">Discerning selections hand-faceted by our Master Goldsmiths.</p>
+            <p class="text-xs text-[#766B5E] mt-1 font-light">Discerning selections hand-faceted by our Master Goldsmiths.</p>
           </div>
           <a href="#shop" class="btn-luxury-secondary text-[10px] py-2.5 px-6">
             Explore All Creations
@@ -402,13 +409,13 @@
           
           <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="star-emblem block mb-2">✦</span>
-            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
               Atelier Interactive Workbench
             </span>
-            <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C] leading-tight">
+            <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815] leading-tight">
               Design Your <span class="italic champagne-gold-text font-serif">Bespoke Heirlooms</span>
             </h2>
-            <p class="text-xs sm:text-sm text-[#756A5E] mt-3 font-light leading-relaxed">
+            <p class="text-xs sm:text-sm text-[#766B5E] mt-3 font-light leading-relaxed">
               Step inside our digital goldsmith workbench. Select your precious metal, center gemstone, cut, and carat weight with real-time vector rendering and instant atelier price appraisal.
             </p>
           </div>
@@ -422,17 +429,17 @@
                   <!-- Dynamically rendered by app.js -->
                 </div>
 
-                <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded text-[9px] uppercase tracking-widest text-[#8F6E3B] border border-[#C5A674]/30 font-semibold shadow-sm">
+                <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded text-[9px] uppercase tracking-widest text-[#8A6B38] border border-[#C5A674]/30 font-semibold shadow-sm">
                   Interactive 360° Studio View
                 </div>
 
-                <div class="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] text-[#756A5E] bg-white/80 px-2.5 py-0.5 rounded border border-[#E8E2D5]">
+                <div class="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] text-[#766B5E] bg-white/80 px-2.5 py-0.5 rounded border border-[#E8E3D8]">
                   <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
                   Live Price Calibrated
                 </div>
               </div>
 
-              <div class="mt-4 flex flex-wrap items-center justify-between w-full px-2 text-[11px] text-[#756A5E] gap-2">
+              <div class="mt-4 flex flex-wrap items-center justify-between w-full px-2 text-[11px] text-[#766B5E] gap-2">
                 <span>✓ Eight-Prong Cathedral Setting</span>
                 <span>✓ Comfort-Fit Interior Contour</span>
                 <span>✓ Hand-Engraving Complimentary</span>
@@ -444,102 +451,102 @@
               
               <!-- 1. Metal Selection -->
               <div>
-                <label class="block text-[11px] uppercase tracking-widest text-[#8F6E3B] font-semibold mb-2.5">
+                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
                   1. Select Precious Metal
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <button onclick="setBespokeMetal('yellow-gold')" data-bespoke-metal="yellow-gold" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeMetal('yellow-gold')" data-bespoke-metal="yellow-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full bg-[#D2B585] border border-[#B6925B] shadow-sm"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">Champagne</span>
+                    <span class="text-xs font-medium text-[#1D1815]">Champagne</span>
                   </button>
-                  <button onclick="setBespokeMetal('rose-gold')" data-bespoke-metal="rose-gold" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeMetal('rose-gold')" data-bespoke-metal="rose-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full bg-[#E8A798] border border-[#D98978] shadow-sm"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">18K Rose</span>
+                    <span class="text-xs font-medium text-[#1D1815]">18K Rose</span>
                   </button>
-                  <button onclick="setBespokeMetal('white-gold')" data-bespoke-metal="white-gold" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeMetal('white-gold')" data-bespoke-metal="white-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full bg-[#E5E7EB] border border-[#D1D5DB] shadow-sm"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">18K White</span>
+                    <span class="text-xs font-medium text-[#1D1815]">18K White</span>
                   </button>
-                  <button onclick="setBespokeMetal('platinum')" data-bespoke-metal="platinum" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeMetal('platinum')" data-bespoke-metal="platinum" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full bg-[#CBD5E1] border border-[#94A3B8] shadow-sm"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">Platinum 950</span>
+                    <span class="text-xs font-medium text-[#1D1815]">Platinum 950</span>
                   </button>
                 </div>
               </div>
 
               <!-- 2. Gemstone Selection -->
               <div>
-                <label class="block text-[11px] uppercase tracking-widest text-[#8F6E3B] font-semibold mb-2.5">
+                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
                   2. Select Center Gemstone
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <button onclick="setBespokeGem('diamond')" data-bespoke-gem="diamond" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeGem('diamond')" data-bespoke-gem="diamond" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-3.5 h-3.5 rounded-full bg-sky-50 border border-sky-300"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">D-Diamond</span>
+                    <span class="text-xs font-medium text-[#1D1815]">D-Diamond</span>
                   </button>
-                  <button onclick="setBespokeGem('emerald')" data-bespoke-gem="emerald" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeGem('emerald')" data-bespoke-gem="emerald" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-3.5 h-3.5 rounded-full bg-emerald-700 border border-emerald-500"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">Emerald</span>
+                    <span class="text-xs font-medium text-[#1D1815]">Emerald</span>
                   </button>
-                  <button onclick="setBespokeGem('sapphire')" data-bespoke-gem="sapphire" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeGem('sapphire')" data-bespoke-gem="sapphire" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-3.5 h-3.5 rounded-full bg-blue-800 border border-blue-500"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">Sapphire</span>
+                    <span class="text-xs font-medium text-[#1D1815]">Sapphire</span>
                   </button>
-                  <button onclick="setBespokeGem('ruby')" data-bespoke-gem="ruby" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <button onclick="setBespokeGem('ruby')" data-bespoke-gem="ruby" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-3.5 h-3.5 rounded-full bg-rose-800 border border-rose-500"></span>
-                    <span class="text-xs font-medium text-[#2A221C]">Ruby</span>
+                    <span class="text-xs font-medium text-[#1D1815]">Ruby</span>
                   </button>
                 </div>
               </div>
 
               <!-- 3. Gemstone Cut -->
               <div>
-                <label class="block text-[11px] uppercase tracking-widest text-[#8F6E3B] font-semibold mb-2.5">
+                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
                   3. Cut & Facet Silhouette
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">Round Ideal</span>
+                  <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">Round Ideal</span>
                   </button>
-                  <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">Emerald Cut</span>
+                  <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">Emerald Cut</span>
                   </button>
-                  <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">Royal Oval</span>
+                  <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">Royal Oval</span>
                   </button>
-                  <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">Teardrop Pear</span>
+                  <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">Teardrop Pear</span>
                   </button>
                 </div>
               </div>
 
               <!-- 4. Carat Weight -->
               <div>
-                <label class="block text-[11px] uppercase tracking-widest text-[#8F6E3B] font-semibold mb-2.5">
+                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
                   4. Carat Weight Selection
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <button onclick="setBespokeCarat(1.0)" data-bespoke-carat="1" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">1.00 Carat</span>
+                  <button onclick="setBespokeCarat(1.0)" data-bespoke-carat="1" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">1.00 Carat</span>
                   </button>
-                  <button onclick="setBespokeCarat(1.75)" data-bespoke-carat="1.75" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">1.75 Carat</span>
+                  <button onclick="setBespokeCarat(1.75)" data-bespoke-carat="1.75" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">1.75 Carat</span>
                   </button>
-                  <button onclick="setBespokeCarat(2.5)" data-bespoke-carat="2.5" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">2.50 Carat</span>
+                  <button onclick="setBespokeCarat(2.5)" data-bespoke-carat="2.5" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">2.50 Carat</span>
                   </button>
-                  <button onclick="setBespokeCarat(4.0)" data-bespoke-carat="4" class="p-2.5 rounded border border-[#E8E2D5] bg-[#FAF8F5] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#2A221C]">4.00 Carat</span>
+                  <button onclick="setBespokeCarat(4.0)" data-bespoke-carat="4" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-center transition">
+                    <span class="text-xs font-medium text-[#1D1815]">4.00 Carat</span>
                   </button>
                 </div>
               </div>
 
               <!-- Live Price Calculation & Actions -->
-              <div class="pt-6 border-t border-[#E8E2D5] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="pt-6 border-t border-[#E8E3D8] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <span class="text-[10px] uppercase tracking-widest text-[#756A5E] block">Estimated Atelier Commission</span>
-                  <span id="bespoke-calc-price" class="font-display text-3xl font-semibold text-[#2A221C]">$10,400</span>
-                  <span class="text-[10px] text-[#A4988B] block">Includes GIA Dossier & Custom Casket</span>
+                  <span class="text-[10px] uppercase tracking-widest text-[#766B5E] block">Estimated Atelier Commission</span>
+                  <span id="bespoke-calc-price" class="font-display text-3xl font-semibold text-[#1D1815]">$10,400</span>
+                  <span class="text-[10px] text-[#9E9386] block">Includes GIA Dossier & Custom Casket</span>
                 </div>
 
                 <div class="flex items-center gap-3 w-full sm:w-auto">
@@ -565,30 +572,30 @@
           
           <div class="space-y-4 px-4">
             <span class="star-emblem text-lg">✦</span>
-            <h4 class="font-display text-xl sm:text-2xl text-[#2A221C] font-normal tracking-wide">
+            <h4 class="font-display text-xl sm:text-2xl text-[#1D1815] font-normal tracking-wide">
               CRAFTED WITH INTENTION.
             </h4>
-            <p class="font-serif text-base text-[#756A5E] leading-relaxed font-light">
+            <p class="font-serif text-base text-[#766B5E] leading-relaxed font-light">
               Every curve, prong, and microscopic claw is conceived with purpose. We reject mass casting in favor of deliberate, contemplative artisan fabrication.
             </p>
           </div>
 
           <div class="space-y-4 px-4 border-y md:border-y-0 md:border-x border-[#C5A674]/30 py-8 md:py-0">
             <span class="star-emblem text-lg">✦</span>
-            <h4 class="font-display text-xl sm:text-2xl text-[#2A221C] font-normal tracking-wide">
+            <h4 class="font-display text-xl sm:text-2xl text-[#1D1815] font-normal tracking-wide">
               DESIGNED FOR A LIFETIME.
             </h4>
-            <p class="font-serif text-base text-[#756A5E] leading-relaxed font-light">
+            <p class="font-serif text-base text-[#766B5E] leading-relaxed font-light">
               Enduring luxury transcends fleeting seasons. Solid fairmined 18-karat gold and certified natural stones ensure your creation becomes an everlasting heirloom.
             </p>
           </div>
 
           <div class="space-y-4 px-4">
             <span class="star-emblem text-lg">✦</span>
-            <h4 class="font-display text-xl sm:text-2xl text-[#2A221C] font-normal tracking-wide">
+            <h4 class="font-display text-xl sm:text-2xl text-[#1D1815] font-normal tracking-wide">
               MADE TO BECOME YOURS.
             </h4>
-            <p class="font-serif text-base text-[#756A5E] leading-relaxed font-light">
+            <p class="font-serif text-base text-[#766B5E] leading-relaxed font-light">
               Jewellery is an intimate portrait of sentiment. We tailor every millimeter of fit, weight, and private engraving to mirror your personal journey.
             </p>
           </div>
@@ -597,49 +604,49 @@
       </section>
 
       <!-- 7. The Lookbook Archive Section -->
-      <section class="py-24 bg-[#F5F0E6]/50">
+      <section class="py-24 bg-[#F4F1EA]/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
           
           <div class="text-center max-w-2xl mx-auto mb-12">
-            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
               Curated Occasion Styling
             </span>
-            <h3 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+            <h3 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
               The Lookbook <span class="italic champagne-gold-text font-serif">Archive</span>
             </h3>
-            <p class="text-xs text-[#756A5E] mt-2 font-light">Witness how Jewelux creations transform sovereign moments into everlasting memories.</p>
+            <p class="text-xs text-[#766B5E] mt-2 font-light">Witness how Jewelux creations transform sovereign moments into everlasting memories.</p>
 
             <div class="flex items-center justify-center gap-3 mt-6">
-              <button onclick="switchLookbook(0)" data-lookbook-index="0" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-[#2A221C] text-white">
+              <button onclick="switchLookbook(0)" data-lookbook-index="0" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-[#1D1815] text-white">
                 Italian Gala
               </button>
-              <button onclick="switchLookbook(1)" data-lookbook-index="1" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-white text-[#756A5E] border border-[#E8E2D5] hover:text-[#2A221C]">
+              <button onclick="switchLookbook(1)" data-lookbook-index="1" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-white text-[#766B5E] border border-[#E8E3D8] hover:text-[#1D1815]">
                 Bridal Sanctuary
               </button>
-              <button onclick="switchLookbook(2)" data-lookbook-index="2" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-white text-[#756A5E] border border-[#E8E2D5] hover:text-[#2A221C]">
+              <button onclick="switchLookbook(2)" data-lookbook-index="2" class="px-4 py-1.5 text-xs rounded-full uppercase tracking-wider transition font-medium bg-white text-[#766B5E] border border-[#E8E3D8] hover:text-[#1D1815]">
                 Temple Edit
               </button>
             </div>
           </div>
 
           <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-[#C5A674]/30 grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div class="lg:col-span-7 h-[420px] sm:h-[480px] overflow-hidden bg-[#FAF8F5]">
+            <div class="lg:col-span-7 h-[420px] sm:h-[480px] overflow-hidden bg-[#FAF9F5]">
               <img id="lookbook-image" src="images/jewelux_editorial_hero.jpg" alt="House of Jewelux Editorial Lookbook" class="w-full h-full object-cover transition-opacity duration-300">
             </div>
 
             <div class="lg:col-span-5 p-8 sm:p-12 space-y-5">
-              <span class="text-[10px] uppercase tracking-widest text-[#8F6E3B] font-semibold">Featured Editorial Styling</span>
-              <h4 id="lookbook-title" class="font-display text-2xl sm:text-3xl text-[#2A221C] font-normal">
+              <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold">Featured Editorial Styling</span>
+              <h4 id="lookbook-title" class="font-display text-2xl sm:text-3xl text-[#1D1815] font-normal">
                 The Italian Gala: Timeless Elegance
               </h4>
-              <p id="lookbook-subtitle" class="font-serif text-base text-[#756A5E] leading-relaxed font-light">
+              <p id="lookbook-subtitle" class="font-serif text-base text-[#766B5E] leading-relaxed font-light">
                 Sculptural diamonds and champagne gold crafted for dramatic entrances.
               </p>
 
-              <div class="p-4 bg-[#FAF8F5] rounded border border-[#E8E2D5] flex items-center justify-between">
+              <div class="p-4 bg-[#FAF9F5] rounded border border-[#E8E3D8] flex items-center justify-between">
                 <div>
-                  <span class="text-[9px] text-[#A4988B] uppercase tracking-wider block">Featured Masterpiece</span>
-                  <span id="lookbook-prod-title" class="font-serif text-[#2A221C] text-base font-medium">Empress Emerald & Diamond Cascade</span>
+                  <span class="text-[9px] text-[#9E9386] uppercase tracking-wider block">Featured Masterpiece</span>
+                  <span id="lookbook-prod-title" class="font-serif text-[#1D1815] text-base font-medium">Empress Emerald & Diamond Cascade</span>
                 </div>
                 <button id="lookbook-prod-btn" onclick="openProductPage('HJ-002')" class="btn-luxury-primary py-2 px-4 text-[10px]">
                   Inspect Piece
@@ -655,10 +662,10 @@
       <section class="py-24 max-w-7xl mx-auto px-4 sm:px-8">
         <div class="text-center max-w-2xl mx-auto mb-16">
           <span class="star-emblem block mb-2">✦</span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
             Global Acclaim
           </span>
-          <h3 class="font-display text-3xl sm:text-4xl font-light text-[#2A221C]">
+          <h3 class="font-display text-3xl sm:text-4xl font-light text-[#1D1815]">
             Beloved by Discerning Patrons
           </h3>
         </div>
@@ -671,11 +678,11 @@
                 "House of Jewelux doesn't merely sell jewellery; they curate wearable sculptures that will be whispered about for generations. My bespoke bridal solitaire exceeded all imagination."
               </p>
             </div>
-            <div class="mt-6 pt-4 border-t border-[#E8E2D5] flex items-center gap-3">
+            <div class="mt-6 pt-4 border-t border-[#E8E3D8] flex items-center gap-3">
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Beatrice R." class="w-10 h-10 rounded-full object-cover border border-[#C5A674]/40" />
               <div>
-                <p class="text-xs font-semibold text-[#2A221C]">Contessa Beatrice R.</p>
-                <p class="text-[10px] text-[#8F6E3B]">Milan & Geneva • Bespoke 3.5ct Solitaire</p>
+                <p class="text-xs font-semibold text-[#1D1815]">Contessa Beatrice R.</p>
+                <p class="text-[10px] text-[#8A6B38]">Milan & Geneva • Bespoke 3.5ct Solitaire</p>
               </div>
             </div>
           </div>
@@ -687,11 +694,11 @@
                 "The gemological knowledge and quiet discretion of their atelier team is unmatched. The Temple Collection choker is our family's proudest heirloom."
               </p>
             </div>
-            <div class="mt-6 pt-4 border-t border-[#E8E2D5] flex items-center gap-3">
+            <div class="mt-6 pt-4 border-t border-[#E8E3D8] flex items-center gap-3">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Devika Singhania" class="w-10 h-10 rounded-full object-cover border border-[#C5A674]/40" />
               <div>
-                <p class="text-xs font-semibold text-[#2A221C]">Devika & Alok Singhania</p>
-                <p class="text-[10px] text-[#8F6E3B]">London & Mumbai • Padmavati Choker</p>
+                <p class="text-xs font-semibold text-[#1D1815]">Devika & Alok Singhania</p>
+                <p class="text-[10px] text-[#8A6B38]">London & Mumbai • Padmavati Choker</p>
               </div>
             </div>
           </div>
@@ -703,11 +710,11 @@
                 "From initial sketch to hand-delivery in Dubai with full GIA and Gübelin certification, every detail was orchestrated with utmost nobility and perfection."
               </p>
             </div>
-            <div class="mt-6 pt-4 border-t border-[#E8E2D5] flex items-center gap-3">
+            <div class="mt-6 pt-4 border-t border-[#E8E3D8] flex items-center gap-3">
               <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Amira Al-Maktoum" class="w-10 h-10 rounded-full object-cover border border-[#C5A674]/40" />
               <div>
-                <p class="text-xs font-semibold text-[#2A221C]">H.E. Amira Al-Maktoum</p>
-                <p class="text-[10px] text-[#8F6E3B]">Dubai DIFC • Bespoke Sapphire Parure</p>
+                <p class="text-xs font-semibold text-[#1D1815]">H.E. Amira Al-Maktoum</p>
+                <p class="text-[10px] text-[#8A6B38]">Dubai DIFC • Bespoke Sapphire Parure</p>
               </div>
             </div>
           </div>
@@ -715,26 +722,26 @@
       </section>
 
       <!-- 9. Newsletter / The Jewelux Salon Invitation -->
-      <section class="py-20 bg-[#F5F0E6] border-t border-[#C5A674]/30 text-center">
+      <section class="py-20 bg-[#F4F1EA] border-t border-[#C5A674]/30 text-center">
         <div class="max-w-3xl mx-auto px-4">
           <span class="star-emblem text-base block mb-2">✦</span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
             Exclusive Invitation
           </span>
-          <h3 class="font-display text-3xl sm:text-4xl font-light text-[#2A221C] mb-3">
+          <h3 class="font-display text-3xl sm:text-4xl font-light text-[#1D1815] mb-3">
             Join The <span class="italic champagne-gold-text font-serif">Jewelux Salon</span>
           </h3>
-          <p class="text-xs sm:text-sm text-[#756A5E] font-light max-w-xl mx-auto mb-8">
+          <p class="text-xs sm:text-sm text-[#766B5E] font-light max-w-xl mx-auto mb-8">
             Receive private previews of rare gemstone acquisitions, invitation-only salon viewings in Geneva and Milan, and a complimentary 10% privilege code towards your inaugural commission.
           </p>
 
           <form onsubmit="event.preventDefault(); showToast('Welcome to The Jewelux Salon. Your VIP courtesy code is JEWELUX10', '💎'); this.reset();" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input type="email" required placeholder="Enter your private email address" class="flex-grow px-4 py-3 bg-white border border-[#C5A674]/40 rounded text-xs text-[#2A221C] placeholder-[#A4988B] focus:outline-none focus:border-[#8F6E3B]">
+            <input type="email" required placeholder="Enter your private email address" class="flex-grow px-4 py-3 bg-white border border-[#C5A674]/40 rounded text-xs text-[#1D1815] placeholder-[#9E9386] focus:outline-none focus:border-[#8A6B38]">
             <button type="submit" class="btn-luxury-primary py-3 px-6 text-[10px]">
               Request Entry
             </button>
           </form>
-          <p class="text-[10px] text-[#A4988B] mt-3">We hold your discretion in highest regard. Unsubscribe at any time.</p>
+          <p class="text-[10px] text-[#9E9386] mt-3">We hold your discretion in highest regard. Unsubscribe at any time.</p>
         </div>
       </section>
 
@@ -746,17 +753,17 @@
         
         <!-- Shop Header & Breadcrumb -->
         <div class="border-b border-[#C5A674]/25 pb-8 mb-10">
-          <p class="text-[10px] uppercase tracking-[0.25em] text-[#8F6E3B] mb-2 font-medium">Home / Haute Joaillerie Catalogue</p>
-          <h2 id="shop-title" class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+          <p class="text-[10px] uppercase tracking-[0.25em] text-[#8A6B38] mb-2 font-medium">Home / Haute Joaillerie Catalogue</p>
+          <h2 id="shop-title" class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
             All <span class="italic champagne-gold-text font-serif">Masterpieces</span>
           </h2>
-          <p id="shop-description" class="text-xs sm:text-sm text-[#756A5E] mt-2 font-light max-w-2xl">
+          <p id="shop-description" class="text-xs sm:text-sm text-[#766B5E] mt-2 font-light max-w-2xl">
             Explore rare diamonds, certified Colombian emeralds, fine 925 silver, and sacred 22K temple heirlooms.
           </p>
         </div>
 
         <!-- Filter & Sort Bar -->
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10 pb-6 border-b border-[#E8E2D5]">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10 pb-6 border-b border-[#E8E3D8]">
           <!-- Category Pills -->
           <div id="shop-category-pills" class="flex flex-wrap gap-2">
             <!-- Dynamically populated -->
@@ -764,8 +771,8 @@
 
           <!-- Sort Selector -->
           <div class="flex items-center gap-3">
-            <label for="sort-select" class="text-xs uppercase tracking-wider text-[#756A5E] font-medium whitespace-nowrap">Sort By:</label>
-            <select id="sort-select" onchange="handleSortChange(this.value)" class="bg-white border border-[#C5A674]/40 rounded px-3 py-1.5 text-xs text-[#2A221C] outline-none">
+            <label for="sort-select" class="text-xs uppercase tracking-wider text-[#766B5E] font-medium whitespace-nowrap">Sort By:</label>
+            <select id="sort-select" onchange="handleSortChange(this.value)" class="bg-white border border-[#C5A674]/40 rounded px-3 py-1.5 text-xs text-[#1D1815] outline-none">
               <option value="featured">Featured Curations</option>
               <option value="price-high">Price: High to Low</option>
               <option value="price-low">Price: Low to High</option>
@@ -786,11 +793,11 @@
     <div id="view-collections" class="page-view">
       <section class="py-16 max-w-7xl mx-auto px-4 sm:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-2">The Six Pillars</span>
-          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-2">The Six Pillars</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
             Curated <span class="italic champagne-gold-text font-serif">Collections</span>
           </h2>
-          <p class="text-xs sm:text-sm text-[#756A5E] mt-3 font-light leading-relaxed">
+          <p class="text-xs sm:text-sm text-[#766B5E] mt-3 font-light leading-relaxed">
             Each collection explores a distinct facet of beauty: from European Didone architecture to sacred Dravidian temple gold.
           </p>
         </div>
@@ -806,10 +813,10 @@
       <section class="py-12 max-w-7xl mx-auto px-4 sm:px-8">
         
         <!-- Breadcrumb -->
-        <div class="mb-8 text-[11px] text-[#756A5E] uppercase tracking-wider">
-          <a href="#home" class="hover:text-[#2A221C]">Home</a> / 
-          <a href="#shop" class="hover:text-[#2A221C]">Shop</a> / 
-          <span id="pdp-breadcrumb-name" class="text-[#8F6E3B] font-medium">Product</span>
+        <div class="mb-8 text-[11px] text-[#766B5E] uppercase tracking-wider">
+          <a href="#home" class="hover:text-[#1D1815]">Home</a> / 
+          <a href="#shop" class="hover:text-[#1D1815]">Shop</a> / 
+          <span id="pdp-breadcrumb-name" class="text-[#8A6B38] font-medium">Product</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -819,7 +826,7 @@
             <!-- Main Large Image with Zoom container -->
             <div class="relative bg-white rounded-xl overflow-hidden border border-[#C5A674]/30 shadow-md aspect-square">
               <img id="pdp-main-image" src="" alt="Jewellery Detail" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110 cursor-zoom-in">
-              <span id="pdp-badge" class="absolute top-4 left-4 px-3 py-1 bg-white/95 text-[#8F6E3B] border border-[#C5A674]/40 text-[9px] uppercase tracking-widest font-semibold rounded-full shadow-sm">
+              <span id="pdp-badge" class="absolute top-4 left-4 px-3 py-1 bg-white/95 text-[#8A6B38] border border-[#C5A674]/40 text-[9px] uppercase tracking-widest font-semibold rounded-full shadow-sm">
                 Masterpiece
               </span>
             </div>
@@ -833,21 +840,21 @@
           <!-- Right: Product Purchase Details & Accordion -->
           <div class="lg:col-span-5 space-y-6">
             <div>
-              <span id="pdp-metal" class="text-[10px] uppercase tracking-[0.25em] text-[#8F6E3B] font-semibold block mb-1">Metal Purity</span>
-              <h1 id="pdp-title" class="font-display text-2xl sm:text-3xl text-[#2A221C] font-normal leading-tight">Masterpiece Name</h1>
-              <p id="pdp-price" class="font-display text-3xl font-semibold text-[#2A221C] mt-3">$0</p>
-              <p id="pdp-description" class="font-serif text-base text-[#756A5E] font-light leading-relaxed mt-4">Description</p>
+              <span id="pdp-metal" class="text-[10px] uppercase tracking-[0.25em] text-[#8A6B38] font-semibold block mb-1">Metal Purity</span>
+              <h1 id="pdp-title" class="font-display text-2xl sm:text-3xl text-[#1D1815] font-normal leading-tight">Masterpiece Name</h1>
+              <p id="pdp-price" class="font-display text-3xl font-semibold text-[#1D1815] mt-3">$0</p>
+              <p id="pdp-description" class="font-serif text-base text-[#766B5E] font-light leading-relaxed mt-4">Description</p>
             </div>
 
             <!-- Size Selector with Size Guide Helper -->
-            <div class="pt-4 border-t border-[#E8E2D5]">
+            <div class="pt-4 border-t border-[#E8E3D8]">
               <div class="flex items-center justify-between mb-2">
-                <label class="text-xs uppercase tracking-wider text-[#2A221C] font-semibold">Select Size / Fit</label>
-                <button onclick="openSizeGuideModal()" class="text-[11px] text-[#8F6E3B] underline underline-offset-4 hover:text-[#2A221C]">
+                <label class="text-xs uppercase tracking-wider text-[#1D1815] font-semibold">Select Size / Fit</label>
+                <button onclick="openSizeGuideModal()" class="text-[11px] text-[#8A6B38] underline underline-offset-4 hover:text-[#1D1815]">
                   Size Guide Helper
                 </button>
               </div>
-              <select id="pdp-size-select" class="w-full p-3 bg-white border border-[#C5A674]/40 rounded text-xs text-[#2A221C] outline-none">
+              <select id="pdp-size-select" class="w-full p-3 bg-white border border-[#C5A674]/40 rounded text-xs text-[#1D1815] outline-none">
                 <!-- Populated dynamically -->
               </select>
             </div>
@@ -868,41 +875,41 @@
             </div>
 
             <!-- Accordion: Details, Craftsmanship, Shipping & Care -->
-            <div class="pt-6 border-t border-[#E8E2D5] space-y-3" id="pdp-accordions">
+            <div class="pt-6 border-t border-[#E8E3D8] space-y-3" id="pdp-accordions">
               
               <!-- Accordion 1: Details -->
               <div class="accordion-item border border-[#C5A674]/25 rounded bg-white overflow-hidden">
-                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#2A221C]">
+                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#1D1815]">
                   <span>Details & Specifications</span>
                   <span class="accordion-icon text-lg">+</span>
                 </button>
-                <div class="accordion-content px-4 py-3 text-xs text-[#756A5E] border-t border-[#F5F0E6] bg-[#FAF8F5] space-y-2">
-                  <div class="flex justify-between pb-1 border-b border-[#E8E2D5]">
-                    <span class="text-[#A4988B]">Stone / Mineral:</span>
-                    <span id="pdp-spec-stone" class="font-medium text-[#2A221C] text-right">-</span>
+                <div class="accordion-content px-4 py-3 text-xs text-[#766B5E] border-t border-[#F4F1EA] bg-[#FAF9F5] space-y-2">
+                  <div class="flex justify-between pb-1 border-b border-[#E8E3D8]">
+                    <span class="text-[#9E9386]">Stone / Mineral:</span>
+                    <span id="pdp-spec-stone" class="font-medium text-[#1D1815] text-right">-</span>
                   </div>
-                  <div class="flex justify-between pb-1 border-b border-[#E8E2D5]">
-                    <span class="text-[#A4988B]">Cut & Clarity:</span>
-                    <span id="pdp-spec-cut" class="font-medium text-[#2A221C] text-right">-</span>
+                  <div class="flex justify-between pb-1 border-b border-[#E8E3D8]">
+                    <span class="text-[#9E9386]">Cut & Clarity:</span>
+                    <span id="pdp-spec-cut" class="font-medium text-[#1D1815] text-right">-</span>
                   </div>
-                  <div class="flex justify-between pb-1 border-b border-[#E8E2D5]">
-                    <span class="text-[#A4988B]">Certification:</span>
-                    <span id="pdp-spec-cert" class="font-medium text-[#8F6E3B] text-right">-</span>
+                  <div class="flex justify-between pb-1 border-b border-[#E8E3D8]">
+                    <span class="text-[#9E9386]">Certification:</span>
+                    <span id="pdp-spec-cert" class="font-medium text-[#8A6B38] text-right">-</span>
                   </div>
                   <div class="flex justify-between">
-                    <span class="text-[#A4988B]">Weight & Dimensions:</span>
-                    <span id="pdp-spec-dimensions" class="font-medium text-[#2A221C] text-right">-</span>
+                    <span class="text-[#9E9386]">Weight & Dimensions:</span>
+                    <span id="pdp-spec-dimensions" class="font-medium text-[#1D1815] text-right">-</span>
                   </div>
                 </div>
               </div>
 
               <!-- Accordion 2: Craftsmanship -->
               <div class="accordion-item border border-[#C5A674]/25 rounded bg-white overflow-hidden">
-                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#2A221C]">
+                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#1D1815]">
                   <span>Craftsmanship & Savoir-Faire</span>
                   <span class="accordion-icon text-lg">+</span>
                 </button>
-                <div class="accordion-content px-4 py-3 text-xs text-[#756A5E] border-t border-[#F5F0E6] bg-[#FAF8F5]">
+                <div class="accordion-content px-4 py-3 text-xs text-[#766B5E] border-t border-[#F4F1EA] bg-[#FAF9F5]">
                   <p id="pdp-spec-craftsmanship" class="leading-relaxed">
                     Handcrafted in our ateliers with over 40 hours of precision claw-setting and hand-burnishing.
                   </p>
@@ -911,11 +918,11 @@
 
               <!-- Accordion 3: Shipping & Returns -->
               <div class="accordion-item border border-[#C5A674]/25 rounded bg-white overflow-hidden">
-                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#2A221C]">
+                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#1D1815]">
                   <span>Shipping & Returns</span>
                   <span class="accordion-icon text-lg">+</span>
                 </button>
-                <div class="accordion-content px-4 py-3 text-xs text-[#756A5E] border-t border-[#F5F0E6] bg-[#FAF8F5] space-y-2">
+                <div class="accordion-content px-4 py-3 text-xs text-[#766B5E] border-t border-[#F4F1EA] bg-[#FAF9F5] space-y-2">
                   <p>• Complimentary armored courier delivery on all orders over $10,000 USD (or equivalent).</p>
                   <p>• 30-day return window in pristine condition with original seals and GIA documentation.</p>
                 </div>
@@ -923,11 +930,11 @@
 
               <!-- Accordion 4: Jewellery Care -->
               <div class="accordion-item border border-[#C5A674]/25 rounded bg-white overflow-hidden">
-                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#2A221C]">
+                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-4 py-3 text-left flex items-center justify-between font-sans text-xs uppercase tracking-widest font-semibold text-[#1D1815]">
                   <span>Jewellery Care</span>
                   <span class="accordion-icon text-lg">+</span>
                 </button>
-                <div class="accordion-content px-4 py-3 text-xs text-[#756A5E] border-t border-[#F5F0E6] bg-[#FAF8F5]">
+                <div class="accordion-content px-4 py-3 text-xs text-[#766B5E] border-t border-[#F4F1EA] bg-[#FAF9F5]">
                   <p id="pdp-spec-care" class="leading-relaxed">
                     Clean gently using warm distilled water and soft brush. Complimentary lifetime annual inspection and ultrasonic spa at any flagship salon.
                   </p>
@@ -947,12 +954,12 @@
     <div id="view-about" class="page-view">
       <section class="py-20 max-w-5xl mx-auto px-4 sm:px-8">
         <div class="text-center mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-2">Our Origins</span>
-          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-2">Our Origins</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
             The House of <span class="italic champagne-gold-text font-serif">Jewelux</span>
           </h2>
           <div class="w-16 h-[1px] bg-[#C5A674] mx-auto my-6"></div>
-          <p class="font-serif text-lg sm:text-xl text-[#756A5E] font-light leading-relaxed">
+          <p class="font-serif text-lg sm:text-xl text-[#766B5E] font-light leading-relaxed">
             Born from a desire to harmonize the sculptural minimalism of Italian haute couture with the sacred generational artistry of Indian goldsmiths.
           </p>
         </div>
@@ -961,15 +968,15 @@
           <div class="rounded-xl overflow-hidden shadow-xl border border-[#C5A674]/30 bg-[#F7EEDF] p-4 flex items-center justify-center">
             <img src="brand-identity/house_of_jewelux_official_logo.jpg" alt="HOUSE OF JEWELUX Official Brand Seal" class="w-full max-w-sm h-auto rounded-lg shadow-md">
           </div>
-          <div class="space-y-4 font-sans text-xs sm:text-sm text-[#756A5E] leading-relaxed font-light">
-            <h3 class="font-display text-2xl text-[#2A221C] font-normal">Italian High Fashion × Indian Savoir-Faire</h3>
+          <div class="space-y-4 font-sans text-xs sm:text-sm text-[#766B5E] leading-relaxed font-light">
+            <h3 class="font-display text-2xl text-[#1D1815] font-normal">Italian High Fashion × Indian Savoir-Faire</h3>
             <p>
               In our design studio in Milan, our creative directors draw inspiration from Didone typography, architectural shadows, and the fluid grace of the feminine silhouette. We distill ornamentation to its pure, eternal essence.
             </p>
             <p>
               In our Indian and Geneva workshops, master artisans with lineages spanning four generations bring these sketches to life. Uncut polki diamonds, Basra pearls, and 22-karat hand-chased gold are shaped with methods perfected over centuries.
             </p>
-            <p class="font-serif text-base text-[#8F6E3B] italic">
+            <p class="font-serif text-base text-[#8A6B38] italic">
               "We do not design jewellery to shout; we craft pieces that whisper forever."
             </p>
           </div>
@@ -977,17 +984,17 @@
 
         <!-- 3 Core Pillars -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-[#C5A674]/25 text-center">
-          <div class="p-6 bg-white rounded border border-[#E8E2D5]">
-            <h4 class="font-display text-lg text-[#2A221C] mb-2">100% Conflict-Free</h4>
-            <p class="text-xs text-[#756A5E] leading-relaxed font-light">Every diamond complies strictly with the Kimberley Process, certified with full mine-to-market provenance.</p>
+          <div class="p-6 bg-white rounded border border-[#E8E3D8]">
+            <h4 class="font-display text-lg text-[#1D1815] mb-2">100% Conflict-Free</h4>
+            <p class="text-xs text-[#766B5E] leading-relaxed font-light">Every diamond complies strictly with the Kimberley Process, certified with full mine-to-market provenance.</p>
           </div>
-          <div class="p-6 bg-white rounded border border-[#E8E2D5]">
-            <h4 class="font-display text-lg text-[#2A221C] mb-2">Proprietary Champagne Gold</h4>
-            <p class="text-xs text-[#756A5E] leading-relaxed font-light">Smelted with subtle silver and rose undertones for a soft, warm vanilla sheen that flatters every skin tone.</p>
+          <div class="p-6 bg-white rounded border border-[#E8E3D8]">
+            <h4 class="font-display text-lg text-[#1D1815] mb-2">Proprietary Champagne Gold</h4>
+            <p class="text-xs text-[#766B5E] leading-relaxed font-light">Smelted with subtle silver and rose undertones for a soft, warm vanilla sheen that flatters every skin tone.</p>
           </div>
-          <div class="p-6 bg-white rounded border border-[#E8E2D5]">
-            <h4 class="font-display text-lg text-[#2A221C] mb-2">Generational Legacy</h4>
-            <p class="text-xs text-[#756A5E] leading-relaxed font-light">Every piece carries a permanent archive entry and lifetime complimentary maintenance covenant.</p>
+          <div class="p-6 bg-white rounded border border-[#E8E3D8]">
+            <h4 class="font-display text-lg text-[#1D1815] mb-2">Generational Legacy</h4>
+            <p class="text-xs text-[#766B5E] leading-relaxed font-light">Every piece carries a permanent archive entry and lifetime complimentary maintenance covenant.</p>
           </div>
         </div>
       </section>
@@ -997,11 +1004,11 @@
     <div id="view-craftsmanship" class="page-view">
       <section class="py-20 max-w-6xl mx-auto px-4 sm:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-2">Artisan Mastery</span>
-          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-2">Artisan Mastery</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
             Our <span class="italic champagne-gold-text font-serif">Craftsmanship</span>
           </h2>
-          <p class="text-xs sm:text-sm text-[#756A5E] mt-3 font-light leading-relaxed">
+          <p class="text-xs sm:text-sm text-[#766B5E] mt-3 font-light leading-relaxed">
             The six sacred stages of savoir-faire required to birth a House of Jewelux masterpiece.
           </p>
         </div>
@@ -1016,11 +1023,11 @@
     <div id="view-contact" class="page-view">
       <section class="py-20 max-w-6xl mx-auto px-4 sm:px-8">
         <div class="text-center max-w-2xl mx-auto mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-2">Private Client Services</span>
-          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-2">Private Client Services</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
             Flagship Salons & <span class="italic champagne-gold-text font-serif">Concierge</span>
           </h2>
-          <p class="text-xs sm:text-sm text-[#756A5E] mt-2 font-light">
+          <p class="text-xs sm:text-sm text-[#766B5E] mt-2 font-light">
             Meet with our Senior Gemologists and goldsmiths for private viewing with Champagne service.
           </p>
         </div>
@@ -1029,27 +1036,27 @@
           
           <!-- Contact Form -->
           <div class="lg:col-span-7 bg-white p-8 rounded-xl border border-[#C5A674]/30 shadow-md">
-            <h3 class="font-display text-xl text-[#2A221C] mb-4">Request Private Concierge Consultation</h3>
+            <h3 class="font-display text-xl text-[#1D1815] mb-4">Request Private Concierge Consultation</h3>
             <form onsubmit="submitAppointment(event)" class="space-y-4 text-xs">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block font-medium text-[#2A221C] mb-1">Full Legal Name *</label>
-                  <input type="text" required placeholder="e.g. Victoria Sterling" class="w-full px-3 py-2.5 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+                  <label class="block font-medium text-[#1D1815] mb-1">Full Legal Name *</label>
+                  <input type="text" required placeholder="e.g. Victoria Sterling" class="w-full px-3 py-2.5 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
                 </div>
                 <div>
-                  <label class="block font-medium text-[#2A221C] mb-1">Email Address *</label>
-                  <input type="email" required placeholder="name@domain.com" class="w-full px-3 py-2.5 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+                  <label class="block font-medium text-[#1D1815] mb-1">Email Address *</label>
+                  <input type="email" required placeholder="name@domain.com" class="w-full px-3 py-2.5 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block font-medium text-[#2A221C] mb-1">Telephone / WhatsApp *</label>
-                  <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2.5 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+                  <label class="block font-medium text-[#1D1815] mb-1">Telephone / WhatsApp *</label>
+                  <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2.5 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
                 </div>
                 <div>
-                  <label class="block font-medium text-[#2A221C] mb-1">Preferred Salon Location *</label>
-                  <select required class="w-full px-3 py-2.5 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none bg-white">
+                  <label class="block font-medium text-[#1D1815] mb-1">Preferred Salon Location *</label>
+                  <select required class="w-full px-3 py-2.5 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none bg-white">
                     <option value="geneva">Geneva Atelier (Rue du Rhône)</option>
                     <option value="milan">Milan (Via Montenapoleone)</option>
                     <option value="london">London (New Bond Street, Mayfair)</option>
@@ -1062,8 +1069,8 @@
               </div>
 
               <div>
-                <label class="block font-medium text-[#2A221C] mb-1">Inquiry Topic</label>
-                <select class="w-full px-3 py-2.5 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none bg-white">
+                <label class="block font-medium text-[#1D1815] mb-1">Inquiry Topic</label>
+                <select class="w-full px-3 py-2.5 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none bg-white">
                   <option value="bespoke">Bespoke Bridal or Solitaire Commission</option>
                   <option value="haute">Haute Joaillerie Viewing</option>
                   <option value="temple">Temple Collection Acquisition</option>
@@ -1072,8 +1079,8 @@
               </div>
 
               <div>
-                <label class="block font-medium text-[#2A221C] mb-1">Special Notes or Commission Details</label>
-                <textarea rows="4" placeholder="Tell us about your celebration, desired carat weight, or heirloom stones to reset..." class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none"></textarea>
+                <label class="block font-medium text-[#1D1815] mb-1">Special Notes or Commission Details</label>
+                <textarea rows="4" placeholder="Tell us about your celebration, desired carat weight, or heirloom stones to reset..." class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none"></textarea>
               </div>
 
               <button type="submit" class="btn-luxury-primary w-full py-3.5 text-xs">
@@ -1095,11 +1102,11 @@
     <div id="view-faq" class="page-view">
       <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8">
         <div class="text-center mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-2">Concierge Assistance</span>
-          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#2A221C]">
+          <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-2">Concierge Assistance</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815]">
             Frequently Asked <span class="italic champagne-gold-text font-serif">Questions</span>
           </h2>
-          <p class="text-xs sm:text-sm text-[#756A5E] mt-2 font-light">
+          <p class="text-xs sm:text-sm text-[#766B5E] mt-2 font-light">
             Everything you need to know about our certifications, bespoke processes, delivery, and care.
           </p>
         </div>
@@ -1112,25 +1119,25 @@
 
     <!-- ================= VIEW 9: SHIPPING & DELIVERY ================= -->
     <div id="view-shipping" class="page-view">
-      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#756A5E] leading-relaxed space-y-6">
+      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#766B5E] leading-relaxed space-y-6">
         <div class="border-b border-[#C5A674]/30 pb-6 mb-8">
-          <h2 class="font-display text-3xl text-[#2A221C]">Shipping & White-Glove Delivery Protocol</h2>
-          <p class="text-[11px] text-[#8F6E3B] uppercase tracking-wider mt-1">Armored Transit & Complete Transit Insurance</p>
+          <h2 class="font-display text-3xl text-[#1D1815]">Shipping & White-Glove Delivery Protocol</h2>
+          <p class="text-[11px] text-[#8A6B38] uppercase tracking-wider mt-1">Armored Transit & Complete Transit Insurance</p>
         </div>
         <p>
           Every acquisition from HOUSE OF JEWELUX is handled with sovereign discretion. All shipments are packed in tamper-evident, unmarked vault containers and entrusted exclusively to armored couriers (Brinks or Malca-Amit).
         </p>
-        <h3 class="font-display text-lg text-[#2A221C] pt-2">Complimentary Global Insured Delivery</h3>
+        <h3 class="font-display text-lg text-[#1D1815] pt-2">Complimentary Global Insured Delivery</h3>
         <p>
           We offer complimentary insured delivery worldwide for all orders over $10,000 USD (or equivalent currency). Orders below this threshold incur a flat courier fee of $150 USD.
         </p>
-        <h3 class="font-display text-lg text-[#2A221C] pt-2">Delivery Timelines</h3>
+        <h3 class="font-display text-lg text-[#1D1815] pt-2">Delivery Timelines</h3>
         <ul class="list-disc pl-5 space-y-1.5">
           <li><strong>In-Stock Masterpieces:</strong> Dispatched within 48 business hours with 2-3 business day worldwide transit.</li>
           <li><strong>Sizing Adjustments:</strong> Adds 3-5 business days for master goldsmith sizing.</li>
           <li><strong>Bespoke Commissions:</strong> Typically 4-6 weeks from design sign-off.</li>
         </ul>
-        <h3 class="font-display text-lg text-[#2A221C] pt-2">Customs & Duties</h3>
+        <h3 class="font-display text-lg text-[#1D1815] pt-2">Customs & Duties</h3>
         <p>
           For international shipments, all duties, taxes, and clearance fees are calculated and collected during checkout or handled seamlessly by our private concierge.
         </p>
@@ -1139,21 +1146,21 @@
 
     <!-- ================= VIEW 10: RETURNS & REFUNDS ================= -->
     <div id="view-returns" class="page-view">
-      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#756A5E] leading-relaxed space-y-6">
+      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#766B5E] leading-relaxed space-y-6">
         <div class="border-b border-[#C5A674]/30 pb-6 mb-8">
-          <h2 class="font-display text-3xl text-[#2A221C]">Returns & Refunds Guarantee</h2>
-          <p class="text-[11px] text-[#8F6E3B] uppercase tracking-wider mt-1">30-Day Sovereign Peace of Mind</p>
+          <h2 class="font-display text-3xl text-[#1D1815]">Returns & Refunds Guarantee</h2>
+          <p class="text-[11px] text-[#8A6B38] uppercase tracking-wider mt-1">30-Day Sovereign Peace of Mind</p>
         </div>
         <p>
           We want you to cherish your piece unconditionally. If for any reason your catalogue acquisition does not meet your expectations, we provide a 30-day complimentary return or exchange period.
         </p>
-        <h3 class="font-display text-lg text-[#2A221C] pt-2">Return Conditions</h3>
+        <h3 class="font-display text-lg text-[#1D1815] pt-2">Return Conditions</h3>
         <ul class="list-disc pl-5 space-y-1.5">
           <li>The piece must be in unworn, pristine condition with security seal tags intact.</li>
           <li>All original GIA, Gübelin, or SSEF certificates, warranty cards, and bespoke caskets must be included.</li>
           <li>Custom bespoke commissions (personalized engraved or custom-sized pieces) are non-refundable, but include unlimited complimentary adjustments.</li>
         </ul>
-        <h3 class="font-display text-lg text-[#2A221C] pt-2">How to Initiate a Return</h3>
+        <h3 class="font-display text-lg text-[#1D1815] pt-2">How to Initiate a Return</h3>
         <p>
           Contact concierge@houseofjewelux.com or your dedicated private client advisor. We will dispatch an armored courier to collect the package directly from your residence or office at no charge to you.
         </p>
@@ -1162,10 +1169,10 @@
 
     <!-- ================= VIEW 11: PRIVACY POLICY ================= -->
     <div id="view-privacy" class="page-view">
-      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#756A5E] leading-relaxed space-y-6">
+      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#766B5E] leading-relaxed space-y-6">
         <div class="border-b border-[#C5A674]/30 pb-6 mb-8">
-          <h2 class="font-display text-3xl text-[#2A221C]">Privacy Policy & Discretion Covenant</h2>
-          <p class="text-[11px] text-[#8F6E3B] uppercase tracking-wider mt-1">Swiss Banking Grade Data Confidentiality</p>
+          <h2 class="font-display text-3xl text-[#1D1815]">Privacy Policy & Discretion Covenant</h2>
+          <p class="text-[11px] text-[#8A6B38] uppercase tracking-wider mt-1">Swiss Banking Grade Data Confidentiality</p>
         </div>
         <p>
           HOUSE OF JEWELUX S.A. operates under stringent Swiss Federal Data Protection Act (FADP) and EU GDPR regulations. We treat our clients’ identities with absolute discretion.
@@ -1178,15 +1185,15 @@
 
     <!-- ================= VIEW 12: TERMS & CONDITIONS ================= -->
     <div id="view-terms" class="page-view">
-      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#756A5E] leading-relaxed space-y-6">
+      <section class="py-20 max-w-4xl mx-auto px-4 sm:px-8 font-sans text-xs sm:text-sm text-[#766B5E] leading-relaxed space-y-6">
         <div class="border-b border-[#C5A674]/30 pb-6 mb-8">
-          <h2 class="font-display text-3xl text-[#2A221C]">Terms & Conditions of Sale</h2>
-          <p class="text-[11px] text-[#8F6E3B] uppercase tracking-wider mt-1">Authenticity & Generational Warranty</p>
+          <h2 class="font-display text-3xl text-[#1D1815]">Terms & Conditions of Sale</h2>
+          <p class="text-[11px] text-[#8A6B38] uppercase tracking-wider mt-1">Authenticity & Generational Warranty</p>
         </div>
         <p>
           All creations sold by HOUSE OF JEWELUX are guaranteed authentic, conflict-free, and legally hallmarked according to Swiss and international precious metal standards.
         </p>
-        <h3 class="font-display text-lg text-[#2A221C] pt-2">Lifetime Warranty</h3>
+        <h3 class="font-display text-lg text-[#1D1815] pt-2">Lifetime Warranty</h3>
         <p>
           Each creation is warranted for life against defects in metallurgical alloy or craftsmanship. This includes complimentary annual stone tightening, prong inspection, and ultrasonic cleaning at any of our global boutiques.
         </p>
@@ -1196,22 +1203,22 @@
   </main>
 
   <!-- ================= EDITORIAL LUXURY FOOTER ================= -->
-  <footer class="bg-[#F5F0E6] text-[#756A5E] text-xs pt-20 pb-12 border-t border-[#C5A674]/30">
+  <footer class="bg-[#F4F1EA] text-[#766B5E] text-xs pt-20 pb-12 border-t border-[#C5A674]/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
       
       <!-- Brand & Mission Column -->
       <div class="lg:col-span-2 space-y-4">
         <div class="flex items-center gap-3">
           <img src="brand-identity/jewelux-official-emblem-transparent.png" alt="HOUSE OF JEWELUX Official Emblem" class="w-10 h-10 object-contain filter drop-shadow-sm">
-          <span class="font-display text-xl tracking-[0.24em] text-[#2A221C] uppercase font-medium">HOUSE OF JEWELUX</span>
+          <span class="font-display text-xl tracking-[0.24em] text-[#1D1815] uppercase font-medium">HOUSE OF JEWELUX</span>
         </div>
-        <p class="font-serif italic text-base text-[#8F6E3B]">
+        <p class="font-serif italic text-base text-[#8A6B38]">
           Where Elegance Becomes Eternal.
         </p>
         <p class="text-xs leading-relaxed font-light pr-6">
           Purveyors of rare conflict-free diamonds, certified Colombian emeralds, 925 fine silver, and sacred temple jewellery. Conceived in Milan and handcrafted to transcend generations.
         </p>
-        <div class="pt-2 flex flex-wrap items-center gap-4 text-[10px] text-[#A4988B]">
+        <div class="pt-2 flex flex-wrap items-center gap-4 text-[10px] text-[#9E9386]">
           <span>• RJC Certified Member</span>
           <span>• GIA Alumnus Council</span>
           <span>• Swiss Gem Lab Verified</span>
@@ -1220,68 +1227,68 @@
 
       <!-- SHOP Column -->
       <div>
-        <h5 class="font-display text-xs text-[#2A221C] uppercase tracking-widest font-semibold mb-4">SHOP</h5>
+        <h5 class="font-display text-xs text-[#1D1815] uppercase tracking-widest font-semibold mb-4">SHOP</h5>
         <ul class="space-y-2.5 text-xs font-light">
-          <li><a href="#new-arrivals" class="hover:text-[#2A221C] transition-colors">New Arrivals</a></li>
-          <li><a href="#best-sellers" class="hover:text-[#2A221C] transition-colors">Best Sellers</a></li>
-          <li><a href="#rings" class="hover:text-[#2A221C] transition-colors">Rings & Solitaires</a></li>
-          <li><a href="#earrings" class="hover:text-[#2A221C] transition-colors">Earrings</a></li>
-          <li><a href="#necklaces" class="hover:text-[#2A221C] transition-colors">Necklaces</a></li>
-          <li><a href="#bracelets" class="hover:text-[#2A221C] transition-colors">Bracelets</a></li>
-          <li><a href="#bangles" class="hover:text-[#2A221C] transition-colors">Champagne Bangles</a></li>
-          <li><a href="#silver" class="hover:text-[#2A221C] transition-colors">The Silver Edit</a></li>
-          <li><a href="#temple" class="hover:text-[#2A221C] transition-colors">Temple Jewellery</a></li>
+          <li><a href="#new-arrivals" class="hover:text-[#1D1815] transition-colors">New Arrivals</a></li>
+          <li><a href="#best-sellers" class="hover:text-[#1D1815] transition-colors">Best Sellers</a></li>
+          <li><a href="#rings" class="hover:text-[#1D1815] transition-colors">Rings & Solitaires</a></li>
+          <li><a href="#earrings" class="hover:text-[#1D1815] transition-colors">Earrings</a></li>
+          <li><a href="#necklaces" class="hover:text-[#1D1815] transition-colors">Necklaces</a></li>
+          <li><a href="#bracelets" class="hover:text-[#1D1815] transition-colors">Bracelets</a></li>
+          <li><a href="#bangles" class="hover:text-[#1D1815] transition-colors">Champagne Bangles</a></li>
+          <li><a href="#silver" class="hover:text-[#1D1815] transition-colors">The Silver Edit</a></li>
+          <li><a href="#temple" class="hover:text-[#1D1815] transition-colors">Temple Jewellery</a></li>
         </ul>
       </div>
 
       <!-- ABOUT Column -->
       <div>
-        <h5 class="font-display text-xs text-[#2A221C] uppercase tracking-widest font-semibold mb-4">ABOUT</h5>
+        <h5 class="font-display text-xs text-[#1D1815] uppercase tracking-widest font-semibold mb-4">ABOUT</h5>
         <ul class="space-y-2.5 text-xs font-light">
-          <li><a href="#about" class="hover:text-[#2A221C] transition-colors">Our Story</a></li>
-          <li><a href="#craftsmanship" class="hover:text-[#2A221C] transition-colors">Our Craftsmanship</a></li>
-          <li><a href="#collections" class="hover:text-[#2A221C] transition-colors">The Collections</a></li>
-          <li><a href="#bespoke-studio" class="hover:text-[#2A221C] transition-colors">Bespoke Atelier</a></li>
-          <li><a href="#contact" class="hover:text-[#2A221C] transition-colors">Flagship Salons</a></li>
+          <li><a href="#about" class="hover:text-[#1D1815] transition-colors">Our Story</a></li>
+          <li><a href="#craftsmanship" class="hover:text-[#1D1815] transition-colors">Our Craftsmanship</a></li>
+          <li><a href="#collections" class="hover:text-[#1D1815] transition-colors">The Collections</a></li>
+          <li><a href="#bespoke-studio" class="hover:text-[#1D1815] transition-colors">Bespoke Atelier</a></li>
+          <li><a href="#contact" class="hover:text-[#1D1815] transition-colors">Flagship Salons</a></li>
         </ul>
       </div>
 
       <!-- CUSTOMER CARE & LEGAL Column -->
       <div>
-        <h5 class="font-display text-xs text-[#2A221C] uppercase tracking-widest font-semibold mb-4">CUSTOMER CARE</h5>
+        <h5 class="font-display text-xs text-[#1D1815] uppercase tracking-widest font-semibold mb-4">CUSTOMER CARE</h5>
         <ul class="space-y-2.5 text-xs font-light mb-6">
-          <li><a href="#contact" class="hover:text-[#2A221C] transition-colors">Contact Concierge</a></li>
-          <li><a href="#faq" class="hover:text-[#2A221C] transition-colors">FAQ</a></li>
-          <li><a href="#shipping" class="hover:text-[#2A221C] transition-colors">Shipping & Delivery</a></li>
-          <li><a href="#returns" class="hover:text-[#2A221C] transition-colors">Returns & Refunds</a></li>
+          <li><a href="#contact" class="hover:text-[#1D1815] transition-colors">Contact Concierge</a></li>
+          <li><a href="#faq" class="hover:text-[#1D1815] transition-colors">FAQ</a></li>
+          <li><a href="#shipping" class="hover:text-[#1D1815] transition-colors">Shipping & Delivery</a></li>
+          <li><a href="#returns" class="hover:text-[#1D1815] transition-colors">Returns & Refunds</a></li>
         </ul>
 
-        <h5 class="font-display text-xs text-[#2A221C] uppercase tracking-widest font-semibold mb-2">LEGAL</h5>
+        <h5 class="font-display text-xs text-[#1D1815] uppercase tracking-widest font-semibold mb-2">LEGAL</h5>
         <ul class="space-y-2 text-xs font-light">
-          <li><a href="#privacy" class="hover:text-[#2A221C] transition-colors">Privacy Policy</a></li>
-          <li><a href="#terms" class="hover:text-[#2A221C] transition-colors">Terms & Conditions</a></li>
+          <li><a href="#privacy" class="hover:text-[#1D1815] transition-colors">Privacy Policy</a></li>
+          <li><a href="#terms" class="hover:text-[#1D1815] transition-colors">Terms & Conditions</a></li>
         </ul>
       </div>
 
     </div>
 
     <!-- Social Links & Bottom Copyright -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-8 border-t border-[#C5A674]/20 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#A4988B]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-8 border-t border-[#C5A674]/20 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#9E9386]">
       <p>© 2026 HOUSE OF JEWELUX S.A. All Rights Reserved. Geneva • Milan • London • Paris • New York • Dubai.</p>
 
       <!-- Social Icons: Instagram, Facebook, Pinterest, YouTube, LinkedIn, X -->
-      <div class="flex items-center gap-4 text-[#756A5E]">
-        <a href="#" class="hover:text-[#8F6E3B] transition-colors" title="Instagram">Instagram</a>
+      <div class="flex items-center gap-4 text-[#766B5E]">
+        <a href="#" class="hover:text-[#8A6B38] transition-colors" title="Instagram">Instagram</a>
         <span>•</span>
-        <a href="#" class="hover:text-[#8F6E3B] transition-colors" title="Facebook">Facebook</a>
+        <a href="#" class="hover:text-[#8A6B38] transition-colors" title="Facebook">Facebook</a>
         <span>•</span>
-        <a href="#" class="hover:text-[#8F6E3B] transition-colors" title="Pinterest">Pinterest</a>
+        <a href="#" class="hover:text-[#8A6B38] transition-colors" title="Pinterest">Pinterest</a>
         <span>•</span>
-        <a href="#" class="hover:text-[#8F6E3B] transition-colors" title="YouTube">YouTube</a>
+        <a href="#" class="hover:text-[#8A6B38] transition-colors" title="YouTube">YouTube</a>
         <span>•</span>
-        <a href="#" class="hover:text-[#8F6E3B] transition-colors" title="LinkedIn">LinkedIn</a>
+        <a href="#" class="hover:text-[#8A6B38] transition-colors" title="LinkedIn">LinkedIn</a>
         <span>•</span>
-        <a href="#" class="hover:text-[#8F6E3B] transition-colors" title="X">X</a>
+        <a href="#" class="hover:text-[#8A6B38] transition-colors" title="X">X</a>
       </div>
     </div>
   </footer>
@@ -1291,31 +1298,31 @@
     <div id="cart-drawer-panel" class="drawer-panel w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between" onclick="event.stopPropagation()">
       
       <!-- Drawer Header -->
-      <div class="p-6 border-b border-[#E8E2D5] flex items-center justify-between bg-[#FAF8F5]">
+      <div class="p-6 border-b border-[#E8E3D8] flex items-center justify-between bg-[#FAF9F5]">
         <div>
-          <h3 class="font-display text-xl text-[#2A221C]">Your Shopping Bag</h3>
-          <p class="text-[10px] text-[#8F6E3B] uppercase tracking-wider">House of Jewelux Acquisition</p>
+          <h3 class="font-display text-xl text-[#1D1815]">Your Shopping Bag</h3>
+          <p class="text-[10px] text-[#8A6B38] uppercase tracking-wider">House of Jewelux Acquisition</p>
         </div>
-        <button onclick="closeCartDrawer()" class="text-[#756A5E] hover:text-[#2A221C] p-2" aria-label="Close cart">
+        <button onclick="closeCartDrawer()" class="text-[#766B5E] hover:text-[#1D1815] p-2" aria-label="Close cart">
           ✕
         </button>
       </div>
 
       <!-- Insured Delivery Progress Bar -->
-      <div class="px-6 py-3 bg-[#F5F0E6] border-b border-[#E8E2D5] text-xs">
-        <div class="w-full bg-[#E8E2D5] h-1.5 rounded-full overflow-hidden mb-1.5">
-          <div id="shipping-progress-fill" class="bg-[#8F6E3B] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+      <div class="px-6 py-3 bg-[#F4F1EA] border-b border-[#E8E3D8] text-xs">
+        <div class="w-full bg-[#E8E3D8] h-1.5 rounded-full overflow-hidden mb-1.5">
+          <div id="shipping-progress-fill" class="bg-[#8A6B38] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <p id="shipping-progress-text" class="text-[10px] text-[#756A5E]">Complimentary Insured Courier Progress</p>
+        <p id="shipping-progress-text" class="text-[10px] text-[#766B5E]">Complimentary Insured Courier Progress</p>
       </div>
 
       <!-- Cart Items List -->
-      <div id="cart-items" class="p-6 overflow-y-auto flex-grow divide-y divide-[#F5F0E6]">
+      <div id="cart-items" class="p-6 overflow-y-auto flex-grow divide-y divide-[#F4F1EA]">
         <!-- Injected by app.js -->
       </div>
 
       <!-- Drawer Footer & Checkout -->
-      <div class="p-6 border-t border-[#E8E2D5] bg-[#FAF8F5] space-y-4">
+      <div class="p-6 border-t border-[#E8E3D8] bg-[#FAF9F5] space-y-4">
         
         <!-- Promo Privilege Code Field -->
         <div class="flex gap-2">
@@ -1323,18 +1330,18 @@
             id="promo-input" 
             type="text" 
             placeholder="Privilege Code (e.g. JEWELUX10)" 
-            class="flex-grow px-3 py-2 text-xs border border-[#C5A674]/40 rounded uppercase placeholder:normal-case focus:outline-none focus:border-[#8F6E3B] bg-white"
+            class="flex-grow px-3 py-2 text-xs border border-[#C5A674]/40 rounded uppercase placeholder:normal-case focus:outline-none focus:border-[#8A6B38] bg-white"
           />
-          <button onclick="applyPromoCode()" class="px-4 py-2 bg-[#2A221C] text-white hover:bg-[#8F6E3B] rounded text-[10px] tracking-wider uppercase font-medium transition">
+          <button onclick="applyPromoCode()" class="px-4 py-2 bg-[#1D1815] text-white hover:bg-[#8A6B38] rounded text-[10px] tracking-wider uppercase font-medium transition">
             Apply
           </button>
         </div>
 
         <!-- Totals Breakdown -->
-        <div class="space-y-1.5 text-xs text-[#756A5E]">
+        <div class="space-y-1.5 text-xs text-[#766B5E]">
           <div class="flex justify-between">
             <span>Subtotal</span>
-            <span id="cart-subtotal" class="font-medium text-[#2A221C]">$0</span>
+            <span id="cart-subtotal" class="font-medium text-[#1D1815]">$0</span>
           </div>
           <div id="cart-discount-row" class="flex justify-between text-[#10B981] hidden">
             <span>VIP Privilege Courtesy</span>
@@ -1342,9 +1349,9 @@
           </div>
           <div class="flex justify-between">
             <span>White-Glove Insured Courier</span>
-            <span class="text-[#8F6E3B] font-medium">Complimentary</span>
+            <span class="text-[#8A6B38] font-medium">Complimentary</span>
           </div>
-          <div class="flex justify-between pt-2 border-t border-[#E8E2D5] text-base font-display text-[#2A221C] font-semibold">
+          <div class="flex justify-between pt-2 border-t border-[#E8E3D8] text-base font-display text-[#1D1815] font-semibold">
             <span>Total Acquisition</span>
             <span id="cart-total">$0</span>
           </div>
@@ -1353,7 +1360,7 @@
         <button onclick="simulateCheckout()" class="btn-luxury-primary w-full py-3.5 text-xs">
           Proceed to Insured Acquisition
         </button>
-        <p class="text-[9px] text-center text-[#A4988B]">Encrypted 256-bit Swiss bank-grade acquisition security</p>
+        <p class="text-[9px] text-center text-[#9E9386]">Encrypted 256-bit Swiss bank-grade acquisition security</p>
       </div>
 
     </div>
@@ -1363,21 +1370,21 @@
   <div id="wishlist-drawer-backdrop" class="drawer-backdrop fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex justify-end" onclick="closeWishlistDrawer()">
     <div id="wishlist-drawer-panel" class="drawer-panel w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between" onclick="event.stopPropagation()">
       
-      <div class="p-6 border-b border-[#E8E2D5] flex items-center justify-between bg-[#FAF8F5]">
+      <div class="p-6 border-b border-[#E8E3D8] flex items-center justify-between bg-[#FAF9F5]">
         <div>
-          <h3 class="font-display text-xl text-[#2A221C]">Your Saved Heirlooms</h3>
-          <p class="text-[10px] text-[#8F6E3B] uppercase tracking-wider">Cherished Wishlist</p>
+          <h3 class="font-display text-xl text-[#1D1815]">Your Saved Heirlooms</h3>
+          <p class="text-[10px] text-[#8A6B38] uppercase tracking-wider">Cherished Wishlist</p>
         </div>
-        <button onclick="closeWishlistDrawer()" class="text-[#756A5E] hover:text-[#2A221C] p-2" aria-label="Close wishlist">
+        <button onclick="closeWishlistDrawer()" class="text-[#766B5E] hover:text-[#1D1815] p-2" aria-label="Close wishlist">
           ✕
         </button>
       </div>
 
-      <div id="wishlist-items" class="p-6 overflow-y-auto flex-grow divide-y divide-[#F5F0E6]">
+      <div id="wishlist-items" class="p-6 overflow-y-auto flex-grow divide-y divide-[#F4F1EA]">
         <!-- Injected by app.js -->
       </div>
 
-      <div class="p-6 border-t border-[#E8E2D5] bg-[#FAF8F5]">
+      <div class="p-6 border-t border-[#E8E3D8] bg-[#FAF9F5]">
         <button onclick="closeWishlistDrawer(); openAppointmentModal('Private viewing requested for all Wishlist pieces');" class="btn-luxury-secondary w-full py-3 text-xs">
           Book Private Viewing For Wishlist
         </button>
@@ -1390,14 +1397,14 @@
   <div id="quick-view-modal" class="modal-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="closeQuickView()">
     <div class="modal-content bg-white rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-[#C5A674]/30 relative max-h-[90vh] flex flex-col md:flex-row" onclick="event.stopPropagation()">
       
-      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-[#2A221C] flex items-center justify-center shadow" aria-label="Close modal">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-[#1D1815] flex items-center justify-center shadow" aria-label="Close modal">
         ✕
       </button>
 
       <!-- Image Half -->
-      <div class="md:w-1/2 bg-[#FAF8F5] relative min-h-[280px] md:min-h-full">
+      <div class="md:w-1/2 bg-[#FAF9F5] relative min-h-[280px] md:min-h-full">
         <img id="qv-img" src="" alt="Gemstone Inspection" class="w-full h-full object-cover">
-        <span id="qv-badge" class="absolute top-4 left-4 bg-white/95 text-[#8F6E3B] text-[9px] tracking-widest uppercase font-semibold px-3 py-1 rounded-full border border-[#C5A674]/40 shadow-sm">
+        <span id="qv-badge" class="absolute top-4 left-4 bg-white/95 text-[#8A6B38] text-[9px] tracking-widest uppercase font-semibold px-3 py-1 rounded-full border border-[#C5A674]/40 shadow-sm">
           Badge
         </span>
       </div>
@@ -1405,33 +1412,33 @@
       <!-- Content Half -->
       <div class="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
         <div>
-          <span id="qv-metal" class="text-[10px] uppercase tracking-widest text-[#8F6E3B] font-semibold block mb-1">Metal</span>
-          <h3 id="qv-title" class="font-display text-2xl text-[#2A221C] font-normal leading-tight">Masterpiece</h3>
-          <p id="qv-price" class="font-display text-2xl font-semibold text-[#2A221C] mt-2">$0</p>
-          <p id="qv-description" class="text-xs text-[#756A5E] mt-3 leading-relaxed font-light">Description</p>
+          <span id="qv-metal" class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold block mb-1">Metal</span>
+          <h3 id="qv-title" class="font-display text-2xl text-[#1D1815] font-normal leading-tight">Masterpiece</h3>
+          <p id="qv-price" class="font-display text-2xl font-semibold text-[#1D1815] mt-2">$0</p>
+          <p id="qv-description" class="text-xs text-[#766B5E] mt-3 leading-relaxed font-light">Description</p>
 
           <!-- Specifications Box -->
-          <div class="mt-5 border border-[#E8E2D5] rounded-lg p-3 bg-[#FAF8F5] text-xs space-y-1.5 font-sans">
-            <div class="flex justify-between border-b border-[#E8E2D5] pb-1">
-              <span class="text-[#A4988B]">Stone:</span>
-              <span id="qv-stone" class="font-medium text-[#2A221C] text-right">-</span>
+          <div class="mt-5 border border-[#E8E3D8] rounded-lg p-3 bg-[#FAF9F5] text-xs space-y-1.5 font-sans">
+            <div class="flex justify-between border-b border-[#E8E3D8] pb-1">
+              <span class="text-[#9E9386]">Stone:</span>
+              <span id="qv-stone" class="font-medium text-[#1D1815] text-right">-</span>
             </div>
-            <div class="flex justify-between border-b border-[#E8E2D5] pb-1">
-              <span class="text-[#A4988B]">Cut:</span>
-              <span id="qv-cut" class="font-medium text-[#2A221C] text-right">-</span>
+            <div class="flex justify-between border-b border-[#E8E3D8] pb-1">
+              <span class="text-[#9E9386]">Cut:</span>
+              <span id="qv-cut" class="font-medium text-[#1D1815] text-right">-</span>
             </div>
-            <div class="flex justify-between border-b border-[#E8E2D5] pb-1">
-              <span class="text-[#A4988B]">Clarity:</span>
-              <span id="qv-clarity" class="font-medium text-[#2A221C] text-right">-</span>
+            <div class="flex justify-between border-b border-[#E8E3D8] pb-1">
+              <span class="text-[#9E9386]">Clarity:</span>
+              <span id="qv-clarity" class="font-medium text-[#1D1815] text-right">-</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-[#A4988B]">Lab Dossier:</span>
-              <span id="qv-certificate" class="font-medium text-[#8F6E3B] text-right">-</span>
+              <span class="text-[#9E9386]">Lab Dossier:</span>
+              <span id="qv-certificate" class="font-medium text-[#8A6B38] text-right">-</span>
             </div>
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-[#E8E2D5] flex gap-3">
+        <div class="mt-6 pt-4 border-t border-[#E8E3D8] flex gap-3">
           <button id="qv-add-btn" class="btn-luxury-primary flex-grow py-3 text-xs">
             Add to Shopping Bag
           </button>
@@ -1448,22 +1455,22 @@
   <!-- ================= LIVE SEARCH OVERLAY MODAL ================= -->
   <div id="search-modal" class="modal-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start justify-center p-4 pt-20" onclick="closeSearchModal()">
     <div class="modal-content bg-white rounded-xl max-w-2xl w-full overflow-hidden shadow-2xl border border-[#C5A674]/30" onclick="event.stopPropagation()">
-      <div class="p-4 border-b border-[#E8E2D5] flex items-center gap-3 bg-[#FAF8F5]">
-        <svg class="w-5 h-5 text-[#8F6E3B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="p-4 border-b border-[#E8E3D8] flex items-center gap-3 bg-[#FAF9F5]">
+        <svg class="w-5 h-5 text-[#8A6B38]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
         <input 
           id="search-input" 
           type="text" 
           placeholder="Search rings, emeralds, temple jewellery, tennis bracelets..." 
-          class="flex-grow text-[#2A221C] placeholder-[#A4988B] outline-none text-sm font-sans bg-transparent"
+          class="flex-grow text-[#1D1815] placeholder-[#9E9386] outline-none text-sm font-sans bg-transparent"
         />
-        <button onclick="closeSearchModal()" class="text-[#756A5E] hover:text-[#2A221C] text-sm px-2">
+        <button onclick="closeSearchModal()" class="text-[#766B5E] hover:text-[#1D1815] text-sm px-2">
           ✕
         </button>
       </div>
 
-      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4 divide-y divide-[#F5F0E6]">
+      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4 divide-y divide-[#F4F1EA]">
         <!-- Populated dynamically -->
       </div>
     </div>
@@ -1473,36 +1480,36 @@
   <div id="appointment-modal" class="modal-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="closeAppointmentModal()">
     <div class="modal-content bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[#C5A674]/30 relative max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
       
-      <button onclick="closeAppointmentModal()" class="absolute top-4 right-4 text-[#756A5E] hover:text-[#2A221C] p-2" aria-label="Close appointment modal">
+      <button onclick="closeAppointmentModal()" class="absolute top-4 right-4 text-[#766B5E] hover:text-[#1D1815] p-2" aria-label="Close appointment modal">
         ✕
       </button>
 
       <div class="text-center mb-6">
-        <span class="text-[9px] uppercase tracking-[0.3em] text-[#8F6E3B] font-semibold block mb-1">Private Atelier Appointment</span>
-        <h3 class="font-display text-2xl text-[#2A221C]">Schedule Salon Consultation</h3>
-        <p class="text-[#756A5E] text-xs mt-1">Converse directly with a Master Goldsmith and Senior Gemologist.</p>
+        <span class="text-[9px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">Private Atelier Appointment</span>
+        <h3 class="font-display text-2xl text-[#1D1815]">Schedule Salon Consultation</h3>
+        <p class="text-[#766B5E] text-xs mt-1">Converse directly with a Master Goldsmith and Senior Gemologist.</p>
       </div>
 
       <form onsubmit="submitAppointment(event)" class="space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-medium text-[#2A221C] mb-1">Full Legal Name *</label>
-            <input type="text" required placeholder="e.g. Eleanor Vance" class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+            <label class="block font-medium text-[#1D1815] mb-1">Full Legal Name *</label>
+            <input type="text" required placeholder="e.g. Eleanor Vance" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
           </div>
           <div>
-            <label class="block font-medium text-[#2A221C] mb-1">Email Address *</label>
-            <input type="email" required placeholder="name@domain.com" class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+            <label class="block font-medium text-[#1D1815] mb-1">Email Address *</label>
+            <input type="email" required placeholder="name@domain.com" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-medium text-[#2A221C] mb-1">Phone / WhatsApp *</label>
-            <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+            <label class="block font-medium text-[#1D1815] mb-1">Phone / WhatsApp *</label>
+            <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
           </div>
           <div>
-            <label class="block font-medium text-[#2A221C] mb-1">Preferred Location *</label>
-            <select required class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none bg-white">
+            <label class="block font-medium text-[#1D1815] mb-1">Preferred Location *</label>
+            <select required class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none bg-white">
               <option value="geneva">Geneva Atelier (Rue du Rhône)</option>
               <option value="milan">Milan (Via Montenapoleone)</option>
               <option value="london">London (Mayfair)</option>
@@ -1515,8 +1522,8 @@
         </div>
 
         <div>
-          <label class="block font-medium text-[#2A221C] mb-1">Commission or Piece Notes</label>
-          <textarea id="appointment-notes" rows="3" placeholder="Tell us about desired diamond specs, heirloom resetting, or celebration dates..." class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none"></textarea>
+          <label class="block font-medium text-[#1D1815] mb-1">Commission or Piece Notes</label>
+          <textarea id="appointment-notes" rows="3" placeholder="Tell us about desired diamond specs, heirloom resetting, or celebration dates..." class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none"></textarea>
         </div>
 
         <button type="submit" class="btn-luxury-primary w-full py-3.5 text-xs">
@@ -1530,30 +1537,30 @@
   <!-- ================= CHECKOUT CONCIERGE PROTOCOL MODAL ================= -->
   <div id="checkout-modal" class="modal-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="closeCheckoutModal()">
     <div class="modal-content bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[#C5A674]/30 text-center" onclick="event.stopPropagation()">
-      <div class="w-14 h-14 rounded-full bg-[#FAF8F5] text-[#8F6E3B] border border-[#C5A674]/40 flex items-center justify-center mx-auto mb-4">
+      <div class="w-14 h-14 rounded-full bg-[#FAF9F5] text-[#8A6B38] border border-[#C5A674]/40 flex items-center justify-center mx-auto mb-4">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
         </svg>
       </div>
 
-      <span class="text-[9px] uppercase tracking-widest text-[#8F6E3B] font-semibold">White-Glove Acquisition Protocol</span>
-      <h3 class="font-display text-2xl text-[#2A221C] mt-1">Complete Insured Inquiry</h3>
-      <p class="text-xs text-[#756A5E] mt-2 leading-relaxed">
+      <span class="text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold">White-Glove Acquisition Protocol</span>
+      <h3 class="font-display text-2xl text-[#1D1815] mt-1">Complete Insured Inquiry</h3>
+      <p class="text-xs text-[#766B5E] mt-2 leading-relaxed">
         Due to the certified rarity and insured value of HOUSE OF JEWELUX pieces, your Private Client Advisor will finalize encrypted bank wire or concierge payment directly with you.
       </p>
 
       <form onsubmit="confirmCheckout(event)" class="mt-6 space-y-3 text-left text-xs">
         <div>
-          <label class="block text-[#2A221C] font-medium mb-1">Principal Name</label>
-          <input type="text" required placeholder="Full Legal Name" class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+          <label class="block text-[#1D1815] font-medium mb-1">Principal Name</label>
+          <input type="text" required placeholder="Full Legal Name" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
         </div>
         <div>
-          <label class="block text-[#2A221C] font-medium mb-1">Telephone / WhatsApp</label>
-          <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+          <label class="block text-[#1D1815] font-medium mb-1">Telephone / WhatsApp</label>
+          <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
         </div>
         <div>
-          <label class="block text-[#2A221C] font-medium mb-1">Secure Delivery Address</label>
-          <input type="text" required placeholder="Suite, Residence, City, Country" class="w-full px-3 py-2 border border-[#E8E2D5] rounded focus:border-[#C5A674] outline-none">
+          <label class="block text-[#1D1815] font-medium mb-1">Secure Delivery Address</label>
+          <input type="text" required placeholder="Suite, Residence, City, Country" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
         </div>
         <button type="submit" class="btn-luxury-primary w-full py-3.5 text-xs mt-2">
           Place Insured Concierge Order
@@ -1565,26 +1572,26 @@
   <!-- ================= SIZE GUIDE MODAL ================= -->
   <div id="size-guide-modal" class="modal-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="closeSizeGuideModal()">
     <div class="modal-content bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#C5A674]/30" onclick="event.stopPropagation()">
-      <div class="flex items-center justify-between border-b border-[#E8E2D5] pb-4 mb-4">
+      <div class="flex items-center justify-between border-b border-[#E8E3D8] pb-4 mb-4">
         <div>
-          <h3 class="font-display text-xl text-[#2A221C]">Ring & Bracelet Size Guide</h3>
-          <p class="text-[10px] text-[#8F6E3B] uppercase tracking-wider">Atelier Precision Fitting</p>
+          <h3 class="font-display text-xl text-[#1D1815]">Ring & Bracelet Size Guide</h3>
+          <p class="text-[10px] text-[#8A6B38] uppercase tracking-wider">Atelier Precision Fitting</p>
         </div>
-        <button onclick="closeSizeGuideModal()" class="text-[#756A5E] hover:text-[#2A221C] text-sm">✕</button>
+        <button onclick="closeSizeGuideModal()" class="text-[#766B5E] hover:text-[#1D1815] text-sm">✕</button>
       </div>
 
-      <div class="text-xs text-[#756A5E] space-y-3 font-sans">
+      <div class="text-xs text-[#766B5E] space-y-3 font-sans">
         <p>All HOUSE OF JEWELUX rings include complimentary lifetime resizing within 2 full sizes.</p>
         <div class="overflow-x-auto">
-          <table class="w-full text-left border border-[#E8E2D5] rounded">
-            <thead class="bg-[#FAF8F5] text-[10px] uppercase tracking-wider text-[#2A221C]">
+          <table class="w-full text-left border border-[#E8E3D8] rounded">
+            <thead class="bg-[#FAF9F5] text-[10px] uppercase tracking-wider text-[#1D1815]">
               <tr>
-                <th class="p-2 border-b border-[#E8E2D5]">US Size</th>
-                <th class="p-2 border-b border-[#E8E2D5]">EU Circumference</th>
-                <th class="p-2 border-b border-[#E8E2D5]">UK / Australia</th>
+                <th class="p-2 border-b border-[#E8E3D8]">US Size</th>
+                <th class="p-2 border-b border-[#E8E3D8]">EU Circumference</th>
+                <th class="p-2 border-b border-[#E8E3D8]">UK / Australia</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-[#E8E2D5]">
+            <tbody class="divide-y divide-[#E8E3D8]">
               <tr><td class="p-2">US 5</td><td class="p-2">49.3 mm</td><td class="p-2">J 1/2</td></tr>
               <tr><td class="p-2">US 6</td><td class="p-2">51.9 mm</td><td class="p-2">L 1/2</td></tr>
               <tr><td class="p-2">US 7</td><td class="p-2">54.4 mm</td><td class="p-2">N 1/2</td></tr>
@@ -1592,7 +1599,7 @@
             </tbody>
           </table>
         </div>
-        <p class="text-[10px] text-[#A4988B] pt-2">Need a custom measurement kit? Request complimentary ring sizing sizer delivered to your home.</p>
+        <p class="text-[10px] text-[#9E9386] pt-2">Need a custom measurement kit? Request complimentary ring sizing sizer delivered to your home.</p>
       </div>
     </div>
   </div>

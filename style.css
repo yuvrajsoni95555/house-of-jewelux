@@ -9,37 +9,42 @@
   --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Primary Atmosphere: Warm Vanilla Ivory */
-  --vanilla-ivory: #FAF8F5;
-  --vanilla-soft: #F5F0E6;
-  --vanilla-warm: #FAF6EE;
-  --vanilla-deep: #EDE6D8;
+  --warm-white: #FAF9F5;
+  --warm-white-light: #FDFCF9;
+  --warm-white-subtle: #F4F1EA;
+  --warm-white-border: #E8E3D8;
+  --card-surface: #FFFFFF;
+  --vanilla-ivory: #FAF9F5;
+  --vanilla-soft: #F4F1EA;
+  --vanilla-warm: #FDFCF9;
+  --vanilla-deep: #EBE5D9;
   --alabaster-pure: #FFFFFF;
 
   /* Metallic Finish: Multi-Stop Champagne Gold (Italian Haute Joaillerie) */
   --champagne-gold: #C5A674;
-  --champagne-light: #F5EBDA;
+  --champagne-light: #F6EEDA;
   --champagne-shimmer: #DECCA8;
   --champagne-deep: #B6925B;
-  --champagne-dark: #8F6E3B;
+  --champagne-dark: #8A6B38;
 
-  --gold-gradient: linear-gradient(135deg, #F5EBDA 0%, #DECCA8 25%, #C5A674 55%, #B6925B 80%, #8F6E3B 100%);
+  --gold-gradient: linear-gradient(135deg, #F6EEDA 0%, #DECCA8 25%, #C5A674 55%, #B6925B 80%, #8A6B38 100%);
   --gold-gradient-hover: linear-gradient(135deg, #FFF8EE 0%, #EAD8AE 30%, #D2B585 60%, #9F783E 100%);
   --gold-gradient-subtle: linear-gradient(135deg, rgba(245, 235, 218, 0.4) 0%, rgba(197, 166, 116, 0.25) 100%);
 
   /* Contrast & Editorial Typographic Tones: Soft Truffle / Espresso */
-  --truffle-dark: #2A221C;
-  --truffle-charcoal: #1E1814;
-  --truffle-espresso: #3D3229;
-  --taupe-muted: #756A5E;
-  --taupe-light: #A4988B;
+  --truffle-dark: #1D1815;
+  --truffle-charcoal: #14100D;
+  --truffle-espresso: #332B25;
+  --taupe-muted: #766B5E;
+  --taupe-light: #9E9386;
 
   /* Fine Borders & Halos */
   --border-gold-subtle: rgba(197, 166, 116, 0.28);
   --border-gold-medium: rgba(197, 166, 116, 0.45);
-  --border-vanilla: #E8E2D5;
+  --border-vanilla: #E8E3D8;
 
   /* Glassmorphic Warm Vanilla Surfaces */
-  --glass-vanilla: rgba(250, 248, 245, 0.92);
+  --glass-vanilla: rgba(250, 249, 245, 0.92);
   --glass-card: rgba(255, 255, 255, 0.82);
   --glass-shadow: 0 20px 40px -15px rgba(61, 50, 41, 0.08), 0 0 25px rgba(197, 166, 116, 0.06);
   --card-hover-shadow: 0 24px 50px -12px rgba(61, 50, 41, 0.12), 0 0 30px rgba(197, 166, 116, 0.15);
@@ -213,7 +218,7 @@ body {
 
 /* Header & Sticky Styling */
 .header-glass {
-  background: rgba(250, 248, 245, 0.94);
+  background: rgba(250, 249, 245, 0.94);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border-gold-subtle);
@@ -221,7 +226,7 @@ body {
 }
 
 .header-scrolled {
-  background: rgba(250, 248, 245, 0.98);
+  background: rgba(250, 249, 245, 0.98);
   box-shadow: 0 10px 30px -10px rgba(42, 34, 28, 0.08);
   border-bottom: 1px solid var(--border-gold-medium);
 }
@@ -264,7 +269,7 @@ body {
 .product-image-container {
   position: relative;
   overflow: hidden;
-  background-color: #F8F5EE;
+  background: radial-gradient(circle at center, #FFFFFF 0%, #F8F6F0 100%);
 }
 .product-image-container img.main-img,
 .product-image-container img.hover-img {
@@ -414,6 +419,6 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(250, 248, 245, 0) 60%, rgba(250, 248, 245, 0.8) 100%);
+  background: linear-gradient(180deg, rgba(250, 249, 245, 0) 60%, rgba(250, 249, 245, 0.8) 100%);
   pointer-events: none;
 }
