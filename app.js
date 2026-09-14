@@ -1902,31 +1902,31 @@ Could we schedule a private atelier consultation to commission this creation?`;
         { x: -w, y: yGirdle, z: -l + gc }
       ];
 
-      // 1. Table Fan: must be CCW to face upward (+Y)
+      // 1. Table Fan
       for (let i = 1; i < 7; i++) {
         addTri(
           tablePts[0].x, tablePts[0].y, tablePts[0].z,
-          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z,
-          tablePts[i].x, tablePts[i].y, tablePts[i].z
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
         );
       }
 
-      // 2. Crown Trapezoids: both triangles wound CCW facing outward
+      // 2. Crown Trapezoids (Two triangles per side)
       for (let i = 0; i < 8; i++) {
         const next = (i + 1) % 8;
         addTri(
           tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
         );
         addTri(
           tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          tablePts[next].x, tablePts[next].y, tablePts[next].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          tablePts[next].x, tablePts[next].y, tablePts[next].z
         );
       }
 
-      // 3. Pavilion Mains to Keel: wound CCW facing outward
+      // 3. Pavilion Mains to Keel
       const keelZ1 = -l * 0.4;
       const keelZ2 = l * 0.4;
 
@@ -1936,8 +1936,8 @@ Could we schedule a private atelier consultation to commission this creation?`;
         const targetZ = midZ < 0 ? keelZ1 : keelZ2;
         addTri(
           0, yCulet, targetZ,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
         );
       }
 
