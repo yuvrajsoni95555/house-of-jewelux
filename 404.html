@@ -2,8 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Page Not Found | HOUSE OF JEWELUX</title>
-  <meta http-equiv="refresh" content="3; url=/shop">
+  <title>Redirecting | HOUSE OF JEWELUX</title>
+  <script>
+    // Smart GitHub Pages Path Router
+    (function() {
+      var path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+      if (path === 'about') {
+        window.location.replace('/about/');
+        return;
+      }
+      var spaRoutes = ['craftsmanship', 'contact', 'faq', 'shipping', 'returns', 'privacy', 'terms', 'collections', 'studio', 'admin', 'silver', 'couples', 'rings', 'earrings', 'bracelets', 'necklaces', 'brooches'];
+      if (spaRoutes.indexOf(path) !== -1) {
+        window.location.replace('/#' + path);
+        return;
+      }
+      if (path.indexOf('product-') === 0) {
+        window.location.replace('/#' + path);
+        return;
+      }
+    })();
+  </script>
+  <meta http-equiv="refresh" content="2; url=/shop">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -13,7 +32,7 @@
       <img src="/brand-identity/jewelux-official-emblem-transparent.png" alt="Emblem" class="w-full h-full object-contain">
     </div>
     <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block">House of Jewelux</span>
-    <h1 class="font-display text-3xl font-light">Redirecting to Catalogue...</h1>
+    <h1 class="font-display text-3xl font-light">Redirecting to Atelier...</h1>
     <p class="text-xs text-[#766B5E]">The requested piece or salon is being retrieved. If you are not redirected automatically, please click below.</p>
     <a href="/shop" class="btn-luxury-primary py-3 px-6 text-xs inline-block">Visit Catalogue (/shop) →</a>
   </div>

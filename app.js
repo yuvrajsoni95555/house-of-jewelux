@@ -156,8 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!el) return;
       if (name === targetName) {
         el.classList.remove('hidden');
+        el.classList.add('active');
       } else {
         el.classList.add('hidden');
+        el.classList.remove('active');
       }
     });
 
