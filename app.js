@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const toast = document.createElement('div');
-    toast.className = 'bg-[#1D1815] text-[#FAF9F5] border border-[#C5A674]/40 shadow-2xl px-4 py-3 rounded-lg flex items-center gap-3 text-xs tracking-wide transform transition-all duration-300 translate-y-4 opacity-0 pointer-events-auto';
+    toast.className = 'bg-[#1D1815] text-[#F6EBDD] border border-[#C5A674]/40 shadow-2xl px-4 py-3 rounded-lg flex items-center gap-3 text-xs tracking-wide transform transition-all duration-300 translate-y-4 opacity-0 pointer-events-auto';
     toast.innerHTML = `<span class="text-base text-[#8A6B38]">${icon}</span><span>${message}</span>`;
     container.appendChild(toast);
 
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function createProductCardHTML(p) {
     const isWished = state.wishlist.some(item => item.id === p.id);
     const badgeHtml = p.badge 
-      ? `<span class="absolute top-3 left-3 bg-[#FAF9F5]/90 backdrop-blur-md px-2.5 py-1 text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold border border-[#C5A674]/30 rounded shadow-sm z-10">${p.badge}</span>` 
+      ? `<span class="absolute top-3 left-3 bg-[#F6EBDD]/90 backdrop-blur-md px-2.5 py-1 text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold border border-[#C5A674]/30 rounded shadow-sm z-10">${p.badge}</span>` 
       : '';
 
     const purityTag = p.purity 
@@ -586,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     itemsContainer.innerHTML = state.cart.map(item => `
       <div class="py-4 flex gap-4 items-center">
-        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded object-cover border border-[#E8E3D8] bg-[#FAF9F5]" />
+        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded object-cover border border-[#E8E3D8] bg-[#F6EBDD]" />
         <div class="flex-grow">
           <h5 class="font-serif text-sm text-[#1D1815] font-medium leading-snug">${item.name}</h5>
           <p class="text-[10px] text-[#8A6B38] mt-0.5">${item.metal || '925 Silver'} ${item.selectedSize ? `• Size: ${item.selectedSize}` : ''}</p>
@@ -679,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     container.innerHTML = state.wishlist.map(p => `
       <div class="py-4 flex gap-4 items-center">
-        <img src="${p.image}" alt="${p.name}" class="w-16 h-16 rounded object-cover border border-[#E8E3D8] bg-[#FAF9F5]" />
+        <img src="${p.image}" alt="${p.name}" class="w-16 h-16 rounded object-cover border border-[#E8E3D8] bg-[#F6EBDD]" />
         <div class="flex-grow">
           <h5 class="font-serif text-sm text-[#1D1815] font-medium leading-snug">${p.name}</h5>
           <p class="text-[10px] text-[#8A6B38] mt-0.5">${p.metal || '925 Silver'}</p>
@@ -737,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     resultsContainer.innerHTML = matches.map(p => `
-      <div onclick="closeSearchModal(); navigateToProduct('${p.id}');" class="flex items-center gap-4 py-3 hover:bg-[#FAF9F5] px-2 rounded cursor-pointer transition">
+      <div onclick="closeSearchModal(); navigateToProduct('${p.id}');" class="flex items-center gap-4 py-3 hover:bg-[#F6EBDD] px-2 rounded cursor-pointer transition">
         <img src="${p.image}" alt="${p.name}" class="w-12 h-12 rounded object-cover border border-[#E8E3D8]" />
         <div class="flex-grow">
           <p class="text-xs font-serif text-[#1D1815] font-medium">${p.name}</p>

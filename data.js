@@ -26,7 +26,7 @@ const JEWELUX_DATA = {
     AED: { symbol: 'AED ', rate: 3.67, label: 'AED (د.إ)' }
   },
 
-                    categories: [
+                      categories: [
     { id: 'all', name: 'All Masterpieces', hash: '#shop', url: '/shop' },
     { id: 'rings', name: 'Rings', hash: '#rings', url: '/shop/rings' },
     { id: 'earrings', name: 'Earrings', hash: '#earrings', url: '/shop/earrings' },
