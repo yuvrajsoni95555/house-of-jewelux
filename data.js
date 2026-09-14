@@ -1,6 +1,23 @@
-// House of Jewelux - Global Data & Inventory Catalogue
+// House of Jewelux - Global Data & Inventory Catalogue V2
+// Master Build: Fine 925 Sterling Silver Focus, Future Gold Suite, Studio Persistence & Multilingual Dictionaries
 
 const JEWELUX_DATA = {
+  storeConfig: {
+    whatsappNumber: "+919876543210",
+    whatsappWelcome: "Hello House of Jewelux Concierge! I would like to inquire about fine jewellery and bespoke commissions.",
+    founderPIN: "1985",
+    announcementText: "THE SILVER EDIT 2026 — Certified 925 Hallmarked Fine Silver & Anti-Tarnish Rhodium • Complimentary Insured Global Delivery",
+    heroHeadline: "Where Elegance Becomes Eternal",
+    heroSubtitle: "Italian Didone sophistication sculpted with generational Indian artistry. Discover certified 925 fine sterling silver and bespoke gold bridal commissions.",
+    heroCtaText: "Explore The Silver Edit",
+    heroCtaHash: "#silver",
+    freeShippingThresholdUSD: 250,
+    shippingDaysDomestic: "2 - 4 Business Days (Armored White-Glove)",
+    shippingDaysInternational: "4 - 7 Business Days (Fully Insured FedEx Priority)",
+    returnsGuaranteeDays: 30,
+    silverSpotlightEnabled: true
+  },
+
   currencies: {
     USD: { symbol: '$', rate: 1.0, label: 'USD ($)' },
     EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)' },
@@ -11,76 +28,69 @@ const JEWELUX_DATA = {
 
   categories: [
     { id: 'all', name: 'All Masterpieces', hash: '#shop' },
-    { id: 'new-arrivals', name: 'New Arrivals', hash: '#new-arrivals' },
-    { id: 'best-sellers', name: 'Best Sellers', hash: '#best-sellers' },
+    { id: 'silver', name: 'Fine 925 Silver', hash: '#silver' },
+    { id: 'couples', name: 'Newlywed & Couples', hash: '#couples' },
     { id: 'rings', name: 'Rings', hash: '#rings' },
     { id: 'earrings', name: 'Earrings', hash: '#earrings' },
     { id: 'necklaces', name: 'Necklaces', hash: '#necklaces' },
     { id: 'bracelets', name: 'Bracelets', hash: '#bracelets' },
     { id: 'bangles', name: 'Bangles', hash: '#bangles' },
-    { id: 'silver', name: 'Silver Jewellery', hash: '#silver' },
-    { id: 'temple', name: 'Temple Jewellery', hash: '#temple' }
+    { id: 'temple', name: 'Temple Heirlooms', hash: '#temple' },
+    { id: 'gold-vault', name: 'The Gold Vault (Bespoke)', hash: '#gold-vault' }
   ],
 
   collections: [
     {
-      id: 'eternal',
-      name: 'The Eternal Collection',
-      tagline: 'Bridal masterpieces and solitaires conceived to endure across generations.',
-      image: 'images/jewelux_solitaire_ring.jpg',
-      category: 'rings',
-      description: 'D-Flawless certified solitaires and diamond pavé bands crafted in solid Platinum 950 and 18K fairmined gold.'
-    },
-    {
-      id: 'signature',
-      name: 'The Signature Collection',
-      tagline: 'The pinnacle of Italian Didone elegance sculpted with rare gemstones.',
-      image: 'images/jewelux_hero_necklace.jpg',
-      category: 'necklaces',
-      description: 'Sculptural parures boasting certified Colombian Muzo emeralds, Ceylon royal sapphires, and blinding river diamonds.'
-    },
-    {
-      id: 'heritage',
-      name: 'The Heritage Collection',
-      tagline: 'Old-world savoir-faire inspired by historic European and Asian royal vaults.',
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85',
-      category: 'earrings',
-      description: 'Art Deco geometric cascades, calibré-cut Burmese rubies, and hand-pierced filigree gold mounts.'
-    },
-    {
-      id: 'temple',
-      name: 'The Temple Collection',
-      tagline: 'Sacred Indian artisanal heritage harmonized with contemporary Italian grace.',
-      image: 'images/jewelux_temple_heritage.jpg',
-      category: 'temple',
-      description: 'Hand-chased 22K antique matte gold, uncut polki diamonds, and sacred divine motifs reimagined for the global aesthete.'
-    },
-    {
       id: 'silver-edit',
       name: 'The Silver Edit',
-      tagline: 'Pristine 925 Sterling Silver veiled in liquid platinum-rhodium lustre.',
+      tagline: 'Certified 925 Sterling Silver dipped in liquid platinum-rhodium lustre.',
       image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
       category: 'silver',
-      description: 'Modern architectural forms set with brilliant lab-certified moissanite and micro-pavé diamonds.'
+      description: 'Modern architectural silhouettes set with brilliant lab-certified GRA moissanite and micro-pavé diamond accents. 100% anti-tarnish and skin-safe.'
+    },
+    {
+      id: 'eternal-couples',
+      name: 'Newlywed & Couple Sanctuary',
+      tagline: 'Conceived for love, sculpted for lifelong companionship.',
+      image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
+      category: 'couples',
+      description: 'Ergonomic comfort-fit couple bands, bridal promise solitaires, and sacred modern mangalsutra necklaces crafted in 925 hallmarked sterling silver.'
     },
     {
       id: 'everyday-icons',
       name: 'The Everyday Icons',
-      tagline: 'Understated brilliance designed to empower everyday personal rituals.',
+      tagline: 'Understated elegance designed to elevate personal daily rituals.',
       image: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
       category: 'bracelets',
-      description: 'Articulated tennis bracelets, stackable gold bangles, and luminous diamond studs that drape effortlessly.'
+      description: 'Articulated tennis bracelets, stackable cuffs, and luminous solitaire drops engineered for seamless transitions from office to evening gala.'
+    },
+    {
+      id: 'temple-heritage',
+      name: 'The Temple Collection',
+      tagline: 'Sacred Indian artisanal heritage harmonized with contemporary Italian grace.',
+      image: 'images/jewelux_temple_heritage.jpg',
+      category: 'temple',
+      description: 'Hand-chased 22K antique matte gold, uncut polki diamonds, and divine sacred motifs reimagined for the international aesthete.'
+    },
+    {
+      id: 'gold-vault',
+      name: 'The Royal Gold Vault',
+      tagline: 'Haute joaillerie and high-carat gold pieces crafted on bespoke commission.',
+      image: 'images/jewelux_hero_necklace.jpg',
+      category: 'gold-vault',
+      description: 'Solid 18K Fairmined Champagne Gold and D-Flawless natural diamonds created exclusively on private salon commission.'
     }
   ],
 
   products: [
+    // ================= 1. FINE 925 STERLING SILVER SPOTLIGHT (CURRENT COMMERCIAL FOCUS) =================
     {
-      id: 'HJ-001',
-      name: 'The Sovereign Radiant Solitaire Ring',
+      id: 'HJ-SIL-001',
+      name: 'The Celestial Radiance 925 Solitaire Ring',
       category: 'rings',
-      collection: 'eternal',
-      tag: 'Iconic Masterpiece',
-      priceUSD: 14500,
+      collection: 'silver-edit',
+      tag: 'Silver Flagship',
+      priceUSD: 185,
       image: 'images/jewelux_solitaire_ring.jpg',
       hoverImage: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
       gallery: [
@@ -88,544 +98,608 @@ const JEWELUX_DATA = {
         'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
         'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85'
       ],
-      metal: 'Platinum 950 & 18K Warm Yellow Gold',
-      stone: '3.20 ct D-Flawless Natural Diamond',
-      cut: 'Brilliant Round Ideal Cut',
-      clarity: 'FL (Flawless)',
-      certificate: 'GIA Dossier #221894031',
-      description: 'Handcrafted in our Geneva atelier, The Sovereign features an ultra-rare 3.20 carat D-Flawless diamond held by eight whisper-thin platinum claws over an 18K warm gold gallery with a hidden halo of pink melee diamonds.',
-      badge: 'Best Seller',
+      metal: 'Solid 925 Sterling Silver (Triple Rhodium Plated Anti-Tarnish)',
+      purity: '925 Silver Hallmarked',
+      stone: '2.50 ct D-Flawless Lab Moissanite (GRA Certified)',
+      cut: 'Brilliant Round 8-Hearts & 8-Arrows',
+      clarity: 'VVS1 (Eye-Clean Superb Refraction)',
+      certificate: 'GRA Gemological Dossier Included',
+      metalWeight: '4.2 grams solid 925 silver',
+      description: 'Meticulously cast in hypoallergenic 925 Sterling Silver dipped in a thick barrier of liquid platinum-rhodium to prevent tarnishing. The center 2.50 carat D-Color Moissanite is crowned with eight whisper-thin prongs and a hidden pavé gallery for unmatched fire and dispersion.',
+      badge: 'Silver Spotlight',
+      isSilver: true,
+      isGold: false,
+      isNew: true,
+      isBestSeller: true,
+      stockStatus: 'In Stock',
+      targetAudience: 'Bridal Promise & Self-Purchase',
+      sizes: ['US 5 / 49mm', 'US 6 / 52mm', 'US 7 / 54mm', 'US 8 / 57mm', 'Bespoke Sizing Complimentary'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver (Stamped)',
+        'Plating': 'Triple Liquid Rhodium Anti-Tarnish Guard',
+        'Center Stone': '2.50 Carat D-Color Lab Moissanite',
+        'Clarity & Cut': 'VVS1 / Hearts & Arrows Ideal Cut',
+        'Certificate': 'GRA Authenticity Certificate & Warranty Card',
+        'Gross Weight': '4.20 grams'
+      }
+    },
+    {
+      id: 'HJ-SIL-002',
+      name: 'The Amore Eternal Couple Bands (Matching Set of 2)',
+      category: 'couples',
+      collection: 'eternal-couples',
+      tag: 'Newlywed Favorite',
+      priceUSD: 240,
+      image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'images/jewelux_solitaire_ring.jpg',
+      gallery: [
+        'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
+        'images/jewelux_solitaire_ring.jpg'
+      ],
+      metal: 'Solid 925 Sterling Silver (Hand-Burnished Comfort Fit)',
+      purity: '925 Silver Hallmarked',
+      stone: 'Secret Flush-Set Brilliant Moissanite on Her Band',
+      cut: 'Comfort-Fit Ergonomic Curved Interior',
+      clarity: 'VVS1',
+      certificate: 'House of Jewelux Hallmarked Warranty',
+      metalWeight: '8.8 grams combined pair weight',
+      description: 'Conceived exclusively for newlyweds and couples celebrating milestones. Two complementary rings sculpted with an ergonomic comfort-fit curve. Her band features a discreet flush-set star moissanite, while his band possesses a refined brushed-satin center with mirror-polished bevels. Complimentary custom inside date engraving.',
+      badge: 'Newlywed Curation',
+      isSilver: true,
+      isGold: false,
+      isNew: true,
+      isBestSeller: true,
+      stockStatus: 'In Stock',
+      targetAudience: 'Newly Married Couples & Anniversaries',
+      sizes: ['Set: Her US 6 / His US 9', 'Set: Her US 7 / His US 10', 'Set: Custom Sizes (Enter in Notes)'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver (Dual Stamped)',
+        'Plating': 'Platinum-Rhodium High-Gloss Barrier',
+        'Finish': 'Satin-Brushed Center with Beveled Edges',
+        'Engraving': 'Complimentary Calligraphy Inside Engraving',
+        'Combined Weight': '8.80 grams total'
+      }
+    },
+    {
+      id: 'HJ-SIL-003',
+      name: 'The Sovereign 925 Silver Tennis Bracelet',
+      category: 'bracelets',
+      collection: 'silver-edit',
+      tag: 'Iconic Luxury',
+      priceUSD: 320,
+      image: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
+      gallery: [
+        'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
+        'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85'
+      ],
+      metal: 'Solid 925 Sterling Silver with Double Safety Clasp',
+      purity: '925 Silver Hallmarked',
+      stone: '52 Round Brilliant GRA Moissanites (6.50 ct Total Weight)',
+      cut: 'Round Ideal Cut (3.5mm each)',
+      clarity: 'VVS1 Colorless D',
+      certificate: 'GRA Certificate of Authenticity',
+      metalWeight: '11.4 grams',
+      description: 'An articulated Italian tennis bracelet designed to flow like liquid silk on the wrist. Each 3.5mm moissanite is hand-set into custom low-profile prongs engineered to never snag fine silk dresses. Equipped with a dual-latch box safety mechanism.',
+      badge: 'Bestseller',
+      isSilver: true,
+      isGold: false,
       isNew: false,
       isBestSeller: true,
-      sizes: ['US 5 / 49mm', 'US 6 / 52mm', 'US 7 / 54mm', 'US 8 / 57mm', 'Bespoke Sizing Complimentary'],
-      specs: {
-        dimensions: 'Central Diamond: 9.42 x 9.45 x 5.82 mm',
-        grossWeight: '5.85 grams Platinum 950',
-        purity: '950/1000 Fine Platinum + 750/1000 Fine Gold',
-        accentGems: '0.24 ctw Argyle Pink Melee Diamonds'
-      },
-      craftsmanship: 'Cast and assembled by hand in Geneva. Eight-prong micro-pavé setting requiring 48 hours of optical alignment.',
-      care: 'Clean gently using warm distilled water and an ultra-soft horsehair brush. Complimentary annual ultrasonic inspection at all boutiques.'
+      stockStatus: 'In Stock',
+      targetAudience: 'Modern Women Everyday Luxury',
+      sizes: ['6.5 inches (Petite)', '7.0 inches (Classic)', '7.5 inches (Relaxed)'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver',
+        'Total Carat Weight': '6.50 Carats Equivalent',
+        'Number of Stones': '52 Stones (3.5mm each)',
+        'Clasp Type': 'Concealed Box Clasp with Double Figure-8 Safety',
+        'Metal Weight': '11.4 grams'
+      }
+    },
+    {
+      id: 'HJ-SIL-004',
+      name: 'The Luna Pavé Halo Mangalsutra Necklace',
+      category: 'necklaces',
+      collection: 'eternal-couples',
+      tag: 'Bridal Heirloom',
+      priceUSD: 280,
+      image: 'images/jewelux_hero_necklace.jpg',
+      hoverImage: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
+      gallery: [
+        'images/jewelux_hero_necklace.jpg',
+        'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85'
+      ],
+      metal: 'Solid 925 Sterling Silver & Genuine Black Spinel Beads',
+      purity: '925 Silver Hallmarked',
+      stone: '1.20 ct Center Moissanite + 24 Pavé Halo Stones',
+      cut: 'Round Brilliant Ideal Cut',
+      clarity: 'D-Color VVS1',
+      certificate: 'GRA Gemological Report & 925 Assay Card',
+      metalWeight: '7.2 grams',
+      description: 'The sacred marital bond re-envisioned with contemporary Italian minimalism. A delicate 925 sterling silver hallmarked pendant encircled by a celestial pavé halo, strung on a hypoallergenic silver chain hand-knotted with auspicious faceted black spinel beads.',
+      badge: 'Modern Bridal',
+      isSilver: true,
+      isGold: false,
+      isNew: true,
+      isBestSeller: true,
+      stockStatus: 'In Stock',
+      targetAudience: 'Newlywed Brides & Gifting',
+      sizes: ['16 inches + 2 inch Extender', '18 inches Standard'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver',
+        'Auspicious Beads': 'Faceted Natural Black Spinel (0.8mm)',
+        'Center Stone': '1.20 Carat Round Lab Moissanite',
+        'Chain Length': '16" with 2" adjustable extender',
+        'Metal Weight': '7.20 grams'
+      }
+    },
+    {
+      id: 'HJ-SIL-005',
+      name: 'The Aurora Pear-Drop Silver Earrings',
+      category: 'earrings',
+      collection: 'silver-edit',
+      tag: 'Evening Elegance',
+      priceUSD: 160,
+      image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85',
+      gallery: [
+        'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
+        'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85'
+      ],
+      metal: 'Solid 925 Sterling Silver with Rhodium Mirror Lustre',
+      purity: '925 Silver Hallmarked',
+      stone: 'Articulated Pear-Cut & Round Brilliant Moissanites (3.2 ct pair)',
+      cut: 'Teardrop Pear & Ideal Round',
+      clarity: 'VVS1 Colorless D',
+      certificate: 'GRA Certificate of Authenticity',
+      metalWeight: '5.1 grams',
+      description: 'Articulated drop earrings featuring a brilliant round stud suspending a shimmering 1.20ct teardrop pear moissanite. Engineered with balanced weight distribution for all-day comfort without drooping.',
+      badge: 'Silver Spotlight',
+      isSilver: true,
+      isGold: false,
+      isNew: true,
+      isBestSeller: false,
+      stockStatus: 'In Stock',
+      targetAudience: 'Women & Cocktail Gala',
+      sizes: ['One Size (Drop length 28mm)'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver',
+        'Stone Weight': '3.20 ct Total Weight (Pair)',
+        'Drop Length': '28mm articulated drop',
+        'Closure': 'Secure Butterfly Friction Back with Bell Silencer'
+      }
+    },
+    {
+      id: 'HJ-SIL-006',
+      name: 'The Venetian Sculpted Silver Kada Bangle',
+      category: 'bangles',
+      collection: 'silver-edit',
+      tag: 'Artisanal Silver',
+      priceUSD: 295,
+      image: 'images/jewelux_temple_heritage.jpg',
+      hoverImage: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
+      gallery: [
+        'images/jewelux_temple_heritage.jpg',
+        'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85'
+      ],
+      metal: 'Solid 925 Sterling Silver (Heavy Gauge with Concealed Hinge)',
+      purity: '925 Silver Hallmarked',
+      stone: 'Florentine Hand-Engraved Scrollwork with Micro-Moissanite Accents',
+      cut: 'Subtle Hand-Chased Texture',
+      clarity: 'VVS1 Accents',
+      certificate: '925 Assay & Hallmark Certification',
+      metalWeight: '18.5 grams solid silver',
+      description: 'A statement heavy-gauge kada bangle sculpted from pure 925 Sterling Silver. Features intricate Italian renaissance scrollwork hand-chased along the outer rim, fastened with a concealed precision push-button clasp.',
+      badge: 'Artisanal Statement',
+      isSilver: true,
+      isGold: false,
+      isNew: true,
+      isBestSeller: false,
+      stockStatus: 'In Stock',
+      targetAudience: 'Women & Festive Heirlooms',
+      sizes: ['2.4 (Small: 57mm inner)', '2.6 (Medium: 60mm inner)', '2.8 (Large: 63mm inner)'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver (18.5g)',
+        'Hinge': 'Swiss Precision Spring-Loaded Concealed Push Clasp',
+        'Width': '8.5mm convex profile',
+        'Finish': 'Hand-Burnished Antique Rhodium'
+      }
+    },
+    {
+      id: 'HJ-SIL-007',
+      name: 'The Empress Emerald-Cut Silver Solitaire Pendant',
+      category: 'necklaces',
+      collection: 'silver-edit',
+      tag: 'Clean Minimalist',
+      priceUSD: 210,
+      image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'images/jewelux_hero_necklace.jpg',
+      gallery: [
+        'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
+        'images/jewelux_hero_necklace.jpg'
+      ],
+      metal: 'Solid 925 Sterling Silver & Italian Diamond-Cut Chain',
+      purity: '925 Silver Hallmarked',
+      stone: '3.00 ct Step-Cut Emerald Moissanite (9x7mm)',
+      cut: 'Classic Emerald Step Cut',
+      clarity: 'D-Color VVS1',
+      certificate: 'GRA Gemological Dossier Included',
+      metalWeight: '4.8 grams',
+      description: 'An architectural 3.00 carat emerald-cut moissanite suspended in a whisper-light four-corner double claw setting. The geometric step facets evoke classic Art Deco grandeur while remaining crisp, modern, and effortless for everyday luxury.',
+      badge: 'Trending',
+      isSilver: true,
+      isGold: false,
+      isNew: true,
+      isBestSeller: true,
+      stockStatus: 'In Stock',
+      targetAudience: 'Women Everyday Minimalist',
+      sizes: ['18 inches with 2-inch extender'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver',
+        'Stone Dimension': '9x7mm (3.00 Carats Equivalent)',
+        'Chain Type': 'Italian Diamond-Cut Cable Chain with Lobster Clasp',
+        'Metal Weight': '4.8 grams'
+      }
+    },
+    {
+      id: 'HJ-SIL-008',
+      name: 'The Riviera Bezel Stacking Band Trio',
+      category: 'rings',
+      collection: 'silver-edit',
+      tag: 'Everyday Chic',
+      priceUSD: 175,
+      image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'images/jewelux_solitaire_ring.jpg',
+      gallery: [
+        'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85',
+        'images/jewelux_solitaire_ring.jpg'
+      ],
+      metal: 'Solid 925 Sterling Silver Trio Bands',
+      purity: '925 Silver Hallmarked',
+      stone: 'Micro-Bezel Set Brilliant Moissanite Dots',
+      cut: 'Round Ideal Cut',
+      clarity: 'VVS1',
+      certificate: '925 Assay Guarantee Card',
+      metalWeight: '5.5 grams trio weight',
+      description: 'Three interlockable whisper-thin 925 sterling silver bands punctuated by bezel-encased moissanite droplets. Wear individually for understated daytime chic or stacked together for a radiant cocktail flourish.',
+      badge: 'Stackable Favorite',
+      isSilver: true,
+      isGold: false,
+      isNew: false,
+      isBestSeller: false,
+      stockStatus: 'In Stock',
+      targetAudience: 'Self-Purchase & Stacking',
+      sizes: ['US 5 / 49mm', 'US 6 / 52mm', 'US 7 / 54mm', 'US 8 / 57mm'],
+      specifications: {
+        'Metal Purity': 'Solid 925 Sterling Silver (Triple Stamped)',
+        'Band Width': '1.5mm per band (4.5mm stacked)',
+        'Setting': 'Smooth Bezel Setting (Zero Snagging)'
+      }
+    },
+
+    // ================= 2. THE ROYAL GOLD VAULT & TEMPLE HEIRLOOMS (BESPOKE COMMISSIONS & FUTURE READY) =================
+    {
+      id: 'HJ-001',
+      name: 'The Sovereign Radiant Solitaire Ring',
+      category: 'rings',
+      collection: 'gold-vault',
+      tag: 'Gold Vault Commission',
+      priceUSD: 14500,
+      image: 'images/jewelux_solitaire_ring.jpg',
+      hoverImage: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
+      gallery: [
+        'images/jewelux_solitaire_ring.jpg',
+        'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85'
+      ],
+      metal: 'Platinum 950 & 18K Solid Fairmined Champagne Gold',
+      purity: 'BIS Hallmarked 750 / Platinum 950 Assayed',
+      stone: '3.20 ct D-Flawless Natural Diamond (GIA Certified)',
+      cut: 'Brilliant Round Ideal Cut',
+      clarity: 'FL (Flawless Natural)',
+      certificate: 'GIA Dossier #221894031',
+      metalWeight: '6.8 grams',
+      description: 'Handcrafted in our Geneva atelier on bespoke commission. Features an ultra-rare 3.20 carat D-Flawless diamond held by eight whisper-thin platinum claws over an 18K warm gold gallery with a hidden halo of pink melee diamonds.',
+      badge: 'Gold Vault Commission',
+      isSilver: false,
+      isGold: true,
+      isNew: false,
+      isBestSeller: true,
+      stockStatus: 'Atelier Commission',
+      targetAudience: 'High Jewellery Bridal Commission',
+      sizes: ['Bespoke Custom Sizing upon Private Salon Consultation'],
+      specifications: {
+        'Metal Purity': 'Platinum 950 & 18K Solid Gold (BIS Hallmarked)',
+        'Stone': '3.20 Carat Natural Diamond (D-Flawless)',
+        'Laboratory': 'GIA (Gemological Institute of America)',
+        'Availability': 'Bespoke Commission via Private WhatsApp Concierge'
+      }
     },
     {
       id: 'HJ-002',
       name: 'Empress Emerald & Diamond Cascade Collar',
       category: 'necklaces',
-      collection: 'signature',
-      tag: 'High Jewellery',
-      priceUSD: 38200,
+      collection: 'gold-vault',
+      tag: 'Haute Joaillerie Masterpiece',
+      priceUSD: 38000,
       image: 'images/jewelux_hero_necklace.jpg',
-      hoverImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'images/jewelux_editorial_hero.jpg',
       gallery: [
         'images/jewelux_hero_necklace.jpg',
-        'images/jewelux_editorial_hero.jpg',
-        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=85'
+        'images/jewelux_editorial_hero.jpg'
       ],
-      metal: '18K White Gold & Solid Platinum',
-      stone: '12.40 ctw Muzo Colombian Emeralds & F-VS1 Diamonds',
-      cut: 'Emerald Cut & Marquise Cluster',
-      clarity: 'VVS1 Natural Untreated Green',
-      certificate: 'SSEF Swiss Gemmological Report #10928',
-      description: 'A breathtaking high-jewellery statement collar boasting vivid green Colombian emeralds from the historic Muzo mines, framed by cascading marquise and brilliant round diamonds in articulated platinum bezels.',
+      metal: '18K Solid Champagne Gold (Hand-Articulated)',
+      purity: 'BIS Hallmarked 750 Gold',
+      stone: '12.40 ct Muzo Colombian Emeralds & 18.5 ct River Diamonds',
+      cut: 'Calibré Step Cut Emeralds & Pear Diamonds',
+      clarity: 'Minor Cedar Oil Treated / VVS Diamonds',
+      certificate: 'SSEF Swiss Gemological Institute #98421',
+      metalWeight: '44.5 grams solid 18K gold',
+      description: 'A museum-grade high jewellery collar set with certified Colombian emeralds of breathtaking green saturation. Hand-articulated in 18K champagne gold to contour softly against the clavicle.',
       badge: 'Haute Joaillerie',
-      isNew: true,
-      isBestSeller: true,
-      sizes: ['Choker (38 cm)', 'Princess (42 cm)', 'Bespoke Length by Atelier'],
-      specs: {
-        dimensions: 'Neckline Drop: 42 mm; Total Length: 410 mm',
-        grossWeight: '46.2 grams 18K Fairmined White Gold',
-        purity: '750/1000 Pure Gold',
-        accentGems: '14.80 ctw D-E Color Marquise & Brilliant Diamonds'
-      },
-      craftsmanship: '180 hours of hand-piercing and microscopic setting by master goldsmiths in Milan and Geneva.',
-      care: 'Do not expose natural emeralds to ultrasonic cleaners or steam. Wipe with microfiber cloth and store in Jewelux suede case.'
+      isSilver: false,
+      isGold: true,
+      isNew: false,
+      isBestSeller: false,
+      stockStatus: 'Atelier Commission',
+      targetAudience: 'Museum & Royal Collectors',
+      sizes: ['One of a Kind (Salon Viewing Available)'],
+      specifications: {
+        'Metal Purity': '18K Solid Fairmined Champagne Gold',
+        'Gemstone': '12.40 Carat Muzo Colombian Emeralds',
+        'Diamond Weight': '18.50 Carat D-F Color VVS Diamonds',
+        'Certificate': 'SSEF Swiss Gemological Institute'
+      }
     },
     {
       id: 'HJ-003',
       name: 'Padmavati Antique Temple Choker Parure',
       category: 'temple',
-      collection: 'temple',
-      tag: 'Sacred Heritage',
-      priceUSD: 26500,
+      collection: 'temple-heritage',
+      tag: 'Sacred Heritage Masterpiece',
+      priceUSD: 24500,
       image: 'images/jewelux_temple_heritage.jpg',
-      hoverImage: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
+      hoverImage: 'images/jewelux_atelier_craft.jpg',
       gallery: [
         'images/jewelux_temple_heritage.jpg',
-        'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
         'images/jewelux_atelier_craft.jpg'
       ],
-      metal: '22K Solid Antique Champagne-Toned Gold',
-      stone: 'Natural Basra Pearls, Uncut Polki Diamonds & Burmese Rubies',
-      cut: 'Traditional Polki & Cabochon Ruby',
-      clarity: 'Natural Untreated Royal Red',
-      certificate: 'IGI Heritage Jewellery Certificate #99281',
-      description: 'A sovereign heirloom honoring centuries of South Indian temple nakshi artistry. Featuring hand-embossed divine motifs, suspended Basra seed pearls, and unheated pigeon-blood rubies set in 22-karat warm matte gold.',
-      badge: 'Heritage Masterpiece',
-      isNew: true,
-      isBestSeller: false,
-      sizes: ['Adjustable Handcrafted Dori (Silk Cord)', 'Solid 22K Gold Link Extension'],
-      specs: {
-        dimensions: 'Central Pendant: 62 x 48 mm; Necklace Width: 28 mm',
-        grossWeight: '88.5 grams 22K Gold',
-        purity: '916/1000 Pure Gold (Hallmarked)',
-        accentGems: '4.50 ctw Uncut Polki Diamonds + 18.2 ct Natural Basra Pearls'
-      },
-      craftsmanship: 'Hand-chased by generational nakshi artisans in Tamil Nadu and refined with Italian clasp ergonomics in Milan.',
-      care: 'Preserve antique patina by avoiding direct perfume or moisture. Store flat in bespoke Jewelux velvet casket.'
-    },
-    {
-      id: 'HJ-004',
-      name: 'Aura Pavé Diamond Tennis Bracelet',
-      category: 'bracelets',
-      collection: 'everyday-icons',
-      tag: 'Signature Everyday',
-      priceUSD: 8900,
-      image: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '18K Warm Champagne Gold',
-      stone: '5.50 ctw E-F VS1 Lab-Certified Natural Diamonds',
-      cut: 'Brilliant Round Four-Prong',
-      clarity: 'VS1 Eye-Clean',
-      certificate: 'House of Jewelux Authenticity Certificate',
-      description: 'The quintessential luxury essential. Engineered with a double safety catch and fluid articulated links that drape effortlessly over the wrist like molten golden silk.',
-      badge: 'Best Seller',
+      metal: 'Solid 22K Antique Matte Gold with Nakshi Carvings',
+      purity: 'BIS 916 Hallmarked Pure Gold',
+      stone: 'Natural Polki Uncut Diamonds, Basra Seed Pearls & Burmese Rubies',
+      cut: 'Traditional Mughal Jadau & Kundan Setting',
+      clarity: 'Natural Heritage Gemstones',
+      certificate: 'IGI Certified & BIS Hallmark 916 Stamped',
+      metalWeight: '62.0 grams 22K gold',
+      description: 'Centuries of South Indian dynastic temple jewellery savoir-faire infused with contemporary royal proportions. Sculpted by 5th-generation goldsmiths featuring Lakshmi prosperity iconography, natural polki diamonds, and real Basra seed pearls.',
+      badge: 'Sacred Temple Heirlooms',
+      isSilver: false,
+      isGold: true,
       isNew: false,
       isBestSeller: true,
-      sizes: ['6.5 Inches (Small)', '7.0 Inches (Standard)', '7.5 Inches (Comfort)', 'Custom Link Adjustment'],
-      specs: {
-        dimensions: 'Width: 3.2 mm; Individual Stone Size: 2.7 mm',
-        grossWeight: '14.2 grams 18K Gold',
-        purity: '750/1000 Fine Champagne Gold',
-        accentGems: '54 Individually Calibrated Round Diamonds'
-      },
-      craftsmanship: 'Precision micro-drilled links providing 360-degree flexibility without catching on fine silk fabrics.',
-      care: 'Safe for warm ultrasonic bath. Rinse thoroughly and dry with non-abrasive chamois cloth.'
-    },
-    {
-      id: 'HJ-005',
-      name: 'The Celeste Pear Diamond Drops',
-      category: 'earrings',
-      collection: 'eternal',
-      tag: 'Bridal Splendor',
-      priceUSD: 16400,
-      image: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: 'Platinum 950 & 18K White Gold',
-      stone: '4.60 ctw D-E Color Matched Pear Diamonds',
-      cut: 'Artisan Pear Brilliant',
-      clarity: 'VVS2 High Dispersion',
-      certificate: 'GIA Dual Dossier #5521948',
-      description: 'Graceful articulated earrings featuring twin matched pear-shaped diamonds that catch and reflect candlelight with every subtle movement, framing the countenance with timeless luminescence.',
-      badge: 'Bridal Selection',
-      isNew: true,
-      isBestSeller: true,
-      sizes: ['Comfort Screw-Back', 'French Clip & Post (Salon Standard)'],
-      specs: {
-        dimensions: 'Drop Length: 36 mm; Pear Stone: 8.8 x 5.6 mm each',
-        grossWeight: '7.6 grams Platinum 950',
-        purity: '950/1000 Pure Platinum',
-        accentGems: '0.80 ctw Brilliant Cut Halo Accent Diamonds'
-      },
-      craftsmanship: 'Hand-matched pair taking over 6 months to gemologically curate for color, proportion, and optic symmetry.',
-      care: 'Polish prongs gently after wear. Store separately in dedicated earring compartments.'
-    },
-    {
-      id: 'HJ-006',
-      name: 'Sovereign Champagne Gold Royal Kada Bangle',
-      category: 'bangles',
-      collection: 'signature',
-      tag: 'Sculptural Gold',
-      priceUSD: 11200,
-      image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '18K Solid Champagne Gold',
-      stone: '2.80 ctw Flush-Set Baguette & Brilliant Diamonds',
-      cut: 'Tapered Baguette & Pavé',
-      clarity: 'VS1 Natural',
-      certificate: 'House of Jewelux Gold Purity & Diamond Guarantee',
-      description: 'An architectural oval bangle inspired by Didone classical proportions. Cast in solid 18K champagne gold with an invisible concealed hinge and double safety click clasp.',
-      badge: 'New Arrival',
-      isNew: true,
-      isBestSeller: false,
-      sizes: ['Size 2.4 (Small - 57.2mm)', 'Size 2.6 (Medium - 60.3mm)', 'Size 2.8 (Large - 63.5mm)'],
-      specs: {
-        dimensions: 'Band Thickness: 6.5 mm; Inner Profile: Comfort-Fit Oval',
-        grossWeight: '32.4 grams Solid 18K Gold',
-        purity: '750/1000 Fine Champagne Gold',
-        accentGems: '36 Channel-Set Diamond Baguettes'
-      },
-      craftsmanship: 'Hand-honed satin finish with high-polish champagne beveled margins, crafted in Valenza, Italy.',
-      care: 'Avoid wearing during strenuous exercise. Buff with jeweler polishing cloth.'
-    },
-    {
-      id: 'HJ-007',
-      name: 'L’Étoile Sterling Silver Pavé Collar',
-      category: 'silver',
-      collection: 'silver-edit',
-      tag: 'The Silver Edit',
-      priceUSD: 1850,
-      image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '925 Sterling Silver with Heavy Platinum-Rhodium Finish',
-      stone: 'Lab-Certified VVS Moissanite & Cultured Freshwater Pearls',
-      cut: 'Ideal Cushion & Marquise Cluster',
-      clarity: 'VVS1 Equivalent',
-      certificate: 'Jewelux Fine Silver Hallmark Certificate',
-      description: 'From The Silver Edit: An ethereal collar forged in 925 sterling silver, plated in liquid platinum-rhodium for an anti-tarnish mirror finish. Accented with luminescent pearls and moissanite stars.',
-      badge: 'Silver Edit',
-      isNew: true,
-      isBestSeller: false,
-      sizes: ['Standard 40 cm with 5 cm Extension Chain'],
-      specs: {
-        dimensions: 'Center Motif: 32 x 22 mm; Pearl Diameter: 7-8 mm',
-        grossWeight: '24.8 grams 925 Silver',
-        purity: '92.5% Pure Silver with 3-Micron Platinum Plating',
-        accentGems: '3.80 ctw Lab VVS Moissanite'
-      },
-      craftsmanship: 'Hand-finished in Vicenza, Italy, featuring high-precision micro-prong setting.',
-      care: 'Keep in airtight Jewelux anti-tarnish pouch when not worn. Do not spray fragrance directly.'
-    },
-    {
-      id: 'HJ-008',
-      name: 'Devi Meenakari Antique Kada Bangles (Pair)',
-      category: 'temple',
-      collection: 'temple',
-      tag: 'Temple Artistry',
-      priceUSD: 18900,
-      image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'images/jewelux_temple_heritage.jpg',
-      gallery: [
-        'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
-        'images/jewelux_temple_heritage.jpg'
-      ],
-      metal: '22K Antique Hallmarked Gold',
-      stone: 'Kundan Uncut Polki Diamonds, Emerald Meenakari & Cabochon Rubies',
-      cut: 'Traditional Jadau Kundan',
-      clarity: 'Natural Untreated Royal Gemstones',
-      certificate: 'National Gemological Laboratory Certificate',
-      description: 'A pair of handcrafted temple kada bangles adorned with delicate peacock and floral meenakari enameling on the inner rim, crowned with uncut polki diamonds in pure 24K gold foil jadau settings.',
-      badge: 'Temple Heirloom',
-      isNew: false,
-      isBestSeller: true,
-      sizes: ['Pair Size 2.4 (57.2 mm)', 'Pair Size 2.6 (60.3 mm)', 'Pair Size 2.8 (63.5 mm)'],
-      specs: {
-        dimensions: 'Width per bangle: 12 mm; Screw pin closure with safety chain',
-        grossWeight: '94.6 grams (Combined Pair Weight)',
-        purity: '22 Karat (91.6% Pure Gold)',
-        accentGems: '6.20 ctw Uncut Polki Diamonds + 8.4 ct Natural Rubies'
-      },
-      craftsmanship: '6 weeks of artisan hand-carving and furnace enameling by master Jaipur and Madurai goldsmiths.',
-      care: 'Clean with a soft dry cloth only. Never immerse meenakari or kundan in water.'
-    },
-    {
-      id: 'HJ-009',
-      name: 'Reine de Rubis Oval Halo Ring',
-      category: 'rings',
-      collection: 'heritage',
-      tag: 'Collector Series',
-      priceUSD: 29500,
-      image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '18K Rose Gold & Platinum 950',
-      stone: '5.10 ct Unheated Pigeon Blood Burmese Ruby',
-      cut: 'Oval Brilliant Cut with Tapered Baguettes',
-      clarity: 'Natural Vivid Red With Fiery Red Fluorescence',
-      certificate: 'GRS Swiss Gem Research Report #GRS2025-081',
-      description: 'An exceptionally rare Burmese ruby endowed with hypnotic crimson fluorescence, set between hand-calibrated diamond baguettes in a sculptural hand-beveled mount.',
-      badge: 'Rare Collector Gem',
-      isNew: false,
-      isBestSeller: true,
-      sizes: ['US 5', 'US 6', 'US 7', 'US 8', 'Bespoke Atelier Fit'],
-      specs: {
-        dimensions: 'Center Ruby: 11.2 x 8.9 x 5.8 mm',
-        grossWeight: '6.8 grams 18K Rose Gold + Platinum Claws',
-        purity: '750/1000 Fine Gold + 950/1000 Platinum',
-        accentGems: '1.40 ctw Tapered Diamond Baguettes (E/VVS)'
-      },
-      craftsmanship: 'Hand-faceted in Geneva to maximize ruby optical fire while ensuring absolute stone security.',
-      care: 'Wash gently with warm soapy water and dry with micro-silk cloth.'
-    },
-    {
-      id: 'HJ-010',
-      name: 'L’Étoile Ceylon Sapphire & Diamond Choker',
-      category: 'necklaces',
-      collection: 'signature',
-      tag: 'Rare Gemstone',
-      priceUSD: 24800,
-      image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '18K Fairmined White Gold',
-      stone: '7.85 ct Royal Blue Ceylon Sapphire',
-      cut: 'Cushion Brilliant Cut',
-      clarity: 'Eye-Clean Royal Blue Unheated',
-      certificate: 'Gübelin Gem Lab Certified #240188',
-      description: 'Centering a majestic unheated Royal Blue Ceylon sapphire cradled by an asymmetric constellation of pear-shaped brilliant diamonds, celebrating eternal celestial harmony.',
-      badge: 'Rare Find',
-      isNew: false,
-      isBestSeller: false,
-      sizes: ['38 cm with 4 cm Extension'],
-      specs: {
-        dimensions: 'Center Sapphire: 12.1 x 10.4 x 6.9 mm',
-        grossWeight: '32.1 grams 18K White Gold',
-        purity: '750/1000 Fine Gold',
-        accentGems: '6.40 ctw Pear & Round Brilliant Diamonds'
-      },
-      craftsmanship: 'Artisan hand-prongs calibrated under 40x magnification for zero gemstone stress.',
-      care: 'Sapphire is 9 on Mohs scale, durable for daily evening wear. Keep away from harsh chemicals.'
-    },
-    {
-      id: 'HJ-011',
-      name: 'Nocturne Diamond Lineage Cuff',
-      category: 'bracelets',
-      collection: 'heritage',
-      tag: 'Sculptural Art',
-      priceUSD: 21500,
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '18K Blackened & White Gold',
-      stone: '8.10 ctw Mixed Cut F-G Diamonds',
-      cut: 'Baguette & Brilliant Geometric Pavé',
-      clarity: 'VS1',
-      certificate: 'Jewelux Haute Joaillerie Archive',
-      description: 'Bold architectural lines inspired by Didone typographic contrast and Art Deco facades. Blackened gold prongs accentuate the blinding fire of precision-set diamond baguettes.',
-      badge: 'Artisan Crafted',
-      isNew: true,
-      isBestSeller: false,
-      sizes: ['Small (15 cm)', 'Medium (17 cm)', 'Large (19 cm)'],
-      specs: {
-        dimensions: 'Cuff Height: 22 mm; Open back with safety tension spring',
-        grossWeight: '38.6 grams 18K Gold',
-        purity: '750/1000 Fine Gold',
-        accentGems: '112 Hand-Set Diamonds'
-      },
-      craftsmanship: 'Black ruthenium electro-accent on white gold claws, handcrafted in Milan atelier.',
-      care: 'Store in soft velvet pouch to avoid scratch friction against other metals.'
-    },
-    {
-      id: 'HJ-012',
-      name: 'Solstice Golden Sunburst Pendant',
-      category: 'necklaces',
-      collection: 'everyday-icons',
-      tag: 'Everyday Elegance',
-      priceUSD: 4600,
-      image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
-      hoverImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=85',
-      gallery: [
-        'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
-        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=85'
-      ],
-      metal: '18K Warm Champagne Gold',
-      stone: '1.20 ct Central Diamond + Sunburst Micro-pavé',
-      cut: 'Round Brilliant Ideal Cut',
-      clarity: 'VS1',
-      certificate: 'GIA Certified #812903',
-      description: 'A luminous celebration of eternal warmth and light. The sunburst fluted gold border magnifies the center diamond, suspended from an adjustable Italian wheat chain.',
-      badge: 'New Arrival',
-      isNew: true,
-      isBestSeller: true,
-      sizes: ['Adjustable 42 cm / 45 cm / 48 cm'],
-      specs: {
-        dimensions: 'Pendant Diameter: 18.5 mm; Chain Thickness: 1.1 mm',
-        grossWeight: '8.2 grams 18K Gold',
-        purity: '750/1000 Fine Gold',
-        accentGems: '0.45 ctw Pavé Melee'
-      },
-      craftsmanship: 'Hand-fluted radial facets with mirror-bright Italian diamond burnishing.',
-      care: 'Ideal for daily wear. Clean with mild soapy water and dry with cotton cloth.'
-    }
-  ],
-
-  craftsmanshipSteps: [
-    {
-      step: '01',
-      title: 'Rare Mineral Provenance',
-      subtitle: 'Ethical Gemological Sourcing',
-      desc: 'Our gemologists traverse the globe from Muzo, Colombia to Ratnapura, Sri Lanka to hand-select only the top 0.01% of natural, conflict-free rough stones.',
-      image: 'images/jewelux_atelier_craft.jpg'
-    },
-    {
-      step: '02',
-      title: 'Atelier Gouache Renderings',
-      subtitle: 'Didone Editorial Aesthetics',
-      desc: 'Every jewel begins as a hand-painted gouache illustration on parchment, studying light dispersion, balance, and the sensual contours of feminine form.',
-      image: 'images/jewelux_hero_necklace.jpg'
-    },
-    {
-      step: '03',
-      title: 'Fairmined Metallurgy',
-      subtitle: '18K Champagne Gold & Platinum',
-      desc: 'We smelt our proprietary champagne-gold alloy in-house, balancing copper, silver, and 75% pure gold to achieve our signature warm vanilla shimmer.',
-      image: 'images/jewelux_solitaire_ring.jpg'
-    },
-    {
-      step: '04',
-      title: 'Generational Nakshi & Micro-Setting',
-      subtitle: 'Indian Heritage Meets Milan Mastery',
-      desc: 'Master artisans execute whisper-thin optical claw settings and intricate hand-chased nakshi motifs requiring up to 200 hours per creation.',
-      image: 'images/jewelux_temple_heritage.jpg'
-    },
-    {
-      step: '05',
-      title: 'Mirror Hand-Burnishing',
-      subtitle: 'The Eternal Glow',
-      desc: 'Using traditional wooden lap wheels and diamond compound, the piece receives multiple stages of hand-buffing to eliminate micro-imperfections.',
-      image: 'images/jewelux_editorial_hero.jpg'
-    },
-    {
-      step: '06',
-      title: 'Dual Swiss Certification',
-      subtitle: 'GIA, Gübelin & SSEF Provenance',
-      desc: 'Each creation is accompanied by independent dossiers certifying 4Cs authenticity, origin disclosure, and our lifetime warranty archive covenant.',
-      image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85'
+      stockStatus: 'Atelier Commission',
+      targetAudience: 'Royal Wedding Heirloom',
+      sizes: ['Adjustable Silk Dori Tassel in Crimson & Gold'],
+      specifications: {
+        'Gold Purity': '22K Solid Gold (BIS 916 Hallmarked)',
+        'Goldsmith Hours': '160 Ateliers Hours of Hand-Chasing',
+        'Precious Stones': 'Natural Polki Diamonds & Basra Pearls',
+        'Hallmark': 'Govt. Approved BIS Hallmarked Laser Inscription'
+      }
     }
   ],
 
   faqs: [
     {
-      q: 'Are all diamonds and gemstones at House of Jewelux ethically certified?',
-      a: 'Yes, without exception. House of Jewelux strictly adheres to the Kimberley Process and the Responsible Jewellery Council (RJC) Code of Practices. Every center diamond is accompanied by an authentic GIA (Gemological Institute of America) dossier, and rare colored gemstones carry reports from Gübelin, SSEF, or GRS.'
+      q: "Are all your Silver pieces genuine 925 Sterling Silver?",
+      a: "Yes, without exception. Every single silver creation at House of Jewelux is hallmarked solid 925 Sterling Silver (92.5% pure silver alloyed with fine copper for durability, completely nickel-free and lead-free). Each piece bears the official '925' purity hallmark stamp and comes with an Assay Certificate."
     },
     {
-      q: 'What is your bespoke commission timeline and process?',
-      a: 'Bespoke commissions typically require 4 to 6 weeks from initial design consultation to final white-glove presentation. You will be paired with a Master Gemologist and goldsmith who will prepare gouache illustrations, 3D resin prototypes for fit inspection, and regular video updates from our Geneva or Milan atelier.'
+      q: "Does your Silver Jewellery tarnish over time?",
+      a: "Our silver creations undergo a proprietary Italian triple-dip plating in liquid platinum-rhodium. Rhodium is a noble platinum-group metal that forms an impenetrable, lustrous shield over the silver, preventing oxidation, tarnishing, and scratching while providing that luminous high-jewelry white reflection."
     },
     {
-      q: 'How does your complimentary insured global white-glove delivery work?',
-      a: 'All orders over $10,000 USD (or local currency equivalent) receive complimentary armored white-glove courier transport (Malca-Amit or Brinks). Shipments are 100% insured until signed for in person with photographic ID verification.'
+      q: "What stones are used in The Silver Edit?",
+      a: "The Silver Edit features certified D-Color, VVS1 Lab Moissanite stones. Moissanite possesses a refractive index of 2.65 (higher than diamond's 2.42), meaning it refracts light with even more dazzling rainbow fire and brilliance. Every solitaire piece over 1.0 carat includes an individual GRA Gemological Certificate."
     },
     {
-      q: 'Can I resize my ring or adjust necklace lengths after purchase?',
-      a: 'We provide complimentary lifetime resizing (within 2 sizes) for all House of Jewelux solitaires and bands. Custom necklace and bracelet link adjustments can also be performed at any of our flagship salons or arranged via our courier concierge.'
+      q: "How do Gold & Haute Joaillerie bespoke commissions work?",
+      a: "While our Silver Edit is readily available for immediate acquisition, our 18K/22K Solid Gold Vault and Temple collections are crafted exclusively on bespoke commission by our master goldsmiths. Simply click 'Inquire on WhatsApp' on any gold piece, and our salon concierge will arrange private sketches, stone curation, and BIS hallmarking tailored to your budget."
     },
     {
-      q: 'What is the signature House of Jewelux Champagne Gold?',
-      a: 'Unlike harsh bright yellow gold, our proprietary 18K Champagne Gold is an Italian alloy blending fine gold, silver, and subtle rose undertones. It creates a soft, warm vanilla metallic finish that flatters every skin tone and echoes the warm editorial atmosphere of our brand.'
+      q: "What is your return and exchange policy?",
+      a: "We offer a 30-Day Complimentary Return and Exchange window for all standard Silver Edit purchases in pristine, unworn condition with original jewelry boxes and certificates. Return shipping is fully insured and arranged by our white-glove courier."
     },
     {
-      q: 'What is your return and exchange policy for fine jewellery?',
-      a: 'We offer a 30-day complimentary return or exchange period for all catalogue masterpieces in pristine, unworn condition with intact security tags and original certification. Bespoke custom commissions are non-refundable but include unlimited adjustments.'
+      q: "How does complimentary armored shipping work?",
+      a: "All domestic orders across India and international orders to the US, UK, UAE, and Europe are dispatched via insured priority couriers (BlueDart / FedEx Priority) in tamper-proof discreet packaging. Delivery requires an adult signature upon arrival."
     }
   ],
 
-  bespokeOptions: {
-    metals: [
-      { id: 'yellow-gold', name: '18K Champagne Gold', color: '#D2B585', border: '#B6925B', basePrice: 2800 },
-      { id: 'rose-gold', name: '18K Rose Gold', color: '#E8A798', border: '#D98978', basePrice: 2850 },
-      { id: 'white-gold', name: '18K White Gold', color: '#E5E7EB', border: '#D1D5DB', basePrice: 2950 },
-      { id: 'platinum', name: 'Platinum 950', color: '#F3F4F6', border: '#CBD5E1', basePrice: 3500 }
-    ],
-    gemstones: [
-      { id: 'diamond', name: 'D-Flawless Diamond', hex: '#F0F9FF', sparkle: 'rgba(240, 249, 255, 0.95)', multiplier: 4.2 },
-      { id: 'emerald', name: 'Muzo Colombian Emerald', hex: '#059669', sparkle: 'rgba(5, 150, 105, 0.85)', multiplier: 3.8 },
-      { id: 'sapphire', name: 'Ceylon Royal Sapphire', hex: '#1D4ED8', sparkle: 'rgba(29, 78, 216, 0.85)', multiplier: 3.6 },
-      { id: 'ruby', name: 'Pigeon Blood Ruby', hex: '#BE123C', sparkle: 'rgba(190, 18, 60, 0.85)', multiplier: 4.0 }
-    ],
-    cuts: [
-      { id: 'round', name: 'Brilliant Round', ratio: 1.0, shape: 'circle' },
-      { id: 'emerald-cut', name: 'Emerald Cut', ratio: 1.15, shape: 'rect' },
-      { id: 'oval', name: 'Royal Oval', ratio: 1.08, shape: 'ellipse' },
-      { id: 'pear', name: 'Teardrop Pear', ratio: 1.12, shape: 'path' }
-    ],
-    carats: [
-      { weight: 1.0, label: '1.00 Carat', scale: 0.85, priceMultiplier: 1.0 },
-      { weight: 1.75, label: '1.75 Carat', scale: 1.05, priceMultiplier: 1.85 },
-      { weight: 2.5, label: '2.50 Carat', scale: 1.25, priceMultiplier: 3.1 },
-      { weight: 4.0, label: '4.00 Carat (Rare)', scale: 1.5, priceMultiplier: 5.6 }
-    ]
+  policies: {
+    shipping: "Complimentary armored white-glove transport on all orders over $250 / ₹20,000. All shipments are 100% insured from our atelier doors to your hands. Standard delivery takes 2–4 business days domestically and 4–7 business days globally.",
+    returns: "We offer an unconditional 30-day return guarantee. If your piece does not evoke absolute wonder upon opening the jewel box, contact our WhatsApp Concierge for complimentary insured pickup and a 100% full refund.",
+    authenticity: "Zero fake claims covenant: Every piece is accompanied by stamped hallmarking (925 for silver, BIS 750/916 for gold) and independent gemological dossiers (GRA / GIA / IGI). We never use base metals or faux plastic stones."
   },
 
-  lookbooks: [
-    {
-      id: 'gala',
-      title: 'The Italian Gala: Timeless Elegance',
-      subtitle: 'Sculptural diamonds and champagne gold crafted for dramatic entrances.',
-      image: 'images/jewelux_editorial_hero.jpg',
-      featuredProduct: 'HJ-002',
-      featuredProductTitle: 'Empress Emerald & Diamond Cascade'
-    },
-    {
-      id: 'bridal',
-      title: 'Eternal Vows: The Bridal Sanctuary',
-      subtitle: 'Flawless solitaires and matching eternity bands blessed by hand-engraved inscriptions.',
-      image: 'images/jewelux_solitaire_ring.jpg',
-      featuredProduct: 'HJ-001',
-      featuredProductTitle: 'The Sovereign Radiant Solitaire Ring'
-    },
-    {
-      id: 'temple-chic',
-      title: 'Sacred Heritage: The Temple Edit',
-      subtitle: 'Generational Indian artisanal nakshi carvings harmonized with European modern minimalism.',
-      image: 'images/jewelux_temple_heritage.jpg',
-      featuredProduct: 'HJ-003',
-      featuredProductTitle: 'Padmavati Antique Temple Choker Parure'
-    }
-  ],
+  bespokeStudio: {
+    metals: [
+      { id: 'liquid-silver', name: '925 Platinum-Rhodium Silver', color: '#E8EBF0', specular: '#FFFFFF', priceBase: 180, isSilver: true },
+      { id: 'champagne-gold', name: '18K Florentine Champagne Gold', color: '#DECCA8', specular: '#FFF8EC', priceBase: 2400, isSilver: false },
+      { id: 'rose-gold', name: '18K Venetian Rose Gold', color: '#E5B299', specular: '#FFEAE0', priceBase: 2400, isSilver: false },
+      { id: 'platinum', name: 'Pure Platinum 950', color: '#D9DDE2', specular: '#FFFFFF', priceBase: 3100, isSilver: false }
+    ],
+    gems: [
+      { id: 'moissanite', name: 'D-Flawless Lab Moissanite', color: '#FFFFFF', dispersion: 0.104, pricePerCarat: 75 },
+      { id: 'diamond', name: 'D-Flawless Natural Diamond (GIA)', color: '#FFFFFF', dispersion: 0.044, pricePerCarat: 4800 },
+      { id: 'emerald', name: 'Muzo Colombian Emerald', color: '#10B981', dispersion: 0.014, pricePerCarat: 3200 },
+      { id: 'sapphire', name: 'Ceylon Royal Sapphire', color: '#1D4ED8', dispersion: 0.018, pricePerCarat: 2800 },
+      { id: 'ruby', name: 'Burmese Pigeon Blood Ruby', color: '#BE123C', dispersion: 0.018, pricePerCarat: 3900 }
+    ],
+    cuts: [
+      { id: 'round', name: 'Brilliant Round', ratio: 1.0 },
+      { id: 'emerald-cut', name: 'Emerald Step Cut', ratio: 1.15 },
+      { id: 'oval', name: 'Royal Oval', ratio: 1.08 },
+      { id: 'pear', name: 'Teardrop Pear', ratio: 1.12 }
+    ],
+    carats: [
+      { weight: 1.0, label: '1.00 Carat' },
+      { weight: 1.75, label: '1.75 Carat' },
+      { weight: 2.5, label: '2.50 Carat (Flagship)' },
+      { weight: 4.0, label: '4.00 Carat (Statement)' }
+    ]
+  }
+};
 
-  testimonials: [
-    {
-      quote: "House of Jewelux doesn't merely sell jewellery; they curate wearable sculptures that will be whispered about for generations. My bespoke bridal solitaire exceeded all imagination.",
-      author: 'Contessa Beatrice R.',
-      city: 'Milan & Geneva',
-      piece: 'Bespoke 3.5ct Solitaire Ring',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
-    },
-    {
-      quote: "The gemological knowledge and quiet discretion of their atelier team is unmatched. The Temple Collection choker is our family's proudest heirloom.",
-      author: 'Devika & Alok Singhania',
-      city: 'London & Mumbai',
-      piece: 'Padmavati Temple Choker Parure',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
-    },
-    {
-      quote: "From initial sketch to hand-delivery in Dubai with full GIA and Gübelin certification, every detail was orchestrated with utmost nobility and perfection.",
-      author: 'H.E. Amira Al-Maktoum',
-      city: 'Dubai International Financial Centre',
-      piece: 'Bespoke Sapphire Parure',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80'
-    }
-  ],
+// ================= MULTILINGUAL DICTIONARY (INTERNATIONAL READY) =================
+const JEWELUX_I18N = {
+  en: {
+    announcement: "THE SILVER EDIT 2026 — 925 Hallmarked Fine Silver & Anti-Tarnish Rhodium • Complimentary Insured Delivery",
+    nav_all: "All Masterpieces",
+    nav_silver: "Fine 925 Silver",
+    nav_couples: "Newlywed & Couples",
+    nav_gold: "The Gold Vault",
+    nav_craftsmanship: "Craftsmanship",
+    nav_about: "About Us",
+    nav_bespoke: "Bespoke 3D Studio",
+    nav_studio: "Founder Studio",
+    cta_add_bag: "Add to Bag",
+    cta_acquire_now: "Acquire Now",
+    cta_whatsapp: "Inquire on WhatsApp",
+    cta_consult: "Consult Atelier",
+    purity_silver: "925 Hallmarked Fine Silver",
+    purity_gold: "18K/22K BIS Hallmarked Gold",
+    badge_silver_spotlight: "Silver Spotlight",
+    honest_luxury_title: "The Honest Luxury Covenant",
+    honest_luxury_desc: "100% Certified 925 Sterling Silver & BIS Hallmarked Gold. Zero fake claims, verified gemological dossiers, and lifetime complimentary cleaning."
+  },
+  hi: {
+    announcement: "द सिल्वर एडिट 2026 — 925 हॉलमार्क फाइन सिल्वर और एंटी-टार्निश रोडियम • मुफ़्त बीमाकृत डिलीवरी",
+    nav_all: "सभी गहने",
+    nav_silver: "फाइन 925 सिल्वर",
+    nav_couples: "नवविवाहित और कपल्स",
+    nav_gold: "रॉयल गोल्ड वॉल्ट",
+    nav_craftsmanship: "कारीगरी",
+    nav_about: "हमारे बारे में",
+    nav_bespoke: "3D रिंग स्टूडियो",
+    nav_studio: "फाउंडर स्टूडियो",
+    cta_add_bag: "बैग में जोड़ें",
+    cta_acquire_now: "अभी खरीदें",
+    cta_whatsapp: "व्हाट्सएप पर बात करें",
+    cta_consult: "कारीगर से सलाह लें",
+    purity_silver: "925 हॉलमार्क्ड शुद्ध चांदी",
+    purity_gold: "18K/22K बीआईएस हॉलमार्क सोना",
+    badge_silver_spotlight: "सिल्वर स्पॉटलाइट",
+    honest_luxury_title: "सच्ची लग्ज़री का वादा",
+    honest_luxury_desc: "100% प्रमाणित 925 स्टर्लिंग चांदी और बीआईएस हॉलमार्क सोना। कोई झूठे दावे नहीं, प्रामाणिक लैब सर्टिफिकेट और आजीवन मुफ़्त पॉलिशिंग।"
+  },
+  fr: {
+    announcement: "L'ÉDITION ARGENT 2026 — Argent 925 Poinçonné et Rhodium Anti-Ternissure • Livraison Offerte et Assurée",
+    nav_all: "Toutes les Pièces",
+    nav_silver: "Argent Fin 925",
+    nav_couples: "Nouveaux Mariés & Couples",
+    nav_gold: "Le Coffre d'Or",
+    nav_craftsmanship: "Savoir-Faire",
+    nav_about: "Maison",
+    nav_bespoke: "Studio 3D Sur-Mesure",
+    nav_studio: "Studio Fondateur",
+    cta_add_bag: "Ajouter au Panier",
+    cta_acquire_now: "Acquérir",
+    cta_whatsapp: "Consulter sur WhatsApp",
+    cta_consult: "Prendre Rendez-vous",
+    purity_silver: "Argent 925 Poinçonné",
+    purity_gold: "Or 18K/22K Certifié",
+    badge_silver_spotlight: "Vedette Argent",
+    honest_luxury_title: "Le Pacte de Luxe Véritable",
+    honest_luxury_desc: "Argent 925 pur et Or certifié. Aucune fausse promesse, rapports gemmologiques rigoureux et garantie à vie."
+  },
+  it: {
+    announcement: "THE SILVER EDIT 2026 — Argento 925 Punzonato e Rodio Lucido • Consegna Assicurata Gratuita",
+    nav_all: "Tutti i Capolavori",
+    nav_silver: "Argento 925 Pregiato",
+    nav_couples: "Sposi & Coppie",
+    nav_gold: "Il Caveau d'Oro",
+    nav_craftsmanship: "Artigianato",
+    nav_about: "La Maison",
+    nav_bespoke: "Studio 3D su Misura",
+    nav_studio: "Studio Fondatore",
+    cta_add_bag: "Aggiungi al Carrello",
+    cta_acquire_now: "Acquista Ora",
+    cta_whatsapp: "Contatta su WhatsApp",
+    cta_consult: "Consulta l'Atelier",
+    purity_silver: "Argento 925 Autentico",
+    purity_gold: "Oro 18K/22K Certificato",
+    badge_silver_spotlight: "In Primo Piano",
+    honest_luxury_title: "Il Patto del Lusso Autentico",
+    honest_luxury_desc: "Argento 925 e Oro garantito al 100%. Trasparenza assoluta, certificati gemmologici e cura a vita."
+  }
+};
 
-  boutiques: [
-    { city: 'Geneva Atelier', address: '12 Rue du Rhône, 1204 Genève, Switzerland', phone: '+41 22 819 9200', hours: 'Mon–Fri: 10:00 – 18:30 (Private Salon by Appointment)' },
-    { city: 'Milan Montenapoleone', address: 'Via Monte Napoleone 8, 20121 Milano, Italy', phone: '+39 02 7600 4811', hours: 'Mon–Sat: 10:30 – 19:30' },
-    { city: 'London Mayfair', address: '14 New Bond Street, Mayfair, London W1S 3PF', phone: '+44 20 7946 0912', hours: 'Mon–Sat: 10:00 – 18:30' },
-    { city: 'Paris Place Vendôme', address: '22 Place Vendôme, 75001 Paris, France', phone: '+33 1 42 68 55 00', hours: 'Mon–Sat: 10:30 – 19:00' },
-    { city: 'New York Fifth Avenue', address: '742 Fifth Avenue, New York, NY 10019', phone: '+1 212 555 0199', hours: 'Mon–Sat: 10:00 – 19:00' },
-    { city: 'Dubai Fashion Avenue', address: 'The Fashion Avenue, The Dubai Mall, Level 1', phone: '+971 4 362 7500', hours: 'Daily: 10:00 – 23:00' }
-  ]
+// ================= STORAGE & PERSISTENCE HELPER (NO CODE EDITING NEEDED) =================
+const JEWELUX_STORAGE = {
+  KEY: 'jewelux_custom_data_v2',
+
+  getStoreData() {
+    try {
+      const saved = localStorage.getItem(this.KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...JEWELUX_DATA,
+          storeConfig: { ...JEWELUX_DATA.storeConfig, ...(parsed.storeConfig || {}) },
+          products: parsed.products && parsed.products.length ? parsed.products : JEWELUX_DATA.products,
+          faqs: parsed.faqs && parsed.faqs.length ? parsed.faqs : JEWELUX_DATA.faqs,
+          policies: { ...JEWELUX_DATA.policies, ...(parsed.policies || {}) },
+          inquiries: parsed.inquiries || []
+        };
+      }
+    } catch (e) {
+      console.warn('Could not read custom store data from localStorage', e);
+    }
+    return { ...JEWELUX_DATA, inquiries: [] };
+  },
+
+  saveStoreData(customData) {
+    try {
+      localStorage.setItem(this.KEY, JSON.stringify(customData));
+      return true;
+    } catch (e) {
+      console.error('Error saving store data to localStorage', e);
+      return false;
+    }
+  },
+
+  exportJson() {
+    const data = this.getStoreData();
+    const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", str);
+    dlAnchor.setAttribute("download", `house-of-jewelux-backup-${new Date().toISOString().slice(0,10)}.json`);
+    document.body.appendChild(dlAnchor);
+    dlAnchor.click();
+    dlAnchor.remove();
+  },
+
+  importJson(jsonString) {
+    try {
+      const parsed = JSON.parse(jsonString);
+      if (parsed && (parsed.products || parsed.storeConfig)) {
+        this.saveStoreData(parsed);
+        return true;
+      }
+    } catch (e) {
+      console.error('Invalid JSON file', e);
+    }
+    return false;
+  },
+
+  resetDefaults() {
+    localStorage.removeItem(this.KEY);
+  }
 };
 
 if (typeof window !== 'undefined') {
   window.JEWELUX_DATA = JEWELUX_DATA;
+  window.JEWELUX_I18N = JEWELUX_I18N;
+  window.JEWELUX_STORAGE = JEWELUX_STORAGE;
 }

@@ -71,25 +71,32 @@
       <div class="flex items-center gap-3">
         <span class="text-[#8A6B38] font-medium flex items-center gap-1.5">
           <span class="star-emblem">✦</span>
-          Complimentary Insured Global White-Glove Delivery
+          <span id="top-announcement-text">THE SILVER EDIT 2026 — 925 Hallmarked Fine Silver & Anti-Tarnish Rhodium • Complimentary Insured Global Delivery</span>
         </span>
         <span class="hidden md:inline text-[#C5A674]/50">|</span>
         <span class="hidden md:inline text-[#766B5E] text-[10px]">Geneva • Milan • London • Paris • New York • Dubai</span>
       </div>
 
-      <div class="flex items-center gap-6">
-        <a href="#contact" class="hover:text-[#8A6B38] transition-colors underline underline-offset-4 text-[10px] tracking-widest">
-          Book Private Atelier
-        </a>
+      <div class="flex items-center gap-4 sm:gap-6">
+        <!-- Language Switcher -->
+        <div class="flex items-center gap-1.5 bg-[#FAF9F5] border border-[#C5A674]/30 rounded px-2 py-0.5 shadow-sm">
+          <label for="language-select" class="text-[#766B5E] text-[9px] font-semibold">LANG:</label>
+          <select id="language-select" class="bg-transparent text-[#8A6B38] font-medium outline-none cursor-pointer text-xs font-sans">
+            <option value="en">EN</option>
+            <option value="hi">हिंदी</option>
+            <option value="fr">FR</option>
+            <option value="it">IT</option>
+          </select>
+        </div>
 
         <!-- Global Currency Switcher -->
         <div class="flex items-center gap-1.5 bg-[#FAF9F5] border border-[#C5A674]/30 rounded px-2.5 py-0.5 shadow-sm">
           <label for="currency-select" class="text-[#766B5E] text-[9px] font-semibold">CURRENCY:</label>
           <select id="currency-select" class="bg-transparent text-[#8A6B38] font-medium outline-none cursor-pointer text-xs font-sans">
             <option value="USD">USD ($)</option>
+            <option value="INR">INR (₹)</option>
             <option value="EUR">EUR (€)</option>
             <option value="GBP">GBP (£)</option>
-            <option value="INR">INR (₹)</option>
             <option value="AED">AED (د.إ)</option>
           </select>
         </div>
@@ -132,9 +139,13 @@
 
       <!-- Desktop Editorial Navigation Links -->
       <nav class="hidden lg:flex items-center gap-7 text-[11px] uppercase tracking-[0.22em] font-medium text-[#1D1815]">
-        <a href="#new-arrivals" class="nav-link hover:text-[#8A6B38] transition-colors py-3 relative">New Arrivals</a>
-        <a href="#shop" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Shop</a>
+        <a href="#silver" class="nav-link hover:text-[#8A6B38] transition-colors py-3 text-[#8A6B38] font-semibold flex items-center gap-1">
+          <span class="star-emblem text-[10px]">✦</span> The Silver Edit
+        </a>
+        <a href="#couples" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Couples & Bridal</a>
+        <a href="#shop" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Catalogue</a>
         <a href="#collections" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Collections</a>
+        <a href="#gold-vault" class="nav-link hover:text-[#8A6B38] transition-colors py-3 text-[#8A6B38]">Gold Vault</a>
 
         <!-- Jewellery Category Mega-Dropdown -->
         <div class="relative dropdown-group py-3">
@@ -355,6 +366,137 @@
         </p>
       </section>
 
+      <!-- ================= 2A. THE SILVER EDIT — 925 HALLMARKED SHOWCASE ================= -->
+      <section id="silver-spotlight-section" class="py-20 bg-white border-y border-[#C5A674]/25">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+          
+          <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div class="space-y-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF9F5] border border-[#C5A674]/40 text-[#8A6B38] text-[10px] tracking-widest uppercase font-semibold">
+                <span>✦</span> Primary Commercial Focus • Certified 925 Silver
+              </div>
+              <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815] tracking-tight">
+                The Silver Edit <span class="italic champagne-gold-text font-serif">2026</span>
+              </h2>
+              <p class="text-[#766B5E] text-xs sm:text-sm font-light max-w-xl">
+                Solid 925 Sterling Silver veiled in liquid platinum-rhodium lustre. Set with certified D-Color VVS1 lab moissanites. Everyday modern elegance crafted for women who celebrate their own brilliance.
+              </p>
+            </div>
+            <a href="#silver" class="btn-luxury-secondary text-[10px] self-start md:self-auto">
+              View All 925 Silver Pieces
+            </a>
+          </div>
+
+          <!-- Featured 925 Silver Grid -->
+          <div id="home-silver-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Dynamically populated from data.js -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 2B. CONCEIVED FOR LOVE — NEWLYWED & COUPLE SANCTUARY ================= -->
+      <section id="couples-sanctuary-section" class="py-24 bg-[#FAF9F5] relative overflow-hidden border-b border-[#C5A674]/25">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-5 space-y-6 text-left">
+              <span class="star-emblem text-base block">✦</span>
+              <span class="text-[10px] uppercase tracking-[0.35em] text-[#8A6B38] font-semibold block">
+                Bridal & Marital Heirlooms
+              </span>
+              <h2 class="font-display text-3xl sm:text-5xl font-light text-[#1D1815] leading-tight">
+                Conceived for Love, <br />
+                <span class="italic champagne-gold-text font-serif">Sculpted for Lifetimes</span>
+              </h2>
+              <p class="text-[#766B5E] text-sm font-serif italic font-light leading-relaxed">
+                "For newlyweds embarking on sacred companionship, jewellery is more than adornment — it is an eternal silent witness to your vows."
+              </p>
+              <div class="space-y-3 pt-2 text-xs text-[#332B25]">
+                <div class="flex items-center gap-3">
+                  <span class="w-2 h-2 rounded-full bg-[#C5A674]"></span>
+                  <span><strong>The Amore Couple Bands:</strong> Ergonomic comfort-fit contour in solid 925 silver with secret flush-set stones.</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-2 h-2 rounded-full bg-[#C5A674]"></span>
+                  <span><strong>The Luna Mangalsutra:</strong> Auspicious natural black spinel hand-knotted with Italian silver minimalism.</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-2 h-2 rounded-full bg-[#C5A674]"></span>
+                  <span><strong>Complimentary Inside Engraving:</strong> Your wedding date or initials hand-inscribed by our atelier.</span>
+                </div>
+              </div>
+              <div class="pt-4 flex items-center gap-4">
+                <a href="#couples" class="btn-luxury-primary text-[10px]">
+                  Explore Newlywed Suite
+                </a>
+                <a href="https://wa.me/919876543210?text=Hello%20House%20of%20Jewelux%20Concierge,%20we%20are%20a%20newly%20married%20couple%20inquiring%20about%20your%20bridal%20couple%20bands." target="_blank" rel="noopener noreferrer" class="btn-luxury-secondary text-[10px] flex items-center gap-2">
+                  <span>Chat on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="bg-white p-5 rounded-xl border border-[#C5A674]/30 shadow-md group">
+                <div class="aspect-square overflow-hidden rounded-lg mb-4 bg-[#F8F6F0]">
+                  <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=85" alt="Amore Couple Bands" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold">Matching Pair • 925 Silver</span>
+                <h4 class="font-display text-base text-[#1D1815] mt-1">The Amore Couple Bands</h4>
+                <p class="text-xs text-[#766B5E] mt-1">From $240 / ₹20,000 pair</p>
+              </div>
+
+              <div class="bg-white p-5 rounded-xl border border-[#C5A674]/30 shadow-md group">
+                <div class="aspect-square overflow-hidden rounded-lg mb-4 bg-[#F8F6F0]">
+                  <img src="images/jewelux_hero_necklace.jpg" alt="Luna Pavé Mangalsutra" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold">Modern Bridal Heirloom</span>
+                <h4 class="font-display text-base text-[#1D1815] mt-1">Luna Pavé Halo Mangalsutra</h4>
+                <p class="text-xs text-[#766B5E] mt-1">From $280 / ₹23,400</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2C. THE HONEST LUXURY COVENANT ================= -->
+      <section class="py-14 bg-[#F4F1EA] border-b border-[#C5A674]/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-8">
+            <span class="star-emblem text-xs">✦</span>
+            <span class="text-[9px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold block">Transparency & Truth</span>
+            <h3 class="font-display text-2xl sm:text-3xl text-[#1D1815] mt-1">The Honest Luxury Covenant</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <div class="bg-white/80 p-5 rounded-lg border border-[#E8E3D8] space-y-1.5 shadow-sm">
+              <div class="w-7 h-7 rounded-full bg-[#FAF9F5] border border-[#C5A674] flex items-center justify-center text-xs text-[#8A6B38] font-bold">925</div>
+              <h5 class="font-display text-sm text-[#1D1815]">Solid 925 Hallmarked</h5>
+              <p class="text-[11px] text-[#766B5E] leading-relaxed">No brass or base metal fillers. Stamped solid 925 silver with pure liquid rhodium anti-tarnish barrier.</p>
+            </div>
+
+            <div class="bg-white/80 p-5 rounded-lg border border-[#E8E3D8] space-y-1.5 shadow-sm">
+              <div class="w-7 h-7 rounded-full bg-[#FAF9F5] border border-[#C5A674] flex items-center justify-center text-xs text-[#8A6B38] font-bold">💎</div>
+              <h5 class="font-display text-sm text-[#1D1815]">Certified Gemstones</h5>
+              <p class="text-[11px] text-[#766B5E] leading-relaxed">Individual GRA gemological dossiers for moissanites & GIA certifications for diamonds. No fake CZ claims.</p>
+            </div>
+
+            <div class="bg-white/80 p-5 rounded-lg border border-[#E8E3D8] space-y-1.5 shadow-sm">
+              <div class="w-7 h-7 rounded-full bg-[#FAF9F5] border border-[#C5A674] flex items-center justify-center text-xs text-[#8A6B38] font-bold">👑</div>
+              <h5 class="font-display text-sm text-[#1D1815]">Future Gold Commissions</h5>
+              <p class="text-[11px] text-[#766B5E] leading-relaxed">18K & 22K Solid Gold pieces crafted on private atelier commission with government-approved BIS hallmarking.</p>
+            </div>
+
+            <div class="bg-white/80 p-5 rounded-lg border border-[#E8E3D8] space-y-1.5 shadow-sm">
+              <div class="w-7 h-7 rounded-full bg-[#FAF9F5] border border-[#C5A674] flex items-center justify-center text-xs text-[#8A6B38] font-bold">🛡️</div>
+              <h5 class="font-display text-sm text-[#1D1815]">30-Day Pure Guarantee</h5>
+              <p class="text-[11px] text-[#766B5E] leading-relaxed">Complimentary insured return pickup & 100% refund if not completely mesmerized by your jewel box opening.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 3. Curated Collections Grid (The 6 Signature Lines) -->
       <section id="collections-section" class="py-20 bg-[#F4F1EA]/60 border-y border-[#C5A674]/25">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
@@ -425,7 +567,14 @@
             <!-- Left: Vector Ring Visualizer -->
             <div class="lg:col-span-6 flex flex-col items-center">
               <div class="ring-studio-viewport relative w-full flex items-center justify-center p-6 min-h-[360px]">
-                <div id="bespoke-ring-visualizer" class="w-full max-w-[320px] aspect-square flex items-center justify-center">
+                <div id="bespoke-ring-visualizer" class="w-full flex items-center justify-center">
+                  <div class="canvas-3d-wrapper">
+                    <canvas id="bespoke-3d-canvas" width="600" height="480"></canvas>
+                    <div class="canvas-3d-hint flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 animate-spin" style="animation-duration: 6s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                      <span>Drag to Rotate 360° • Raytraced Facets</span>
+                    </div>
+                  </div>
                   <!-- Dynamically rendered by app.js -->
                 </div>
 
@@ -455,6 +604,10 @@
                   1. Select Precious Metal
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <button onclick="setBespokeMetal('liquid-silver')" data-bespoke-metal="liquid-silver" class="p-2.5 rounded border border-[#C5A674] bg-white text-left transition flex items-center gap-2 shadow-sm">
+                    <span class="w-4 h-4 rounded-full bg-[#E8EBF0] border border-[#B0B8C4] shadow-sm"></span>
+                    <span class="text-xs font-semibold text-[#8A6B38]">925 Silver</span>
+                  </button>
                   <button onclick="setBespokeMetal('yellow-gold')" data-bespoke-metal="yellow-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#FAF9F5] hover:border-[#C5A674] text-left transition flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full bg-[#D2B585] border border-[#B6925B] shadow-sm"></span>
                     <span class="text-xs font-medium text-[#1D1815]">Champagne</span>
@@ -1200,6 +1353,371 @@
       </section>
     </div>
 
+      <!-- ================= VIEW 13: PRIVATE YOUTUBE STUDIO-STYLE FOUNDER DASHBOARD ================= -->
+    <div id="view-studio" class="page-view studio-root">
+      
+      <!-- Screen A: PIN Lockpad (Shown when studio is locked) -->
+      <div id="studio-lock-screen" class="min-h-[85vh] flex items-center justify-center p-4">
+        <div class="studio-card-dark p-8 sm:p-12 max-w-md w-full text-center border border-[#C5A674]/40 shadow-2xl relative overflow-hidden">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-[#14110F] border border-[#C5A674] flex items-center justify-center p-2">
+            <img src="brand-identity/jewelux-official-emblem-transparent.png" alt="Emblem" class="w-full h-full object-contain">
+          </div>
+          <h3 class="font-display text-2xl text-white tracking-widest uppercase">Founder Studio</h3>
+          <p class="text-xs text-[#8A6B38] tracking-[0.2em] uppercase mt-1 mb-6">Atelier Private Portal • House of Jewelux</p>
+          
+          <form onsubmit="event.preventDefault(); verifyStudioPin();" class="space-y-4">
+            <div>
+              <label for="studio-pin-input" class="block text-[10px] text-[#A4988B] uppercase tracking-widest mb-2 font-medium">Enter 4-Digit Security Passcode</label>
+              <input type="password" id="studio-pin-input" maxlength="6" placeholder="••••" class="studio-input-dark text-center text-2xl tracking-[0.4em] w-44 mx-auto font-mono" autocomplete="off" required>
+            </div>
+            <button type="submit" class="btn-luxury-gold w-full py-3 text-xs tracking-widest uppercase">
+              Unlock Creator Dashboard
+            </button>
+          </form>
+
+          <p class="text-[10px] text-[#766B5E] mt-6">
+            Default Founder Passcode: <code class="text-[#C5A674] font-mono">1985</code> (Customizable inside)
+          </p>
+        </div>
+      </div>
+
+      <!-- Screen B: Main Studio Dashboard (Shown when unlocked) -->
+      <div id="studio-dashboard" class="hidden min-h-screen pb-20">
+        
+        <!-- Studio Header Bar -->
+        <header class="border-b border-[#C5A674]/20 bg-[#16120F] px-4 sm:px-8 py-4 sticky top-0 z-30 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-[#1F1A16] border border-[#C5A674] flex items-center justify-center p-1.5">
+              <img src="brand-identity/jewelux-official-emblem-transparent.png" alt="Emblem" class="w-full h-full object-contain">
+            </div>
+            <div>
+              <h2 class="font-display text-sm tracking-[0.2em] text-white font-medium uppercase flex items-center gap-2">
+                House of Jewelux Studio
+                <span class="px-2 py-0.5 rounded text-[9px] bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30">V2 Master</span>
+              </h2>
+              <p class="text-[10px] text-[#8A6B38]">Creator & Inventory Management Suite</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 text-xs">
+            <a href="#home" class="px-3.5 py-1.5 rounded border border-[#C5A674]/40 text-[#DECCA8] hover:bg-[#C5A674]/10 transition flex items-center gap-1.5">
+              <span>↗ Live Storefront</span>
+            </a>
+            <button onclick="JEWELUX_STORAGE.exportJson(); showToast('Backup JSON exported successfully!', '💾');" class="px-3.5 py-1.5 rounded bg-[#C5A674]/20 border border-[#C5A674] text-white hover:bg-[#C5A674]/30 transition flex items-center gap-1.5">
+              <span>💾 1-Click Backup JSON</span>
+            </button>
+            <button onclick="lockStudio()" class="px-3 py-1.5 rounded bg-red-950/40 border border-red-800/40 text-red-300 hover:bg-red-900/50 transition">
+              Lock
+            </button>
+          </div>
+        </header>
+
+        <!-- Studio Main Layout -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-8">
+          
+          <!-- Studio Tabs (YouTube Studio Style) -->
+          <div class="flex border-b border-[#C5A674]/25 mb-8 overflow-x-auto gap-2 pb-1">
+            <button onclick="switchStudioTab('overview')" id="studio-tab-btn-overview" class="px-5 py-2.5 rounded-t text-xs uppercase tracking-wider font-semibold studio-tab-active transition flex items-center gap-2 flex-shrink-0">
+              <span>📊 Overview & Analytics</span>
+            </button>
+            <button onclick="switchStudioTab('inventory')" id="studio-tab-btn-inventory" class="px-5 py-2.5 rounded-t text-xs uppercase tracking-wider font-semibold text-[#A4988B] hover:text-white transition flex items-center gap-2 flex-shrink-0">
+              <span>💎 Live Inventory (925 Silver & Gold)</span>
+            </button>
+            <button onclick="switchStudioTab('content')" id="studio-tab-btn-content" class="px-5 py-2.5 rounded-t text-xs uppercase tracking-wider font-semibold text-[#A4988B] hover:text-white transition flex items-center gap-2 flex-shrink-0">
+              <span>✍️ Policies & Content</span>
+            </button>
+            <button onclick="switchStudioTab('media')" id="studio-tab-btn-media" class="px-5 py-2.5 rounded-t text-xs uppercase tracking-wider font-semibold text-[#A4988B] hover:text-white transition flex items-center gap-2 flex-shrink-0">
+              <span>🎨 Media & Asset Studio</span>
+            </button>
+            <button onclick="switchStudioTab('inquiries')" id="studio-tab-btn-inquiries" class="px-5 py-2.5 rounded-t text-xs uppercase tracking-wider font-semibold text-[#A4988B] hover:text-white transition flex items-center gap-2 flex-shrink-0">
+              <span>💬 WhatsApp & Leads CRM</span>
+            </button>
+          </div>
+
+          <!-- ================= TAB 1: OVERVIEW & ANALYTICS ================= -->
+          <div id="studio-panel-overview" class="space-y-8">
+            <!-- Metric Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="studio-card-dark p-6 space-y-1">
+                <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold">Total Inventory Value</span>
+                <p id="stat-total-value" class="text-2xl sm:text-3xl font-display text-white font-medium">$0</p>
+                <p class="text-[10px] text-[#A4988B]">Live appraisal across all collections</p>
+              </div>
+
+              <div class="studio-card-dark p-6 space-y-1">
+                <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold">925 Silver Spotlight Pieces</span>
+                <p id="stat-silver-count" class="text-2xl sm:text-3xl font-display text-[#10B981] font-medium">8 Pieces</p>
+                <p class="text-[10px] text-[#A4988B]">Primary commercial focus active</p>
+              </div>
+
+              <div class="studio-card-dark p-6 space-y-1">
+                <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold">Gold Vault Commissions</span>
+                <p id="stat-gold-count" class="text-2xl sm:text-3xl font-display text-[#C5A674] font-medium">3 Pieces</p>
+                <p class="text-[10px] text-[#A4988B]">Bespoke atelier & salon viewing</p>
+              </div>
+
+              <div class="studio-card-dark p-6 space-y-1">
+                <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold">WhatsApp Concierge Status</span>
+                <p class="text-2xl sm:text-3xl font-display text-[#25D366] font-medium">Online</p>
+                <p id="stat-whatsapp-number" class="text-[10px] text-[#A4988B]">+91 98765 43210</p>
+              </div>
+            </div>
+
+            <!-- Quick Live Announcement Marquee Controller -->
+            <div class="studio-card-dark p-6 space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-display text-base text-white">Live Storefront Announcement Marquee</h4>
+                  <p class="text-xs text-[#A4988B]">Edit the banner shown across the top of your entire digital flagship in real-time.</p>
+                </div>
+                <button onclick="saveAnnouncementBar()" class="btn-luxury-gold py-2 px-5 text-xs">
+                  Save Marquee
+                </button>
+              </div>
+              <input type="text" id="studio-announcement-input" class="studio-input-dark w-full text-sm font-sans" placeholder="Enter announcement text...">
+            </div>
+
+            <!-- Quick Security / WhatsApp Phone Settings -->
+            <div class="studio-card-dark p-6 space-y-4">
+              <h4 class="font-display text-base text-white">Founder Concierge & Security Settings</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-2 font-medium">WhatsApp Concierge Phone Number (with country code)</label>
+                  <input type="text" id="studio-whatsapp-input" class="studio-input-dark w-full text-sm font-mono" placeholder="+919876543210">
+                </div>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-2 font-medium">Founder Studio 4-Digit Passcode (PIN)</label>
+                  <input type="text" id="studio-newpin-input" maxlength="6" class="studio-input-dark w-full text-sm font-mono" placeholder="1985">
+                </div>
+              </div>
+              <button onclick="saveStudioSecurityConfig()" class="btn-luxury-gold py-2 px-6 text-xs">
+                Update Concierge & PIN
+              </button>
+            </div>
+          </div>
+
+          <!-- ================= TAB 2: LIVE PRODUCT INVENTORY ================= -->
+          <div id="studio-panel-inventory" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 class="font-display text-xl text-white">Masterpiece Inventory Catalogue</h3>
+                <p class="text-xs text-[#A4988B]">Manage prices, stock status, silver vs gold priority, and new creations.</p>
+              </div>
+              <button onclick="openAddProductModal()" class="btn-luxury-gold py-2.5 px-6 text-xs flex items-center gap-2">
+                <span>+ Add New Masterpiece</span>
+              </button>
+            </div>
+
+            <!-- Inventory Search & Filter Bar -->
+            <div class="flex flex-wrap items-center gap-3">
+              <input type="text" id="studio-search-input" oninput="filterStudioInventory()" placeholder="Search by name, SKU, or stone..." class="studio-input-dark flex-grow max-w-sm text-xs">
+              <select id="studio-category-filter" onchange="filterStudioInventory()" class="studio-input-dark text-xs">
+                <option value="all">All Categories</option>
+                <option value="silver">Fine 925 Silver</option>
+                <option value="couples">Newlywed & Couples</option>
+                <option value="rings">Rings</option>
+                <option value="earrings">Earrings</option>
+                <option value="necklaces">Necklaces</option>
+                <option value="bracelets">Bracelets</option>
+                <option value="bangles">Bangles</option>
+                <option value="temple">Temple Heirlooms</option>
+                <option value="gold-vault">Gold Vault</option>
+              </select>
+            </div>
+
+            <!-- Inventory Table -->
+            <div class="studio-card-dark overflow-x-auto">
+              <table class="w-full text-left text-xs text-[#DECCA8]">
+                <thead class="bg-[#14110F] text-[#8A6B38] uppercase text-[10px] tracking-wider border-b border-[#C5A674]/20">
+                  <tr>
+                    <th class="p-3.5">Piece / SKU</th>
+                    <th class="p-3.5">Category</th>
+                    <th class="p-3.5">Metal & Purity</th>
+                    <th class="p-3.5">Price (USD / Active)</th>
+                    <th class="p-3.5">Status</th>
+                    <th class="p-3.5 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="studio-inventory-tbody" class="divide-y divide-[#C5A674]/15">
+                  <!-- Dynamically rendered by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB 3: POLICIES & CONTENT CONTROLLER ================= -->
+          <div id="studio-panel-content" class="hidden space-y-6">
+            <div>
+              <h3 class="font-display text-xl text-white">Storefront Content & Policy Controller</h3>
+              <p class="text-xs text-[#A4988B]">Modify hero messaging, shipping policies, returns guarantee, and client FAQs without writing code.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Hero Section Editor -->
+              <div class="studio-card-dark p-6 space-y-4">
+                <h4 class="font-display text-base text-white border-b border-[#C5A674]/20 pb-2">Hero Showcase Content</h4>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-1 font-medium">Hero Primary Headline</label>
+                  <input type="text" id="studio-hero-headline" class="studio-input-dark w-full text-xs">
+                </div>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-1 font-medium">Hero Narrative Subtitle</label>
+                  <textarea id="studio-hero-subtitle" rows="3" class="studio-input-dark w-full text-xs"></textarea>
+                </div>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-1 font-medium">Primary CTA Text</label>
+                  <input type="text" id="studio-hero-cta" class="studio-input-dark w-full text-xs">
+                </div>
+                <button onclick="saveHeroContent()" class="btn-luxury-gold py-2 px-5 text-xs">Save Hero Content</button>
+              </div>
+
+              <!-- Shipping & Returns Policy Editor -->
+              <div class="studio-card-dark p-6 space-y-4">
+                <h4 class="font-display text-base text-white border-b border-[#C5A674]/20 pb-2">Shipping & 30-Day Returns Policy</h4>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-1 font-medium">Free Shipping Threshold ($ USD)</label>
+                  <input type="number" id="studio-shipping-threshold" class="studio-input-dark w-full text-xs">
+                </div>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-1 font-medium">Domestic Shipping Timeline</label>
+                  <input type="text" id="studio-shipping-domestic" class="studio-input-dark w-full text-xs">
+                </div>
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-1 font-medium">30-Day Return Guarantee Covenant</label>
+                  <textarea id="studio-returns-policy" rows="3" class="studio-input-dark w-full text-xs"></textarea>
+                </div>
+                <button onclick="savePoliciesContent()" class="btn-luxury-gold py-2 px-5 text-xs">Save Policies</button>
+              </div>
+            </div>
+
+            <!-- FAQ Management -->
+            <div class="studio-card-dark p-6 space-y-4">
+              <div class="flex items-center justify-between border-b border-[#C5A674]/20 pb-3">
+                <div>
+                  <h4 class="font-display text-base text-white">Client FAQ Manager</h4>
+                  <p class="text-xs text-[#A4988B]">Add or edit questions displayed on your luxury FAQ page.</p>
+                </div>
+                <button onclick="openAddFaqModal()" class="px-4 py-1.5 rounded border border-[#C5A674] text-white text-xs hover:bg-[#C5A674]/20">
+                  + Add New FAQ
+                </button>
+              </div>
+              <div id="studio-faq-list" class="space-y-3">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= TAB 4: MEDIA & ASSET PROCESSING STUDIO ================= -->
+          <div id="studio-panel-media" class="hidden space-y-6">
+            <div>
+              <h3 class="font-display text-xl text-white">Media & Asset Studio</h3>
+              <p class="text-xs text-[#A4988B]">Test images, preview Warm White color grading, and verify watermark overlays before publication.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <!-- Controls -->
+              <div class="lg:col-span-5 studio-card-dark p-6 space-y-5">
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-2 font-medium">Image URL to Test</label>
+                  <input type="url" id="studio-media-url" oninput="updateMediaSimulator()" value="images/jewelux_solitaire_ring.jpg" class="studio-input-dark w-full text-xs">
+                </div>
+
+                <div>
+                  <label class="block text-xs text-[#A4988B] mb-2 font-medium">Aspect Ratio Guide</label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <button onclick="setMediaAspect('square')" class="p-2 rounded border border-[#C5A674] bg-[#16120F] text-xs text-center text-white">1:1 Square</button>
+                    <button onclick="setMediaAspect('portrait')" class="p-2 rounded border border-[#C5A674]/40 bg-[#16120F] text-xs text-center text-white">4:5 Portrait</button>
+                    <button onclick="setMediaAspect('banner')" class="p-2 rounded border border-[#C5A674]/40 bg-[#16120F] text-xs text-center text-white">16:9 Banner</button>
+                  </div>
+                </div>
+
+                <!-- Warm White Luxury Filter Simulator -->
+                <div class="space-y-3 pt-2 border-t border-[#C5A674]/20">
+                  <h5 class="text-xs font-semibold text-[#DECCA8] uppercase tracking-wider">Luxury Color Grading</h5>
+                  <div>
+                    <div class="flex justify-between text-[11px] text-[#A4988B] mb-1">
+                      <span>Warm White Luminance</span>
+                      <span id="val-brightness">104%</span>
+                    </div>
+                    <input type="range" id="slider-brightness" min="90" max="120" value="104" oninput="updateMediaSimulator()" class="w-full accent-[#C5A674]">
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between text-[11px] text-[#A4988B] mb-1">
+                      <span>Italian Gold Warmth</span>
+                      <span id="val-warmth">105%</span>
+                    </div>
+                    <input type="range" id="slider-warmth" min="90" max="125" value="105" oninput="updateMediaSimulator()" class="w-full accent-[#C5A674]">
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between text-[11px] text-[#A4988B] mb-1">
+                      <span>Didone Contrast</span>
+                      <span id="val-contrast">102%</span>
+                    </div>
+                    <input type="range" id="slider-contrast" min="90" max="115" value="102" oninput="updateMediaSimulator()" class="w-full accent-[#C5A674]">
+                  </div>
+
+                  <div class="flex items-center gap-2 pt-2">
+                    <input type="checkbox" id="check-watermark" checked onchange="updateMediaSimulator()" class="accent-[#C5A674]">
+                    <label for="check-watermark" class="text-xs text-[#DECCA8]">Overlay House of Jewelux Brand Seal</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Simulator Viewport -->
+              <div class="lg:col-span-7 studio-card-dark p-6 flex flex-col items-center justify-center">
+                <span class="text-[10px] text-[#8A6B38] uppercase tracking-widest mb-4 font-semibold">Live Simulation Viewport</span>
+                <div id="media-preview-box" class="relative overflow-hidden border border-[#C5A674]/30 rounded-lg max-w-md w-full bg-[#FAF9F5] shadow-xl" style="aspect-ratio: 1/1;">
+                  <img id="media-preview-img" src="images/jewelux_solitaire_ring.jpg" alt="Preview" class="w-full h-full object-cover transition duration-300">
+                  <div id="media-preview-watermark" class="absolute bottom-3 right-3 w-10 h-10 pointer-events-none opacity-80 filter drop-shadow-md">
+                    <img src="brand-identity/jewelux-official-emblem-transparent.png" alt="Seal" class="w-full h-full object-contain">
+                  </div>
+                </div>
+                <p id="media-css-code" class="text-[11px] text-[#A4988B] font-mono mt-4 text-center bg-[#14110F] px-4 py-2 rounded border border-[#C5A674]/20 max-w-md w-full">
+                  filter: brightness(1.04) sepia(0.05) contrast(1.02);
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= TAB 5: INQUIRIES & WHATSAPP CRM ================= -->
+          <div id="studio-panel-inquiries" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-display text-xl text-white">Client Inquiries & WhatsApp Pipeline</h3>
+                <p class="text-xs text-[#A4988B]">Track clients who inquired about custom 3D pieces, bridal bands, or salon bookings.</p>
+              </div>
+              <button onclick="addSampleInquiry()" class="px-3.5 py-1.5 rounded border border-[#C5A674]/40 text-xs text-[#DECCA8] hover:bg-[#C5A674]/10">
+                + Simulate Test Lead
+              </button>
+            </div>
+
+            <div class="studio-card-dark overflow-x-auto">
+              <table class="w-full text-left text-xs text-[#DECCA8]">
+                <thead class="bg-[#14110F] text-[#8A6B38] uppercase text-[10px] tracking-wider border-b border-[#C5A674]/20">
+                  <tr>
+                    <th class="p-3.5">Date & Client</th>
+                    <th class="p-3.5">Piece / Interest</th>
+                    <th class="p-3.5">Budget / Value</th>
+                    <th class="p-3.5">Status</th>
+                    <th class="p-3.5 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="studio-inquiries-tbody" class="divide-y divide-[#C5A674]/15">
+                  <!-- Dynamically rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
   </main>
 
   <!-- ================= EDITORIAL LUXURY FOOTER ================= -->
@@ -1607,5 +2125,46 @@
   <!-- Scripts -->
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <!-- ================= FLOATING WHATSAPP LUXURY CONCIERGE ================= -->
+  <div id="whatsapp-concierge-widget">
+    <!-- Popover Card -->
+    <div id="whatsapp-popover" class="whatsapp-popover">
+      <div class="flex items-start justify-between pb-3 border-b border-[#E8E3D8] mb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-[#1D1815] flex items-center justify-center p-1.5 border border-[#C5A674]">
+            <img src="brand-identity/jewelux-official-emblem-transparent.png" alt="Emblem" class="w-full h-full object-contain">
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-[#1D1815]">Jewelux Salon Concierge</p>
+            <p class="text-[10px] text-[#10B981] flex items-center gap-1 font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse"></span> Available for Private Consult
+            </p>
+          </div>
+        </div>
+        <button onclick="toggleWhatsAppPopover()" class="text-[#766B5E] hover:text-[#1D1815] text-sm">&times;</button>
+      </div>
+      <p class="text-[11px] text-[#766B5E] font-serif italic mb-3 leading-relaxed">
+        "Welcome to House of Jewelux. How may our senior goldsmiths and diamond curators assist your journey today?"
+      </p>
+      <div class="space-y-2">
+        <a id="whatsapp-direct-link" href="https://wa.me/919876543210?text=Hello%20House%20of%20Jewelux%20Concierge!%20I%20would%20like%20to%20inquire%20about%20your%20fine%20jewellery%20collection." target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-xs font-medium rounded transition shadow-sm">
+          <span>Chat Directly on WhatsApp</span>
+        </a>
+        <button onclick="toggleWhatsAppPopover(); openAppointmentModal();" class="w-full py-2 px-3 border border-[#C5A674] text-[#8A6B38] hover:bg-[#FAF9F5] text-[10px] uppercase tracking-wider rounded transition">
+          Book Private Atelier Video Call
+        </button>
+      </div>
+    </div>
+
+    <!-- Floating Circular Button -->
+    <div class="whatsapp-btn-luxury" onclick="toggleWhatsAppPopover()" title="Chat with House of Jewelux Concierge">
+      <div class="whatsapp-pulse-ring"></div>
+      <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.888 2.79.889h.001c3.182 0 5.768-2.587 5.768-5.768.001-3.181-2.586-5.773-5.768-5.773zm3.364 8.163c-.14.394-.813.751-1.129.799-.315.048-.717.069-2.029-.475-.867-.36-1.579-1.074-2.115-1.782-.26-.345-.558-.871-.558-1.42 0-.616.321-.922.434-1.041.114-.119.248-.149.332-.149.083 0 .166.002.239.006.077.004.181-.03.283.216.104.252.356.868.387.932.031.064.052.139.01.223-.042.083-.063.135-.125.209-.063.073-.132.164-.188.22-.062.062-.127.13-.055.254.073.125.324.535.696.866.478.426.882.558 1.007.62.125.063.197.052.27-.032.073-.083.312-.364.395-.489.083-.125.166-.104.281-.062.114.041.728.343.853.405.125.063.208.094.239.146.031.052.031.302-.109.696z"/>
+      </svg>
+    </div>
+  </div>
+
+
 </body>
 </html>
