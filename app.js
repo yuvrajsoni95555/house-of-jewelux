@@ -3,7 +3,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Load Dynamic Store State (Persisted in LocalStorage)
-  let STORE = typeof JEWELUX_STORAGE !== 'undefined' ? JEWELUX_STORAGE.getStoreData() : JEWELUX_DATA;
+    let STORE = typeof JEWELUX_STORAGE !== 'undefined' ? JEWELUX_STORAGE.getStoreData() : JEWELUX_DATA;
+  if (STORE && STORE.storeConfig) {
+    STORE.storeConfig.whatsappNumber = '+916377061020';
+    if (typeof JEWELUX_STORAGE !== 'undefined') JEWELUX_STORAGE.saveStoreData(STORE);
+  }
   window.STORE = STORE;
 
   // Global Application State
@@ -45,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const annEl = document.getElementById('top-announcement-text');
     if (annEl && config.announcementText) annEl.textContent = config.announcementText;
 
-    const waNumber = (config.whatsappNumber || '+919876543210').replace(/[^0-9]/g, '');
+    const waNumber = (config.whatsappNumber || '+916377061020').replace(/[^0-9]/g, '');
     const waLinks = document.querySelectorAll('#whatsapp-direct-link, a[href*="wa.me"]');
     waLinks.forEach(link => {
       link.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hello House of Jewelux Concierge! I would like to inquire about your fine jewellery collection.")}`;
@@ -914,7 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const p = STORE.products.find(item => item.id === productId);
     if (!p) return;
 
-    const waNumber = (STORE.storeConfig.whatsappNumber || '+919876543210').replace(/[^0-9]/g, '');
+    const waNumber = (STORE.storeConfig.whatsappNumber || '+916377061020').replace(/[^0-9]/g, '');
     const priceFormatted = formatPrice(p.priceUSD);
     const message = `Hello House of Jewelux Concierge! I would like to inquire about "${p.name}" (SKU: ${p.id}) in ${p.metal} priced at ${priceFormatted}. Could you share more details on bespoke sizing and availability? Link: https://houseofjewelux.com/#product-${p.id}`;
 
@@ -929,7 +933,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cutObj = STORE.bespokeStudio.cuts.find(c => c.id === b.cutId) || STORE.bespokeStudio.cuts[0];
     const priceTotal = formatPrice(metalObj.priceBase + (gemObj.pricePerCarat * b.caratWeight));
 
-    const waNumber = (STORE.storeConfig.whatsappNumber || '+919876543210').replace(/[^0-9]/g, '');
+    const waNumber = (STORE.storeConfig.whatsappNumber || '+916377061020').replace(/[^0-9]/g, '');
     const msg = `Hello House of Jewelux Concierge! I have customized a 3D ring on your Bespoke Goldsmith Workbench:
 
 • Metal: ${metalObj.name}
@@ -1358,7 +1362,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
     if (elTotal) elTotal.textContent = totalCount;
     if (elSilver) elSilver.textContent = silverCount;
     if (elGold) elGold.textContent = goldCount;
-    if (elWa) elWa.textContent = STORE.storeConfig.whatsappNumber || '+919876543210';
+    if (elWa) elWa.textContent = STORE.storeConfig.whatsappNumber || '+916377061020';
 
     const annInput = document.getElementById('studio-announcement-input');
     const waInput = document.getElementById('studio-whatsapp-input');
@@ -1657,7 +1661,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
           <span class="px-2.5 py-0.5 rounded text-[10px] font-medium bg-[#C5A674]/20 text-[#C5A674] border border-[#C5A674]/30">${inq.status}</span>
         </td>
         <td class="p-3.5 text-right">
-          <a href="https://wa.me/${(STORE.storeConfig.whatsappNumber||'+919876543210').replace(/[^0-9]/g,'')}?text=Hello%20${encodeURIComponent(inq.name)}!" target="_blank" class="text-[#25D366] hover:underline text-xs">Open WA</a>
+          <a href="https://wa.me/${(STORE.storeConfig.whatsappNumber||'+916377061020').replace(/[^0-9]/g,'')}?text=Hello%20${encodeURIComponent(inq.name)}!" target="_blank" class="text-[#25D366] hover:underline text-xs">Open WA</a>
         </td>
       </tr>
     `).join('');
@@ -1695,7 +1699,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
       "image": `${window.location.origin}/brand-identity/house_of_jewelux_official_logo.jpg`,
       "description": "Italian high-fashion luxury jewellery digital flagship featuring certified 925 fine sterling silver and bespoke gold bridal commissions.",
       "url": "https://houseofjewelux.com",
-      "telephone": STORE.storeConfig.whatsappNumber || "+919876543210",
+      "telephone": STORE.storeConfig.whatsappNumber || "+916377061020",
       "priceRange": "$$$$",
       "currenciesAccepted": "USD, INR, EUR, GBP, AED",
       "paymentAccepted": "Credit Card, Wire Transfer, Armored Escrow",

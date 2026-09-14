@@ -3,7 +3,7 @@
 
 const JEWELUX_DATA = {
   storeConfig: {
-    whatsappNumber: "+919876543210",
+    whatsappNumber: "+916377061020",
     whatsappWelcome: "Hello House of Jewelux Concierge! I would like to inquire about fine jewellery and bespoke commissions.",
     founderPIN: "1985",
     announcementText: "THE SILVER EDIT 2026 — Certified 925 Hallmarked Fine Silver & Anti-Tarnish Rhodium • Complimentary Insured Global Delivery",
