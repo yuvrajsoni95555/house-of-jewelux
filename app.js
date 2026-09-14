@@ -1237,37 +1237,31 @@ Could we schedule a private atelier consultation to commission this creation?`;
         envMapIntensity: 1.8
       });
 
-      // Calibrated gemstone palettes (proper facet definition, zero chalky white, natural deep green emerald)
+      // Calibrated gemstone palettes (solid white diamond fully opaque, zero internal reflection)
       const gemPalettes = {
         'diamond': {
-          color: 0x1a222e, // Crystalline optical depth (flashes pure brilliant white on specular reflection)
-          metalness: 0.04,
-          roughness: 0.0,
+          color: 0xffffff, // Solid pure white diamond material (fully opaque)
+          metalness: 0.0,
+          roughness: 0.04,
           clearcoat: 1.0,
-          specularIntensity: 2.2,
-          specularColor: 0xffffff,
-          envMapIntensity: 2.8,
-          wire: 0x7eb8e6,
-          wireOpacity: 0.35
+          envMapIntensity: 1.7,
+          wire: 0xd2d9e4,
+          wireOpacity: 0.40
         },
         'moissanite': {
-          color: 0x1c2432,
-          metalness: 0.04,
-          roughness: 0.0,
+          color: 0xfafcff,
+          metalness: 0.0,
+          roughness: 0.04,
           clearcoat: 1.0,
-          specularIntensity: 2.4,
-          specularColor: 0xffffff,
-          envMapIntensity: 3.0,
-          wire: 0x90caf9,
-          wireOpacity: 0.35
+          envMapIntensity: 1.8,
+          wire: 0xd2d9e4,
+          wireOpacity: 0.40
         },
         'emerald': {
           color: 0x022c13, // Authentic Colombian deep velvety emerald green (NOT neon!)
           metalness: 0.02,
           roughness: 0.04,
           clearcoat: 0.5,
-          specularIntensity: 1.2,
-          specularColor: 0xffffff,
           envMapIntensity: 1.3,
           wire: 0x011f0d, // Deep forest green facet edge
           wireOpacity: 0.25
@@ -1277,8 +1271,6 @@ Could we schedule a private atelier consultation to commission this creation?`;
           metalness: 0.02,
           roughness: 0.04,
           clearcoat: 0.5,
-          specularIntensity: 1.2,
-          specularColor: 0xffffff,
           envMapIntensity: 1.3,
           wire: 0x020a1f,
           wireOpacity: 0.25
@@ -1288,8 +1280,6 @@ Could we schedule a private atelier consultation to commission this creation?`;
           metalness: 0.02,
           roughness: 0.04,
           clearcoat: 0.5,
-          specularIntensity: 1.2,
-          specularColor: 0xffffff,
           envMapIntensity: 1.3,
           wire: 0x220107,
           wireOpacity: 0.25
@@ -1307,25 +1297,31 @@ Could we schedule a private atelier consultation to commission this creation?`;
         reflectivity: 1.0,
         envMapIntensity: curGem.envMapIntensity,
         flatShading: true,
-        side: THREE.DoubleSide
+        side: THREE.FrontSide, // Disable all internal reflections/backfaces - strictly front-facing opaque outer facets
+        transparent: false,
+        depthWrite: true
       });
 
       const wireMaterial = new THREE.LineBasicMaterial({
         color: curGem.wire,
         transparent: true,
         opacity: curGem.wireOpacity,
-        linewidth: 1
+        linewidth: 1,
+        depthTest: true
       });
 
-      // Micro-pavé diamonds on gallery collar (Always brilliant white diamond sparkle)
+      // Micro-pavé diamonds on gallery collar (Solid pure white brilliant diamond sparkle)
       const paveMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0x1a222e),
-        roughness: 0.0,
-        metalness: 0.04,
+        color: new THREE.Color(0xffffff),
+        roughness: 0.04,
+        metalness: 0.0,
         clearcoat: 1.0,
         reflectivity: 1.0,
-        envMapIntensity: 2.5,
-        flatShading: true
+        envMapIntensity: 1.8,
+        flatShading: true,
+        side: THREE.FrontSide,
+        transparent: false,
+        depthWrite: true
       });
 
       return {
