@@ -1118,75 +1118,63 @@ Could we schedule a private atelier consultation to commission this creation?`;
       pmremGen.compileEquirectangularShader();
 
       const envScene = new THREE.Scene();
-      envScene.background = new THREE.Color(0x181614); // Dark studio backdrop for rich specular contrast
+      envScene.background = new THREE.Color(0x020202); // Deep dark studio void for crisp facet scintillation
 
-      // Top Softbox
-      const topBox = new THREE.Mesh(
-        new THREE.PlaneGeometry(35, 25),
-        new THREE.MeshBasicMaterial({ color: 0xffffff })
-      );
-      topBox.position.set(0, 22, 0);
-      topBox.rotation.x = Math.PI / 2;
-      envScene.add(topBox);
+      // 4 High-contrast vertical softbox strips (produces liquid metal reflections & diamond scintillation)
+      for (let i = 0; i < 4; i++) {
+        const ang = (i / 4) * Math.PI * 2 + Math.PI / 8;
+        const strip = new THREE.Mesh(
+          new THREE.PlaneGeometry(5, 30),
+          new THREE.MeshBasicMaterial({ color: 0xffffff })
+        );
+        strip.position.set(Math.cos(ang) * 22, 14, Math.sin(ang) * 22);
+        strip.lookAt(0, 5, 0);
+        envScene.add(strip);
+      }
 
-      // Front Overhead Kicker (Crisp table facet reflections)
-      const frontKicker = new THREE.Mesh(
-        new THREE.PlaneGeometry(16, 12),
-        new THREE.MeshBasicMaterial({ color: 0xffffff })
-      );
-      frontKicker.position.set(5, 20, 15);
-      frontKicker.lookAt(0, 5, 0);
-      envScene.add(frontKicker);
+      // Overhead kicker spots for crisp table facet highlights
+      for (let i = 0; i < 4; i++) {
+        const ang = (i / 4) * Math.PI * 2;
+        const kicker = new THREE.Mesh(
+          new THREE.PlaneGeometry(8, 8),
+          new THREE.MeshBasicMaterial({ color: 0xffffff })
+        );
+        kicker.position.set(Math.cos(ang) * 10, 24, Math.sin(ang) * 10);
+        kicker.lookAt(0, 0, 0);
+        envScene.add(kicker);
+      }
 
-      // Key Softbox (Right rim)
-      const keyBox = new THREE.Mesh(
-        new THREE.PlaneGeometry(18, 34),
-        new THREE.MeshBasicMaterial({ color: 0xfffcf5 })
-      );
-      keyBox.position.set(22, 14, 18);
-      keyBox.lookAt(0, 0, 0);
-      envScene.add(keyBox);
-
-      // Fill Softbox (Left rim)
-      const fillBox = new THREE.Mesh(
-        new THREE.PlaneGeometry(15, 30),
-        new THREE.MeshBasicMaterial({ color: 0xeaf2ff })
-      );
-      fillBox.position.set(-22, 14, 14);
-      fillBox.lookAt(0, 0, 0);
-      envScene.add(fillBox);
-
-      // Warm Bottom Reflector
+      // Warm Bottom Reflector for 18K Gold Underside Glow
       const bounceBox = new THREE.Mesh(
         new THREE.PlaneGeometry(30, 30),
-        new THREE.MeshBasicMaterial({ color: 0xB5873C })
+        new THREE.MeshBasicMaterial({ color: 0x9b6e1e })
       );
-      bounceBox.position.set(0, -18, 0);
+      bounceBox.position.set(0, -16, 0);
       bounceBox.rotation.x = -Math.PI / 2;
       envScene.add(bounceBox);
 
-      const renderTarget = pmremGen.fromScene(envScene, 0.04);
+      const renderTarget = pmremGen.fromScene(envScene, 0.0);
       this.scene.environment = renderTarget.texture;
     }
 
     createStudioLights() {
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
+      // Gentle ambient so crevices have deep contrast
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
       this.scene.add(ambientLight);
 
-      const keyLight = new THREE.DirectionalLight(0xfffcf0, 1.2);
-      keyLight.position.set(18, 28, 22);
+      // Key light: warm specular gleam
+      const keyLight = new THREE.DirectionalLight(0xfff6ea, 0.95);
+      keyLight.position.set(16, 25, 20);
       this.scene.add(keyLight);
 
-      const fillLight = new THREE.DirectionalLight(0xedf4ff, 0.5);
-      fillLight.position.set(-20, 16, -16);
+      // Fill light: soft cool shadow fill
+      const fillLight = new THREE.DirectionalLight(0xdce8ff, 0.30);
+      fillLight.position.set(-18, 14, -14);
       this.scene.add(fillLight);
 
-      const rimLight = new THREE.DirectionalLight(0xffeedd, 0.7);
-      rimLight.position.set(0, -10, 24);
-      this.scene.add(rimLight);
-
-      const diamondSpot = new THREE.PointLight(0xffffff, 1.3, 35);
-      diamondSpot.position.set(3, 22, 10);
+      // Diamond sparkle pinpoint
+      const diamondSpot = new THREE.PointLight(0xffffff, 0.70, 30);
+      diamondSpot.position.set(2, 22, 10);
       this.scene.add(diamondSpot);
     }
 
@@ -1196,10 +1184,10 @@ Could we schedule a private atelier consultation to commission this creation?`;
       shadowCanvas.height = 256;
       const sctx = shadowCanvas.getContext('2d');
       const grad = sctx.createRadialGradient(128, 128, 6, 128, 128, 115);
-      grad.addColorStop(0, 'rgba(35, 25, 15, 0.52)');
-      grad.addColorStop(0.35, 'rgba(55, 42, 28, 0.25)');
-      grad.addColorStop(0.7, 'rgba(80, 68, 55, 0.08)');
-      grad.addColorStop(1, 'rgba(80, 68, 55, 0)');
+      grad.addColorStop(0, 'rgba(30, 20, 12, 0.58)');
+      grad.addColorStop(0.35, 'rgba(50, 36, 22, 0.28)');
+      grad.addColorStop(0.7, 'rgba(75, 60, 45, 0.08)');
+      grad.addColorStop(1, 'rgba(75, 60, 45, 0)');
       sctx.fillStyle = grad;
       sctx.fillRect(0, 0, 256, 256);
 
@@ -1218,12 +1206,13 @@ Could we schedule a private atelier consultation to commission this creation?`;
     }
 
     createMaterials() {
+      // Calibrated metal palettes (eliminates washed-out 3D appearance with true PBR metallic conductors)
       const metalPalettes = {
-        'yellow-gold': { shank: 0xC2A262, head: 0xF0F3F7, metalness: 0.94, roughness: 0.11 },
-        'liquid-silver': { shank: 0xE2E6EE, head: 0xE2E6EE, metalness: 0.94, roughness: 0.08 },
-        'rose-gold': { shank: 0xD89886, head: 0xF0F3F7, metalness: 0.92, roughness: 0.12 },
-        'white-gold': { shank: 0xECEFF4, head: 0xF0F3F7, metalness: 0.95, roughness: 0.07 },
-        'platinum': { shank: 0xD8DDE6, head: 0xD8DDE6, metalness: 0.96, roughness: 0.06 }
+        'yellow-gold': { shank: 0xB28228, head: 0xDCE0E8, metalness: 0.98, roughness: 0.09, clearcoat: 0.08, envMapIntensity: 1.5 },
+        'liquid-silver': { shank: 0xE2E7EE, head: 0xE2E7EE, metalness: 0.98, roughness: 0.07, clearcoat: 0.10, envMapIntensity: 1.6 },
+        'rose-gold': { shank: 0xBA6450, head: 0xDCE0E8, metalness: 0.98, roughness: 0.09, clearcoat: 0.08, envMapIntensity: 1.5 },
+        'white-gold': { shank: 0xDCE0E8, head: 0xDCE0E8, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
+        'platinum': { shank: 0xD2D6E0, head: 0xD2D6E0, metalness: 1.0, roughness: 0.06, clearcoat: 0.12, envMapIntensity: 1.7 }
       };
 
       const curMetal = metalPalettes[this.currentMetal] || metalPalettes['yellow-gold'];
@@ -1232,47 +1221,91 @@ Could we schedule a private atelier consultation to commission this creation?`;
         color: new THREE.Color(curMetal.shank),
         metalness: curMetal.metalness,
         roughness: curMetal.roughness,
-        clearcoat: 0.92,
+        clearcoat: curMetal.clearcoat,
         clearcoatRoughness: 0.03,
-        reflectivity: 0.98,
-        envMapIntensity: 2.1
+        reflectivity: 0.96,
+        envMapIntensity: curMetal.envMapIntensity
       });
 
       const headMaterial = new THREE.MeshPhysicalMaterial({
         color: new THREE.Color(curMetal.head),
-        metalness: 0.96,
+        metalness: 0.98,
         roughness: 0.07,
-        clearcoat: 0.94,
+        clearcoat: 0.12,
         clearcoatRoughness: 0.02,
         reflectivity: 0.98,
-        envMapIntensity: 2.3
+        envMapIntensity: 1.8
       });
 
+      // Calibrated gemstone palettes (proper facet definition, zero chalky white, natural deep green emerald)
       const gemPalettes = {
-        'diamond': { color: 0xffffff, transmission: 0.68, ior: 2.417, att: 0xe0f0ff, attDist: 12.0, wire: 0x88ccff },
-        'moissanite': { color: 0xffffff, transmission: 0.70, ior: 2.65, att: 0xe0f8ff, attDist: 14.0, wire: 0x99ddff },
-        'emerald': { color: 0x0B7D4E, transmission: 0.62, ior: 1.576, att: 0x033821, attDist: 6.0, wire: 0x22c55e },
-        'sapphire': { color: 0x16368C, transmission: 0.62, ior: 1.770, att: 0x0b1a45, attDist: 6.0, wire: 0x60a5fa },
-        'ruby': { color: 0x9E0E30, transmission: 0.62, ior: 1.760, att: 0x4a0515, attDist: 6.0, wire: 0xf43f5e }
+        'diamond': {
+          color: 0x1a222e, // Crystalline optical depth (flashes pure brilliant white on specular reflection)
+          metalness: 0.04,
+          roughness: 0.0,
+          clearcoat: 1.0,
+          specularIntensity: 2.2,
+          specularColor: 0xffffff,
+          envMapIntensity: 2.8,
+          wire: 0x7eb8e6,
+          wireOpacity: 0.35
+        },
+        'moissanite': {
+          color: 0x1c2432,
+          metalness: 0.04,
+          roughness: 0.0,
+          clearcoat: 1.0,
+          specularIntensity: 2.4,
+          specularColor: 0xffffff,
+          envMapIntensity: 3.0,
+          wire: 0x90caf9,
+          wireOpacity: 0.35
+        },
+        'emerald': {
+          color: 0x022c13, // Authentic Colombian deep velvety emerald green (NOT neon!)
+          metalness: 0.02,
+          roughness: 0.04,
+          clearcoat: 0.5,
+          specularIntensity: 1.2,
+          specularColor: 0xffffff,
+          envMapIntensity: 1.3,
+          wire: 0x011f0d, // Deep forest green facet edge
+          wireOpacity: 0.25
+        },
+        'sapphire': {
+          color: 0x051336, // Deep royal Kashmir sapphire blue
+          metalness: 0.02,
+          roughness: 0.04,
+          clearcoat: 0.5,
+          specularIntensity: 1.2,
+          specularColor: 0xffffff,
+          envMapIntensity: 1.3,
+          wire: 0x020a1f,
+          wireOpacity: 0.25
+        },
+        'ruby': {
+          color: 0x38030d, // Deep Burmese pigeon blood ruby
+          metalness: 0.02,
+          roughness: 0.04,
+          clearcoat: 0.5,
+          specularIntensity: 1.2,
+          specularColor: 0xffffff,
+          envMapIntensity: 1.3,
+          wire: 0x220107,
+          wireOpacity: 0.25
+        }
       };
 
       const curGem = gemPalettes[this.currentGem] || gemPalettes['diamond'];
 
       const gemMaterial = new THREE.MeshPhysicalMaterial({
         color: new THREE.Color(curGem.color),
-        roughness: 0.0,
-        metalness: 0.10,
-        transmission: curGem.transmission,
-        ior: curGem.ior,
-        thickness: 4.8,
-        reflectivity: 1.0,
-        clearcoat: 1.0,
+        roughness: curGem.roughness,
+        metalness: curGem.metalness,
+        clearcoat: curGem.clearcoat,
         clearcoatRoughness: 0.0,
-        specularIntensity: 1.6,
-        specularColor: new THREE.Color(0xffffff),
-        attenuationColor: new THREE.Color(curGem.att),
-        attenuationDistance: curGem.attDist,
-        envMapIntensity: 4.0,
+        reflectivity: 1.0,
+        envMapIntensity: curGem.envMapIntensity,
         flatShading: true,
         side: THREE.DoubleSide
       });
@@ -1280,8 +1313,19 @@ Could we schedule a private atelier consultation to commission this creation?`;
       const wireMaterial = new THREE.LineBasicMaterial({
         color: curGem.wire,
         transparent: true,
-        opacity: 0.35,
+        opacity: curGem.wireOpacity,
         linewidth: 1
+      });
+
+      // Micro-pavé diamonds on gallery collar (Always brilliant white diamond sparkle)
+      const paveMaterial = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(0x1a222e),
+        roughness: 0.0,
+        metalness: 0.04,
+        clearcoat: 1.0,
+        reflectivity: 1.0,
+        envMapIntensity: 2.5,
+        flatShading: true
       });
 
       return {
@@ -1289,6 +1333,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
         head: headMaterial,
         gem: gemMaterial,
         wire: wireMaterial,
+        pave: paveMaterial,
         metalPalettes,
         gemPalettes
       };
@@ -1415,7 +1460,7 @@ Could we schedule a private atelier consultation to commission this creation?`;
         const ang = (i / paveCount) * Math.PI * 2;
         const px = Math.cos(ang) * 2.6;
         const pz = Math.sin(ang) * 2.6;
-        const paveStone = new THREE.Mesh(paveGeom, this.materials.gem);
+        const paveStone = new THREE.Mesh(paveGeom, this.materials.pave || this.materials.gem);
         paveStone.position.set(px, collarY, pz);
         this.headGroup.add(paveStone);
       }
@@ -1740,8 +1785,12 @@ Could we schedule a private atelier consultation to commission this creation?`;
       this.materials.shank.color.setHex(p.shank);
       this.materials.shank.metalness = p.metalness;
       this.materials.shank.roughness = p.roughness;
+      this.materials.shank.clearcoat = p.clearcoat || 0.08;
+      this.materials.shank.envMapIntensity = p.envMapIntensity || 1.5;
 
       this.materials.head.color.setHex(p.head);
+      this.materials.head.metalness = 0.98;
+      this.materials.head.roughness = 0.07;
       if (this.bridgeMesh) {
         this.bridgeMesh.material.color.setHex(p.shank);
       }
@@ -1752,11 +1801,15 @@ Could we schedule a private atelier consultation to commission this creation?`;
       const p = this.materials.gemPalettes[gemId] || this.materials.gemPalettes['diamond'];
 
       this.materials.gem.color.setHex(p.color);
-      this.materials.gem.transmission = p.transmission;
-      this.materials.gem.ior = p.ior;
-      this.materials.gem.attenuationColor.setHex(p.att);
-      this.materials.gem.attenuationDistance = p.attDist;
+      this.materials.gem.metalness = p.metalness !== undefined ? p.metalness : 0.02;
+      this.materials.gem.roughness = p.roughness !== undefined ? p.roughness : 0.02;
+      this.materials.gem.clearcoat = p.clearcoat !== undefined ? p.clearcoat : 0.5;
+      this.materials.gem.envMapIntensity = p.envMapIntensity || 1.3;
+      this.materials.gem.needsUpdate = true;
+
       this.materials.wire.color.setHex(p.wire);
+      this.materials.wire.opacity = p.wireOpacity || 0.30;
+      this.materials.wire.needsUpdate = true;
     }
 
     setCut(cutId) {
