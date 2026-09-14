@@ -2074,48 +2074,60 @@ Could we schedule a private atelier consultation to commission this creation?`;
     if (priceEl) priceEl.textContent = formatPrice(totalPrice);
   }
 
+  function updateBespokeOptionHighlight(attrName, selectedVal, isNumeric = false) {
+    document.querySelectorAll(`[${attrName}]`).forEach(b => {
+      const rawVal = b.getAttribute(attrName);
+      const isMatch = isNumeric
+        ? Math.abs(parseFloat(rawVal) - parseFloat(selectedVal)) < 0.01
+        : rawVal === selectedVal;
+
+      // Remove solid black override
+      b.classList.remove('bg-[#1D1815]', 'text-white');
+
+      if (isMatch) {
+        b.classList.remove('bg-[#F6EBDD]', 'border-[#E8E3D8]');
+        b.classList.add('bg-white', 'border-[#C5A674]', 'ring-2', 'ring-[#8A6B38]', 'shadow-sm');
+      } else {
+        b.classList.remove('bg-white', 'border-[#C5A674]', 'ring-2', 'ring-[#8A6B38]', 'shadow-sm');
+        b.classList.add('bg-[#F6EBDD]', 'border-[#E8E3D8]');
+      }
+
+      const span = b.querySelector('span:last-child') || b.querySelector('span');
+      if (span) {
+        if (isMatch) {
+          span.classList.remove('text-[#1D1815]', 'font-medium');
+          span.classList.add('text-[#8A6B38]', 'font-semibold');
+        } else {
+          span.classList.remove('text-[#8A6B38]', 'font-semibold');
+          span.classList.add('text-[#1D1815]', 'font-medium');
+        }
+      }
+    });
+  }
+
   window.setBespokeMetal = (metalId) => {
     state.bespoke.metalId = metalId;
-    document.querySelectorAll('[data-bespoke-metal]').forEach(b => {
-      const isMatch = b.getAttribute('data-bespoke-metal') === metalId;
-      b.classList.toggle('ring-2', isMatch);
-      b.classList.toggle('ring-[#8A6B38]', isMatch);
-      b.classList.toggle('border-[#C5A674]', isMatch);
-    });
+    updateBespokeOptionHighlight('data-bespoke-metal', metalId);
     updateBespokePrice();
     if (window.jewelryViewer) window.jewelryViewer.setMetal(metalId);
   };
 
   window.setBespokeGem = (gemId) => {
     state.bespoke.gemId = gemId;
-    document.querySelectorAll('[data-bespoke-gem]').forEach(b => {
-      const isMatch = b.getAttribute('data-bespoke-gem') === gemId;
-      b.classList.toggle('ring-2', isMatch);
-      b.classList.toggle('ring-[#8A6B38]', isMatch);
-      b.classList.toggle('border-[#C5A674]', isMatch);
-    });
+    updateBespokeOptionHighlight('data-bespoke-gem', gemId);
     updateBespokePrice();
     if (window.jewelryViewer) window.jewelryViewer.setGem(gemId);
   };
 
   window.setBespokeCut = (cutId) => {
     state.bespoke.cutId = cutId;
-    document.querySelectorAll('[data-bespoke-cut]').forEach(b => {
-      const isMatch = b.getAttribute('data-bespoke-cut') === cutId;
-      b.classList.toggle('bg-[#1D1815]', isMatch);
-      b.classList.toggle('text-white', isMatch);
-    });
+    updateBespokeOptionHighlight('data-bespoke-cut', cutId);
     if (window.jewelryViewer) window.jewelryViewer.setCut(cutId);
   };
 
   window.setBespokeCarat = (caratVal) => {
     state.bespoke.caratWeight = parseFloat(caratVal);
-    document.querySelectorAll('[data-bespoke-carat]').forEach(b => {
-      const val = parseFloat(b.getAttribute('data-bespoke-carat'));
-      const isMatch = Math.abs(val - state.bespoke.caratWeight) < 0.01;
-      b.classList.toggle('bg-[#1D1815]', isMatch);
-      b.classList.toggle('text-white', isMatch);
-    });
+    updateBespokeOptionHighlight('data-bespoke-carat', caratVal, true);
     const displayEl = document.getElementById('bespoke-carat-display');
     if (displayEl) displayEl.textContent = `${state.bespoke.caratWeight.toFixed(2)} ct`;
     updateBespokePrice();
