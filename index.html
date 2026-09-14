@@ -617,8 +617,12 @@
             <div class="lg:col-span-6 flex flex-col items-center">
               <div class="ring-studio-viewport relative w-full flex items-center justify-center p-6 min-h-[360px]">
                 <div id="bespoke-ring-visualizer" class="w-full flex items-center justify-center">
-                  <div class="canvas-3d-wrapper">
-                    <canvas id="bespoke-3d-canvas" width="600" height="480"></canvas>
+                  <div class="canvas-3d-wrapper" id="bespoke-3d-wrapper">
+                    <canvas id="bespoke-3d-canvas"></canvas>
+                    <div id="canvas-3d-loader" class="canvas-3d-loader">
+                      <div class="luxury-spinner"></div>
+                      <span class="luxury-loader-text">Synthesizing 3D Studio...</span>
+                    </div>
                     <div class="canvas-3d-hint flex items-center gap-1.5">
                       <svg class="w-3.5 h-3.5 animate-spin" style="animation-duration: 6s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                       <span>Drag to Rotate 360° • Raytraced Facets</span>
@@ -638,7 +642,7 @@
               </div>
 
               <div class="mt-4 flex flex-wrap items-center justify-between w-full px-2 text-[11px] text-[#766B5E] gap-2">
-                <span>✓ Eight-Prong Cathedral Setting</span>
+                <span>✓ Six-Prong Cathedral Solitaire</span>
                 <span>✓ Comfort-Fit Interior Contour</span>
                 <span>✓ Hand-Engraving Complimentary</span>
               </div>
@@ -2173,6 +2177,8 @@
   </div>
 
   <!-- Scripts -->
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/OrbitControls.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
   <!-- ================= FLOATING WHATSAPP LUXURY CONCIERGE ================= -->

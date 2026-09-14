@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Bespoke 3D Ring Studio State
     bespoke: {
-      metalId: 'liquid-silver',
-      gemId: 'moissanite',
+      metalId: 'yellow-gold',
+      gemId: 'diamond',
       cutId: 'round',
       caratWeight: 2.5,
       rotationY: 0.4,
@@ -208,10 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (hash === 'bespoke-studio') {
       switchView('home');
-      setTimeout(() => {
-        const el = document.getElementById('bespoke-studio');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
+      const el = document.getElementById('bespoke-studio');
+      if (el) el.scrollIntoView(true);
       return;
     }
 
@@ -1014,256 +1012,807 @@ Could we schedule a private atelier consultation to commission this creation?`;
     inquireBespokeOnWhatsApp();
   };
 
-  // ================= 9. FUTURE 3D JEWELLERY ENGINE =================
-  let canvas3D = document.getElementById('bespoke-3d-canvas');
-  let ctx3D = canvas3D ? canvas3D.getContext('2d') : null;
+  // ================= 9. LUXURY 3D JEWELLERY ENGINE (THREE.JS) =================
+  class Jewelry3DViewer {
+    constructor(canvasId = 'bespoke-3d-canvas', containerId = 'bespoke-3d-wrapper', loaderId = 'canvas-3d-loader') {
+      this.canvas = document.getElementById(canvasId);
+      this.container = document.getElementById(containerId);
+      this.loader = document.getElementById(loaderId);
+      if (!this.canvas) return;
+
+      this.currentMetal = state.bespoke.metalId || 'yellow-gold';
+      this.currentGem = state.bespoke.gemId || 'diamond';
+      this.currentCut = state.bespoke.cutId || 'round';
+      this.currentCarat = state.bespoke.caratWeight || 2.5;
+
+      this.isUserInteracting = false;
+      this.idleTimer = null;
+
+      this.init();
+    }
+
+    init() {
+      if (typeof THREE === 'undefined') {
+        console.warn('Three.js not loaded, skipping 3D engine init.');
+        return;
+      }
+
+      const rect = this.container ? this.container.getBoundingClientRect() : this.canvas.getBoundingClientRect();
+      this.width = rect.width || 600;
+      this.height = rect.height || 480;
+
+      // 1. WebGL Renderer
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance"
+      });
+      this.renderer.setSize(this.width, this.height, false);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      this.renderer.toneMappingExposure = 1.05;
+      this.renderer.outputEncoding = THREE.sRGBEncoding;
+
+      // 2. Scene & Camera
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(34, this.width / this.height, 0.1, 1000);
+      // Hero 3/4 beauty angle matching visual reference photo exactly
+      this.camera.position.set(16, 20, 36);
+
+      // 3. OrbitControls (Smooth inertia, pan disabled, zoom clamped)
+      if (typeof THREE.OrbitControls !== 'undefined') {
+        this.controls = new THREE.OrbitControls(this.camera, this.canvas);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.05;
+        this.controls.enablePan = false;
+        this.controls.minDistance = 20;
+        this.controls.maxDistance = 60;
+        this.controls.minPolarAngle = Math.PI * 0.12;
+        this.controls.maxPolarAngle = Math.PI * 0.82;
+        this.controls.target.set(0, 3.2, 0);
+        this.controls.update();
+
+        this.controls.addEventListener('start', () => {
+          this.isUserInteracting = true;
+          if (this.idleTimer) clearTimeout(this.idleTimer);
+        });
+        this.controls.addEventListener('end', () => {
+          this.idleTimer = setTimeout(() => {
+            this.isUserInteracting = false;
+          }, 2500);
+        });
+      }
+
+      // 4. Studio Environment & Lighting
+      this.createStudioEnvironment();
+      this.createStudioLights();
+      this.createGroundShadow();
+
+      // 5. Build 3D Ring Group
+      this.ringGroup = new THREE.Group();
+      this.ringGroup.rotation.set(0.08, -0.22, 0.05);
+      this.scene.add(this.ringGroup);
+
+      this.materials = this.createMaterials();
+
+      // 6. Build Geometry Components
+      this.buildShank();
+      this.buildSettingHead();
+      this.buildCenterGemstone();
+
+      // 7. Hide Loader with Smooth Fade
+      if (this.loader) {
+        setTimeout(() => {
+          this.loader.classList.add('fade-out');
+        }, 300);
+      }
+
+      // 8. Event Listeners & Animation Loop
+      window.addEventListener('resize', () => this.onResize());
+      this.animate();
+    }
+
+    createStudioEnvironment() {
+      const pmremGen = new THREE.PMREMGenerator(this.renderer);
+      pmremGen.compileEquirectangularShader();
+
+      const envScene = new THREE.Scene();
+      envScene.background = new THREE.Color(0x181614); // Dark studio backdrop for rich specular contrast
+
+      // Top Softbox
+      const topBox = new THREE.Mesh(
+        new THREE.PlaneGeometry(35, 25),
+        new THREE.MeshBasicMaterial({ color: 0xffffff })
+      );
+      topBox.position.set(0, 22, 0);
+      topBox.rotation.x = Math.PI / 2;
+      envScene.add(topBox);
+
+      // Front Overhead Kicker (Crisp table facet reflections)
+      const frontKicker = new THREE.Mesh(
+        new THREE.PlaneGeometry(16, 12),
+        new THREE.MeshBasicMaterial({ color: 0xffffff })
+      );
+      frontKicker.position.set(5, 20, 15);
+      frontKicker.lookAt(0, 5, 0);
+      envScene.add(frontKicker);
+
+      // Key Softbox (Right rim)
+      const keyBox = new THREE.Mesh(
+        new THREE.PlaneGeometry(18, 34),
+        new THREE.MeshBasicMaterial({ color: 0xfffcf5 })
+      );
+      keyBox.position.set(22, 14, 18);
+      keyBox.lookAt(0, 0, 0);
+      envScene.add(keyBox);
+
+      // Fill Softbox (Left rim)
+      const fillBox = new THREE.Mesh(
+        new THREE.PlaneGeometry(15, 30),
+        new THREE.MeshBasicMaterial({ color: 0xeaf2ff })
+      );
+      fillBox.position.set(-22, 14, 14);
+      fillBox.lookAt(0, 0, 0);
+      envScene.add(fillBox);
+
+      // Warm Bottom Reflector
+      const bounceBox = new THREE.Mesh(
+        new THREE.PlaneGeometry(30, 30),
+        new THREE.MeshBasicMaterial({ color: 0xB5873C })
+      );
+      bounceBox.position.set(0, -18, 0);
+      bounceBox.rotation.x = -Math.PI / 2;
+      envScene.add(bounceBox);
+
+      const renderTarget = pmremGen.fromScene(envScene, 0.04);
+      this.scene.environment = renderTarget.texture;
+    }
+
+    createStudioLights() {
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
+      this.scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xfffcf0, 1.2);
+      keyLight.position.set(18, 28, 22);
+      this.scene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0xedf4ff, 0.5);
+      fillLight.position.set(-20, 16, -16);
+      this.scene.add(fillLight);
+
+      const rimLight = new THREE.DirectionalLight(0xffeedd, 0.7);
+      rimLight.position.set(0, -10, 24);
+      this.scene.add(rimLight);
+
+      const diamondSpot = new THREE.PointLight(0xffffff, 1.3, 35);
+      diamondSpot.position.set(3, 22, 10);
+      this.scene.add(diamondSpot);
+    }
+
+    createGroundShadow() {
+      const shadowCanvas = document.createElement('canvas');
+      shadowCanvas.width = 256;
+      shadowCanvas.height = 256;
+      const sctx = shadowCanvas.getContext('2d');
+      const grad = sctx.createRadialGradient(128, 128, 6, 128, 128, 115);
+      grad.addColorStop(0, 'rgba(35, 25, 15, 0.52)');
+      grad.addColorStop(0.35, 'rgba(55, 42, 28, 0.25)');
+      grad.addColorStop(0.7, 'rgba(80, 68, 55, 0.08)');
+      grad.addColorStop(1, 'rgba(80, 68, 55, 0)');
+      sctx.fillStyle = grad;
+      sctx.fillRect(0, 0, 256, 256);
+
+      const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+      const shadowGeom = new THREE.PlaneGeometry(36, 36);
+      const shadowMat = new THREE.MeshBasicMaterial({
+        map: shadowTex,
+        transparent: true,
+        opacity: 0.85,
+        depthWrite: false
+      });
+      const shadowPlane = new THREE.Mesh(shadowGeom, shadowMat);
+      shadowPlane.rotation.x = -Math.PI / 2;
+      shadowPlane.position.y = -10.45;
+      this.scene.add(shadowPlane);
+    }
+
+    createMaterials() {
+      const metalPalettes = {
+        'yellow-gold': { shank: 0xC2A262, head: 0xF0F3F7, metalness: 0.94, roughness: 0.11 },
+        'liquid-silver': { shank: 0xE2E6EE, head: 0xE2E6EE, metalness: 0.94, roughness: 0.08 },
+        'rose-gold': { shank: 0xD89886, head: 0xF0F3F7, metalness: 0.92, roughness: 0.12 },
+        'white-gold': { shank: 0xECEFF4, head: 0xF0F3F7, metalness: 0.95, roughness: 0.07 },
+        'platinum': { shank: 0xD8DDE6, head: 0xD8DDE6, metalness: 0.96, roughness: 0.06 }
+      };
+
+      const curMetal = metalPalettes[this.currentMetal] || metalPalettes['yellow-gold'];
+
+      const shankMaterial = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(curMetal.shank),
+        metalness: curMetal.metalness,
+        roughness: curMetal.roughness,
+        clearcoat: 0.92,
+        clearcoatRoughness: 0.03,
+        reflectivity: 0.98,
+        envMapIntensity: 2.1
+      });
+
+      const headMaterial = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(curMetal.head),
+        metalness: 0.96,
+        roughness: 0.07,
+        clearcoat: 0.94,
+        clearcoatRoughness: 0.02,
+        reflectivity: 0.98,
+        envMapIntensity: 2.3
+      });
+
+      const gemPalettes = {
+        'diamond': { color: 0xffffff, transmission: 0.68, ior: 2.417, att: 0xe0f0ff, attDist: 12.0, wire: 0x88ccff },
+        'moissanite': { color: 0xffffff, transmission: 0.70, ior: 2.65, att: 0xe0f8ff, attDist: 14.0, wire: 0x99ddff },
+        'emerald': { color: 0x0B7D4E, transmission: 0.62, ior: 1.576, att: 0x033821, attDist: 6.0, wire: 0x22c55e },
+        'sapphire': { color: 0x16368C, transmission: 0.62, ior: 1.770, att: 0x0b1a45, attDist: 6.0, wire: 0x60a5fa },
+        'ruby': { color: 0x9E0E30, transmission: 0.62, ior: 1.760, att: 0x4a0515, attDist: 6.0, wire: 0xf43f5e }
+      };
+
+      const curGem = gemPalettes[this.currentGem] || gemPalettes['diamond'];
+
+      const gemMaterial = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(curGem.color),
+        roughness: 0.0,
+        metalness: 0.10,
+        transmission: curGem.transmission,
+        ior: curGem.ior,
+        thickness: 4.8,
+        reflectivity: 1.0,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.0,
+        specularIntensity: 1.6,
+        specularColor: new THREE.Color(0xffffff),
+        attenuationColor: new THREE.Color(curGem.att),
+        attenuationDistance: curGem.attDist,
+        envMapIntensity: 4.0,
+        flatShading: true,
+        side: THREE.DoubleSide
+      });
+
+      const wireMaterial = new THREE.LineBasicMaterial({
+        color: curGem.wire,
+        transparent: true,
+        opacity: 0.35,
+        linewidth: 1
+      });
+
+      return {
+        shank: shankMaterial,
+        head: headMaterial,
+        gem: gemMaterial,
+        wire: wireMaterial,
+        metalPalettes,
+        gemPalettes
+      };
+    }
+
+    buildShank() {
+      if (this.shankMesh) {
+        this.ringGroup.remove(this.shankMesh);
+      }
+
+      const nSegments = 90;
+      const nRadial = 18;
+      const vertices = [];
+      const indices = [];
+
+      const topHalfGap = 0.22;
+      const startAngle = Math.PI * 0.5 + topHalfGap;
+      const endAngle = Math.PI * 2.5 - topHalfGap;
+      const totalSweep = endAngle - startAngle;
+
+      const rInner = 9.0;
+      const rOuterBase = 10.8;
+
+      for (let i = 0; i <= nSegments; i++) {
+        const t = i / nSegments;
+        const theta = startAngle + t * totalSweep;
+
+        const distFromMid = Math.abs(t - 0.5) * 2.0;
+        const shoulder = Math.pow(Math.max(0, distFromMid - 0.32) / 0.68, 1.8);
+
+        const rOuter = rOuterBase + shoulder * 1.5;
+        const rMid = (rInner + rOuter) / 2.0;
+        const radialThickness = (rOuter - rInner) / 2.0;
+        const axialWidth = (1.28 - shoulder * 0.28);
+
+        const cx = Math.cos(theta) * rMid;
+        const cy = Math.sin(theta) * rMid;
+        const nx = Math.cos(theta);
+        const ny = Math.sin(theta);
+
+        for (let j = 0; j < nRadial; j++) {
+          const phi = (j / nRadial) * Math.PI * 2.0;
+          const sinP = Math.sin(phi);
+          const cosP = Math.cos(phi);
+
+          const radOff = sinP * radialThickness * (sinP < 0 ? 0.78 : 1.0);
+          const zOff = cosP * axialWidth;
+
+          vertices.push(
+            cx + nx * radOff,
+            cy + ny * radOff,
+            zOff
+          );
+        }
+      }
+
+      for (let i = 0; i < nSegments; i++) {
+        for (let j = 0; j < nRadial; j++) {
+          const jNext = (j + 1) % nRadial;
+          const p1 = i * nRadial + j;
+          const p2 = i * nRadial + jNext;
+          const p3 = (i + 1) * nRadial + jNext;
+          const p4 = (i + 1) * nRadial + j;
+
+          indices.push(p1, p2, p3);
+          indices.push(p1, p3, p4);
+        }
+      }
+
+      // End caps for shoulders
+      const cap1Center = vertices.length / 3;
+      let c1x = 0, c1y = 0, c1z = 0;
+      for (let j = 0; j < nRadial; j++) {
+        c1x += vertices[j * 3];
+        c1y += vertices[j * 3 + 1];
+        c1z += vertices[j * 3 + 2];
+      }
+      vertices.push(c1x / nRadial, c1y / nRadial, c1z / nRadial);
+      for (let j = 0; j < nRadial; j++) {
+        indices.push(cap1Center, (j + 1) % nRadial, j);
+      }
+
+      const cap2Center = vertices.length / 3;
+      const lastRow = nSegments * nRadial;
+      let c2x = 0, c2y = 0, c2z = 0;
+      for (let j = 0; j < nRadial; j++) {
+        c2x += vertices[(lastRow + j) * 3];
+        c2y += vertices[(lastRow + j) * 3 + 1];
+        c2z += vertices[(lastRow + j) * 3 + 2];
+      }
+      vertices.push(c2x / nRadial, c2y / nRadial, c2z / nRadial);
+      for (let j = 0; j < nRadial; j++) {
+        indices.push(cap2Center, lastRow + j, lastRow + (j + 1) % nRadial);
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geom.setIndex(indices);
+      geom.computeVertexNormals();
+
+      this.shankMesh = new THREE.Mesh(geom, this.materials.shank);
+      this.ringGroup.add(this.shankMesh);
+    }
+
+    buildSettingHead() {
+      if (this.headGroup) {
+        this.ringGroup.remove(this.headGroup);
+      }
+
+      this.headGroup = new THREE.Group();
+
+      // Gallery Collar
+      const collarY = 11.2;
+      const collarGeom = new THREE.TorusGeometry(2.6, 0.44, 16, 32);
+      collarGeom.rotateX(Math.PI / 2);
+      const collar = new THREE.Mesh(collarGeom, this.materials.head);
+      collar.position.y = collarY;
+      this.headGroup.add(collar);
+
+      // Micro-pavé diamonds on collar
+      const paveCount = 10;
+      const paveGeom = new THREE.SphereGeometry(0.32, 10, 10);
+      for (let i = 0; i < paveCount; i++) {
+        const ang = (i / paveCount) * Math.PI * 2;
+        const px = Math.cos(ang) * 2.6;
+        const pz = Math.sin(ang) * 2.6;
+        const paveStone = new THREE.Mesh(paveGeom, this.materials.gem);
+        paveStone.position.set(px, collarY, pz);
+        this.headGroup.add(paveStone);
+      }
+
+      // Cathedral Bridge under collar
+      const bridgeGeom = new THREE.CylinderGeometry(0.55, 0.65, 4.8, 16);
+      bridgeGeom.rotateZ(Math.PI / 2);
+      this.bridgeMesh = new THREE.Mesh(bridgeGeom, this.materials.shank);
+      this.bridgeMesh.position.set(0, 10.45, 0);
+      this.headGroup.add(this.bridgeMesh);
+
+      // 6 Cathedral Prongs
+      const prongCount = 6;
+      const prongBaseY = 10.8;
+      const prongGirdleY = 14.1;
+      const prongTipY = 15.35;
+
+      const rBase = 2.0;
+      const rGirdle = 3.65;
+      const rTip = 3.25;
+
+      this.prongsMeshGroup = new THREE.Group();
+
+      for (let i = 0; i < prongCount; i++) {
+        const ang = (i / prongCount) * Math.PI * 2 + Math.PI / 6;
+        const cosA = Math.cos(ang);
+        const sinA = Math.sin(ang);
+
+        const p0 = new THREE.Vector3(cosA * rBase, prongBaseY, sinA * rBase);
+        const p1 = new THREE.Vector3(cosA * (rBase * 0.55 + rGirdle * 0.45), (prongBaseY + prongGirdleY) / 2, sinA * (rBase * 0.55 + rGirdle * 0.45));
+        const p2 = new THREE.Vector3(cosA * rGirdle, prongGirdleY, sinA * rGirdle);
+        const p3 = new THREE.Vector3(cosA * rTip, prongTipY, sinA * rTip);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, 0.36, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        // Rounded claw tip
+        const tipGeom = new THREE.SphereGeometry(0.38, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+
+      this.headGroup.add(this.prongsMeshGroup);
+      this.ringGroup.add(this.headGroup);
+    }
+
+    buildCenterGemstone() {
+      if (this.centerGemGroup) {
+        this.ringGroup.remove(this.centerGemGroup);
+      }
+
+      this.centerGemGroup = new THREE.Group();
+
+      const baseRadius = 3.55;
+      let geom;
+
+      if (this.currentCut === 'emerald-cut') {
+        geom = this.createEmeraldCutGeometry(baseRadius * 0.9, baseRadius * 1.2);
+      } else if (this.currentCut === 'oval') {
+        geom = this.createOvalCutGeometry(baseRadius);
+      } else if (this.currentCut === 'pear') {
+        geom = this.createPearCutGeometry(baseRadius);
+      } else {
+        geom = this.createRoundBrilliantGeometry(baseRadius);
+      }
+
+      const gemMesh = new THREE.Mesh(geom, this.materials.gem);
+      this.centerGemGroup.add(gemMesh);
+
+      // Facet edge highlights
+      const edgesGeom = new THREE.EdgesGeometry(geom, 12);
+      const wire = new THREE.LineSegments(edgesGeom, this.materials.wire);
+      this.centerGemGroup.add(wire);
+
+      this.centerGemGroup.position.y = 14.1;
+
+      // Carat scale
+      const caratScale = Math.sqrt(this.currentCarat / 2.5);
+      this.centerGemGroup.scale.set(caratScale, caratScale, caratScale);
+
+      this.ringGroup.add(this.centerGemGroup);
+    }
+
+    createRoundBrilliantGeometry(radius = 3.55) {
+      const hCrown = radius * 0.34;
+      const hPavilion = radius * 0.88;
+      const rTable = radius * 0.56;
+      const tGirdle = radius * 0.05;
+
+      const yGirdleTop = tGirdle / 2.0;
+      const yGirdleBot = -tGirdle / 2.0;
+      const yTable = yGirdleTop + hCrown;
+      const yCulet = yGirdleBot - hPavilion;
+      const yStar = yGirdleTop + hCrown * 0.58;
+      const rStar = radius * 0.76;
+
+      const triVertices = [];
+      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
+        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+      }
+
+      const tablePts = [];
+      for (let i = 0; i < 8; i++) {
+        const ang = (i * 2 + 1) * Math.PI / 8.0;
+        tablePts.push({ x: rTable * Math.cos(ang), y: yTable, z: rTable * Math.sin(ang) });
+      }
+
+      const crownMainPts = [];
+      for (let i = 0; i < 8; i++) {
+        const ang = (i * 2) * Math.PI / 8.0;
+        crownMainPts.push({ x: rStar * Math.cos(ang), y: yStar, z: rStar * Math.sin(ang) });
+      }
+
+      const girdleUpPts = [];
+      for (let i = 0; i < 16; i++) {
+        const ang = i * Math.PI / 8.0;
+        girdleUpPts.push({ x: radius * Math.cos(ang), y: yGirdleTop, z: radius * Math.sin(ang) });
+      }
+
+      const girdleLowPts = [];
+      for (let i = 0; i < 16; i++) {
+        const ang = i * Math.PI / 8.0;
+        girdleLowPts.push({ x: radius * Math.cos(ang), y: yGirdleBot, z: radius * Math.sin(ang) });
+      }
+
+      const pavBreakPts = [];
+      const yPavBreak = yGirdleBot - hPavilion * 0.45;
+      const rPavBreak = radius * 0.52;
+      for (let i = 0; i < 8; i++) {
+        const ang = (i * 2 + 1) * Math.PI / 8.0;
+        pavBreakPts.push({ x: rPavBreak * Math.cos(ang), y: yPavBreak, z: rPavBreak * Math.sin(ang) });
+      }
+
+      // 1. Table Facets
+      for (let i = 0; i < 8; i++) {
+        const next = (i + 1) % 8;
+        addTri(
+          0, yTable, 0,
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          tablePts[next].x, tablePts[next].y, tablePts[next].z
+        );
+      }
+
+      // 2. Star Facets
+      for (let i = 0; i < 8; i++) {
+        const tPrev = tablePts[(i - 1 + 8) % 8];
+        const tCur = tablePts[i];
+        const cm = crownMainPts[i];
+        addTri(cm.x, cm.y, cm.z, tCur.x, tCur.y, tCur.z, tPrev.x, tPrev.y, tPrev.z);
+      }
+
+      // 3. Bezel / Kite & Upper Girdle
+      for (let i = 0; i < 8; i++) {
+        const cm = crownMainPts[i];
+        const guMid = girdleUpPts[i * 2];
+        const guLeft = girdleUpPts[(i * 2 - 1 + 16) % 16];
+        const guRight = girdleUpPts[(i * 2 + 1) % 16];
+
+        addTri(cm.x, cm.y, cm.z, guLeft.x, guLeft.y, guLeft.z, guMid.x, guMid.y, guMid.z);
+        addTri(cm.x, cm.y, cm.z, guMid.x, guMid.y, guMid.z, guRight.x, guRight.y, guRight.z);
+      }
+
+      // 4. Girdle Facets
+      for (let i = 0; i < 16; i++) {
+        const next = (i + 1) % 16;
+        addTri(
+          girdleUpPts[i].x, girdleUpPts[i].y, girdleUpPts[i].z,
+          girdleLowPts[i].x, girdleLowPts[i].y, girdleLowPts[i].z,
+          girdleUpPts[next].x, girdleUpPts[next].y, girdleUpPts[next].z
+        );
+        addTri(
+          girdleUpPts[next].x, girdleUpPts[next].y, girdleUpPts[next].z,
+          girdleLowPts[i].x, girdleLowPts[i].y, girdleLowPts[i].z,
+          girdleLowPts[next].x, girdleLowPts[next].y, girdleLowPts[next].z
+        );
+      }
+
+      // 5. Lower Girdle Facets
+      for (let i = 0; i < 8; i++) {
+        const pm = pavBreakPts[i];
+        const gl1 = girdleLowPts[i * 2];
+        const glMid = girdleLowPts[i * 2 + 1];
+        const gl2 = girdleLowPts[(i * 2 + 2) % 16];
+
+        addTri(pm.x, pm.y, pm.z, glMid.x, glMid.y, glMid.z, gl1.x, gl1.y, gl1.z);
+        addTri(pm.x, pm.y, pm.z, gl2.x, gl2.y, gl2.z, glMid.x, glMid.y, glMid.z);
+      }
+
+      // 6. Pavilion Mains to Culet
+      for (let i = 0; i < 8; i++) {
+        const next = (i + 1) % 8;
+        addTri(
+          0, yCulet, 0,
+          pavBreakPts[next].x, pavBreakPts[next].y, pavBreakPts[next].z,
+          pavBreakPts[i].x, pavBreakPts[i].y, pavBreakPts[i].z
+        );
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createEmeraldCutGeometry(w = 3.2, l = 4.2) {
+      const hCrown = 1.1;
+      const hPav = 2.8;
+      const yTable = hCrown;
+      const yGirdle = 0;
+      const yCulet = -hPav;
+
+      const triVertices = [];
+      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
+        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+      }
+
+      const tw = w * 0.6;
+      const tl = l * 0.6;
+      const tc = 0.5;
+      const tablePts = [
+        { x: -tw + tc, y: yTable, z: -tl },
+        { x: tw - tc, y: yTable, z: -tl },
+        { x: tw, y: yTable, z: -tl + tc },
+        { x: tw, y: yTable, z: tl - tc },
+        { x: tw - tc, y: yTable, z: tl },
+        { x: -tw + tc, y: yTable, z: tl },
+        { x: -tw, y: yTable, z: tl - tc },
+        { x: -tw, y: yTable, z: -tl + tc }
+      ];
+
+      const gc = 0.8;
+      const girdlePts = [
+        { x: -w + gc, y: yGirdle, z: -l },
+        { x: w - gc, y: yGirdle, z: -l },
+        { x: w, y: yGirdle, z: -l + gc },
+        { x: w, y: yGirdle, z: l - gc },
+        { x: w - gc, y: yGirdle, z: l },
+        { x: -w + gc, y: yGirdle, z: l },
+        { x: -w, y: yGirdle, z: l - gc },
+        { x: -w, y: yGirdle, z: -l + gc }
+      ];
+
+      for (let i = 1; i < 7; i++) {
+        addTri(
+          tablePts[0].x, tablePts[0].y, tablePts[0].z,
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
+        );
+      }
+
+      for (let i = 0; i < 8; i++) {
+        const next = (i + 1) % 8;
+        addTri(
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
+        );
+        addTri(
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          tablePts[next].x, tablePts[next].y, tablePts[next].z
+        );
+      }
+
+      const keelZ1 = -l * 0.4;
+      const keelZ2 = l * 0.4;
+
+      for (let i = 0; i < 8; i++) {
+        const next = (i + 1) % 8;
+        const midZ = (girdlePts[i].z + girdlePts[next].z) / 2;
+        const targetZ = midZ < 0 ? keelZ1 : keelZ2;
+        addTri(
+          0, yCulet, targetZ,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
+        );
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createOvalCutGeometry(radius = 3.55) {
+      const geom = this.createRoundBrilliantGeometry(radius);
+      geom.scale(1.28, 1.0, 0.88);
+      return geom;
+    }
+
+    createPearCutGeometry(radius = 3.55) {
+      const geom = this.createRoundBrilliantGeometry(radius);
+      const pos = geom.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        let x = pos.getX(i);
+        let y = pos.getY(i);
+        let z = pos.getZ(i);
+
+        const zNorm = (z / radius);
+        if (zNorm > 0) {
+          const taper = 1.0 - zNorm * 0.55;
+          x *= Math.max(0.2, taper);
+          z *= 1.25;
+        } else {
+          z *= 0.95;
+        }
+
+        pos.setXYZ(i, x, y, z);
+      }
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    setMetal(metalId) {
+      this.currentMetal = metalId;
+      const p = this.materials.metalPalettes[metalId] || this.materials.metalPalettes['yellow-gold'];
+
+      this.materials.shank.color.setHex(p.shank);
+      this.materials.shank.metalness = p.metalness;
+      this.materials.shank.roughness = p.roughness;
+
+      this.materials.head.color.setHex(p.head);
+      if (this.bridgeMesh) {
+        this.bridgeMesh.material.color.setHex(p.shank);
+      }
+    }
+
+    setGem(gemId) {
+      this.currentGem = gemId;
+      const p = this.materials.gemPalettes[gemId] || this.materials.gemPalettes['diamond'];
+
+      this.materials.gem.color.setHex(p.color);
+      this.materials.gem.transmission = p.transmission;
+      this.materials.gem.ior = p.ior;
+      this.materials.gem.attenuationColor.setHex(p.att);
+      this.materials.gem.attenuationDistance = p.attDist;
+      this.materials.wire.color.setHex(p.wire);
+    }
+
+    setCut(cutId) {
+      this.currentCut = cutId;
+      this.buildCenterGemstone();
+    }
+
+    setCarat(caratVal) {
+      this.currentCarat = parseFloat(caratVal) || 2.5;
+      if (this.centerGemGroup) {
+        const caratScale = Math.sqrt(this.currentCarat / 2.5);
+        this.centerGemGroup.scale.set(caratScale, caratScale, caratScale);
+      }
+    }
+
+    onResize() {
+      if (!this.renderer || !this.camera || !this.container) return;
+      const rect = this.container.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height || (w < 640 ? 380 : 480);
+
+      this.camera.aspect = w / h;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(w, h, false);
+    }
+
+    animate() {
+      requestAnimationFrame(() => this.animate());
+
+      if (!this.isUserInteracting && this.ringGroup) {
+        this.ringGroup.rotation.y += 0.003;
+      }
+
+      if (this.controls) {
+        this.controls.update();
+      }
+
+      if (this.renderer && this.scene && this.camera) {
+        this.renderer.render(this.scene, this.camera);
+      }
+    }
+  }
+
+  let jewelry3DViewer = null;
 
   function init3DCanvasEngine() {
-    if (!canvas3D || !ctx3D) return;
-
-    // Support Retina Displays
-    const rect = canvas3D.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    canvas3D.width = (rect.width || 420) * dpr;
-    canvas3D.height = (rect.height || 420) * dpr;
-    ctx3D.scale(dpr, dpr);
-
-    // Mouse Interaction
-    canvas3D.addEventListener('mousedown', (e) => {
-      state.bespoke.isDragging = true;
-      state.bespoke.lastMouseX = e.clientX;
-      state.bespoke.lastMouseY = e.clientY;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!state.bespoke.isDragging) return;
-      const dx = e.clientX - state.bespoke.lastMouseX;
-      const dy = e.clientY - state.bespoke.lastMouseY;
-      state.bespoke.rotationY += dx * 0.012;
-      state.bespoke.rotationX = Math.max(-0.6, Math.min(0.6, state.bespoke.rotationX + dy * 0.008));
-      state.bespoke.lastMouseX = e.clientX;
-      state.bespoke.lastMouseY = e.clientY;
-      render3DFrame();
-    });
-
-    window.addEventListener('mouseup', () => {
-      state.bespoke.isDragging = false;
-    });
-
-    // Touch Interaction for Mobile
-    canvas3D.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        state.bespoke.isDragging = true;
-        state.bespoke.lastMouseX = e.touches[0].clientX;
-        state.bespoke.lastMouseY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    canvas3D.addEventListener('touchmove', (e) => {
-      if (!state.bespoke.isDragging || e.touches.length !== 1) return;
-      const dx = e.touches[0].clientX - state.bespoke.lastMouseX;
-      const dy = e.touches[0].clientY - state.bespoke.lastMouseY;
-      state.bespoke.rotationY += dx * 0.015;
-      state.bespoke.rotationX = Math.max(-0.6, Math.min(0.6, state.bespoke.rotationX + dy * 0.01));
-      state.bespoke.lastMouseX = e.touches[0].clientX;
-      state.bespoke.lastMouseY = e.touches[0].clientY;
-      render3DFrame();
-    }, { passive: true });
-
-    canvas3D.addEventListener('touchend', () => {
-      state.bespoke.isDragging = false;
-    });
-
-    // Subtle idle rotation & sparkles
-    function animateLoop() {
-      if (!state.bespoke.isDragging) {
-        state.bespoke.rotationY += 0.003;
-      }
-      state.bespoke.sparkleTimer += 0.05;
-      render3DFrame();
-      requestAnimationFrame(animateLoop);
+    try {
+      jewelry3DViewer = new Jewelry3DViewer('bespoke-3d-canvas', 'bespoke-3d-wrapper', 'canvas-3d-loader');
+      window.jewelryViewer = jewelry3DViewer;
+    } catch (e) {
+      console.error('Failed to initialize 3D Jewelry Engine:', e);
     }
-    requestAnimationFrame(animateLoop);
   }
 
   function render3DFrame() {
-    if (!ctx3D) return;
-    const rect = canvas3D.getBoundingClientRect();
-    const w = rect.width || 420;
-    const h = rect.height || 420;
-    const cx = w / 2;
-    const cy = h / 2 + 25;
-
-    ctx3D.clearRect(0, 0, w, h);
-
-    const b = state.bespoke;
-    const metal = STORE.bespokeStudio.metals.find(m => m.id === b.metalId) || STORE.bespokeStudio.metals[0];
-    const gem = STORE.bespokeStudio.gems.find(g => g.id === b.gemId) || STORE.bespokeStudio.gems[0];
-
-    const rotY = b.rotationY;
-    const rotX = b.rotationX;
-    const ringRadius = 95 * b.zoom;
-    const tubeRadius = 12 * b.zoom;
-
-    ctx3D.save();
-    ctx3D.translate(cx, cy);
-
-    // 1. Draw back half of ring shank
-    drawRingArc(ctx3D, ringRadius, tubeRadius, metal, rotY, rotX, true);
-
-    // 2. Draw Crown Setting & Claws
-    const crownY = -ringRadius * Math.cos(rotX) - 15;
-    const crownX = ringRadius * 0.1 * Math.sin(rotY);
-
-    ctx3D.strokeStyle = metal.isSilver ? '#E0E4EB' : '#C5A674';
-    ctx3D.lineWidth = 3;
-    for (let i = 0; i < 6; i++) {
-      const angle = (i / 6) * Math.PI * 2 + rotY;
-      const px = crownX + Math.cos(angle) * (30 * b.zoom);
-      const py = crownY + Math.sin(angle) * (12 * b.zoom);
-      ctx3D.beginPath();
-      ctx3D.moveTo(crownX, crownY + 20);
-      ctx3D.lineTo(px, py);
-      ctx3D.stroke();
-    }
-
-    // 3. Draw Center Gemstone
-    draw3DGemstone(ctx3D, crownX, crownY, gem, b.cutId, b.caratWeight * b.zoom, rotY, b.sparkleTimer);
-
-    // 4. Draw front half of ring shank
-    drawRingArc(ctx3D, ringRadius, tubeRadius, metal, rotY, rotX, false);
-
-    ctx3D.restore();
-  }
-
-  function drawRingArc(ctx, r, tube, metal, rotY, rotX, isBack) {
-    const startAngle = isBack ? Math.PI : 0;
-    const endAngle = isBack ? Math.PI * 2 : Math.PI;
-
-    ctx.save();
-    ctx.scale(1, Math.cos(rotX) * 0.45 + 0.55);
-
-    const grad = ctx.createLinearGradient(-r, 0, r, 0);
-    if (metal.isSilver) {
-      grad.addColorStop(0, '#CBD2DC');
-      grad.addColorStop(0.2, '#FFFFFF');
-      grad.addColorStop(0.5, '#E5EBF2');
-      grad.addColorStop(0.8, '#B8C2CF');
-      grad.addColorStop(1, '#9AA6B5');
-    } else if (metal.id === 'rose-gold') {
-      grad.addColorStop(0, '#D99B87');
-      grad.addColorStop(0.3, '#FFE6DD');
-      grad.addColorStop(0.6, '#E5A593');
-      grad.addColorStop(1, '#9E5B4B');
-    } else if (metal.id === 'platinum') {
-      grad.addColorStop(0, '#B8BCC4');
-      grad.addColorStop(0.25, '#FFFFFF');
-      grad.addColorStop(0.6, '#CAD0DA');
-      grad.addColorStop(1, '#8A909C');
-    } else {
-      // Champagne Gold
-      grad.addColorStop(0, '#B6925B');
-      grad.addColorStop(0.25, '#FFF8EC');
-      grad.addColorStop(0.55, '#C5A674');
-      grad.addColorStop(0.85, '#DECCA8');
-      grad.addColorStop(1, '#7A5B2B');
-    }
-
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = tube * 2;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.arc(0, 0, r, startAngle, endAngle);
-    ctx.stroke();
-
-    // Specular Highlight
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.arc(0, -tube * 0.35, r - tube * 0.4, startAngle + 0.2, endAngle - 0.2);
-    ctx.stroke();
-
-    ctx.restore();
-  }
-
-  function draw3DGemstone(ctx, x, y, gem, cutId, carats, rotY, timer) {
-    ctx.save();
-    ctx.translate(x, y);
-
-    const size = Math.min(55, Math.max(22, 14 * Math.sqrt(carats)));
-
-    // Facet Glow
-    const glow = ctx.createRadialGradient(0, 0, 2, 0, 0, size * 1.5);
-    glow.addColorStop(0, gem.color || 'rgba(255,255,255,0.8)');
-    glow.addColorStop(0.7, 'rgba(255,255,255,0.2)');
-    glow.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = glow;
-    ctx.beginPath();
-    ctx.arc(0, 0, size * 1.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Faceted Geometry
-    ctx.fillStyle = gem.color;
-    ctx.strokeStyle = '#FFFFFF';
-    ctx.lineWidth = 1.2;
-
-    if (cutId === 'emerald-cut') {
-      ctx.beginPath();
-      ctx.rect(-size, -size * 0.7, size * 2, size * 1.4);
-      ctx.fill();
-      ctx.stroke();
-    } else if (cutId === 'pear') {
-      ctx.beginPath();
-      ctx.moveTo(0, -size * 1.3);
-      ctx.bezierCurveTo(size * 0.9, -size * 0.3, size * 0.9, size * 0.8, 0, size);
-      ctx.bezierCurveTo(-size * 0.9, size * 0.8, -size * 0.9, -size * 0.3, 0, -size * 1.3);
-      ctx.fill();
-      ctx.stroke();
-    } else if (cutId === 'oval') {
-      ctx.beginPath();
-      ctx.ellipse(0, 0, size * 0.8, size * 1.1, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-    } else {
-      // Round Brilliant
-      ctx.beginPath();
-      for (let i = 0; i < 8; i++) {
-        const a = (i / 8) * Math.PI * 2 + (rotY * 0.3);
-        const px = Math.cos(a) * size;
-        const py = Math.sin(a) * size;
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-    }
-
-    // Caustic Sparkles
-    const sparkleAngle = timer % (Math.PI * 2);
-    const spX = Math.cos(sparkleAngle) * (size * 0.6);
-    const spY = Math.sin(sparkleAngle) * (size * 0.6);
-    drawSparkleStar(ctx, spX, spY, 7 + Math.sin(timer * 2) * 3);
-
-    ctx.restore();
-  }
-
-  function drawSparkleStar(ctx, x, y, r) {
-    ctx.save();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.beginPath();
-    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.moveTo(x - r, y);
-    ctx.lineTo(x + r, y);
-    ctx.moveTo(x, y - r);
-    ctx.lineTo(x, y + r);
-    ctx.stroke();
-    ctx.restore();
+    // Retained as backward-compatibility alias
   }
 
   function updateBespokePrice() {
@@ -1279,38 +1828,49 @@ Could we schedule a private atelier consultation to commission this creation?`;
   window.setBespokeMetal = (metalId) => {
     state.bespoke.metalId = metalId;
     document.querySelectorAll('[data-bespoke-metal]').forEach(b => {
-      b.classList.toggle('ring-2', b.getAttribute('data-bespoke-metal') === metalId);
-      b.classList.toggle('ring-[#8A6B38]', b.getAttribute('data-bespoke-metal') === metalId);
+      const isMatch = b.getAttribute('data-bespoke-metal') === metalId;
+      b.classList.toggle('ring-2', isMatch);
+      b.classList.toggle('ring-[#8A6B38]', isMatch);
+      b.classList.toggle('border-[#C5A674]', isMatch);
     });
     updateBespokePrice();
-    render3DFrame();
+    if (window.jewelryViewer) window.jewelryViewer.setMetal(metalId);
   };
 
   window.setBespokeGem = (gemId) => {
     state.bespoke.gemId = gemId;
     document.querySelectorAll('[data-bespoke-gem]').forEach(b => {
-      b.classList.toggle('ring-2', b.getAttribute('data-bespoke-gem') === gemId);
-      b.classList.toggle('ring-[#8A6B38]', b.getAttribute('data-bespoke-gem') === gemId);
+      const isMatch = b.getAttribute('data-bespoke-gem') === gemId;
+      b.classList.toggle('ring-2', isMatch);
+      b.classList.toggle('ring-[#8A6B38]', isMatch);
+      b.classList.toggle('border-[#C5A674]', isMatch);
     });
     updateBespokePrice();
-    render3DFrame();
+    if (window.jewelryViewer) window.jewelryViewer.setGem(gemId);
   };
 
   window.setBespokeCut = (cutId) => {
     state.bespoke.cutId = cutId;
     document.querySelectorAll('[data-bespoke-cut]').forEach(b => {
-      b.classList.toggle('bg-[#1D1815]', b.getAttribute('data-bespoke-cut') === cutId);
-      b.classList.toggle('text-white', b.getAttribute('data-bespoke-cut') === cutId);
+      const isMatch = b.getAttribute('data-bespoke-cut') === cutId;
+      b.classList.toggle('bg-[#1D1815]', isMatch);
+      b.classList.toggle('text-white', isMatch);
     });
-    render3DFrame();
+    if (window.jewelryViewer) window.jewelryViewer.setCut(cutId);
   };
 
   window.setBespokeCarat = (caratVal) => {
     state.bespoke.caratWeight = parseFloat(caratVal);
+    document.querySelectorAll('[data-bespoke-carat]').forEach(b => {
+      const val = parseFloat(b.getAttribute('data-bespoke-carat'));
+      const isMatch = Math.abs(val - state.bespoke.caratWeight) < 0.01;
+      b.classList.toggle('bg-[#1D1815]', isMatch);
+      b.classList.toggle('text-white', isMatch);
+    });
     const displayEl = document.getElementById('bespoke-carat-display');
     if (displayEl) displayEl.textContent = `${state.bespoke.caratWeight.toFixed(2)} ct`;
     updateBespokePrice();
-    render3DFrame();
+    if (window.jewelryViewer) window.jewelryViewer.setCarat(caratVal);
   };
 
   // ================= 10. PRIVATE FOUNDER STUDIO (#studio / #admin) =================
@@ -1766,5 +2326,9 @@ Could we schedule a private atelier consultation to commission this creation?`;
   // ================= 12. INITIAL BOOTSTRAP =================
   renderAllProductGrids();
   init3DCanvasEngine();
+  setBespokeMetal(state.bespoke.metalId || 'yellow-gold');
+  setBespokeGem(state.bespoke.gemId || 'diamond');
+  setBespokeCut(state.bespoke.cutId || 'round');
+  setBespokeCarat(state.bespoke.caratWeight || 2.5);
   handleRoute();
 });
