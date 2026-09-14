@@ -1,31 +1,56 @@
-# House of Jewelux 💎
-### Haute Joaillerie & Bespoke Fine Jewellery
+# HOUSE OF JEWELUX ✦
+### *Where Elegance Becomes Eternal.*
+#### Haute Joaillerie • Milano • Genève • Paris • London • New York • Dubai
 
-Welcome to the official web showcase for **House of Jewelux** — purveyors of rare conflict-free diamonds, certified Colombian emeralds, and bespoke bridal masterpieces handcrafted to transcend generations.
-
----
-
-## 👑 Features
-
-* **Interactive Bespoke Ring Studio**: Real-time interactive goldsmith workbench allowing clients to customize precious metals (18K Yellow Gold, 18K Rose Gold, 18K White Gold, Platinum 950), center gems (D-Flawless Diamond, Muzo Emerald, Ceylon Sapphire, Ruby), cuts, and carat weight with dynamic SVG rendering and live pricing.
-* **Global Currency Conversion**: Live currency switcher supporting USD ($), EUR (€), GBP (£), INR (₹), and AED (د.إ).
-* **Curated Haute Joaillerie Vault**: Filterable collections with dual-angle hover imagery, GIA certification inspection, and quick-add actions.
-* **Slide-over Shopping Bag & Wishlist**: LocalStorage-persisted cart and wishlist drawers with promotional privilege discounts.
-* **Private Salon Booking**: Atelier consultation reservation system for flagship locations (London, Paris, New York, Dubai) and virtual salons.
-* **Liquid Glass & Gold Aesthetic**: Elegant design crafted with Tailwind CSS, Google Fonts (`Cormorant Garamond` & `Montserrat`), and ambient particle canvases.
+Welcome to the official digital flagship for **HOUSE OF JEWELUX**, designed with the refinement of an Italian high-fashion jewellery brand harmonized with centuries of generational Indian craftsmanship.
 
 ---
 
-## 🚀 Live Demo on GitHub Pages
+## ⚜️ Brand Aesthetic & Visual System
 
-This website is built with vanilla HTML5, CSS3, and JavaScript — zero build step or dependencies required.
+* **Primary Atmosphere:** Warm Vanilla Ivory (`#FAF8F5`, `#F5F0E6`, `#FAF6EE`) — warm, radiant, and understated luxury, strictly avoiding black-heavy layouts.
+* **Metallic Finish:** Multi-stop Italian Champagne Gold (`#F5EBDA`, `#DECCA8`, `#C5A674`, `#B6925B`, `#8F6E3B`) matching the brand's vector logo lockup.
+* **Typographic Contrast:** Soft Espresso / Truffle Brown (`#2A221C`) and Warm Muted Taupe (`#756A5E`).
+* **Display Typography:** High-contrast Didone / Classical Italian Serif (`Cinzel` & `Cormorant Garamond`) paired with minimal geometric sans-serif (`Montserrat`).
+* **Emblem System:** Four-point stars, diamond facets, and delicate hairline dividers derived directly from the official monogram.
 
-### Quick Setup for GitHub Pages:
-1. Fork or clone this repository.
-2. Go to **Settings** > **Pages** in your GitHub repository.
-3. Under **Branch**, select `main` (or `master`) and directory `/ (root)`.
-4. Click **Save**.
-5. Your live site will be accessible at: `https://<your-username>.github.io/<repository-name>/`
+---
+
+## 👑 The 20 Required Pages & Sections
+
+The digital boutique is architected as a seamless, high-performance Single Page Application with client-side hash routing:
+
+1. **Home (`#home`):** Dramatic minimal hero (*"WHERE ELEGANCE BECOMES ETERNAL"*), brand introduction (*"Elegance, Designed to Endure"*), 6 curated collections, featured vault, bespoke goldsmith workbench, luxury storytelling tri-column (*"Crafted with Intention"*, *"Designed for a Lifetime"*, *"Made to Become Yours"*), lookbook archive, client testimonials, and salon invitation.
+2. **Shop (`#shop`):** Comprehensive catalogue with category filter pills, sorting by price and rarity, dual-angle hover transitions, quick view, wishlist, and add to bag.
+3. **Collections (`#collections`):** Detailed editorial showcase of all 6 signature lines (The Eternal Collection, The Signature Collection, The Heritage Collection, The Temple Collection, The Silver Edit, The Everyday Icons).
+4. **New Arrivals (`#new-arrivals`):** 2026 debuts directly from our European and Indian ateliers.
+5. **Best Sellers (`#best-sellers`):** Iconic client favorites favored by royal patrons and international collectors.
+6. **Rings (`#rings`):** Solitaires, eternity bands, and cocktail creations in Platinum 950 and 18K champagne gold.
+7. **Earrings (`#earrings`):** Chandelier drops, solitaire studs, and articulated pear drops.
+8. **Necklaces (`#necklaces`):** Statement haute joaillerie collars, chokers, and diamond solitaire pendants.
+9. **Bracelets (`#bracelets`):** Articulated tennis bracelets engineered with double safety catches.
+10. **Bangles (`#bangles`):** Hand-sculpted champagne gold kada and pavé diamond bangles.
+11. **Silver Jewellery (`#silver`):** *The Silver Edit* — 925 sterling silver plated in liquid platinum-rhodium with lab-certified moissanite.
+12. **Temple Jewellery (`#temple`):** South Indian antique nakshi craftsmanship infused with European Didone elegance (22K antique matte gold, polki uncut diamonds, Basra pearls, ruby accents).
+13. **About Us (`#about`):** Milan design studio origin, generational artisan lineage, ethical sourcing charter, and creative philosophy.
+14. **Our Craftsmanship (`#craftsmanship`):** Six-stage savoir-faire: Mineral provenance, gouache renderings, metallurgy, generational nakshi setting, mirror hand-burnishing, and Swiss lab certification.
+15. **Contact & Salons (`#contact`):** Private salon reservation scheduler, global flagship locations (Geneva, Milan, London, Paris, New York, Dubai), and direct WhatsApp concierge.
+16. **FAQ (`#faq`):** Expandable luxury accordions covering 4Cs certification, bespoke timeline, resizing, armored delivery, and gold alloys.
+17. **Shipping & Delivery (`#shipping`):** Armored courier white-glove transport protocol, insurance, and international customs clearance.
+18. **Returns & Refunds (`#returns`):** 30-day complimentary return guarantee, return shipping procedures, and bespoke exceptions.
+19. **Privacy Policy (`#privacy`):** Discretion covenant, 256-bit SSL encryption, Swiss banking data confidentiality standards.
+20. **Terms & Conditions (`#terms`):** Authenticity covenants, lifetime warranty, and valuation certificates.
+
+---
+
+## 💎 Interactive Features & E-Commerce Flow
+
+* **Dedicated Product Detail View (`#product-:id`):** Multi-image thumbnail gallery, hover zoom, metal and gemological specs, ring/bracelet size selector, size guide helper modal, Add to Bag, Acquire Now, Wishlist, and expandable specifications accordion.
+* **Interactive Bespoke Ring Studio:** Real-time goldsmith workbench rendering 18K Champagne Gold, Rose Gold, White Gold, and Platinum 950 bands paired with D-Flawless Diamonds, Colombian Emeralds, Ceylon Sapphires, or Burmese Rubies across 4 cut silhouettes and 4 carat weights with dynamic price calculation.
+* **Global Currency Conversion:** Live switcher supporting USD ($), EUR (€), GBP (£), INR (₹), and AED (د.إ).
+* **Slide-over Shopping Bag & Wishlist:** LocalStorage-persisted cart and wishlist drawers with complimentary courier threshold indicator and privilege discount system (`JEWELUX10`).
+* **Live Search Overlay:** Instant typeahead filtering across stones, metals, collections, and categories.
+* **White-Glove Acquisition Protocol:** Simulated luxury checkout modal.
 
 ---
 
@@ -33,15 +58,21 @@ This website is built with vanilla HTML5, CSS3, and JavaScript — zero build st
 
 ```text
 house-of-jewelux/
-├── index.html            # Main semantic homepage and interactive drawers
-├── style.css             # Luxury design tokens, gold gradients, animations
-├── data.js               # Catalogue items, customizer parameters, reviews
-├── app.js                # State management (cart, currency, bespoke studio)
-├── images/               # High-resolution haute joaillerie photography
+├── index.html            # Semantic HTML5 luxury storefront and modal suites
+├── style.css             # Warm Vanilla Ivory tokens, champagne gold gradients, typography
+├── data.js               # Comprehensive catalogue, collections, craftsmanship, FAQs
+├── app.js                # SPA routing, bespoke studio, cart & wishlist state
+├── images/               # High-resolution editorial campaign & craft photography
+│   ├── jewelux_editorial_hero.jpg
+│   ├── jewelux_temple_heritage.jpg
+│   ├── jewelux_atelier_craft.jpg
+│   ├── jewelux_hero_necklace.jpg
+│   └── jewelux_solitaire_ring.jpg
+├── brand-identity/       # Official vector SVG logo suite & mockups
 ├── run_local_server.py   # One-click local Python preview server
-└── preview.bat           # Windows quick-launch script
+└── preview.bat           # Windows quick-launch batch script
 ```
 
 ---
 
-© 2026 House of Jewelux S.A. All rights reserved. Geneva • London • Paris • New York • Dubai.
+© 2026 HOUSE OF JEWELUX S.A. All rights reserved. Geneva • Milan • London • Paris • New York • Dubai.

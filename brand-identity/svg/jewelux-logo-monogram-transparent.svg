@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=Montserrat:wght@200;300;400;500&amp;display=swap');
+
+      .brand-title {
+        font-family: 'Cinzel', 'Cormorant Garamond', 'Bodoni MT', 'Didot', serif;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-anchor: middle;
+      }
+      .brand-prefix {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+        letter-spacing: 0.52em;
+        text-anchor: middle;
+      }
+      .brand-tagline {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+        letter-spacing: 0.38em;
+        text-anchor: middle;
+      }
+      .brand-city {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+        letter-spacing: 0.44em;
+        text-anchor: middle;
+      }
+    </style>
+
+    <!-- Soft Champagne Gold Multi-Stop Metallic Gradient (Subtle, Expensive, Italian) -->
+    <linearGradient id="champagneGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5EBDA" />
+      <stop offset="20%" stop-color="#DECCA8" />
+      <stop offset="45%" stop-color="#C5A674" />
+      <stop offset="70%" stop-color="#B6925B" />
+      <stop offset="85%" stop-color="#C8AE7F" />
+      <stop offset="100%" stop-color="#8F6E3B" />
+    </linearGradient>
+
+    <!-- Shimmer Highlight Gradient for Edge Reflections -->
+    <linearGradient id="goldSheenGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#E2D0B2" />
+      <stop offset="35%" stop-color="#FFF8EE" />
+      <stop offset="55%" stop-color="#D2B585" />
+      <stop offset="80%" stop-color="#B38F54" />
+      <stop offset="100%" stop-color="#7D5E2D" />
+    </linearGradient>
+
+    <!-- Horizontal Gradient for Rule Dividers -->
+    <linearGradient id="goldHorizGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#9A7B48" stop-opacity="0" />
+      <stop offset="20%" stop-color="#CBB084" stop-opacity="0.85" />
+      <stop offset="50%" stop-color="#F5EBDA" stop-opacity="1" />
+      <stop offset="80%" stop-color="#CBB084" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#9A7B48" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Warm Vanilla White Vignette Gradient -->
+    <radialGradient id="ivoryVignette" cx="50%" cy="48%" r="65%">
+      <stop offset="0%" stop-color="#FFFDFB" />
+      <stop offset="60%" stop-color="#FAF8F5" />
+      <stop offset="100%" stop-color="#F2ECE0" />
+    </radialGradient>
+
+    <!-- Midnight Velvet Noir Background -->
+    <radialGradient id="noirVignette" cx="50%" cy="46%" r="65%">
+      <stop offset="0%" stop-color="#1D1917" />
+      <stop offset="60%" stop-color="#13100E" />
+      <stop offset="100%" stop-color="#0B0908" />
+    </radialGradient>
+
+    <!-- Soft Drop Shadow for Hot-Foil Stamping -->
+    <filter id="softFoilShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#4A3B22" flood-opacity="0.22" />
+    </filter>
+  </defs>
+
+  
+  <g transform="translate(40, 40) scale(1.4)">
+    
+  <g id="hj-monogram-symbol" filter="url(#softFoilShadow)">
+    <!-- Fine Jewellery Subtle Elliptical Halo -->
+    <ellipse cx="150" cy="150" rx="96" ry="118" fill="none" stroke="url(#champagneGoldGrad)" stroke-width="0.75" opacity="0.4" stroke-dasharray="1 3" />
+    <circle cx="150" cy="32" r="1.8" fill="url(#goldSheenGrad)" />
+    <circle cx="150" cy="268" r="1.8" fill="url(#goldSheenGrad)" />
+    <circle cx="54" cy="150" r="1.4" fill="url(#goldSheenGrad)" />
+    <circle cx="246" cy="150" r="1.4" fill="url(#goldSheenGrad)" />
+
+    <!-- ==================== LETTER H ==================== -->
+    <!-- Left Column: Didone Pillar with graceful bracketed top & bottom serifs -->
+    <path d="
+      M 95,78
+      L 125,78
+      L 125,80.5
+      C 120,80.5 117,83 116,88
+      L 116,212
+      C 117,217 120,219.5 125,219.5
+      L 125,222
+      L 95,222
+      L 95,219.5
+      C 100,219.5 103,217 104,212
+      L 104,88
+      C 103,83 100,80.5 95,80.5
+      Z
+    " fill="url(#champagneGoldGrad)" />
+
+    <!-- Left Column Hairline Shimmer Accent -->
+    <path d="M 108,86 L 112,86 L 112,214 L 108,214 Z" fill="url(#goldSheenGrad)" opacity="0.85" />
+
+    <!-- Right Column of H: Gracefully matching pillar with delicate Didone terminals -->
+    <path d="
+      M 175,78
+      L 205,78
+      L 205,80.5
+      C 200,80.5 197,83 196,88
+      L 196,134
+      C 196,137 194,139 191,139
+      C 188,139 186,137 186,134
+      L 186,88
+      C 185,83 182,80.5 177,80.5
+      L 175,80.5
+      Z
+    " fill="url(#champagneGoldGrad)" />
+
+    <!-- Lower Right Pillar of H -->
+    <path d="
+      M 186,164
+      C 186,161 188,159 191,159
+      C 194,159 196,161 196,164
+      L 196,212
+      C 197,217 200,219.5 205,219.5
+      L 205,222
+      L 175,222
+      L 175,219.5
+      C 180,219.5 183,217 184,212
+      L 184,164
+      Z
+    " fill="url(#champagneGoldGrad)" />
+
+    <!-- Crossbar of H: Left Segment connecting to Interlock -->
+    <path d="
+      M 116,148
+      C 126,148 134,149 140,149.5
+      L 140,152.5
+      C 134,152 126,151 116,151
+      Z
+    " fill="url(#goldSheenGrad)" />
+
+    <!-- Crossbar of H: Right Segment -->
+    <path d="
+      M 160,149.5
+      C 166,149 174,148 184,148
+      L 184,151
+      C 174,151 166,152 160,152.5
+      Z
+    " fill="url(#goldSheenGrad)" />
+
+    <!-- ==================== LETTER J (THE INTERLOCKING JEWEL) ==================== -->
+    <!-- Top Finial of J: Elegant curved horizontal serif with tapered finial -->
+    <path d="
+      M 136,80
+      C 136,76 140,73.5 148,73.5
+      L 164,73.5
+      L 164,76
+      C 159,76 156,78 155,83
+      L 155,142
+      L 149,142
+      L 149,83
+      C 148,78 145,76 140,76
+      L 136,76
+      Z
+    " fill="url(#goldSheenGrad)" />
+
+    <!-- Main Interlocking Stem and Feminine Sweep of J -->
+    <!-- Weaves through H's crossbar, descends with voluptuous thick-thin modulation,
+         curves underneath H's left baseline, and finishes with a refined pear/diamond finial -->
+    <path d="
+      M 149,136
+      L 155,136
+      C 155,166 156,190 152,210
+      C 148,228 140,243 127,254
+      C 114,264 97,268 79,266
+      C 63,264 50,254 44,239
+      C 40,229 42,219 48,212
+      C 54,206 63,207 67,214
+      C 70,221 68,228 62,232
+      C 58,235 55,234 53,232
+      C 56,242 67,250 83,252
+      C 103,254 121,245 132,230
+      C 140,217 142,198 142,174
+      L 142,136
+      Z
+    " fill="url(#champagneGoldGrad)" />
+
+    <!-- Fluid Internal Shimmer Line along the J sweep -->
+    <path d="
+      M 148,150
+      C 149,182 148,204 141,222
+      C 133,238 118,248 98,249
+      C 82,249 70,242 63,232
+      C 67,237 77,243 91,244
+      C 109,245 124,236 133,222
+      C 139,207 142,188 142,150
+      Z
+    " fill="url(#goldSheenGrad)" opacity="0.9" />
+
+    <!-- ==================== CENTRAL JEWELLERY ACCENT ==================== -->
+    <!-- Marquise Diamond Facet at the Nexus of H & J -->
+    <polygon points="150,145 154,151 150,157 146,151" fill="url(#goldSheenGrad)" stroke="url(#champagneGoldGrad)" stroke-width="0.5" />
+    
+    <!-- Top & Bottom Micro-Gem Accents for Fine Italian Symmetry -->
+    <polygon points="150,62 152,65 150,68 148,65" fill="url(#goldSheenGrad)" />
+    <polygon points="150,234 152,237 150,240 148,237" fill="url(#goldSheenGrad)" opacity="0.8" />
+  </g>
+
+  </g>
+</svg>
