@@ -1304,10 +1304,18 @@ const JEWELUX_DATA = {
       { id: 'ruby', name: 'Burmese Pigeon Blood Ruby', color: '#BE123C', dispersion: 0.018, pricePerCarat: 3900 }
     ],
     cuts: [
-      { id: 'round', name: 'Brilliant Round', ratio: 1.0 },
-      { id: 'emerald-cut', name: 'Emerald Step Cut', ratio: 1.15 },
-      { id: 'oval', name: 'Royal Oval', ratio: 1.08 },
-      { id: 'pear', name: 'Teardrop Pear', ratio: 1.12 }
+      { id: 'round', name: 'Round Brilliant', ratio: 1.0 },
+      { id: 'princess', name: 'Princess', ratio: 1.0 },
+      { id: 'oval', name: 'Oval', ratio: 1.08 },
+      { id: 'emerald-cut', name: 'Emerald Cut', ratio: 1.15 },
+      { id: 'radiant', name: 'Radiant Cut', ratio: 1.14 },
+      { id: 'heart', name: 'Heart', ratio: 1.10 },
+      { id: 'asscher', name: 'Asscher Cut', ratio: 1.05 },
+      { id: 'marquise', name: 'Marquise', ratio: 1.20 },
+      { id: 'pear', name: 'Pear / Teardrop', ratio: 1.12 },
+      { id: 'cushion', name: 'Cushion', ratio: 1.06 },
+      { id: 'elongated-cushion', name: 'Elongated Cushion', ratio: 1.12 },
+      { id: 'hexagonal', name: 'Hexagonal', ratio: 1.10 }
     ],
     carats: [
       { weight: 1.0, label: '1.00 Carat' },

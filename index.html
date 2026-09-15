@@ -710,18 +710,272 @@
                 <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
                   3. Cut & Facet Silhouette
                 </label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#1D1815]">Round Ideal</span>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
+                  <!-- 1. Round Brilliant -->
+                  <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="24" cy="24" r="19"/>
+                      <polygon points="20.5,15.5 27.5,15.5 32.5,20.5 32.5,27.5 27.5,32.5 20.5,32.5 15.5,27.5 15.5,20.5"/>
+                      <line x1="20.5" y1="15.5" x2="10.5" y2="10.5"/>
+                      <line x1="27.5" y1="15.5" x2="37.5" y2="10.5"/>
+                      <line x1="32.5" y1="20.5" x2="42.5" y2="17"/>
+                      <line x1="32.5" y1="27.5" x2="42.5" y2="31"/>
+                      <line x1="27.5" y1="32.5" x2="37.5" y2="37.5"/>
+                      <line x1="20.5" y1="32.5" x2="10.5" y2="37.5"/>
+                      <line x1="15.5" y1="27.5" x2="5.5" y2="31"/>
+                      <line x1="15.5" y1="20.5" x2="5.5" y2="17"/>
+                      <line x1="24" y1="5" x2="20.5" y2="15.5"/>
+                      <line x1="24" y1="5" x2="27.5" y2="15.5"/>
+                      <line x1="43" y1="24" x2="32.5" y2="20.5"/>
+                      <line x1="43" y1="24" x2="32.5" y2="27.5"/>
+                      <line x1="24" y1="43" x2="27.5" y2="32.5"/>
+                      <line x1="24" y1="43" x2="20.5" y2="32.5"/>
+                      <line x1="5" y1="24" x2="15.5" y2="27.5"/>
+                      <line x1="5" y1="24" x2="15.5" y2="20.5"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Round Brilliant</span>
                   </button>
-                  <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#1D1815]">Emerald Cut</span>
+
+                  <!-- 2. Princess -->
+                  <button onclick="setBespokeCut('princess')" data-bespoke-cut="princess" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="7" y="7" width="34" height="34"/>
+                      <line x1="7" y1="7" x2="41" y2="41"/>
+                      <line x1="41" y1="7" x2="7" y2="41"/>
+                      <polygon points="24,14 34,24 24,34 14,24"/>
+                      <line x1="24" y1="7" x2="24" y2="14"/>
+                      <line x1="41" y1="24" x2="34" y2="24"/>
+                      <line x1="24" y1="41" x2="24" y2="34"/>
+                      <line x1="7" y1="24" x2="14" y2="24"/>
+                      <line x1="7" y1="7" x2="24" y2="14"/>
+                      <line x1="41" y1="7" x2="24" y2="14"/>
+                      <line x1="41" y1="7" x2="34" y2="24"/>
+                      <line x1="41" y1="41" x2="34" y2="24"/>
+                      <line x1="41" y1="41" x2="24" y2="34"/>
+                      <line x1="7" y1="41" x2="24" y2="34"/>
+                      <line x1="7" y1="41" x2="14" y2="24"/>
+                      <line x1="7" y1="7" x2="14" y2="24"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Princess</span>
                   </button>
-                  <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#1D1815]">Royal Oval</span>
+
+                  <!-- 3. Oval -->
+                  <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <ellipse cx="24" cy="24" rx="15" ry="19"/>
+                      <polygon points="20,13 28,13 32,19 32,29 28,35 20,35 16,29 16,19"/>
+                      <line x1="24" y1="5" x2="24" y2="13"/>
+                      <line x1="24" y1="5" x2="20" y2="13"/>
+                      <line x1="24" y1="5" x2="28" y2="13"/>
+                      <line x1="28" y1="13" x2="36" y2="9"/>
+                      <line x1="20" y1="13" x2="12" y2="9"/>
+                      <line x1="32" y1="19" x2="38.5" y2="18"/>
+                      <line x1="32" y1="29" x2="38.5" y2="30"/>
+                      <line x1="16" y1="19" x2="9.5" y2="18"/>
+                      <line x1="16" y1="29" x2="9.5" y2="30"/>
+                      <line x1="28" y1="35" x2="36" y2="39"/>
+                      <line x1="20" y1="35" x2="12" y2="39"/>
+                      <line x1="24" y1="43" x2="24" y2="35"/>
+                      <line x1="24" y1="43" x2="28" y2="35"/>
+                      <line x1="24" y1="43" x2="20" y2="35"/>
+                      <line x1="9" y1="24" x2="16" y2="24"/>
+                      <line x1="39" y1="24" x2="32" y2="24"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Oval</span>
                   </button>
-                  <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-                    <span class="text-xs font-medium text-[#1D1815]">Teardrop Pear</span>
+
+                  <!-- 4. Emerald Cut -->
+                  <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="13,5 35,5 42,12 42,36 35,43 13,43 6,36 6,12"/>
+                      <polygon points="15,10 33,10 38,15 38,33 33,38 15,38 10,33 10,15"/>
+                      <polygon points="18,15 30,15 34,19 34,29 30,33 18,33 14,29 14,19"/>
+                      <line x1="6" y1="12" x2="14" y2="19"/>
+                      <line x1="13" y1="5" x2="18" y2="15"/>
+                      <line x1="35" y1="5" x2="30" y2="15"/>
+                      <line x1="42" y1="12" x2="34" y2="19"/>
+                      <line x1="42" y1="36" x2="34" y2="29"/>
+                      <line x1="35" y1="43" x2="30" y2="33"/>
+                      <line x1="13" y1="43" x2="18" y2="33"/>
+                      <line x1="6" y1="36" x2="14" y2="29"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Emerald Cut</span>
+                  </button>
+
+                  <!-- 5. Radiant Cut -->
+                  <button onclick="setBespokeCut('radiant')" data-bespoke-cut="radiant" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12,6 36,6 42,12 42,36 36,42 12,42 6,36 6,12"/>
+                      <polygon points="18,16 30,16 33,19 33,29 30,32 18,32 15,29 15,19"/>
+                      <line x1="24" y1="6" x2="24" y2="16"/>
+                      <line x1="42" y1="24" x2="33" y2="24"/>
+                      <line x1="24" y1="42" x2="24" y2="32"/>
+                      <line x1="6" y1="24" x2="15" y2="24"/>
+                      <line x1="12" y1="6" x2="18" y2="16"/>
+                      <line x1="6" y1="12" x2="15" y2="19"/>
+                      <line x1="36" y1="6" x2="30" y2="16"/>
+                      <line x1="42" y1="12" x2="33" y2="19"/>
+                      <line x1="42" y1="36" x2="33" y2="29"/>
+                      <line x1="36" y1="42" x2="30" y2="32"/>
+                      <line x1="12" y1="42" x2="18" y2="32"/>
+                      <line x1="6" y1="36" x2="15" y2="29"/>
+                      <line x1="24" y1="6" x2="18" y2="16"/>
+                      <line x1="24" y1="6" x2="30" y2="16"/>
+                      <line x1="42" y1="24" x2="33" y2="19"/>
+                      <line x1="42" y1="24" x2="33" y2="29"/>
+                      <line x1="24" y1="42" x2="30" y2="32"/>
+                      <line x1="24" y1="42" x2="18" y2="32"/>
+                      <line x1="6" y1="24" x2="15" y2="19"/>
+                      <line x1="6" y1="24" x2="15" y2="29"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Radiant Cut</span>
+                  </button>
+
+                  <!-- 6. Heart -->
+                  <button onclick="setBespokeCut('heart')" data-bespoke-cut="heart" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M 24,14 C 24,7 16,5 11,10 C 6,15 6,22 11,28 C 16,34 24,42 24,42 C 24,42 32,34 37,28 C 42,22 42,15 37,10 C 32,5 24,7 24,14 Z"/>
+                      <path d="M 24,20 C 24,15 19,14 16,17 C 13,20 14,24 17,28 C 20,32 24,36 24,36 C 24,36 28,32 31,28 C 34,24 35,20 32,17 C 29,14 24,15 24,20 Z"/>
+                      <line x1="24" y1="14" x2="24" y2="20"/>
+                      <line x1="11" y1="10" x2="16" y2="17"/>
+                      <line x1="37" y1="10" x2="32" y2="17"/>
+                      <line x1="7" y1="19" x2="14" y2="22"/>
+                      <line x1="41" y1="19" x2="34" y2="22"/>
+                      <line x1="11" y1="28" x2="17" y2="28"/>
+                      <line x1="37" y1="28" x2="31" y2="28"/>
+                      <line x1="17" y1="35" x2="20" y2="32"/>
+                      <line x1="31" y1="35" x2="28" y2="32"/>
+                      <line x1="24" y1="42" x2="24" y2="36"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Heart</span>
+                  </button>
+
+                  <!-- 7. Asscher Cut -->
+                  <button onclick="setBespokeCut('asscher')" data-bespoke-cut="asscher" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="14,6 34,6 42,14 42,34 34,42 14,42 6,34 6,14"/>
+                      <polygon points="16,11 32,11 37,16 37,32 32,37 16,37 11,32 11,16"/>
+                      <polygon points="19,16 29,16 32,19 32,29 29,32 19,32 16,29 16,19"/>
+                      <line x1="6" y1="14" x2="16" y2="19"/>
+                      <line x1="14" y1="6" x2="19" y2="16"/>
+                      <line x1="34" y1="6" x2="29" y2="16"/>
+                      <line x1="42" y1="14" x2="32" y2="19"/>
+                      <line x1="42" y1="34" x2="32" y2="29"/>
+                      <line x1="34" y1="42" x2="29" y2="32"/>
+                      <line x1="14" y1="42" x2="19" y2="32"/>
+                      <line x1="6" y1="34" x2="16" y2="29"/>
+                      <line x1="19" y1="19" x2="29" y2="29"/>
+                      <line x1="29" y1="19" x2="19" y2="29"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Asscher Cut</span>
+                  </button>
+
+                  <!-- 8. Marquise -->
+                  <button onclick="setBespokeCut('marquise')" data-bespoke-cut="marquise" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M 24,4 C 36,13 36,35 24,44 C 12,35 12,13 24,4 Z"/>
+                      <path d="M 24,14 C 30,19 30,29 24,34 C 18,29 18,19 24,14 Z"/>
+                      <line x1="24" y1="4" x2="24" y2="14"/>
+                      <line x1="24" y1="44" x2="24" y2="34"/>
+                      <line x1="34" y1="24" x2="28" y2="24"/>
+                      <line x1="14" y1="24" x2="20" y2="24"/>
+                      <line x1="24" y1="4" x2="27" y2="18"/>
+                      <line x1="24" y1="4" x2="21" y2="18"/>
+                      <line x1="32" y1="14" x2="27" y2="18"/>
+                      <line x1="16" y1="14" x2="21" y2="18"/>
+                      <line x1="32" y1="34" x2="27" y2="30"/>
+                      <line x1="16" y1="34" x2="21" y2="30"/>
+                      <line x1="24" y1="44" x2="27" y2="30"/>
+                      <line x1="24" y1="44" x2="21" y2="30"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Marquise</span>
+                  </button>
+
+                  <!-- 9. Pear / Teardrop Pear -->
+                  <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M 24,5 C 29,12 36,23 36,31 C 36,38 31,43 24,43 C 17,43 12,38 12,31 C 12,23 19,12 24,5 Z"/>
+                      <path d="M 24,14 C 27,19 30,25 30,30 C 30,35 27,37 24,37 C 21,37 18,35 18,30 C 18,25 21,19 24,14 Z"/>
+                      <line x1="24" y1="5" x2="24" y2="14"/>
+                      <line x1="24" y1="5" x2="27" y2="18"/>
+                      <line x1="24" y1="5" x2="21" y2="18"/>
+                      <line x1="30" y1="13" x2="27" y2="18"/>
+                      <line x1="18" y1="13" x2="21" y2="18"/>
+                      <line x1="35" y1="23" x2="30" y2="25"/>
+                      <line x1="13" y1="23" x2="18" y2="25"/>
+                      <line x1="36" y1="32" x2="30" y2="32"/>
+                      <line x1="12" y1="32" x2="18" y2="32"/>
+                      <line x1="32" y1="40" x2="27" y2="36"/>
+                      <line x1="16" y1="40" x2="21" y2="36"/>
+                      <line x1="24" y1="43" x2="24" y2="37"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Pear</span>
+                  </button>
+
+                  <!-- 10. Cushion -->
+                  <button onclick="setBespokeCut('cushion')" data-bespoke-cut="cushion" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="7" y="7" width="34" height="34" rx="9" ry="9"/>
+                      <rect x="17" y="17" width="14" height="14" rx="4" ry="4"/>
+                      <line x1="17" y1="17" x2="11" y2="11"/>
+                      <line x1="31" y1="17" x2="37" y2="11"/>
+                      <line x1="31" y1="31" x2="37" y2="37"/>
+                      <line x1="17" y1="31" x2="11" y2="37"/>
+                      <line x1="24" y1="7" x2="24" y2="17"/>
+                      <line x1="41" y1="24" x2="31" y2="24"/>
+                      <line x1="24" y1="41" x2="24" y2="31"/>
+                      <line x1="7" y1="24" x2="17" y2="24"/>
+                      <line x1="24" y1="7" x2="17" y2="17"/>
+                      <line x1="24" y1="7" x2="31" y2="17"/>
+                      <line x1="41" y1="24" x2="31" y2="17"/>
+                      <line x1="41" y1="24" x2="31" y2="31"/>
+                      <line x1="24" y1="41" x2="31" y2="31"/>
+                      <line x1="24" y1="41" x2="17" y2="31"/>
+                      <line x1="7" y1="24" x2="17" y2="31"/>
+                      <line x1="7" y1="24" x2="17" y2="17"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Cushion</span>
+                  </button>
+
+                  <!-- 11. Elongated Cushion -->
+                  <button onclick="setBespokeCut('elongated-cushion')" data-bespoke-cut="elongated-cushion" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="5" width="30" height="38" rx="8" ry="8"/>
+                      <rect x="17" y="14" width="14" height="20" rx="4" ry="4"/>
+                      <line x1="17" y1="14" x2="13" y2="9"/>
+                      <line x1="31" y1="14" x2="35" y2="9"/>
+                      <line x1="31" y1="34" x2="35" y2="39"/>
+                      <line x1="17" y1="34" x2="13" y2="39"/>
+                      <line x1="24" y1="5" x2="24" y2="14"/>
+                      <line x1="39" y1="24" x2="31" y2="24"/>
+                      <line x1="24" y1="43" x2="24" y2="34"/>
+                      <line x1="9" y1="24" x2="17" y2="24"/>
+                      <line x1="24" y1="5" x2="17" y2="14"/>
+                      <line x1="24" y1="5" x2="31" y2="14"/>
+                      <line x1="39" y1="24" x2="31" y2="14"/>
+                      <line x1="39" y1="24" x2="31" y2="34"/>
+                      <line x1="24" y1="43" x2="31" y2="34"/>
+                      <line x1="24" y1="43" x2="17" y2="34"/>
+                      <line x1="9" y1="24" x2="17" y2="34"/>
+                      <line x1="9" y1="24" x2="17" y2="14"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Elongated Cushion</span>
+                  </button>
+
+                  <!-- 12. Hexagonal -->
+                  <button onclick="setBespokeCut('hexagonal')" data-bespoke-cut="hexagonal" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
+                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="24,5 41,14.8 41,33.2 24,43 7,33.2 7,14.8"/>
+                      <polygon points="24,11 36,18 36,30 24,37 12,30 12,18"/>
+                      <polygon points="24,17 31,21 31,27 24,31 17,27 17,21"/>
+                      <line x1="24" y1="5" x2="24" y2="17"/>
+                      <line x1="41" y1="14.8" x2="31" y2="21"/>
+                      <line x1="41" y1="33.2" x2="31" y2="27"/>
+                      <line x1="24" y1="43" x2="24" y2="31"/>
+                      <line x1="7" y1="33.2" x2="17" y2="27"/>
+                      <line x1="7" y1="14.8" x2="17" y2="21"/>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Hexagonal</span>
                   </button>
                 </div>
               </div>

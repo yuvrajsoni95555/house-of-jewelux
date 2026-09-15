@@ -1465,9 +1465,9 @@ Could we schedule a private atelier consultation to commission this creation?`;
       const collarTube = 0.38 + (scale - 1.0) * 0.12;
 
       let collarMesh;
-      if (this.currentCut === 'emerald-cut') {
-        const ew = 3.2 * scale * 0.72;
-        const el = 4.2 * scale * 0.72;
+      if (['emerald-cut', 'asscher', 'radiant', 'princess'].includes(this.currentCut)) {
+        const ew = (this.currentCut === 'emerald-cut' || this.currentCut === 'radiant' ? 3.2 : 3.4) * scale * 0.72;
+        const el = (this.currentCut === 'emerald-cut' ? 4.2 : this.currentCut === 'radiant' ? 4.0 : 3.4) * scale * 0.72;
         const egc = 0.65 * scale * 0.72;
         const curvePoints = [
           new THREE.Vector3(-ew + egc, collarY, -el),
@@ -1482,6 +1482,28 @@ Could we schedule a private atelier consultation to commission this creation?`;
         const closedCurve = new THREE.CatmullRomCurve3(curvePoints, true, 'catmullrom', 0.1);
         const collarGeom = new THREE.TubeGeometry(closedCurve, 32, collarTube, 12, true);
         collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
+      } else if (['cushion', 'elongated-cushion'].includes(this.currentCut)) {
+        const cw = (this.currentCut === 'elongated-cushion' ? 3.2 : 3.5) * scale * 0.70;
+        const cl = (this.currentCut === 'elongated-cushion' ? 4.1 : 3.5) * scale * 0.70;
+        const curvePoints = [
+          new THREE.Vector3(-cw, collarY, -cl * 0.6),
+          new THREE.Vector3(-cw * 0.6, collarY, -cl),
+          new THREE.Vector3(cw * 0.6, collarY, -cl),
+          new THREE.Vector3(cw, collarY, -cl * 0.6),
+          new THREE.Vector3(cw, collarY, cl * 0.6),
+          new THREE.Vector3(cw * 0.6, collarY, cl),
+          new THREE.Vector3(-cw * 0.6, collarY, cl),
+          new THREE.Vector3(-cw, collarY, cl * 0.6)
+        ];
+        const closedCurve = new THREE.CatmullRomCurve3(curvePoints, true, 'catmullrom', 0.15);
+        const collarGeom = new THREE.TubeGeometry(closedCurve, 32, collarTube, 12, true);
+        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
+      } else if (this.currentCut === 'marquise') {
+        const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
+        collarGeom.rotateX(Math.PI / 2);
+        collarGeom.scale(0.85, 1.0, 1.45);
+        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
+        collarMesh.position.y = collarY;
       } else if (this.currentCut === 'oval') {
         const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
         collarGeom.rotateX(Math.PI / 2);
@@ -1507,9 +1529,19 @@ Could we schedule a private atelier consultation to commission this creation?`;
         if (this.currentCut === 'oval') {
           px *= 1.28;
           pz *= 0.88;
-        } else if (this.currentCut === 'emerald-cut') {
-          px = Math.sign(Math.cos(ang)) * Math.min(Math.abs(px * 1.15), 3.2 * scale * 0.65);
-          pz = Math.sign(Math.sin(ang)) * Math.min(Math.abs(pz * 1.15), 4.2 * scale * 0.65);
+        } else if (this.currentCut === 'marquise') {
+          px *= 0.85;
+          pz *= 1.45;
+        } else if (['emerald-cut', 'asscher', 'radiant', 'princess'].includes(this.currentCut)) {
+          const ewMax = (this.currentCut === 'emerald-cut' || this.currentCut === 'radiant' ? 3.2 : 3.4) * scale * 0.65;
+          const elMax = (this.currentCut === 'emerald-cut' ? 4.2 : this.currentCut === 'radiant' ? 4.0 : 3.4) * scale * 0.65;
+          px = Math.sign(Math.cos(ang)) * Math.min(Math.abs(px * 1.15), ewMax);
+          pz = Math.sign(Math.sin(ang)) * Math.min(Math.abs(pz * 1.15), elMax);
+        } else if (['cushion', 'elongated-cushion'].includes(this.currentCut)) {
+          const cwMax = (this.currentCut === 'elongated-cushion' ? 3.2 : 3.5) * scale * 0.65;
+          const clMax = (this.currentCut === 'elongated-cushion' ? 4.1 : 3.5) * scale * 0.65;
+          px = Math.sign(Math.cos(ang)) * Math.min(Math.abs(px * 1.1), cwMax);
+          pz = Math.sign(Math.sin(ang)) * Math.min(Math.abs(pz * 1.1), clMax);
         }
         const paveStone = new THREE.Mesh(paveGeom, this.materials.pave || this.materials.gem);
         paveStone.position.set(px, collarY, pz);
@@ -1530,6 +1562,22 @@ Could we schedule a private atelier consultation to commission this creation?`;
 
       if (this.currentCut === 'emerald-cut') {
         this.buildEmeraldCutProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'asscher') {
+        this.buildCornerProngs(scale, 3.4 * scale, 3.4 * scale, 0.9 * scale, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'radiant') {
+        this.buildCornerProngs(scale, 3.2 * scale, 4.0 * scale, 0.7 * scale, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'princess') {
+        this.buildCornerProngs(scale, 3.3 * scale, 3.3 * scale, 0.25 * scale, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'cushion') {
+        this.buildCornerProngs(scale, 3.4 * scale, 3.4 * scale, 0.8 * scale, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'elongated-cushion') {
+        this.buildCornerProngs(scale, 3.2 * scale, 4.1 * scale, 0.8 * scale, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'marquise') {
+        this.buildMarquiseProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'heart') {
+        this.buildHeartProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
+      } else if (this.currentCut === 'hexagonal') {
+        this.buildHexagonalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
       } else if (this.currentCut === 'oval') {
         this.buildOvalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
       } else if (this.currentCut === 'pear') {
@@ -1703,6 +1751,134 @@ Could we schedule a private atelier consultation to commission this creation?`;
       }
     }
 
+    buildCornerProngs(scale, halfW, halfL, gc, girdleY, collarY, prongRadius, tipRadius) {
+      const crownH = 1.1 * scale;
+      const corners = [
+        { x: halfW - gc * 0.5, z: halfL - gc * 0.5 },
+        { x: -halfW + gc * 0.5, z: halfL - gc * 0.5 },
+        { x: -halfW + gc * 0.5, z: -halfL + gc * 0.5 },
+        { x: halfW - gc * 0.5, z: -halfL + gc * 0.5 }
+      ];
+
+      for (let i = 0; i < corners.length; i++) {
+        const c = corners[i];
+        const nx = Math.sign(c.x) * 0.7071;
+        const nz = Math.sign(c.z) * 0.7071;
+
+        const p0 = new THREE.Vector3(c.x * 0.60, collarY - 0.20, c.z * 0.60);
+        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(c.x + nx * prongRadius * 0.65, girdleY, c.z + nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(c.x - nx * prongRadius * 0.28, tipY, c.z - nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius * 1.08, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        const tipGeom = new THREE.SphereGeometry(tipRadius * 1.15, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(1.15, 0.70, 1.15);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
+    buildMarquiseProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const crownH = stoneRadius * 0.34;
+      const r = stoneRadius;
+      const pointsConfig = [
+        { x: 0, z: r * 1.45, nx: 0, nz: 1.0, isVTip: true },
+        { x: 0, z: -r * 1.45, nx: 0, nz: -1.0, isVTip: true },
+        { x: r * 0.75, z: r * 0.45, nx: 0.88, nz: 0.45 },
+        { x: -r * 0.75, z: r * 0.45, nx: -0.88, nz: 0.45 },
+        { x: r * 0.75, z: -r * 0.45, nx: 0.88, nz: -0.45 },
+        { x: -r * 0.75, z: -r * 0.45, nx: -0.88, nz: -0.45 }
+      ];
+
+      for (let i = 0; i < pointsConfig.length; i++) {
+        const pt = pointsConfig[i];
+        const p0 = new THREE.Vector3(pt.x * 0.62, collarY - 0.20, pt.z * 0.62);
+        const p1 = new THREE.Vector3(pt.x * 0.82 + pt.nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, pt.z * 0.82 + pt.nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(pt.x + pt.nx * prongRadius * 0.65, girdleY, pt.z + pt.nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(pt.x - pt.nx * prongRadius * 0.28, tipY, pt.z - pt.nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        const tipGeom = new THREE.SphereGeometry(pt.isVTip ? tipRadius * 1.25 : tipRadius, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(pt.isVTip ? 1.3 : 1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
+    buildHeartProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const crownH = stoneRadius * 0.34;
+      const r = stoneRadius;
+      const pointsConfig = [
+        { x: 0, z: -r * 1.18, nx: 0, nz: -1.0, isVTip: true },
+        { x: r * 0.80, z: r * 0.35, nx: 0.85, nz: 0.45 },
+        { x: -r * 0.80, z: r * 0.35, nx: -0.85, nz: 0.45 },
+        { x: r * 0.48, z: r * 0.72, nx: 0.60, nz: 0.80 },
+        { x: -r * 0.48, z: r * 0.72, nx: -0.60, nz: 0.80 }
+      ];
+
+      for (let i = 0; i < pointsConfig.length; i++) {
+        const pt = pointsConfig[i];
+        const p0 = new THREE.Vector3(pt.x * 0.62, collarY - 0.20, pt.z * 0.62);
+        const p1 = new THREE.Vector3(pt.x * 0.82 + pt.nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, pt.z * 0.82 + pt.nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(pt.x + pt.nx * prongRadius * 0.65, girdleY, pt.z + pt.nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(pt.x - pt.nx * prongRadius * 0.28, tipY, pt.z - pt.nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        const tipGeom = new THREE.SphereGeometry(pt.isVTip ? tipRadius * 1.25 : tipRadius, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(pt.isVTip ? 1.3 : 1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
+    buildHexagonalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
+      const crownH = stoneRadius * 0.34;
+      const r = stoneRadius;
+
+      for (let i = 0; i < 6; i++) {
+        const ang = (i * Math.PI / 3.0) + Math.PI / 6.0;
+        const gx = r * Math.cos(ang);
+        const gz = r * Math.sin(ang);
+        const nx = Math.cos(ang);
+        const nz = Math.sin(ang);
+
+        const p0 = new THREE.Vector3(gx * 0.62, collarY - 0.20, gz * 0.62);
+        const p1 = new THREE.Vector3(gx * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, gz * 0.82 + nz * prongRadius * 0.35);
+        const p2 = new THREE.Vector3(gx + nx * prongRadius * 0.65, girdleY, gz + nz * prongRadius * 0.65);
+        const tipY = girdleY + crownH * 0.45;
+        const p3 = new THREE.Vector3(gx - nx * prongRadius * 0.28, tipY, gz - nz * prongRadius * 0.28);
+
+        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
+        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
+        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
+        this.prongsMeshGroup.add(prongMesh);
+
+        const tipGeom = new THREE.SphereGeometry(tipRadius, 12, 12);
+        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
+        tipMesh.position.copy(p3);
+        tipMesh.scale.set(1.0, 0.75, 1.0);
+        this.prongsMeshGroup.add(tipMesh);
+      }
+    }
+
     buildCenterGemstone() {
       if (this.centerGemGroup) {
         this.ringGroup.remove(this.centerGemGroup);
@@ -1720,10 +1896,26 @@ Could we schedule a private atelier consultation to commission this creation?`;
 
       if (this.currentCut === 'emerald-cut') {
         geom = this.createEmeraldCutGeometry(3.2 * scale, 4.2 * scale);
+      } else if (this.currentCut === 'asscher') {
+        geom = this.createEmeraldCutGeometry(3.4 * scale, 3.4 * scale);
+      } else if (this.currentCut === 'radiant') {
+        geom = this.createRadiantCutGeometry(3.2 * scale, 4.0 * scale);
+      } else if (this.currentCut === 'princess') {
+        geom = this.createPrincessCutGeometry(3.3 * scale);
+      } else if (this.currentCut === 'cushion') {
+        geom = this.createCushionCutGeometry(3.55 * scale, 3.55 * scale);
+      } else if (this.currentCut === 'elongated-cushion') {
+        geom = this.createCushionCutGeometry(3.2 * scale, 4.2 * scale);
       } else if (this.currentCut === 'oval') {
         geom = this.createOvalCutGeometry(stoneRadius);
+      } else if (this.currentCut === 'marquise') {
+        geom = this.createMarquiseCutGeometry(stoneRadius);
       } else if (this.currentCut === 'pear') {
         geom = this.createPearCutGeometry(stoneRadius);
+      } else if (this.currentCut === 'heart') {
+        geom = this.createHeartCutGeometry(stoneRadius);
+      } else if (this.currentCut === 'hexagonal') {
+        geom = this.createHexagonalCutGeometry(stoneRadius);
       } else {
         geom = this.createRoundBrilliantGeometry(stoneRadius);
       }
@@ -1972,6 +2164,274 @@ Could we schedule a private atelier consultation to commission this creation?`;
 
         pos.setXYZ(i, x, y, z);
       }
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createPrincessCutGeometry(size = 3.3) {
+      const hCrown = size * 0.35;
+      const hPav = size * 0.90;
+      const yTable = hCrown;
+      const yGirdle = 0;
+      const yCulet = -hPav;
+      const tw = size * 0.58;
+
+      const triVertices = [];
+      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
+        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+      }
+
+      addTri(-tw, yTable, -tw, tw, yTable, -tw, tw, yTable, tw);
+      addTri(-tw, yTable, -tw, tw, yTable, tw, -tw, yTable, tw);
+
+      const corners = [
+        { x: -size, z: -size },
+        { x: size, z: -size },
+        { x: size, z: size },
+        { x: -size, z: size }
+      ];
+      const tableCorners = [
+        { x: -tw, z: -tw },
+        { x: tw, z: -tw },
+        { x: tw, z: tw },
+        { x: -tw, z: tw }
+      ];
+
+      for (let i = 0; i < 4; i++) {
+        const next = (i + 1) % 4;
+        addTri(
+          tableCorners[i].x, yTable, tableCorners[i].z,
+          corners[next].x, yGirdle, corners[next].z,
+          corners[i].x, yGirdle, corners[i].z
+        );
+        addTri(
+          tableCorners[i].x, yTable, tableCorners[i].z,
+          tableCorners[next].x, yTable, tableCorners[next].z,
+          corners[next].x, yGirdle, corners[next].z
+        );
+      }
+
+      for (let i = 0; i < 4; i++) {
+        const next = (i + 1) % 4;
+        addTri(
+          0, yCulet, 0,
+          corners[next].x, yGirdle, corners[next].z,
+          corners[i].x, yGirdle, corners[i].z
+        );
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createRadiantCutGeometry(w = 3.2, l = 4.0) {
+      const sRef = w / 3.2;
+      const hCrown = 1.15 * sRef;
+      const hPav = 2.8 * sRef;
+      const yTable = hCrown;
+      const yGirdle = 0;
+      const yCulet = -hPav;
+
+      const triVertices = [];
+      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
+        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+      }
+
+      const tw = w * 0.58;
+      const tl = l * 0.58;
+      const tc = 0.5 * sRef;
+      const tablePts = [
+        { x: -tw + tc, y: yTable, z: -tl },
+        { x: tw - tc, y: yTable, z: -tl },
+        { x: tw, y: yTable, z: -tl + tc },
+        { x: tw, y: yTable, z: tl - tc },
+        { x: tw - tc, y: yTable, z: tl },
+        { x: -tw + tc, y: yTable, z: tl },
+        { x: -tw, y: yTable, z: tl - tc },
+        { x: -tw, y: yTable, z: -tl + tc }
+      ];
+
+      const gc = 0.75 * sRef;
+      const girdlePts = [
+        { x: -w + gc, y: yGirdle, z: -l },
+        { x: w - gc, y: yGirdle, z: -l },
+        { x: w, y: yGirdle, z: -l + gc },
+        { x: w, y: yGirdle, z: l - gc },
+        { x: w - gc, y: yGirdle, z: l },
+        { x: -w + gc, y: yGirdle, z: l },
+        { x: -w, y: yGirdle, z: l - gc },
+        { x: -w, y: yGirdle, z: -l + gc }
+      ];
+
+      for (let i = 1; i < 7; i++) {
+        addTri(
+          tablePts[0].x, tablePts[0].y, tablePts[0].z,
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
+        );
+      }
+
+      for (let i = 0; i < 8; i++) {
+        const next = (i + 1) % 8;
+        addTri(
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
+        );
+        addTri(
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          tablePts[next].x, tablePts[next].y, tablePts[next].z
+        );
+      }
+
+      const keelZ1 = -l * 0.35;
+      const keelZ2 = l * 0.35;
+      for (let i = 0; i < 8; i++) {
+        const next = (i + 1) % 8;
+        const midZ = (girdlePts[i].z + girdlePts[next].z) / 2;
+        const targetZ = midZ < 0 ? keelZ1 : keelZ2;
+        addTri(
+          0, yCulet, targetZ,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
+        );
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createCushionCutGeometry(w = 3.55, l = 3.55) {
+      const baseR = (w + l) / 2.0;
+      const geom = this.createRoundBrilliantGeometry(baseR);
+      const pos = geom.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        let x = pos.getX(i);
+        let y = pos.getY(i);
+        let z = pos.getZ(i);
+
+        const r = Math.sqrt(x * x + z * z);
+        if (r > 0.001) {
+          const angle = Math.atan2(z, x);
+          const cos4 = Math.cos(angle * 4.0);
+          const cushionFactor = 1.0 + 0.12 * (1.0 - cos4);
+          x *= (w / baseR) * cushionFactor;
+          z *= (l / baseR) * cushionFactor;
+        }
+        pos.setXYZ(i, x, y, z);
+      }
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createMarquiseCutGeometry(radius = 3.55) {
+      const geom = this.createRoundBrilliantGeometry(radius);
+      const pos = geom.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        let x = pos.getX(i);
+        let y = pos.getY(i);
+        let z = pos.getZ(i);
+
+        const normZ = Math.abs(z / radius);
+        x *= Math.max(0.12, 1.0 - Math.pow(normZ, 1.35) * 0.78);
+        x *= 0.88;
+        z *= 1.45;
+
+        pos.setXYZ(i, x, y, z);
+      }
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createHeartCutGeometry(radius = 3.55) {
+      const geom = this.createRoundBrilliantGeometry(radius);
+      const pos = geom.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        let x = pos.getX(i);
+        let y = pos.getY(i);
+        let z = pos.getZ(i);
+
+        const normX = x / radius;
+        const normZ = z / radius;
+
+        let newX = x * 1.08;
+        let newZ = z;
+        if (z > 0) {
+          const cleft = Math.exp(-Math.pow(normX * 2.8, 2)) * radius * 0.42;
+          newZ -= cleft;
+          newX *= 1.0 + normZ * 0.15;
+        } else {
+          const t = -z / radius;
+          newX *= Math.max(0.08, 1.0 - t * 0.72);
+          newZ *= 1.18;
+        }
+        pos.setXYZ(i, newX, y, newZ);
+      }
+      geom.computeVertexNormals();
+      return geom;
+    }
+
+    createHexagonalCutGeometry(radius = 3.55) {
+      const sRef = radius / 3.55;
+      const hCrown = 1.1 * sRef;
+      const hPav = 2.8 * sRef;
+      const yTable = hCrown;
+      const yGirdle = 0;
+      const yCulet = -hPav;
+
+      const triVertices = [];
+      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
+        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+      }
+
+      const rTable = radius * 0.62;
+      const tablePts = [];
+      const girdlePts = [];
+
+      for (let i = 0; i < 6; i++) {
+        const ang = (i * Math.PI / 3.0) + Math.PI / 6.0;
+        tablePts.push({ x: rTable * Math.cos(ang), y: yTable, z: rTable * Math.sin(ang) });
+        girdlePts.push({ x: radius * Math.cos(ang), y: yGirdle, z: radius * Math.sin(ang) });
+      }
+
+      for (let i = 1; i < 5; i++) {
+        addTri(
+          tablePts[0].x, tablePts[0].y, tablePts[0].z,
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
+        );
+      }
+
+      for (let i = 0; i < 6; i++) {
+        const next = (i + 1) % 6;
+        addTri(
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
+        );
+        addTri(
+          tablePts[i].x, tablePts[i].y, tablePts[i].z,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          tablePts[next].x, tablePts[next].y, tablePts[next].z
+        );
+      }
+
+      for (let i = 0; i < 6; i++) {
+        const next = (i + 1) % 6;
+        addTri(
+          0, yCulet, 0,
+          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
+          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
+        );
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
       geom.computeVertexNormals();
       return geom;
     }
