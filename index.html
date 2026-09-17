@@ -93,8 +93,8 @@
         <div class="flex items-center gap-1.5 bg-[#F6EBDD] border border-[#C5A674]/30 rounded px-2.5 py-0.5 shadow-sm">
           <label for="currency-select" class="text-[#766B5E] text-[9px] font-semibold">CURRENCY:</label>
           <select id="currency-select" class="bg-transparent text-[#8A6B38] font-medium outline-none cursor-pointer text-xs font-sans">
+            <option value="INR" selected>INR (₹)</option>
             <option value="USD">USD ($)</option>
-            <option value="INR">INR (₹)</option>
             <option value="EUR">EUR (€)</option>
             <option value="GBP">GBP (£)</option>
             <option value="AED">AED (د.إ)</option>
@@ -491,7 +491,7 @@
                 </div>
                 <span class="text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold">Matching Pair • 925 Silver</span>
                 <h4 class="font-display text-base text-[#1D1815] mt-1">The Amore Couple Bands</h4>
-                <p class="text-xs text-[#766B5E] mt-1">From $240 / ₹20,000 pair</p>
+                <p class="text-xs text-[#766B5E] mt-1">From ₹20,000 pair</p>
               </div>
 
               <div class="bg-white p-5 rounded-xl border border-[#C5A674]/30 shadow-md group">
@@ -500,7 +500,7 @@
                 </div>
                 <span class="text-[9px] uppercase tracking-widest text-[#8A6B38] font-semibold">Modern Bridal Heirloom</span>
                 <h4 class="font-display text-base text-[#1D1815] mt-1">Luna Pavé Halo Mangalsutra</h4>
-                <p class="text-xs text-[#766B5E] mt-1">From $280 / ₹23,400</p>
+                <p class="text-xs text-[#766B5E] mt-1">From ₹23,400</p>
               </div>
             </div>
 
@@ -1004,7 +1004,7 @@
               <div class="pt-6 border-t border-[#E8E3D8] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                   <span class="text-[10px] uppercase tracking-widest text-[#766B5E] block">Estimated Atelier Commission</span>
-                  <span id="bespoke-calc-price" class="font-display text-3xl font-semibold text-[#1D1815]">$10,400</span>
+                  <span id="bespoke-calc-price" class="font-display text-3xl font-semibold text-[#1D1815]">₹8,68,400</span>
                   <span class="text-[10px] text-[#9E9386] block">Includes GIA Dossier & Custom Casket</span>
                 </div>
 
@@ -1301,7 +1301,7 @@
             <div>
               <span id="pdp-metal" class="text-[10px] uppercase tracking-[0.25em] text-[#8A6B38] font-semibold block mb-1">Metal Purity</span>
               <h1 id="pdp-title" class="font-display text-2xl sm:text-3xl text-[#1D1815] font-normal leading-tight">Masterpiece Name</h1>
-              <p id="pdp-price" class="font-display text-3xl font-semibold text-[#1D1815] mt-3">$0</p>
+              <p id="pdp-price" class="font-display text-3xl font-semibold text-[#1D1815] mt-3">₹0</p>
               <p id="pdp-description" class="font-serif text-base text-[#766B5E] font-light leading-relaxed mt-4">Description</p>
             </div>
 
@@ -1382,7 +1382,7 @@
                   <span class="accordion-icon text-lg">+</span>
                 </button>
                 <div class="accordion-content px-4 py-3 text-xs text-[#766B5E] border-t border-[#F4F1EA] bg-[#F6EBDD] space-y-2">
-                  <p>• Complimentary armored courier delivery on all orders over $10,000 USD (or equivalent).</p>
+                  <p>• Complimentary armored courier delivery on all orders over ₹8,00,000 (or equivalent).</p>
                   <p>• 30-day return window in pristine condition with original seals and GIA documentation.</p>
                 </div>
               </div>
@@ -1606,7 +1606,7 @@
         </p>
         <h3 class="font-display text-lg text-[#1D1815] pt-2">Complimentary Global Insured Delivery</h3>
         <p>
-          We offer complimentary insured delivery worldwide for all orders over $10,000 USD (or equivalent currency). Orders below this threshold incur a flat courier fee of $150 USD.
+          We offer complimentary insured delivery worldwide for all orders over ₹8,00,000 INR (or equivalent currency). Orders below this threshold incur a flat courier fee of ₹12,500.
         </p>
         <h3 class="font-display text-lg text-[#1D1815] pt-2">Delivery Timelines</h3>
         <ul class="list-disc pl-5 space-y-1.5">
@@ -1764,7 +1764,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div class="studio-card-dark p-6 space-y-1">
                 <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold">Total Inventory Value</span>
-                <p id="stat-total-value" class="text-2xl sm:text-3xl font-display text-white font-medium">$0</p>
+                <p id="stat-total-value" class="text-2xl sm:text-3xl font-display text-white font-medium">₹0</p>
                 <p class="text-[10px] text-[#A4988B]">Live appraisal across all collections</p>
               </div>
 
@@ -2182,11 +2182,11 @@
         <div class="space-y-1.5 text-xs text-[#766B5E]">
           <div class="flex justify-between">
             <span>Subtotal</span>
-            <span id="cart-subtotal" class="font-medium text-[#1D1815]">$0</span>
+            <span id="cart-subtotal" class="font-medium text-[#1D1815]">₹0</span>
           </div>
           <div id="cart-discount-row" class="flex justify-between text-[#10B981] hidden">
             <span>VIP Privilege Courtesy</span>
-            <span id="cart-discount-amount">-$0</span>
+            <span id="cart-discount-amount">-₹0</span>
           </div>
           <div class="flex justify-between">
             <span>White-Glove Insured Courier</span>
@@ -2194,7 +2194,7 @@
           </div>
           <div class="flex justify-between pt-2 border-t border-[#E8E3D8] text-base font-display text-[#1D1815] font-semibold">
             <span>Total Acquisition</span>
-            <span id="cart-total">$0</span>
+            <span id="cart-total">₹0</span>
           </div>
         </div>
 
@@ -2255,7 +2255,7 @@
         <div>
           <span id="qv-metal" class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold block mb-1">Metal</span>
           <h3 id="qv-title" class="font-display text-2xl text-[#1D1815] font-normal leading-tight">Masterpiece</h3>
-          <p id="qv-price" class="font-display text-2xl font-semibold text-[#1D1815] mt-2">$0</p>
+          <p id="qv-price" class="font-display text-2xl font-semibold text-[#1D1815] mt-2">₹0</p>
           <p id="qv-description" class="text-xs text-[#766B5E] mt-3 leading-relaxed font-light">Description</p>
 
           <!-- Specifications Box -->

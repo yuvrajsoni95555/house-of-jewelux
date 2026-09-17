@@ -10,9 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.STORE = STORE;
 
+  // Default currency is strictly INR unless user manually chose otherwise in this session
+  const initialCurrency = sessionStorage.getItem('jewelux_currency') || localStorage.getItem('jewelux_currency') || 'INR';
+
   // Global Application State
   const state = {
-    currency: 'USD',
+    currency: initialCurrency,
     language: 'en',
     cart: JSON.parse(localStorage.getItem('jewelux_cart') || '[]'),
     wishlist: JSON.parse(localStorage.getItem('jewelux_wishlist') || '[]'),
@@ -57,35 +60,59 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   syncStoreConfigToUI();
 
+  // Indian Number Formatting System (Lakhs & Crores: e.g. 10,000, 1,25,000, 12,50,000, 1,25,00,000)
+  function formatIndianNumber(num) {
+    const s = Math.round(num).toString();
+    if (s.length <= 3) return s;
+    const last3 = s.substring(s.length - 3);
+    const other = s.substring(0, s.length - 3);
+    return other.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + last3;
+  }
+  window.formatIndianNumber = formatIndianNumber;
+
   // Price Formatting
   const currencyRates = {
-    USD: { symbol: '$', rate: 1 },
     INR: { symbol: '₹', rate: 83.5 },
+    USD: { symbol: '$', rate: 1 },
     EUR: { symbol: '€', rate: 0.92 },
     GBP: { symbol: '£', rate: 0.79 },
     AED: { symbol: 'AED ', rate: 3.67 }
   };
 
   function formatPrice(usdAmount) {
-    const curr = currencyRates[state.currency] || currencyRates.USD;
+    const curr = currencyRates[state.currency] || currencyRates.INR;
     const converted = Math.round(usdAmount * curr.rate);
+    if (state.currency === 'INR') {
+      return `₹${formatIndianNumber(converted)}`;
+    }
     return `${curr.symbol}${converted.toLocaleString()}`;
   }
   window.formatPrice = formatPrice;
 
-  // Currency Switcher
-  const currSelect = document.getElementById('currency-select');
-  if (currSelect) {
-    currSelect.value = state.currency;
-    currSelect.addEventListener('change', (e) => {
-      state.currency = e.target.value;
-      renderAllProductGrids();
-      renderCart();
-      renderWishlist();
-      updateBespokePrice();
-      if (state.activeProduct) renderProductDetail(state.activeProduct);
+  // Currency Switcher & Cross-Viewport Synchronizer
+  function initCurrencySwitcher() {
+    const selects = document.querySelectorAll('#currency-select, select[id="currency-select"]');
+    selects.forEach(select => {
+      select.value = state.currency;
+      select.addEventListener('change', (e) => {
+        state.currency = e.target.value;
+        sessionStorage.setItem('jewelux_currency', e.target.value);
+        localStorage.setItem('jewelux_currency', e.target.value);
+        
+        // Sync all currency dropdowns on the page
+        document.querySelectorAll('#currency-select, select[id="currency-select"]').forEach(s => {
+          s.value = state.currency;
+        });
+
+        renderAllProductGrids();
+        renderCart();
+        renderWishlist();
+        updateBespokePrice();
+        if (state.activeProduct) renderProductDetail(state.activeProduct);
+      });
     });
   }
+  initCurrencySwitcher();
 
   // Multilingual Switcher
   function switchLanguage(lang) {
@@ -550,7 +577,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (totalEl) totalEl.textContent = formatPrice(0);
       if (discountRow) discountRow.classList.add('hidden');
       if (progressFill) progressFill.style.width = '0%';
-      if (progressText) progressText.textContent = 'Complimentary Insured Courier on orders over $250';
+      const freeThreshold = (STORE.storeConfig && STORE.storeConfig.freeShippingThresholdUSD) || 250;
+      if (progressText) progressText.textContent = `Complimentary Insured Courier on orders over ${formatPrice(freeThreshold)}`;
       return;
     }
 
@@ -792,10 +820,55 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('Private Salon Appointment requested! Your advisor will reach out.', '⚜️');
   };
 
-  // Checkout Modal
+  // Checkout Modal & Live Order Summary
+  function renderCheckoutSummary() {
+    const modal = document.getElementById('checkout-modal');
+    if (!modal) return;
+    const form = modal.querySelector('form');
+    if (!form) return;
+
+    let summaryContainer = document.getElementById('checkout-order-summary');
+    if (!summaryContainer) {
+      summaryContainer = document.createElement('div');
+      summaryContainer.id = 'checkout-order-summary';
+      form.parentNode.insertBefore(summaryContainer, form);
+    }
+
+    const subtotal = state.cart.reduce((sum, item) => sum + (item.priceUSD * (item.quantity || 1)), 0);
+    const discountAmount = state.discountPercent ? (subtotal * state.discountPercent / 100) : 0;
+    const finalTotal = Math.max(0, subtotal - discountAmount);
+    const totalItems = state.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+    summaryContainer.innerHTML = `
+      <div class="my-4 p-4 bg-[#F6EBDD] border border-[#C5A674]/40 rounded-xl text-left space-y-2 font-sans">
+        <div class="flex justify-between text-xs text-[#766B5E]">
+          <span>Acquisition Pieces (${totalItems})</span>
+          <span class="font-medium text-[#1D1815]">${formatPrice(subtotal)}</span>
+        </div>
+        ${discountAmount > 0 ? `
+          <div class="flex justify-between text-xs text-[#10B981]">
+            <span>VIP Privilege (${state.discountPercent}%)</span>
+            <span>-${formatPrice(discountAmount)}</span>
+          </div>
+        ` : ''}
+        <div class="flex justify-between text-xs text-[#766B5E]">
+          <span>Insured Armored Delivery</span>
+          <span class="text-[#10B981] font-semibold">Complimentary</span>
+        </div>
+        <div class="flex justify-between text-sm font-semibold text-[#1D1815] pt-2 border-t border-[#C5A674]/30 font-display">
+          <span>Order Valuation</span>
+          <span class="text-[#8A6B38] font-bold text-base">${formatPrice(finalTotal)}</span>
+        </div>
+      </div>
+    `;
+  }
+
   window.openCheckoutModal = () => {
     const modal = document.getElementById('checkout-modal');
-    if (modal) modal.classList.add('active');
+    if (modal) {
+      modal.classList.add('active');
+      renderCheckoutSummary();
+    }
   };
 
   window.closeCheckoutModal = () => {
@@ -3049,10 +3122,13 @@ Could we schedule a private atelier consultation to commission this creation?`;
 
   // ================= 12. INITIAL BOOTSTRAP =================
   renderAllProductGrids();
+  renderCart();
+  renderWishlist();
   init3DCanvasEngine();
   setBespokeMetal(state.bespoke.metalId || 'yellow-gold');
   setBespokeGem(state.bespoke.gemId || 'diamond');
   setBespokeCut(state.bespoke.cutId || 'round');
   setBespokeCarat(state.bespoke.caratWeight || 2.5);
+  updateBespokePrice();
   handleRoute();
 });
