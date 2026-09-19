@@ -1039,7 +1039,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const metalObj = STORE.bespokeStudio.metals.find(m => m.id === b.metalId) || STORE.bespokeStudio.metals[0];
     const gemObj = STORE.bespokeStudio.gems.find(g => g.id === b.gemId) || STORE.bespokeStudio.gems[0];
     const cutObj = STORE.bespokeStudio.cuts.find(c => c.id === b.cutId) || STORE.bespokeStudio.cuts[0];
-    const priceTotal = formatPrice(metalObj.priceBase + (gemObj.pricePerCarat * b.caratWeight));
 
     const waNumber = (STORE.storeConfig.whatsappNumber || '+916377061020').replace(/[^0-9]/g, '');
     const msg = `Hello House of Jewelux Concierge! I have customized a 3D ring on your Bespoke Goldsmith Workbench:
@@ -1048,9 +1047,8 @@ document.addEventListener('DOMContentLoaded', () => {
 • Gemstone: ${gemObj.name}
 • Cut: ${cutObj.name}
 • Carat Weight: ${b.caratWeight} ct
-• Estimated Valuation: ${priceTotal}
 
-Could we schedule a private atelier consultation to commission this creation?`;
+Could we schedule a private atelier consultation to discuss this bespoke creation?`;
 
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   }
