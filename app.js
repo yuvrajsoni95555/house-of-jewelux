@@ -1137,15 +1137,17 @@ Could we schedule a private atelier consultation to commission this creation?`;
       // Initial positioning will be dynamically calibrated by updateCameraFraming()
       this.camera.position.set(16, 20, 36);
 
-      // 3. OrbitControls (Smooth inertia, pan disabled, zoom clamped)
+      // 3. OrbitControls (Smooth inertia, pan disabled, controlled gentle zoom)
       if (typeof THREE.OrbitControls !== 'undefined') {
         this.controls = new THREE.OrbitControls(this.camera, this.canvas);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.enablePan = false;
+        this.controls.enableZoom = true;
+        this.controls.zoomSpeed = 0.40;
         this.controls.minPolarAngle = Math.PI * 0.12;
         this.controls.maxPolarAngle = Math.PI * 0.82;
-        this.controls.target.set(0, 1.0, 0);
+        this.controls.target.set(0, 1.2, 0);
 
         this.controls.addEventListener('start', () => {
           this.isUserInteracting = true;
@@ -1158,6 +1160,12 @@ Could we schedule a private atelier consultation to commission this creation?`;
           }, 2500);
         });
       }
+
+      // Quick double-click to reset to default hero view
+      this.canvas.addEventListener('dblclick', () => {
+        this.hasUserInteractedOnce = false;
+        this.updateCameraFraming(true);
+      });
 
       // Initial responsive camera framing calculation for current display size
       this.updateCameraFraming(true);
@@ -2600,38 +2608,43 @@ Could we schedule a private atelier consultation to commission this creation?`;
       this.camera.aspect = aspect;
 
       // Visual center of the entire ring assembly in 3D perspective projection
-      // Calibrated to (0, 1.0, 0) so the top table facet and bottom of the ring shank
-      // are exactly equidistant from the canvas center at an elevated 3/4 camera angle.
-      const targetCenter = new THREE.Vector3(0, 1.0, 0);
+      // Calibrated to (0, 1.2, 0) so the top table facet and bottom of the ring shank
+      // are symmetrically framed with comfortable luxury margin.
+      const targetCenter = new THREE.Vector3(0, 1.2, 0);
 
-      // Normalized reference hero direction vector from target (0, 1.0, 0) to elevated beauty angle
-      const baseDirection = new THREE.Vector3(16, 18.5, 36).normalize();
-      const baseDistance = 55.0; // Calibrated distance ensuring ample margin for all 12 cuts & 4.0ct
+      // Normalized reference hero direction vector from target (0, 1.2, 0) to elevated beauty angle
+      const baseDirection = new THREE.Vector3(16, 18.8, 36).normalize();
+      
+      // Base distance calibrated so the complete ring appears visually smaller inside the viewer (~50-55% occupancy),
+      // providing ample, comfortable empty space around the ring on all laptops, monitors, and projectors.
+      const baseDistance = 82.0;
+      const refAspect = 1.15;
 
       // Adaptive Distance & Auto Zoom Adjustment:
       // In Three.js PerspectiveCamera, vertical FOV is fixed at 34°.
-      // As screen width narrows (phones, portrait tablets, projectors, small laptops),
-      // the horizontal FOV narrows: tan(fov_h/2) = aspect * tan(fov_v/2).
-      // We dynamically adapt camera distance so the ring is 100% visible, centered,
-      // and unclipped across any display size (mobile to 4K/projector).
+      // As screen width narrows (phones, portrait tablets, 4:3 projectors),
+      // we dynamically pull the camera back so the ring always has comfortable empty space
+      // and zero edge clipping.
       let distanceFactor = 1.0;
-      if (aspect < 1.08) {
+      if (aspect < refAspect) {
         // Horizontally constrained displays (phones, portrait tablets, 4:3 projectors)
-        distanceFactor = 1.12 / aspect;
-        if (aspect < 0.82) {
-          distanceFactor *= 1.04;
+        distanceFactor = refAspect / aspect;
+        if (aspect < 0.85) {
+          distanceFactor *= 1.05;
         }
-      } else if (aspect > 1.75) {
+      } else if (aspect > 1.8) {
         // Vertically constrained displays (mobile landscape, ultra-wide monitors)
-        distanceFactor = 1.05;
+        distanceFactor = 1.06;
       }
 
       const targetDistance = baseDistance * distanceFactor;
 
       if (this.controls) {
         this.controls.target.copy(targetCenter);
-        this.controls.minDistance = Math.max(16, targetDistance * 0.40);
-        this.controls.maxDistance = Math.max(90, targetDistance * 1.90);
+        // Tightly clamp zoom so the ring can NEVER become excessively zoomed in
+        // or excessively small, maintaining a consistent comfortable size on all displays
+        this.controls.minDistance = targetDistance * 0.84;
+        this.controls.maxDistance = targetDistance * 1.22;
 
         if (forceResetAngle || !this.hasUserInteractedOnce) {
           this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
