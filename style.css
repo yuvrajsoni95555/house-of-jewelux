@@ -316,12 +316,15 @@ body {
 .drawer-backdrop {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
   transition: all 0.4s ease;
   z-index: 60;
 }
 .drawer-backdrop.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 .drawer-panel {
   transform: translateX(100%);
@@ -602,8 +605,33 @@ body {
   font-weight: 500;
 }
 
+#bespoke-3d-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  outline: none;
+}
+
+@media (max-width: 1024px) {
+  .canvas-3d-wrapper {
+    height: clamp(380px, 48vh, 460px);
+  }
+}
+
 @media (max-width: 640px) {
   .canvas-3d-wrapper {
-    height: 380px;
+    height: clamp(330px, 85vw, 400px);
+    border-radius: 12px;
+  }
+  .canvas-3d-hint {
+    font-size: 0.62rem;
+    padding: 0.35rem 0.8rem;
+    bottom: 0.8rem;
+  }
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  .canvas-3d-wrapper {
+    height: clamp(250px, 72vh, 320px);
   }
 }

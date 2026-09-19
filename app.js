@@ -1099,7 +1099,10 @@ Could we schedule a private atelier consultation to commission this creation?`;
       this.currentCarat = state.bespoke.caratWeight || 2.5;
 
       this.isUserInteracting = false;
+      this.hasUserInteractedOnce = false;
       this.idleTimer = null;
+      this.resizeTimeout = null;
+      this.resizeObserver = null;
 
       this.init();
     }
@@ -1130,7 +1133,8 @@ Could we schedule a private atelier consultation to commission this creation?`;
       // 2. Scene & Camera
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(34, this.width / this.height, 0.1, 1000);
-      // Hero 3/4 beauty angle matching visual reference photo exactly
+      // Hero 3/4 beauty angle direction vector matching visual reference photo exactly
+      // Initial positioning will be dynamically calibrated by updateCameraFraming()
       this.camera.position.set(16, 20, 36);
 
       // 3. OrbitControls (Smooth inertia, pan disabled, zoom clamped)
@@ -1139,15 +1143,13 @@ Could we schedule a private atelier consultation to commission this creation?`;
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.enablePan = false;
-        this.controls.minDistance = 20;
-        this.controls.maxDistance = 60;
         this.controls.minPolarAngle = Math.PI * 0.12;
         this.controls.maxPolarAngle = Math.PI * 0.82;
-        this.controls.target.set(0, 3.2, 0);
-        this.controls.update();
+        this.controls.target.set(0, 1.0, 0);
 
         this.controls.addEventListener('start', () => {
           this.isUserInteracting = true;
+          this.hasUserInteractedOnce = true;
           if (this.idleTimer) clearTimeout(this.idleTimer);
         });
         this.controls.addEventListener('end', () => {
@@ -1156,6 +1158,9 @@ Could we schedule a private atelier consultation to commission this creation?`;
           }, 2500);
         });
       }
+
+      // Initial responsive camera framing calculation for current display size
+      this.updateCameraFraming(true);
 
       // 4. Studio Environment & Lighting
       this.createStudioEnvironment();
@@ -1181,8 +1186,35 @@ Could we schedule a private atelier consultation to commission this creation?`;
         }, 300);
       }
 
-      // 8. Event Listeners & Animation Loop
-      window.addEventListener('resize', () => this.onResize());
+      // 8. Responsive Display, Screen Orientation & Observer Handlers
+      window.addEventListener('resize', () => this.handleResizeDebounced());
+      window.addEventListener('orientationchange', () => {
+        setTimeout(() => this.onResize(), 100);
+        setTimeout(() => this.onResize(), 300);
+      });
+      if (typeof screen !== 'undefined' && screen.orientation) {
+        screen.orientation.addEventListener('change', () => {
+          setTimeout(() => this.onResize(), 100);
+          setTimeout(() => this.onResize(), 300);
+        });
+      }
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          this.onResize();
+        }
+      });
+
+      if (typeof ResizeObserver !== 'undefined' && this.container) {
+        this.resizeObserver = new ResizeObserver(() => {
+          this.onResize();
+        });
+        this.resizeObserver.observe(this.container);
+      }
+
+      // Final settling frame in case layout engine is still calculating styles
+      requestAnimationFrame(() => this.onResize());
+      setTimeout(() => this.onResize(), 250);
+
       this.animate();
     }
 
@@ -2557,15 +2589,89 @@ Could we schedule a private atelier consultation to commission this creation?`;
       this.setMetal(this.currentMetal);
     }
 
+    updateCameraFraming(forceResetAngle = false) {
+      if (!this.camera || !this.container) return;
+      const rect = this.container.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w <= 0 || h <= 0) return;
+
+      const aspect = w / h;
+      this.camera.aspect = aspect;
+
+      // Visual center of the entire ring assembly in 3D perspective projection
+      // Calibrated to (0, 1.0, 0) so the top table facet and bottom of the ring shank
+      // are exactly equidistant from the canvas center at an elevated 3/4 camera angle.
+      const targetCenter = new THREE.Vector3(0, 1.0, 0);
+
+      // Normalized reference hero direction vector from target (0, 1.0, 0) to elevated beauty angle
+      const baseDirection = new THREE.Vector3(16, 18.5, 36).normalize();
+      const baseDistance = 55.0; // Calibrated distance ensuring ample margin for all 12 cuts & 4.0ct
+
+      // Adaptive Distance & Auto Zoom Adjustment:
+      // In Three.js PerspectiveCamera, vertical FOV is fixed at 34°.
+      // As screen width narrows (phones, portrait tablets, projectors, small laptops),
+      // the horizontal FOV narrows: tan(fov_h/2) = aspect * tan(fov_v/2).
+      // We dynamically adapt camera distance so the ring is 100% visible, centered,
+      // and unclipped across any display size (mobile to 4K/projector).
+      let distanceFactor = 1.0;
+      if (aspect < 1.08) {
+        // Horizontally constrained displays (phones, portrait tablets, 4:3 projectors)
+        distanceFactor = 1.12 / aspect;
+        if (aspect < 0.82) {
+          distanceFactor *= 1.04;
+        }
+      } else if (aspect > 1.75) {
+        // Vertically constrained displays (mobile landscape, ultra-wide monitors)
+        distanceFactor = 1.05;
+      }
+
+      const targetDistance = baseDistance * distanceFactor;
+
+      if (this.controls) {
+        this.controls.target.copy(targetCenter);
+        this.controls.minDistance = Math.max(16, targetDistance * 0.40);
+        this.controls.maxDistance = Math.max(90, targetDistance * 1.90);
+
+        if (forceResetAngle || !this.hasUserInteractedOnce) {
+          this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
+        } else {
+          // If user rotated ring, preserve their angle of view and smoothly adjust distance
+          const curDir = new THREE.Vector3().subVectors(this.camera.position, this.controls.target);
+          if (curDir.lengthSq() > 0.001) {
+            curDir.normalize();
+            this.camera.position.copy(targetCenter).addScaledVector(curDir, targetDistance);
+          } else {
+            this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
+          }
+        }
+        this.controls.update();
+      } else {
+        this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
+        this.camera.lookAt(targetCenter);
+      }
+
+      this.camera.updateProjectionMatrix();
+    }
+
+    handleResizeDebounced() {
+      this.onResize();
+      if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+        this.onResize();
+      }, 50);
+    }
+
     onResize() {
       if (!this.renderer || !this.camera || !this.container) return;
       const rect = this.container.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height || (w < 640 ? 380 : 480);
+      const w = Math.round(rect.width);
+      const h = Math.round(rect.height);
+      if (w <= 0 || h <= 0) return;
 
-      this.camera.aspect = w / h;
-      this.camera.updateProjectionMatrix();
+      this.updateCameraFraming(false);
       this.renderer.setSize(w, h, false);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     }
 
     animate() {
