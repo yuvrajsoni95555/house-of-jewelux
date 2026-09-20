@@ -12,8 +12,8 @@ const JEWELUX_DATA = {
     announcementText: "✦ INDIAN FINE JEWELLERY • TEMPLE JEWELLERY • 925 SILVER • DESIGNED & MADE IN INDIA",
     heroHeadline: "Where Elegance Becomes Eternal",
     heroSubtitle: "An Indian silver jewellery brand bringing together traditional craftsmanship, contemporary design and carefully selected international influences. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
-    heroCtaText: "Explore The Silver Edit",
-    heroCtaHash: "/silver-edit",
+    heroCtaText: "Explore The Jewelux Collection",
+    heroCtaHash: "/jewelux-collection",
     freeShippingThresholdUSD: 250,
     shippingDaysDomestic: "2 - 4 Business Days (Armored White-Glove)",
     shippingDaysInternational: "4 - 7 Business Days (Fully Insured FedEx Priority)",
@@ -46,8 +46,8 @@ const JEWELUX_DATA = {
   collections: [
     {
       id: 'silver-edit',
-      name: 'The Silver Edit',
-      tagline: 'Certified 925 Sterling Silver dipped in liquid platinum-rhodium lustre.',
+      name: 'The Jewelux Collection',
+      tagline: 'Signature House of Jewelux creations dipped in liquid platinum-rhodium lustre.',
       image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85',
       category: 'silver',
       description: 'Modern architectural silhouettes set with brilliant lab-certified GRA moissanite and micro-pavé diamond accents. 100% anti-tarnish and skin-safe.'
@@ -1737,7 +1737,7 @@ const JEWELUX_DATA = {
     ]
   },
   hi: {
-    announcement: "द सिल्वर एडिट 2026 — 925 हॉलमार्क फाइन सिल्वर और एंटी-टार्निश रोडियम • मुफ़्त बीमाकृत डिलीवरी",
+    announcement: "द ज्वेलक्स कलेक्शन 2026 — 925 हॉलमार्क फाइन सिल्वर और एंटी-टार्निश रोडियम • मुफ़्त बीमाकृत डिलीवरी",
     nav_all: "सभी गहने",
     nav_silver: "फाइन 925 सिल्वर",
     nav_couples: "नवविवाहित और कपल्स",
@@ -1757,7 +1757,7 @@ const JEWELUX_DATA = {
     honest_luxury_desc: "100% प्रमाणित 925 स्टर्लिंग चांदी और बीआईएस हॉलमार्क सोना। कोई झूठे दावे नहीं, प्रामाणिक लैब सर्टिफिकेट और आजीवन मुफ़्त पॉलिशिंग।"
   },
   fr: {
-    announcement: "L'ÉDITION ARGENT 2026 — Argent 925 Poinçonné et Rhodium Anti-Ternissure • Livraison Offerte et Assurée",
+    announcement: "LA COLLECTION JEWELUX 2026 — Argent 925 Poinçonné et Rhodium Anti-Ternissure • Livraison Offerte et Assurée",
     nav_all: "Toutes les Pièces",
     nav_silver: "Argent Fin 925",
     nav_couples: "Nouveaux Mariés & Couples",
@@ -1777,7 +1777,7 @@ const JEWELUX_DATA = {
     honest_luxury_desc: "Argent 925 pur et Or certifié. Aucune fausse promesse, rapports gemmologiques rigoureux et garantie à vie."
   },
   it: {
-    announcement: "THE SILVER EDIT 2026 — Argento 925 Punzonato e Rodio Lucido • Consegna Assicurata Gratuita",
+    announcement: "THE JEWELUX COLLECTION 2026 — Argento 925 Punzonato e Rodio Lucido • Consegna Assicurata Gratuita",
     nav_all: "Tutti i Capolavori",
     nav_silver: "Argento 925 Pregiato",
     nav_couples: "Sposi & Coppie",

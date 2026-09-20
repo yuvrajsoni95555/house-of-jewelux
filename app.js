@@ -252,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (hash === 'silver' || hash === 'silver-edit') {
-      window.location.href = '/silver-edit';
+    if (hash === 'silver' || hash === 'silver-edit' || hash === 'jewelux-collection') {
+      window.location.href = '/jewelux-collection';
       return;
     }
 
@@ -679,9 +679,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="py-16 text-center space-y-4">
           <span class="text-4xl block">🛍️</span>
           <h4 class="font-display text-lg text-[#1D1815]">Your Shopping Bag is Empty</h4>
-          <p class="text-xs text-[#766B5E] max-w-xs mx-auto">Explore our certified 925 Sterling Silver edit and bespoke couple bands.</p>
-          <button onclick="closeCartDrawer(); window.location.hash = 'silver';" class="btn-luxury-primary py-2.5 px-6 text-[10px]">
-            Explore Silver Edit
+          <p class="text-xs text-[#766B5E] max-w-xs mx-auto">Explore our signature Jewelux Collection and bespoke couple bands.</p>
+          <button onclick="closeCartDrawer(); window.location.href = '/jewelux-collection';" class="btn-luxury-primary py-2.5 px-6 text-[10px]">
+            Explore The Jewelux Collection
           </button>
         </div>
       `;

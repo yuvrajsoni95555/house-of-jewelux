@@ -22,7 +22,7 @@ The digital boutique is architected as a seamless, high-performance Single Page 
 
 1. **Home (`#home`):** Dramatic minimal hero (*"WHERE ELEGANCE BECOMES ETERNAL"*), brand introduction (*"Elegance, Designed to Endure"*), 6 curated collections, featured vault, bespoke goldsmith workbench, luxury storytelling tri-column (*"Crafted with Intention"*, *"Designed for a Lifetime"*, *"Made to Become Yours"*), lookbook archive, client testimonials, and atelier circle invitation.
 2. **Shop (`#shop`):** Comprehensive catalogue with category filter pills, sorting by price and rarity, dual-angle hover transitions, quick view, wishlist, and add to bag.
-3. **Collections (`#collections`):** Detailed editorial showcase of signature lines (The Temple Collection, The Silver Edit, Indian Fine Jewellery).
+3. **Collections (`#collections`):** Detailed editorial showcase of signature lines (The Temple Collection, The Jewelux Collection, Indian Fine Jewellery).
 4. **New Arrivals (`#new-arrivals`):** 2026 debuts directly from our Indian ateliers.
 5. **Best Sellers (`#best-sellers`):** Iconic client favorites favored by royal patrons and collectors.
 6. **Rings (`#rings`):** Solitaires, eternity bands, and cocktail creations in solid 925 sterling silver with micron gold and rhodium plating.
@@ -30,7 +30,7 @@ The digital boutique is architected as a seamless, high-performance Single Page 
 8. **Necklaces (`#necklaces`):** Statement haute joaillerie collars, chokers, and diamond solitaire pendants.
 9. **Bracelets (`#bracelets`):** Articulated tennis bracelets engineered with double safety catches.
 10. **Bangles (`#bangles`):** Hand-sculpted champagne gold kada and pavé diamond bangles.
-11. **Silver Jewellery (`#silver`):** *The Silver Edit* — 925 sterling silver plated in liquid platinum-rhodium with lab-certified moissanite.
+11. **Silver Jewellery (`#jewelux-collection`):** *The Jewelux Collection* — 925 sterling silver plated in liquid platinum-rhodium with lab-certified moissanite.
 12. **Temple Jewellery (`#temple`):** South Indian antique nakshi craftsmanship infused with European Didone elegance (22K antique matte gold, polki uncut diamonds, Basra pearls, ruby accents).
 13. **About Us (`#about`):** Milan design studio origin, generational artisan lineage, ethical sourcing charter, and creative philosophy.
 14. **Our Craftsmanship (`#craftsmanship`):** Six-stage savoir-faire: Mineral provenance, gouache renderings, metallurgy, generational nakshi setting, mirror hand-burnishing, and Swiss lab certification.

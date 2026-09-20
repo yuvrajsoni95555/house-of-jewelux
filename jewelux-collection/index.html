@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Jewelux Collection — Coming Soon | HOUSE OF JEWELUX</title>
+  <meta name="description" content="A refined signature expression of fine jewellery is currently being created at the House of Jewelux atelier. Designed in India. Crafted with intention. Coming soon.">
+  <link rel="icon" type="image/png" href="/brand-identity/jewelux-official-emblem-transparent.png">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Jewelux Collection — Coming Soon | HOUSE OF JEWELUX">
+  <meta property="og:description" content="A refined signature expression of fine jewellery is currently being created at the House of Jewelux atelier. Designed in India. Crafted with intention. Coming soon.">
+  <meta property="og:image" content="/images/jewelux_silver_edit_hero.jpg">
+  <meta property="og:url" content="https://houseofjewelux.com/jewelux-collection">
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body style="overflow-x: hidden;" class="bg-[#F6EBDD] text-[#1D1815] selection:bg-[#DECCA8]/40 selection:text-[#1D1815]">
+
+  <!-- TOP VIP ANNOUNCEMENT BAR -->
+  <div class="bg-[#F4F1EA] text-[#766B5E] text-[11px] tracking-[0.2em] uppercase border-b border-[#C5A674]/25 py-2.5 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-3">
+        <span class="text-[#8A6B38] font-medium flex items-center gap-1.5">
+          <span class="star-emblem">✦</span>
+          <span>THE JEWELUX COLLECTION — 925 Hallmarked Fine Silver &amp; Platinum-Rhodium Lustre • Coming Soon</span>
+        </span>
+        <span class="hidden md:inline text-[#C5A674]/50">|</span>
+        <span class="hidden md:inline text-[#766B5E] text-[10px] tracking-widest uppercase">Designed &amp; Crafted in India • Worldwide Insured Delivery</span>
+      </div>
+
+      <div class="flex items-center gap-4 sm:gap-6">
+        <div class="flex items-center gap-1.5 bg-[#F6EBDD] border border-[#C5A674]/30 rounded px-2 py-0.5 shadow-sm">
+          <label for="language-select" class="text-[#766B5E] text-[9px] font-semibold">LANG:</label>
+          <select id="language-select" onchange="switchLanguage(this.value)" class="bg-transparent text-[#8A6B38] font-medium outline-none cursor-pointer text-xs font-sans">
+            <option value="en">EN</option>
+            <option value="hi">HI</option>
+            <option value="fr">FR</option>
+            <option value="it">IT</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-[#F6EBDD] border border-[#C5A674]/30 rounded px-2 py-0.5 shadow-sm">
+          <label for="currency-select" class="text-[#766B5E] text-[9px] font-semibold">CURR:</label>
+          <select id="currency-select" class="bg-transparent text-[#8A6B38] font-medium outline-none cursor-pointer text-xs font-sans">
+            <option value="INR" selected>INR (₹)</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="AED">AED (د.إ)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="sticky relative top-0 z-50 bg-[#F6EBDD]/95 backdrop-blur-md border-b border-[#C5A674]/25 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+      
+      <div class="flex items-center gap-4">
+        <button onclick="toggleMobileMenu()" class="lg:hidden text-[#1D1815] hover:text-[#8A6B38] p-2" aria-label="Open mobile menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <a href="/" class="flex items-center group py-1" aria-label="House of Jewelux Home">
+          <img 
+            src="/brand-identity/house_of_jewelux_horizontal_logo.png" 
+            alt="House of Jewelux — Where Elegance Becomes Eternal" 
+            class="h-11 sm:h-13 md:h-15 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+          />
+        </a>
+      </div>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center gap-8 text-[11px] uppercase tracking-[0.24em] font-medium text-[#1D1815]">
+        <!-- Dedicated Active The Jewelux Collection Nav -->
+        <a href="/jewelux-collection" class="nav-link text-[#8A6B38] border-b-2 border-[#8A6B38] py-3 inline-flex items-center gap-1.5 font-semibold">
+          <span class="text-[#8A6B38] text-[9px]">✦</span> THE JEWELUX COLLECTION
+        </a>
+        
+        <a href="/couples-bridal" class="nav-link hover:text-[#8A6B38] transition-colors py-3 inline-flex items-center gap-1">Couples &amp; Bridal</a>
+
+        <!-- Catalogue Link -->
+        <div class="dropdown-group py-3">
+          <a href="/shop" class="flex items-center gap-1 hover:text-[#8A6B38] transition-colors">
+            <span>Catalogue</span>
+            <svg class="w-3 h-3 text-[#C5A674]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+
+          <!-- Dropdown Mega Menu -->
+          <div class="dropdown-menu">
+            <div class="max-w-7xl mx-auto px-6 sm:px-8 py-10">
+              <div class="grid grid-cols-12 gap-8 lg:gap-10 items-stretch">
+                <div class="col-span-4 space-y-4 border-r border-[#C5A674]/25 pr-6 text-left">
+                  <p class="text-[10px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold">THE 5 COLLECTIONS</p>
+                  <ul class="space-y-3 font-sans">
+                    <li><a href="/shop/rings" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Rings &amp; Solitaires</a></li>
+                    <li><a href="/shop/earrings" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Earrings &amp; Drops</a></li>
+                    <li><a href="/shop/bracelets" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Bracelets &amp; Cuffs</a></li>
+                    <li><a href="/shop/necklaces" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Necklaces &amp; Collars</a></li>
+                    <li><a href="/shop/brooches" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Haute Brooches</a></li>
+                  </ul>
+                </div>
+
+                <div class="col-span-4 space-y-4 border-r border-[#C5A674]/25 pr-6 text-left">
+                  <p class="text-[10px] tracking-[0.3em] uppercase text-[#8A6B38] font-semibold">ATELIER PILLARS</p>
+                  <ul class="space-y-3 font-sans">
+                    <li><a href="/jewelux-collection" class="font-medium text-sm text-[#8A6B38] hover:text-[#1D1815] transition-colors">The Jewelux Collection (Coming Soon)</a></li>
+                    <li><a href="/couples-bridal" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Couples &amp; Bridal (Coming Soon)</a></li>
+                    <li><a href="/#collections-section" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Nature &amp; Wildlife Jewellery</a></li>
+                    <li><a href="/#collections-section" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Fine Contemporary Jewellery</a></li>
+                    <li><a href="/#collections-section" class="font-medium text-sm text-[#1D1815] hover:text-[#8A6B38] transition-colors">Temple Sacred Jewellery</a></li>
+                  </ul>
+                </div>
+
+                <div class="col-span-4 flex flex-col justify-between bg-white p-6 rounded-2xl border border-[#C5A674]/30 shadow-sm text-left">
+                  <div>
+                    <span class="text-[9px] tracking-[0.28em] uppercase text-[#8A6B38] font-semibold block mb-2">SIGNATURE VAULT</span>
+                    <h4 class="font-display text-base text-[#1D1815] leading-snug tracking-wider mb-2">
+                      ✦ THE JEWELUX COLLECTION
+                    </h4>
+                    <p class="text-xs text-[#766B5E] font-light leading-relaxed mb-4">
+                      An evolving signature collection of fine jewellery, architectural silhouettes, and mirror-polished rhodium craftsmanship.
+                    </p>
+                  </div>
+                  <button onclick="openAppointmentModal('The Jewelux Collection Atelier Preview Inquiry')" class="btn-luxury-gold py-2.5 px-4 text-[10px] text-center w-full uppercase tracking-widest">
+                    Request Early Access →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/about" class="nav-link hover:text-[#8A6B38] transition-colors py-3">About</a>
+        <a href="/#craftsmanship" class="nav-link hover:text-[#8A6B38] transition-colors py-3">Craftsmanship</a>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-4 sm:gap-6">
+        <button onclick="openSearchModal()" class="text-[#1D1815] hover:text-[#8A6B38] transition-colors" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+
+        <a href="/#wishlist" class="text-[#1D1815] hover:text-[#8A6B38] transition-colors relative" aria-label="Wishlist">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </a>
+
+        <a href="/shop" class="btn-luxury-primary text-[10px] py-2 px-4 hidden sm:inline-block">
+          Explore Catalogue
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-[#C5A674]/25 bg-[#F6EBDD] px-6 py-6 font-sans text-xs tracking-wider uppercase space-y-4">
+      <a href="/jewelux-collection" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] text-[#8A6B38] font-semibold block">
+        ✦ THE JEWELUX COLLECTION
+      </a>
+      <a href="/couples-bridal" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38] flex items-center justify-between">Couples &amp; Bridal</a>
+      <a href="/shop" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38] block">Catalogue</a>
+      <a href="/about" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38] block">About</a>
+      <a href="/#craftsmanship" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38] block">Craftsmanship</a>
+      <a href="/#contact" onclick="toggleMobileMenu()" class="py-2.5 border-b border-[#E8E3D8] hover:text-[#8A6B38] block">Contact &amp; Ateliers</a>
+    </div>
+  </header>
+
+  <!-- BREADCRUMB / REFINED EYEBROW -->
+  <div class="bg-[#FAF6EE] border-b border-[#C5A674]/20 py-3 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex items-center gap-2 text-[10px] tracking-[0.22em] uppercase text-[#9E9386]">
+      <a href="/" class="hover:text-[#8A6B38] transition-colors">Home</a>
+      <span>/</span>
+      <span>Atelier Curations</span>
+      <span>/</span>
+      <span class="text-[#8A6B38] font-medium">The Jewelux Collection (Coming Soon)</span>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO SECTION (QUIET LUXURY, SERIF TYPOGRAPHY, COMING SOON FOCUS) -->
+    <section class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-8 text-center">
+      
+      <!-- Small Eyebrow Pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C5A674]/50 bg-[#FAF6EE] shadow-sm mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#8A6B38] animate-pulse"></span>
+        <span class="text-[9.5px] sm:text-[10px] uppercase tracking-[0.28em] text-[#8A6B38] font-semibold">
+          SIGNATURE ATELIER CHAPTER
+        </span>
+      </div>
+
+      <!-- Main Luxury Heading -->
+      <h1 class="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#1D1815] tracking-tight leading-[1.08] mb-4">
+        ✦ THE JEWELUX COLLECTION
+      </h1>
+
+      <!-- Refined Status Label -->
+      <p class="font-serif italic text-xl sm:text-2xl md:text-3xl text-[#8A6B38] tracking-[0.22em] uppercase font-normal mb-8">
+        COMING SOON
+      </p>
+
+      <!-- Refined Description Statements -->
+      <div class="max-w-3xl mx-auto space-y-3 mb-12">
+        <p class="text-[#766B5E] text-base sm:text-lg md:text-xl font-serif font-light leading-relaxed">
+          “A refined signature expression of fine jewellery is currently being created at the House of Jewelux atelier.”
+        </p>
+        <p class="text-[#8A6B38] text-xs sm:text-sm font-sans tracking-widest uppercase font-medium">
+          Designed in India. Crafted with intention. Coming soon.
+        </p>
+      </div>
+
+      <!-- ================= SINGLE STRONG EDITORIAL HERO VISUAL ================= -->
+      <div class="max-w-5xl mx-auto mb-16 sm:mb-20">
+        <div class="relative overflow-hidden rounded-2xl border-2 border-[#C5A674]/50 shadow-2xl bg-[#FAF6EE] aspect-[16/9] group">
+          <img 
+            src="/images/jewelux_silver_edit_hero.jpg" 
+            alt="The Jewelux Collection Masterpieces by House of Jewelux — Sculptural Fine Jewellery and Architectural Silhouettes Stamped India" 
+            class="w-full h-full object-cover filter brightness-[0.99] contrast-[1.02] transition-transform duration-1000 group-hover:scale-105"
+          />
+          
+          <!-- Subtle Luxury Vignette Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10 pointer-events-none"></div>
+
+          <!-- Subtle Bottom Legend -->
+          <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-white/90">
+            <div>
+              <p class="font-display text-sm sm:text-base tracking-wider text-white">The Sculptural Jewelux Suite</p>
+              <p class="text-[10px] sm:text-[11px] font-light text-[#E8E3D8] font-sans">Solid 925 Sterling Silver with Pure Platinum-Rhodium Lustre</p>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-[#C5A674]/40 text-[9px] uppercase tracking-widest text-[#E8E3D8]">
+              Atelier Preview • Stamped 925 India
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= COMING SOON MESSAGE & POSITIONING ================= -->
+      <div class="max-w-3xl mx-auto text-center space-y-6 mb-16 sm:mb-20">
+        <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block">
+          THE NEXT JEWELUX CHAPTER
+        </span>
+        <h2 class="font-display text-2xl sm:text-3xl text-[#1D1815] leading-snug">
+          An evolving signature collection of fine jewellery is currently being curated at the House of Jewelux atelier.
+        </h2>
+        <p class="text-xs sm:text-sm text-[#766B5E] font-light leading-relaxed font-sans">
+          From sculptural contemporary forms to Indian-inspired craftsmanship, The Jewelux Collection will bring together distinctive signature pieces designed for modern collectors. Each creation unites certified precious metals with brilliant hand-finishing and thoughtful Indian artistry — conceived for everyday elegance and enduring presence.
+        </p>
+      </div>
+
+      <!-- ================= 4 EDITORIAL CATEGORY PREVIEW BLOCKS (NON-TRANSACTIONAL) ================= -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16 sm:mb-20 text-left">
+        
+        <!-- Pillar 1: 925 SILVER -->
+        <div class="bg-white/85 p-7 rounded-2xl border border-[#E8E3D8] hover:border-[#C5A674]/60 transition-all shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-full bg-[#FAF6EE] border border-[#C5A674]/40 flex items-center justify-center text-sm text-[#8A6B38] font-serif">
+            ⚪
+          </div>
+          <h3 class="font-display text-base text-[#1D1815] tracking-wide">925 SILVER</h3>
+          <p class="text-xs text-[#766B5E] font-light leading-relaxed font-sans">
+            “Pure forms, refined craftsmanship.” Solid certified 925 sterling silver finished with anti-tarnish rhodium barrier for lasting brilliance.
+          </p>
+          <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-medium block pt-2">Upcoming Edit</span>
+        </div>
+
+        <!-- Pillar 2: CONTEMPORARY SILHOUETTES -->
+        <div class="bg-white/85 p-7 rounded-2xl border border-[#E8E3D8] hover:border-[#C5A674]/60 transition-all shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-full bg-[#FAF6EE] border border-[#C5A674]/40 flex items-center justify-center text-sm text-[#8A6B38] font-serif">
+            📐
+          </div>
+          <h3 class="font-display text-base text-[#1D1815] tracking-wide">CONTEMPORARY FORMS</h3>
+          <p class="text-xs text-[#766B5E] font-light leading-relaxed font-sans">
+            “Modern silhouettes with an architectural character.” Fluid cuff bracelets, geometric solitaires, and statement contours.
+          </p>
+          <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-medium block pt-2">Upcoming Edit</span>
+        </div>
+
+        <!-- Pillar 3: HERITAGE & INDIAN CRAFT -->
+        <div class="bg-white/85 p-7 rounded-2xl border border-[#E8E3D8] hover:border-[#C5A674]/60 transition-all shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-full bg-[#FAF6EE] border border-[#C5A674]/40 flex items-center justify-center text-sm text-[#8A6B38] font-serif">
+            👑
+          </div>
+          <h3 class="font-display text-base text-[#1D1815] tracking-wide">HERITAGE &amp; INDIAN CRAFT</h3>
+          <p class="text-xs text-[#766B5E] font-light leading-relaxed font-sans">
+            “Traditional influences interpreted through a modern lens.” Generational filigree, chased silverwork, and selective 18K micron gold accents.
+          </p>
+          <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-medium block pt-2">Upcoming Edit</span>
+        </div>
+
+        <!-- Pillar 4: NATURE & WILDLIFE -->
+        <div class="bg-white/85 p-7 rounded-2xl border border-[#E8E3D8] hover:border-[#C5A674]/60 transition-all shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-full bg-[#FAF6EE] border border-[#C5A674]/40 flex items-center justify-center text-sm text-[#8A6B38] font-serif">
+            🌿
+          </div>
+          <h3 class="font-display text-base text-[#1D1815] tracking-wide">NATURE &amp; WILDLIFE</h3>
+          <p class="text-xs text-[#766B5E] font-light leading-relaxed font-sans">
+            “Organic forms inspired by the natural world.” Subtle floral textures, sculptural fauna motifs, and organic leaf veins cast in silver.
+          </p>
+          <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-medium block pt-2">Upcoming Edit</span>
+        </div>
+
+      </div>
+
+      <!-- ================= CALL TO ACTION SECTION ================= -->
+      <div class="bg-[#FAF6EE] border border-[#C5A674]/40 rounded-2xl p-8 sm:p-12 max-w-3xl mx-auto shadow-md text-center space-y-6">
+        <span class="text-[9.5px] uppercase tracking-[0.28em] text-[#8A6B38] font-semibold block">
+          PRIVATE ATELIER ACCESS
+        </span>
+        <h3 class="font-display text-2xl sm:text-3xl text-[#1D1815]">
+          Curious About The Upcoming Jewelux Collection?
+        </h3>
+        <p class="text-xs sm:text-sm text-[#766B5E] font-light leading-relaxed max-w-xl mx-auto font-sans">
+          Connect directly with our atelier concierges for confidential early lookbook releases, bespoke commissions, or private previews.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <!-- Button 1: Enquire with the Atelier -->
+          <button 
+            onclick="openAppointmentModal('The Jewelux Collection Private Atelier Enquiry')" 
+            class="btn-luxury-primary w-full sm:w-auto px-8 py-3.5 text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2"
+          >
+            <span>ENQUIRE WITH THE ATELIER →</span>
+          </button>
+
+          <!-- Button 2: Chat on WhatsApp -->
+          <a 
+            href="https://wa.me/916377061020?text=Hello%20House%20of%20Jewelux%20Concierge!%20I%20would%20like%20to%20enquire%20about%20the%20upcoming%20Jewelux%20Collection." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="w-full sm:w-auto px-8 py-3.5 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-xs font-semibold uppercase tracking-wider rounded transition-colors shadow-sm flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.888 2.79.889h.001c3.182 0 5.768-2.587 5.768-5.768.001-3.181-2.586-5.773-5.768-5.773zm3.364 8.163c-.14.394-.813.751-1.129.799-.315.048-.717.069-2.029-.475-.867-.36-1.579-1.074-2.115-1.782-.26-.345-.558-.871-.558-1.42 0-.616.321-.922.434-1.041.114-.119.248-.149.332-.149.083 0 .166.002.239.006.077.004.181-.03.283.216.104.252.356.868.387.932.031.064.052.139.01.223-.042.083-.063.135-.125.209-.063.073-.132.164-.188.22-.062.062-.127.13-.055.254.073.125.324.535.696.866.478.426.882.558 1.007.62.125.063.197.052.27-.032.073-.083.312-.364.395-.489.083-.125.166-.104.281-.062.114.041.728.343.853.405.125.063.208.094.239.146.031.052.031.302-.109.696z"/>
+            </svg>
+            <span>CHAT ON WHATSAPP</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ================= CRAFTSMANSHIP PILLARS ================= -->
+      <div class="mt-20 pt-10 border-t border-[#C5A674]/25 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-[#766B5E]">
+          <div>
+            <p class="text-xs font-semibold text-[#1D1815] uppercase tracking-wider mb-1">BIS Hallmarked Purity</p>
+            <p class="text-[11px] font-serif italic text-[#8A6B38]">Guaranteed 925 Sterling Silver</p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-[#1D1815] uppercase tracking-wider mb-1">Liquid Rhodium Finish</p>
+            <p class="text-[11px] font-serif italic text-[#8A6B38]">Anti-Tarnish Mirror Brilliance</p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-[#1D1815] uppercase tracking-wider mb-1">Indian Artisanal Savoir-Faire</p>
+            <p class="text-[11px] font-serif italic text-[#8A6B38]">Hand-Finished in Jaipur Ateliers</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- APPOINTMENT / ENQUIRY MODAL -->
+  <div id="appointment-modal" class="modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="closeAppointmentModal()">
+    <div class="modal-content bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#C5A674]/40 relative text-left" onclick="event.stopPropagation()">
+      <button onclick="closeAppointmentModal()" class="absolute top-4 right-4 text-[#766B5E] hover:text-[#1D1815] text-lg font-bold">
+        &times;
+      </button>
+
+      <div class="text-center mb-6">
+        <span class="text-[9px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">Private Atelier Appointment</span>
+        <h3 class="font-display text-2xl text-[#1D1815]">The Jewelux Collection Enquiry</h3>
+        <p class="text-[#766B5E] text-xs mt-1">Converse directly with a Master Silversmith and Concierge.</p>
+      </div>
+
+      <form onsubmit="submitJeweluxEnquiry(event)" class="space-y-4 text-xs font-sans">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-[#1D1815] mb-1">Full Name *</label>
+            <input type="text" id="appointment-name" required placeholder="e.g. Eleanor Vance" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
+          </div>
+          <div>
+            <label class="block font-medium text-[#1D1815] mb-1">Email Address *</label>
+            <input type="email" id="appointment-email" required placeholder="name@domain.com" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-[#1D1815] mb-1">Phone / WhatsApp *</label>
+            <input type="tel" id="appointment-phone" required placeholder="+91 00000 00000" class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none">
+          </div>
+          <div>
+            <label class="block font-medium text-[#1D1815] mb-1">Preferred Consultation *</label>
+            <select id="appointment-type" required class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none bg-white">
+              <option value="whatsapp">Direct WhatsApp Concierge</option>
+              <option value="virtual">Virtual Video Consultation</option>
+              <option value="jaipur">Jaipur Flagship Atelier (Rajasthan)</option>
+              <option value="mumbai">Mumbai Private Client Studio</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium text-[#1D1815] mb-1">Jewellery Interests / Commission Notes</label>
+          <textarea id="appointment-notes" rows="3" placeholder="Tell us about desired pieces (sculptural cuffs, architectural rings, statement necklaces, or custom finishes)..." class="w-full px-3 py-2 border border-[#E8E3D8] rounded focus:border-[#C5A674] outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="btn-luxury-primary w-full py-3.5 text-xs uppercase tracking-widest font-semibold">
+          Submit Private Atelier Enquiry
+        </button>
+      </form>
+
+      <div id="appointment-success" class="hidden text-center py-6 space-y-2">
+        <div class="w-12 h-12 rounded-full bg-[#FAF6EE] text-[#8A6B38] border border-[#C5A674] flex items-center justify-center mx-auto text-lg font-bold">✓</div>
+        <h4 class="font-display text-lg text-[#1D1815]">Enquiry Received</h4>
+        <p class="text-xs text-[#766B5E]">Our Atelier Concierge will reach out via WhatsApp / Email within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH MODAL -->
+  <div id="search-modal" class="modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-24 p-4" onclick="closeSearchModal()">
+    <div class="modal-content bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl border border-[#C5A674]/30" onclick="event.stopPropagation()">
+      <div class="p-4 border-b border-[#E8E3D8] flex items-center gap-3 bg-[#F6EBDD]">
+        <svg class="w-5 h-5 text-[#8A6B38]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search-input" type="text" placeholder="Search rings, earrings, bracelets, necklaces, brooches..." class="flex-grow text-[#1D1815] placeholder-[#9E9386] outline-none text-sm font-sans bg-transparent" />
+        <button onclick="closeSearchModal()" class="text-[#766B5E] hover:text-[#1D1815] text-sm px-2">✕</button>
+      </div>
+      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4 divide-y divide-[#F4F1EA]"></div>
+    </div>
+  </div>
+
+  <!-- FLOATING WHATSAPP CONCIERGE -->
+  <div id="whatsapp-concierge-widget">
+    <div id="whatsapp-popover" class="whatsapp-popover">
+      <div class="flex items-start justify-between pb-3 border-b border-[#E8E3D8] mb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <img src="/brand-identity/jewelux-official-emblem-transparent.png" alt="Emblem" class="w-full h-full object-contain filter drop-shadow-sm">
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-[#1D1815]">Jewelux Concierge</p>
+            <p class="text-[10px] text-[#10B981] flex items-center gap-1 font-medium"><span class="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse"></span> Available for Private Consult</p>
+          </div>
+        </div>
+        <button onclick="toggleWhatsAppPopover()" class="text-[#9E9386] hover:text-[#1D1815] text-xs">✕</button>
+      </div>
+      <p class="text-xs text-[#766B5E] mb-3 leading-relaxed">
+        Namaste! How may our Senior Concierge assist your jewellery curation or bespoke commission today?
+      </p>
+      <a 
+        href="https://wa.me/916377061020?text=Hello%20House%20of%20Jewelux%20Concierge!%20I%20would%20like%20to%20enquire%20about%20The%20Jewelux%20Collection." 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="block w-full py-2.5 bg-[#25D366] hover:bg-[#1ebd5b] text-white text-center text-xs font-semibold uppercase tracking-wider rounded transition-colors"
+      >
+        Start WhatsApp Chat →
+      </a>
+    </div>
+    <button id="whatsapp-btn" onclick="toggleWhatsAppPopover()" class="whatsapp-floating-btn" aria-label="Open WhatsApp Chat">
+      <svg class="w-7 h-7 text-white fill-current" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.888 2.79.889h.001c3.182 0 5.768-2.587 5.768-5.768.001-3.181-2.586-5.773-5.768-5.773zm3.364 8.163c-.14.394-.813.751-1.129.799-.315.048-.717.069-2.029-.475-.867-.36-1.579-1.074-2.115-1.782-.26-.345-.558-.871-.558-1.42 0-.616.321-.922.434-1.041.114-.119.248-.149.332-.149.083 0 .166.002.239.006.077.004.181-.03.283.216.104.252.356.868.387.932.031.064.052.139.01.223-.042.083-.063.135-.125.209-.063.073-.132.164-.188.22-.062.062-.127.13-.055.254.073.125.324.535.696.866.478.426.882.558 1.007.62.125.063.197.052.27-.032.073-.083.312-.364.395-.489.083-.125.166-.104.281-.062.114.041.728.343.853.405.125.063.208.094.239.146.031.052.031.302-.109.696z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- LUXURY FOOTER -->
+  <footer class="bg-[#1D1815] text-[#FAF6EE] pt-16 pb-12 border-t border-[#C5A674]/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#332B25]">
+        
+        <!-- Brand Narrative Column -->
+        <div class="lg:col-span-2 space-y-4 text-left">
+          <a href="/" class="inline-block">
+            <img src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="House of Jewelux" class="h-10 sm:h-12 w-auto object-contain brightness-125">
+          </a>
+          <p class="text-xs text-[#9E9386] font-light leading-relaxed max-w-sm font-sans">
+            Where Elegance Becomes Eternal. Certified haute joaillerie, fine hallmarked 925 sterling silver, and sacred temple heirlooms thoughtfully conceived and sculpted by master Indian goldsmiths.
+          </p>
+          <div class="pt-2 flex items-center gap-4 text-[#C5A674] text-xs">
+            <span>Jaipur Flagship</span> • <span>Mumbai Atelier</span> • <span>Worldwide Delivery</span>
+          </div>
+        </div>
+
+        <!-- Collections Column -->
+        <div class="space-y-3 text-left">
+          <p class="text-xs tracking-[0.25em] uppercase text-[#C5A674] font-semibold">Collections</p>
+          <ul class="space-y-2 text-xs text-[#9E9386] font-sans">
+            <li><a href="/jewelux-collection" class="hover:text-[#FAF6EE] text-[#C5A674] font-medium transition-colors">The Jewelux Collection (Coming Soon)</a></li>
+            <li><a href="/couples-bridal" class="hover:text-[#FAF6EE] transition-colors">Couples &amp; Bridal (Coming Soon)</a></li>
+            <li><a href="/#collections-section" class="hover:text-[#FAF6EE] transition-colors">Nature &amp; Wildlife Jewellery</a></li>
+            <li><a href="/#collections-section" class="hover:text-[#FAF6EE] transition-colors">Fine Contemporary Jewellery</a></li>
+            <li><a href="/#collections-section" class="hover:text-[#FAF6EE] transition-colors">Temple Sacred Jewellery</a></li>
+          </ul>
+        </div>
+
+        <!-- The Atelier Column -->
+        <div class="space-y-3 text-left">
+          <p class="text-xs tracking-[0.25em] uppercase text-[#C5A674] font-semibold">The Atelier</p>
+          <ul class="space-y-2 text-xs text-[#9E9386] font-sans">
+            <li><a href="/about" class="hover:text-[#FAF6EE] transition-colors">Maison Heritage &amp; Founder</a></li>
+            <li><a href="/#craftsmanship" class="hover:text-[#FAF6EE] transition-colors">Indian Savoir-Faire</a></li>
+            <li><a href="/#bespoke-studio" class="hover:text-[#FAF6EE] transition-colors">Bespoke 3D Configurator</a></li>
+            <li><a href="/shop" class="hover:text-[#FAF6EE] transition-colors">Complete Catalogue</a></li>
+          </ul>
+        </div>
+
+        <!-- Concierge Column -->
+        <div class="space-y-3 text-left">
+          <p class="text-xs tracking-[0.25em] uppercase text-[#C5A674] font-semibold">Concierge</p>
+          <ul class="space-y-2 text-xs text-[#9E9386] font-sans">
+            <li><a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" class="hover:text-[#FAF6EE] transition-colors">WhatsApp: +91 63770 61020</a></li>
+            <li><a href="mailto:houseofjewelux@gmail.com" class="hover:text-[#FAF6EE] transition-colors text-[#9E9386]">Email: houseofjewelux@gmail.com</a></li>
+            <li><span class="text-[#9E9386]">Insured Global Courier</span></li>
+            <li><span class="text-[#9E9386]">14-Day Pure Guarantee</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-[#766B5E] font-sans">
+        <p>&copy; 2026 HOUSE OF JEWELUX. All rights reserved. Registered Indian Haute Joaillerie Maison.</p>
+        <div class="flex items-center gap-6">
+          <span>BIS Hallmarked 925 Silver</span>
+          <span>Insured Transit</span>
+          <span>Jaipur Ateliers</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Modal and Drawer Interactions -->
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function openAppointmentModal(note) {
+      const modal = document.getElementById('appointment-modal');
+      const noteInput = document.getElementById('appointment-notes');
+      if (note && noteInput && !noteInput.value) {
+        noteInput.value = note;
+      }
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeAppointmentModal() {
+      const modal = document.getElementById('appointment-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function submitJeweluxEnquiry(e) {
+      e.preventDefault();
+      const name = document.getElementById('appointment-name').value;
+      const phone = document.getElementById('appointment-phone').value;
+      const type = document.getElementById('appointment-type').value;
+      const notes = document.getElementById('appointment-notes').value;
+
+      const text = encodeURIComponent(
+        `Hello House of Jewelux Concierge!\n\nNew Jewelux Collection Private Atelier Enquiry:\n- Name: ${name}\n- Phone: ${phone}\n- Type: ${type}\n- Notes: ${notes}`
+      );
+      
+      const successDiv = document.getElementById('appointment-success');
+      const form = e.target;
+      form.classList.add('hidden');
+      if (successDiv) successDiv.classList.remove('hidden');
+
+      setTimeout(() => {
+        window.open(`https://wa.me/916377061020?text=${text}`, '_blank');
+      }, 800);
+    }
+
+    function toggleWhatsAppPopover() {
+      const pop = document.getElementById('whatsapp-popover');
+      if (pop) pop.classList.toggle('active');
+    }
+
+    function openSearchModal() {
+      const modal = document.getElementById('search-modal');
+      if (modal) {
+        modal.classList.add('active');
+        setTimeout(() => document.getElementById('search-input')?.focus(), 100);
+      }
+    }
+
+    function closeSearchModal() {
+      const modal = document.getElementById('search-modal');
+      if (modal) modal.classList.remove('active');
+    }
+  </script>
+</body>
+</html>
