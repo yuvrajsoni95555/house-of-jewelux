@@ -372,22 +372,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.activeCategory === 'all') {
       // all products
-    } else if (state.activeCategory === 'silver' || state.activeCategory === 'silver-jewellery') {
-      filtered = filtered.filter(p => p.mainCategoryId === 'silver-jewellery' || p.isSilver);
     } else if (state.activeCategory === 'indian-jewellery') {
       filtered = filtered.filter(p => p.mainCategoryId === 'indian-jewellery');
     } else if (state.activeCategory === 'fine-jewellery') {
       filtered = filtered.filter(p => p.mainCategoryId === 'fine-jewellery');
     } else if (state.activeCategory === 'temple' || state.activeCategory === 'temple-jewellery') {
       filtered = filtered.filter(p => p.mainCategoryId === 'temple-jewellery' || p.category === 'temple');
-    } else if (state.activeCategory === 'heritage-traditional' || state.activeCategory === 'couples') {
-      filtered = filtered.filter(p => p.mainCategoryId === 'heritage-traditional' || p.collection === 'eternal-couples');
+    } else if (state.activeCategory === 'micron-gold' || state.activeCategory === 'gold-jewellery' || state.activeCategory === 'gold-vault') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'micron-gold' || (p.finishing && p.finishing.includes('Gold')));
+    } else if (state.activeCategory === 'silver' || state.activeCategory === 'silver-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'silver-jewellery' || (p.finishing && p.finishing.includes('Rhodium')));
     } else if (state.activeCategory === 'diamond-jewellery') {
       filtered = filtered.filter(p => p.mainCategoryId === 'diamond-jewellery' || (p.stone && p.stone.toLowerCase().includes('diamond')));
-    } else if (state.activeCategory === 'gold-jewellery' || state.activeCategory === 'gold-vault') {
-      filtered = filtered.filter(p => p.mainCategoryId === 'gold-jewellery' || p.isGold);
-    } else if (state.activeCategory === 'haute-joaillerie') {
-      filtered = filtered.filter(p => p.mainCategoryId === 'haute-joaillerie' || p.priceUSD >= 700);
+    } else if (state.activeCategory === 'heritage-jewellery' || state.activeCategory === 'heritage-traditional' || state.activeCategory === 'couples') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'heritage-jewellery' || p.collection === 'eternal-couples');
+    } else if (state.activeCategory === 'contemporary-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'contemporary-jewellery' || p.category === 'bracelets' || p.category === 'earrings');
+    } else if (state.activeCategory === 'hong-kong-inspired' || state.activeCategory === 'haute-joaillerie') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'hong-kong-inspired' || Boolean(p.inspiration));
     } else if (state.activeCategory === 'new-arrivals') {
       filtered = filtered.filter(p => p.isNew);
     } else {
@@ -477,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ================= 5. PRODUCT DETAIL VIEW =================
   function renderProductDetail(p) {
+    const breadcrumbEl = document.getElementById('pdp-breadcrumb-name');
     const titleEl = document.getElementById('pdp-title');
     const priceEl = document.getElementById('pdp-price');
     const descEl = document.getElementById('pdp-description');
@@ -489,11 +492,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const buyBtn = document.getElementById('pdp-buy-now-btn');
     const wishBtn = document.getElementById('pdp-wishlist-btn');
 
+    if (breadcrumbEl) breadcrumbEl.textContent = p.name;
+    if (titleEl) titleEl.textContent = p.name;
+    if (priceEl) priceEl.textContent = formatPrice(p.priceUSD);
+    if (descEl) descEl.textContent = p.description;
+    if (metalEl) metalEl.textContent = p.metal || p.material || 'BIS Hallmarked 925 Sterling Silver';
+    if (badgeEl) badgeEl.textContent = p.badge || p.tag || 'Atelier Masterpiece';
+    if (heroImg) {
+      heroImg.src = p.image;
+      heroImg.alt = p.name;
+    }
+
     const specCategory = document.getElementById('pdp-spec-category');
     const specDesignedIn = document.getElementById('pdp-spec-designed');
     const specCraftedIn = document.getElementById('pdp-spec-crafted');
     const specMaterial = document.getElementById('pdp-spec-material');
-    const specGemstone = document.getElementById('pdp-spec-gemstone');
+    const specFinishing = document.getElementById('pdp-spec-finishing');
+    const specInspirationRow = document.getElementById('pdp-spec-inspiration-row');
+    const specInspiration = document.getElementById('pdp-spec-inspiration');
     const specCertRow = document.getElementById('pdp-spec-cert-row');
     const specCert = document.getElementById('pdp-spec-cert');
     const specDimensions = document.getElementById('pdp-spec-dimensions');
@@ -501,8 +517,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (specCategory) specCategory.textContent = p.mainCategory || 'Indian Fine Jewellery';
     if (specDesignedIn) specDesignedIn.textContent = p.designedIn || 'India';
     if (specCraftedIn) specCraftedIn.textContent = p.craftedIn || 'India';
-    if (specMaterial) specMaterial.textContent = p.material || p.metal || 'BIS Hallmarked 925 Sterling Silver';
-    if (specGemstone) specGemstone.textContent = p.gemstone || p.stone || 'Natural Gemstone';
+    if (specMaterial) specMaterial.textContent = p.material || 'BIS Hallmarked 925 Sterling Silver';
+    if (specFinishing) specFinishing.textContent = p.finishing || 'Anti-Tarnish Rhodium Plating';
+
+    if (specInspirationRow) {
+      if (p.inspiration && p.inspiration.trim() !== '') {
+        specInspirationRow.classList.remove('hidden');
+        specInspirationRow.style.display = 'flex';
+        if (specInspiration) specInspiration.textContent = p.inspiration;
+      } else {
+        specInspirationRow.classList.add('hidden');
+        specInspirationRow.style.display = 'none';
+      }
+    }
     
     if (specCertRow) {
       if (p.certificate && p.certificate.trim() !== '' && p.certificate !== 'None') {
@@ -801,7 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!resultsContainer) return;
     const q = (query || '').trim().toLowerCase();
     if (!q) {
-      resultsContainer.innerHTML = '<p class="text-xs text-[#9E9386] py-6 text-center">Type a keyword to discover certified 925 sterling silver, couple bands, mangalsutras, or gemstones...</p>';
+      resultsContainer.innerHTML = '<p class="text-xs text-[#9E9386] py-6 text-center">Type a keyword to discover certified 925 sterling silver, couple bands, mangalsutras, or temple jewels...</p>';
       return;
     }
     const matches = STORE.products.filter(p => 
@@ -1099,7 +1126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = `Hello House of Jewelux Concierge! I have customized a 3D ring on your Bespoke Goldsmith Workbench:
 
 • Metal: ${metalObj.name}
-• Gemstone: ${gemObj.name}
+• Center Stone: ${gemObj.name}
 • Cut: ${cutObj.name}
 • Carat Weight: ${b.caratWeight} ct
 
@@ -3125,7 +3152,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     if (!list) return;
     const faqs = STORE.faqs || [
       { q: 'Is your 925 Sterling Silver genuine and hallmarked?', a: 'Every piece is stamped with genuine 925 sterling silver and plated in rhodium for lifelong anti-tarnish luster.' },
-      { q: 'Do rings include certificates of authenticity?', a: 'Yes, all our moissanites and gemstones include individual laboratory dossiers and GRA/GIA verification numbers.' }
+      { q: 'Do rings include certificates of authenticity?', a: 'Yes, all our moissanites and diamonds include individual laboratory dossiers and GRA/GIA verification numbers, along with official BIS Hallmarking on all 925 sterling silver settings.' }
     ];
 
     list.innerHTML = faqs.map((faq, i) => `

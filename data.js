@@ -8,9 +8,9 @@ const JEWELUX_DATA = {
     founderName: "Yuvraj Soni",
     founderTitle: "Founder & Creative Director",
     founderPIN: "1985",
-    announcementText: "✦ FINE JEWELLERY • INDIAN CRAFTSMANSHIP • DESIGNED & CRAFTED IN INDIA • INSURED GLOBAL DELIVERY",
+    announcementText: "✦ INDIAN FINE JEWELLERY • TEMPLE JEWELLERY • 925 SILVER • DESIGNED & MADE IN INDIA",
     heroHeadline: "Where Elegance Becomes Eternal",
-    heroSubtitle: "An Indian luxury jewellery house rooted in heritage, craftsmanship and contemporary design. Designed and crafted in India.",
+    heroSubtitle: "An Indian silver jewellery house bringing together traditional craftsmanship, contemporary design and carefully selected international influences. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
     heroCtaText: "Explore The Silver Edit",
     heroCtaHash: "#silver",
     freeShippingThresholdUSD: 250,
@@ -28,16 +28,18 @@ const JEWELUX_DATA = {
     AED: { symbol: 'AED ', rate: 3.67, label: 'AED (د.إ)' }
   },
 
-                                  categories: [
-    { id: 'all', name: 'All Jewels', hash: '#shop', url: '/shop', subtitle: 'Authentic Indian Fine Jewellery', icon: '✦', isPrimary: false },
-    { id: 'indian-jewellery', name: 'Indian Jewellery', hash: '#indian-jewellery', url: '/shop?cat=indian-jewellery', subtitle: 'Handcrafted Heritage & Cultural Artistry', icon: '🪷', isPrimary: true },
-    { id: 'fine-jewellery', name: 'Fine Jewellery', hash: '#fine-jewellery', url: '/shop?cat=fine-jewellery', subtitle: 'Contemporary Elegance in Silver & Gold', icon: '💎', isPrimary: true },
-    { id: 'temple-jewellery', name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi', icon: '🛕', isPrimary: true },
-    { id: 'heritage-traditional', name: 'Heritage & Traditional', hash: '#heritage-traditional', url: '/shop?cat=heritage-traditional', subtitle: 'Generational Goldsmith Heirlooms', icon: '👑', isPrimary: false },
-    { id: 'diamond-jewellery', name: 'Diamond Jewellery', hash: '#diamond-jewellery', url: '/shop?cat=diamond-jewellery', subtitle: 'Certified Solitaires & Pavé Brilliance', icon: '✨', isPrimary: false },
-    { id: 'gold-jewellery', name: 'Gold Jewellery', hash: '#gold-jewellery', url: '/shop?cat=gold-jewellery', subtitle: '18K & 22K Atelier Commissions', icon: '⚜️', isPrimary: false },
-    { id: 'silver-jewellery', name: 'Silver Jewellery', hash: '#silver-jewellery', url: '/shop?cat=silver-jewellery', subtitle: 'BIS Hallmarked 925 Sterling Silver', icon: '⚪', isPrimary: false },
-    { id: 'haute-joaillerie', name: 'Haute Joaillerie', hash: '#haute-joaillerie', url: '/shop?cat=haute-joaillerie', subtitle: 'Exceptional Jewels by Indian Master Artisans', icon: '🌟', isPrimary: false }
+                                    categories: [
+    { id: 'all', name: 'All Silver Jewels', hash: '#shop', url: '/shop', subtitle: 'BIS Hallmarked 925 Sterling Silver', icon: '✦', isPrimary: false },
+    { id: 'indian-jewellery', name: 'Indian Jewellery', hash: '#indian-jewellery', url: '/shop?cat=indian-jewellery', subtitle: 'Handcrafted Heritage & Cultural Artistry in Silver', icon: '🪷', isPrimary: true },
+    { id: 'fine-jewellery', name: 'Fine Jewellery', hash: '#fine-jewellery', url: '/shop?cat=fine-jewellery', subtitle: 'Contemporary 925 Silver Luxury', icon: '💎', isPrimary: true },
+    { id: 'temple-jewellery', name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi in Silver', icon: '🛕', isPrimary: true },
+    { id: 'micron-gold', name: 'Micron Gold Plated', hash: '#micron-gold', url: '/shop?cat=micron-gold', subtitle: 'Solid 925 Silver with 18K/22K Micro Gold Plating', icon: '⚜️', isPrimary: false },
+    { id: 'silver-jewellery', name: 'Rhodium Silver', hash: '#silver-jewellery', url: '/shop?cat=silver-jewellery', subtitle: 'Solid 925 Silver with Anti-Tarnish Rhodium', icon: '⚪', isPrimary: false },
+    { id: 'diamond-jewellery', name: 'Diamond & Moissanite', hash: '#diamond-jewellery', url: '/shop?cat=diamond-jewellery', subtitle: 'Certified Solitaires & Pavé Set in 925 Silver', icon: '✨', isPrimary: false },
+    { id: 'heritage-jewellery', name: 'Heritage Jewellery', hash: '#heritage-jewellery', url: '/shop?cat=heritage-jewellery', subtitle: 'Generational Indian Silver Heirlooms', icon: '👑', isPrimary: false },
+    { id: 'contemporary-jewellery', name: 'Contemporary Jewellery', hash: '#contemporary-jewellery', url: '/shop?cat=contemporary-jewellery', subtitle: 'Modern Architectural Silver Expressions', icon: '📐', isPrimary: false },
+    { id: 'bespoke-jewellery', name: 'Bespoke / Custom', hash: '#bespoke-studio', url: '/#bespoke-studio', subtitle: 'Private Atelier Silver Commissions', icon: '🛠️', isPrimary: false },
+    { id: 'hong-kong-inspired', name: 'Hong Kong–Inspired', hash: '#hong-kong-inspired', url: '/shop?cat=hong-kong-inspired', subtitle: 'Refined Geometry & Pavé Elegance in Silver', icon: '🇭🇰', isPrimary: false }
   ],
 
   collections: [
@@ -93,7 +95,7 @@ const JEWELUX_DATA = {
         "priceUSD": 185,
         "image": "images/jewelux_solitaire_ring.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Anti-Tarnish Rhodium)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "2.5ct Certified Lab Moissanite (D-Flawless)",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Hearts & Arrows Ideal Brilliant",
@@ -112,7 +114,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "2.5ct Certified Lab Moissanite (D-Flawless)",
         "mainCategory": "Silver Jewellery",
-        "mainCategoryId": "silver-jewellery"
+        "mainCategoryId": "silver-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-002",
@@ -123,7 +127,7 @@ const JEWELUX_DATA = {
         "priceUSD": 240,
         "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver & Liquid Rhodium",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Micro-Pav\u00e9 Conflict-Free Lab Diamonds",
         "purity": "Stamped 925 Silver",
         "cut": "Round Brilliant Pav\u00e9",
@@ -141,8 +145,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Micro-Pav\u00e9 Conflict-Free Lab Diamonds",
-        "mainCategory": "Heritage / Traditional Jewellery",
-        "mainCategoryId": "heritage-traditional"
+        "mainCategory": "Heritage Jewellery",
+        "mainCategoryId": "heritage-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-003",
@@ -153,7 +159,7 @@ const JEWELUX_DATA = {
         "priceUSD": 220,
         "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver (Platinum Finish)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "3.0ct Emerald-Cut Moissanite with French Pav\u00e9 Halo",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Step-Cut Emerald Facet",
@@ -172,7 +178,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "3.0ct Emerald-Cut Moissanite with French Pav\u00e9 Halo",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": "Hong Kong-inspired contemporary design"
     },
     {
         "id": "HJ-RNG-004",
@@ -183,7 +191,7 @@ const JEWELUX_DATA = {
         "priceUSD": 580,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold Vermeil & 925 Silver Core",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "2.2ct Marquise Cut Lab Diamond",
         "purity": "18K Gold Plated 925 Hallmarked",
         "cut": "Marquise Modified Brilliant",
@@ -201,8 +209,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "2.2ct Marquise Cut Lab Diamond",
-        "mainCategory": "Gold Jewellery",
-        "mainCategoryId": "gold-jewellery"
+        "mainCategory": "Micron Gold Plated",
+        "mainCategoryId": "micron-gold",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-005",
@@ -213,7 +223,7 @@ const JEWELUX_DATA = {
         "priceUSD": 165,
         "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver (Anti-Tarnish Rhodium)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Dual Ribbon Micro-Pav\u00e9 Moissanites",
         "purity": "Stamped 925",
         "cut": "Round Brilliant",
@@ -232,7 +242,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Dual Ribbon Micro-Pav\u00e9 Moissanites",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-006",
@@ -243,7 +255,7 @@ const JEWELUX_DATA = {
         "priceUSD": 195,
         "image": "images/jewelux_solitaire_ring.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Fine Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "2.0ct Oval Brilliant Moissanite",
         "purity": "925 Stamped & Rhodium Dipped",
         "cut": "Oval Brilliant Facet",
@@ -262,7 +274,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "2.0ct Oval Brilliant Moissanite",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-007",
@@ -273,7 +287,7 @@ const JEWELUX_DATA = {
         "priceUSD": 175,
         "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "Brushed & Polished 925 Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Center Flush-Set Baguette Diamond Accent",
         "purity": "Solid 925 Silver",
         "cut": "Step Cut Baguette",
@@ -291,8 +305,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Center Flush-Set Baguette Diamond Accent",
-        "mainCategory": "Heritage / Traditional Jewellery",
-        "mainCategoryId": "heritage-traditional"
+        "mainCategory": "Heritage Jewellery",
+        "mainCategoryId": "heritage-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-008",
@@ -303,7 +319,7 @@ const JEWELUX_DATA = {
         "priceUSD": 210,
         "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Silver Plated in Liquid Rose Gold",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "1.8ct Pear Cut Lab Diamond",
         "purity": "925 Hallmarked",
         "cut": "Pear Modified Brilliant",
@@ -322,7 +338,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "1.8ct Pear Cut Lab Diamond",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-009",
@@ -333,7 +351,7 @@ const JEWELUX_DATA = {
         "priceUSD": 150,
         "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Fine Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Pav\u00e9 Diamond Accent V-Curve",
         "purity": "Stamped 925",
         "cut": "Round Brilliant",
@@ -351,8 +369,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Diamond Accent V-Curve",
-        "mainCategory": "Heritage / Traditional Jewellery",
-        "mainCategoryId": "heritage-traditional"
+        "mainCategory": "Heritage Jewellery",
+        "mainCategoryId": "heritage-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-RNG-010",
@@ -363,7 +383,7 @@ const JEWELUX_DATA = {
         "priceUSD": 230,
         "image": "images/jewelux_solitaire_ring.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Heavy Rhodium Coating)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "3 Rows of Flawless Lab Moissanites",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Round Brilliant Micro-Pav\u00e9",
@@ -382,7 +402,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "3 Rows of Flawless Lab Moissanites",
         "mainCategory": "Diamond Jewellery",
-        "mainCategoryId": "diamond-jewellery"
+        "mainCategoryId": "diamond-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-001",
@@ -393,7 +415,7 @@ const JEWELUX_DATA = {
         "priceUSD": 175,
         "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Anti-Tarnish Rhodium)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "2.0ct Each Certified Pear Moissanites",
         "purity": "Stamped 925",
         "cut": "Pear Brilliant",
@@ -412,7 +434,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "2.0ct Each Certified Pear Moissanites",
         "mainCategory": "Silver Jewellery",
-        "mainCategoryId": "silver-jewellery"
+        "mainCategoryId": "silver-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-002",
@@ -423,7 +447,7 @@ const JEWELUX_DATA = {
         "priceUSD": 140,
         "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold Finish & 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Dual-Row Micro-Pav\u00e9 Diamonds",
         "purity": "925 Hallmarked",
         "cut": "Round Brilliant",
@@ -442,7 +466,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Dual-Row Micro-Pav\u00e9 Diamonds",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": "Hong Kong-inspired contemporary design"
     },
     {
         "id": "HJ-EAR-003",
@@ -453,7 +479,7 @@ const JEWELUX_DATA = {
         "priceUSD": 290,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Platinum Sheen)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Graduated Moissanite Drops & Marquis Links",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Round & Marquise Brilliant",
@@ -471,8 +497,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Graduated Moissanite Drops & Marquis Links",
-        "mainCategory": "Haute Joaillerie",
-        "mainCategoryId": "haute-joaillerie"
+        "mainCategory": "Hong Kong\u2013Inspired",
+        "mainCategoryId": "hong-kong-inspired",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": "Hong Kong-inspired contemporary design"
     },
     {
         "id": "HJ-EAR-004",
@@ -483,7 +511,7 @@ const JEWELUX_DATA = {
         "priceUSD": 380,
         "image": "images/jewelux_hero_necklace.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Florentine Champagne Gold Vermeil",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Lab-Grown Colombian Emeralds with Diamond Halos",
         "purity": "18K Gold over 925 Silver",
         "cut": "Octagonal Step Cut",
@@ -499,10 +527,12 @@ const JEWELUX_DATA = {
         "targetAudience": "Discerning Women",
         "designedIn": "India",
         "craftedIn": "India",
-        "material": "18K Champagne Gold",
+        "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Lab-Grown Colombian Emeralds with Diamond Halos",
-        "mainCategory": "Gold Jewellery",
-        "mainCategoryId": "gold-jewellery"
+        "mainCategory": "Micron Gold Plated",
+        "mainCategoryId": "micron-gold",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-005",
@@ -513,7 +543,7 @@ const JEWELUX_DATA = {
         "priceUSD": 130,
         "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver with Rhodium Dipping",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "1.5ct Each D-Flawless Moissanite",
         "purity": "Stamped 925",
         "cut": "Hearts & Arrows Round Ideal",
@@ -532,7 +562,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "1.5ct Each D-Flawless Moissanite",
         "mainCategory": "Diamond Jewellery",
-        "mainCategoryId": "diamond-jewellery"
+        "mainCategoryId": "diamond-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-006",
@@ -543,7 +575,7 @@ const JEWELUX_DATA = {
         "priceUSD": 155,
         "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
-        "metal": "Solid 925 Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Pav\u00e9 Ribbons on Inner Flange",
         "purity": "925 Stamped",
         "cut": "Micro Brilliant",
@@ -562,7 +594,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Ribbons on Inner Flange",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-007",
@@ -573,7 +607,7 @@ const JEWELUX_DATA = {
         "priceUSD": 275,
         "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold & 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "11mm Luminous South Sea Pearl Drops",
         "purity": "18K Gold Plated 925",
         "cut": "Natural Spheroid Pearl",
@@ -592,7 +626,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "11mm Luminous South Sea Pearl Drops",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-008",
@@ -603,7 +639,7 @@ const JEWELUX_DATA = {
         "priceUSD": 195,
         "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver & Platinum Sheen",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Pav\u00e9 Diamond Multi-Ray Starburst",
         "purity": "925 Hallmarked",
         "cut": "Round Brilliant",
@@ -622,7 +658,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Diamond Multi-Ray Starburst",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-009",
@@ -633,7 +671,7 @@ const JEWELUX_DATA = {
         "priceUSD": 220,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Step-Cut Baguettes & Triangle Facets",
         "purity": "Stamped 925",
         "cut": "Baguette Step Cut",
@@ -652,7 +690,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Step-Cut Baguettes & Triangle Facets",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-EAR-010",
@@ -663,7 +703,7 @@ const JEWELUX_DATA = {
         "priceUSD": 310,
         "image": "images/jewelux_temple_heritage.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "22K Antique Gold Wash over 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Uncut Polki Moissanites & Seed Pearls",
         "purity": "925 Core with 22K Gold Finish",
         "cut": "Traditional Polki Flat Slice",
@@ -682,7 +722,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Uncut Polki Moissanites & Seed Pearls",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-001",
@@ -693,7 +735,7 @@ const JEWELUX_DATA = {
         "priceUSD": 260,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Anti-Tarnish Rhodium)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "58 Individually Set Lab Moissanites (4mm)",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Hearts & Arrows Round Ideal",
@@ -712,7 +754,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "58 Individually Set Lab Moissanites (4mm)",
         "mainCategory": "Silver Jewellery",
-        "mainCategoryId": "silver-jewellery"
+        "mainCategoryId": "silver-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-002",
@@ -723,7 +767,7 @@ const JEWELUX_DATA = {
         "priceUSD": 210,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_editorial_hero.jpg",
-        "metal": "Solid 925 Fine Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Twin Pav\u00e9 Finials with Moissanite Accents",
         "purity": "Heavyweight 925 Silver (32 Grams)",
         "cut": "Micro-Pav\u00e9 Terminals",
@@ -742,7 +786,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Twin Pav\u00e9 Finials with Moissanite Accents",
         "mainCategory": "Diamond Jewellery",
-        "mainCategoryId": "diamond-jewellery"
+        "mainCategoryId": "diamond-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-003",
@@ -753,7 +799,7 @@ const JEWELUX_DATA = {
         "priceUSD": 340,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold Finish & 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Alternating Channel Baguette Diamonds",
         "purity": "18K Gold Plated 925",
         "cut": "Precision Step-Cut Baguettes",
@@ -772,7 +818,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Alternating Channel Baguette Diamonds",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": "Hong Kong-inspired contemporary design"
     },
     {
         "id": "HJ-BRC-004",
@@ -783,7 +831,7 @@ const JEWELUX_DATA = {
         "priceUSD": 190,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver with Rhodium Dipping",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Pav\u00e9 Set Interlocking Lovers Knot Charm",
         "purity": "Stamped 925",
         "cut": "Round Brilliant",
@@ -802,7 +850,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Set Interlocking Lovers Knot Charm",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-005",
@@ -813,7 +863,7 @@ const JEWELUX_DATA = {
         "priceUSD": 145,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "5 Bezel-Set Solitaire Stations",
         "purity": "925 Hallmarked",
         "cut": "Round Brilliant",
@@ -832,7 +882,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "5 Bezel-Set Solitaire Stations",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-006",
@@ -843,7 +895,7 @@ const JEWELUX_DATA = {
         "priceUSD": 295,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_editorial_hero.jpg",
-        "metal": "18K Champagne Gold Vermeil & 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Pav\u00e9 Diamond Bar Centerpiece",
         "purity": "18K Vermeil Stamped 925",
         "cut": "Pav\u00e9 Setting",
@@ -862,7 +914,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Diamond Bar Centerpiece",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-007",
@@ -873,7 +927,7 @@ const JEWELUX_DATA = {
         "priceUSD": 175,
         "image": "images/jewelux_hero_necklace.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Platinum Sheen)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "1.2ct Vivid Green Lab Colombian Emerald",
         "purity": "Stamped 925",
         "cut": "Emerald Step Cut",
@@ -892,7 +946,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "1.2ct Vivid Green Lab Colombian Emerald",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-008",
@@ -903,7 +959,7 @@ const JEWELUX_DATA = {
         "priceUSD": 270,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Solid Sterling Silver (Brushed & Polished)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Flush-Set Solitaire Diamond on Hers",
         "purity": "Stamped 925",
         "cut": "Round Brilliant",
@@ -922,7 +978,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Flush-Set Solitaire Diamond on Hers",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-009",
@@ -933,7 +991,7 @@ const JEWELUX_DATA = {
         "priceUSD": 160,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver Plated in Liquid Rhodium",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Mirror-Faceted Solid Links",
         "purity": "Solid 925",
         "cut": "Diamond-Cut Beveled Edges",
@@ -952,7 +1010,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Mirror-Faceted Solid Links",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRC-010",
@@ -963,7 +1023,7 @@ const JEWELUX_DATA = {
         "priceUSD": 225,
         "image": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver & Platinum Sheen",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Twin Orbit Rings with Micro-Pav\u00e9 Diamonds",
         "purity": "925 Stamped",
         "cut": "Micro Round Brilliant",
@@ -982,7 +1042,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Twin Orbit Rings with Micro-Pav\u00e9 Diamonds",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-001",
@@ -993,7 +1055,7 @@ const JEWELUX_DATA = {
         "priceUSD": 280,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_hero_necklace.jpg",
-        "metal": "925 Sterling Silver & Liquid Rhodium",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "1.5ct Solitaire with Double Pav\u00e9 Halo & Black Spinel Beads",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Round Brilliant Hearts & Arrows",
@@ -1011,8 +1073,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "1.5ct Solitaire with Double Pav\u00e9 Halo & Black Spinel Beads",
-        "mainCategory": "Haute Joaillerie",
-        "mainCategoryId": "haute-joaillerie"
+        "mainCategory": "Hong Kong\u2013Inspired",
+        "mainCategoryId": "hong-kong-inspired",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": "Hong Kong-inspired contemporary design"
     },
     {
         "id": "HJ-NCK-002",
@@ -1023,7 +1087,7 @@ const JEWELUX_DATA = {
         "priceUSD": 1250,
         "image": "images/jewelux_hero_necklace.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold & 925 Silver Base",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "18.5 carats Certified Colombian Emeralds & D-Flawless Moissanite",
         "purity": "18K Gold Vermeil Stamped",
         "cut": "Step Cut Octagonal & Marquis",
@@ -1041,8 +1105,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "18.5 carats Certified Colombian Emeralds & D-Flawless Moissanite",
-        "mainCategory": "Heritage / Traditional Jewellery",
-        "mainCategoryId": "heritage-traditional"
+        "mainCategory": "Heritage Jewellery",
+        "mainCategoryId": "heritage-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-003",
@@ -1053,7 +1119,7 @@ const JEWELUX_DATA = {
         "priceUSD": 165,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver with Liquid Rhodium",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "1.5ct Round Brilliant Lab Moissanite",
         "purity": "Stamped 925",
         "cut": "Hearts & Arrows Round Ideal",
@@ -1072,7 +1138,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "1.5ct Round Brilliant Lab Moissanite",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-004",
@@ -1083,7 +1151,7 @@ const JEWELUX_DATA = {
         "priceUSD": 450,
         "image": "images/jewelux_temple_heritage.jpg",
         "hoverImage": "images/jewelux_hero_necklace.jpg",
-        "metal": "22K Antique Matte Gold Finish & 925 Core",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Uncut Polki Moissanites & Basra Pearl Cluster",
         "purity": "22K Gold Finish on 925 Silver",
         "cut": "Polki Flat Cut",
@@ -1102,7 +1170,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Uncut Polki Moissanites & Basra Pearl Cluster",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-005",
@@ -1113,7 +1183,7 @@ const JEWELUX_DATA = {
         "priceUSD": 520,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1611591475877-2287e0766324?auto=format&fit=crop&w=1000&q=85",
-        "metal": "Solid 925 Sterling Silver (Rhodium Dipped)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Graduated 3mm to 6mm Lab Moissanites",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Round Brilliant",
@@ -1131,8 +1201,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Graduated 3mm to 6mm Lab Moissanites",
-        "mainCategory": "Gold Jewellery",
-        "mainCategoryId": "gold-jewellery"
+        "mainCategory": "Micron Gold Plated",
+        "mainCategoryId": "micron-gold",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-006",
@@ -1143,7 +1215,7 @@ const JEWELUX_DATA = {
         "priceUSD": 195,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Pav\u00e9 Slider Ring with Pear Moissanite Drop",
         "purity": "Stamped 925",
         "cut": "Pear & Round Brilliant",
@@ -1162,7 +1234,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Slider Ring with Pear Moissanite Drop",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-007",
@@ -1173,7 +1247,7 @@ const JEWELUX_DATA = {
         "priceUSD": 150,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Fine Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Flush-Set Star Diamonds & Deep Blue Enamel",
         "purity": "925 Hallmarked",
         "cut": "Micro Round Cut",
@@ -1192,7 +1266,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Flush-Set Star Diamonds & Deep Blue Enamel",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-008",
@@ -1203,7 +1279,7 @@ const JEWELUX_DATA = {
         "priceUSD": 395,
         "image": "images/jewelux_hero_necklace.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K White Gold Finish on 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "3.5ct Royal Ceylon Blue Sapphire with Halo",
         "purity": "925 Core 18K White Finish",
         "cut": "Oval Brilliant Facet",
@@ -1222,7 +1298,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "3.5ct Royal Ceylon Blue Sapphire with Halo",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-009",
@@ -1233,7 +1311,7 @@ const JEWELUX_DATA = {
         "priceUSD": 170,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Solid Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Twin Diamond Bezel Points",
         "purity": "Solid 925 Stamped",
         "cut": "Round Brilliant",
@@ -1252,7 +1330,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Twin Diamond Bezel Points",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-NCK-010",
@@ -1263,7 +1343,7 @@ const JEWELUX_DATA = {
         "priceUSD": 320,
         "image": "images/jewelux_editorial_hero.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold Vermeil & 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Sculptural Freshwater Baroque Pearl Centerpiece",
         "purity": "18K Vermeil over 925 Silver",
         "cut": "Organic Baroque Pearl & Pav\u00e9 Ring",
@@ -1282,7 +1362,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Sculptural Freshwater Baroque Pearl Centerpiece",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-001",
@@ -1293,7 +1375,7 @@ const JEWELUX_DATA = {
         "priceUSD": 290,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_editorial_hero.jpg",
-        "metal": "925 Fine Sterling Silver & Liquid Rhodium",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Baguette Cut Wing Feathers & Ruby Eye Accent",
         "purity": "Stamped 925 Hallmarked",
         "cut": "Step Cut Baguettes & Micro-Pav\u00e9",
@@ -1312,7 +1394,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Baguette Cut Wing Feathers & Ruby Eye Accent",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-002",
@@ -1323,7 +1407,7 @@ const JEWELUX_DATA = {
         "priceUSD": 210,
         "image": "images/jewelux_editorial_hero.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "18K Champagne Gold Finish on 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Pav\u00e9 Diamond Petals with Dewdrop Moissanite",
         "purity": "18K Vermeil over 925",
         "cut": "Round Brilliant Pav\u00e9",
@@ -1342,7 +1426,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Pav\u00e9 Diamond Petals with Dewdrop Moissanite",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-003",
@@ -1353,7 +1439,7 @@ const JEWELUX_DATA = {
         "priceUSD": 185,
         "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver (Platinum Sheen)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Graduated Moissanites on Crescent Arc",
         "purity": "Stamped 925",
         "cut": "Round Brilliant",
@@ -1372,7 +1458,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Graduated Moissanites on Crescent Arc",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-004",
@@ -1383,7 +1471,7 @@ const JEWELUX_DATA = {
         "priceUSD": 360,
         "image": "images/jewelux_temple_heritage.jpg",
         "hoverImage": "images/jewelux_hero_necklace.jpg",
-        "metal": "22K Matte Gold Wash over 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Central Colombian Emerald with Blue Sapphire Eye",
         "purity": "925 Silver Core 22K Gold Finish",
         "cut": "Cabochon Emerald & Brilliant Pav\u00e9",
@@ -1402,7 +1490,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Central Colombian Emerald with Blue Sapphire Eye",
         "mainCategory": "Indian Jewellery",
-        "mainCategoryId": "indian-jewellery"
+        "mainCategoryId": "indian-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-005",
@@ -1413,7 +1503,7 @@ const JEWELUX_DATA = {
         "priceUSD": 240,
         "image": "images/jewelux_solitaire_ring.jpg",
         "hoverImage": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
-        "metal": "925 Sterling Silver (Mirror Rhodium)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Faceted Baguettes in Radial Arrangement",
         "purity": "Stamped 925",
         "cut": "Step Cut Baguettes",
@@ -1432,7 +1522,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Faceted Baguettes in Radial Arrangement",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": "Hong Kong-inspired contemporary design"
     },
     {
         "id": "HJ-BRO-006",
@@ -1443,7 +1535,7 @@ const JEWELUX_DATA = {
         "priceUSD": 195,
         "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_editorial_hero.jpg",
-        "metal": "925 Sterling Silver with Liquid Platinum",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Fluid Pav\u00e9 Ribbon Bow with South Sea Pearl Drop",
         "purity": "925 Hallmarked",
         "cut": "Pav\u00e9 & AAA Pearl",
@@ -1462,7 +1554,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Fluid Pav\u00e9 Ribbon Bow with South Sea Pearl Drop",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-007",
@@ -1473,7 +1567,7 @@ const JEWELUX_DATA = {
         "priceUSD": 230,
         "image": "images/jewelux_editorial_hero.jpg",
         "hoverImage": "images/jewelux_hero_necklace.jpg",
-        "metal": "18K Champagne Gold Vermeil on 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Micro-Pav\u00e9 Vein Accents",
         "purity": "18K Gold Finish 925",
         "cut": "Micro Round Brilliant",
@@ -1492,7 +1586,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Micro-Pav\u00e9 Vein Accents",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-008",
@@ -1503,7 +1599,7 @@ const JEWELUX_DATA = {
         "priceUSD": 265,
         "image": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1000&q=85",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "925 Sterling Silver (Anti-Tarnish Rhodium)",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
         "stone": "Filigree Wings Inset with Lab Diamonds & Sapphires",
         "purity": "Stamped 925",
         "cut": "Faceted Marquise & Round",
@@ -1522,7 +1618,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Filigree Wings Inset with Lab Diamonds & Sapphires",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Anti-Tarnish Rhodium Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-009",
@@ -1533,7 +1631,7 @@ const JEWELUX_DATA = {
         "priceUSD": 310,
         "image": "images/jewelux_temple_heritage.jpg",
         "hoverImage": "images/jewelux_editorial_hero.jpg",
-        "metal": "18K Gold Wash & 925 Sterling Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Natural Teardrop Pearl Body & Pav\u00e9 Wings",
         "purity": "925 Core 18K Finish",
         "cut": "Natural Organic Pearl & Pav\u00e9",
@@ -1552,7 +1650,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Natural Teardrop Pearl Body & Pav\u00e9 Wings",
         "mainCategory": "Temple Jewellery",
-        "mainCategoryId": "temple-jewellery"
+        "mainCategoryId": "temple-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     },
     {
         "id": "HJ-BRO-010",
@@ -1563,7 +1663,7 @@ const JEWELUX_DATA = {
         "priceUSD": 175,
         "image": "images/jewelux_editorial_hero.jpg",
         "hoverImage": "images/jewelux_solitaire_ring.jpg",
-        "metal": "18K Champagne Gold Finish on 925 Silver",
+        "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
         "stone": "Solitaire Diamond Nib Point",
         "purity": "Solid 925 Core",
         "cut": "Round Brilliant",
@@ -1582,7 +1682,9 @@ const JEWELUX_DATA = {
         "material": "BIS Hallmarked 925 Sterling Silver",
         "gemstone": "Solitaire Diamond Nib Point",
         "mainCategory": "Fine Jewellery",
-        "mainCategoryId": "fine-jewellery"
+        "mainCategoryId": "fine-jewellery",
+        "finishing": "Micron Gold Plating",
+        "inspiration": ""
     }
 ],
 
