@@ -30,7 +30,7 @@ const JEWELUX_DATA = {
 
                                     categories: [
     { id: 'all', name: 'All Silver Jewels', hash: '#shop', url: '/shop', subtitle: 'BIS Hallmarked 925 Sterling Silver', icon: '✦', isPrimary: false },
-    { id: 'indian-jewellery', name: 'Indian Jewellery', hash: '#indian-jewellery', url: '/shop?cat=indian-jewellery', subtitle: 'Handcrafted Heritage & Cultural Artistry in Silver', icon: '🪷', isPrimary: true },
+    { id: 'nature-inspired', alias: 'indian-jewellery', name: 'Nature-Inspired Jewellery', hash: '#nature-inspired', url: '/shop?cat=nature-inspired', subtitle: 'Inspired by Nature • Crafted in India', icon: '🌿', isPrimary: true },
     { id: 'fine-jewellery', name: 'Fine Jewellery', hash: '#fine-jewellery', url: '/shop?cat=fine-jewellery', subtitle: 'Contemporary 925 Silver Luxury', icon: '💎', isPrimary: true },
     { id: 'temple-jewellery', name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi in Silver', icon: '🛕', isPrimary: true },
     { id: 'micron-gold', name: 'Micron Gold Plated', hash: '#micron-gold', url: '/shop?cat=micron-gold', subtitle: 'Solid 925 Silver with 18K/22K Micro Gold Plating', icon: '⚜️', isPrimary: false },
