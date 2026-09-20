@@ -37,7 +37,7 @@ The digital boutique is architected as a seamless, high-performance Single Page 
 15. **Contact & Ateliers (`#contact`):** Private atelier consultation scheduler, global flagship locations (Geneva, Milan, London, Paris, New York, Dubai), and direct WhatsApp concierge.
 16. **FAQ (`#faq`):** Expandable luxury accordions covering 4Cs certification, bespoke timeline, resizing, armored delivery, and gold alloys.
 17. **Shipping & Delivery (`#shipping`):** Armored courier white-glove transport protocol, insurance, and international customs clearance.
-18. **Returns & Refunds (`#returns`):** 30-day complimentary return guarantee, return shipping procedures, and bespoke exceptions.
+18. **Returns & Refunds (`#returns`):** 14-day complimentary return guarantee, return shipping procedures, and bespoke exceptions.
 19. **Privacy Policy (`#privacy`):** Discretion covenant, 256-bit SSL encryption, Swiss banking data confidentiality standards.
 20. **Terms & Conditions (`#terms`):** Authenticity covenants, lifetime warranty, and valuation certificates.
 

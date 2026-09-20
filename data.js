@@ -1690,7 +1690,7 @@ const JEWELUX_DATA = {
 
   policies: {
     shipping: "Complimentary armored white-glove transport on all orders over $250 / ₹20,000. All shipments are 100% insured from our atelier doors to your hands. Standard delivery takes 2–4 business days domestically and 4–7 business days globally.",
-    returns: "We offer an unconditional 30-day return guarantee. If your piece does not evoke absolute wonder upon opening the jewel box, contact our WhatsApp Concierge for complimentary insured pickup and a 100% full refund.",
+    returns: "We offer an unconditional 14-day return guarantee. If your piece does not evoke absolute wonder upon opening the jewel box, contact our WhatsApp Concierge for complimentary insured pickup and a 100% full refund.",
     authenticity: "Zero fake claims covenant: Every piece is accompanied by stamped hallmarking (925 for silver, BIS 750/916 for gold) and independent gemological dossiers (GRA / GIA / IGI). We never use base metals or faux plastic stones."
   },
 
