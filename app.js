@@ -216,8 +216,9 @@ document.addEventListener('DOMContentLoaded', () => {
       'temple': 'temple',
       'temple-jewellery': 'temple-jewellery',
       'fine-jewellery': 'fine-jewellery',
-      'nature-inspired': 'nature-inspired',
-      'indian-jewellery': 'nature-inspired',
+      'nature-wildlife': 'nature-wildlife',
+      'nature-inspired': 'nature-wildlife',
+      'indian-jewellery': 'nature-wildlife',
       'gold-vault': 'gold-vault',
       'new-arrivals': 'new-arrivals',
       'best-sellers': 'best-sellers'
@@ -347,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const categories = (STORE && STORE.categories) ? STORE.categories : [
       { id: 'all', name: 'All Jewels', icon: '✦', isPrimary: false },
-      { id: 'nature-inspired', name: 'Nature-Inspired Jewellery', icon: '🌿', isPrimary: true },
+      { id: 'nature-wildlife', name: 'Nature & Wildlife Jewellery', icon: '🌿', isPrimary: true },
       { id: 'fine-jewellery', name: 'Fine Jewellery', icon: '💎', isPrimary: true },
       { id: 'temple-jewellery', name: 'Temple Jewellery', icon: '🛕', isPrimary: true },
       { id: 'heritage-traditional', name: 'Heritage & Traditional', icon: '👑', isPrimary: false },
@@ -391,8 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.activeCategory === 'all') {
       // all products
-    } else if (state.activeCategory === 'nature-inspired' || state.activeCategory === 'indian-jewellery') {
-      filtered = filtered.filter(p => p.mainCategoryId === 'nature-inspired' || p.mainCategoryId === 'indian-jewellery');
+    } else if (state.activeCategory === 'nature-wildlife' || state.activeCategory === 'nature-inspired' || state.activeCategory === 'indian-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'nature-wildlife' || p.mainCategoryId === 'nature-inspired' || p.mainCategoryId === 'indian-jewellery');
     } else if (state.activeCategory === 'fine-jewellery') {
       filtered = filtered.filter(p => p.mainCategoryId === 'fine-jewellery');
     } else if (state.activeCategory === 'temple' || state.activeCategory === 'temple-jewellery') {
@@ -426,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = filtered.length 
       ? filtered.map(createProductCardHTML).join('')
-      : `<div class="col-span-full py-16 text-center text-[#766B5E]">No pieces found in this curation. Explore <a href="#nature-inspired" onclick="filterShopCategory('nature-inspired')" class="text-[#8A6B38] underline">Nature-Inspired Jewellery</a>.</div>`;
+      : `<div class="col-span-full py-16 text-center text-[#766B5E]">No pieces found in this curation. Explore <a href="#nature-wildlife" onclick="filterShopCategory('nature-wildlife')" class="text-[#8A6B38] underline">Nature & Wildlife Jewellery</a>.</div>`;
 
     // Highlight active category tab in shop filter bar
     document.querySelectorAll('[data-cat-pill]').forEach(btn => {
@@ -473,11 +474,10 @@ document.addEventListener('DOMContentLoaded', () => {
     state.activeCategory = cat;
     renderShopView();
     // Also highlight button in filter bar
+    const wildlifeAliases = ['nature-wildlife', 'nature-inspired', 'indian-jewellery'];
     document.querySelectorAll('[data-cat-pill]').forEach(btn => {
       const pill = btn.getAttribute('data-cat-pill');
-      const isMatch = pill === cat || 
-                      (cat === 'nature-inspired' && (pill === 'nature-inspired' || pill === 'indian-jewellery')) ||
-                      (cat === 'indian-jewellery' && (pill === 'nature-inspired' || pill === 'indian-jewellery'));
+      const isMatch = pill === cat || (wildlifeAliases.includes(cat) && wildlifeAliases.includes(pill));
       if (isMatch) {
         btn.classList.add('bg-[#1D1815]', 'text-white');
         btn.classList.remove('bg-white', 'text-[#766B5E]', 'bg-[#F6EBDD]', 'text-[#8A6B38]');
