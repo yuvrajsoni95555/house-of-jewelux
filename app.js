@@ -247,9 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (hash === 'couples') {
-      switchView('home');
-      const el = document.getElementById('couples') || document.getElementById('couples-sanctuary-section');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      window.location.href = '/couples-bridal';
       return;
     }
 
@@ -338,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('home-silver-grid');
     if (!container) return;
 
-    const silverPieces = STORE.products.filter(p => p.isSilver).slice(0, 4);
+    const silverPieces = STORE.products.filter(p => p.isSilver && !p.name.toLowerCase().includes('couple') && !p.name.toLowerCase().includes('bridal') && !p.name.toLowerCase().includes('mangalsutra')).slice(0, 4);
     container.innerHTML = silverPieces.map(createProductCardHTML).join('');
   }
 
@@ -1076,11 +1074,11 @@ document.addEventListener('DOMContentLoaded', () => {
       prodId: 'HJ-002'
     },
     {
-      title: 'The Bridal Sanctuary: Eternal Vows',
-      subtitle: 'Ethereal 925 fine sterling silver promise rings and bespoke bridal suites celebrating modern matrimony.',
-      image: 'images/jewelux_silver_couple_bands.jpg',
-      prodTitle: 'The Amore Eternity Couple Bands',
-      prodId: 'HJ-SIL-002'
+      title: 'Sovereign Soirée: High Joaillerie',
+      subtitle: 'Mastercrafted fine jewels and luminous gemstones designed for distinguished evenings and private galas.',
+      image: 'images/jewelux_nature_wildlife.jpg',
+      prodTitle: 'The Empress Emerald-Cut Halo Ring',
+      prodId: 'HJ-RNG-003'
     },
     {
       title: 'The Temple Edit: Sacred Grandeur',
