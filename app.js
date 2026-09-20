@@ -233,6 +233,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (hash === 'couples') {
+      switchView('home');
+      const el = document.getElementById('couples') || document.getElementById('couples-sanctuary-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
     if (hash === 'bespoke-studio') {
       switchView('home');
       const el = document.getElementById('bespoke-studio');
