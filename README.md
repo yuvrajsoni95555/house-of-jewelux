@@ -20,12 +20,12 @@ Welcome to the official digital flagship for **HOUSE OF JEWELUX**, designed with
 
 The digital boutique is architected as a seamless, high-performance Single Page Application with client-side hash routing:
 
-1. **Home (`#home`):** Dramatic minimal hero (*"WHERE ELEGANCE BECOMES ETERNAL"*), brand introduction (*"Elegance, Designed to Endure"*), 6 curated collections, featured vault, bespoke goldsmith workbench, luxury storytelling tri-column (*"Crafted with Intention"*, *"Designed for a Lifetime"*, *"Made to Become Yours"*), lookbook archive, client testimonials, and salon invitation.
+1. **Home (`#home`):** Dramatic minimal hero (*"WHERE ELEGANCE BECOMES ETERNAL"*), brand introduction (*"Elegance, Designed to Endure"*), 6 curated collections, featured vault, bespoke goldsmith workbench, luxury storytelling tri-column (*"Crafted with Intention"*, *"Designed for a Lifetime"*, *"Made to Become Yours"*), lookbook archive, client testimonials, and atelier circle invitation.
 2. **Shop (`#shop`):** Comprehensive catalogue with category filter pills, sorting by price and rarity, dual-angle hover transitions, quick view, wishlist, and add to bag.
-3. **Collections (`#collections`):** Detailed editorial showcase of all 6 signature lines (The Eternal Collection, The Signature Collection, The Heritage Collection, The Temple Collection, The Silver Edit, The Everyday Icons).
-4. **New Arrivals (`#new-arrivals`):** 2026 debuts directly from our European and Indian ateliers.
-5. **Best Sellers (`#best-sellers`):** Iconic client favorites favored by royal patrons and international collectors.
-6. **Rings (`#rings`):** Solitaires, eternity bands, and cocktail creations in Platinum 950 and 18K champagne gold.
+3. **Collections (`#collections`):** Detailed editorial showcase of signature lines (The Temple Collection, The Silver Edit, Indian Fine Jewellery).
+4. **New Arrivals (`#new-arrivals`):** 2026 debuts directly from our Indian ateliers.
+5. **Best Sellers (`#best-sellers`):** Iconic client favorites favored by royal patrons and collectors.
+6. **Rings (`#rings`):** Solitaires, eternity bands, and cocktail creations in solid 925 sterling silver with micron gold and rhodium plating.
 7. **Earrings (`#earrings`):** Chandelier drops, solitaire studs, and articulated pear drops.
 8. **Necklaces (`#necklaces`):** Statement haute joaillerie collars, chokers, and diamond solitaire pendants.
 9. **Bracelets (`#bracelets`):** Articulated tennis bracelets engineered with double safety catches.
@@ -34,7 +34,7 @@ The digital boutique is architected as a seamless, high-performance Single Page 
 12. **Temple Jewellery (`#temple`):** South Indian antique nakshi craftsmanship infused with European Didone elegance (22K antique matte gold, polki uncut diamonds, Basra pearls, ruby accents).
 13. **About Us (`#about`):** Milan design studio origin, generational artisan lineage, ethical sourcing charter, and creative philosophy.
 14. **Our Craftsmanship (`#craftsmanship`):** Six-stage savoir-faire: Mineral provenance, gouache renderings, metallurgy, generational nakshi setting, mirror hand-burnishing, and Swiss lab certification.
-15. **Contact & Salons (`#contact`):** Private salon reservation scheduler, global flagship locations (Geneva, Milan, London, Paris, New York, Dubai), and direct WhatsApp concierge.
+15. **Contact & Ateliers (`#contact`):** Private atelier consultation scheduler, global flagship locations (Geneva, Milan, London, Paris, New York, Dubai), and direct WhatsApp concierge.
 16. **FAQ (`#faq`):** Expandable luxury accordions covering 4Cs certification, bespoke timeline, resizing, armored delivery, and gold alloys.
 17. **Shipping & Delivery (`#shipping`):** Armored courier white-glove transport protocol, insurance, and international customs clearance.
 18. **Returns & Refunds (`#returns`):** 30-day complimentary return guarantee, return shipping procedures, and bespoke exceptions.

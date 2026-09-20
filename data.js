@@ -10,7 +10,7 @@ const JEWELUX_DATA = {
     founderPIN: "1985",
     announcementText: "✦ INDIAN FINE JEWELLERY • TEMPLE JEWELLERY • 925 SILVER • DESIGNED & MADE IN INDIA",
     heroHeadline: "Where Elegance Becomes Eternal",
-    heroSubtitle: "An Indian silver jewellery house bringing together traditional craftsmanship, contemporary design and carefully selected international influences. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
+    heroSubtitle: "An Indian silver jewellery brand bringing together traditional craftsmanship, contemporary design and carefully selected international influences. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
     heroCtaText: "Explore The Silver Edit",
     heroCtaHash: "#silver",
     freeShippingThresholdUSD: 250,
@@ -81,7 +81,7 @@ const JEWELUX_DATA = {
       tagline: 'Haute joaillerie and high-carat gold pieces crafted on bespoke commission.',
       image: 'images/jewelux_hero_necklace.jpg',
       category: 'gold-vault',
-      description: 'Solid 18K Champagne Gold and certified D-Flawless gemstones shaped by master Indian artisans on private salon commission.'
+      description: 'Fine creations in BIS hallmarked 925 silver with micron gold plating crafted by master Indian artisans on private atelier commission.'
     }
   ],
 
@@ -1510,7 +1510,7 @@ const JEWELUX_DATA = {
         "clarity": "VVS1",
         "dimensions": "40mm Symmetrical Brooch",
         "certificate": "Jewelux Certificate",
-        "description": "Sun rays of step-cut crystal facets bursting from an octagonal center. Pure 1920s Paris salon luxury.",
+        "description": "Sun rays of step-cut crystal facets bursting from an octagonal center. Pure 1920s Art Deco architectural elegance.",
         "badge": "Vintage Revival",
         "isSilver": true,
         "isGold": false,

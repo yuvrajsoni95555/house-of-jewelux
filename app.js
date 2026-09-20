@@ -899,7 +899,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.submitAppointment = (e) => {
     e.preventDefault();
     closeAppointmentModal();
-    showToast('Private Salon Appointment requested! Your advisor will reach out.', '⚜️');
+    showToast('Private Atelier Consultation requested! Your advisor will reach out.', '⚜️');
   };
 
   // Checkout Modal & Live Order Summary
