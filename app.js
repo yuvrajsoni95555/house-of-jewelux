@@ -1062,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       title: 'The Bridal Sanctuary: Eternal Vows',
-      subtitle: 'Ethereal 925 fine sterling silver promise rings and bridal mangalsutras celebrating modern matrimony.',
+      subtitle: 'Ethereal 925 fine sterling silver promise rings and bespoke bridal suites celebrating modern matrimony.',
       image: 'images/jewelux_silver_couple_bands.jpg',
       prodTitle: 'The Amore Eternity Couple Bands',
       prodId: 'HJ-SIL-002'
@@ -3245,7 +3245,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     const inquiries = STORE.inquiries && STORE.inquiries.length ? STORE.inquiries : [
       { id: 'INQ-101', date: '14 Sep 2026', name: 'Rhea & Siddharth (Newlyweds)', piece: 'The Amore Couple Bands in 925 Silver', value: '$240', status: 'In Atelier' },
       { id: 'INQ-102', date: '13 Sep 2026', name: 'Sophia De Luca', piece: 'Custom 3D 2.5ct Moissanite Solitaire', value: '$365', status: 'Contacted' },
-      { id: 'INQ-103', date: '12 Sep 2026', name: 'Kabir Varma', piece: 'Luna Pavé Halo Mangalsutra', value: '$280', status: 'Dispatched' }
+      { id: 'INQ-103', date: '12 Sep 2026', name: 'Kabir Varma', piece: 'The Geometric Pavé Cascade Necklace', value: '$280', status: 'Dispatched' }
     ];
 
     tbody.innerHTML = inquiries.map(inq => `
@@ -3272,7 +3272,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       id: `INQ-${Date.now().toString().slice(-3)}`,
       date: 'Today',
       name: 'Priya M. (Bride-to-Be)',
-      piece: 'Luna Mangalsutra & 925 Tennis Bracelet',
+      piece: 'Bespoke Bridal Suite & 925 Tennis Bracelet',
       value: '$600',
       status: 'New Lead'
     });
