@@ -12,12 +12,12 @@ const JEWELUX_DATA = {
     heroHeadline: "Where Elegance Becomes Eternal",
     heroSubtitle: "An Indian silver jewellery brand bringing together traditional craftsmanship, contemporary design and carefully selected international influences. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
     heroCtaText: "Explore The Silver Edit",
-    heroCtaHash: "#silver",
+    heroCtaHash: "/silver-edit",
     freeShippingThresholdUSD: 250,
     shippingDaysDomestic: "2 - 4 Business Days (Armored White-Glove)",
     shippingDaysInternational: "4 - 7 Business Days (Fully Insured FedEx Priority)",
-    returnsGuaranteeDays: 30,
-    silverSpotlightEnabled: true
+    returnsGuaranteeDays: 14,
+    silverSpotlightEnabled: false
   },
 
   currencies: {

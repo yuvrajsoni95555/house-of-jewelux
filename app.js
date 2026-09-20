@@ -206,8 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const categoryRoutes = {
-      'silver': 'silver',
-      'couples': 'couples',
       'rings': 'rings',
       'earrings': 'earrings',
       'necklaces': 'necklaces',
@@ -246,7 +244,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (hash === 'couples') {
+    if (hash === 'silver' || hash === 'silver-edit') {
+      window.location.href = '/silver-edit';
+      return;
+    }
+
+    if (hash === 'couples' || hash === 'couples-bridal') {
       window.location.href = '/couples-bridal';
       return;
     }
