@@ -7,6 +7,7 @@ const JEWELUX_DATA = {
     whatsappWelcome: "Hello House of Jewelux Concierge! I would like to inquire about fine jewellery and bespoke commissions.",
     founderName: "Yuvraj Soni",
     founderTitle: "Founder & Creative Director",
+    conciergeEmail: "houseofjewelux@gmail.com",
     founderPinHash: "a20a2b7bb0842d5cf8a0c06c626421fd51ec103925c1819a51271f2779afa730",
     announcementText: "✦ INDIAN FINE JEWELLERY • TEMPLE JEWELLERY • 925 SILVER • DESIGNED & MADE IN INDIA",
     heroHeadline: "Where Elegance Becomes Eternal",
