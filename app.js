@@ -322,24 +322,76 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = silverPieces.map(createProductCardHTML).join('');
   }
 
+    function renderShopCategoryPills() {
+    const pillsContainer = document.getElementById('shop-category-pills');
+    if (!pillsContainer) return;
+    
+    const categories = (STORE && STORE.categories) ? STORE.categories : [
+      { id: 'all', name: 'All Jewels', icon: '✦', isPrimary: false },
+      { id: 'indian-jewellery', name: 'Indian Jewellery', icon: '🪷', isPrimary: true },
+      { id: 'fine-jewellery', name: 'Fine Jewellery', icon: '💎', isPrimary: true },
+      { id: 'temple-jewellery', name: 'Temple Jewellery', icon: '🛕', isPrimary: true },
+      { id: 'heritage-traditional', name: 'Heritage & Traditional', icon: '👑', isPrimary: false },
+      { id: 'diamond-jewellery', name: 'Diamond Jewellery', icon: '✨', isPrimary: false },
+      { id: 'gold-jewellery', name: 'Gold Jewellery', icon: '⚜️', isPrimary: false },
+      { id: 'silver-jewellery', name: 'Silver Jewellery', icon: '⚪', isPrimary: false },
+      { id: 'haute-joaillerie', name: 'Haute Joaillerie', icon: '🌟', isPrimary: false }
+    ];
+
+    pillsContainer.innerHTML = categories.map(cat => {
+      const isActive = state.activeCategory === cat.id;
+      const isPrimary = cat.isPrimary;
+      
+      let btnClasses = "px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-wider font-medium transition flex items-center gap-1.5 border ";
+      if (isActive) {
+        btnClasses += "bg-[#1D1815] text-white border-[#1D1815] shadow-sm";
+      } else if (isPrimary) {
+        btnClasses += "bg-[#F6EBDD] text-[#8A6B38] border-[#C5A674]/60 hover:bg-[#1D1815] hover:text-white";
+      } else {
+        btnClasses += "bg-white text-[#766B5E] border-[#E8E3D8] hover:border-[#C5A674] hover:text-[#1D1815]";
+      }
+
+      const coreBadge = isPrimary ? `<span class="text-[9px] uppercase tracking-widest text-[#8A6B38] font-bold px-1.5 py-0.2 bg-white/90 rounded border border-[#C5A674]/30">CORE</span>` : '';
+
+      return `
+        <button onclick="filterShopCategory('${cat.id}')" data-cat-pill="${cat.id}" class="${btnClasses}">
+          <span>${cat.icon || '✦'}</span>
+          <span>${cat.name}</span>
+          ${coreBadge}
+        </button>
+      `;
+    }).join('');
+  }
+
   function renderShopView() {
-    const container = document.getElementById('shop-product-grid');
+    renderShopCategoryPills();
+    const container = document.getElementById('shop-product-grid') || document.getElementById('shop-products-grid');
     if (!container) return;
 
     let filtered = [...STORE.products];
 
-    if (state.activeCategory === 'silver') {
-      filtered = filtered.filter(p => p.isSilver);
-    } else if (state.activeCategory === 'couples') {
-      filtered = filtered.filter(p => p.category === 'couples' || (p.targetAudience && p.targetAudience.includes('Couple')));
-    } else if (state.activeCategory === 'gold-vault') {
-      filtered = filtered.filter(p => p.isGold || p.category === 'gold-vault');
-    } else if (state.activeCategory === 'temple') {
-      filtered = filtered.filter(p => p.category === 'temple');
+    if (state.activeCategory === 'all') {
+      // all products
+    } else if (state.activeCategory === 'silver' || state.activeCategory === 'silver-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'silver-jewellery' || p.isSilver);
+    } else if (state.activeCategory === 'indian-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'indian-jewellery');
+    } else if (state.activeCategory === 'fine-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'fine-jewellery');
+    } else if (state.activeCategory === 'temple' || state.activeCategory === 'temple-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'temple-jewellery' || p.category === 'temple');
+    } else if (state.activeCategory === 'heritage-traditional' || state.activeCategory === 'couples') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'heritage-traditional' || p.collection === 'eternal-couples');
+    } else if (state.activeCategory === 'diamond-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'diamond-jewellery' || (p.stone && p.stone.toLowerCase().includes('diamond')));
+    } else if (state.activeCategory === 'gold-jewellery' || state.activeCategory === 'gold-vault') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'gold-jewellery' || p.isGold);
+    } else if (state.activeCategory === 'haute-joaillerie') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'haute-joaillerie' || p.priceUSD >= 700);
     } else if (state.activeCategory === 'new-arrivals') {
       filtered = filtered.filter(p => p.isNew);
-    } else if (state.activeCategory !== 'all') {
-      filtered = filtered.filter(p => p.category === state.activeCategory);
+    } else {
+      filtered = filtered.filter(p => p.category === state.activeCategory || p.collection === state.activeCategory || p.mainCategoryId === state.activeCategory);
     }
 
     // Apply Active Sorting
@@ -353,19 +405,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = filtered.length 
       ? filtered.map(createProductCardHTML).join('')
-      : `<div class="col-span-full py-16 text-center text-[#766B5E]">No pieces found in this curation. Explore <a href="#silver" class="text-[#8A6B38] underline">The Silver Edit</a>.</div>`;
+      : `<div class="col-span-full py-16 text-center text-[#766B5E]">No pieces found in this curation. Explore <a href="#indian-jewellery" onclick="filterShopCategory('indian-jewellery')" class="text-[#8A6B38] underline">Indian Jewellery</a>.</div>`;
 
     // Highlight active category tab in shop filter bar
-    document.querySelectorAll('[data-category-filter]').forEach(btn => {
-      const cat = btn.getAttribute('data-category-filter');
+    document.querySelectorAll('[data-cat-pill]').forEach(btn => {
+      const cat = btn.getAttribute('data-cat-pill');
       if (cat === state.activeCategory) {
         btn.classList.add('bg-[#1D1815]', 'text-white');
-        btn.classList.remove('bg-white', 'text-[#766B5E]');
-      } else {
-        btn.classList.remove('bg-[#1D1815]', 'text-white');
-        btn.classList.add('bg-white', 'text-[#766B5E]');
+        btn.classList.remove('bg-white', 'text-[#766B5E]', 'bg-[#F6EBDD]', 'text-[#8A6B38]');
       }
     });
+  });
   }
 
   function renderCategoryPageView() {
@@ -439,25 +489,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const buyBtn = document.getElementById('pdp-buy-now-btn');
     const wishBtn = document.getElementById('pdp-wishlist-btn');
 
-    const specStone = document.getElementById('pdp-spec-stone');
-    const specCut = document.getElementById('pdp-spec-cut');
+    const specCategory = document.getElementById('pdp-spec-category');
+    const specDesignedIn = document.getElementById('pdp-spec-designed');
+    const specCraftedIn = document.getElementById('pdp-spec-crafted');
+    const specMaterial = document.getElementById('pdp-spec-material');
+    const specGemstone = document.getElementById('pdp-spec-gemstone');
+    const specCertRow = document.getElementById('pdp-spec-cert-row');
     const specCert = document.getElementById('pdp-spec-cert');
     const specDimensions = document.getElementById('pdp-spec-dimensions');
 
-    if (titleEl) titleEl.textContent = p.name;
-    if (priceEl) priceEl.textContent = formatPrice(p.priceUSD);
-    if (descEl) descEl.textContent = p.description;
-    if (metalEl) metalEl.textContent = p.metal || (p.isSilver ? '925 Sterling Silver (Anti-Tarnish Rhodium)' : '18K Gold');
-    if (badgeEl) badgeEl.textContent = p.badge || (p.isSilver ? 'Fine 925 Silver' : 'Haute Joaillerie');
-    if (heroImg) {
-      heroImg.src = p.image;
-      heroImg.alt = p.name;
+    if (specCategory) specCategory.textContent = p.mainCategory || 'Indian Fine Jewellery';
+    if (specDesignedIn) specDesignedIn.textContent = p.designedIn || 'India';
+    if (specCraftedIn) specCraftedIn.textContent = p.craftedIn || 'India';
+    if (specMaterial) specMaterial.textContent = p.material || p.metal || 'BIS Hallmarked 925 Sterling Silver';
+    if (specGemstone) specGemstone.textContent = p.gemstone || p.stone || 'Natural Gemstone';
+    
+    if (specCertRow) {
+      if (p.certificate && p.certificate.trim() !== '' && p.certificate !== 'None') {
+        specCertRow.style.display = 'flex';
+        if (specCert) specCert.textContent = p.certificate;
+      } else {
+        specCertRow.style.display = 'none';
+      }
     }
-
-    if (specStone) specStone.textContent = p.stone || (p.isSilver ? 'Certified Moissanite / Zirconia' : 'Flawless Diamond');
-    if (specCut) specCut.textContent = p.cut || 'Hearts & Arrows Ideal Facet';
-    if (specCert) specCert.textContent = p.certificate || (p.isSilver ? 'GRA Registered & 925 Stamped' : 'GIA Dossier Certified');
-    if (specDimensions) specDimensions.textContent = p.dimensions || 'Bespoke Sizing';
+    if (specDimensions) specDimensions.textContent = p.dimensions || 'Bespoke Atelier Sizing';
 
     if (sizeSelect) {
       const sizes = p.sizes || ['Standard Size', 'US 5', 'US 6', 'US 7', 'US 8', 'Bespoke Request'];
@@ -3216,7 +3271,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       "paymentAccepted": "Credit Card, Wire Transfer, Armored Escrow",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Geneva",
+        "addressLocality": "Mumbai",
         "addressCountry": "CH"
       }
     };

@@ -8,9 +8,9 @@ const JEWELUX_DATA = {
     founderName: "Yuvraj Soni",
     founderTitle: "Founder & Creative Director",
     founderPIN: "1985",
-    announcementText: "THE SILVER EDIT 2026 — Certified 925 Hallmarked Fine Silver & Anti-Tarnish Rhodium • Complimentary Insured Global Delivery",
+    announcementText: "✦ FINE JEWELLERY • INDIAN CRAFTSMANSHIP • DESIGNED & CRAFTED IN INDIA • INSURED GLOBAL DELIVERY",
     heroHeadline: "Where Elegance Becomes Eternal",
-    heroSubtitle: "Italian Didone sophistication sculpted with generational Indian artistry. Discover certified 925 fine sterling silver and bespoke gold bridal commissions.",
+    heroSubtitle: "An Indian luxury jewellery house rooted in heritage, craftsmanship and contemporary design. Designed and crafted in India.",
     heroCtaText: "Explore The Silver Edit",
     heroCtaHash: "#silver",
     freeShippingThresholdUSD: 250,
@@ -28,13 +28,16 @@ const JEWELUX_DATA = {
     AED: { symbol: 'AED ', rate: 3.67, label: 'AED (د.إ)' }
   },
 
-                                categories: [
-    { id: 'all', name: 'All Masterpieces', hash: '#shop', url: '/shop' },
-    { id: 'rings', name: 'Rings', hash: '#rings', url: '/shop/rings' },
-    { id: 'earrings', name: 'Earrings', hash: '#earrings', url: '/shop/earrings' },
-    { id: 'bracelets', name: 'Bracelets', hash: '#bracelets', url: '/shop/bracelets' },
-    { id: 'necklaces', name: 'Necklaces', hash: '#necklaces', url: '/shop/necklaces' },
-    { id: 'brooches', name: 'Brooches', hash: '#brooches', url: '/shop/brooches' }
+                                  categories: [
+    { id: 'all', name: 'All Jewels', hash: '#shop', url: '/shop', subtitle: 'Authentic Indian Fine Jewellery', icon: '✦', isPrimary: false },
+    { id: 'indian-jewellery', name: 'Indian Jewellery', hash: '#indian-jewellery', url: '/shop?cat=indian-jewellery', subtitle: 'Handcrafted Heritage & Cultural Artistry', icon: '🪷', isPrimary: true },
+    { id: 'fine-jewellery', name: 'Fine Jewellery', hash: '#fine-jewellery', url: '/shop?cat=fine-jewellery', subtitle: 'Contemporary Elegance in Silver & Gold', icon: '💎', isPrimary: true },
+    { id: 'temple-jewellery', name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi', icon: '🛕', isPrimary: true },
+    { id: 'heritage-traditional', name: 'Heritage & Traditional', hash: '#heritage-traditional', url: '/shop?cat=heritage-traditional', subtitle: 'Generational Goldsmith Heirlooms', icon: '👑', isPrimary: false },
+    { id: 'diamond-jewellery', name: 'Diamond Jewellery', hash: '#diamond-jewellery', url: '/shop?cat=diamond-jewellery', subtitle: 'Certified Solitaires & Pavé Brilliance', icon: '✨', isPrimary: false },
+    { id: 'gold-jewellery', name: 'Gold Jewellery', hash: '#gold-jewellery', url: '/shop?cat=gold-jewellery', subtitle: '18K & 22K Atelier Commissions', icon: '⚜️', isPrimary: false },
+    { id: 'silver-jewellery', name: 'Silver Jewellery', hash: '#silver-jewellery', url: '/shop?cat=silver-jewellery', subtitle: 'BIS Hallmarked 925 Sterling Silver', icon: '⚪', isPrimary: false },
+    { id: 'haute-joaillerie', name: 'Haute Joaillerie', hash: '#haute-joaillerie', url: '/shop?cat=haute-joaillerie', subtitle: 'Exceptional Jewels by Indian Master Artisans', icon: '🌟', isPrimary: false }
   ],
 
   collections: [
@@ -65,10 +68,10 @@ const JEWELUX_DATA = {
     {
       id: 'temple-heritage',
       name: 'The Temple Collection',
-      tagline: 'Sacred Indian artisanal heritage harmonized with contemporary Italian grace.',
+      tagline: 'Treasures inspired by the sacred artistry of Indian temples, reinterpreted through the hands of skilled Indian artisans.',
       image: 'images/jewelux_temple_heritage.jpg',
       category: 'temple',
-      description: 'Hand-chased 22K antique matte gold, uncut polki diamonds, and divine sacred motifs reimagined for the international aesthete.'
+      description: 'Hand-chased 22K antique matte gold, hallmarked silver nakshi, uncut polki gemstones, and divine sacred motifs honoring centuries of Indian temple craftsmanship.'
     },
     {
       id: 'gold-vault',
@@ -76,7 +79,7 @@ const JEWELUX_DATA = {
       tagline: 'Haute joaillerie and high-carat gold pieces crafted on bespoke commission.',
       image: 'images/jewelux_hero_necklace.jpg',
       category: 'gold-vault',
-      description: 'Solid 18K Fairmined Champagne Gold and D-Flawless natural diamonds created exclusively on private salon commission.'
+      description: 'Solid 18K Champagne Gold and certified D-Flawless gemstones shaped by master Indian artisans on private salon commission.'
     }
   ],
 
@@ -103,7 +106,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Couples"
+        "targetAudience": "Women & Couples",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "2.5ct Certified Lab Moissanite (D-Flawless)",
+        "mainCategory": "Silver Jewellery",
+        "mainCategoryId": "silver-jewellery"
     },
     {
         "id": "HJ-RNG-002",
@@ -127,7 +136,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Newlywed Couples"
+        "targetAudience": "Newlywed Couples",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Micro-Pav\u00e9 Conflict-Free Lab Diamonds",
+        "mainCategory": "Heritage / Traditional Jewellery",
+        "mainCategoryId": "heritage-traditional"
     },
     {
         "id": "HJ-RNG-003",
@@ -145,13 +160,19 @@ const JEWELUX_DATA = {
         "clarity": "FL / VVS1 Flawless",
         "dimensions": "9x7mm Center Stone \u2022 1.8mm Halo Rim",
         "certificate": "GRA Laboratory Certified",
-        "description": "Inspired by 1930s Milanese aristocracy, step-cut facets generate hypnotic hall-of-mirrors light dispersion encircled by a delicate French pav\u00e9 border.",
+        "description": "Inspired by timeless regal aesthetics, step-cut facets generate hypnotic hall-of-mirrors light dispersion encircled by a delicate French pav\u00e9 border.",
         "badge": "Limited Edition",
         "isSilver": true,
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Modern Brides"
+        "targetAudience": "Women & Modern Brides",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "3.0ct Emerald-Cut Moissanite with French Pav\u00e9 Halo",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-RNG-004",
@@ -169,13 +190,19 @@ const JEWELUX_DATA = {
         "clarity": "VVS1 D-Color",
         "dimensions": "12x6mm Center Stone",
         "certificate": "GIA Dossier Certified",
-        "description": "An elongated marquise silhouette that flatters the finger with graceful symmetry, finished in warm Florentine champagne gold.",
+        "description": "An elongated marquise silhouette that flatters the finger with graceful symmetry, finished in warm warm antique champagne gold.",
         "badge": "Atelier Spotlight",
         "isSilver": true,
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Discerning Women"
+        "targetAudience": "Discerning Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "2.2ct Marquise Cut Lab Diamond",
+        "mainCategory": "Gold Jewellery",
+        "mainCategoryId": "gold-jewellery"
     },
     {
         "id": "HJ-RNG-005",
@@ -199,7 +226,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Dual Ribbon Micro-Pav\u00e9 Moissanites",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-RNG-006",
@@ -223,7 +256,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Couples"
+        "targetAudience": "Women & Couples",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "2.0ct Oval Brilliant Moissanite",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-RNG-007",
@@ -247,7 +286,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Men & Women"
+        "targetAudience": "Men & Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Center Flush-Set Baguette Diamond Accent",
+        "mainCategory": "Heritage / Traditional Jewellery",
+        "mainCategoryId": "heritage-traditional"
     },
     {
         "id": "HJ-RNG-008",
@@ -271,7 +316,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "1.8ct Pear Cut Lab Diamond",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-RNG-009",
@@ -295,7 +346,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Brides & Newlyweds"
+        "targetAudience": "Brides & Newlyweds",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Diamond Accent V-Curve",
+        "mainCategory": "Heritage / Traditional Jewellery",
+        "mainCategoryId": "heritage-traditional"
     },
     {
         "id": "HJ-RNG-010",
@@ -319,7 +376,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Anniversaries"
+        "targetAudience": "Women & Anniversaries",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "3 Rows of Flawless Lab Moissanites",
+        "mainCategory": "Diamond Jewellery",
+        "mainCategoryId": "diamond-jewellery"
     },
     {
         "id": "HJ-EAR-001",
@@ -343,7 +406,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "2.0ct Each Certified Pear Moissanites",
+        "mainCategory": "Silver Jewellery",
+        "mainCategoryId": "silver-jewellery"
     },
     {
         "id": "HJ-EAR-002",
@@ -367,7 +436,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Modern Women"
+        "targetAudience": "Modern Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Dual-Row Micro-Pav\u00e9 Diamonds",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-EAR-003",
@@ -391,7 +466,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Evening Gala & Brides"
+        "targetAudience": "Evening Gala & Brides",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Graduated Moissanite Drops & Marquis Links",
+        "mainCategory": "Haute Joaillerie",
+        "mainCategoryId": "haute-joaillerie"
     },
     {
         "id": "HJ-EAR-004",
@@ -415,7 +496,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Discerning Women"
+        "targetAudience": "Discerning Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "18K Champagne Gold",
+        "gemstone": "Lab-Grown Colombian Emeralds with Diamond Halos",
+        "mainCategory": "Gold Jewellery",
+        "mainCategoryId": "gold-jewellery"
     },
     {
         "id": "HJ-EAR-005",
@@ -439,7 +526,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "1.5ct Each D-Flawless Moissanite",
+        "mainCategory": "Diamond Jewellery",
+        "mainCategoryId": "diamond-jewellery"
     },
     {
         "id": "HJ-EAR-006",
@@ -463,7 +556,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Fashion Leaders"
+        "targetAudience": "Fashion Leaders",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Ribbons on Inner Flange",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-EAR-007",
@@ -487,7 +586,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Brides & Elegance Lovers"
+        "targetAudience": "Brides & Elegance Lovers",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "11mm Luminous South Sea Pearl Drops",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-EAR-008",
@@ -511,7 +616,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Diamond Multi-Ray Starburst",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-EAR-009",
@@ -535,7 +646,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Step-Cut Baguettes & Triangle Facets",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-EAR-010",
@@ -559,7 +676,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Bridal & Festive"
+        "targetAudience": "Bridal & Festive",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Uncut Polki Moissanites & Seed Pearls",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRC-001",
@@ -583,7 +706,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Gift Giving"
+        "targetAudience": "Women & Gift Giving",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "58 Individually Set Lab Moissanites (4mm)",
+        "mainCategory": "Silver Jewellery",
+        "mainCategoryId": "silver-jewellery"
     },
     {
         "id": "HJ-BRC-002",
@@ -601,13 +730,19 @@ const JEWELUX_DATA = {
         "clarity": "VVS1",
         "dimensions": "62mm Internal Diameter (Malleable Fit)",
         "certificate": "Jewelux Assay Office Hallmark",
-        "description": "Heavyweight solid silver torc cuff hand-shaped by Milanese silversmiths. Features a smooth mirror-burnished body ending in faceted diamond finials.",
+        "description": "Heavyweight solid silver torc cuff hand-shaped by master Indian silversmiths. Features a smooth mirror-burnished body ending in faceted diamond finials.",
         "badge": "Statement Icon",
         "isSilver": true,
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Minimalist Women"
+        "targetAudience": "Minimalist Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Twin Pav\u00e9 Finials with Moissanite Accents",
+        "mainCategory": "Diamond Jewellery",
+        "mainCategoryId": "diamond-jewellery"
     },
     {
         "id": "HJ-BRC-003",
@@ -625,13 +760,19 @@ const JEWELUX_DATA = {
         "clarity": "VVS1",
         "dimensions": "7.2 inches \u2022 3.8mm Width",
         "certificate": "GIA Certified Stone Selection",
-        "description": "Architectural link bars inset with channel-set baguette gemstones. Warm Florentine champagne gold finish reflects opulent evening grandeur.",
+        "description": "Architectural link bars inset with channel-set baguette gemstones. Warm warm antique champagne gold finish reflects opulent evening grandeur.",
         "badge": "Luxury Link",
         "isSilver": true,
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Alternating Channel Baguette Diamonds",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-BRC-004",
@@ -655,7 +796,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Brides & Newlyweds"
+        "targetAudience": "Brides & Newlyweds",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Set Interlocking Lovers Knot Charm",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRC-005",
@@ -679,7 +826,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "5 Bezel-Set Solitaire Stations",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-BRC-006",
@@ -703,7 +856,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Diamond Bar Centerpiece",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRC-007",
@@ -727,7 +886,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "1.2ct Vivid Green Lab Colombian Emerald",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRC-008",
@@ -751,7 +916,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Newlywed Couples"
+        "targetAudience": "Newlywed Couples",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Flush-Set Solitaire Diamond on Hers",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-BRC-009",
@@ -775,7 +946,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Mirror-Faceted Solid Links",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-BRC-010",
@@ -799,7 +976,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Twin Orbit Rings with Micro-Pav\u00e9 Diamonds",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-NCK-001",
@@ -823,7 +1006,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Modern Brides"
+        "targetAudience": "Modern Brides",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "1.5ct Solitaire with Double Pav\u00e9 Halo & Black Spinel Beads",
+        "mainCategory": "Haute Joaillerie",
+        "mainCategoryId": "haute-joaillerie"
     },
     {
         "id": "HJ-NCK-002",
@@ -847,7 +1036,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "High Jewelry Patrons"
+        "targetAudience": "High Jewelry Patrons",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "18.5 carats Certified Colombian Emeralds & D-Flawless Moissanite",
+        "mainCategory": "Heritage / Traditional Jewellery",
+        "mainCategoryId": "heritage-traditional"
     },
     {
         "id": "HJ-NCK-003",
@@ -871,7 +1066,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "1.5ct Round Brilliant Lab Moissanite",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-NCK-004",
@@ -895,7 +1096,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Connoisseurs & Brides"
+        "targetAudience": "Connoisseurs & Brides",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Uncut Polki Moissanites & Basra Pearl Cluster",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-NCK-005",
@@ -919,7 +1126,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Graduated 3mm to 6mm Lab Moissanites",
+        "mainCategory": "Gold Jewellery",
+        "mainCategoryId": "gold-jewellery"
     },
     {
         "id": "HJ-NCK-006",
@@ -943,7 +1156,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Modern Women"
+        "targetAudience": "Modern Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Slider Ring with Pear Moissanite Drop",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-NCK-007",
@@ -967,7 +1186,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Gifts"
+        "targetAudience": "Women & Gifts",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Flush-Set Star Diamonds & Deep Blue Enamel",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-NCK-008",
@@ -991,7 +1216,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women"
+        "targetAudience": "Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "3.5ct Royal Ceylon Blue Sapphire with Halo",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-NCK-009",
@@ -1015,7 +1246,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Couples & Men"
+        "targetAudience": "Couples & Men",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Twin Diamond Bezel Points",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-NCK-010",
@@ -1039,7 +1276,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Fashion Forward Women"
+        "targetAudience": "Fashion Forward Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Sculptural Freshwater Baroque Pearl Centerpiece",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-BRO-001",
@@ -1063,7 +1306,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Collectors & Haute Couturiers"
+        "targetAudience": "Collectors & Haute Couturiers",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Baguette Cut Wing Feathers & Ruby Eye Accent",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRO-002",
@@ -1087,7 +1336,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Men"
+        "targetAudience": "Women & Men",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Pav\u00e9 Diamond Petals with Dewdrop Moissanite",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRO-003",
@@ -1111,7 +1366,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Connoisseurs"
+        "targetAudience": "Connoisseurs",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Graduated Moissanites on Crescent Arc",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-BRO-004",
@@ -1135,7 +1396,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Festive & Bridal"
+        "targetAudience": "Festive & Bridal",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Central Colombian Emerald with Blue Sapphire Eye",
+        "mainCategory": "Indian Jewellery",
+        "mainCategoryId": "indian-jewellery"
     },
     {
         "id": "HJ-BRO-005",
@@ -1159,7 +1426,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Art Deco Admirers"
+        "targetAudience": "Art Deco Admirers",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Faceted Baguettes in Radial Arrangement",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-BRO-006",
@@ -1183,7 +1456,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Brides"
+        "targetAudience": "Brides",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Fluid Pav\u00e9 Ribbon Bow with South Sea Pearl Drop",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-BRO-007",
@@ -1207,7 +1486,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Women & Men"
+        "targetAudience": "Women & Men",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Micro-Pav\u00e9 Vein Accents",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-BRO-008",
@@ -1231,7 +1516,13 @@ const JEWELUX_DATA = {
         "isGold": false,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Jewelry Collectors"
+        "targetAudience": "Jewelry Collectors",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Filigree Wings Inset with Lab Diamonds & Sapphires",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     },
     {
         "id": "HJ-BRO-009",
@@ -1255,7 +1546,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": false,
         "stockStatus": "In Stock",
-        "targetAudience": "Elegance Lovers"
+        "targetAudience": "Elegance Lovers",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Natural Teardrop Pearl Body & Pav\u00e9 Wings",
+        "mainCategory": "Temple Jewellery",
+        "mainCategoryId": "temple-jewellery"
     },
     {
         "id": "HJ-BRO-010",
@@ -1279,7 +1576,13 @@ const JEWELUX_DATA = {
         "isGold": true,
         "isNew": true,
         "stockStatus": "In Stock",
-        "targetAudience": "Sartorial Gentlemen & Women"
+        "targetAudience": "Sartorial Gentlemen & Women",
+        "designedIn": "India",
+        "craftedIn": "India",
+        "material": "BIS Hallmarked 925 Sterling Silver",
+        "gemstone": "Solitaire Diamond Nib Point",
+        "mainCategory": "Fine Jewellery",
+        "mainCategoryId": "fine-jewellery"
     }
 ],
 

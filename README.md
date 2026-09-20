@@ -1,6 +1,6 @@
 # HOUSE OF JEWELUX ✦
 ### *Where Elegance Becomes Eternal.*
-#### Haute Joaillerie • Milano • Genève • Paris • London • New York • Dubai
+#### Indian Luxury Fine Jewellery • Designed & Crafted in India
 
 Welcome to the official digital flagship for **HOUSE OF JEWELUX**, designed with the refinement of an Italian high-fashion jewellery brand harmonized with centuries of generational Indian craftsmanship.
 
@@ -75,4 +75,4 @@ house-of-jewelux/
 
 ---
 
-© 2026 HOUSE OF JEWELUX S.A. All rights reserved. Geneva • Milan • London • Paris • New York • Dubai.
+© 2026 HOUSE OF JEWELUX All rights reserved. Geneva • Milan • London • Paris • New York • Dubai.
