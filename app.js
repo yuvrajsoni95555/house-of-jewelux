@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Bespoke 3D Ring Studio State
     bespoke: {
-      metalId: 'yellow-gold',
-      gemId: 'diamond',
+      metalId: 'micro-gold',
+      gemId: 'moissanite',
       cutId: 'round',
       caratWeight: 2.5,
       rotationY: 0.4,
@@ -424,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.remove('bg-white', 'text-[#766B5E]', 'bg-[#F6EBDD]', 'text-[#8A6B38]');
       }
     });
-  });
   }
 
   function renderCategoryPageView() {
@@ -1152,7 +1151,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
 
     const bespokeItem = {
       id: `BESPOKE-${Date.now()}`,
-      name: `${b.caratWeight}ct ${gemObj.name} ${metalObj.name} Solitaire`,
+      name: `${b.caratWeight}ct ${gemObj.name} Solitaire Ring (${metalObj.name})`,
       priceUSD: priceVal,
       image: 'images/jewelux_solitaire_ring.jpg',
       metal: metalObj.name,
@@ -1164,7 +1163,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     state.cart.push(bespokeItem);
     localStorage.setItem('jewelux_cart', JSON.stringify(state.cart));
     updateCartBadges();
-    showToast('Bespoke ring commission added to your bag!', '💍');
+    showToast('Bespoke fine silver ring added to your bag!', '💍');
     openCartDrawer();
   };
 
@@ -1277,7 +1276,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       // 7. Hide Loader with Smooth Fade
       if (this.loader) {
         setTimeout(() => {
-          this.loader.classList.add('fade-out');
+          this.loader.classList.add('fade-out'); setTimeout(() => { if (this.loader) this.loader.style.display = 'none'; }, 400);
         }, 300);
       }
 
@@ -1408,11 +1407,15 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     createMaterials() {
       // Calibrated metal palettes (eliminates washed-out 3D appearance with true PBR metallic conductors)
       const metalPalettes = {
-        'yellow-gold': { shank: 0xB28228, head: 0xDCE0E8, metalness: 0.98, roughness: 0.09, clearcoat: 0.08, envMapIntensity: 1.5 },
-        'liquid-silver': { shank: 0xE2E7EE, head: 0xE2E7EE, metalness: 0.98, roughness: 0.07, clearcoat: 0.10, envMapIntensity: 1.6 },
-        'rose-gold': { shank: 0xBA6450, head: 0xDCE0E8, metalness: 0.98, roughness: 0.09, clearcoat: 0.08, envMapIntensity: 1.5 },
-        'white-gold': { shank: 0xDCE0E8, head: 0xDCE0E8, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
-        'platinum': { shank: 0xD2D6E0, head: 0xD2D6E0, metalness: 1.0, roughness: 0.06, clearcoat: 0.12, envMapIntensity: 1.7 }
+        'micro-gold': { shank: 0xD4A237, head: 0xE8EBF0, metalness: 0.96, roughness: 0.10, clearcoat: 0.12, envMapIntensity: 1.6 },
+        'rhodium-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
+        'rose-gold': { shank: 0xCF7A64, head: 0xE8EBF0, metalness: 0.96, roughness: 0.10, clearcoat: 0.12, envMapIntensity: 1.6 },
+        'antique-gold': { shank: 0xB88728, head: 0xB88728, metalness: 0.92, roughness: 0.18, clearcoat: 0.08, envMapIntensity: 1.4 },
+        // Aliases
+        'liquid-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
+        'yellow-gold': { shank: 0xD4A237, head: 0xE8EBF0, metalness: 0.96, roughness: 0.10, clearcoat: 0.12, envMapIntensity: 1.6 },
+        'white-gold': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
+        'platinum': { shank: 0xDCE0E8, head: 0xDCE0E8, metalness: 1.0, roughness: 0.06, clearcoat: 0.12, envMapIntensity: 1.7 }
       };
 
       const curMetal = metalPalettes[this.currentMetal] || metalPalettes['yellow-gold'];
@@ -1437,53 +1440,48 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
         envMapIntensity: 1.8
       });
 
-      // Calibrated gemstone palettes (solid white diamond fully opaque, zero internal reflection)
+      // Calibrated solitaire center stone palettes (solid white diamond fully opaque, zero internal reflection)
       const gemPalettes = {
-        'diamond': {
-          color: 0xffffff, // Solid pure white diamond material (fully opaque)
-          metalness: 0.0,
-          roughness: 0.04,
-          clearcoat: 1.0,
-          envMapIntensity: 1.7,
-          wire: 0xd2d9e4,
-          wireOpacity: 0.40
-        },
         'moissanite': {
-          color: 0xfafcff,
+          color: 0xffffff,
           metalness: 0.0,
-          roughness: 0.04,
+          roughness: 0.03,
           clearcoat: 1.0,
-          envMapIntensity: 1.8,
-          wire: 0xd2d9e4,
-          wireOpacity: 0.40
+          envMapIntensity: 1.85,
+          wire: 0xd6e0f0,
+          wireOpacity: 0.38
         },
-        'emerald': {
-          color: 0x022c13, // Authentic Colombian deep velvety emerald green (NOT neon!)
-          metalness: 0.02,
-          roughness: 0.04,
-          clearcoat: 0.5,
-          envMapIntensity: 1.3,
-          wire: 0x011f0d, // Deep forest green facet edge
-          wireOpacity: 0.25
+        'diamond': {
+          color: 0xffffff,
+          metalness: 0.0,
+          roughness: 0.03,
+          clearcoat: 1.0,
+          envMapIntensity: 1.80,
+          wire: 0xd0d8e8,
+          wireOpacity: 0.35
         },
-        'sapphire': {
-          color: 0x051336, // Deep royal Kashmir sapphire blue
-          metalness: 0.02,
-          roughness: 0.04,
-          clearcoat: 0.5,
-          envMapIntensity: 1.3,
-          wire: 0x020a1f,
-          wireOpacity: 0.25
+        'solitaire-vvs': {
+          color: 0xfdfdff,
+          metalness: 0.0,
+          roughness: 0.03,
+          clearcoat: 1.0,
+          envMapIntensity: 1.80,
+          wire: 0xd2d9e6,
+          wireOpacity: 0.35
         },
-        'ruby': {
-          color: 0x38030d, // Deep Burmese pigeon blood ruby
-          metalness: 0.02,
+        'champagne-solitaire': {
+          color: 0xF5E6D3,
+          metalness: 0.01,
           roughness: 0.04,
-          clearcoat: 0.5,
-          envMapIntensity: 1.3,
-          wire: 0x220107,
-          wireOpacity: 0.25
-        }
+          clearcoat: 0.9,
+          envMapIntensity: 1.60,
+          wire: 0xDEC29B,
+          wireOpacity: 0.35
+        },
+        // Legacy aliases
+        'emerald': { color: 0xffffff, metalness: 0.0, roughness: 0.03, clearcoat: 1.0, envMapIntensity: 1.8, wire: 0xd2d9e4, wireOpacity: 0.35 },
+        'sapphire': { color: 0xffffff, metalness: 0.0, roughness: 0.03, clearcoat: 1.0, envMapIntensity: 1.8, wire: 0xd2d9e4, wireOpacity: 0.35 },
+        'ruby': { color: 0xffffff, metalness: 0.0, roughness: 0.03, clearcoat: 1.0, envMapIntensity: 1.8, wire: 0xd2d9e4, wireOpacity: 0.35 }
       };
 
       const curGem = gemPalettes[this.currentGem] || gemPalettes['diamond'];
@@ -1806,10 +1804,10 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
         const rMid = (rBase + stoneRadius) * 0.50 + prongRadius * 0.35;
         const p1 = new THREE.Vector3(cosA * rMid, (collarY + girdleY) * 0.52, sinA * rMid);
 
-        const rGirdle = stoneRadius + prongRadius * 0.65;
+        const rGirdle = stoneRadius + prongRadius * (scale >= 1.15 ? 0.85 : 0.65);
         const p2 = new THREE.Vector3(cosA * rGirdle, girdleY, sinA * rGirdle);
 
-        const rTip = stoneRadius - prongRadius * 0.28;
+        const rTip = stoneRadius - prongRadius * (scale >= 1.15 ? 0.20 : 0.28);
         const tipY = girdleY + crownH * 0.45;
         const p3 = new THREE.Vector3(cosA * rTip, tipY, sinA * rTip);
 
@@ -1893,7 +1891,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
         const nz = Math.sign(c.z) * 0.7071;
 
         const p0 = new THREE.Vector3(c.x * 0.60, collarY - 0.20, c.z * 0.60);
-        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * 0.35);
+        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * (scale >= 1.15 ? 0.55 : 0.35), (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * (scale >= 1.15 ? 0.55 : 0.35));
         const p2 = new THREE.Vector3(c.x + nx * prongRadius * 0.65, girdleY, c.z + nz * prongRadius * 0.65);
         const tipY = girdleY + crownH * 0.45;
         const p3 = new THREE.Vector3(c.x - nx * prongRadius * 0.28, tipY, c.z - nz * prongRadius * 0.28);
@@ -1966,7 +1964,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
         const nz = Math.sign(c.z) * 0.7071;
 
         const p0 = new THREE.Vector3(c.x * 0.60, collarY - 0.20, c.z * 0.60);
-        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * 0.35);
+        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * (scale >= 1.15 ? 0.55 : 0.35), (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * (scale >= 1.15 ? 0.55 : 0.35));
         const p2 = new THREE.Vector3(c.x + nx * prongRadius * 0.65, girdleY, c.z + nz * prongRadius * 0.65);
         const tipY = girdleY + crownH * 0.45;
         const p3 = new THREE.Vector3(c.x - nx * prongRadius * 0.28, tipY, c.z - nz * prongRadius * 0.28);
@@ -2675,6 +2673,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       this.buildCenterGemstone();
       this.buildSettingHead();
       this.setMetal(this.currentMetal);
+      this.updateCameraFraming(false);
     }
 
     setCarat(caratVal) {
@@ -2682,6 +2681,7 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       this.buildCenterGemstone();
       this.buildSettingHead();
       this.setMetal(this.currentMetal);
+      this.updateCameraFraming(false);
     }
 
     updateCameraFraming(forceResetAngle = false) {
@@ -2694,49 +2694,44 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       const aspect = w / h;
       this.camera.aspect = aspect;
 
-      // Visual center of the entire ring assembly in 3D perspective projection
-      // Calibrated to (0, 1.2, 0) so the top table facet and bottom of the ring shank
-      // are symmetrically framed with comfortable luxury margin.
-      const targetCenter = new THREE.Vector3(0, 1.2, 0);
+      const scale = this.getCaratScale(this.currentCarat);
+      // Adaptive vertical visual center:
+      // Ring bottom is at y ≈ -10.5, 1ct table facet is at y ≈ 15.2, 4ct table facet is at y ≈ 16.5.
+      // Target center elevates slightly with carat weight so the entire ring + stone assembly remains perfectly centered.
+      const targetCenterY = 2.0 + (scale - 1.0) * 2.2;
+      const targetCenter = new THREE.Vector3(0, targetCenterY, 0);
 
-      // Normalized reference hero direction vector from target (0, 1.2, 0) to elevated beauty angle
+      // Hero beauty angle direction vector matching visual reference photo
       const baseDirection = new THREE.Vector3(16, 18.8, 36).normalize();
       
-      // Base distance calibrated so the complete ring appears visually smaller inside the viewer (~50-55% occupancy),
-      // providing ample, comfortable empty space around the ring on all laptops, monitors, and projectors.
-      const baseDistance = 82.0;
+      // Base distance calibrated with generous luxury margin:
+      // At 1ct (scale 1.0), distance is ~88. At 4ct (scale 1.172), distance factor increases so the stone never clips!
+      const baseDistance = 88.0;
+      const caratDistanceFactor = 1.0 + (scale - 1.0) * 0.95;
       const refAspect = 1.15;
 
-      // Adaptive Distance & Auto Zoom Adjustment:
-      // In Three.js PerspectiveCamera, vertical FOV is fixed at 34°.
-      // As screen width narrows (phones, portrait tablets, 4:3 projectors),
-      // we dynamically pull the camera back so the ring always has comfortable empty space
-      // and zero edge clipping.
       let distanceFactor = 1.0;
       if (aspect < refAspect) {
         // Horizontally constrained displays (phones, portrait tablets, 4:3 projectors)
         distanceFactor = refAspect / aspect;
         if (aspect < 0.85) {
-          distanceFactor *= 1.05;
+          distanceFactor *= 1.10;
         }
       } else if (aspect > 1.8) {
         // Vertically constrained displays (mobile landscape, ultra-wide monitors)
-        distanceFactor = 1.06;
+        distanceFactor = 1.10;
       }
 
-      const targetDistance = baseDistance * distanceFactor;
+      const targetDistance = baseDistance * distanceFactor * caratDistanceFactor;
 
       if (this.controls) {
         this.controls.target.copy(targetCenter);
-        // Tightly clamp zoom so the ring can NEVER become excessively zoomed in
-        // or excessively small, maintaining a consistent comfortable size on all displays
         this.controls.minDistance = targetDistance * 0.84;
-        this.controls.maxDistance = targetDistance * 1.22;
+        this.controls.maxDistance = targetDistance * 1.25;
 
         if (forceResetAngle || !this.hasUserInteractedOnce) {
           this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
         } else {
-          // If user rotated ring, preserve their angle of view and smoothly adjust distance
           const curDir = new THREE.Vector3().subVectors(this.camera.position, this.controls.target);
           if (curDir.lengthSq() > 0.001) {
             curDir.normalize();
@@ -2791,14 +2786,18 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     }
   }
 
+  window.Jewelry3DViewer = Jewelry3DViewer;
   let jewelry3DViewer = null;
 
   function init3DCanvasEngine() {
     try {
+      console.log('init3DCanvasEngine: starting...');
       jewelry3DViewer = new Jewelry3DViewer('bespoke-3d-canvas', 'bespoke-3d-wrapper', 'canvas-3d-loader');
       window.jewelryViewer = jewelry3DViewer;
+      console.log('init3DCanvasEngine: SUCCESS, window.jewelryViewer is set.');
     } catch (e) {
-      console.error('Failed to initialize 3D Jewelry Engine:', e);
+      console.error('Failed to initialize 3D Jewelry Engine:', e.message, e.stack);
+      window.__3d_init_error = { message: e.message, stack: e.stack };
     }
   }
 
