@@ -3451,6 +3451,118 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     scriptTag.textContent = JSON.stringify(schema, null, 2);
   }
 
+  // ================= MEGA MENU / CATALOGUE DROPDOWN CONTROLLER =================
+  function initMegaMenu() {
+    const groups = document.querySelectorAll('.dropdown-group');
+    if (!groups.length) return;
+
+    groups.forEach(group => {
+      const trigger = group.querySelector('a, button');
+      const menu = group.querySelector('.dropdown-menu');
+      if (!trigger || !menu) return;
+
+      let closeTimer = null;
+
+      function openMenu() {
+        clearTimeout(closeTimer);
+        group.classList.add('is-open');
+        menu.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeMenu(immediate = false) {
+        clearTimeout(closeTimer);
+        if (immediate) {
+          group.classList.remove('is-open');
+          menu.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        } else {
+          closeTimer = setTimeout(() => {
+            group.classList.remove('is-open');
+            menu.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+          }, 220);
+        }
+      }
+
+      // Desktop hover bridge
+      group.addEventListener('mouseenter', openMenu);
+      group.addEventListener('mouseleave', (e) => {
+        if (e.relatedTarget && menu.contains(e.relatedTarget)) {
+          clearTimeout(closeTimer);
+          return;
+        }
+        closeMenu(false);
+      });
+
+      menu.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimer);
+        openMenu();
+      });
+
+      menu.addEventListener('mouseleave', (e) => {
+        if (e.relatedTarget && group.contains(e.relatedTarget)) {
+          clearTimeout(closeTimer);
+          return;
+        }
+        closeMenu(false);
+      });
+
+      // Touch & Click toggle
+      trigger.addEventListener('pointerup', (e) => {
+        if (e.pointerType === 'touch') {
+          if (!menu.classList.contains('is-open')) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMenu();
+          }
+        }
+      });
+
+      trigger.addEventListener('click', (e) => {
+        if (!menu.classList.contains('is-open')) {
+          e.preventDefault();
+          openMenu();
+        }
+      });
+
+      // Close when clicking any link inside the mega menu
+      const links = menu.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMenu(true);
+        });
+      });
+    });
+
+    // Global Outside Click listener to close any open dropdowns
+    document.addEventListener('click', (e) => {
+      groups.forEach(group => {
+        if (!group.contains(e.target)) {
+          const trigger = group.querySelector('a, button');
+          const menu = group.querySelector('.dropdown-menu');
+          group.classList.remove('is-open');
+          if (menu) menu.classList.remove('is-open');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Global Escape key listener
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        groups.forEach(group => {
+          const trigger = group.querySelector('a, button');
+          const menu = group.querySelector('.dropdown-menu');
+          group.classList.remove('is-open');
+          if (menu) menu.classList.remove('is-open');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  }
+  window.initMegaMenu = initMegaMenu;
+
   // ================= 12. INITIAL BOOTSTRAP =================
   renderAllProductGrids();
   renderCart();
@@ -3462,4 +3574,5 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
   setBespokeCarat(state.bespoke.caratWeight || 2.5);
   updateBespokePrice();
   handleRoute();
+  initMegaMenu();
 });
