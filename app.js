@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'returns': document.getElementById('view-returns'),
     'privacy': document.getElementById('view-privacy'),
     'terms': document.getElementById('view-terms'),
+    'care': document.getElementById('view-care'),
     'studio': document.getElementById('view-studio')
   };
 
@@ -1024,8 +1025,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (qvDesc) qvDesc.textContent = p.description;
     if (qvStone) qvStone.textContent = p.stone || 'Solitaire';
     if (qvCut) qvCut.textContent = p.cut || 'Hearts & Arrows Ideal';
-    if (qvClarity) qvClarity.textContent = p.clarity || 'VVS1 Certified';
-    if (qvCert) qvCert.textContent = p.certificate || 'GIA / GRA Registered';
+    if (qvClarity) qvClarity.textContent = p.clarity || 'VVS1 Clarity';
+    if (qvCert) qvCert.textContent = p.certificate || 'BIS Hallmarked • Specialist Inspected';
 
     const addBtn = document.getElementById('qv-add-btn');
     if (addBtn) {
@@ -3283,8 +3284,8 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     const list = document.getElementById('studio-faq-list');
     if (!list) return;
     const faqs = STORE.faqs || [
-      { q: 'Is your 925 Sterling Silver genuine and hallmarked?', a: 'Every piece is stamped with genuine 925 sterling silver and plated in rhodium for lifelong anti-tarnish luster.' },
-      { q: 'Do rings include certificates of authenticity?', a: 'Yes, all our moissanites and diamonds include individual laboratory dossiers and GRA/GIA verification numbers, along with official BIS Hallmarking on all 925 sterling silver settings.' }
+      { q: 'Is your 925 Sterling Silver genuine and hallmarked?', a: 'Every piece is stamped with genuine BIS 925 sterling silver and finished in anti-tarnish rhodium or micron gold plating.' },
+      { q: 'Do creations include certificates of authenticity?', a: 'Yes, all our solitaires and stones are carefully selected by our specialists, accompanied by an atelier authenticity dossier, with official BIS Hallmarking on all 925 sterling silver settings.' }
     ];
 
     list.innerHTML = faqs.map((faq, i) => `
