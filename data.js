@@ -1706,14 +1706,13 @@ const JEWELUX_DATA = {
       { id: 'yellow-gold', name: 'Solid 925 Silver (Micron Gold Plated)', color: '#DECCA8', specular: '#FFF8EC', priceBase: 106, isSilver: true }
     ],
     gems: [
-      { id: 'moissanite', name: 'D-Flawless Moissanite (Certified)', color: '#FFFFFF', dispersion: 0.104, pricePerCarat: 26 },
       { id: 'diamond', name: 'Certified Lab Diamond', color: '#FFFFFF', dispersion: 0.044, pricePerCarat: 54 },
+      { id: 'ruby', name: 'Burma Ruby (Pigeon Blood)', color: '#9E1224', dispersion: 0.038, pricePerCarat: 48 },
+      { id: 'emerald', name: 'Colombian Emerald', color: '#0A7A50', dispersion: 0.044, pricePerCarat: 52 },
+      { id: 'sapphire', name: 'Royal Ceylon Sapphire', color: '#123680', dispersion: 0.040, pricePerCarat: 50 },
+      { id: 'moissanite', name: 'D-Flawless Moissanite (Certified)', color: '#FFFFFF', dispersion: 0.104, pricePerCarat: 26 },
       { id: 'solitaire-vvs', name: 'VVS Solitaire (Fine White)', color: '#FFFFFF', dispersion: 0.040, pricePerCarat: 38 },
-      { id: 'champagne-solitaire', name: 'Vintage Champagne Solitaire', color: '#F7E7CE', dispersion: 0.038, pricePerCarat: 34 },
-      // Backward-compatible aliases
-      { id: 'emerald', name: 'Certified Lab Diamond', color: '#FFFFFF', dispersion: 0.044, pricePerCarat: 54 },
-      { id: 'sapphire', name: 'VVS Solitaire (Fine White)', color: '#FFFFFF', dispersion: 0.040, pricePerCarat: 38 },
-      { id: 'ruby', name: 'Vintage Champagne Solitaire', color: '#F7E7CE', dispersion: 0.038, pricePerCarat: 34 }
+      { id: 'champagne-solitaire', name: 'Vintage Champagne Solitaire', color: '#F7E7CE', dispersion: 0.038, pricePerCarat: 34 }
     ],
     cuts: [
       { id: 'round', name: 'Round Brilliant', ratio: 1.0 },

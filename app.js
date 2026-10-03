@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Bespoke 3D Ring Studio State
     bespoke: {
       bandStyle: 'cathedral',
-      metalId: 'micro-gold',
-      gemId: 'moissanite',
+      metalId: 'yellow-gold',
+      gemId: 'diamond',
       cutId: 'round',
       caratWeight: 2.5,
       ringSize: '14',
@@ -1248,7 +1248,7 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     constructor(canvasId = 'bespoke-3d-canvas', containerId = 'bespoke-3d-wrapper', loaderId = 'canvas-3d-loader') {
       this.canvas = document.getElementById(canvasId);
       this.container = document.getElementById(containerId);
-      this.loader = document.getElementById(loaderId);
+      this.loader = document.getElementById(loaderId) || document.getElementById('bespoke-loader') || document.getElementById('canvas-3d-loader');
       if (!this.canvas) return;
 
       this.currentBandStyle = state.bespoke.bandStyle || 'cathedral';
@@ -1347,11 +1347,17 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
       this.buildCenterGemstone();
 
       // 7. Hide Loader with Smooth Fade
-      if (this.loader) {
-        setTimeout(() => {
-          this.loader.classList.add('fade-out'); setTimeout(() => { if (this.loader) this.loader.style.display = 'none'; }, 400);
-        }, 300);
-      }
+      const hideLoaders = () => {
+        ['bespoke-loader', 'canvas-3d-loader'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.classList.add('fade-out');
+            setTimeout(() => { if (el) el.style.display = 'none'; }, 200);
+          }
+        });
+      };
+      setTimeout(hideLoaders, 50);
+      setTimeout(hideLoaders, 300);
 
       // 8. Responsive Display, Screen Orientation & Observer Handlers
       window.addEventListener('resize', () => this.handleResizeDebounced());
@@ -1444,9 +1450,10 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
       fillLight.position.set(-18, 14, -14);
       this.scene.add(fillLight);
 
-      // Diamond sparkle pinpoint
-      const diamondSpot = new THREE.PointLight(0xffffff, 0.70, 30);
+      // Diamond sparkle pinpoint (calibrated to preserve deep saturated color on ruby, emerald, and sapphire)
+      const diamondSpot = new THREE.PointLight(0xffffff, 0.35, 35);
       diamondSpot.position.set(2, 22, 10);
+      this.diamondSpot = diamondSpot;
       this.scene.add(diamondSpot);
     }
 
@@ -1478,17 +1485,16 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     }
 
     createMaterials() {
-      // Calibrated metal palettes (eliminates washed-out 3D appearance with true PBR metallic conductors)
+      // Calibrated metal palettes (rich 18K yellow gold, liquid white gold, and warm rose gold throughout shank and prongs)
       const metalPalettes = {
-        'micro-gold': { shank: 0xD4A237, head: 0xE8EBF0, metalness: 0.96, roughness: 0.10, clearcoat: 0.12, envMapIntensity: 1.6 },
-        'rhodium-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
-        'rose-gold': { shank: 0xCF7A64, head: 0xE8EBF0, metalness: 0.96, roughness: 0.10, clearcoat: 0.12, envMapIntensity: 1.6 },
-        'antique-gold': { shank: 0xB88728, head: 0xB88728, metalness: 0.92, roughness: 0.18, clearcoat: 0.08, envMapIntensity: 1.4 },
-        // Aliases
-        'liquid-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
-        'yellow-gold': { shank: 0xD4A237, head: 0xE8EBF0, metalness: 0.96, roughness: 0.10, clearcoat: 0.12, envMapIntensity: 1.6 },
-        'white-gold': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.12, envMapIntensity: 1.7 },
-        'platinum': { shank: 0xDCE0E8, head: 0xDCE0E8, metalness: 1.0, roughness: 0.06, clearcoat: 0.12, envMapIntensity: 1.7 }
+        'micro-gold': { shank: 0xD4A237, head: 0xD4A237, metalness: 0.96, roughness: 0.09, clearcoat: 0.15, envMapIntensity: 1.7 },
+        'yellow-gold': { shank: 0xD4A237, head: 0xD4A237, metalness: 0.96, roughness: 0.09, clearcoat: 0.15, envMapIntensity: 1.7 },
+        'rhodium-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.15, envMapIntensity: 1.75 },
+        'white-gold': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.15, envMapIntensity: 1.75 },
+        'rose-gold': { shank: 0xCF7A64, head: 0xCF7A64, metalness: 0.96, roughness: 0.09, clearcoat: 0.15, envMapIntensity: 1.7 },
+        'antique-gold': { shank: 0xB88728, head: 0xB88728, metalness: 0.92, roughness: 0.18, clearcoat: 0.10, envMapIntensity: 1.4 },
+        'liquid-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.15, envMapIntensity: 1.75 },
+        'platinum': { shank: 0xDCE0E8, head: 0xDCE0E8, metalness: 1.0, roughness: 0.06, clearcoat: 0.15, envMapIntensity: 1.75 }
       };
 
       const curMetal = metalPalettes[this.currentMetal] || metalPalettes['yellow-gold'];
@@ -1505,56 +1511,79 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
 
       const headMaterial = new THREE.MeshPhysicalMaterial({
         color: new THREE.Color(curMetal.head),
-        metalness: 0.98,
-        roughness: 0.07,
-        clearcoat: 0.12,
+        metalness: curMetal.metalness,
+        roughness: curMetal.roughness,
+        clearcoat: curMetal.clearcoat,
         clearcoatRoughness: 0.02,
         reflectivity: 0.98,
-        envMapIntensity: 1.8
+        envMapIntensity: curMetal.envMapIntensity
       });
 
-      // Calibrated solitaire center stone palettes (solid white diamond fully opaque, zero internal reflection)
+      // Calibrated solitaire center stone palettes (true vibrant diamond, ruby, emerald, sapphire)
       const gemPalettes = {
-        'moissanite': {
-          color: 0xffffff,
-          metalness: 0.0,
-          roughness: 0.03,
-          clearcoat: 1.0,
-          envMapIntensity: 1.85,
-          wire: 0xd6e0f0,
-          wireOpacity: 0.38
-        },
         'diamond': {
           color: 0xffffff,
           metalness: 0.0,
-          roughness: 0.03,
+          roughness: 0.02,
           clearcoat: 1.0,
-          envMapIntensity: 1.80,
+          envMapIntensity: 1.85,
           wire: 0xd0d8e8,
+          wireOpacity: 0.30
+        },
+        'ruby': {
+          color: 0x850014,
+          metalness: 0.08,
+          roughness: 0.07,
+          clearcoat: 0.25,
+          envMapIntensity: 0.35,
+          wire: 0x5A0410,
+          wireOpacity: 0.10
+        },
+        'emerald': {
+          color: 0x005220,
+          metalness: 0.08,
+          roughness: 0.07,
+          clearcoat: 0.25,
+          envMapIntensity: 0.35,
+          wire: 0x01381A,
+          wireOpacity: 0.10
+        },
+        'sapphire': {
+          color: 0x051C66,
+          metalness: 0.08,
+          roughness: 0.07,
+          clearcoat: 0.25,
+          envMapIntensity: 0.35,
+          wire: 0x05133D,
+          wireOpacity: 0.10
+        },
+        'moissanite': {
+          color: 0xffffff,
+          metalness: 0.0,
+          roughness: 0.02,
+          clearcoat: 1.0,
+          envMapIntensity: 1.95,
+          wire: 0xd6e0f0,
           wireOpacity: 0.35
         },
         'solitaire-vvs': {
           color: 0xfdfdff,
           metalness: 0.0,
-          roughness: 0.03,
+          roughness: 0.02,
           clearcoat: 1.0,
-          envMapIntensity: 1.80,
+          envMapIntensity: 1.85,
           wire: 0xd2d9e6,
-          wireOpacity: 0.35
+          wireOpacity: 0.30
         },
         'champagne-solitaire': {
-          color: 0xF5E6D3,
-          metalness: 0.01,
+          color: 0xD8B278,
+          metalness: 0.10,
           roughness: 0.04,
-          clearcoat: 0.9,
-          envMapIntensity: 1.60,
-          wire: 0xDEC29B,
-          wireOpacity: 0.35
-        },
-        // Legacy aliases
-        'emerald': { color: 0xffffff, metalness: 0.0, roughness: 0.03, clearcoat: 1.0, envMapIntensity: 1.8, wire: 0xd2d9e4, wireOpacity: 0.35 },
-        'sapphire': { color: 0xffffff, metalness: 0.0, roughness: 0.03, clearcoat: 1.0, envMapIntensity: 1.8, wire: 0xd2d9e4, wireOpacity: 0.35 },
-        'ruby': { color: 0xffffff, metalness: 0.0, roughness: 0.03, clearcoat: 1.0, envMapIntensity: 1.8, wire: 0xd2d9e4, wireOpacity: 0.35 }
+          clearcoat: 0.90,
+          envMapIntensity: 1.20,
+          wire: 0x8C6B38,
+          wireOpacity: 0.20
+        }
       };
 
       const curGem = gemPalettes[this.currentGem] || gemPalettes['diamond'];
@@ -2205,11 +2234,15 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
       }
 
       const gemMesh = new THREE.Mesh(geom, this.materials.gem);
+      this.centerGemMesh = gemMesh;
       this.centerGemGroup.add(gemMesh);
 
-      // Facet edge highlights
+      // Facet edge highlights (subtle sparkle for diamonds, disabled for colored gems to preserve deep jewel color)
       const edgesGeom = new THREE.EdgesGeometry(geom, 12);
       const wire = new THREE.LineSegments(edgesGeom, this.materials.wire);
+      this.gemWireMesh = wire;
+      const isWhite = (this.currentGem === 'diamond' || this.currentGem === 'moissanite' || this.currentGem === 'solitaire-vvs');
+      wire.visible = isWhite;
       this.centerGemGroup.add(wire);
 
       const girdleY = 14.1 + (scale - 1.0) * 1.25;
@@ -2727,14 +2760,29 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
       this.materials.shank.color.setHex(p.shank);
       this.materials.shank.metalness = p.metalness;
       this.materials.shank.roughness = p.roughness;
-      this.materials.shank.clearcoat = p.clearcoat || 0.08;
-      this.materials.shank.envMapIntensity = p.envMapIntensity || 1.5;
+      this.materials.shank.clearcoat = p.clearcoat || 0.15;
+      this.materials.shank.envMapIntensity = p.envMapIntensity || 1.7;
+      this.materials.shank.needsUpdate = true;
 
       this.materials.head.color.setHex(p.head);
-      this.materials.head.metalness = 0.98;
-      this.materials.head.roughness = 0.07;
-      if (this.bridgeMesh) {
+      this.materials.head.metalness = p.metalness;
+      this.materials.head.roughness = p.roughness;
+      this.materials.head.clearcoat = p.clearcoat || 0.15;
+      this.materials.head.envMapIntensity = p.envMapIntensity || 1.7;
+      this.materials.head.needsUpdate = true;
+
+      if (this.bridgeMesh && this.bridgeMesh.material) {
         this.bridgeMesh.material.color.setHex(p.shank);
+      }
+      if (this.prongsMeshGroup) {
+        this.prongsMeshGroup.traverse(child => {
+          if (child.isMesh && child.material) {
+            child.material.color.setHex(p.head);
+            child.material.metalness = p.metalness;
+            child.material.roughness = p.roughness;
+            child.material.needsUpdate = true;
+          }
+        });
       }
     }
 
@@ -2745,13 +2793,36 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
       this.materials.gem.color.setHex(p.color);
       this.materials.gem.metalness = p.metalness !== undefined ? p.metalness : 0.02;
       this.materials.gem.roughness = p.roughness !== undefined ? p.roughness : 0.02;
-      this.materials.gem.clearcoat = p.clearcoat !== undefined ? p.clearcoat : 0.5;
-      this.materials.gem.envMapIntensity = p.envMapIntensity || 1.3;
+      this.materials.gem.clearcoat = p.clearcoat !== undefined ? p.clearcoat : 1.0;
+      this.materials.gem.envMapIntensity = p.envMapIntensity || 1.85;
       this.materials.gem.needsUpdate = true;
 
+      if (this.centerGemMesh && this.centerGemMesh.material) {
+        this.centerGemMesh.material.color.setHex(p.color);
+        this.centerGemMesh.material.metalness = this.materials.gem.metalness;
+        this.centerGemMesh.material.roughness = this.materials.gem.roughness;
+        this.centerGemMesh.material.clearcoat = this.materials.gem.clearcoat;
+        this.centerGemMesh.material.envMapIntensity = this.materials.gem.envMapIntensity;
+        this.centerGemMesh.material.needsUpdate = true;
+      }
+
       this.materials.wire.color.setHex(p.wire);
-      this.materials.wire.opacity = p.wireOpacity || 0.30;
+      this.materials.wire.opacity = p.wireOpacity || 0.15;
       this.materials.wire.needsUpdate = true;
+
+      if (this.gemWireMesh && this.gemWireMesh.material) {
+        this.gemWireMesh.material.color.setHex(p.wire);
+        this.gemWireMesh.material.opacity = p.wireOpacity || 0.15;
+        this.gemWireMesh.material.needsUpdate = true;
+      }
+
+      const isWhite = (gemId === 'diamond' || gemId === 'moissanite' || gemId === 'solitaire-vvs');
+      if (this.gemWireMesh) {
+        this.gemWireMesh.visible = isWhite;
+      }
+      if (this.diamondSpot) {
+        this.diamondSpot.intensity = isWhite ? 0.35 : 0.12;
+      }
     }
 
     setCut(cutId) {
@@ -2894,37 +2965,34 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
       const scale = this.getCaratScale(this.currentCarat);
       // Adaptive vertical visual center:
       // Ring bottom is at y ≈ -10.5, 1ct table facet is at y ≈ 15.2, 4ct table facet is at y ≈ 16.5.
-      // Target center elevates slightly with carat weight so the entire ring + stone assembly remains perfectly centered.
-      const targetCenterY = 2.0 + (scale - 1.0) * 2.2;
+      const targetCenterY = 1.6 + (scale - 1.0) * 1.8;
       const targetCenter = new THREE.Vector3(0, targetCenterY, 0);
 
-      // Hero beauty angle direction vector matching visual reference photo
-      const baseDirection = new THREE.Vector3(16, 18.8, 36).normalize();
+      // Hero beauty angle direction vector matching visual reference Image 2 (upright 3/4 beauty view)
+      const baseDirection = new THREE.Vector3(26, 12, 18).normalize();
       
-      // Base distance calibrated with generous luxury margin:
-      // At 1ct (scale 1.0), distance is ~88. At 4ct (scale 1.172), distance factor increases so the stone never clips!
-      const baseDistance = 88.0;
-      const caratDistanceFactor = 1.0 + (scale - 1.0) * 0.95;
+      // Base distance calibrated so ring fills ~75-80% of canvas height just like Image 2
+      const baseDistance = 50.0;
+      const caratDistanceFactor = 1.0 + (scale - 1.0) * 0.75;
       const refAspect = 1.15;
 
       let distanceFactor = 1.0;
       if (aspect < refAspect) {
-        // Horizontally constrained displays (phones, portrait tablets, 4:3 projectors)
+        // Horizontally constrained displays (phones, portrait tablets)
         distanceFactor = refAspect / aspect;
         if (aspect < 0.85) {
-          distanceFactor *= 1.10;
+          distanceFactor *= 1.08;
         }
       } else if (aspect > 1.8) {
-        // Vertically constrained displays (mobile landscape, ultra-wide monitors)
-        distanceFactor = 1.10;
+        distanceFactor = 1.08;
       }
 
       const targetDistance = baseDistance * distanceFactor * caratDistanceFactor;
 
       if (this.controls) {
         this.controls.target.copy(targetCenter);
-        this.controls.minDistance = targetDistance * 0.84;
-        this.controls.maxDistance = targetDistance * 1.25;
+        this.controls.minDistance = 30.0;
+        this.controls.maxDistance = 85.0;
 
         if (forceResetAngle || !this.hasUserInteractedOnce) {
           this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
@@ -3069,16 +3137,6 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     document.querySelectorAll('[data-bespoke-style]').forEach(btn => {
       const isMatch = btn.getAttribute('data-bespoke-style') === style;
       btn.classList.toggle('active', isMatch);
-      const titleSpan = btn.querySelector('span:first-of-type');
-      if (titleSpan) {
-        if (isMatch) {
-          titleSpan.classList.remove('font-medium', 'text-[#1D1815]');
-          titleSpan.classList.add('font-semibold', 'text-[#8A6B38]');
-        } else {
-          titleSpan.classList.remove('font-semibold', 'text-[#8A6B38]');
-          titleSpan.classList.add('font-medium', 'text-[#1D1815]');
-        }
-      }
     });
     if (window.jewelryViewer && typeof window.jewelryViewer.setBandStyle === 'function') {
       window.jewelryViewer.setBandStyle(style);
@@ -3086,13 +3144,14 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
   };
 
   const BESPOKE_METAL_NAMES = {
-    'rhodium-silver': 'Silver / Rhodium',
-    'liquid-silver': 'Silver / Rhodium',
-    'micro-gold': 'Micron Gold',
-    'rose-gold': 'Rose Gold Plated',
-    'white-gold': 'Bright Rhodium',
-    'platinum': 'Antique Finish',
-    'antique-gold': 'Antique Finish'
+    'yellow-gold': 'Yellow Gold',
+    'white-gold': 'White Gold',
+    'rose-gold': 'Rose Gold',
+    'micro-gold': 'Yellow Gold',
+    'rhodium-silver': 'White Gold',
+    'liquid-silver': 'White Gold',
+    'antique-gold': 'Antique Gold',
+    'platinum': 'White Gold'
   };
 
   window.setBespokeMetal = (metalId) => {
@@ -3103,27 +3162,24 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     }
     document.querySelectorAll('[data-bespoke-metal]').forEach(btn => {
       const val = btn.getAttribute('data-bespoke-metal');
-      const isMatch = val === metalId || (metalId === 'liquid-silver' && val === 'rhodium-silver') || (metalId === 'rhodium-silver' && val === 'liquid-silver');
+      const isMatch = val === metalId || 
+        (metalId === 'yellow-gold' && val === 'micro-gold') || (metalId === 'micro-gold' && val === 'yellow-gold') ||
+        (metalId === 'white-gold' && (val === 'rhodium-silver' || val === 'liquid-silver')) ||
+        ((metalId === 'rhodium-silver' || metalId === 'liquid-silver') && val === 'white-gold');
       btn.classList.toggle('active', isMatch);
-      const span = btn.querySelector('span');
-      if (span) {
-        if (isMatch) {
-          span.classList.remove('text-[#766B5E]', 'font-medium');
-          span.classList.add('text-[#8A6B38]', 'font-semibold');
-        } else {
-          span.classList.remove('text-[#8A6B38]', 'font-semibold');
-          span.classList.add('text-[#766B5E]', 'font-medium');
-        }
-      }
     });
     if (window.jewelryViewer && typeof window.jewelryViewer.setMetal === 'function') {
       window.jewelryViewer.setMetal(metalId);
     }
+    updateBespokePrice();
   };
 
   const BESPOKE_GEM_NAMES = {
+    'diamond': 'Diamond',
+    'ruby': 'Ruby',
+    'emerald': 'Emerald',
+    'sapphire': 'Sapphire',
     'moissanite': 'D-Moissanite',
-    'diamond': 'Lab Diamond',
     'solitaire-vvs': 'VS Solitaire',
     'champagne-solitaire': 'Champagne Solitaire'
   };
@@ -3137,20 +3193,11 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     document.querySelectorAll('[data-bespoke-gem]').forEach(btn => {
       const isMatch = btn.getAttribute('data-bespoke-gem') === gemId;
       btn.classList.toggle('active', isMatch);
-      const span = btn.querySelector('span');
-      if (span) {
-        if (isMatch) {
-          span.classList.remove('text-[#766B5E]', 'font-medium');
-          span.classList.add('text-[#8A6B38]', 'font-semibold');
-        } else {
-          span.classList.remove('text-[#8A6B38]', 'font-semibold');
-          span.classList.add('text-[#766B5E]', 'font-medium');
-        }
-      }
     });
     if (window.jewelryViewer && typeof window.jewelryViewer.setGem === 'function') {
       window.jewelryViewer.setGem(gemId);
     }
+    updateBespokePrice();
   };
 
   const BESPOKE_CUT_NAMES = {
@@ -3176,23 +3223,17 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     }
     document.querySelectorAll('[data-bespoke-cut]').forEach(btn => {
       const isMatch = btn.getAttribute('data-bespoke-cut') === cutId;
+      btn.classList.toggle('active', isMatch);
       if (isMatch) {
-        btn.className = 'group p-2 rounded-lg border border-[#C5A674] bg-[#F6EBDD]/50 text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none shadow-sm ring-1 ring-[#C5A674]';
+        btn.className = 'pill-cut-btn active py-1.5 px-3 sm:px-3.5 rounded-full border border-black bg-black text-white text-xs font-medium transition shadow-sm';
       } else {
-        btn.className = 'group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none';
-      }
-      const span = btn.querySelector('span');
-      if (span) {
-        if (isMatch) {
-          span.className = 'text-[10px] font-semibold text-[#8A6B38] block';
-        } else {
-          span.className = 'text-[10px] font-medium text-[#1D1815] block';
-        }
+        btn.className = 'pill-cut-btn py-1.5 px-3 sm:px-3.5 rounded-full border border-neutral-200 bg-white text-neutral-700 hover:border-black text-xs font-normal transition';
       }
     });
     if (window.jewelryViewer && typeof window.jewelryViewer.setCut === 'function') {
       window.jewelryViewer.setCut(cutId);
     }
+    updateBespokePrice();
   };
 
   window.setBespokeCarat = (caratVal) => {
@@ -3205,15 +3246,17 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
     document.querySelectorAll('[data-bespoke-carat]').forEach(btn => {
       const bVal = parseFloat(btn.getAttribute('data-bespoke-carat'));
       const isMatch = Math.abs(bVal - val) < 0.05;
+      btn.classList.toggle('active', isMatch);
       if (isMatch) {
-        btn.className = 'py-2 px-3 rounded-lg border border-[#C5A674] bg-[#F6EBDD]/60 text-xs font-semibold text-[#8A6B38] shadow-sm transition';
+        btn.className = 'pill-carat-btn active py-2 px-4 rounded-full border border-black bg-black text-white text-xs font-medium transition shadow-sm';
       } else {
-        btn.className = 'py-2 px-3 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-xs font-medium text-[#1D1815] transition';
+        btn.className = 'pill-carat-btn py-2 px-4 rounded-full border border-neutral-200 bg-white text-neutral-700 hover:border-black text-xs font-normal transition';
       }
     });
     if (window.jewelryViewer && typeof window.jewelryViewer.setCarat === 'function') {
       window.jewelryViewer.setCarat(caratVal);
     }
+    updateBespokePrice();
   };
 
   window.setBespokeRingSize = (size) => {
@@ -3998,6 +4041,7 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
   renderCart();
   renderWishlist();
   init3DCanvasEngine();
+  setBespokeBandStyle(state.bespoke.bandStyle || 'cathedral');
   setBespokeMetal(state.bespoke.metalId || 'yellow-gold');
   setBespokeGem(state.bespoke.gemId || 'diamond');
   setBespokeCut(state.bespoke.cutId || 'round');

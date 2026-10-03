@@ -555,6 +555,31 @@ body {
   cursor: grab;
   touch-action: none;
 }
+#bespoke-studio .canvas-3d-wrapper,
+#bespoke-3d-wrapper {
+  background: #FFFFFF !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  height: 100% !important;
+  min-height: 520px;
+}
+.bespoke-loader {
+  position: absolute;
+  inset: 0;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.bespoke-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 .canvas-3d-wrapper:active {
   cursor: grabbing;
 }
@@ -724,58 +749,91 @@ body {
   color: #766B5E;
 }
 
-/* Metal & Stone Circular Swatches */
-.customizer-swatch-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.25rem;
-  border-radius: 12px;
-  background: transparent;
-  border: 1px solid transparent;
+/* Circular Band Style Silhouette Icons matching Image 2 */
+.band-style-item {
   cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
   transition: all 0.2s ease;
 }
-.customizer-swatch-btn:hover {
-  background: rgba(246, 235, 221, 0.5);
-}
-.customizer-swatch-circle {
-  width: 38px;
-  height: 38px;
+.band-style-circle {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  position: relative;
+  background: #FAFAFA;
+  border: 1.5px solid #E5E5E5;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 3px 8px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
 }
-.customizer-swatch-btn.active .customizer-swatch-circle {
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #1D1815, 0 4px 12px rgba(29, 24, 21, 0.25);
+.band-style-circle:hover {
+  border-color: #737373;
+  background: #FFFFFF;
+}
+.band-style-circle.active,
+.band-style-item.active .band-style-circle {
+  border-color: #111111;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3.5px #111111;
+  transform: scale(1.05);
+}
+
+/* Circular Metal Swatches with Active Halo Ring matching Image 2 */
+.metal-swatch-item {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+.metal-swatch-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), 0 2px 5px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.metal-swatch-circle:hover {
+  transform: scale(1.06);
+}
+.metal-swatch-circle.active,
+.metal-swatch-item.active .metal-swatch-circle {
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3.5px #111111;
   transform: scale(1.08);
 }
 
-/* Band Style Silhouette Cards */
-.band-style-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.85rem 1rem;
-  border-radius: 14px;
-  border: 1.5px solid #E8E3D8;
-  background: #FDFCF9;
+/* Circular Gemstone Swatches with VIBRANT COLORS matching Image 2 */
+.gem-swatch-item {
   cursor: pointer;
-  transition: all 0.25s ease;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: all 0.2s ease;
 }
-.band-style-btn:hover {
-  border-color: #C5A674;
-  background: #FFFFFF;
+.gem-swatch-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.band-style-btn.active {
-  border-color: #1D1815;
-  background: #FFFFFF;
-  box-shadow: 0 0 0 1px #1D1815, 0 6px 16px rgba(29, 24, 21, 0.08);
+.gem-swatch-circle:hover {
+  transform: scale(1.06);
+}
+.gem-swatch-circle.active,
+.gem-swatch-item.active .gem-swatch-circle {
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3.5px #111111;
+  transform: scale(1.08);
 }
 
 /* Inside-Band Engraving Live Ribbon */
@@ -820,3 +878,17 @@ body {
   font-size: 1.3rem;
   letter-spacing: 0.12em;
 }
+
+/* Customizer Cut & Carat Pill Options */
+.pill-cut-btn,
+.pill-carat-btn {
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pill-cut-btn:active,
+.pill-carat-btn:active {
+  transform: scale(0.97);
+}
+
