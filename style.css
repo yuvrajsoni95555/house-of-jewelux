@@ -645,3 +645,178 @@ body {
     height: clamp(250px, 72vh, 320px);
   }
 }
+
+/* ================= LUXURY CUSTOMIZER WORKBENCH (REFERENCE REFINED) ================= */
+.customizer-tab-btn {
+  position: relative;
+  padding: 0.85rem 1.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #766B5E;
+  transition: all 0.25s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.customizer-tab-btn:hover {
+  color: #1D1815;
+}
+.customizer-tab-btn.active {
+  color: #1D1815;
+}
+.customizer-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  background: #1D1815;
+  border-radius: 1px;
+}
+
+/* Floating 3D Viewer Action Controls */
+.viewer-action-bar {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 8;
+}
+.viewer-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 166, 116, 0.35);
+  box-shadow: 0 4px 14px rgba(29, 24, 21, 0.08);
+  color: #1D1815;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.viewer-action-btn:hover {
+  background: #FFFFFF;
+  border-color: #8A6B38;
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(138, 107, 56, 0.20);
+  color: #8A6B38;
+}
+.viewer-action-btn:active {
+  transform: scale(0.96);
+}
+.viewer-action-label {
+  font-size: 8px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+  color: #766B5E;
+}
+
+/* Metal & Stone Circular Swatches */
+.customizer-swatch-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.customizer-swatch-btn:hover {
+  background: rgba(246, 235, 221, 0.5);
+}
+.customizer-swatch-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+.customizer-swatch-btn.active .customizer-swatch-circle {
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #1D1815, 0 4px 12px rgba(29, 24, 21, 0.25);
+  transform: scale(1.08);
+}
+
+/* Band Style Silhouette Cards */
+.band-style-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: 1.5px solid #E8E3D8;
+  background: #FDFCF9;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.band-style-btn:hover {
+  border-color: #C5A674;
+  background: #FFFFFF;
+}
+.band-style-btn.active {
+  border-color: #1D1815;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px #1D1815, 0 6px 16px rgba(29, 24, 21, 0.08);
+}
+
+/* Inside-Band Engraving Live Ribbon */
+.engraving-ribbon-preview {
+  position: relative;
+  width: 100%;
+  height: 84px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #E6E1D8 0%, #F5F1E9 30%, #D4CEBF 70%, #BEB7A6 100%);
+  border: 1px solid #C5A674;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.15), inset 0 -3px 6px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.engraving-ribbon-arc {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.7) 0%, transparent 60%);
+  pointer-events: none;
+}
+.engraving-live-text {
+  position: relative;
+  z-index: 2;
+  font-size: 1.15rem;
+  letter-spacing: 0.18em;
+  color: #38302A;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65), 0 -1px 0 rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+}
+.engraving-font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.engraving-font-sans {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.22em;
+}
+.engraving-font-script {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+}

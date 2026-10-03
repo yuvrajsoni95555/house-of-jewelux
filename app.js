@@ -37,10 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Bespoke 3D Ring Studio State
     bespoke: {
+      bandStyle: 'cathedral',
       metalId: 'micro-gold',
       gemId: 'moissanite',
       cutId: 'round',
       caratWeight: 2.5,
+      ringSize: '14',
+      engravingText: '',
+      engravingFont: 'serif',
+      activeTab: 'options',
       rotationY: 0.4,
       rotationX: 0.2,
       isDragging: false,
@@ -1149,19 +1154,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function inquireBespokeOnWhatsApp() {
     const b = state.bespoke;
-    const metalObj = STORE.bespokeStudio.metals.find(m => m.id === b.metalId) || STORE.bespokeStudio.metals[0];
-    const gemObj = STORE.bespokeStudio.gems.find(g => g.id === b.gemId) || STORE.bespokeStudio.gems[0];
-    const cutObj = STORE.bespokeStudio.cuts.find(c => c.id === b.cutId) || STORE.bespokeStudio.cuts[0];
+    const metalNames = {
+      'rhodium-silver': '925 Silver / Liquid Rhodium',
+      'liquid-silver': '925 Silver / Liquid Rhodium',
+      'micro-gold': '18K Micron Gold (2.5 Micron Vermeil)',
+      'rose-gold': '18K Rose Gold Plated',
+      'white-gold': 'Bright Rhodium High Polish',
+      'platinum': 'Heritage Antique Patina Finish',
+      'antique-gold': 'Heritage Antique Patina Finish'
+    };
+    const gemNames = {
+      'moissanite': 'D-Color Exceptional Fire Moissanite',
+      'diamond': 'Lab Diamond (EF / VVS Clarity)',
+      'solitaire-vvs': 'Clarity-Graded VS Solitaire',
+      'champagne-solitaire': 'Warm Amber Champagne Solitaire'
+    };
+    const cutNames = {
+      'round': 'Round Brilliant',
+      'princess': 'Princess Cut',
+      'oval': 'Oval Cut',
+      'cushion': 'Cushion Cut',
+      'emerald-cut': 'Emerald Cut',
+      'radiant': 'Radiant Cut',
+      'pear': 'Pear Cut',
+      'asscher': 'Asscher Cut',
+      'marquise': 'Marquise Cut',
+      'heart': 'Heart Cut',
+      'hexagonal': 'Hexagonal Cut',
+      'elongated-cushion': 'Elongated Cushion'
+    };
 
-    const waNumber = (STORE.storeConfig.whatsappNumber || '+916377061020').replace(/[^0-9]/g, '');
-    const msg = `Hello House of Jewelux Concierge! I have customized a 3D ring on your Bespoke Goldsmith Workbench:
+    const bandLabel = b.bandStyle === 'traditional' ? 'Traditional Classic Comfort-Fit' : 'Cathedral Arch Shoulders';
+    const metalLabel = metalNames[b.metalId] || b.metalId;
+    const gemLabel = gemNames[b.gemId] || b.gemId;
+    const cutLabel = cutNames[b.cutId] || b.cutId;
+    const caratLabel = `${b.caratWeight ? parseFloat(b.caratWeight).toFixed(2) : '2.50'} ct`;
+    const sizeLabel = b.ringSize ? `Indian Size ${b.ringSize}` : 'Indian Size 14';
+    const fontLabel = b.engravingFont === 'script' ? 'Italic Script' : b.engravingFont === 'sans' ? 'Modern Sans' : 'Classic Roman';
+    const engravingLabel = b.engravingText && b.engravingText.trim().length > 0
+      ? `"${b.engravingText.trim()}" (${fontLabel})`
+      : 'None (Plain Inside Band)';
 
-• Metal: ${metalObj.name}
-• Center Stone: ${gemObj.name}
-• Cut: ${cutObj.name}
-• Carat Weight: ${b.caratWeight} ct
+    const waNumber = (STORE.storeConfig && STORE.storeConfig.whatsappNumber ? STORE.storeConfig.whatsappNumber : '+916377061020').replace(/[^0-9]/g, '');
+    const msg = `Hello House of Jewelux Concierge! I have customized a ring on your 3D Bespoke Goldsmith Workbench:
 
-Could we schedule a private atelier consultation to discuss this bespoke creation?`;
+💍 SPECIFICATION:
+• Band Style: ${bandLabel}
+• Band Metal: ${metalLabel}
+• Center Stone: ${gemLabel}
+• Stone Cut: ${cutLabel}
+• Carat Weight: ${caratLabel}
+• Ring Size: ${sizeLabel}
+• Inside Engraving: ${engravingLabel}
+
+Could we schedule a private atelier consultation with the master goldsmith to discuss crafting this bespoke piece?
+Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
 
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   }
@@ -1204,8 +1251,9 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       this.loader = document.getElementById(loaderId);
       if (!this.canvas) return;
 
-      this.currentMetal = state.bespoke.metalId || 'yellow-gold';
-      this.currentGem = state.bespoke.gemId || 'diamond';
+      this.currentBandStyle = state.bespoke.bandStyle || 'cathedral';
+      this.currentMetal = state.bespoke.metalId || 'micro-gold';
+      this.currentGem = state.bespoke.gemId || 'moissanite';
       this.currentCut = state.bespoke.cutId || 'round';
       this.currentCarat = state.bespoke.caratWeight || 2.5;
 
@@ -1581,12 +1629,25 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
         const theta = startAngle + t * totalSweep;
 
         const distFromMid = Math.abs(t - 0.5) * 2.0;
-        const shoulder = Math.pow(Math.max(0, distFromMid - 0.32) / 0.68, 1.8);
 
-        const rOuter = rOuterBase + shoulder * 1.5;
+        let shoulder = 0;
+        let rOuter = rOuterBase;
+        let axialWidth = 1.28;
+
+        if (this.currentBandStyle === 'traditional') {
+          // Traditional comfort-fit: smooth, uniform silhouette meeting head cleanly
+          shoulder = Math.pow(Math.max(0, distFromMid - 0.5) / 0.5, 1.2) * 0.35;
+          rOuter = rOuterBase + shoulder * 0.35;
+          axialWidth = (1.32 - shoulder * 0.12);
+        } else {
+          // Cathedral: dramatic arching lift on shoulders near the head
+          shoulder = Math.pow(Math.max(0, distFromMid - 0.32) / 0.68, 1.8);
+          rOuter = rOuterBase + shoulder * 1.5;
+          axialWidth = (1.28 - shoulder * 0.28);
+        }
+
         const rMid = (rInner + rOuter) / 2.0;
         const radialThickness = (rOuter - rInner) / 2.0;
-        const axialWidth = (1.28 - shoulder * 0.28);
 
         const cx = Math.cos(theta) * rMid;
         const cy = Math.sin(theta) * rMid;
@@ -2709,6 +2770,117 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
       this.updateCameraFraming(false);
     }
 
+    setBandStyle(style) {
+      this.currentBandStyle = style || 'cathedral';
+      this.buildShank();
+      this.setMetal(this.currentMetal);
+    }
+
+    resetCamera() {
+      this.hasUserInteractedOnce = false;
+      this.updateCameraFraming(true);
+    }
+
+    zoomIn() {
+      if (!this.controls || !this.camera) return;
+      const target = this.controls.target;
+      const dir = new THREE.Vector3().subVectors(this.camera.position, target);
+      const curDist = dir.length();
+      const minD = this.controls.minDistance || 40;
+      const newDist = Math.max(curDist * 0.88, minD);
+      dir.normalize().multiplyScalar(newDist);
+      this.camera.position.copy(target).add(dir);
+      this.controls.update();
+    }
+
+    zoomOut() {
+      if (!this.controls || !this.camera) return;
+      const target = this.controls.target;
+      const dir = new THREE.Vector3().subVectors(this.camera.position, target);
+      const curDist = dir.length();
+      const maxD = this.controls.maxDistance || 160;
+      const newDist = Math.min(curDist * 1.12, maxD);
+      dir.normalize().multiplyScalar(newDist);
+      this.camera.position.copy(target).add(dir);
+      this.controls.update();
+    }
+
+    toggleFullscreen() {
+      const container = this.container || document.getElementById('bespoke-3d-wrapper');
+      if (!container) return;
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (container.requestFullscreen) {
+          container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) {
+          container.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+
+    shareConfiguration() {
+      const b = state.bespoke;
+      const metalNames = {
+        'rhodium-silver': '925 Silver / Rhodium',
+        'liquid-silver': '925 Silver / Rhodium',
+        'micro-gold': '18K Micron Gold',
+        'rose-gold': 'Rose Gold Plated',
+        'white-gold': 'Bright Rhodium',
+        'platinum': 'Antique Finish',
+        'antique-gold': 'Antique Finish'
+      };
+      const gemNames = {
+        'moissanite': 'D-Moissanite',
+        'diamond': 'Lab Diamond (EF/VVS)',
+        'solitaire-vvs': 'VS Solitaire',
+        'champagne-solitaire': 'Champagne Solitaire'
+      };
+      const cutNames = {
+        'round': 'Round Brilliant',
+        'princess': 'Princess',
+        'oval': 'Oval',
+        'cushion': 'Cushion',
+        'emerald-cut': 'Emerald Cut',
+        'radiant': 'Radiant',
+        'pear': 'Pear',
+        'asscher': 'Asscher',
+        'marquise': 'Marquise',
+        'heart': 'Heart',
+        'hexagonal': 'Hexagonal',
+        'elongated-cushion': 'Elongated Cushion'
+      };
+
+      const bandLabel = b.bandStyle === 'traditional' ? 'Traditional Comfort-Fit' : 'Cathedral Arch';
+      const metalLabel = metalNames[b.metalId] || b.metalId;
+      const gemLabel = gemNames[b.gemId] || b.gemId;
+      const cutLabel = cutNames[b.cutId] || b.cutId;
+      const sizeLabel = b.ringSize ? `Indian Size ${b.ringSize}` : 'Indian Size 14';
+      const engraveLabel = b.engravingText && b.engravingText.trim().length > 0 ? `"${b.engravingText.trim()}"` : 'None';
+
+      const shareText = `House of Jewelux 3D Bespoke Ring:\n• Style: ${bandLabel}\n• Metal: ${metalLabel}\n• Stone: ${gemLabel}\n• Cut: ${cutLabel}\n• Carat: ${b.caratWeight} ct\n• Size: ${sizeLabel}\n• Engraving: ${engraveLabel}\nhttps://houseofjewelux.com/#bespoke-studio`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: 'House of Jewelux - Bespoke Ring',
+          text: shareText,
+          url: 'https://houseofjewelux.com/#bespoke-studio'
+        }).catch(() => {});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareText).then(() => {
+          if (typeof showToast === 'function') {
+            showToast('Configuration copied to clipboard!', '✨');
+          } else {
+            alert('Configuration copied to clipboard!');
+          }
+        }).catch(() => {});
+      }
+    }
+
     updateCameraFraming(forceResetAngle = false) {
       if (!this.camera || !this.container) return;
       const rect = this.container.getBoundingClientRect();
@@ -2871,33 +3043,290 @@ Could we schedule a private atelier consultation to discuss this bespoke creatio
     });
   }
 
+  // ================= 9B. BESPOKE STUDIO INTERACTION HANDLERS =================
+  window.switchBespokeTab = (tabName) => {
+    state.bespoke.activeTab = tabName;
+    const btnOptions = document.getElementById('tab-btn-options');
+    const btnEngraving = document.getElementById('tab-btn-engraving');
+    const panelOptions = document.getElementById('customizer-panel-options');
+    const panelEngraving = document.getElementById('customizer-panel-engraving');
+
+    if (tabName === 'engraving') {
+      if (btnOptions) btnOptions.classList.remove('active');
+      if (btnEngraving) btnEngraving.classList.add('active');
+      if (panelOptions) panelOptions.classList.add('hidden');
+      if (panelEngraving) panelEngraving.classList.remove('hidden');
+    } else {
+      if (btnOptions) btnOptions.classList.add('active');
+      if (btnEngraving) btnEngraving.classList.remove('active');
+      if (panelOptions) panelOptions.classList.remove('hidden');
+      if (panelEngraving) panelEngraving.classList.add('hidden');
+    }
+  };
+
+  window.setBespokeBandStyle = (style) => {
+    state.bespoke.bandStyle = style;
+    document.querySelectorAll('[data-bespoke-style]').forEach(btn => {
+      const isMatch = btn.getAttribute('data-bespoke-style') === style;
+      btn.classList.toggle('active', isMatch);
+      const titleSpan = btn.querySelector('span:first-of-type');
+      if (titleSpan) {
+        if (isMatch) {
+          titleSpan.classList.remove('font-medium', 'text-[#1D1815]');
+          titleSpan.classList.add('font-semibold', 'text-[#8A6B38]');
+        } else {
+          titleSpan.classList.remove('font-semibold', 'text-[#8A6B38]');
+          titleSpan.classList.add('font-medium', 'text-[#1D1815]');
+        }
+      }
+    });
+    if (window.jewelryViewer && typeof window.jewelryViewer.setBandStyle === 'function') {
+      window.jewelryViewer.setBandStyle(style);
+    }
+  };
+
+  const BESPOKE_METAL_NAMES = {
+    'rhodium-silver': 'Silver / Rhodium',
+    'liquid-silver': 'Silver / Rhodium',
+    'micro-gold': 'Micron Gold',
+    'rose-gold': 'Rose Gold Plated',
+    'white-gold': 'Bright Rhodium',
+    'platinum': 'Antique Finish',
+    'antique-gold': 'Antique Finish'
+  };
+
   window.setBespokeMetal = (metalId) => {
     state.bespoke.metalId = metalId;
-    updateBespokeOptionHighlight('data-bespoke-metal', metalId);
-    updateBespokePrice();
-    if (window.jewelryViewer) window.jewelryViewer.setMetal(metalId);
+    const label = document.getElementById('selected-metal-name');
+    if (label && BESPOKE_METAL_NAMES[metalId]) {
+      label.textContent = BESPOKE_METAL_NAMES[metalId];
+    }
+    document.querySelectorAll('[data-bespoke-metal]').forEach(btn => {
+      const val = btn.getAttribute('data-bespoke-metal');
+      const isMatch = val === metalId || (metalId === 'liquid-silver' && val === 'rhodium-silver') || (metalId === 'rhodium-silver' && val === 'liquid-silver');
+      btn.classList.toggle('active', isMatch);
+      const span = btn.querySelector('span');
+      if (span) {
+        if (isMatch) {
+          span.classList.remove('text-[#766B5E]', 'font-medium');
+          span.classList.add('text-[#8A6B38]', 'font-semibold');
+        } else {
+          span.classList.remove('text-[#8A6B38]', 'font-semibold');
+          span.classList.add('text-[#766B5E]', 'font-medium');
+        }
+      }
+    });
+    if (window.jewelryViewer && typeof window.jewelryViewer.setMetal === 'function') {
+      window.jewelryViewer.setMetal(metalId);
+    }
+  };
+
+  const BESPOKE_GEM_NAMES = {
+    'moissanite': 'D-Moissanite',
+    'diamond': 'Lab Diamond',
+    'solitaire-vvs': 'VS Solitaire',
+    'champagne-solitaire': 'Champagne Solitaire'
   };
 
   window.setBespokeGem = (gemId) => {
     state.bespoke.gemId = gemId;
-    updateBespokeOptionHighlight('data-bespoke-gem', gemId);
-    updateBespokePrice();
-    if (window.jewelryViewer) window.jewelryViewer.setGem(gemId);
+    const label = document.getElementById('selected-gem-name');
+    if (label && BESPOKE_GEM_NAMES[gemId]) {
+      label.textContent = BESPOKE_GEM_NAMES[gemId];
+    }
+    document.querySelectorAll('[data-bespoke-gem]').forEach(btn => {
+      const isMatch = btn.getAttribute('data-bespoke-gem') === gemId;
+      btn.classList.toggle('active', isMatch);
+      const span = btn.querySelector('span');
+      if (span) {
+        if (isMatch) {
+          span.classList.remove('text-[#766B5E]', 'font-medium');
+          span.classList.add('text-[#8A6B38]', 'font-semibold');
+        } else {
+          span.classList.remove('text-[#8A6B38]', 'font-semibold');
+          span.classList.add('text-[#766B5E]', 'font-medium');
+        }
+      }
+    });
+    if (window.jewelryViewer && typeof window.jewelryViewer.setGem === 'function') {
+      window.jewelryViewer.setGem(gemId);
+    }
+  };
+
+  const BESPOKE_CUT_NAMES = {
+    'round': 'Round Brilliant',
+    'princess': 'Princess',
+    'oval': 'Oval',
+    'cushion': 'Cushion',
+    'emerald-cut': 'Emerald Cut',
+    'radiant': 'Radiant',
+    'pear': 'Pear',
+    'asscher': 'Asscher',
+    'marquise': 'Marquise',
+    'heart': 'Heart',
+    'hexagonal': 'Hexagonal',
+    'elongated-cushion': 'Elongated Cushion'
   };
 
   window.setBespokeCut = (cutId) => {
     state.bespoke.cutId = cutId;
-    updateBespokeOptionHighlight('data-bespoke-cut', cutId);
-    if (window.jewelryViewer) window.jewelryViewer.setCut(cutId);
+    const label = document.getElementById('selected-cut-name');
+    if (label && BESPOKE_CUT_NAMES[cutId]) {
+      label.textContent = BESPOKE_CUT_NAMES[cutId];
+    }
+    document.querySelectorAll('[data-bespoke-cut]').forEach(btn => {
+      const isMatch = btn.getAttribute('data-bespoke-cut') === cutId;
+      if (isMatch) {
+        btn.className = 'group p-2 rounded-lg border border-[#C5A674] bg-[#F6EBDD]/50 text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none shadow-sm ring-1 ring-[#C5A674]';
+      } else {
+        btn.className = 'group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none';
+      }
+      const span = btn.querySelector('span');
+      if (span) {
+        if (isMatch) {
+          span.className = 'text-[10px] font-semibold text-[#8A6B38] block';
+        } else {
+          span.className = 'text-[10px] font-medium text-[#1D1815] block';
+        }
+      }
+    });
+    if (window.jewelryViewer && typeof window.jewelryViewer.setCut === 'function') {
+      window.jewelryViewer.setCut(cutId);
+    }
   };
 
   window.setBespokeCarat = (caratVal) => {
-    state.bespoke.caratWeight = parseFloat(caratVal);
-    updateBespokeOptionHighlight('data-bespoke-carat', caratVal, true);
+    const val = parseFloat(caratVal);
+    state.bespoke.caratWeight = val;
     const displayEl = document.getElementById('bespoke-carat-display');
-    if (displayEl) displayEl.textContent = `${state.bespoke.caratWeight.toFixed(2)} ct`;
-    updateBespokePrice();
-    if (window.jewelryViewer) window.jewelryViewer.setCarat(caratVal);
+    if (displayEl) {
+      displayEl.textContent = `${val.toFixed(2)} ct`;
+    }
+    document.querySelectorAll('[data-bespoke-carat]').forEach(btn => {
+      const bVal = parseFloat(btn.getAttribute('data-bespoke-carat'));
+      const isMatch = Math.abs(bVal - val) < 0.05;
+      if (isMatch) {
+        btn.className = 'py-2 px-3 rounded-lg border border-[#C5A674] bg-[#F6EBDD]/60 text-xs font-semibold text-[#8A6B38] shadow-sm transition';
+      } else {
+        btn.className = 'py-2 px-3 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-xs font-medium text-[#1D1815] transition';
+      }
+    });
+    if (window.jewelryViewer && typeof window.jewelryViewer.setCarat === 'function') {
+      window.jewelryViewer.setCarat(caratVal);
+    }
+  };
+
+  window.setBespokeRingSize = (size) => {
+    state.bespoke.ringSize = String(size);
+    const select = document.getElementById('bespoke-ring-size-select');
+    if (select && select.value !== String(size)) {
+      select.value = String(size);
+    }
+  };
+
+  window.openRingSizeGuide = () => {
+    const modal = document.getElementById('ring-size-guide-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  };
+
+  window.closeRingSizeGuide = () => {
+    const modal = document.getElementById('ring-size-guide-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  };
+
+  window.selectSizeFromGuide = (size) => {
+    setBespokeRingSize(size);
+    closeRingSizeGuide();
+  };
+
+  window.handleEngravingInput = (val) => {
+    state.bespoke.engravingText = val;
+    const countEl = document.getElementById('engraving-char-count');
+    if (countEl) {
+      countEl.textContent = `${val.length} / 20`;
+    }
+    const previewEl = document.getElementById('engraving-preview-text');
+    if (previewEl) {
+      previewEl.textContent = val.trim().length > 0 ? val : 'JEWELUX • 2026';
+    }
+  };
+
+  window.setBespokeEngravingFont = (fontKey) => {
+    state.bespoke.engravingFont = fontKey;
+    const previewEl = document.getElementById('engraving-preview-text');
+    if (previewEl) {
+      previewEl.classList.remove('engraving-font-serif', 'engraving-font-sans', 'engraving-font-script');
+      previewEl.classList.add(`engraving-font-${fontKey}`);
+    }
+    document.querySelectorAll('[data-engrave-font]').forEach(btn => {
+      const isMatch = btn.getAttribute('data-engrave-font') === fontKey;
+      if (isMatch) {
+        btn.classList.add('border-[#C5A674]', 'bg-white', 'text-[#8A6B38]', 'font-semibold', 'shadow-sm');
+        btn.classList.remove('border-[#E8E3D8]', 'bg-[#FDFCF9]', 'text-[#1D1815]', 'font-medium');
+      } else {
+        btn.classList.remove('border-[#C5A674]', 'bg-white', 'text-[#8A6B38]', 'font-semibold', 'shadow-sm');
+        btn.classList.add('border-[#E8E3D8]', 'bg-[#FDFCF9]', 'text-[#1D1815]', 'font-medium');
+      }
+    });
+  };
+
+  window.insertEngravingSymbol = (symbol) => {
+    const input = document.getElementById('engraving-text-input');
+    if (!input) return;
+    if (input.value.length >= 20) return;
+    const start = input.selectionStart || input.value.length;
+    const end = input.selectionEnd || input.value.length;
+    const current = input.value;
+    const updated = current.substring(0, start) + symbol + current.substring(end);
+    if (updated.length <= 20) {
+      input.value = updated;
+      handleEngravingInput(updated);
+      input.focus();
+      const nextPos = start + symbol.length;
+      input.setSelectionRange(nextPos, nextPos);
+    }
+  };
+
+  window.clearBespokeEngraving = () => {
+    const input = document.getElementById('engraving-text-input');
+    if (input) input.value = '';
+    handleEngravingInput('');
+  };
+
+  window.shareBespokeConfig = () => {
+    if (window.jewelryViewer && typeof window.jewelryViewer.shareConfiguration === 'function') {
+      window.jewelryViewer.shareConfiguration();
+    }
+  };
+
+  window.toggleBespokeFullscreen = () => {
+    if (window.jewelryViewer && typeof window.jewelryViewer.toggleFullscreen === 'function') {
+      window.jewelryViewer.toggleFullscreen();
+    }
+  };
+
+  window.resetBespokeCamera = () => {
+    if (window.jewelryViewer && typeof window.jewelryViewer.resetCamera === 'function') {
+      window.jewelryViewer.resetCamera();
+    }
+  };
+
+  window.zoomBespokeIn = () => {
+    if (window.jewelryViewer && typeof window.jewelryViewer.zoomIn === 'function') {
+      window.jewelryViewer.zoomIn();
+    }
+  };
+
+  window.zoomBespokeOut = () => {
+    if (window.jewelryViewer && typeof window.jewelryViewer.zoomOut === 'function') {
+      window.jewelryViewer.zoomOut();
+    }
   };
 
   // ================= 10. PRIVATE FOUNDER STUDIO (#studio / #admin) =================

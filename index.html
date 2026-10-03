@@ -1628,792 +1628,488 @@
 
 
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white p-6 sm:p-10 rounded-2xl border border-[#C5A674]/30 shadow-lg">
-
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start bg-white p-6 sm:p-10 rounded-2xl border border-[#C5A674]/30 shadow-lg">
             
-
-            <!-- Left: Vector Ring Visualizer -->
-
-            <div class="lg:col-span-6 flex flex-col items-center">
-
-              <div class="ring-studio-viewport relative w-full flex items-center justify-center p-3 sm:p-6 min-h-[320px] sm:min-h-[360px]">
-
+            <!-- Left: Interactive 3D Ring Viewport & Floating Actions -->
+            <div class="lg:col-span-6 xl:col-span-7 flex flex-col items-center sticky top-24">
+              <div class="ring-studio-viewport relative w-full flex items-center justify-center min-h-[380px] sm:min-h-[480px]">
                 <div id="bespoke-ring-visualizer" class="w-full flex items-center justify-center">
-
                   <div class="canvas-3d-wrapper" id="bespoke-3d-wrapper">
+                    
+                    <!-- Floating Viewer Action Bar (Inspired by Reference) -->
+                    <div class="viewer-action-bar">
+                      <button onclick="shareBespokeConfig()" class="viewer-action-btn" title="Share Ring Configuration" aria-label="Share Configuration">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                        </svg>
+                        <span class="viewer-action-label">Share</span>
+                      </button>
+
+                      <button onclick="toggleBespokeFullscreen()" class="viewer-action-btn" title="Fullscreen View" aria-label="Toggle Fullscreen">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                        </svg>
+                        <span class="viewer-action-label">Expand</span>
+                      </button>
+
+                      <button onclick="resetBespokeCamera()" class="viewer-action-btn" title="Reset Camera View" aria-label="Reset Camera Angle">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        <span class="viewer-action-label">Reset</span>
+                      </button>
+
+                      <div class="h-[1px] w-6 bg-[#C5A674]/30 my-0.5 mx-auto"></div>
+
+                      <button onclick="zoomBespokeIn()" class="viewer-action-btn !h-9 !w-9" title="Zoom In" aria-label="Zoom In">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                      </button>
+
+                      <button onclick="zoomBespokeOut()" class="viewer-action-btn !h-9 !w-9" title="Zoom Out" aria-label="Zoom Out">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                        </svg>
+                      </button>
+                    </div>
 
                     <canvas id="bespoke-3d-canvas"></canvas>
 
                     <div id="canvas-3d-loader" class="canvas-3d-loader">
-
                       <div class="luxury-spinner"></div>
-
                       <span class="luxury-loader-text">Synthesizing 3D Studio...</span>
-
                     </div>
 
                     <div class="canvas-3d-hint flex items-center gap-1.5">
-
-                      <svg class="w-3.5 h-3.5 animate-spin" style="animation-duration: 6s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-
+                      <svg class="w-3.5 h-3.5 animate-spin" style="animation-duration: 6s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                      </svg>
                       <span>Drag to Rotate 360° • Raytraced Facets</span>
-
                     </div>
-
                   </div>
-
-                  <!-- Dynamically rendered by app.js -->
-
                 </div>
-
-
 
                 <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-white/90 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded text-[8px] sm:text-[9px] uppercase tracking-widest text-[#8A6B38] border border-[#C5A674]/30 font-semibold shadow-sm pointer-events-none">
-
                   Interactive 360° Studio View
-
                 </div>
-
-
 
                 <div class="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-1.5 text-[9px] sm:text-[10px] text-[#766B5E] bg-white/80 px-2 sm:px-2.5 py-0.5 rounded border border-[#E8E3D8] pointer-events-none">
-
                   <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
-
                   Atelier Studio Calibrated
-
                 </div>
-
               </div>
-
-
 
               <div class="mt-4 flex flex-wrap items-center justify-between w-full px-2 text-[11px] text-[#766B5E] gap-2">
-
-                <span>✓ Six-Prong Cathedral Solitaire</span>
-
+                <span>✓ Six-Prong Solitaire Setting</span>
                 <span>✓ Comfort-Fit Interior Contour</span>
-
                 <span>✓ Hand-Engraving Complimentary</span>
-
               </div>
-
             </div>
 
-
-
-            <!-- Right: Studio Controls -->
-
-            <div class="lg:col-span-6 space-y-5">
-
+            <!-- Right: Studio Controls Panel (Tabs: Ring Options | Engraving) -->
+            <div class="lg:col-span-6 xl:col-span-5 space-y-6">
               
+              <!-- Atelier Title Header -->
+              <div class="border-b border-[#E8E3D8] pb-4">
+                <span class="text-[9px] uppercase tracking-[0.3em] text-[#8A6B38] font-semibold block mb-1">
+                  Atelier Bespoke Commission
+                </span>
+                <h3 class="font-display text-2xl sm:text-3xl text-[#1D1815] font-light">
+                  The Bespoke Solitaire
+                </h3>
+                <p class="text-xs text-[#766B5E] font-light leading-relaxed mt-1">
+                  Thoughtfully customized by you, meticulously handcrafted in solid 925 sterling silver and micron gold in India.
+                </p>
+              </div>
 
-              <!-- 1. Metal Selection -->
+              <!-- Dual Tab Switcher -->
+              <div class="flex items-center border-b border-[#E8E3D8]">
+                <button id="tab-btn-options" onclick="switchBespokeTab('options')" class="customizer-tab-btn active">
+                  RING OPTIONS
+                </button>
+                <button id="tab-btn-engraving" onclick="switchBespokeTab('engraving')" class="customizer-tab-btn">
+                  ENGRAVING
+                </button>
+              </div>
 
-              <div>
+              <!-- ================= TAB 1: RING OPTIONS ================= -->
+              <div id="customizer-panel-options" class="space-y-6">
+                
+                <!-- A. BAND STYLE (Traditional vs Cathedral) -->
+                <div>
+                  <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
+                    Band Style
+                  </label>
+                  <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setBespokeBandStyle('traditional')" data-bespoke-style="traditional" class="band-style-btn group">
+                      <svg viewBox="0 0 48 48" class="w-10 h-10 mb-1 text-[#8A6B38] transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.4">
+                        <circle cx="24" cy="26" r="15"/>
+                        <circle cx="24" cy="26" r="12"/>
+                        <path d="M 21,11 L 27,11" stroke-width="1.8"/>
+                      </svg>
+                      <span class="text-xs font-medium text-[#1D1815]">Traditional</span>
+                      <span class="text-[9.5px] text-[#766B5E] font-light">Classic Comfort-Fit</span>
+                    </button>
 
-                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
+                    <button onclick="setBespokeBandStyle('cathedral')" data-bespoke-style="cathedral" class="band-style-btn active group">
+                      <svg viewBox="0 0 48 48" class="w-10 h-10 mb-1 text-[#8A6B38] transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.4">
+                        <circle cx="24" cy="26" r="15"/>
+                        <circle cx="24" cy="26" r="12"/>
+                        <!-- Cathedral arch shoulders sweeping up to setting -->
+                        <path d="M 12,20 C 13,14 18,10 21,9" stroke-width="1.6"/>
+                        <path d="M 36,20 C 35,14 30,10 27,9" stroke-width="1.6"/>
+                        <path d="M 20,8 L 28,8" stroke-width="1.8"/>
+                      </svg>
+                      <span class="text-xs font-semibold text-[#8A6B38]">Cathedral</span>
+                      <span class="text-[9.5px] text-[#766B5E] font-light">Elevated Arch</span>
+                    </button>
+                  </div>
+                </div>
 
-                  1. Select 925 Silver Finish / Plating
+                <!-- B. BAND METAL (Circular Swatches) -->
+                <div>
+                  <div class="flex items-center justify-between mb-2.5">
+                    <label class="text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold">
+                      Band Metal
+                    </label>
+                    <span id="selected-metal-name" class="text-xs font-medium text-[#1D1815]">Micron Gold</span>
+                  </div>
 
-                </label>
+                  <div class="grid grid-cols-5 gap-2 text-center">
+                    <!-- 1. Silver / Rhodium -->
+                    <button onclick="setBespokeMetal('liquid-silver')" data-bespoke-metal="liquid-silver" class="customizer-swatch-btn group" title="Solid 925 Silver Plated in Liquid Rhodium">
+                      <div class="customizer-swatch-circle" style="background: linear-gradient(135deg, #F0F4F8 0%, #D4DCED 50%, #B8C2D4 100%);"></div>
+                      <span class="text-[9.5px] text-[#766B5E] font-medium leading-tight block">Silver / Rhodium</span>
+                    </button>
 
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <!-- 2. Micron Gold -->
+                    <button onclick="setBespokeMetal('yellow-gold')" data-bespoke-metal="yellow-gold" class="customizer-swatch-btn active group" title="18K/22K Micron Gold Plated">
+                      <div class="customizer-swatch-circle" style="background: linear-gradient(135deg, #FDE68A 0%, #D4A237 50%, #9B6E1E 100%);"></div>
+                      <span class="text-[9.5px] text-[#8A6B38] font-semibold leading-tight block">Micron Gold</span>
+                    </button>
 
-                  <button onclick="setBespokeMetal('liquid-silver')" data-bespoke-metal="liquid-silver" class="p-2.5 rounded border border-[#C5A674] bg-white text-left transition flex items-center gap-2 shadow-sm">
+                    <!-- 3. Rose Gold Plated -->
+                    <button onclick="setBespokeMetal('rose-gold')" data-bespoke-metal="rose-gold" class="customizer-swatch-btn group" title="Rose Gold Micron Plated">
+                      <div class="customizer-swatch-circle" style="background: linear-gradient(135deg, #FED7AA 0%, #CF7A64 50%, #9C4B3A 100%);"></div>
+                      <span class="text-[9.5px] text-[#766B5E] font-medium leading-tight block">Rose Gold</span>
+                    </button>
 
-                    <span class="w-4 h-4 rounded-full bg-[#E8EBF0] border border-[#B0B8C4] shadow-sm"></span>
+                    <!-- 4. Bright Rhodium -->
+                    <button onclick="setBespokeMetal('white-gold')" data-bespoke-metal="white-gold" class="customizer-swatch-btn group" title="High-Luster White Rhodium">
+                      <div class="customizer-swatch-circle" style="background: linear-gradient(135deg, #FFFFFF 0%, #E5E9F0 50%, #CBD5E1 100%);"></div>
+                      <span class="text-[9.5px] text-[#766B5E] font-medium leading-tight block">Bright Rhodium</span>
+                    </button>
 
-                    <span class="text-xs font-semibold text-[#8A6B38]">Rhodium Silver</span>
+                    <!-- 5. Antique Finish -->
+                    <button onclick="setBespokeMetal('platinum')" data-bespoke-metal="platinum" class="customizer-swatch-btn group" title="Antique Oxidized Patina Finish">
+                      <div class="customizer-swatch-circle" style="background: linear-gradient(135deg, #E2E8F0 0%, #94A3B8 50%, #64748B 100%);"></div>
+                      <span class="text-[9.5px] text-[#766B5E] font-medium leading-tight block">Antique Finish</span>
+                    </button>
+                  </div>
+                </div>
 
-                  </button>
+                <!-- C. CENTER STONE -->
+                <div>
+                  <div class="flex items-center justify-between mb-2.5">
+                    <label class="text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold">
+                      Center Stone
+                    </label>
+                    <span id="selected-gem-name" class="text-xs font-medium text-[#1D1815]">D-Moissanite</span>
+                  </div>
 
-                  <button onclick="setBespokeMetal('yellow-gold')" data-bespoke-metal="yellow-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                  <div class="grid grid-cols-4 gap-2 text-center">
+                    <!-- D-Moissanite -->
+                    <button onclick="setBespokeGem('moissanite')" data-bespoke-gem="moissanite" class="customizer-swatch-btn active group" title="D-Color Exceptional Fire Moissanite">
+                      <div class="customizer-swatch-circle" style="background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #E0F2FE 40%, #BAE6FD 80%, #7DD3FC 100%);"></div>
+                      <span class="text-[10px] text-[#8A6B38] font-semibold block leading-tight">D-Moissanite</span>
+                    </button>
 
-                    <span class="w-4 h-4 rounded-full bg-[#D2B585] border border-[#B6925B] shadow-sm"></span>
+                    <!-- Lab Diamond -->
+                    <button onclick="setBespokeGem('diamond')" data-bespoke-gem="diamond" class="customizer-swatch-btn group" title="Specialist Inspected Lab Diamond">
+                      <div class="customizer-swatch-circle" style="background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #F1F5F9 50%, #CBD5E1 100%);"></div>
+                      <span class="text-[10px] text-[#766B5E] font-medium block leading-tight">Lab Diamond</span>
+                    </button>
 
-                    <span class="text-xs font-medium text-[#1D1815]">Micron Gold</span>
+                    <!-- VS Solitaire -->
+                    <button onclick="setBespokeGem('solitaire-vvs')" data-bespoke-gem="solitaire-vvs" class="customizer-swatch-btn group" title="Clarity-Graded VS Solitaire">
+                      <div class="customizer-swatch-circle" style="background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #EDE9FE 50%, #C4B5FD 100%);"></div>
+                      <span class="text-[10px] text-[#766B5E] font-medium block leading-tight">VS Solitaire</span>
+                    </button>
 
-                  </button>
+                    <!-- Champagne Solitaire -->
+                    <button onclick="setBespokeGem('champagne-solitaire')" data-bespoke-gem="champagne-solitaire" class="customizer-swatch-btn group" title="Warm Champagne Amber Solitaire">
+                      <div class="customizer-swatch-circle" style="background: radial-gradient(circle at 35% 35%, #FFFBEB 0%, #FDE68A 50%, #D97706 100%);"></div>
+                      <span class="text-[10px] text-[#766B5E] font-medium block leading-tight">Champagne Solitaire</span>
+                    </button>
+                  </div>
+                </div>
 
-                  <button onclick="setBespokeMetal('rose-gold')" data-bespoke-metal="rose-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                <!-- D. STONE CUT (12 Silhouette Options) -->
+                <div>
+                  <div class="flex items-center justify-between mb-2.5">
+                    <label class="text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold">
+                      Stone Cut
+                    </label>
+                    <span id="selected-cut-name" class="text-xs font-medium text-[#1D1815]">Round Brilliant</span>
+                  </div>
 
-                    <span class="w-4 h-4 rounded-full bg-[#E8A798] border border-[#D98978] shadow-sm"></span>
+                  <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    <!-- 1. Round Brilliant -->
+                    <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="group p-2 rounded-lg border border-[#C5A674] bg-white text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none shadow-sm">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="24" cy="24" r="19"/>
+                        <polygon points="20.5,15.5 27.5,15.5 32.5,20.5 32.5,27.5 27.5,32.5 20.5,32.5 15.5,27.5 15.5,20.5"/>
+                      </svg>
+                      <span class="text-[10px] font-semibold text-[#8A6B38] block">Round Brilliant</span>
+                    </button>
 
-                    <span class="text-xs font-medium text-[#1D1815]">Rose Gold Plated</span>
+                    <!-- 2. Princess -->
+                    <button onclick="setBespokeCut('princess')" data-bespoke-cut="princess" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <rect x="8" y="8" width="32" height="32"/>
+                        <line x1="8" y1="8" x2="40" y2="40"/>
+                        <line x1="40" y1="8" x2="8" y2="40"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Princess</span>
+                    </button>
 
-                  </button>
+                    <!-- 3. Oval -->
+                    <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <ellipse cx="24" cy="24" rx="14" ry="19"/>
+                        <polygon points="20,13 28,13 32,19 32,29 28,35 20,35 16,29 16,19"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Oval</span>
+                    </button>
 
-                  <button onclick="setBespokeMetal('white-gold')" data-bespoke-metal="white-gold" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                    <!-- 4. Emerald Cut -->
+                    <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <polygon points="13,5 35,5 42,12 42,36 35,43 13,43 6,36 6,12"/>
+                        <polygon points="16,10 32,10 37,15 37,33 32,38 16,38 11,33 11,15"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Emerald Cut</span>
+                    </button>
 
-                    <span class="w-4 h-4 rounded-full bg-[#E5E7EB] border border-[#D1D5DB] shadow-sm"></span>
+                    <!-- 5. Radiant Cut -->
+                    <button onclick="setBespokeCut('radiant')" data-bespoke-cut="radiant" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <polygon points="12,6 36,6 42,12 42,36 36,42 12,42 6,36 6,12"/>
+                        <polygon points="18,16 30,16 33,19 33,29 30,32 18,32 15,29 15,19"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Radiant Cut</span>
+                    </button>
 
-                    <span class="text-xs font-medium text-[#1D1815]">Bright Rhodium</span>
+                    <!-- 6. Heart -->
+                    <button onclick="setBespokeCut('heart')" data-bespoke-cut="heart" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M 24,14 C 24,7 16,5 11,10 C 6,15 6,22 11,28 C 16,34 24,42 24,42 C 24,42 32,34 37,28 C 42,22 42,15 37,10 C 32,5 24,7 24,14 Z"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Heart</span>
+                    </button>
 
-                  </button>
+                    <!-- 7. Asscher Cut -->
+                    <button onclick="setBespokeCut('asscher')" data-bespoke-cut="asscher" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <polygon points="14,6 34,6 42,14 42,34 34,42 14,42 6,34 6,14"/>
+                        <polygon points="19,16 29,16 32,19 32,29 29,32 19,32 16,29 16,19"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Asscher Cut</span>
+                    </button>
 
-                  <button onclick="setBespokeMetal('platinum')" data-bespoke-metal="platinum" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
+                    <!-- 8. Marquise -->
+                    <button onclick="setBespokeCut('marquise')" data-bespoke-cut="marquise" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M 24,4 C 36,13 36,35 24,44 C 12,35 12,13 24,4 Z"/>
+                        <path d="M 24,14 C 30,19 30,29 24,34 C 18,29 18,19 24,14 Z"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Marquise</span>
+                    </button>
 
-                    <span class="w-4 h-4 rounded-full bg-[#CBD5E1] border border-[#94A3B8] shadow-sm"></span>
+                    <!-- 9. Pear -->
+                    <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M 24,5 C 29,12 36,23 36,31 C 36,38 31,43 24,43 C 17,43 12,38 12,31 C 12,23 19,12 24,5 Z"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Pear</span>
+                    </button>
 
-                    <span class="text-xs font-medium text-[#1D1815]">Antique Finish</span>
+                    <!-- 10. Cushion -->
+                    <button onclick="setBespokeCut('cushion')" data-bespoke-cut="cushion" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <rect x="7" y="7" width="34" height="34" rx="9" ry="9"/>
+                        <rect x="17" y="17" width="14" height="14" rx="4" ry="4"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Cushion</span>
+                    </button>
 
-                  </button>
+                    <!-- 11. Elongated Cushion -->
+                    <button onclick="setBespokeCut('elongated-cushion')" data-bespoke-cut="elongated-cushion" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <rect x="9" y="5" width="30" height="38" rx="8" ry="8"/>
+                        <rect x="17" y="14" width="14" height="20" rx="4" ry="4"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Elongated Cushion</span>
+                    </button>
 
+                    <!-- 12. Hexagonal -->
+                    <button onclick="setBespokeCut('hexagonal')" data-bespoke-cut="hexagonal" class="group p-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[82px] focus:outline-none">
+                      <svg viewBox="0 0 48 48" class="w-8 h-8 text-[#8A6B38] mb-1 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <polygon points="24,5 41,14.8 41,33.2 24,43 7,33.2 7,14.8"/>
+                        <polygon points="24,11 36,18 36,30 24,37 12,30 12,18"/>
+                      </svg>
+                      <span class="text-[10px] font-medium text-[#1D1815] block">Hexagonal</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- E. CARAT WEIGHT -->
+                <div>
+                  <div class="flex items-center justify-between mb-2.5">
+                    <label class="text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold">
+                      Carat Weight
+                    </label>
+                    <span id="bespoke-carat-display" class="text-xs font-semibold text-[#8A6B38]">2.50 ct</span>
+                  </div>
+
+                  <div class="grid grid-cols-4 gap-2.5">
+                    <button onclick="setBespokeCarat(1.0)" data-bespoke-carat="1" class="py-2.5 px-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition">
+                      <span class="text-xs font-medium text-[#1D1815]">1.00 ct</span>
+                    </button>
+                    <button onclick="setBespokeCarat(1.75)" data-bespoke-carat="1.75" class="py-2.5 px-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition">
+                      <span class="text-xs font-medium text-[#1D1815]">1.75 ct</span>
+                    </button>
+                    <button onclick="setBespokeCarat(2.5)" data-bespoke-carat="2.5" class="py-2.5 px-2 rounded-lg border border-[#C5A674] bg-white ring-2 ring-[#8A6B38] text-center transition shadow-sm">
+                      <span class="text-xs font-semibold text-[#8A6B38]">2.50 ct</span>
+                    </button>
+                    <button onclick="setBespokeCarat(4.0)" data-bespoke-carat="4" class="py-2.5 px-2 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] hover:border-[#C5A674] text-center transition">
+                      <span class="text-xs font-medium text-[#1D1815]">4.00 ct</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- F. RING SIZE & SIZE GUIDE -->
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold">
+                      Ring Size
+                    </label>
+                    <button onclick="openRingSizeGuide()" class="text-[11px] text-[#8A6B38] hover:underline flex items-center gap-1 font-medium">
+                      <span>📏</span> Size Guide
+                    </button>
+                  </div>
+
+                  <select id="bespoke-ring-size-select" onchange="setBespokeRingSize(this.value)" class="w-full px-3.5 py-2.5 bg-[#FDFCF9] border border-[#C5A674]/50 rounded-lg text-xs text-[#1D1815] focus:outline-none focus:border-[#8A6B38]">
+                    <option value="8">Indian Size 8 (US 4.5) — 15.3 mm</option>
+                    <option value="9">Indian Size 9 (US 4.75) — 15.6 mm</option>
+                    <option value="10">Indian Size 10 (US 5) — 16.0 mm</option>
+                    <option value="11">Indian Size 11 (US 5.5) — 16.3 mm</option>
+                    <option value="12">Indian Size 12 (US 6) — 16.6 mm</option>
+                    <option value="13">Indian Size 13 (US 6.25) — 17.0 mm</option>
+                    <option value="14" selected>Indian Size 14 (US 6.5) — 17.3 mm (Most Popular)</option>
+                    <option value="15">Indian Size 15 (US 7) — 17.7 mm</option>
+                    <option value="16">Indian Size 16 (US 7.5) — 18.1 mm</option>
+                    <option value="17">Indian Size 17 (US 8) — 18.5 mm</option>
+                    <option value="18">Indian Size 18 (US 8.5) — 18.8 mm</option>
+                    <option value="19">Indian Size 19 (US 9) — 19.2 mm</option>
+                    <option value="20">Indian Size 20 (US 9.5) — 19.5 mm</option>
+                    <option value="21">Indian Size 21 (US 10) — 19.9 mm</option>
+                    <option value="22">Indian Size 22 (US 10.5) — 20.2 mm</option>
+                    <option value="23">Indian Size 23 (US 11) — 20.6 mm</option>
+                    <option value="24">Indian Size 24 (US 11.5) — 21.0 mm</option>
+                    <option value="25">Indian Size 25 (US 12) — 21.4 mm</option>
+                  </select>
                 </div>
 
               </div>
 
+              <!-- ================= TAB 2: ENGRAVING ================= -->
+              <div id="customizer-panel-engraving" class="hidden space-y-5">
+                <div class="space-y-1">
+                  <span class="text-[10px] uppercase tracking-widest text-[#8A6B38] font-semibold block">
+                    Complimentary Atelier Service
+                  </span>
+                  <p class="text-xs text-[#766B5E] font-light leading-relaxed">
+                    Personalize your heirloom with custom inside-band hand engraving. Enter initials, an anniversary date, sacred Sanskrit symbol, or private vow (max 20 characters).
+                  </p>
+                </div>
 
+                <!-- Live Ribbon Preview -->
+                <div>
+                  <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2">
+                    Inside-Band Live Preview
+                  </label>
+                  <div class="engraving-ribbon-preview">
+                    <div class="engraving-ribbon-arc"></div>
+                    <span id="engraving-preview-text" class="engraving-live-text engraving-font-serif">
+                      JEWELUX • 2026
+                    </span>
+                  </div>
+                </div>
 
-              <!-- 2. Center Stone Selection -->
+                <!-- Input & Character Counter -->
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="engraving-text-input" class="text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold">
+                      Your Inscription
+                    </label>
+                    <span id="engraving-char-count" class="text-[10px] text-[#766B5E] font-mono">
+                      0 / 20
+                    </span>
+                  </div>
+                  <input type="text" id="engraving-text-input" maxlength="20" placeholder="e.g. A & Y • 2026" oninput="handleEngravingInput(this.value)" class="w-full px-4 py-3 bg-[#FDFCF9] border border-[#C5A674]/50 rounded-lg text-sm text-[#1D1815] focus:outline-none focus:border-[#8A6B38]">
+                </div>
 
-              <div>
+                <!-- Font Script Selector -->
+                <div>
+                  <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2">
+                    Script Style
+                  </label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <button type="button" onclick="setBespokeEngravingFont('serif')" data-engrave-font="serif" class="py-2.5 px-3 rounded-lg border border-[#C5A674] bg-white text-xs font-serif font-semibold text-[#8A6B38] transition text-center shadow-sm">
+                      Classic Roman
+                    </button>
+                    <button type="button" onclick="setBespokeEngravingFont('sans')" data-engrave-font="sans" class="py-2.5 px-3 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] text-xs font-sans font-medium text-[#1D1815] transition text-center">
+                      Modern Sans
+                    </button>
+                    <button type="button" onclick="setBespokeEngravingFont('script')" data-engrave-font="script" class="py-2.5 px-3 rounded-lg border border-[#E8E3D8] bg-[#FDFCF9] text-xs font-serif italic font-medium text-[#1D1815] transition text-center">
+                      Italic Script
+                    </button>
+                  </div>
+                </div>
 
-                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
-
-                  2. Select Solitaire / Center Stone
-
-                </label>
-
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-
-                  <button onclick="setBespokeGem('moissanite')" data-bespoke-gem="moissanite" class="p-2.5 rounded border border-[#C5A674] bg-white hover:border-[#C5A674] text-left transition flex items-center gap-2 shadow-sm">
-                    <span class="w-3.5 h-3.5 rounded-full bg-white border border-[#CBD5E1] shadow-sm"></span>
-                    <span class="text-xs font-semibold text-[#8A6B38]">D-Moissanite</span>
+                <!-- Quick Symbols Palette -->
+                <div class="p-3 bg-[#F6EBDD]/60 rounded-lg border border-[#C5A674]/25 flex items-center justify-between">
+                  <span class="text-[10px] text-[#766B5E] uppercase tracking-wider font-medium">Insert Symbols:</span>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="insertEngravingSymbol('•')" class="w-7 h-7 rounded bg-white border border-[#E8E3D8] hover:border-[#8A6B38] text-xs font-medium transition" title="Bullet dot">•</button>
+                    <button type="button" onclick="insertEngravingSymbol('♡')" class="w-7 h-7 rounded bg-white border border-[#E8E3D8] hover:border-[#8A6B38] text-xs font-medium transition" title="Heart">♡</button>
+                    <button type="button" onclick="insertEngravingSymbol('✦')" class="w-7 h-7 rounded bg-white border border-[#E8E3D8] hover:border-[#8A6B38] text-xs font-medium transition" title="Star emblem">✦</button>
+                    <button type="button" onclick="insertEngravingSymbol('∞')" class="w-7 h-7 rounded bg-white border border-[#E8E3D8] hover:border-[#8A6B38] text-xs font-medium transition" title="Infinity">∞</button>
+                  </div>
+                  <button type="button" onclick="clearBespokeEngraving()" class="text-[10px] text-[#8A6B38] hover:underline uppercase tracking-wider font-semibold">
+                    Clear
                   </button>
-                  <button onclick="setBespokeGem('diamond')" data-bespoke-gem="diamond" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
-                    <span class="w-3.5 h-3.5 rounded-full bg-[#F0F4F8] border border-sky-300"></span>
-                    <span class="text-xs font-medium text-[#1D1815]">Lab Diamond</span>
-                  </button>
-                  <button onclick="setBespokeGem('solitaire-vvs')" data-bespoke-gem="solitaire-vvs" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
-                    <span class="w-3.5 h-3.5 rounded-full bg-white border border-slate-300"></span>
-                    <span class="text-xs font-medium text-[#1D1815]">VVS Solitaire</span>
-                  </button>
-                  <button onclick="setBespokeGem('champagne-solitaire')" data-bespoke-gem="champagne-solitaire" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-left transition flex items-center gap-2">
-                    <span class="w-3.5 h-3.5 rounded-full bg-[#F7E7CE] border border-[#DECCA8]"></span>
-                    <span class="text-xs font-medium text-[#1D1815]">Champagne Solitaire</span>
-                  </button>
-
                 </div>
 
               </div>
 
-
-
-              <!-- 3. Solitaire Cut -->
-
-              <div>
-
-                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
-
-                  3. Cut & Facet Silhouette
-
-                </label>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2 sm:gap-2.5">
-
-                  <!-- 1. Round Brilliant -->
-
-                  <button onclick="setBespokeCut('round')" data-bespoke-cut="round" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <circle cx="24" cy="24" r="19"/>
-
-                      <polygon points="20.5,15.5 27.5,15.5 32.5,20.5 32.5,27.5 27.5,32.5 20.5,32.5 15.5,27.5 15.5,20.5"/>
-
-                      <line x1="20.5" y1="15.5" x2="10.5" y2="10.5"/>
-
-                      <line x1="27.5" y1="15.5" x2="37.5" y2="10.5"/>
-
-                      <line x1="32.5" y1="20.5" x2="42.5" y2="17"/>
-
-                      <line x1="32.5" y1="27.5" x2="42.5" y2="31"/>
-
-                      <line x1="27.5" y1="32.5" x2="37.5" y2="37.5"/>
-
-                      <line x1="20.5" y1="32.5" x2="10.5" y2="37.5"/>
-
-                      <line x1="15.5" y1="27.5" x2="5.5" y2="31"/>
-
-                      <line x1="15.5" y1="20.5" x2="5.5" y2="17"/>
-
-                      <line x1="24" y1="5" x2="20.5" y2="15.5"/>
-
-                      <line x1="24" y1="5" x2="27.5" y2="15.5"/>
-
-                      <line x1="43" y1="24" x2="32.5" y2="20.5"/>
-
-                      <line x1="43" y1="24" x2="32.5" y2="27.5"/>
-
-                      <line x1="24" y1="43" x2="27.5" y2="32.5"/>
-
-                      <line x1="24" y1="43" x2="20.5" y2="32.5"/>
-
-                      <line x1="5" y1="24" x2="15.5" y2="27.5"/>
-
-                      <line x1="5" y1="24" x2="15.5" y2="20.5"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Round Brilliant</span>
-
-                  </button>
-
-
-
-                  <!-- 2. Princess -->
-
-                  <button onclick="setBespokeCut('princess')" data-bespoke-cut="princess" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <rect x="7" y="7" width="34" height="34"/>
-
-                      <line x1="7" y1="7" x2="41" y2="41"/>
-
-                      <line x1="41" y1="7" x2="7" y2="41"/>
-
-                      <polygon points="24,14 34,24 24,34 14,24"/>
-
-                      <line x1="24" y1="7" x2="24" y2="14"/>
-
-                      <line x1="41" y1="24" x2="34" y2="24"/>
-
-                      <line x1="24" y1="41" x2="24" y2="34"/>
-
-                      <line x1="7" y1="24" x2="14" y2="24"/>
-
-                      <line x1="7" y1="7" x2="24" y2="14"/>
-
-                      <line x1="41" y1="7" x2="24" y2="14"/>
-
-                      <line x1="41" y1="7" x2="34" y2="24"/>
-
-                      <line x1="41" y1="41" x2="34" y2="24"/>
-
-                      <line x1="41" y1="41" x2="24" y2="34"/>
-
-                      <line x1="7" y1="41" x2="24" y2="34"/>
-
-                      <line x1="7" y1="41" x2="14" y2="24"/>
-
-                      <line x1="7" y1="7" x2="14" y2="24"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Princess</span>
-
-                  </button>
-
-
-
-                  <!-- 3. Oval -->
-
-                  <button onclick="setBespokeCut('oval')" data-bespoke-cut="oval" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <ellipse cx="24" cy="24" rx="15" ry="19"/>
-
-                      <polygon points="20,13 28,13 32,19 32,29 28,35 20,35 16,29 16,19"/>
-
-                      <line x1="24" y1="5" x2="24" y2="13"/>
-
-                      <line x1="24" y1="5" x2="20" y2="13"/>
-
-                      <line x1="24" y1="5" x2="28" y2="13"/>
-
-                      <line x1="28" y1="13" x2="36" y2="9"/>
-
-                      <line x1="20" y1="13" x2="12" y2="9"/>
-
-                      <line x1="32" y1="19" x2="38.5" y2="18"/>
-
-                      <line x1="32" y1="29" x2="38.5" y2="30"/>
-
-                      <line x1="16" y1="19" x2="9.5" y2="18"/>
-
-                      <line x1="16" y1="29" x2="9.5" y2="30"/>
-
-                      <line x1="28" y1="35" x2="36" y2="39"/>
-
-                      <line x1="20" y1="35" x2="12" y2="39"/>
-
-                      <line x1="24" y1="43" x2="24" y2="35"/>
-
-                      <line x1="24" y1="43" x2="28" y2="35"/>
-
-                      <line x1="24" y1="43" x2="20" y2="35"/>
-
-                      <line x1="9" y1="24" x2="16" y2="24"/>
-
-                      <line x1="39" y1="24" x2="32" y2="24"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Oval</span>
-
-                  </button>
-
-
-
-                  <!-- 4. Emerald Cut -->
-
-                  <button onclick="setBespokeCut('emerald-cut')" data-bespoke-cut="emerald-cut" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <polygon points="13,5 35,5 42,12 42,36 35,43 13,43 6,36 6,12"/>
-
-                      <polygon points="15,10 33,10 38,15 38,33 33,38 15,38 10,33 10,15"/>
-
-                      <polygon points="18,15 30,15 34,19 34,29 30,33 18,33 14,29 14,19"/>
-
-                      <line x1="6" y1="12" x2="14" y2="19"/>
-
-                      <line x1="13" y1="5" x2="18" y2="15"/>
-
-                      <line x1="35" y1="5" x2="30" y2="15"/>
-
-                      <line x1="42" y1="12" x2="34" y2="19"/>
-
-                      <line x1="42" y1="36" x2="34" y2="29"/>
-
-                      <line x1="35" y1="43" x2="30" y2="33"/>
-
-                      <line x1="13" y1="43" x2="18" y2="33"/>
-
-                      <line x1="6" y1="36" x2="14" y2="29"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Emerald Cut</span>
-
-                  </button>
-
-
-
-                  <!-- 5. Radiant Cut -->
-
-                  <button onclick="setBespokeCut('radiant')" data-bespoke-cut="radiant" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <polygon points="12,6 36,6 42,12 42,36 36,42 12,42 6,36 6,12"/>
-
-                      <polygon points="18,16 30,16 33,19 33,29 30,32 18,32 15,29 15,19"/>
-
-                      <line x1="24" y1="6" x2="24" y2="16"/>
-
-                      <line x1="42" y1="24" x2="33" y2="24"/>
-
-                      <line x1="24" y1="42" x2="24" y2="32"/>
-
-                      <line x1="6" y1="24" x2="15" y2="24"/>
-
-                      <line x1="12" y1="6" x2="18" y2="16"/>
-
-                      <line x1="6" y1="12" x2="15" y2="19"/>
-
-                      <line x1="36" y1="6" x2="30" y2="16"/>
-
-                      <line x1="42" y1="12" x2="33" y2="19"/>
-
-                      <line x1="42" y1="36" x2="33" y2="29"/>
-
-                      <line x1="36" y1="42" x2="30" y2="32"/>
-
-                      <line x1="12" y1="42" x2="18" y2="32"/>
-
-                      <line x1="6" y1="36" x2="15" y2="29"/>
-
-                      <line x1="24" y1="6" x2="18" y2="16"/>
-
-                      <line x1="24" y1="6" x2="30" y2="16"/>
-
-                      <line x1="42" y1="24" x2="33" y2="19"/>
-
-                      <line x1="42" y1="24" x2="33" y2="29"/>
-
-                      <line x1="24" y1="42" x2="30" y2="32"/>
-
-                      <line x1="24" y1="42" x2="18" y2="32"/>
-
-                      <line x1="6" y1="24" x2="15" y2="19"/>
-
-                      <line x1="6" y1="24" x2="15" y2="29"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Radiant Cut</span>
-
-                  </button>
-
-
-
-                  <!-- 6. Heart -->
-
-                  <button onclick="setBespokeCut('heart')" data-bespoke-cut="heart" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <path d="M 24,14 C 24,7 16,5 11,10 C 6,15 6,22 11,28 C 16,34 24,42 24,42 C 24,42 32,34 37,28 C 42,22 42,15 37,10 C 32,5 24,7 24,14 Z"/>
-
-                      <path d="M 24,20 C 24,15 19,14 16,17 C 13,20 14,24 17,28 C 20,32 24,36 24,36 C 24,36 28,32 31,28 C 34,24 35,20 32,17 C 29,14 24,15 24,20 Z"/>
-
-                      <line x1="24" y1="14" x2="24" y2="20"/>
-
-                      <line x1="11" y1="10" x2="16" y2="17"/>
-
-                      <line x1="37" y1="10" x2="32" y2="17"/>
-
-                      <line x1="7" y1="19" x2="14" y2="22"/>
-
-                      <line x1="41" y1="19" x2="34" y2="22"/>
-
-                      <line x1="11" y1="28" x2="17" y2="28"/>
-
-                      <line x1="37" y1="28" x2="31" y2="28"/>
-
-                      <line x1="17" y1="35" x2="20" y2="32"/>
-
-                      <line x1="31" y1="35" x2="28" y2="32"/>
-
-                      <line x1="24" y1="42" x2="24" y2="36"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Heart</span>
-
-                  </button>
-
-
-
-                  <!-- 7. Asscher Cut -->
-
-                  <button onclick="setBespokeCut('asscher')" data-bespoke-cut="asscher" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <polygon points="14,6 34,6 42,14 42,34 34,42 14,42 6,34 6,14"/>
-
-                      <polygon points="16,11 32,11 37,16 37,32 32,37 16,37 11,32 11,16"/>
-
-                      <polygon points="19,16 29,16 32,19 32,29 29,32 19,32 16,29 16,19"/>
-
-                      <line x1="6" y1="14" x2="16" y2="19"/>
-
-                      <line x1="14" y1="6" x2="19" y2="16"/>
-
-                      <line x1="34" y1="6" x2="29" y2="16"/>
-
-                      <line x1="42" y1="14" x2="32" y2="19"/>
-
-                      <line x1="42" y1="34" x2="32" y2="29"/>
-
-                      <line x1="34" y1="42" x2="29" y2="32"/>
-
-                      <line x1="14" y1="42" x2="19" y2="32"/>
-
-                      <line x1="6" y1="34" x2="16" y2="29"/>
-
-                      <line x1="19" y1="19" x2="29" y2="29"/>
-
-                      <line x1="29" y1="19" x2="19" y2="29"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Asscher Cut</span>
-
-                  </button>
-
-
-
-                  <!-- 8. Marquise -->
-
-                  <button onclick="setBespokeCut('marquise')" data-bespoke-cut="marquise" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <path d="M 24,4 C 36,13 36,35 24,44 C 12,35 12,13 24,4 Z"/>
-
-                      <path d="M 24,14 C 30,19 30,29 24,34 C 18,29 18,19 24,14 Z"/>
-
-                      <line x1="24" y1="4" x2="24" y2="14"/>
-
-                      <line x1="24" y1="44" x2="24" y2="34"/>
-
-                      <line x1="34" y1="24" x2="28" y2="24"/>
-
-                      <line x1="14" y1="24" x2="20" y2="24"/>
-
-                      <line x1="24" y1="4" x2="27" y2="18"/>
-
-                      <line x1="24" y1="4" x2="21" y2="18"/>
-
-                      <line x1="32" y1="14" x2="27" y2="18"/>
-
-                      <line x1="16" y1="14" x2="21" y2="18"/>
-
-                      <line x1="32" y1="34" x2="27" y2="30"/>
-
-                      <line x1="16" y1="34" x2="21" y2="30"/>
-
-                      <line x1="24" y1="44" x2="27" y2="30"/>
-
-                      <line x1="24" y1="44" x2="21" y2="30"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Marquise</span>
-
-                  </button>
-
-
-
-                  <!-- 9. Pear / Teardrop Pear -->
-
-                  <button onclick="setBespokeCut('pear')" data-bespoke-cut="pear" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <path d="M 24,5 C 29,12 36,23 36,31 C 36,38 31,43 24,43 C 17,43 12,38 12,31 C 12,23 19,12 24,5 Z"/>
-
-                      <path d="M 24,14 C 27,19 30,25 30,30 C 30,35 27,37 24,37 C 21,37 18,35 18,30 C 18,25 21,19 24,14 Z"/>
-
-                      <line x1="24" y1="5" x2="24" y2="14"/>
-
-                      <line x1="24" y1="5" x2="27" y2="18"/>
-
-                      <line x1="24" y1="5" x2="21" y2="18"/>
-
-                      <line x1="30" y1="13" x2="27" y2="18"/>
-
-                      <line x1="18" y1="13" x2="21" y2="18"/>
-
-                      <line x1="35" y1="23" x2="30" y2="25"/>
-
-                      <line x1="13" y1="23" x2="18" y2="25"/>
-
-                      <line x1="36" y1="32" x2="30" y2="32"/>
-
-                      <line x1="12" y1="32" x2="18" y2="32"/>
-
-                      <line x1="32" y1="40" x2="27" y2="36"/>
-
-                      <line x1="16" y1="40" x2="21" y2="36"/>
-
-                      <line x1="24" y1="43" x2="24" y2="37"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Pear</span>
-
-                  </button>
-
-
-
-                  <!-- 10. Cushion -->
-
-                  <button onclick="setBespokeCut('cushion')" data-bespoke-cut="cushion" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <rect x="7" y="7" width="34" height="34" rx="9" ry="9"/>
-
-                      <rect x="17" y="17" width="14" height="14" rx="4" ry="4"/>
-
-                      <line x1="17" y1="17" x2="11" y2="11"/>
-
-                      <line x1="31" y1="17" x2="37" y2="11"/>
-
-                      <line x1="31" y1="31" x2="37" y2="37"/>
-
-                      <line x1="17" y1="31" x2="11" y2="37"/>
-
-                      <line x1="24" y1="7" x2="24" y2="17"/>
-
-                      <line x1="41" y1="24" x2="31" y2="24"/>
-
-                      <line x1="24" y1="41" x2="24" y2="31"/>
-
-                      <line x1="7" y1="24" x2="17" y2="24"/>
-
-                      <line x1="24" y1="7" x2="17" y2="17"/>
-
-                      <line x1="24" y1="7" x2="31" y2="17"/>
-
-                      <line x1="41" y1="24" x2="31" y2="17"/>
-
-                      <line x1="41" y1="24" x2="31" y2="31"/>
-
-                      <line x1="24" y1="41" x2="31" y2="31"/>
-
-                      <line x1="24" y1="41" x2="17" y2="31"/>
-
-                      <line x1="7" y1="24" x2="17" y2="31"/>
-
-                      <line x1="7" y1="24" x2="17" y2="17"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Cushion</span>
-
-                  </button>
-
-
-
-                  <!-- 11. Elongated Cushion -->
-
-                  <button onclick="setBespokeCut('elongated-cushion')" data-bespoke-cut="elongated-cushion" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <rect x="9" y="5" width="30" height="38" rx="8" ry="8"/>
-
-                      <rect x="17" y="14" width="14" height="20" rx="4" ry="4"/>
-
-                      <line x1="17" y1="14" x2="13" y2="9"/>
-
-                      <line x1="31" y1="14" x2="35" y2="9"/>
-
-                      <line x1="31" y1="34" x2="35" y2="39"/>
-
-                      <line x1="17" y1="34" x2="13" y2="39"/>
-
-                      <line x1="24" y1="5" x2="24" y2="14"/>
-
-                      <line x1="39" y1="24" x2="31" y2="24"/>
-
-                      <line x1="24" y1="43" x2="24" y2="34"/>
-
-                      <line x1="9" y1="24" x2="17" y2="24"/>
-
-                      <line x1="24" y1="5" x2="17" y2="14"/>
-
-                      <line x1="24" y1="5" x2="31" y2="14"/>
-
-                      <line x1="39" y1="24" x2="31" y2="14"/>
-
-                      <line x1="39" y1="24" x2="31" y2="34"/>
-
-                      <line x1="24" y1="43" x2="31" y2="34"/>
-
-                      <line x1="24" y1="43" x2="17" y2="34"/>
-
-                      <line x1="9" y1="24" x2="17" y2="34"/>
-
-                      <line x1="9" y1="24" x2="17" y2="14"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Elongated Cushion</span>
-
-                  </button>
-
-
-
-                  <!-- 12. Hexagonal -->
-
-                  <button onclick="setBespokeCut('hexagonal')" data-bespoke-cut="hexagonal" class="group p-2 sm:p-2.5 rounded-lg border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition flex flex-col items-center justify-between min-h-[92px] sm:min-h-[100px] focus:outline-none">
-
-                    <svg viewBox="0 0 48 48" class="w-9 h-9 sm:w-10 sm:h-10 text-[#8A6B38] mb-1.5 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-
-                      <polygon points="24,5 41,14.8 41,33.2 24,43 7,33.2 7,14.8"/>
-
-                      <polygon points="24,11 36,18 36,30 24,37 12,30 12,18"/>
-
-                      <polygon points="24,17 31,21 31,27 24,31 17,27 17,21"/>
-
-                      <line x1="24" y1="5" x2="24" y2="17"/>
-
-                      <line x1="41" y1="14.8" x2="31" y2="21"/>
-
-                      <line x1="41" y1="33.2" x2="31" y2="27"/>
-
-                      <line x1="24" y1="43" x2="24" y2="31"/>
-
-                      <line x1="7" y1="33.2" x2="17" y2="27"/>
-
-                      <line x1="7" y1="14.8" x2="17" y2="21"/>
-
-                    </svg>
-
-                    <span class="text-[10px] sm:text-[11px] leading-tight font-medium text-[#1D1815] transition-colors block">Hexagonal</span>
-
-                  </button>
-
+              <!-- Atelier Actions & Preserved Consult Button -->
+              <div class="pt-5 border-t border-[#E8E3D8] flex items-center justify-between gap-4">
+                <div class="text-[11px] text-[#766B5E] font-light">
+                  <span class="font-medium text-[#1D1815] block">Private Goldsmith Consultation</span>
+                  <span>Direct WhatsApp inquiry with your configuration</span>
                 </div>
-
-              </div>
-
-
-
-              <!-- 4. Carat Weight -->
-
-              <div>
-
-                <label class="block text-[11px] uppercase tracking-widest text-[#8A6B38] font-semibold mb-2.5">
-
-                  4. Carat Weight Selection
-
-                </label>
-
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-
-                  <button onclick="setBespokeCarat(1.0)" data-bespoke-carat="1" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-
-                    <span class="text-xs font-medium text-[#1D1815]">1.00 Carat</span>
-
-                  </button>
-
-                  <button onclick="setBespokeCarat(1.75)" data-bespoke-carat="1.75" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-
-                    <span class="text-xs font-medium text-[#1D1815]">1.75 Carat</span>
-
-                  </button>
-
-                  <button onclick="setBespokeCarat(2.5)" data-bespoke-carat="2.5" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-
-                    <span class="text-xs font-medium text-[#1D1815]">2.50 Carat</span>
-
-                  </button>
-
-                  <button onclick="setBespokeCarat(4.0)" data-bespoke-carat="4" class="p-2.5 rounded border border-[#E8E3D8] bg-[#F6EBDD] hover:border-[#C5A674] text-center transition">
-
-                    <span class="text-xs font-medium text-[#1D1815]">4.00 Carat</span>
-
-                  </button>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- Atelier Actions -->
-
-              <div class="pt-5 border-t border-[#E8E3D8] flex items-center justify-end">
 
                 <button onclick="consultBespokePiece()" class="btn-luxury-secondary py-3 px-6 text-[10px] w-full sm:w-auto" title="Discuss with Master Goldsmith">
-
                   Consult
-
                 </button>
-
               </div>
-
-
 
             </div>
 
-
-
           </div>
-
-
 
         </div>
 
@@ -5824,11 +5520,114 @@
 
     </div>
 
+  <!-- Ring Size Guide Modal -->
+  <div id="ring-size-guide-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity duration-300">
+    <div class="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-[#FDFCF9] border border-[#C5A674]/40 rounded-xl shadow-2xl p-6 sm:p-8 space-y-6 text-[#1D1815]">
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-[#E8E3D8] pb-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[#8A6B38] text-sm">✦</span>
+            <span class="text-[10px] tracking-[0.25em] text-[#8A6B38] uppercase font-medium">House of Jewelux</span>
+          </div>
+          <h3 class="font-display text-xl sm:text-2xl text-[#1D1815] font-light">Ring Sizing Guide</h3>
+          <p class="text-xs text-[#766B5E] font-light mt-1">Indian &amp; International ring size conversions calibrated for our bespoke pieces.</p>
+        </div>
+        <button type="button" onclick="closeRingSizeGuide()" class="text-[#766B5E] hover:text-[#1D1815] text-2xl font-light w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#F6EBDD] transition" aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Sizing Chart Table -->
+      <div class="overflow-x-auto border border-[#E8E3D8] rounded-lg">
+        <table class="w-full text-xs text-left">
+          <thead class="bg-[#F6EBDD]/60 text-[#1D1815] uppercase tracking-wider text-[10px] font-semibold border-b border-[#E8E3D8]">
+            <tr>
+              <th class="py-2.5 px-3">India / Asia</th>
+              <th class="py-2.5 px-3">US / Canada</th>
+              <th class="py-2.5 px-3">Diameter (mm)</th>
+              <th class="py-2.5 px-3">Circumference (mm)</th>
+              <th class="py-2.5 px-3 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#E8E3D8]/60 text-[#766B5E] font-sans">
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('10')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 10</td>
+              <td class="py-2 px-3">US 5.25</td>
+              <td class="py-2 px-3">15.9 mm</td>
+              <td class="py-2 px-3">50.0 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('12')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 12</td>
+              <td class="py-2 px-3">US 6.0</td>
+              <td class="py-2 px-3">16.5 mm</td>
+              <td class="py-2 px-3">51.9 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('14')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 14</td>
+              <td class="py-2 px-3">US 6.75</td>
+              <td class="py-2 px-3">17.2 mm</td>
+              <td class="py-2 px-3">54.0 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('16')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 16</td>
+              <td class="py-2 px-3">US 7.5</td>
+              <td class="py-2 px-3">17.8 mm</td>
+              <td class="py-2 px-3">56.0 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('18')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 18</td>
+              <td class="py-2 px-3">US 8.5</td>
+              <td class="py-2 px-3">18.5 mm</td>
+              <td class="py-2 px-3">58.0 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('20')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 20</td>
+              <td class="py-2 px-3">US 9.25</td>
+              <td class="py-2 px-3">19.1 mm</td>
+              <td class="py-2 px-3">60.0 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('22')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 22</td>
+              <td class="py-2 px-3">US 10.0</td>
+              <td class="py-2 px-3">19.8 mm</td>
+              <td class="py-2 px-3">62.1 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+            <tr class="hover:bg-[#F6EBDD]/30 transition cursor-pointer" onclick="selectSizeFromGuide('24')">
+              <td class="py-2 px-3 font-semibold text-[#1D1815]">Size 24</td>
+              <td class="py-2 px-3">US 11.0</td>
+              <td class="py-2 px-3">20.4 mm</td>
+              <td class="py-2 px-3">64.1 mm</td>
+              <td class="py-2 px-3 text-right"><span class="text-[10px] text-[#8A6B38] font-medium hover:underline">Select</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Quick Finger Measurement Instructions -->
+      <div class="bg-[#F6EBDD]/40 p-4 rounded-lg border border-[#C5A674]/30 space-y-2 text-xs">
+        <h4 class="font-medium text-[#1D1815] text-[11px] uppercase tracking-wider">How to Measure at Home:</h4>
+        <ol class="list-decimal list-inside space-y-1 text-[#766B5E] leading-relaxed">
+          <li>Wrap a non-stretchy string or narrow slip of paper comfortably around your intended finger.</li>
+          <li>Mark the exact spot where the end overlaps with a fine pen.</li>
+          <li>Measure the length in millimeters against a ruler to find your circumference. Match it to the closest size above.</li>
+        </ol>
+      </div>
+
+      <!-- Footer action -->
+      <div class="flex items-center justify-between pt-2">
+        <span class="text-[11px] text-[#766B5E]">Unsure? Our concierge provides complimentary sizing assistance.</span>
+        <button type="button" onclick="closeRingSizeGuide()" class="btn-luxury-secondary py-2 px-5 text-xs">
+          Close Guide
+        </button>
+      </div>
+    </div>
   </div>
-
-
-
-
 
 </body>
 
