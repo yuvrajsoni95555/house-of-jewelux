@@ -30,16 +30,16 @@ The digital boutique is architected as a seamless, high-performance Single Page 
 8. **Necklaces (`#necklaces`):** Statement haute joaillerie collars, chokers, and diamond solitaire pendants.
 9. **Bracelets (`#bracelets`):** Articulated tennis bracelets engineered with double safety catches.
 10. **Bangles (`#bangles`):** Hand-sculpted champagne gold kada and pavé diamond bangles.
-11. **Silver Jewellery (`#jewelux-collection`):** *The Jewelux Collection* — 925 sterling silver plated in liquid platinum-rhodium with lab-certified moissanite.
-12. **Temple Jewellery (`#temple`):** South Indian antique nakshi craftsmanship infused with European Didone elegance (22K antique matte gold, polki uncut diamonds, Basra pearls, ruby accents).
-13. **About Us (`#about`):** Milan design studio origin, generational artisan lineage, ethical sourcing charter, and creative philosophy.
-14. **Our Craftsmanship (`#craftsmanship`):** Six-stage savoir-faire: Mineral provenance, gouache renderings, metallurgy, generational nakshi setting, mirror hand-burnishing, and Swiss lab certification.
-15. **Contact & Ateliers (`#contact`):** Private atelier consultation scheduler, global flagship locations (Geneva, Milan, London, Paris, New York, Dubai), and direct WhatsApp concierge.
-16. **FAQ (`#faq`):** Expandable luxury accordions covering 4Cs certification, bespoke timeline, resizing, armored delivery, and gold alloys.
-17. **Shipping & Delivery (`#shipping`):** Armored courier white-glove transport protocol, insurance, and international customs clearance.
-18. **Returns & Refunds (`#returns`):** 14-day complimentary return guarantee, return shipping procedures, and bespoke exceptions.
-19. **Privacy Policy (`#privacy`):** Discretion covenant, 256-bit SSL encryption, Swiss banking data confidentiality standards.
-20. **Terms & Conditions (`#terms`):** Authenticity covenants, lifetime warranty, and valuation certificates.
+11. **Silver Jewellery (`#jewelux-collection`):** *The Jewelux Collection* — Solid 925 sterling silver plated in liquid platinum-rhodium with specialist-inspected solitaires.
+12. **Temple Jewellery (`#temple`):** Sacred Indian antique Nakshi craftsmanship honoring cultural iconography (22K antique matte gold, polki motifs, Basra pearls, ruby accents).
+13. **About Us (`#about`):** Founded by Yuvraj Soni, celebrating Indian fine jewellery artistry, sacred temple carvings, and nature-inspired botanical forms.
+14. **Our Craftsmanship (`#craftsmanship`):** Ten-stage savoir-faire: Inspiration, hand sketch, 3D goldsmithing, CPX wax prototype, 925 silver casting, filing, specialist stone setting, hand polishing, protective plating, and quality review.
+15. **Contact & Ateliers (`#contact`):** Private atelier consultation scheduler and direct WhatsApp concierge.
+16. **FAQ (`#faq`):** Expandable luxury accordions covering BIS hallmarking, bespoke timelines, resizing, insured delivery, and care guidelines.
+17. **Shipping & Delivery (`#shipping`):** Worldwide insured transit protocol, tamper-evident packaging, and tracking.
+18. **Returns & Refunds (`#returns`):** 14-day return protocol, inspection procedures, and bespoke exceptions.
+19. **Privacy Policy (`#privacy`):** Discretion covenant, 256-bit SSL encryption, and customer data confidentiality.
+20. **Terms & Conditions (`#terms`):** Authenticity covenants, BIS hallmarking standards, and terms of service.
 
 ---
 
@@ -75,4 +75,4 @@ house-of-jewelux/
 
 ---
 
-© 2026 HOUSE OF JEWELUX All rights reserved. Geneva • Milan • London • Paris • New York • Dubai.
+© 2026 HOUSE OF JEWELUX. All rights reserved. Designed & Handcrafted in India • Jaipur • Mumbai • New Delhi • Worldwide Insured Delivery.
