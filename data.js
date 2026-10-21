@@ -1860,6 +1860,8 @@ const JEWELUX_STORAGE = {
   }
 };
 
+const JEWELUX_I18N = { en: {} };
+
 if (typeof window !== 'undefined') {
   window.JEWELUX_DATA = JEWELUX_DATA;
   window.JEWELUX_I18N = JEWELUX_I18N;

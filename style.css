@@ -1,12 +1,22 @@
+/* Custom Local Font: Balthazar (SIL Open Font License) */
+@font-face {
+  font-family: 'Balthazar';
+  src: url('/fonts/Balthazar-Regular.ttf') format('truetype'),
+       url('../fonts/Balthazar-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* House of Jewelux - Luxury Haute Joaillerie Stylesheet */
 /* Color Architecture: Warm Vanilla Ivory + Champagne Gold + Soft Espresso */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balthazar&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600;700&display=swap');
 
 :root {
-  --font-serif-display: 'Cinzel', 'Cormorant Garamond', 'Bodoni MT', 'Didot', serif;
-  --font-serif-text: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif-display: 'Balthazar', 'Cinzel', 'Cormorant Garamond', serif;
+  --font-serif-text: 'Balthazar', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Balthazar', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Primary Atmosphere: Warm Champagne Cream (#F6EBDD) */
   --warm-white: #F6EBDD;
