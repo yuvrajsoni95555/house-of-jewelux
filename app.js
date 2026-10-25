@@ -191,70 +191,48 @@ document.addEventListener('DOMContentLoaded', () => {
     'studio': document.getElementById('view-studio')
   };
 
-  function switchView(targetName) {
-    Object.keys(views).forEach(name => {
-      const el = views[name];
-      if (!el) return;
-      if (name === targetName) {
-        el.classList.remove('hidden');
-        el.classList.add('active');
-      } else {
-        el.classList.add('hidden');
-        el.classList.remove('active');
-      }
-    });
+  function switchView(targetName, scrollToTop = true) {
+    const targetEl = views[targetName];
+    if (!targetEl) return;
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    injectJsonLdSchema(targetName);
+    // Prevent redundant DOM reflows if the view is already active
+    const isAlreadyActive = targetEl.classList.contains('active') && !targetEl.classList.contains('hidden');
+
+    if (!isAlreadyActive) {
+      Object.keys(views).forEach(name => {
+        const el = views[name];
+        if (!el) return;
+        if (name === targetName) {
+          el.classList.remove('hidden');
+          el.classList.add('active');
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('active');
+        }
+      });
+      injectJsonLdSchema(targetName);
+    }
+
+    if (scrollToTop && !isAlreadyActive) {
+      window.scrollTo(0, 0);
+    }
   }
   window.switchView = switchView;
 
   function handleRoute() {
-    const rawHash = window.location.hash.replace('#', '') || 'home';
+    const rawHash = (window.location.hash || '').replace('#', '').trim();
     const hash = rawHash.split('?')[0];
 
+    // Founder Studio / Admin
     if (hash === 'studio' || hash === 'admin') {
       switchView('studio');
       renderStudio();
       return;
     }
 
-    const categoryRoutes = {
-      'rings': 'rings',
-      'earrings': 'earrings',
-      'necklaces': 'necklaces',
-      'bracelets': 'bracelets',
-      'brooches': 'brooches',
-      'temple': 'temple',
-      'temple-jewellery': 'temple-jewellery',
-      'fine-jewellery': 'fine-jewellery',
-      'nature-wildlife': 'nature-wildlife',
-      'nature-inspired': 'nature-wildlife',
-      'indian-jewellery': 'nature-wildlife',
-      'gold-vault': 'gold-vault',
-      'new-arrivals': 'new-arrivals',
-      'best-sellers': 'best-sellers'
-    };
-
-    if (hash === 'shop') {
-      switchView('shop');
-      if (!state.activeCategory) {
-        state.activeCategory = 'all';
-      }
-      renderShopView();
-      return;
-    }
-
-    if (hash.startsWith('product-')) {
-      const prodId = hash.replace('product-', '');
-      const product = STORE.products.find(p => p.id === prodId);
-      if (product) {
-        state.activeProduct = product;
-        switchView('product-detail');
-        renderProductDetail(product);
-      } else {
-        switchView('shop');
-      }
+    // Direct multi-page destinations
+    if (hash === 'about') {
+      window.location.href = '/about';
       return;
     }
 
@@ -268,29 +246,110 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (hash === 'bespoke-studio') {
-      switchView('home');
-      const el = document.getElementById('bespoke-studio');
-      if (el) el.scrollIntoView(true);
-      return;
-    }
+    // Category routes
+    const categoryRoutes = {
+      'rings': 'rings',
+      'earrings': 'earrings',
+      'necklaces': 'necklaces',
+      'bracelets': 'bracelets',
+      'brooches': 'brooches',
+      'temple-jewellery': 'temple-jewellery',
+      'fine-jewellery': 'fine-jewellery',
+      'nature-wildlife': 'nature-wildlife',
+      'nature-inspired': 'nature-wildlife',
+      'indian-jewellery': 'nature-wildlife',
+      'gold-vault': 'gold-vault'
+    };
 
     if (categoryRoutes[hash]) {
-      state.activeCategory = categoryRoutes[hash];
-      switchView('shop');
-      renderShopView();
+      window.location.href = '/shop?cat=' + categoryRoutes[hash];
       return;
     }
 
+    // Product detail modal / view
+    if (hash.startsWith('product-')) {
+      const prodId = hash.replace('product-', '');
+      const product = STORE.products.find(p => p.id === prodId);
+      if (product) {
+        state.activeProduct = product;
+        switchView('product-detail', true);
+        renderProductDetail(product);
+      } else {
+        window.location.href = '/shop';
+      }
+      return;
+    }
+
+    // Homepage section anchors - keep view-home active and smoothly scroll to the element
+    const homeAnchorMap = {
+      'home': 'home',
+      'hero': 'home',
+      'top': 'home',
+      'collections': 'collections',
+      'collections-section': 'collections',
+      'temple': 'temple',
+      'temple-showcase-section': 'temple',
+      'best-sellers': 'best-sellers',
+      'iconic-masterpieces': 'best-sellers',
+      'minimalist': 'minimalist',
+      'minimalist-showcase-section': 'minimalist',
+      'bespoke-studio': 'bespoke-studio',
+      'studio-ring': 'bespoke-studio',
+      '3d-studio': 'bespoke-studio',
+      'craftsmanship': 'craftsmanship',
+      'home-craftsmanship-story': 'craftsmanship',
+      'founder': 'founder',
+      'home-founder-spotlight': 'founder',
+      'new-arrivals': 'new-arrivals',
+      'home-upcoming-collections': 'new-arrivals'
+    };
+
+    if (homeAnchorMap[hash]) {
+      switchView('home', false);
+      const targetId = homeAnchorMap[hash];
+      if (targetId === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const targetEl = document.getElementById(targetId) || document.getElementById(hash);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      return;
+    }
+
+    // Policy and legal views
     if (views[hash]) {
       switchView(hash);
       return;
     }
 
-    switchView('home');
+    // Default: home view without unwanted scroll reset
+    switchView('home', false);
   }
 
   window.addEventListener('hashchange', handleRoute);
+
+  // Global smooth navigation interceptor for header logo and internal anchors
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // Logo / Home click when on home page
+    if (href === '/' || href === '/#home' || href === '#home') {
+      const isHomePath = window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname === '';
+      if (isHomePath) {
+        e.preventDefault();
+        switchView('home', false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.location.hash) {
+          history.pushState(null, '', window.location.pathname || '/');
+        }
+      }
+    }
+  });
 
   // ================= 4. PRODUCT CARDS & SHOWCASES =================
   function createProductCardHTML(p) {

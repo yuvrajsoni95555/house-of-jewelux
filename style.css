@@ -122,11 +122,29 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
   font-family: var(--font-sans);
   color: var(--truffle-dark);
   background-color: var(--vanilla-ivory);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure all anchor target sections leave clearance below the sticky header */
+section[id], div[id].page-section, div[id^="view-"] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Stabilize header layout across all devices */
+.header-glass {
+  background: rgba(246, 235, 221, 0.95);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border-gold-subtle);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
 }
 
 body {
