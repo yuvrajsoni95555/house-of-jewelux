@@ -19,6 +19,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Balthazar&family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Praise"', '"Cinzel"', 'serif'],
+            serif: ['"Balthazar"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Balthazar"', '"Montserrat"', 'sans-serif'],
+            body: ['"Balthazar"', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body style="overflow-x: hidden;" class="bg-[#F6EBDD] text-[#1D1815] selection:bg-[#DECCA8]/40 selection:text-[#1D1815]">
