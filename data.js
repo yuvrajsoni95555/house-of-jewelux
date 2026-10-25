@@ -11,7 +11,7 @@ const JEWELUX_DATA = {
     founderPinHash: "a20a2b7bb0842d5cf8a0c06c626421fd51ec103925c1819a51271f2779afa730",
     announcementText: "✦ INDIAN FINE JEWELLERY • TEMPLE JEWELLERY • 925 SILVER • DESIGNED & MADE IN INDIA",
     heroHeadline: "Where Elegance Becomes Eternal",
-    heroSubtitle: "An Indian silver jewellery brand bringing together traditional craftsmanship, contemporary design and carefully selected international influences. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
+    heroSubtitle: "An Indian silver jewellery brand bringing together traditional craftsmanship, sacred temple artistry and refined contemporary design. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
     heroCtaText: "Explore The Jewelux Collection",
     heroCtaHash: "/jewelux-collection",
     freeShippingThresholdUSD: 250,
@@ -31,16 +31,16 @@ const JEWELUX_DATA = {
 
                                     categories: [
     { id: 'all', name: 'All Silver Jewels', hash: '#shop', url: '/shop', subtitle: 'BIS Hallmarked 925 Sterling Silver', icon: '✦', isPrimary: false },
-    { id: 'nature-wildlife', alias: ['nature-inspired', 'indian-jewellery'], name: 'Nature & Wildlife Jewellery', hash: '#nature-wildlife', url: '/shop?cat=nature-wildlife', subtitle: 'Inspired by Nature • Wildlife • Crafted in India', icon: '🌿', isPrimary: true },
-    { id: 'fine-jewellery', name: 'Fine Jewellery', hash: '#fine-jewellery', url: '/shop?cat=fine-jewellery', subtitle: 'Contemporary 925 Silver Luxury', icon: '💎', isPrimary: true },
-    { id: 'temple-jewellery', name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi in Silver', icon: '🛕', isPrimary: true },
+    { id: 'temple-jewellery', alias: ['temple-heritage', 'sacred-artistry'], name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi in Silver', icon: '🛕', isPrimary: true },
+    { id: 'sacred-motifs', alias: ['spiritual-jewellery', 'sacred-geometry'], name: 'Sacred & Spiritual Motifs', hash: '#sacred-motifs', url: '/shop?cat=sacred-motifs', subtitle: 'Devotional Mandalas & Sacred Symbolism', icon: '🕉️', isPrimary: true },
+    { id: 'animal-motifs', alias: ['animal-jewellery', 'wildlife-jewellery'], name: 'Animal-Inspired Jewellery', hash: '#animal-motifs', url: '/shop?cat=animal-motifs', subtitle: 'Peacocks, Elephants & Sacred Indian Fauna', icon: '🦚', isPrimary: true },
+    { id: 'nature-wildlife', alias: ['nature-inspired', 'indian-jewellery', 'botanical-jewellery'], name: 'Nature-Inspired Fine Jewellery', hash: '#nature-wildlife', url: '/shop?cat=nature-wildlife', subtitle: 'Lotus Flowers, Vines, Petals & Organic Forms', icon: '🌿', isPrimary: true },
+    { id: 'minimalist-jewellery', alias: ['minimalist-fine-jewellery', 'contemporary-pave', 'fine-jewellery'], name: 'Minimalist Fine Jewellery', hash: '#minimalist-jewellery', url: '/shop?cat=minimalist-jewellery', subtitle: 'Understated Proportions & Modern Silver Pavé', icon: '✦', isPrimary: true },
     { id: 'micron-gold', name: 'Micron Gold Plated', hash: '#micron-gold', url: '/shop?cat=micron-gold', subtitle: 'Solid 925 Silver with 18K/22K Micro Gold Plating', icon: '⚜️', isPrimary: false },
     { id: 'silver-jewellery', name: 'Rhodium Silver', hash: '#silver-jewellery', url: '/shop?cat=silver-jewellery', subtitle: 'Solid 925 Silver with Anti-Tarnish Rhodium', icon: '⚪', isPrimary: false },
     { id: 'diamond-jewellery', name: 'Diamond & Moissanite', hash: '#diamond-jewellery', url: '/shop?cat=diamond-jewellery', subtitle: 'Certified Solitaires & Pavé Set in 925 Silver', icon: '✨', isPrimary: false },
     { id: 'heritage-jewellery', name: 'Heritage Jewellery', hash: '#heritage-jewellery', url: '/shop?cat=heritage-jewellery', subtitle: 'Generational Indian Silver Heirlooms', icon: '👑', isPrimary: false },
-    { id: 'contemporary-jewellery', name: 'Contemporary Jewellery', hash: '#contemporary-jewellery', url: '/shop?cat=contemporary-jewellery', subtitle: 'Modern Architectural Silver Expressions', icon: '📐', isPrimary: false },
-    { id: 'bespoke-jewellery', name: 'Bespoke / Custom', hash: '#bespoke-studio', url: '/#bespoke-studio', subtitle: 'Private Atelier Silver Commissions', icon: '🛠️', isPrimary: false },
-    { id: 'hong-kong-inspired', name: 'Hong Kong–Inspired', hash: '#hong-kong-inspired', url: '/shop?cat=hong-kong-inspired', subtitle: 'Refined Geometry & Pavé Elegance in Silver', icon: '🇭🇰', isPrimary: false }
+    { id: 'bespoke-jewellery', name: 'Bespoke / Custom', hash: '#bespoke-studio', url: '/#bespoke-studio', subtitle: 'Private Atelier Silver Commissions', icon: '🛠️', isPrimary: false }
   ],
 
   collections: [
@@ -181,7 +181,7 @@ const JEWELUX_DATA = {
         "mainCategory": "Fine Jewellery",
         "mainCategoryId": "fine-jewellery",
         "finishing": "Anti-Tarnish Rhodium Plating",
-        "inspiration": "Hong Kong-inspired contemporary design"
+        "inspiration": "Minimalist contemporary pavé geometry"
     },
     {
         "id": "HJ-RNG-004",
@@ -469,7 +469,7 @@ const JEWELUX_DATA = {
         "mainCategory": "Fine Jewellery",
         "mainCategoryId": "fine-jewellery",
         "finishing": "Micron Gold Plating",
-        "inspiration": "Hong Kong-inspired contemporary design"
+        "inspiration": "Minimalist contemporary pavé geometry"
     },
     {
         "id": "HJ-EAR-003",
@@ -498,10 +498,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "stone": "Graduated Moissanite Drops & Marquis Links",
-        "mainCategory": "Hong Kong\u2013Inspired",
-        "mainCategoryId": "hong-kong-inspired",
+        "mainCategory": "Minimalist Fine Jewellery",
+        "mainCategoryId": "minimalist-jewellery",
         "finishing": "Anti-Tarnish Rhodium Plating",
-        "inspiration": "Hong Kong-inspired contemporary design"
+        "inspiration": "Minimalist contemporary pavé geometry"
     },
     {
         "id": "HJ-EAR-004",
@@ -821,7 +821,7 @@ const JEWELUX_DATA = {
         "mainCategory": "Fine Jewellery",
         "mainCategoryId": "fine-jewellery",
         "finishing": "Micron Gold Plating",
-        "inspiration": "Hong Kong-inspired contemporary design"
+        "inspiration": "Minimalist contemporary pavé geometry"
     },
     {
         "id": "HJ-BRC-004",
@@ -1074,10 +1074,10 @@ const JEWELUX_DATA = {
         "craftedIn": "India",
         "material": "BIS Hallmarked 925 Sterling Silver",
         "stone": "1.5ct Solitaire with Double Pavé Halo & Micro-Pavé Solitaires",
-        "mainCategory": "Hong Kong\u2013Inspired",
-        "mainCategoryId": "hong-kong-inspired",
+        "mainCategory": "Minimalist Fine Jewellery",
+        "mainCategoryId": "minimalist-jewellery",
         "finishing": "Anti-Tarnish Rhodium Plating",
-        "inspiration": "Hong Kong-inspired contemporary design"
+        "inspiration": "Minimalist contemporary pavé geometry"
     },
     {
         "id": "HJ-NCK-002",
@@ -1525,7 +1525,7 @@ const JEWELUX_DATA = {
         "mainCategory": "Fine Jewellery",
         "mainCategoryId": "fine-jewellery",
         "finishing": "Anti-Tarnish Rhodium Plating",
-        "inspiration": "Hong Kong-inspired contemporary design"
+        "inspiration": "Minimalist contemporary pavé geometry"
     },
     {
         "id": "HJ-BRO-006",

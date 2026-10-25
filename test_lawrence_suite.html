@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lawrence Typography Full Suite Test</title>
+<link rel="stylesheet" href="style.css?v=lawrence_test">
+<style>
+@font-face {
+  font-family: 'Lawrence';
+  src: url('fonts/Lawrence-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lawrence';
+  src: url('fonts/Lawrence-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+body {
+  background: #F6EBDD;
+  color: #1D1815;
+  font-family: 'Lawrence', 'Balthazar', sans-serif;
+  padding: 40px;
+}
+.hero-h1 {
+  font-family: 'Lawrence', 'Cinzel', serif;
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+.hero-h1 .italic {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  color: #C5A059;
+}
+.section-h2 {
+  font-family: 'Lawrence', 'Cinzel', serif;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-top: 30px;
+}
+.nav-sample {
+  display: flex;
+  gap: 25px;
+  font-family: 'Lawrence', 'Balthazar', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 13px;
+  border-bottom: 1px solid #C5A674;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+.btn-sample {
+  display: inline-block;
+  background: #1D1815;
+  color: #F6EBDD;
+  padding: 14px 28px;
+  font-family: 'Lawrence', 'Balthazar', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  border: 1px solid #1D1815;
+  margin-right: 15px;
+}
+.btn-gold {
+  background: #8A6B38;
+  border-color: #8A6B38;
+}
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E5D5C2;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 380px;
+  margin-top: 25px;
+}
+.card-title {
+  font-family: 'Lawrence', 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.card-price {
+  font-family: 'Balthazar', 'Lawrence', sans-serif;
+  font-size: 22px;
+  color: #8A6B38;
+  margin: 12px 0;
+}
+.hindi-sample {
+  font-family: 'Noto Serif Devanagari', 'Rozha One', serif;
+  font-size: 18px;
+  color: #766B5E;
+  margin-top: 15px;
+}
+</style>
+</head>
+<body>
+  <div class="nav-sample">
+    <span>Home</span>
+    <span>Catalogue</span>
+    <span>Temple Jewellery</span>
+    <span>Sacred Motifs</span>
+    <span>Animal Motifs</span>
+    <span>Nature Inspired</span>
+    <span>Minimalist Jewels</span>
+    <span>About</span>
+  </div>
+
+  <h1 class="hero-h1">WHERE ELEGANCE<br><span class="italic">BECOMES ETERNAL</span></h1>
+
+  <h2 class="section-h2">SACRED ARTISTRY, <span style="font-family:'Cormorant Garamond', serif; font-style:italic; color:#C5A059;">Reimagined for Today</span></h2>
+
+  <h2 class="section-h2">ICONIC <span style="font-family:'Cormorant Garamond', serif; font-style:italic; color:#C5A059;">Masterpieces</span></h2>
+
+  <div style="margin: 25px 0;">
+    <button class="btn-sample">Explore Collection</button>
+    <button class="btn-sample btn-gold">Atelier Inquiry</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The Royal Peacock Emerald Brooch</div>
+    <p style="font-size: 15px; line-height: 1.5; color: #5C5248;">
+      Detailed filigree feathers bloom outward from a vivid certified emerald center, celebrating the sacred national emblem of India in hallmarked 925 silver.
+    </p>
+    <div class="card-price">₹28,450 <span style="font-size:13px; color:#9E9386; font-family:'Lawrence', sans-serif;">(BIS Hallmarked 925 Silver)</span></div>
+    <button class="btn-sample" style="width:100%; text-align:center; margin:0;">Add To Jewel Box</button>
+  </div>
+
+  <div class="hindi-sample" lang="hi">
+    भारतीय परम्परा और पवित्र मन्दिर कला से प्रेरित शुद्ध 925 चाँदी के आभूषण।
+  </div>
+</body>
+</html>

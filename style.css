@@ -1,9 +1,34 @@
-/* Custom Local Fonts: Praise (Display Headings) & Balthazar (Body & Supporting) */
+/* Custom Local Fonts: Lawrence (Primary Luxury Typography) & Balthazar / Praise (Supporting) */
+@font-face {
+  font-family: 'Lawrence';
+  src: url('/fonts/Lawrence-Regular.otf') format('opentype'),
+       url('/fonts/DEMO-lawrence_regular.otf') format('opentype'),
+       url('fonts/Lawrence-Regular.otf') format('opentype'),
+       url('fonts/DEMO-lawrence_regular.otf') format('opentype'),
+       url('../fonts/Lawrence-Regular.otf') format('opentype'),
+       url('../fonts/DEMO-lawrence_regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lawrence';
+  src: url('/fonts/Lawrence-Bold.otf') format('opentype'),
+       url('/fonts/DEMO-lawrence_bold.otf') format('opentype'),
+       url('fonts/Lawrence-Bold.otf') format('opentype'),
+       url('fonts/DEMO-lawrence_bold.otf') format('opentype'),
+       url('../fonts/Lawrence-Bold.otf') format('opentype'),
+       url('../fonts/DEMO-lawrence_bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Praise';
   src: url('/fonts/Praise.otf') format('opentype'),
        url('fonts/Praise.otf') format('opentype'),
-       url('./fonts/Praise.otf') format('opentype'),
        url('../fonts/Praise.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
@@ -14,7 +39,6 @@
   font-family: 'Balthazar';
   src: url('/fonts/Balthazar-Regular.ttf') format('truetype'),
        url('fonts/Balthazar-Regular.ttf') format('truetype'),
-       url('./fonts/Balthazar-Regular.ttf') format('truetype'),
        url('../fonts/Balthazar-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
@@ -28,7 +52,7 @@
 
 :root {
   /* Luxury Typography System */
-  --font-display: 'Praise', 'Cinzel', serif;
+  --font-display: 'Lawrence', 'Cinzel', serif;
   --font-body: 'Balthazar', Georgia, serif;
 
   --font-serif-display: var(--font-display);
@@ -131,12 +155,11 @@ body {
    TYPOGRAPHY SYSTEM — PRAISE (DISPLAY) & BALTHAZAR (BODY)
    ======================================================== */
 
-/* Utility Typography Classes */
+/* Utility Typography Classes using Lawrence */
 .font-display {
   font-family: var(--font-display) !important;
   letter-spacing: 0.025em;
-  font-variant-ligatures: no-common-ligatures;
-  font-feature-settings: "liga" 0;
+  font-feature-settings: "calt" 1, "dlig" 0;
   font-synthesis: none;
 }
 .font-serif {
@@ -152,16 +175,25 @@ body {
   font-synthesis: none;
 }
 
-/* Base Headings & Titles using Praise */
-h1, h2, h3, .hero-headline, .section-heading, .collection-heading, .brand-headline {
-  font-family: var(--font-display);
+/* Base Headings & Titles using Lawrence */
+h1, h2, h3, h4, h5, h6, .hero-headline, .section-heading, .collection-heading, .brand-headline {
+  font-family: var(--font-display) !important;
   letter-spacing: 0.025em;
   font-weight: 400;
   text-wrap: balance;
-  font-variant-ligatures: no-common-ligatures;
-  font-feature-settings: "liga" 0;
+  font-feature-settings: "calt" 1, "dlig" 0;
   font-synthesis: none;
   overflow: visible;
+}
+
+/* Price & Currency Fallback (guarantees ₹ and numerals render cleanly) */
+.price, [data-price], .product-price, .cart-total, #pdp-price, .currency-symbol {
+  font-family: 'Balthazar', 'Lawrence', sans-serif !important;
+}
+
+/* Indian Language / Hindi Script Fallback */
+[lang="hi"], :lang(hi), .hindi-text {
+  font-family: 'Noto Serif Devanagari', 'Rozha One', 'Kohinoor Devanagari', serif !important;
 }
 
 /* Editorial Luxury Italic Accent in Headings (True Italic Harmony) */
@@ -182,15 +214,20 @@ h3 .italic,
 
 /* Product names on cards & detail pages */
 .product-card h4, .product-card h3, .product-name, #pdp-title, .pdp-product-name {
-  font-family: var(--font-display);
+  font-family: var(--font-display) !important;
   letter-spacing: 0.02em;
   font-variant-ligatures: no-common-ligatures;
   font-feature-settings: "liga" 0;
   font-synthesis: none;
 }
 
-/* Base Body & UI using Balthazar */
-p, li, a, span, button, input, select, textarea, label {
+/* Navigation, Buttons & UI Controls in Lawrence */
+nav a, .nav-link, .btn-luxury-primary, .btn-luxury-secondary, .badge, .category-pill, button {
+  font-family: 'Lawrence', 'Balthazar', sans-serif !important;
+}
+
+/* Base Body using Balthazar for effortless reading comfort */
+p, li, .product-description, .legal-text, input, select, textarea, label {
   font-family: var(--font-body);
   font-synthesis: none;
 }

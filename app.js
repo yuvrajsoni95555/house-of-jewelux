@@ -421,10 +421,14 @@ document.addEventListener('DOMContentLoaded', () => {
       filtered = filtered.filter(p => p.mainCategoryId === 'diamond-jewellery' || (p.stone && p.stone.toLowerCase().includes('diamond')));
     } else if (state.activeCategory === 'heritage-jewellery' || state.activeCategory === 'heritage-traditional' || state.activeCategory === 'couples') {
       filtered = filtered.filter(p => p.mainCategoryId === 'heritage-jewellery' || p.collection === 'eternal-couples');
+    } else if (state.activeCategory === 'sacred-motifs' || state.activeCategory === 'spiritual-jewellery') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'temple-jewellery' || (p.description && (p.description.toLowerCase().includes('sacred') || p.description.toLowerCase().includes('mandala') || p.description.toLowerCase().includes('vow'))));
+    } else if (state.activeCategory === 'animal-motifs' || state.activeCategory === 'animal-jewellery') {
+      filtered = filtered.filter(p => (p.description && (p.description.toLowerCase().includes('peacock') || p.description.toLowerCase().includes('falcon') || p.description.toLowerCase().includes('butterfly') || p.description.toLowerCase().includes('dragonfly') || p.description.toLowerCase().includes('tiger') || p.description.toLowerCase().includes('feather'))));
     } else if (state.activeCategory === 'contemporary-jewellery') {
       filtered = filtered.filter(p => p.mainCategoryId === 'contemporary-jewellery' || p.category === 'bracelets' || p.category === 'earrings');
-    } else if (state.activeCategory === 'hong-kong-inspired' || state.activeCategory === 'haute-joaillerie') {
-      filtered = filtered.filter(p => p.mainCategoryId === 'hong-kong-inspired' || Boolean(p.inspiration));
+    } else if (state.activeCategory === 'minimalist-jewellery' || state.activeCategory === 'minimalist-fine-jewellery' || state.activeCategory === 'contemporary-pave' || state.activeCategory === 'haute-joaillerie') {
+      filtered = filtered.filter(p => p.mainCategoryId === 'minimalist-jewellery' || p.mainCategoryId === 'fine-jewellery' || Boolean(p.inspiration));
     } else if (state.activeCategory === 'new-arrivals') {
       filtered = filtered.filter(p => p.isNew);
     } else {
