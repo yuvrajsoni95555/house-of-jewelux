@@ -134,35 +134,65 @@ body {
 /* Utility Typography Classes */
 .font-display {
   font-family: var(--font-display) !important;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
+  font-variant-ligatures: no-common-ligatures;
+  font-feature-settings: "liga" 0;
+  font-synthesis: none;
 }
 .font-serif {
   font-family: var(--font-body) !important;
+  font-synthesis: none;
 }
 .font-sans {
   font-family: var(--font-body) !important;
+  font-synthesis: none;
 }
 .font-body {
   font-family: var(--font-body) !important;
+  font-synthesis: none;
 }
 
 /* Base Headings & Titles using Praise */
 h1, h2, h3, .hero-headline, .section-heading, .collection-heading, .brand-headline {
   font-family: var(--font-display);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
   font-weight: 400;
   text-wrap: balance;
+  font-variant-ligatures: no-common-ligatures;
+  font-feature-settings: "liga" 0;
+  font-synthesis: none;
+  overflow: visible;
+}
+
+/* Editorial Luxury Italic Accent in Headings (True Italic Harmony) */
+.italic,
+h1 .italic,
+h2 .italic,
+h3 .italic,
+.champagne-gold-text.italic,
+.font-serif.italic {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic !important;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  display: inline-block;
+  vertical-align: baseline;
+  font-synthesis: none;
 }
 
 /* Product names on cards & detail pages */
 .product-card h4, .product-card h3, .product-name, #pdp-title, .pdp-product-name {
   font-family: var(--font-display);
   letter-spacing: 0.02em;
+  font-variant-ligatures: no-common-ligatures;
+  font-feature-settings: "liga" 0;
+  font-synthesis: none;
 }
 
 /* Base Body & UI using Balthazar */
 p, li, a, span, button, input, select, textarea, label {
   font-family: var(--font-body);
+  font-synthesis: none;
 }
 
 /* Specific elements using Balthazar */
@@ -171,6 +201,7 @@ button, .btn-luxury-primary, .btn-luxury-secondary, .btn-luxury-gold,
 .product-price, .price-display, .spec-label, .breadcrumb-item, .pdp-meta,
 footer, footer p, footer a, footer li, .caption-text, .announcement-bar {
   font-family: var(--font-body);
+  font-synthesis: none;
 }
 
 /* Hot-Foil Champagne Gold Text Gradient */
@@ -179,6 +210,9 @@ footer, footer p, footer a, footer li, .caption-text, .announcement-bar {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  vertical-align: baseline;
+  padding-right: 0.06em;
+  overflow: visible;
 }
 
 .gold-gradient-bg {
