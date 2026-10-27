@@ -2184,11 +2184,22 @@ window.checkoutViaWhatsApp = function() {
   window.open(`https://wa.me/916377061020?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
-// Initialize listeners on load
-setTimeout(() => {
-  updateBadges();
+
+// Robust Multi-Stage Auto-Initializer
+function autoInitJeweluxPages() {
+  if (typeof updateBadges === 'function') updateBadges();
   if (typeof renderShopCatalog === 'function') renderShopCatalog();
   if (typeof renderAllCollectionGrids === 'function') renderAllCollectionGrids();
   if (typeof renderWishlistPage === 'function') renderWishlistPage();
   if (typeof renderCartPage === 'function') renderCartPage();
-}, 200);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', autoInitJeweluxPages);
+} else {
+  autoInitJeweluxPages();
+}
+window.addEventListener('load', autoInitJeweluxPages);
+setTimeout(autoInitJeweluxPages, 100);
+setTimeout(autoInitJeweluxPages, 500);
+
