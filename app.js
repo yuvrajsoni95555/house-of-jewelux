@@ -33,27 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     promoCodeApplied: null,
     activeProduct: null,
     studioUnlocked: false,
-    activeStudioTab: 'overview',
-    
-    // Bespoke 3D Ring Studio State
-    bespoke: {
-      bandStyle: 'cathedral',
-      metalId: 'yellow-gold',
-      gemId: 'diamond',
-      cutId: 'round',
-      caratWeight: 2.5,
-      ringSize: '14',
-      engravingText: '',
-      engravingFont: 'serif',
-      activeTab: 'options',
-      rotationY: 0.4,
-      rotationX: 0.2,
-      isDragging: false,
-      lastMouseX: 0,
-      lastMouseY: 0,
-      zoom: 1.0,
-      sparkleTimer: 0
-    }
+    activeStudioTab: 'overview'
   };
   window.appState = state;
 
@@ -120,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderAllProductGrids();
         renderCart();
         renderWishlist();
-        updateBespokePrice();
         if (state.activeProduct) renderProductDetail(state.activeProduct);
       });
     });
@@ -280,6 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // Safely redirect legacy 3D bespoke customizer links to shop
+    if (hash === 'bespoke-studio' || hash === 'studio-ring' || hash === '3d-studio') {
+      window.location.href = '/shop';
+      return;
+    }
+
     // Homepage section anchors - keep view-home active and smoothly scroll to the element
     const homeAnchorMap = {
       'home': 'home',
@@ -293,9 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
       'iconic-masterpieces': 'best-sellers',
       'minimalist': 'minimalist',
       'minimalist-showcase-section': 'minimalist',
-      'bespoke-studio': 'bespoke-studio',
-      'studio-ring': 'bespoke-studio',
-      '3d-studio': 'bespoke-studio',
       'craftsmanship': 'craftsmanship',
       'home-craftsmanship-story': 'craftsmanship',
       'founder': 'founder',
@@ -1215,2226 +1197,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.inquireProductOnWhatsApp = inquireProductOnWhatsApp;
 
-  function inquireBespokeOnWhatsApp() {
-    const b = state.bespoke;
-    const metalNames = {
-      'rhodium-silver': '925 Silver / Liquid Rhodium',
-      'liquid-silver': '925 Silver / Liquid Rhodium',
-      'micro-gold': '18K Micron Gold (2.5 Micron Vermeil)',
-      'rose-gold': '18K Rose Gold Plated',
-      'white-gold': 'Bright Rhodium High Polish',
-      'platinum': 'Heritage Antique Patina Finish',
-      'antique-gold': 'Heritage Antique Patina Finish'
-    };
-    const gemNames = {
-      'moissanite': 'D-Color Exceptional Fire Moissanite',
-      'diamond': 'Lab Diamond (EF / VVS Clarity)',
-      'solitaire-vvs': 'Clarity-Graded VS Solitaire',
-      'champagne-solitaire': 'Warm Amber Champagne Solitaire'
-    };
-    const cutNames = {
-      'round': 'Round Brilliant',
-      'princess': 'Princess Cut',
-      'oval': 'Oval Cut',
-      'cushion': 'Cushion Cut',
-      'emerald-cut': 'Emerald Cut',
-      'radiant': 'Radiant Cut',
-      'pear': 'Pear Cut',
-      'asscher': 'Asscher Cut',
-      'marquise': 'Marquise Cut',
-      'heart': 'Heart Cut',
-      'hexagonal': 'Hexagonal Cut',
-      'elongated-cushion': 'Elongated Cushion'
-    };
-
-    const bandLabel = b.bandStyle === 'traditional' ? 'Traditional Classic Comfort-Fit' : 'Cathedral Arch Shoulders';
-    const metalLabel = metalNames[b.metalId] || b.metalId;
-    const gemLabel = gemNames[b.gemId] || b.gemId;
-    const cutLabel = cutNames[b.cutId] || b.cutId;
-    const caratLabel = `${b.caratWeight ? parseFloat(b.caratWeight).toFixed(2) : '2.50'} ct`;
-    const sizeLabel = b.ringSize ? `Indian Size ${b.ringSize}` : 'Indian Size 14';
-    const fontLabel = b.engravingFont === 'script' ? 'Italic Script' : b.engravingFont === 'sans' ? 'Modern Sans' : 'Classic Roman';
-    const engravingLabel = b.engravingText && b.engravingText.trim().length > 0
-      ? `"${b.engravingText.trim()}" (${fontLabel})`
-      : 'None (Plain Inside Band)';
-
-    const waNumber = (STORE.storeConfig && STORE.storeConfig.whatsappNumber ? STORE.storeConfig.whatsappNumber : '+916377061020').replace(/[^0-9]/g, '');
-    const msg = `Hello House of Jewelux Concierge! I have customized a ring on your 3D Bespoke Goldsmith Workbench:
-
-💍 SPECIFICATION:
-• Band Style: ${bandLabel}
-• Band Metal: ${metalLabel}
-• Center Stone: ${gemLabel}
-• Stone Cut: ${cutLabel}
-• Carat Weight: ${caratLabel}
-• Ring Size: ${sizeLabel}
-• Inside Engraving: ${engravingLabel}
-
-Could we schedule a private atelier consultation with the master goldsmith to discuss crafting this bespoke piece?
-Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
-
-    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-  window.inquireBespokeOnWhatsApp = inquireBespokeOnWhatsApp;
-
-  window.orderBespokePiece = () => {
-    const b = state.bespoke;
-    const metalObj = STORE.bespokeStudio.metals.find(m => m.id === b.metalId) || STORE.bespokeStudio.metals[0];
-    const gemObj = STORE.bespokeStudio.gems.find(g => g.id === b.gemId) || STORE.bespokeStudio.gems[0];
-    const cutObj = STORE.bespokeStudio.cuts.find(c => c.id === b.cutId) || STORE.bespokeStudio.cuts[0];
-    const priceVal = metalObj.priceBase + (gemObj.pricePerCarat * b.caratWeight);
-
-    const bespokeItem = {
-      id: `BESPOKE-${Date.now()}`,
-      name: `${b.caratWeight}ct ${gemObj.name} Solitaire Ring (${metalObj.name})`,
-      priceUSD: priceVal,
-      image: 'images/jewelux_solitaire_ring.jpg',
-      metal: metalObj.name,
-      stone: `${gemObj.name} (${cutObj.name} Cut)`,
-      quantity: 1,
-      isBespoke: true
-    };
-
-    state.cart.push(bespokeItem);
-    localStorage.setItem('jewelux_cart', JSON.stringify(state.cart));
-    updateCartBadges();
-    showToast('Bespoke fine silver ring added to your bag!', '💍');
-    openCartDrawer();
-  };
-
-  window.consultBespokePiece = () => {
-    inquireBespokeOnWhatsApp();
-  };
-
-  // ================= 9. LUXURY 3D JEWELLERY ENGINE (THREE.JS) =================
-  class Jewelry3DViewer {
-    constructor(canvasId = 'bespoke-3d-canvas', containerId = 'bespoke-3d-wrapper', loaderId = 'canvas-3d-loader') {
-      this.canvas = document.getElementById(canvasId);
-      this.container = document.getElementById(containerId);
-      this.loader = document.getElementById(loaderId) || document.getElementById('bespoke-loader') || document.getElementById('canvas-3d-loader');
-      if (!this.canvas) return;
-
-      this.currentBandStyle = state.bespoke.bandStyle || 'cathedral';
-      this.currentMetal = state.bespoke.metalId || 'micro-gold';
-      this.currentGem = state.bespoke.gemId || 'moissanite';
-      this.currentCut = state.bespoke.cutId || 'round';
-      this.currentCarat = state.bespoke.caratWeight || 2.5;
-
-      this.isUserInteracting = false;
-      this.hasUserInteractedOnce = false;
-      this.idleTimer = null;
-      this.resizeTimeout = null;
-      this.resizeObserver = null;
-
-      this.init();
-    }
-
-    init() {
-      if (typeof THREE === 'undefined') {
-        console.warn('Three.js not loaded, skipping 3D engine init.');
-        return;
-      }
-
-      const rect = this.container ? this.container.getBoundingClientRect() : this.canvas.getBoundingClientRect();
-      this.width = rect.width || 600;
-      this.height = rect.height || 480;
-
-      // 1. WebGL Renderer
-      this.renderer = new THREE.WebGLRenderer({
-        canvas: this.canvas,
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance"
-      });
-      this.renderer.setSize(this.width, this.height, false);
-      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      this.renderer.toneMappingExposure = 1.05;
-      this.renderer.outputEncoding = THREE.sRGBEncoding;
-
-      // 2. Scene & Camera
-      this.scene = new THREE.Scene();
-      this.camera = new THREE.PerspectiveCamera(34, this.width / this.height, 0.1, 1000);
-      // Hero 3/4 beauty angle direction vector matching visual reference photo exactly
-      // Initial positioning will be dynamically calibrated by updateCameraFraming()
-      this.camera.position.set(16, 20, 36);
-
-      // 3. OrbitControls (Smooth inertia, pan disabled, controlled gentle zoom)
-      if (typeof THREE.OrbitControls !== 'undefined') {
-        this.controls = new THREE.OrbitControls(this.camera, this.canvas);
-        this.controls.enableDamping = true;
-        this.controls.dampingFactor = 0.05;
-        this.controls.enablePan = false;
-        this.controls.enableZoom = true;
-        this.controls.zoomSpeed = 0.40;
-        this.controls.minPolarAngle = Math.PI * 0.12;
-        this.controls.maxPolarAngle = Math.PI * 0.82;
-        this.controls.target.set(0, 1.2, 0);
-
-        this.controls.addEventListener('start', () => {
-          this.isUserInteracting = true;
-          this.hasUserInteractedOnce = true;
-          if (this.idleTimer) clearTimeout(this.idleTimer);
-        });
-        this.controls.addEventListener('end', () => {
-          this.idleTimer = setTimeout(() => {
-            this.isUserInteracting = false;
-          }, 2500);
-        });
-      }
-
-      // Quick double-click to reset to default hero view
-      this.canvas.addEventListener('dblclick', () => {
-        this.hasUserInteractedOnce = false;
-        this.updateCameraFraming(true);
-      });
-
-      // Initial responsive camera framing calculation for current display size
-      this.updateCameraFraming(true);
-
-      // 4. Studio Environment & Lighting
-      this.createStudioEnvironment();
-      this.createStudioLights();
-      this.createGroundShadow();
-
-      // 5. Build 3D Ring Group
-      this.ringGroup = new THREE.Group();
-      this.ringGroup.rotation.set(0.08, -0.22, 0.05);
-      this.scene.add(this.ringGroup);
-
-      this.materials = this.createMaterials();
-
-      // 6. Build Geometry Components
-      this.buildShank();
-      this.buildSettingHead();
-      this.buildCenterGemstone();
-
-      // 7. Hide Loader with Smooth Fade
-      const hideLoaders = () => {
-        ['bespoke-loader', 'canvas-3d-loader'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) {
-            el.classList.add('fade-out');
-            setTimeout(() => { if (el) el.style.display = 'none'; }, 200);
-          }
-        });
-      };
-      setTimeout(hideLoaders, 50);
-      setTimeout(hideLoaders, 300);
-
-      // 8. Responsive Display, Screen Orientation & Observer Handlers
-      window.addEventListener('resize', () => this.handleResizeDebounced());
-      window.addEventListener('orientationchange', () => {
-        setTimeout(() => this.onResize(), 100);
-        setTimeout(() => this.onResize(), 300);
-      });
-      if (typeof screen !== 'undefined' && screen.orientation) {
-        screen.orientation.addEventListener('change', () => {
-          setTimeout(() => this.onResize(), 100);
-          setTimeout(() => this.onResize(), 300);
-        });
-      }
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') {
-          this.onResize();
-        }
-      });
-
-      if (typeof ResizeObserver !== 'undefined' && this.container) {
-        this.resizeObserver = new ResizeObserver(() => {
-          this.onResize();
-        });
-        this.resizeObserver.observe(this.container);
-      }
-
-      // Final settling frame in case layout engine is still calculating styles
-      requestAnimationFrame(() => this.onResize());
-      setTimeout(() => this.onResize(), 250);
-
-      this.animate();
-    }
-
-    createStudioEnvironment() {
-      const pmremGen = new THREE.PMREMGenerator(this.renderer);
-      pmremGen.compileEquirectangularShader();
-
-      const envScene = new THREE.Scene();
-      envScene.background = new THREE.Color(0x020202); // Deep dark studio void for crisp facet scintillation
-
-      // 4 High-contrast vertical softbox strips (produces liquid metal reflections & diamond scintillation)
-      for (let i = 0; i < 4; i++) {
-        const ang = (i / 4) * Math.PI * 2 + Math.PI / 8;
-        const strip = new THREE.Mesh(
-          new THREE.PlaneGeometry(5, 30),
-          new THREE.MeshBasicMaterial({ color: 0xffffff })
-        );
-        strip.position.set(Math.cos(ang) * 22, 14, Math.sin(ang) * 22);
-        strip.lookAt(0, 5, 0);
-        envScene.add(strip);
-      }
-
-      // Overhead kicker spots for crisp table facet highlights
-      for (let i = 0; i < 4; i++) {
-        const ang = (i / 4) * Math.PI * 2;
-        const kicker = new THREE.Mesh(
-          new THREE.PlaneGeometry(8, 8),
-          new THREE.MeshBasicMaterial({ color: 0xffffff })
-        );
-        kicker.position.set(Math.cos(ang) * 10, 24, Math.sin(ang) * 10);
-        kicker.lookAt(0, 0, 0);
-        envScene.add(kicker);
-      }
-
-      // Warm Bottom Reflector for 18K Gold Underside Glow
-      const bounceBox = new THREE.Mesh(
-        new THREE.PlaneGeometry(30, 30),
-        new THREE.MeshBasicMaterial({ color: 0x9b6e1e })
-      );
-      bounceBox.position.set(0, -16, 0);
-      bounceBox.rotation.x = -Math.PI / 2;
-      envScene.add(bounceBox);
-
-      const renderTarget = pmremGen.fromScene(envScene, 0.0);
-      this.scene.environment = renderTarget.texture;
-    }
-
-    createStudioLights() {
-      // Gentle ambient so crevices have deep contrast
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
-      this.scene.add(ambientLight);
-
-      // Key light: warm specular gleam
-      const keyLight = new THREE.DirectionalLight(0xfff6ea, 0.95);
-      keyLight.position.set(16, 25, 20);
-      this.scene.add(keyLight);
-
-      // Fill light: soft cool shadow fill
-      const fillLight = new THREE.DirectionalLight(0xdce8ff, 0.30);
-      fillLight.position.set(-18, 14, -14);
-      this.scene.add(fillLight);
-
-      // Diamond sparkle pinpoint (calibrated to preserve deep saturated color on ruby, emerald, and sapphire)
-      const diamondSpot = new THREE.PointLight(0xffffff, 0.35, 35);
-      diamondSpot.position.set(2, 22, 10);
-      this.diamondSpot = diamondSpot;
-      this.scene.add(diamondSpot);
-    }
-
-    createGroundShadow() {
-      const shadowCanvas = document.createElement('canvas');
-      shadowCanvas.width = 256;
-      shadowCanvas.height = 256;
-      const sctx = shadowCanvas.getContext('2d');
-      const grad = sctx.createRadialGradient(128, 128, 6, 128, 128, 115);
-      grad.addColorStop(0, 'rgba(30, 20, 12, 0.58)');
-      grad.addColorStop(0.35, 'rgba(50, 36, 22, 0.28)');
-      grad.addColorStop(0.7, 'rgba(75, 60, 45, 0.08)');
-      grad.addColorStop(1, 'rgba(75, 60, 45, 0)');
-      sctx.fillStyle = grad;
-      sctx.fillRect(0, 0, 256, 256);
-
-      const shadowTex = new THREE.CanvasTexture(shadowCanvas);
-      const shadowGeom = new THREE.PlaneGeometry(36, 36);
-      const shadowMat = new THREE.MeshBasicMaterial({
-        map: shadowTex,
-        transparent: true,
-        opacity: 0.85,
-        depthWrite: false
-      });
-      const shadowPlane = new THREE.Mesh(shadowGeom, shadowMat);
-      shadowPlane.rotation.x = -Math.PI / 2;
-      shadowPlane.position.y = -10.45;
-      this.scene.add(shadowPlane);
-    }
-
-    createMaterials() {
-      // Calibrated metal palettes (rich 18K yellow gold, liquid white gold, and warm rose gold throughout shank and prongs)
-      const metalPalettes = {
-        'micro-gold': { shank: 0xD4A237, head: 0xD4A237, metalness: 0.96, roughness: 0.09, clearcoat: 0.15, envMapIntensity: 1.7 },
-        'yellow-gold': { shank: 0xD4A237, head: 0xD4A237, metalness: 0.96, roughness: 0.09, clearcoat: 0.15, envMapIntensity: 1.7 },
-        'rhodium-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.15, envMapIntensity: 1.75 },
-        'white-gold': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.15, envMapIntensity: 1.75 },
-        'rose-gold': { shank: 0xCF7A64, head: 0xCF7A64, metalness: 0.96, roughness: 0.09, clearcoat: 0.15, envMapIntensity: 1.7 },
-        'antique-gold': { shank: 0xB88728, head: 0xB88728, metalness: 0.92, roughness: 0.18, clearcoat: 0.10, envMapIntensity: 1.4 },
-        'liquid-silver': { shank: 0xE8ECF2, head: 0xE8ECF2, metalness: 0.98, roughness: 0.07, clearcoat: 0.15, envMapIntensity: 1.75 },
-        'platinum': { shank: 0xDCE0E8, head: 0xDCE0E8, metalness: 1.0, roughness: 0.06, clearcoat: 0.15, envMapIntensity: 1.75 }
-      };
-
-      const curMetal = metalPalettes[this.currentMetal] || metalPalettes['yellow-gold'];
-
-      const shankMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(curMetal.shank),
-        metalness: curMetal.metalness,
-        roughness: curMetal.roughness,
-        clearcoat: curMetal.clearcoat,
-        clearcoatRoughness: 0.03,
-        reflectivity: 0.96,
-        envMapIntensity: curMetal.envMapIntensity
-      });
-
-      const headMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(curMetal.head),
-        metalness: curMetal.metalness,
-        roughness: curMetal.roughness,
-        clearcoat: curMetal.clearcoat,
-        clearcoatRoughness: 0.02,
-        reflectivity: 0.98,
-        envMapIntensity: curMetal.envMapIntensity
-      });
-
-      // Calibrated solitaire center stone palettes (true vibrant diamond, ruby, emerald, sapphire)
-      const gemPalettes = {
-        'diamond': {
-          color: 0xffffff,
-          metalness: 0.0,
-          roughness: 0.02,
-          clearcoat: 1.0,
-          envMapIntensity: 1.85,
-          wire: 0xd0d8e8,
-          wireOpacity: 0.30
-        },
-        'ruby': {
-          color: 0x850014,
-          metalness: 0.08,
-          roughness: 0.07,
-          clearcoat: 0.25,
-          envMapIntensity: 0.35,
-          wire: 0x5A0410,
-          wireOpacity: 0.10
-        },
-        'emerald': {
-          color: 0x005220,
-          metalness: 0.08,
-          roughness: 0.07,
-          clearcoat: 0.25,
-          envMapIntensity: 0.35,
-          wire: 0x01381A,
-          wireOpacity: 0.10
-        },
-        'sapphire': {
-          color: 0x051C66,
-          metalness: 0.08,
-          roughness: 0.07,
-          clearcoat: 0.25,
-          envMapIntensity: 0.35,
-          wire: 0x05133D,
-          wireOpacity: 0.10
-        },
-        'moissanite': {
-          color: 0xffffff,
-          metalness: 0.0,
-          roughness: 0.02,
-          clearcoat: 1.0,
-          envMapIntensity: 1.95,
-          wire: 0xd6e0f0,
-          wireOpacity: 0.35
-        },
-        'solitaire-vvs': {
-          color: 0xfdfdff,
-          metalness: 0.0,
-          roughness: 0.02,
-          clearcoat: 1.0,
-          envMapIntensity: 1.85,
-          wire: 0xd2d9e6,
-          wireOpacity: 0.30
-        },
-        'champagne-solitaire': {
-          color: 0xD8B278,
-          metalness: 0.10,
-          roughness: 0.04,
-          clearcoat: 0.90,
-          envMapIntensity: 1.20,
-          wire: 0x8C6B38,
-          wireOpacity: 0.20
-        }
-      };
-
-      const curGem = gemPalettes[this.currentGem] || gemPalettes['diamond'];
-
-      const gemMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(curGem.color),
-        roughness: curGem.roughness,
-        metalness: curGem.metalness,
-        clearcoat: curGem.clearcoat,
-        clearcoatRoughness: 0.0,
-        reflectivity: 1.0,
-        envMapIntensity: curGem.envMapIntensity,
-        flatShading: true,
-        side: THREE.FrontSide, // Disable all internal reflections/backfaces - strictly front-facing opaque outer facets
-        transparent: false,
-        depthWrite: true
-      });
-
-      const wireMaterial = new THREE.LineBasicMaterial({
-        color: curGem.wire,
-        transparent: true,
-        opacity: curGem.wireOpacity,
-        linewidth: 1,
-        depthTest: true
-      });
-
-      // Micro-pavé diamonds on gallery collar (Solid pure white brilliant diamond sparkle)
-      const paveMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xffffff),
-        roughness: 0.04,
-        metalness: 0.0,
-        clearcoat: 1.0,
-        reflectivity: 1.0,
-        envMapIntensity: 1.8,
-        flatShading: true,
-        side: THREE.FrontSide,
-        transparent: false,
-        depthWrite: true
-      });
-
-      return {
-        shank: shankMaterial,
-        head: headMaterial,
-        gem: gemMaterial,
-        wire: wireMaterial,
-        pave: paveMaterial,
-        metalPalettes,
-        gemPalettes
-      };
-    }
-
-    buildShank() {
-      if (this.shankMesh) {
-        this.ringGroup.remove(this.shankMesh);
-      }
-
-      const nSegments = 90;
-      const nRadial = 18;
-      const vertices = [];
-      const indices = [];
-
-      const topHalfGap = 0.22;
-      const startAngle = Math.PI * 0.5 + topHalfGap;
-      const endAngle = Math.PI * 2.5 - topHalfGap;
-      const totalSweep = endAngle - startAngle;
-
-      const rInner = 9.0;
-      const rOuterBase = 10.8;
-
-      for (let i = 0; i <= nSegments; i++) {
-        const t = i / nSegments;
-        const theta = startAngle + t * totalSweep;
-
-        const distFromMid = Math.abs(t - 0.5) * 2.0;
-
-        let shoulder = 0;
-        let rOuter = rOuterBase;
-        let axialWidth = 1.28;
-
-        if (this.currentBandStyle === 'traditional') {
-          // Traditional comfort-fit: smooth, uniform silhouette meeting head cleanly
-          shoulder = Math.pow(Math.max(0, distFromMid - 0.5) / 0.5, 1.2) * 0.35;
-          rOuter = rOuterBase + shoulder * 0.35;
-          axialWidth = (1.32 - shoulder * 0.12);
-        } else {
-          // Cathedral: dramatic arching lift on shoulders near the head
-          shoulder = Math.pow(Math.max(0, distFromMid - 0.32) / 0.68, 1.8);
-          rOuter = rOuterBase + shoulder * 1.5;
-          axialWidth = (1.28 - shoulder * 0.28);
-        }
-
-        const rMid = (rInner + rOuter) / 2.0;
-        const radialThickness = (rOuter - rInner) / 2.0;
-
-        const cx = Math.cos(theta) * rMid;
-        const cy = Math.sin(theta) * rMid;
-        const nx = Math.cos(theta);
-        const ny = Math.sin(theta);
-
-        for (let j = 0; j < nRadial; j++) {
-          const phi = (j / nRadial) * Math.PI * 2.0;
-          const sinP = Math.sin(phi);
-          const cosP = Math.cos(phi);
-
-          const radOff = sinP * radialThickness * (sinP < 0 ? 0.78 : 1.0);
-          const zOff = cosP * axialWidth;
-
-          vertices.push(
-            cx + nx * radOff,
-            cy + ny * radOff,
-            zOff
-          );
-        }
-      }
-
-      for (let i = 0; i < nSegments; i++) {
-        for (let j = 0; j < nRadial; j++) {
-          const jNext = (j + 1) % nRadial;
-          const p1 = i * nRadial + j;
-          const p2 = i * nRadial + jNext;
-          const p3 = (i + 1) * nRadial + jNext;
-          const p4 = (i + 1) * nRadial + j;
-
-          indices.push(p1, p2, p3);
-          indices.push(p1, p3, p4);
-        }
-      }
-
-      // End caps for shoulders
-      const cap1Center = vertices.length / 3;
-      let c1x = 0, c1y = 0, c1z = 0;
-      for (let j = 0; j < nRadial; j++) {
-        c1x += vertices[j * 3];
-        c1y += vertices[j * 3 + 1];
-        c1z += vertices[j * 3 + 2];
-      }
-      vertices.push(c1x / nRadial, c1y / nRadial, c1z / nRadial);
-      for (let j = 0; j < nRadial; j++) {
-        indices.push(cap1Center, (j + 1) % nRadial, j);
-      }
-
-      const cap2Center = vertices.length / 3;
-      const lastRow = nSegments * nRadial;
-      let c2x = 0, c2y = 0, c2z = 0;
-      for (let j = 0; j < nRadial; j++) {
-        c2x += vertices[(lastRow + j) * 3];
-        c2y += vertices[(lastRow + j) * 3 + 1];
-        c2z += vertices[(lastRow + j) * 3 + 2];
-      }
-      vertices.push(c2x / nRadial, c2y / nRadial, c2z / nRadial);
-      for (let j = 0; j < nRadial; j++) {
-        indices.push(cap2Center, lastRow + j, lastRow + (j + 1) % nRadial);
-      }
-
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-      geom.setIndex(indices);
-      geom.computeVertexNormals();
-
-      this.shankMesh = new THREE.Mesh(geom, this.materials.shank);
-      this.ringGroup.add(this.shankMesh);
-    }
-
-    getCaratScale(carat = this.currentCarat) {
-      const c = parseFloat(carat) || 2.5;
-      // Authentic GIA millimeter proportion scaling relative to 2.50ct (8.8mm base)
-      if (Math.abs(c - 1.00) < 0.05) return 0.74;   // 1.00ct: 6.5mm
-      if (Math.abs(c - 1.75) < 0.05) return 0.888;  // 1.75ct: 7.8mm
-      if (Math.abs(c - 2.50) < 0.05) return 1.00;   // 2.50ct: 8.8mm
-      if (Math.abs(c - 4.00) < 0.05) return 1.172;  // 4.00ct: 10.3mm
-      return Math.pow(c / 2.5, 0.34);
-    }
-
-    buildSettingHead() {
-      if (this.headGroup) {
-        this.ringGroup.remove(this.headGroup);
-        this.headGroup.traverse(child => {
-          if (child.isMesh && child.geometry) child.geometry.dispose();
-        });
-      }
-
-      this.headGroup = new THREE.Group();
-
-      const scale = this.getCaratScale(this.currentCarat);
-      const baseRadius = 3.55;
-      const stoneRadius = baseRadius * scale;
-      const girdleY = 14.1 + (scale - 1.0) * 1.25;
-
-      // 1. Dynamic Gallery Collar / Basket Ring
-      const collarY = 11.25 + (scale - 1.0) * 0.45;
-      const collarRadius = stoneRadius * 0.72;
-      const collarTube = 0.38 + (scale - 1.0) * 0.12;
-
-      let collarMesh;
-      if (['emerald-cut', 'asscher', 'radiant', 'princess'].includes(this.currentCut)) {
-        const ew = (this.currentCut === 'emerald-cut' || this.currentCut === 'radiant' ? 3.2 : 3.4) * scale * 0.72;
-        const el = (this.currentCut === 'emerald-cut' ? 4.2 : this.currentCut === 'radiant' ? 4.0 : 3.4) * scale * 0.72;
-        const egc = 0.65 * scale * 0.72;
-        const curvePoints = [
-          new THREE.Vector3(-ew + egc, collarY, -el),
-          new THREE.Vector3(ew - egc, collarY, -el),
-          new THREE.Vector3(ew, collarY, -el + egc),
-          new THREE.Vector3(ew, collarY, el - egc),
-          new THREE.Vector3(ew - egc, collarY, el),
-          new THREE.Vector3(-ew + egc, collarY, el),
-          new THREE.Vector3(-ew, collarY, el - egc),
-          new THREE.Vector3(-ew, collarY, -el + egc)
-        ];
-        const closedCurve = new THREE.CatmullRomCurve3(curvePoints, true, 'catmullrom', 0.1);
-        const collarGeom = new THREE.TubeGeometry(closedCurve, 32, collarTube, 12, true);
-        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
-      } else if (['cushion', 'elongated-cushion'].includes(this.currentCut)) {
-        const cw = (this.currentCut === 'elongated-cushion' ? 3.2 : 3.5) * scale * 0.70;
-        const cl = (this.currentCut === 'elongated-cushion' ? 4.1 : 3.5) * scale * 0.70;
-        const curvePoints = [
-          new THREE.Vector3(-cw, collarY, -cl * 0.6),
-          new THREE.Vector3(-cw * 0.6, collarY, -cl),
-          new THREE.Vector3(cw * 0.6, collarY, -cl),
-          new THREE.Vector3(cw, collarY, -cl * 0.6),
-          new THREE.Vector3(cw, collarY, cl * 0.6),
-          new THREE.Vector3(cw * 0.6, collarY, cl),
-          new THREE.Vector3(-cw * 0.6, collarY, cl),
-          new THREE.Vector3(-cw, collarY, cl * 0.6)
-        ];
-        const closedCurve = new THREE.CatmullRomCurve3(curvePoints, true, 'catmullrom', 0.15);
-        const collarGeom = new THREE.TubeGeometry(closedCurve, 32, collarTube, 12, true);
-        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
-      } else if (this.currentCut === 'marquise') {
-        const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
-        collarGeom.rotateX(Math.PI / 2);
-        collarGeom.scale(0.85, 1.0, 1.45);
-        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
-        collarMesh.position.y = collarY;
-      } else if (this.currentCut === 'oval') {
-        const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
-        collarGeom.rotateX(Math.PI / 2);
-        collarGeom.scale(1.28, 1.0, 0.88);
-        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
-        collarMesh.position.y = collarY;
-      } else {
-        const collarGeom = new THREE.TorusGeometry(collarRadius, collarTube, 16, 32);
-        collarGeom.rotateX(Math.PI / 2);
-        collarMesh = new THREE.Mesh(collarGeom, this.materials.head);
-        collarMesh.position.y = collarY;
-      }
-      this.headGroup.add(collarMesh);
-
-      // Micro-pavé diamonds on gallery collar (follow collar diameter and height)
-      const paveCount = 10;
-      const paveRadius = collarRadius + collarTube * 0.22;
-      const paveGeom = new THREE.SphereGeometry(0.28 + (scale - 1.0) * 0.08, 10, 10);
-      for (let i = 0; i < paveCount; i++) {
-        const ang = (i / paveCount) * Math.PI * 2;
-        let px = Math.cos(ang) * paveRadius;
-        let pz = Math.sin(ang) * paveRadius;
-        if (this.currentCut === 'oval') {
-          px *= 1.28;
-          pz *= 0.88;
-        } else if (this.currentCut === 'marquise') {
-          px *= 0.85;
-          pz *= 1.45;
-        } else if (['emerald-cut', 'asscher', 'radiant', 'princess'].includes(this.currentCut)) {
-          const ewMax = (this.currentCut === 'emerald-cut' || this.currentCut === 'radiant' ? 3.2 : 3.4) * scale * 0.65;
-          const elMax = (this.currentCut === 'emerald-cut' ? 4.2 : this.currentCut === 'radiant' ? 4.0 : 3.4) * scale * 0.65;
-          px = Math.sign(Math.cos(ang)) * Math.min(Math.abs(px * 1.15), ewMax);
-          pz = Math.sign(Math.sin(ang)) * Math.min(Math.abs(pz * 1.15), elMax);
-        } else if (['cushion', 'elongated-cushion'].includes(this.currentCut)) {
-          const cwMax = (this.currentCut === 'elongated-cushion' ? 3.2 : 3.5) * scale * 0.65;
-          const clMax = (this.currentCut === 'elongated-cushion' ? 4.1 : 3.5) * scale * 0.65;
-          px = Math.sign(Math.cos(ang)) * Math.min(Math.abs(px * 1.1), cwMax);
-          pz = Math.sign(Math.sin(ang)) * Math.min(Math.abs(pz * 1.1), clMax);
-        }
-        const paveStone = new THREE.Mesh(paveGeom, this.materials.pave || this.materials.gem);
-        paveStone.position.set(px, collarY, pz);
-        this.headGroup.add(paveStone);
-      }
-
-      // Cathedral Bridge connecting shank shoulders
-      const bridgeGeom = new THREE.CylinderGeometry(0.55, 0.65, 4.8, 16);
-      bridgeGeom.rotateZ(Math.PI / 2);
-      this.bridgeMesh = new THREE.Mesh(bridgeGeom, this.materials.shank);
-      this.bridgeMesh.position.set(0, 10.45, 0);
-      this.headGroup.add(this.bridgeMesh);
-
-      // Prongs Group
-      this.prongsMeshGroup = new THREE.Group();
-      const prongRadius = 0.32 * (1.0 + (scale - 1.0) * 0.45);
-      const tipRadius = prongRadius * 1.06;
-
-      if (this.currentCut === 'emerald-cut') {
-        this.buildEmeraldCutProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'asscher') {
-        this.buildCornerProngs(scale, 3.4 * scale, 3.4 * scale, 0.9 * scale, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'radiant') {
-        this.buildCornerProngs(scale, 3.2 * scale, 4.0 * scale, 0.7 * scale, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'princess') {
-        this.buildCornerProngs(scale, 3.3 * scale, 3.3 * scale, 0.25 * scale, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'cushion') {
-        this.buildCornerProngs(scale, 3.4 * scale, 3.4 * scale, 0.8 * scale, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'elongated-cushion') {
-        this.buildCornerProngs(scale, 3.2 * scale, 4.1 * scale, 0.8 * scale, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'marquise') {
-        this.buildMarquiseProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'heart') {
-        this.buildHeartProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'hexagonal') {
-        this.buildHexagonalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'oval') {
-        this.buildOvalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      } else if (this.currentCut === 'pear') {
-        this.buildPearProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      } else {
-        this.buildRoundProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius);
-      }
-
-      this.headGroup.add(this.prongsMeshGroup);
-      this.ringGroup.add(this.headGroup);
-    }
-
-    buildRoundProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const prongCount = 6;
-      const crownH = stoneRadius * 0.34;
-      const collarRadius = stoneRadius * 0.72;
-
-      for (let i = 0; i < prongCount; i++) {
-        const ang = (i / prongCount) * Math.PI * 2 + Math.PI / 6;
-        const cosA = Math.cos(ang);
-        const sinA = Math.sin(ang);
-
-        const rBase = collarRadius * 0.90;
-        const p0 = new THREE.Vector3(cosA * rBase, collarY - 0.20, sinA * rBase);
-
-        const rMid = (rBase + stoneRadius) * 0.50 + prongRadius * 0.35;
-        const p1 = new THREE.Vector3(cosA * rMid, (collarY + girdleY) * 0.52, sinA * rMid);
-
-        const rGirdle = stoneRadius + prongRadius * (scale >= 1.15 ? 0.85 : 0.65);
-        const p2 = new THREE.Vector3(cosA * rGirdle, girdleY, sinA * rGirdle);
-
-        const rTip = stoneRadius - prongRadius * (scale >= 1.15 ? 0.20 : 0.28);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(cosA * rTip, tipY, sinA * rTip);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        // Rounded claw tip securely clamping upper crown facet
-        const tipGeom = new THREE.SphereGeometry(tipRadius, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildOvalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const crownH = stoneRadius * 0.34;
-      const a = stoneRadius * 1.28;
-      const b = stoneRadius * 0.88;
-
-      const angles = [
-        Math.PI * 0.20,
-        Math.PI * 0.50,
-        Math.PI * 0.80,
-        Math.PI * 1.20,
-        Math.PI * 1.50,
-        Math.PI * 1.80
-      ];
-
-      for (let i = 0; i < angles.length; i++) {
-        const phi = angles[i];
-        const cosP = Math.cos(phi);
-        const sinP = Math.sin(phi);
-
-        const gx = a * cosP;
-        const gz = b * sinP;
-
-        const nxRaw = b * cosP;
-        const nzRaw = a * sinP;
-        const nLen = Math.sqrt(nxRaw * nxRaw + nzRaw * nzRaw) || 1;
-        const nx = nxRaw / nLen;
-        const nz = nzRaw / nLen;
-
-        const p0 = new THREE.Vector3(gx * 0.62, collarY - 0.20, gz * 0.62);
-        const p1 = new THREE.Vector3(gx * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, gz * 0.82 + nz * prongRadius * 0.35);
-        const p2 = new THREE.Vector3(gx + nx * prongRadius * 0.65, girdleY, gz + nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(gx - nx * prongRadius * 0.28, tipY, gz - nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        const tipGeom = new THREE.SphereGeometry(tipRadius, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildEmeraldCutProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const w = 3.2 * scale;
-      const l = 4.2 * scale;
-      const gc = 0.8 * scale;
-      const crownH = 1.1 * scale;
-
-      const corners = [
-        { x: w - gc * 0.5, z: l - gc * 0.5 },
-        { x: -w + gc * 0.5, z: l - gc * 0.5 },
-        { x: -w + gc * 0.5, z: -l + gc * 0.5 },
-        { x: w - gc * 0.5, z: -l + gc * 0.5 }
-      ];
-
-      for (let i = 0; i < corners.length; i++) {
-        const c = corners[i];
-        const nx = Math.sign(c.x) * 0.7071;
-        const nz = Math.sign(c.z) * 0.7071;
-
-        const p0 = new THREE.Vector3(c.x * 0.60, collarY - 0.20, c.z * 0.60);
-        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * (scale >= 1.15 ? 0.55 : 0.35), (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * (scale >= 1.15 ? 0.55 : 0.35));
-        const p2 = new THREE.Vector3(c.x + nx * prongRadius * 0.65, girdleY, c.z + nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(c.x - nx * prongRadius * 0.28, tipY, c.z - nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius * 1.08, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        // Classic French corner claw tab
-        const tipGeom = new THREE.SphereGeometry(tipRadius * 1.15, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(1.15, 0.70, 1.15);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildPearProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const crownH = stoneRadius * 0.34;
-      const r = stoneRadius;
-      const w = r * 0.95;
-
-      const pointsConfig = [
-        // Pointed Tip V-Prong
-        { x: 0, z: r * 1.25, nx: 0, nz: 1.0, isVTip: true },
-        // Upper Shoulders
-        { x: w * 0.72, z: r * 0.45, nx: 0.86, nz: 0.50 },
-        { x: -w * 0.72, z: r * 0.45, nx: -0.86, nz: 0.50 },
-        // Mid Belly
-        { x: w * 0.92, z: -r * 0.28, nx: 0.86, nz: -0.50 },
-        { x: -w * 0.92, z: -r * 0.28, nx: -0.86, nz: -0.50 },
-        // Rounded Bottom Lobe
-        { x: 0, z: -r * 0.95, nx: 0, nz: -1.0 }
-      ];
-
-      for (let i = 0; i < pointsConfig.length; i++) {
-        const pt = pointsConfig[i];
-        const p0 = new THREE.Vector3(pt.x * 0.62, collarY - 0.20, pt.z * 0.62);
-        const p1 = new THREE.Vector3(pt.x * 0.82 + pt.nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, pt.z * 0.82 + pt.nz * prongRadius * 0.35);
-        const p2 = new THREE.Vector3(pt.x + pt.nx * prongRadius * 0.65, girdleY, pt.z + pt.nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(pt.x - pt.nx * prongRadius * 0.28, tipY, pt.z - pt.nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        const tipGeom = new THREE.SphereGeometry(pt.isVTip ? tipRadius * 1.25 : tipRadius, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(pt.isVTip ? 1.3 : 1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildCornerProngs(scale, halfW, halfL, gc, girdleY, collarY, prongRadius, tipRadius) {
-      const crownH = 1.1 * scale;
-      const corners = [
-        { x: halfW - gc * 0.5, z: halfL - gc * 0.5 },
-        { x: -halfW + gc * 0.5, z: halfL - gc * 0.5 },
-        { x: -halfW + gc * 0.5, z: -halfL + gc * 0.5 },
-        { x: halfW - gc * 0.5, z: -halfL + gc * 0.5 }
-      ];
-
-      for (let i = 0; i < corners.length; i++) {
-        const c = corners[i];
-        const nx = Math.sign(c.x) * 0.7071;
-        const nz = Math.sign(c.z) * 0.7071;
-
-        const p0 = new THREE.Vector3(c.x * 0.60, collarY - 0.20, c.z * 0.60);
-        const p1 = new THREE.Vector3(c.x * 0.82 + nx * prongRadius * (scale >= 1.15 ? 0.55 : 0.35), (collarY + girdleY) * 0.52, c.z * 0.82 + nz * prongRadius * (scale >= 1.15 ? 0.55 : 0.35));
-        const p2 = new THREE.Vector3(c.x + nx * prongRadius * 0.65, girdleY, c.z + nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(c.x - nx * prongRadius * 0.28, tipY, c.z - nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius * 1.08, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        const tipGeom = new THREE.SphereGeometry(tipRadius * 1.15, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(1.15, 0.70, 1.15);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildMarquiseProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const crownH = stoneRadius * 0.34;
-      const r = stoneRadius;
-      const pointsConfig = [
-        { x: 0, z: r * 1.45, nx: 0, nz: 1.0, isVTip: true },
-        { x: 0, z: -r * 1.45, nx: 0, nz: -1.0, isVTip: true },
-        { x: r * 0.75, z: r * 0.45, nx: 0.88, nz: 0.45 },
-        { x: -r * 0.75, z: r * 0.45, nx: -0.88, nz: 0.45 },
-        { x: r * 0.75, z: -r * 0.45, nx: 0.88, nz: -0.45 },
-        { x: -r * 0.75, z: -r * 0.45, nx: -0.88, nz: -0.45 }
-      ];
-
-      for (let i = 0; i < pointsConfig.length; i++) {
-        const pt = pointsConfig[i];
-        const p0 = new THREE.Vector3(pt.x * 0.62, collarY - 0.20, pt.z * 0.62);
-        const p1 = new THREE.Vector3(pt.x * 0.82 + pt.nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, pt.z * 0.82 + pt.nz * prongRadius * 0.35);
-        const p2 = new THREE.Vector3(pt.x + pt.nx * prongRadius * 0.65, girdleY, pt.z + pt.nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(pt.x - pt.nx * prongRadius * 0.28, tipY, pt.z - pt.nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        const tipGeom = new THREE.SphereGeometry(pt.isVTip ? tipRadius * 1.25 : tipRadius, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(pt.isVTip ? 1.3 : 1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildHeartProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const crownH = stoneRadius * 0.34;
-      const r = stoneRadius;
-      const pointsConfig = [
-        { x: 0, z: -r * 1.18, nx: 0, nz: -1.0, isVTip: true },
-        { x: r * 0.80, z: r * 0.35, nx: 0.85, nz: 0.45 },
-        { x: -r * 0.80, z: r * 0.35, nx: -0.85, nz: 0.45 },
-        { x: r * 0.48, z: r * 0.72, nx: 0.60, nz: 0.80 },
-        { x: -r * 0.48, z: r * 0.72, nx: -0.60, nz: 0.80 }
-      ];
-
-      for (let i = 0; i < pointsConfig.length; i++) {
-        const pt = pointsConfig[i];
-        const p0 = new THREE.Vector3(pt.x * 0.62, collarY - 0.20, pt.z * 0.62);
-        const p1 = new THREE.Vector3(pt.x * 0.82 + pt.nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, pt.z * 0.82 + pt.nz * prongRadius * 0.35);
-        const p2 = new THREE.Vector3(pt.x + pt.nx * prongRadius * 0.65, girdleY, pt.z + pt.nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(pt.x - pt.nx * prongRadius * 0.28, tipY, pt.z - pt.nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        const tipGeom = new THREE.SphereGeometry(pt.isVTip ? tipRadius * 1.25 : tipRadius, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(pt.isVTip ? 1.3 : 1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildHexagonalProngs(scale, stoneRadius, girdleY, collarY, prongRadius, tipRadius) {
-      const crownH = stoneRadius * 0.34;
-      const r = stoneRadius;
-
-      for (let i = 0; i < 6; i++) {
-        const ang = (i * Math.PI / 3.0) + Math.PI / 6.0;
-        const gx = r * Math.cos(ang);
-        const gz = r * Math.sin(ang);
-        const nx = Math.cos(ang);
-        const nz = Math.sin(ang);
-
-        const p0 = new THREE.Vector3(gx * 0.62, collarY - 0.20, gz * 0.62);
-        const p1 = new THREE.Vector3(gx * 0.82 + nx * prongRadius * 0.35, (collarY + girdleY) * 0.52, gz * 0.82 + nz * prongRadius * 0.35);
-        const p2 = new THREE.Vector3(gx + nx * prongRadius * 0.65, girdleY, gz + nz * prongRadius * 0.65);
-        const tipY = girdleY + crownH * 0.45;
-        const p3 = new THREE.Vector3(gx - nx * prongRadius * 0.28, tipY, gz - nz * prongRadius * 0.28);
-
-        const curve = new THREE.CatmullRomCurve3([p0, p1, p2, p3]);
-        const prongGeom = new THREE.TubeGeometry(curve, 18, prongRadius, 12, false);
-        const prongMesh = new THREE.Mesh(prongGeom, this.materials.head);
-        this.prongsMeshGroup.add(prongMesh);
-
-        const tipGeom = new THREE.SphereGeometry(tipRadius, 12, 12);
-        const tipMesh = new THREE.Mesh(tipGeom, this.materials.head);
-        tipMesh.position.copy(p3);
-        tipMesh.scale.set(1.0, 0.75, 1.0);
-        this.prongsMeshGroup.add(tipMesh);
-      }
-    }
-
-    buildCenterGemstone() {
-      if (this.centerGemGroup) {
-        this.ringGroup.remove(this.centerGemGroup);
-        this.centerGemGroup.traverse(child => {
-          if (child.isMesh && child.geometry) child.geometry.dispose();
-        });
-      }
-
-      this.centerGemGroup = new THREE.Group();
-
-      const scale = this.getCaratScale(this.currentCarat);
-      const baseRadius = 3.55;
-      const stoneRadius = baseRadius * scale;
-      let geom;
-
-      if (this.currentCut === 'emerald-cut') {
-        geom = this.createEmeraldCutGeometry(3.2 * scale, 4.2 * scale);
-      } else if (this.currentCut === 'asscher') {
-        geom = this.createEmeraldCutGeometry(3.4 * scale, 3.4 * scale);
-      } else if (this.currentCut === 'radiant') {
-        geom = this.createRadiantCutGeometry(3.2 * scale, 4.0 * scale);
-      } else if (this.currentCut === 'princess') {
-        geom = this.createPrincessCutGeometry(3.3 * scale);
-      } else if (this.currentCut === 'cushion') {
-        geom = this.createCushionCutGeometry(3.55 * scale, 3.55 * scale);
-      } else if (this.currentCut === 'elongated-cushion') {
-        geom = this.createCushionCutGeometry(3.2 * scale, 4.2 * scale);
-      } else if (this.currentCut === 'oval') {
-        geom = this.createOvalCutGeometry(stoneRadius);
-      } else if (this.currentCut === 'marquise') {
-        geom = this.createMarquiseCutGeometry(stoneRadius);
-      } else if (this.currentCut === 'pear') {
-        geom = this.createPearCutGeometry(stoneRadius);
-      } else if (this.currentCut === 'heart') {
-        geom = this.createHeartCutGeometry(stoneRadius);
-      } else if (this.currentCut === 'hexagonal') {
-        geom = this.createHexagonalCutGeometry(stoneRadius);
-      } else {
-        geom = this.createRoundBrilliantGeometry(stoneRadius);
-      }
-
-      const gemMesh = new THREE.Mesh(geom, this.materials.gem);
-      this.centerGemMesh = gemMesh;
-      this.centerGemGroup.add(gemMesh);
-
-      // Facet edge highlights (subtle sparkle for diamonds, disabled for colored gems to preserve deep jewel color)
-      const edgesGeom = new THREE.EdgesGeometry(geom, 12);
-      const wire = new THREE.LineSegments(edgesGeom, this.materials.wire);
-      this.gemWireMesh = wire;
-      const isWhite = (this.currentGem === 'diamond' || this.currentGem === 'moissanite' || this.currentGem === 'solitaire-vvs');
-      wire.visible = isWhite;
-      this.centerGemGroup.add(wire);
-
-      const girdleY = 14.1 + (scale - 1.0) * 1.25;
-      this.centerGemGroup.position.set(0, girdleY, 0);
-
-      this.ringGroup.add(this.centerGemGroup);
-    }
-
-    createRoundBrilliantGeometry(radius = 3.55) {
-      const hCrown = radius * 0.34;
-      const hPavilion = radius * 0.88;
-      const rTable = radius * 0.56;
-      const tGirdle = radius * 0.05;
-
-      const yGirdleTop = tGirdle / 2.0;
-      const yGirdleBot = -tGirdle / 2.0;
-      const yTable = yGirdleTop + hCrown;
-      const yCulet = yGirdleBot - hPavilion;
-      const yStar = yGirdleTop + hCrown * 0.58;
-      const rStar = radius * 0.76;
-
-      const triVertices = [];
-      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
-        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
-      }
-
-      const tablePts = [];
-      for (let i = 0; i < 8; i++) {
-        const ang = (i * 2 + 1) * Math.PI / 8.0;
-        tablePts.push({ x: rTable * Math.cos(ang), y: yTable, z: rTable * Math.sin(ang) });
-      }
-
-      const crownMainPts = [];
-      for (let i = 0; i < 8; i++) {
-        const ang = (i * 2) * Math.PI / 8.0;
-        crownMainPts.push({ x: rStar * Math.cos(ang), y: yStar, z: rStar * Math.sin(ang) });
-      }
-
-      const girdleUpPts = [];
-      for (let i = 0; i < 16; i++) {
-        const ang = i * Math.PI / 8.0;
-        girdleUpPts.push({ x: radius * Math.cos(ang), y: yGirdleTop, z: radius * Math.sin(ang) });
-      }
-
-      const girdleLowPts = [];
-      for (let i = 0; i < 16; i++) {
-        const ang = i * Math.PI / 8.0;
-        girdleLowPts.push({ x: radius * Math.cos(ang), y: yGirdleBot, z: radius * Math.sin(ang) });
-      }
-
-      const pavBreakPts = [];
-      const yPavBreak = yGirdleBot - hPavilion * 0.45;
-      const rPavBreak = radius * 0.52;
-      for (let i = 0; i < 8; i++) {
-        const ang = (i * 2 + 1) * Math.PI / 8.0;
-        pavBreakPts.push({ x: rPavBreak * Math.cos(ang), y: yPavBreak, z: rPavBreak * Math.sin(ang) });
-      }
-
-      // 1. Table Facets
-      for (let i = 0; i < 8; i++) {
-        const next = (i + 1) % 8;
-        addTri(
-          0, yTable, 0,
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          tablePts[next].x, tablePts[next].y, tablePts[next].z
-        );
-      }
-
-      // 2. Star Facets
-      for (let i = 0; i < 8; i++) {
-        const tPrev = tablePts[(i - 1 + 8) % 8];
-        const tCur = tablePts[i];
-        const cm = crownMainPts[i];
-        addTri(cm.x, cm.y, cm.z, tCur.x, tCur.y, tCur.z, tPrev.x, tPrev.y, tPrev.z);
-      }
-
-      // 3. Bezel / Kite & Upper Girdle
-      for (let i = 0; i < 8; i++) {
-        const cm = crownMainPts[i];
-        const guMid = girdleUpPts[i * 2];
-        const guLeft = girdleUpPts[(i * 2 - 1 + 16) % 16];
-        const guRight = girdleUpPts[(i * 2 + 1) % 16];
-
-        addTri(cm.x, cm.y, cm.z, guLeft.x, guLeft.y, guLeft.z, guMid.x, guMid.y, guMid.z);
-        addTri(cm.x, cm.y, cm.z, guMid.x, guMid.y, guMid.z, guRight.x, guRight.y, guRight.z);
-      }
-
-      // 4. Girdle Facets
-      for (let i = 0; i < 16; i++) {
-        const next = (i + 1) % 16;
-        addTri(
-          girdleUpPts[i].x, girdleUpPts[i].y, girdleUpPts[i].z,
-          girdleLowPts[i].x, girdleLowPts[i].y, girdleLowPts[i].z,
-          girdleUpPts[next].x, girdleUpPts[next].y, girdleUpPts[next].z
-        );
-        addTri(
-          girdleUpPts[next].x, girdleUpPts[next].y, girdleUpPts[next].z,
-          girdleLowPts[i].x, girdleLowPts[i].y, girdleLowPts[i].z,
-          girdleLowPts[next].x, girdleLowPts[next].y, girdleLowPts[next].z
-        );
-      }
-
-      // 5. Lower Girdle Facets
-      for (let i = 0; i < 8; i++) {
-        const pm = pavBreakPts[i];
-        const gl1 = girdleLowPts[i * 2];
-        const glMid = girdleLowPts[i * 2 + 1];
-        const gl2 = girdleLowPts[(i * 2 + 2) % 16];
-
-        addTri(pm.x, pm.y, pm.z, glMid.x, glMid.y, glMid.z, gl1.x, gl1.y, gl1.z);
-        addTri(pm.x, pm.y, pm.z, gl2.x, gl2.y, gl2.z, glMid.x, glMid.y, glMid.z);
-      }
-
-      // 6. Pavilion Mains to Culet
-      for (let i = 0; i < 8; i++) {
-        const next = (i + 1) % 8;
-        addTri(
-          0, yCulet, 0,
-          pavBreakPts[next].x, pavBreakPts[next].y, pavBreakPts[next].z,
-          pavBreakPts[i].x, pavBreakPts[i].y, pavBreakPts[i].z
-        );
-      }
-
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createEmeraldCutGeometry(w = 3.2, l = 4.2) {
-      const sRef = w / 3.2;
-      const hCrown = 1.1 * sRef;
-      const hPav = 2.8 * sRef;
-      const yTable = hCrown;
-      const yGirdle = 0;
-      const yCulet = -hPav;
-
-      const triVertices = [];
-      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
-        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
-      }
-
-      const tw = w * 0.6;
-      const tl = l * 0.6;
-      const tc = 0.5 * sRef;
-      const tablePts = [
-        { x: -tw + tc, y: yTable, z: -tl },
-        { x: tw - tc, y: yTable, z: -tl },
-        { x: tw, y: yTable, z: -tl + tc },
-        { x: tw, y: yTable, z: tl - tc },
-        { x: tw - tc, y: yTable, z: tl },
-        { x: -tw + tc, y: yTable, z: tl },
-        { x: -tw, y: yTable, z: tl - tc },
-        { x: -tw, y: yTable, z: -tl + tc }
-      ];
-
-      const gc = 0.8 * sRef;
-      const girdlePts = [
-        { x: -w + gc, y: yGirdle, z: -l },
-        { x: w - gc, y: yGirdle, z: -l },
-        { x: w, y: yGirdle, z: -l + gc },
-        { x: w, y: yGirdle, z: l - gc },
-        { x: w - gc, y: yGirdle, z: l },
-        { x: -w + gc, y: yGirdle, z: l },
-        { x: -w, y: yGirdle, z: l - gc },
-        { x: -w, y: yGirdle, z: -l + gc }
-      ];
-
-      // 1. Table Fan
-      for (let i = 1; i < 7; i++) {
-        addTri(
-          tablePts[0].x, tablePts[0].y, tablePts[0].z,
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
-        );
-      }
-
-      // 2. Crown Trapezoids (Two triangles per side)
-      for (let i = 0; i < 8; i++) {
-        const next = (i + 1) % 8;
-        addTri(
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
-        );
-        addTri(
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          tablePts[next].x, tablePts[next].y, tablePts[next].z
-        );
-      }
-
-      // 3. Pavilion Mains to Keel
-      const keelZ1 = -l * 0.4;
-      const keelZ2 = l * 0.4;
-
-      for (let i = 0; i < 8; i++) {
-        const next = (i + 1) % 8;
-        const midZ = (girdlePts[i].z + girdlePts[next].z) / 2;
-        const targetZ = midZ < 0 ? keelZ1 : keelZ2;
-        addTri(
-          0, yCulet, targetZ,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
-        );
-      }
-
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createOvalCutGeometry(radius = 3.55) {
-      const geom = this.createRoundBrilliantGeometry(radius);
-      geom.scale(1.28, 1.0, 0.88);
-      return geom;
-    }
-
-    createPearCutGeometry(radius = 3.55) {
-      const geom = this.createRoundBrilliantGeometry(radius);
-      const pos = geom.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        let x = pos.getX(i);
-        let y = pos.getY(i);
-        let z = pos.getZ(i);
-
-        const zNorm = (z / radius);
-        if (zNorm > 0) {
-          const taper = 1.0 - zNorm * 0.55;
-          x *= Math.max(0.2, taper);
-          z *= 1.25;
-        } else {
-          z *= 0.95;
-        }
-
-        pos.setXYZ(i, x, y, z);
-      }
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createPrincessCutGeometry(size = 3.3) {
-      const hCrown = size * 0.35;
-      const hPav = size * 0.90;
-      const yTable = hCrown;
-      const yGirdle = 0;
-      const yCulet = -hPav;
-      const tw = size * 0.58;
-
-      const triVertices = [];
-      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
-        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
-      }
-
-      addTri(-tw, yTable, -tw, tw, yTable, -tw, tw, yTable, tw);
-      addTri(-tw, yTable, -tw, tw, yTable, tw, -tw, yTable, tw);
-
-      const corners = [
-        { x: -size, z: -size },
-        { x: size, z: -size },
-        { x: size, z: size },
-        { x: -size, z: size }
-      ];
-      const tableCorners = [
-        { x: -tw, z: -tw },
-        { x: tw, z: -tw },
-        { x: tw, z: tw },
-        { x: -tw, z: tw }
-      ];
-
-      for (let i = 0; i < 4; i++) {
-        const next = (i + 1) % 4;
-        addTri(
-          tableCorners[i].x, yTable, tableCorners[i].z,
-          corners[next].x, yGirdle, corners[next].z,
-          corners[i].x, yGirdle, corners[i].z
-        );
-        addTri(
-          tableCorners[i].x, yTable, tableCorners[i].z,
-          tableCorners[next].x, yTable, tableCorners[next].z,
-          corners[next].x, yGirdle, corners[next].z
-        );
-      }
-
-      for (let i = 0; i < 4; i++) {
-        const next = (i + 1) % 4;
-        addTri(
-          0, yCulet, 0,
-          corners[next].x, yGirdle, corners[next].z,
-          corners[i].x, yGirdle, corners[i].z
-        );
-      }
-
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createRadiantCutGeometry(w = 3.2, l = 4.0) {
-      const sRef = w / 3.2;
-      const hCrown = 1.15 * sRef;
-      const hPav = 2.8 * sRef;
-      const yTable = hCrown;
-      const yGirdle = 0;
-      const yCulet = -hPav;
-
-      const triVertices = [];
-      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
-        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
-      }
-
-      const tw = w * 0.58;
-      const tl = l * 0.58;
-      const tc = 0.5 * sRef;
-      const tablePts = [
-        { x: -tw + tc, y: yTable, z: -tl },
-        { x: tw - tc, y: yTable, z: -tl },
-        { x: tw, y: yTable, z: -tl + tc },
-        { x: tw, y: yTable, z: tl - tc },
-        { x: tw - tc, y: yTable, z: tl },
-        { x: -tw + tc, y: yTable, z: tl },
-        { x: -tw, y: yTable, z: tl - tc },
-        { x: -tw, y: yTable, z: -tl + tc }
-      ];
-
-      const gc = 0.75 * sRef;
-      const girdlePts = [
-        { x: -w + gc, y: yGirdle, z: -l },
-        { x: w - gc, y: yGirdle, z: -l },
-        { x: w, y: yGirdle, z: -l + gc },
-        { x: w, y: yGirdle, z: l - gc },
-        { x: w - gc, y: yGirdle, z: l },
-        { x: -w + gc, y: yGirdle, z: l },
-        { x: -w, y: yGirdle, z: l - gc },
-        { x: -w, y: yGirdle, z: -l + gc }
-      ];
-
-      for (let i = 1; i < 7; i++) {
-        addTri(
-          tablePts[0].x, tablePts[0].y, tablePts[0].z,
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
-        );
-      }
-
-      for (let i = 0; i < 8; i++) {
-        const next = (i + 1) % 8;
-        addTri(
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
-        );
-        addTri(
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          tablePts[next].x, tablePts[next].y, tablePts[next].z
-        );
-      }
-
-      const keelZ1 = -l * 0.35;
-      const keelZ2 = l * 0.35;
-      for (let i = 0; i < 8; i++) {
-        const next = (i + 1) % 8;
-        const midZ = (girdlePts[i].z + girdlePts[next].z) / 2;
-        const targetZ = midZ < 0 ? keelZ1 : keelZ2;
-        addTri(
-          0, yCulet, targetZ,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
-        );
-      }
-
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createCushionCutGeometry(w = 3.55, l = 3.55) {
-      const baseR = (w + l) / 2.0;
-      const geom = this.createRoundBrilliantGeometry(baseR);
-      const pos = geom.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        let x = pos.getX(i);
-        let y = pos.getY(i);
-        let z = pos.getZ(i);
-
-        const r = Math.sqrt(x * x + z * z);
-        if (r > 0.001) {
-          const angle = Math.atan2(z, x);
-          const cos4 = Math.cos(angle * 4.0);
-          const cushionFactor = 1.0 + 0.12 * (1.0 - cos4);
-          x *= (w / baseR) * cushionFactor;
-          z *= (l / baseR) * cushionFactor;
-        }
-        pos.setXYZ(i, x, y, z);
-      }
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createMarquiseCutGeometry(radius = 3.55) {
-      const geom = this.createRoundBrilliantGeometry(radius);
-      const pos = geom.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        let x = pos.getX(i);
-        let y = pos.getY(i);
-        let z = pos.getZ(i);
-
-        const normZ = Math.abs(z / radius);
-        x *= Math.max(0.12, 1.0 - Math.pow(normZ, 1.35) * 0.78);
-        x *= 0.88;
-        z *= 1.45;
-
-        pos.setXYZ(i, x, y, z);
-      }
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createHeartCutGeometry(radius = 3.55) {
-      const geom = this.createRoundBrilliantGeometry(radius);
-      const pos = geom.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        let x = pos.getX(i);
-        let y = pos.getY(i);
-        let z = pos.getZ(i);
-
-        const normX = x / radius;
-        const normZ = z / radius;
-
-        let newX = x * 1.08;
-        let newZ = z;
-        if (z > 0) {
-          const cleft = Math.exp(-Math.pow(normX * 2.8, 2)) * radius * 0.42;
-          newZ -= cleft;
-          newX *= 1.0 + normZ * 0.15;
-        } else {
-          const t = -z / radius;
-          newX *= Math.max(0.08, 1.0 - t * 0.72);
-          newZ *= 1.18;
-        }
-        pos.setXYZ(i, newX, y, newZ);
-      }
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    createHexagonalCutGeometry(radius = 3.55) {
-      const sRef = radius / 3.55;
-      const hCrown = 1.1 * sRef;
-      const hPav = 2.8 * sRef;
-      const yTable = hCrown;
-      const yGirdle = 0;
-      const yCulet = -hPav;
-
-      const triVertices = [];
-      function addTri(ax, ay, az, bx, by, bz, cx, cy, cz) {
-        triVertices.push(ax, ay, az, bx, by, bz, cx, cy, cz);
-      }
-
-      const rTable = radius * 0.62;
-      const tablePts = [];
-      const girdlePts = [];
-
-      for (let i = 0; i < 6; i++) {
-        const ang = (i * Math.PI / 3.0) + Math.PI / 6.0;
-        tablePts.push({ x: rTable * Math.cos(ang), y: yTable, z: rTable * Math.sin(ang) });
-        girdlePts.push({ x: radius * Math.cos(ang), y: yGirdle, z: radius * Math.sin(ang) });
-      }
-
-      for (let i = 1; i < 5; i++) {
-        addTri(
-          tablePts[0].x, tablePts[0].y, tablePts[0].z,
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          tablePts[i + 1].x, tablePts[i + 1].y, tablePts[i + 1].z
-        );
-      }
-
-      for (let i = 0; i < 6; i++) {
-        const next = (i + 1) % 6;
-        addTri(
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z
-        );
-        addTri(
-          tablePts[i].x, tablePts[i].y, tablePts[i].z,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          tablePts[next].x, tablePts[next].y, tablePts[next].z
-        );
-      }
-
-      for (let i = 0; i < 6; i++) {
-        const next = (i + 1) % 6;
-        addTri(
-          0, yCulet, 0,
-          girdlePts[next].x, girdlePts[next].y, girdlePts[next].z,
-          girdlePts[i].x, girdlePts[i].y, girdlePts[i].z
-        );
-      }
-
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.Float32BufferAttribute(triVertices, 3));
-      geom.computeVertexNormals();
-      return geom;
-    }
-
-    setMetal(metalId) {
-      this.currentMetal = metalId;
-      const p = this.materials.metalPalettes[metalId] || this.materials.metalPalettes['yellow-gold'];
-
-      this.materials.shank.color.setHex(p.shank);
-      this.materials.shank.metalness = p.metalness;
-      this.materials.shank.roughness = p.roughness;
-      this.materials.shank.clearcoat = p.clearcoat || 0.15;
-      this.materials.shank.envMapIntensity = p.envMapIntensity || 1.7;
-      this.materials.shank.needsUpdate = true;
-
-      this.materials.head.color.setHex(p.head);
-      this.materials.head.metalness = p.metalness;
-      this.materials.head.roughness = p.roughness;
-      this.materials.head.clearcoat = p.clearcoat || 0.15;
-      this.materials.head.envMapIntensity = p.envMapIntensity || 1.7;
-      this.materials.head.needsUpdate = true;
-
-      if (this.bridgeMesh && this.bridgeMesh.material) {
-        this.bridgeMesh.material.color.setHex(p.shank);
-      }
-      if (this.prongsMeshGroup) {
-        this.prongsMeshGroup.traverse(child => {
-          if (child.isMesh && child.material) {
-            child.material.color.setHex(p.head);
-            child.material.metalness = p.metalness;
-            child.material.roughness = p.roughness;
-            child.material.needsUpdate = true;
-          }
-        });
-      }
-    }
-
-    setGem(gemId) {
-      this.currentGem = gemId;
-      const p = this.materials.gemPalettes[gemId] || this.materials.gemPalettes['diamond'];
-
-      this.materials.gem.color.setHex(p.color);
-      this.materials.gem.metalness = p.metalness !== undefined ? p.metalness : 0.02;
-      this.materials.gem.roughness = p.roughness !== undefined ? p.roughness : 0.02;
-      this.materials.gem.clearcoat = p.clearcoat !== undefined ? p.clearcoat : 1.0;
-      this.materials.gem.envMapIntensity = p.envMapIntensity || 1.85;
-      this.materials.gem.needsUpdate = true;
-
-      if (this.centerGemMesh && this.centerGemMesh.material) {
-        this.centerGemMesh.material.color.setHex(p.color);
-        this.centerGemMesh.material.metalness = this.materials.gem.metalness;
-        this.centerGemMesh.material.roughness = this.materials.gem.roughness;
-        this.centerGemMesh.material.clearcoat = this.materials.gem.clearcoat;
-        this.centerGemMesh.material.envMapIntensity = this.materials.gem.envMapIntensity;
-        this.centerGemMesh.material.needsUpdate = true;
-      }
-
-      this.materials.wire.color.setHex(p.wire);
-      this.materials.wire.opacity = p.wireOpacity || 0.15;
-      this.materials.wire.needsUpdate = true;
-
-      if (this.gemWireMesh && this.gemWireMesh.material) {
-        this.gemWireMesh.material.color.setHex(p.wire);
-        this.gemWireMesh.material.opacity = p.wireOpacity || 0.15;
-        this.gemWireMesh.material.needsUpdate = true;
-      }
-
-      const isWhite = (gemId === 'diamond' || gemId === 'moissanite' || gemId === 'solitaire-vvs');
-      if (this.gemWireMesh) {
-        this.gemWireMesh.visible = isWhite;
-      }
-      if (this.diamondSpot) {
-        this.diamondSpot.intensity = isWhite ? 0.35 : 0.12;
-      }
-    }
-
-    setCut(cutId) {
-      this.currentCut = cutId;
-      this.buildCenterGemstone();
-      this.buildSettingHead();
-      this.setMetal(this.currentMetal);
-      this.updateCameraFraming(false);
-    }
-
-    setCarat(caratVal) {
-      this.currentCarat = parseFloat(caratVal) || 2.5;
-      this.buildCenterGemstone();
-      this.buildSettingHead();
-      this.setMetal(this.currentMetal);
-      this.updateCameraFraming(false);
-    }
-
-    setBandStyle(style) {
-      this.currentBandStyle = style || 'cathedral';
-      this.buildShank();
-      this.setMetal(this.currentMetal);
-    }
-
-    resetCamera() {
-      this.hasUserInteractedOnce = false;
-      this.updateCameraFraming(true);
-    }
-
-    zoomIn() {
-      if (!this.controls || !this.camera) return;
-      const target = this.controls.target;
-      const dir = new THREE.Vector3().subVectors(this.camera.position, target);
-      const curDist = dir.length();
-      const minD = this.controls.minDistance || 40;
-      const newDist = Math.max(curDist * 0.88, minD);
-      dir.normalize().multiplyScalar(newDist);
-      this.camera.position.copy(target).add(dir);
-      this.controls.update();
-    }
-
-    zoomOut() {
-      if (!this.controls || !this.camera) return;
-      const target = this.controls.target;
-      const dir = new THREE.Vector3().subVectors(this.camera.position, target);
-      const curDist = dir.length();
-      const maxD = this.controls.maxDistance || 160;
-      const newDist = Math.min(curDist * 1.12, maxD);
-      dir.normalize().multiplyScalar(newDist);
-      this.camera.position.copy(target).add(dir);
-      this.controls.update();
-    }
-
-    toggleFullscreen() {
-      const container = this.container || document.getElementById('bespoke-3d-wrapper');
-      if (!container) return;
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if (container.requestFullscreen) {
-          container.requestFullscreen();
-        } else if (container.webkitRequestFullscreen) {
-          container.webkitRequestFullscreen();
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        }
-      }
-    }
-
-    shareConfiguration() {
-      const b = state.bespoke;
-      const metalNames = {
-        'rhodium-silver': '925 Silver / Rhodium',
-        'liquid-silver': '925 Silver / Rhodium',
-        'micro-gold': '18K Micron Gold',
-        'rose-gold': 'Rose Gold Plated',
-        'white-gold': 'Bright Rhodium',
-        'platinum': 'Antique Finish',
-        'antique-gold': 'Antique Finish'
-      };
-      const gemNames = {
-        'moissanite': 'D-Moissanite',
-        'diamond': 'Lab Diamond (EF/VVS)',
-        'solitaire-vvs': 'VS Solitaire',
-        'champagne-solitaire': 'Champagne Solitaire'
-      };
-      const cutNames = {
-        'round': 'Round Brilliant',
-        'princess': 'Princess',
-        'oval': 'Oval',
-        'cushion': 'Cushion',
-        'emerald-cut': 'Emerald Cut',
-        'radiant': 'Radiant',
-        'pear': 'Pear',
-        'asscher': 'Asscher',
-        'marquise': 'Marquise',
-        'heart': 'Heart',
-        'hexagonal': 'Hexagonal',
-        'elongated-cushion': 'Elongated Cushion'
-      };
-
-      const bandLabel = b.bandStyle === 'traditional' ? 'Traditional Comfort-Fit' : 'Cathedral Arch';
-      const metalLabel = metalNames[b.metalId] || b.metalId;
-      const gemLabel = gemNames[b.gemId] || b.gemId;
-      const cutLabel = cutNames[b.cutId] || b.cutId;
-      const sizeLabel = b.ringSize ? `Indian Size ${b.ringSize}` : 'Indian Size 14';
-      const engraveLabel = b.engravingText && b.engravingText.trim().length > 0 ? `"${b.engravingText.trim()}"` : 'None';
-
-      const shareText = `House of Jewelux 3D Bespoke Ring:\n• Style: ${bandLabel}\n• Metal: ${metalLabel}\n• Stone: ${gemLabel}\n• Cut: ${cutLabel}\n• Carat: ${b.caratWeight} ct\n• Size: ${sizeLabel}\n• Engraving: ${engraveLabel}\nhttps://houseofjewelux.com/#bespoke-studio`;
-
-      if (navigator.share) {
-        navigator.share({
-          title: 'House of Jewelux - Bespoke Ring',
-          text: shareText,
-          url: 'https://houseofjewelux.com/#bespoke-studio'
-        }).catch(() => {});
-      } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(shareText).then(() => {
-          if (typeof showToast === 'function') {
-            showToast('Configuration copied to clipboard!', '✨');
-          } else {
-            alert('Configuration copied to clipboard!');
-          }
-        }).catch(() => {});
-      }
-    }
-
-    updateCameraFraming(forceResetAngle = false) {
-      if (!this.camera || !this.container) return;
-      const rect = this.container.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
-      if (w <= 0 || h <= 0) return;
-
-      const aspect = w / h;
-      this.camera.aspect = aspect;
-
-      const scale = this.getCaratScale(this.currentCarat);
-      // Adaptive vertical visual center:
-      // Ring bottom is at y ≈ -10.5, 1ct table facet is at y ≈ 15.2, 4ct table facet is at y ≈ 16.5.
-      const targetCenterY = 1.6 + (scale - 1.0) * 1.8;
-      const targetCenter = new THREE.Vector3(0, targetCenterY, 0);
-
-      // Hero beauty angle direction vector matching visual reference Image 2 (upright 3/4 beauty view)
-      const baseDirection = new THREE.Vector3(26, 12, 18).normalize();
-      
-      // Base distance calibrated so ring fills ~75-80% of canvas height just like Image 2
-      const baseDistance = 50.0;
-      const caratDistanceFactor = 1.0 + (scale - 1.0) * 0.75;
-      const refAspect = 1.15;
-
-      let distanceFactor = 1.0;
-      if (aspect < refAspect) {
-        // Horizontally constrained displays (phones, portrait tablets)
-        distanceFactor = refAspect / aspect;
-        if (aspect < 0.85) {
-          distanceFactor *= 1.08;
-        }
-      } else if (aspect > 1.8) {
-        distanceFactor = 1.08;
-      }
-
-      const targetDistance = baseDistance * distanceFactor * caratDistanceFactor;
-
-      if (this.controls) {
-        this.controls.target.copy(targetCenter);
-        this.controls.minDistance = 30.0;
-        this.controls.maxDistance = 85.0;
-
-        if (forceResetAngle || !this.hasUserInteractedOnce) {
-          this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
-        } else {
-          const curDir = new THREE.Vector3().subVectors(this.camera.position, this.controls.target);
-          if (curDir.lengthSq() > 0.001) {
-            curDir.normalize();
-            this.camera.position.copy(targetCenter).addScaledVector(curDir, targetDistance);
-          } else {
-            this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
-          }
-        }
-        this.controls.update();
-      } else {
-        this.camera.position.copy(targetCenter).addScaledVector(baseDirection, targetDistance);
-        this.camera.lookAt(targetCenter);
-      }
-
-      this.camera.updateProjectionMatrix();
-    }
-
-    handleResizeDebounced() {
-      this.onResize();
-      if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
-      this.resizeTimeout = setTimeout(() => {
-        this.onResize();
-      }, 50);
-    }
-
-    onResize() {
-      if (!this.renderer || !this.camera || !this.container) return;
-      const rect = this.container.getBoundingClientRect();
-      const w = Math.round(rect.width);
-      const h = Math.round(rect.height);
-      if (w <= 0 || h <= 0) return;
-
-      this.updateCameraFraming(false);
-      this.renderer.setSize(w, h, false);
-      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    }
-
-    animate() {
-      requestAnimationFrame(() => this.animate());
-
-      if (!this.isUserInteracting && this.ringGroup) {
-        this.ringGroup.rotation.y += 0.003;
-      }
-
-      if (this.controls) {
-        this.controls.update();
-      }
-
-      if (this.renderer && this.scene && this.camera) {
-        this.renderer.render(this.scene, this.camera);
-      }
-    }
-  }
-
-  window.Jewelry3DViewer = Jewelry3DViewer;
-  let jewelry3DViewer = null;
-
-  function init3DCanvasEngine() {
-    try {
-      console.log('init3DCanvasEngine: starting...');
-      jewelry3DViewer = new Jewelry3DViewer('bespoke-3d-canvas', 'bespoke-3d-wrapper', 'canvas-3d-loader');
-      window.jewelryViewer = jewelry3DViewer;
-      console.log('init3DCanvasEngine: SUCCESS, window.jewelryViewer is set.');
-    } catch (e) {
-      console.error('Failed to initialize 3D Jewelry Engine:', e.message, e.stack);
-      window.__3d_init_error = { message: e.message, stack: e.stack };
-    }
-  }
-
-  function render3DFrame() {
-    // Retained as backward-compatibility alias
-  }
-
-  function updateBespokePrice() {
-    const b = state.bespoke;
-    const metal = STORE.bespokeStudio.metals.find(m => m.id === b.metalId) || STORE.bespokeStudio.metals[0];
-    const gem = STORE.bespokeStudio.gems.find(g => g.id === b.gemId) || STORE.bespokeStudio.gems[0];
-    const totalPrice = metal.priceBase + (gem.pricePerCarat * b.caratWeight);
-
-    const priceEl = document.getElementById('bespoke-calc-price');
-    if (priceEl) priceEl.textContent = formatPrice(totalPrice);
-  }
-
-  function updateBespokeOptionHighlight(attrName, selectedVal, isNumeric = false) {
-    document.querySelectorAll(`[${attrName}]`).forEach(b => {
-      const rawVal = b.getAttribute(attrName);
-      const isMatch = isNumeric
-        ? Math.abs(parseFloat(rawVal) - parseFloat(selectedVal)) < 0.01
-        : rawVal === selectedVal;
-
-      // Remove solid black override
-      b.classList.remove('bg-[#1D1815]', 'text-white');
-
-      if (isMatch) {
-        b.classList.remove('bg-[#F6EBDD]', 'border-[#E8E3D8]');
-        b.classList.add('bg-white', 'border-[#C5A674]', 'ring-2', 'ring-[#8A6B38]', 'shadow-sm');
-      } else {
-        b.classList.remove('bg-white', 'border-[#C5A674]', 'ring-2', 'ring-[#8A6B38]', 'shadow-sm');
-        b.classList.add('bg-[#F6EBDD]', 'border-[#E8E3D8]');
-      }
-
-      const span = b.querySelector('span:last-child') || b.querySelector('span');
-      if (span) {
-        if (isMatch) {
-          span.classList.remove('text-[#1D1815]', 'font-medium');
-          span.classList.add('text-[#8A6B38]', 'font-semibold');
-        } else {
-          span.classList.remove('text-[#8A6B38]', 'font-semibold');
-          span.classList.add('text-[#1D1815]', 'font-medium');
-        }
-      }
-    });
-  }
-
-  // ================= 9B. BESPOKE STUDIO INTERACTION HANDLERS =================
-  window.switchBespokeTab = (tabName) => {
-    state.bespoke.activeTab = tabName;
-    const btnOptions = document.getElementById('tab-btn-options');
-    const btnEngraving = document.getElementById('tab-btn-engraving');
-    const panelOptions = document.getElementById('customizer-panel-options');
-    const panelEngraving = document.getElementById('customizer-panel-engraving');
-
-    if (tabName === 'engraving') {
-      if (btnOptions) btnOptions.classList.remove('active');
-      if (btnEngraving) btnEngraving.classList.add('active');
-      if (panelOptions) panelOptions.classList.add('hidden');
-      if (panelEngraving) panelEngraving.classList.remove('hidden');
-    } else {
-      if (btnOptions) btnOptions.classList.add('active');
-      if (btnEngraving) btnEngraving.classList.remove('active');
-      if (panelOptions) panelOptions.classList.remove('hidden');
-      if (panelEngraving) panelEngraving.classList.add('hidden');
-    }
-  };
-
-  window.setBespokeBandStyle = (style) => {
-    state.bespoke.bandStyle = style;
-    document.querySelectorAll('[data-bespoke-style]').forEach(btn => {
-      const isMatch = btn.getAttribute('data-bespoke-style') === style;
-      btn.classList.toggle('active', isMatch);
-    });
-    if (window.jewelryViewer && typeof window.jewelryViewer.setBandStyle === 'function') {
-      window.jewelryViewer.setBandStyle(style);
-    }
-  };
-
-  const BESPOKE_METAL_NAMES = {
-    'yellow-gold': 'Yellow Gold',
-    'white-gold': 'White Gold',
-    'rose-gold': 'Rose Gold',
-    'micro-gold': 'Yellow Gold',
-    'rhodium-silver': 'White Gold',
-    'liquid-silver': 'White Gold',
-    'antique-gold': 'Antique Gold',
-    'platinum': 'White Gold'
-  };
-
-  window.setBespokeMetal = (metalId) => {
-    state.bespoke.metalId = metalId;
-    const label = document.getElementById('selected-metal-name');
-    if (label && BESPOKE_METAL_NAMES[metalId]) {
-      label.textContent = BESPOKE_METAL_NAMES[metalId];
-    }
-    document.querySelectorAll('[data-bespoke-metal]').forEach(btn => {
-      const val = btn.getAttribute('data-bespoke-metal');
-      const isMatch = val === metalId || 
-        (metalId === 'yellow-gold' && val === 'micro-gold') || (metalId === 'micro-gold' && val === 'yellow-gold') ||
-        (metalId === 'white-gold' && (val === 'rhodium-silver' || val === 'liquid-silver')) ||
-        ((metalId === 'rhodium-silver' || metalId === 'liquid-silver') && val === 'white-gold');
-      btn.classList.toggle('active', isMatch);
-    });
-    if (window.jewelryViewer && typeof window.jewelryViewer.setMetal === 'function') {
-      window.jewelryViewer.setMetal(metalId);
-    }
-    updateBespokePrice();
-  };
-
-  const BESPOKE_GEM_NAMES = {
-    'diamond': 'Diamond',
-    'ruby': 'Ruby',
-    'emerald': 'Emerald',
-    'sapphire': 'Sapphire',
-    'moissanite': 'D-Moissanite',
-    'solitaire-vvs': 'VS Solitaire',
-    'champagne-solitaire': 'Champagne Solitaire'
-  };
-
-  window.setBespokeGem = (gemId) => {
-    state.bespoke.gemId = gemId;
-    const label = document.getElementById('selected-gem-name');
-    if (label && BESPOKE_GEM_NAMES[gemId]) {
-      label.textContent = BESPOKE_GEM_NAMES[gemId];
-    }
-    document.querySelectorAll('[data-bespoke-gem]').forEach(btn => {
-      const isMatch = btn.getAttribute('data-bespoke-gem') === gemId;
-      btn.classList.toggle('active', isMatch);
-    });
-    if (window.jewelryViewer && typeof window.jewelryViewer.setGem === 'function') {
-      window.jewelryViewer.setGem(gemId);
-    }
-    updateBespokePrice();
-  };
-
-  const BESPOKE_CUT_NAMES = {
-    'round': 'Round Brilliant',
-    'princess': 'Princess',
-    'oval': 'Oval',
-    'cushion': 'Cushion',
-    'emerald-cut': 'Emerald Cut',
-    'radiant': 'Radiant',
-    'pear': 'Pear',
-    'asscher': 'Asscher',
-    'marquise': 'Marquise',
-    'heart': 'Heart',
-    'hexagonal': 'Hexagonal',
-    'elongated-cushion': 'Elongated Cushion'
-  };
-
-  window.setBespokeCut = (cutId) => {
-    state.bespoke.cutId = cutId;
-    const label = document.getElementById('selected-cut-name');
-    if (label && BESPOKE_CUT_NAMES[cutId]) {
-      label.textContent = BESPOKE_CUT_NAMES[cutId];
-    }
-    document.querySelectorAll('[data-bespoke-cut]').forEach(btn => {
-      const isMatch = btn.getAttribute('data-bespoke-cut') === cutId;
-      btn.classList.toggle('active', isMatch);
-      if (isMatch) {
-        btn.className = 'pill-cut-btn active py-1.5 px-3 sm:px-3.5 rounded-full border border-black bg-black text-white text-xs font-medium transition shadow-sm';
-      } else {
-        btn.className = 'pill-cut-btn py-1.5 px-3 sm:px-3.5 rounded-full border border-neutral-200 bg-white text-neutral-700 hover:border-black text-xs font-normal transition';
-      }
-    });
-    if (window.jewelryViewer && typeof window.jewelryViewer.setCut === 'function') {
-      window.jewelryViewer.setCut(cutId);
-    }
-    updateBespokePrice();
-  };
-
-  window.setBespokeCarat = (caratVal) => {
-    const val = parseFloat(caratVal);
-    state.bespoke.caratWeight = val;
-    const displayEl = document.getElementById('bespoke-carat-display');
-    if (displayEl) {
-      displayEl.textContent = `${val.toFixed(2)} ct`;
-    }
-    document.querySelectorAll('[data-bespoke-carat]').forEach(btn => {
-      const bVal = parseFloat(btn.getAttribute('data-bespoke-carat'));
-      const isMatch = Math.abs(bVal - val) < 0.05;
-      btn.classList.toggle('active', isMatch);
-      if (isMatch) {
-        btn.className = 'pill-carat-btn active py-2 px-4 rounded-full border border-black bg-black text-white text-xs font-medium transition shadow-sm';
-      } else {
-        btn.className = 'pill-carat-btn py-2 px-4 rounded-full border border-neutral-200 bg-white text-neutral-700 hover:border-black text-xs font-normal transition';
-      }
-    });
-    if (window.jewelryViewer && typeof window.jewelryViewer.setCarat === 'function') {
-      window.jewelryViewer.setCarat(caratVal);
-    }
-    updateBespokePrice();
-  };
-
-  window.setBespokeRingSize = (size) => {
-    state.bespoke.ringSize = String(size);
-    const select = document.getElementById('bespoke-ring-size-select');
-    if (select && select.value !== String(size)) {
-      select.value = String(size);
-    }
-  };
-
-  window.openRingSizeGuide = () => {
-    const modal = document.getElementById('ring-size-guide-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-  };
-
-  window.closeRingSizeGuide = () => {
-    const modal = document.getElementById('ring-size-guide-modal');
-    if (modal) {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-  };
-
-  window.selectSizeFromGuide = (size) => {
-    setBespokeRingSize(size);
-    closeRingSizeGuide();
-  };
-
-  window.handleEngravingInput = (val) => {
-    state.bespoke.engravingText = val;
-    const countEl = document.getElementById('engraving-char-count');
-    if (countEl) {
-      countEl.textContent = `${val.length} / 20`;
-    }
-    const previewEl = document.getElementById('engraving-preview-text');
-    if (previewEl) {
-      previewEl.textContent = val.trim().length > 0 ? val : 'JEWELUX • 2026';
-    }
-  };
-
-  window.setBespokeEngravingFont = (fontKey) => {
-    state.bespoke.engravingFont = fontKey;
-    const previewEl = document.getElementById('engraving-preview-text');
-    if (previewEl) {
-      previewEl.classList.remove('engraving-font-serif', 'engraving-font-sans', 'engraving-font-script');
-      previewEl.classList.add(`engraving-font-${fontKey}`);
-    }
-    document.querySelectorAll('[data-engrave-font]').forEach(btn => {
-      const isMatch = btn.getAttribute('data-engrave-font') === fontKey;
-      if (isMatch) {
-        btn.classList.add('border-[#C5A674]', 'bg-white', 'text-[#8A6B38]', 'font-semibold', 'shadow-sm');
-        btn.classList.remove('border-[#E8E3D8]', 'bg-[#FDFCF9]', 'text-[#1D1815]', 'font-medium');
-      } else {
-        btn.classList.remove('border-[#C5A674]', 'bg-white', 'text-[#8A6B38]', 'font-semibold', 'shadow-sm');
-        btn.classList.add('border-[#E8E3D8]', 'bg-[#FDFCF9]', 'text-[#1D1815]', 'font-medium');
-      }
-    });
-  };
-
-  window.insertEngravingSymbol = (symbol) => {
-    const input = document.getElementById('engraving-text-input');
-    if (!input) return;
-    if (input.value.length >= 20) return;
-    const start = input.selectionStart || input.value.length;
-    const end = input.selectionEnd || input.value.length;
-    const current = input.value;
-    const updated = current.substring(0, start) + symbol + current.substring(end);
-    if (updated.length <= 20) {
-      input.value = updated;
-      handleEngravingInput(updated);
-      input.focus();
-      const nextPos = start + symbol.length;
-      input.setSelectionRange(nextPos, nextPos);
-    }
-  };
-
-  window.clearBespokeEngraving = () => {
-    const input = document.getElementById('engraving-text-input');
-    if (input) input.value = '';
-    handleEngravingInput('');
-  };
-
-  window.shareBespokeConfig = () => {
-    if (window.jewelryViewer && typeof window.jewelryViewer.shareConfiguration === 'function') {
-      window.jewelryViewer.shareConfiguration();
-    }
-  };
-
-  window.toggleBespokeFullscreen = () => {
-    if (window.jewelryViewer && typeof window.jewelryViewer.toggleFullscreen === 'function') {
-      window.jewelryViewer.toggleFullscreen();
-    }
-  };
-
-  window.resetBespokeCamera = () => {
-    if (window.jewelryViewer && typeof window.jewelryViewer.resetCamera === 'function') {
-      window.jewelryViewer.resetCamera();
-    }
-  };
-
-  window.zoomBespokeIn = () => {
-    if (window.jewelryViewer && typeof window.jewelryViewer.zoomIn === 'function') {
-      window.jewelryViewer.zoomIn();
-    }
-  };
-
-  window.zoomBespokeOut = () => {
-    if (window.jewelryViewer && typeof window.jewelryViewer.zoomOut === 'function') {
-      window.jewelryViewer.zoomOut();
-    }
-  };
-
   // ================= 10. PRIVATE FOUNDER STUDIO (#studio / #admin) =================
   function renderStudio() {
     const lockScreen = document.getElementById('studio-lock-screen');
@@ -4103,13 +1865,330 @@ Workbench Link: https://houseofjewelux.com/#bespoke-studio`;
   renderAllProductGrids();
   renderCart();
   renderWishlist();
-  init3DCanvasEngine();
-  setBespokeBandStyle(state.bespoke.bandStyle || 'cathedral');
-  setBespokeMetal(state.bespoke.metalId || 'yellow-gold');
-  setBespokeGem(state.bespoke.gemId || 'diamond');
-  setBespokeCut(state.bespoke.cutId || 'round');
-  setBespokeCarat(state.bespoke.caratWeight || 2.5);
-  updateBespokePrice();
   handleRoute();
   initMegaMenu();
 });
+
+
+// ========================================================
+// LOVABLE REFERENCE SUITE HANDLERS & CATALOG LOGIC
+// ========================================================
+
+window.toggleMobileMenu = function() {
+  const drawer = document.getElementById('mobile-nav-drawer');
+  const panel = document.getElementById('mobile-drawer-panel');
+  if (!drawer) return;
+  const isHidden = drawer.classList.contains('pointer-events-none');
+  if (isHidden) {
+    drawer.classList.remove('pointer-events-none', 'opacity-0');
+    drawer.classList.add('opacity-100');
+    if (panel) panel.classList.remove('-translate-x-full');
+  } else {
+    drawer.classList.add('pointer-events-none', 'opacity-0');
+    drawer.classList.remove('opacity-100');
+    if (panel) panel.classList.add('-translate-x-full');
+  }
+};
+
+window.changeCurrency = function(curr) {
+  if (!window.appState) return;
+  window.appState.currency = curr;
+  sessionStorage.setItem('jewelux_currency', curr);
+  localStorage.setItem('jewelux_currency', curr);
+  document.querySelectorAll('#global-currency-select, #currency-select').forEach(s => s.value = curr);
+  
+  // Re-render all dynamic views
+  if (typeof renderShopCatalog === 'function') renderShopCatalog();
+  if (typeof renderAllCollectionGrids === 'function') renderAllCollectionGrids();
+  if (typeof renderWishlistPage === 'function') renderWishlistPage();
+  if (typeof renderCartPage === 'function') renderCartPage();
+  
+  // Update static data-price tags on homepage
+  document.querySelectorAll('[data-price]').forEach(el => {
+    const inr = parseFloat(el.getAttribute('data-price'));
+    if (!isNaN(inr)) {
+      const usdEquivalent = inr / 83.5;
+      el.textContent = formatPrice(usdEquivalent);
+    }
+  });
+
+  if (typeof showToast === 'function') showToast(`Currency updated to ${curr}`, '✦');
+};
+
+window.toggleWishlistItem = function(id) {
+  if (!window.appState) return;
+  const list = window.appState.wishlist;
+  const idx = list.indexOf(id);
+  if (idx === -1) {
+    list.push(id);
+    if (typeof showToast === 'function') showToast('Added to your Wishlist', '♥');
+  } else {
+    list.splice(idx, 1);
+    if (typeof showToast === 'function') showToast('Removed from your Wishlist', '♡');
+  }
+  localStorage.setItem('jewelux_wishlist', JSON.stringify(list));
+  updateBadges();
+  if (typeof renderWishlistPage === 'function') renderWishlistPage();
+};
+
+window.addToCart = function(id) {
+  if (!window.appState) return;
+  const cart = window.appState.cart;
+  const existing = cart.find(item => item.id === id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: id, qty: 1 });
+  }
+  localStorage.setItem('jewelux_cart', JSON.stringify(cart));
+  updateBadges();
+  if (typeof renderCartPage === 'function') renderCartPage();
+  if (typeof showToast === 'function') showToast('Piece added to Shopping Bag', '🛍');
+};
+
+function updateBadges() {
+  if (!window.appState) return;
+  const wCount = window.appState.wishlist ? window.appState.wishlist.length : 0;
+  const cCount = window.appState.cart ? window.appState.cart.reduce((sum, item) => sum + item.qty, 0) : 0;
+  
+  const wBadge = document.getElementById('wishlist-badge-count');
+  if (wBadge) wBadge.textContent = wCount;
+  
+  const cBadge = document.getElementById('cart-badge-count');
+  if (cBadge) cBadge.textContent = cCount;
+}
+
+window.toggleCartDrawer = function() {
+  // If dedicated cart page exists, navigate directly or open bag
+  if (window.location.pathname.includes('/cart/')) return;
+  window.location.href = (window.location.pathname.includes('/collections/') || window.location.pathname.includes('/shop/') || window.location.pathname.includes('/blog/') || window.location.pathname.includes('/about/') || window.location.pathname.includes('/contact/')) ? '../cart/' : 'cart/';
+};
+
+// Render Products on /shop/
+function renderShopCatalog() {
+  const container = document.getElementById('shop-catalog-grid');
+  if (!container || typeof STORE === 'undefined' || !STORE.products) return;
+
+  const selectedMetals = Array.from(document.querySelectorAll('input[name="metal"]:checked')).map(el => el.value);
+  const selectedCatEl = document.querySelector('input[name="cat"]:checked');
+  const selectedCat = selectedCatEl ? selectedCatEl.value : 'all';
+  const inStockOnly = document.getElementById('instock-only') ? document.getElementById('instock-only').checked : false;
+  const sortOption = document.getElementById('sort-select') ? document.getElementById('sort-select').value : 'featured';
+
+  let filtered = STORE.products.filter(p => {
+    // Metal filter
+    if (!selectedMetals.includes('all')) {
+      const matchGold = selectedMetals.includes('Gold') && (p.isGold || (p.metal && p.metal.toLowerCase().includes('gold')));
+      const matchSilver = selectedMetals.includes('Silver') && (p.isSilver || (p.metal && p.metal.toLowerCase().includes('silver')));
+      const matchDiamond = selectedMetals.includes('Diamond') && (p.stone && p.stone.toLowerCase().includes('moissanite') || p.stone && p.stone.toLowerCase().includes('diamond'));
+      if (!matchGold && !matchSilver && !matchDiamond) return false;
+    }
+    // Category filter
+    if (selectedCat !== 'all') {
+      if (p.category !== selectedCat && p.collection !== selectedCat) return false;
+    }
+    // Stock filter
+    if (inStockOnly && p.stockStatus !== 'In Stock') return false;
+
+    return true;
+  });
+
+  // Sort
+  if (sortOption === 'price-asc') {
+    filtered.sort((a, b) => a.priceUSD - b.priceUSD);
+  } else if (sortOption === 'price-desc') {
+    filtered.sort((a, b) => b.priceUSD - a.priceUSD);
+  } else if (sortOption === 'newest') {
+    filtered.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+  }
+
+  const countDisplay = document.getElementById('product-count-display');
+  if (countDisplay) countDisplay.textContent = `${filtered.length} PIECES`;
+
+  let html = '';
+  filtered.forEach(p => {
+    const isWish = window.appState && window.appState.wishlist && window.appState.wishlist.includes(p.id);
+    const heartFill = isWish ? 'currentColor' : 'none';
+    const heartColor = isWish ? 'text-[#581825]' : 'text-[#2E2C29]';
+    const prefix = "../";
+
+    html += `
+    <article class="group relative" id="${p.id}">
+      <div class="block overflow-hidden rounded-sm bg-[#F3EFE8] aspect-square relative">
+        <img src="${prefix}${p.image}" alt="${p.name}" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105">
+        ${p.badge ? `<span class="absolute top-2.5 left-2.5 rounded-sm bg-[#581825] px-2 py-0.5 text-[0.58rem] tracking-[0.2em] uppercase text-white font-semibold">${p.badge}</span>` : ''}
+        <button type="button" onclick="toggleWishlistItem('${p.id}')" aria-label="Save to wishlist" class="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full bg-[#FCFAF7]/95 ${heartColor} transition-colors hover:text-[#581825] shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="${heartFill}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
+        </button>
+      </div>
+      <div class="mt-3.5 text-center">
+        <p class="text-[0.58rem] tracking-[0.24em] uppercase text-[#736E65]">${p.category} · ${p.metal ? p.metal.split('(')[0] : 'Fine Jewellery'}</p>
+        <h3 class="mt-1 text-base font-serif text-[#2E2C29] line-clamp-1">
+          <span class="link-underline">${p.name}</span>
+        </h3>
+        <p class="mt-1 text-sm font-medium text-[#2E2C29]">${formatPrice(p.priceUSD)}</p>
+        <div class="mt-2.5">
+          <button onclick="addToCart('${p.id}')" class="w-full rounded-sm border border-[#581825] py-2 text-[0.62rem] tracking-[0.2em] uppercase text-[#581825] hover:bg-[#581825] hover:text-white transition-colors">
+            Add to Bag
+          </button>
+        </div>
+      </div>
+    </article>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+window.filterProducts = renderShopCatalog;
+
+// Render sub-collection grids
+function renderAllCollectionGrids() {
+  if (typeof STORE === 'undefined' || !STORE.products) return;
+
+  const mappings = [
+    { id: 'collection-grid-gold', filter: p => p.isGold || (p.metal && p.metal.toLowerCase().includes('gold')) },
+    { id: 'collection-grid-diamond', filter: p => (p.stone && p.stone.toLowerCase().includes('moissanite')) || (p.category === 'rings') },
+    { id: 'collection-grid-silver', filter: p => p.isSilver || (p.collection === 'silver-edit') },
+    { id: 'collection-grid-bridal', filter: p => p.collection === 'couples-bridal' || p.category === 'necklaces' },
+    { id: 'collection-grid-everyday', filter: p => p.category === 'bracelets' || p.category === 'earrings' },
+    { id: 'collection-grid-new', filter: p => p.isNew || p.badge === 'New' || p.badge === 'Bestseller' }
+  ];
+
+  mappings.forEach(m => {
+    const el = document.getElementById(m.id);
+    if (!el) return;
+    const items = STORE.products.filter(m.filter).slice(0, 8);
+    let html = '';
+    items.forEach(p => {
+      html += `
+      <article class="group relative">
+        <div class="block overflow-hidden rounded-sm bg-[#F3EFE8] aspect-square relative">
+          <img src="../../${p.image}" alt="${p.name}" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+          <button type="button" onclick="toggleWishlistItem('${p.id}')" aria-label="Save to wishlist" class="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full bg-[#FCFAF7]/95 text-[#2E2C29] transition-colors hover:text-[#581825] shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
+          </button>
+        </div>
+        <div class="mt-3 text-center">
+          <h3 class="mt-1 text-base font-serif text-[#2E2C29] line-clamp-1">${p.name}</h3>
+          <p class="mt-1 text-sm font-medium text-[#2E2C29]">${formatPrice(p.priceUSD)}</p>
+          <button onclick="addToCart('${p.id}')" class="mt-2 w-full rounded-sm border border-[#581825] py-1.5 text-[0.6rem] tracking-[0.2em] uppercase text-[#581825] hover:bg-[#581825] hover:text-white transition-colors">
+            Add to Bag
+          </button>
+        </div>
+      </article>
+      `;
+    });
+    el.innerHTML = html;
+  });
+}
+
+// Render Dedicated Wishlist Page
+function renderWishlistPage() {
+  const container = document.getElementById('wishlist-page-grid');
+  const emptyEl = document.getElementById('wishlist-empty-state');
+  if (!container || !window.appState || typeof STORE === 'undefined') return;
+
+  const wIds = window.appState.wishlist || [];
+  if (!wIds.length) {
+    container.innerHTML = '';
+    if (emptyEl) emptyEl.classList.remove('hidden');
+    return;
+  }
+
+  if (emptyEl) emptyEl.classList.add('hidden');
+  const products = STORE.products.filter(p => wIds.includes(p.id));
+  let html = '';
+  products.forEach(p => {
+    html += `
+    <article class="group relative">
+      <div class="block overflow-hidden rounded-sm bg-[#F3EFE8] aspect-square relative">
+        <img src="../${p.image}" alt="${p.name}" class="h-full w-full object-cover">
+        <button onclick="toggleWishlistItem('${p.id}')" class="absolute top-2.5 right-2.5 bg-[#FCFAF7] rounded-full p-1.5 text-[#581825]">
+          <svg class="w-4 h-4" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="mt-3 text-center">
+        <h3 class="font-serif text-base text-[#2E2C29]">${p.name}</h3>
+        <p class="mt-1 text-sm font-medium">${formatPrice(p.priceUSD)}</p>
+        <button onclick="addToCart('${p.id}')" class="mt-2.5 w-full rounded-sm bg-[#581825] py-2 text-[0.62rem] tracking-[0.2em] uppercase text-white">
+          Move to Bag
+        </button>
+      </div>
+    </article>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// Render Dedicated Cart Page
+function renderCartPage() {
+  const container = document.getElementById('cart-page-items');
+  const totalEl = document.getElementById('cart-page-total');
+  if (!container || !window.appState || typeof STORE === 'undefined') return;
+
+  const cart = window.appState.cart || [];
+  if (!cart.length) {
+    container.innerHTML = '<p class="text-center py-12 font-serif text-lg text-[#736E65]">Your shopping bag is empty.</p>';
+    if (totalEl) totalEl.textContent = formatPrice(0);
+    return;
+  }
+
+  let totalUSD = 0;
+  let html = '';
+  cart.forEach(item => {
+    const prod = STORE.products.find(p => p.id === item.id);
+    if (!prod) return;
+    totalUSD += (prod.priceUSD * item.qty);
+    html += `
+    <div class="flex items-center gap-4 py-4 border-b border-[#E5DFD5]">
+      <img src="../${prod.image}" alt="${prod.name}" class="w-20 h-20 rounded-sm object-cover bg-[#F3EFE8]">
+      <div class="flex-1">
+        <h3 class="font-serif text-base text-[#2E2C29]">${prod.name}</h3>
+        <p class="text-xs text-[#736E65]">${prod.metal}</p>
+        <p class="mt-1 text-sm font-medium text-[#581825]">${formatPrice(prod.priceUSD)}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs uppercase tracking-wider text-[#736E65]">Qty: ${item.qty}</span>
+        <button onclick="removeFromCart('${item.id}')" class="text-xs text-[#736E65] hover:text-[#581825] ml-4 underline">Remove</button>
+      </div>
+    </div>
+    `;
+  });
+
+  container.innerHTML = html;
+  if (totalEl) totalEl.textContent = formatPrice(totalUSD);
+}
+
+window.removeFromCart = function(id) {
+  if (!window.appState) return;
+  window.appState.cart = window.appState.cart.filter(item => item.id !== id);
+  localStorage.setItem('jewelux_cart', JSON.stringify(window.appState.cart));
+  updateBadges();
+  renderCartPage();
+};
+
+window.checkoutViaWhatsApp = function() {
+  if (!window.appState || !window.appState.cart.length) {
+    alert('Your shopping bag is empty.');
+    return;
+  }
+  let msg = "Hello HOUSE OF JEWELUX Concierge! I would like to place an order for the following pieces:\n\n";
+  window.appState.cart.forEach((item, i) => {
+    const prod = STORE.products.find(p => p.id === item.id);
+    if (prod) {
+      msg += `${i+1}. ${prod.name} (Qty: ${item.qty}) - ${formatPrice(prod.priceUSD)}\n`;
+    }
+  });
+  const totalStr = document.getElementById('cart-page-total') ? document.getElementById('cart-page-total').textContent : '';
+  msg += `\nTotal: ${totalStr}\n\nPlease confirm delivery timelines and payment gateway link.`;
+  window.open(`https://wa.me/916377061020?text=${encodeURIComponent(msg)}`, '_blank');
+};
+
+// Initialize listeners on load
+setTimeout(() => {
+  updateBadges();
+  if (typeof renderShopCatalog === 'function') renderShopCatalog();
+  if (typeof renderAllCollectionGrids === 'function') renderAllCollectionGrids();
+  if (typeof renderWishlistPage === 'function') renderWishlistPage();
+  if (typeof renderCartPage === 'function') renderCartPage();
+}, 200);

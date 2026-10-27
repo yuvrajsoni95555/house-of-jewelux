@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diamond Collection — HOUSE OF JEWELUX</title>
+  <link rel="icon" href="../../images/house_of_jewelux_official_logo.jpg" type="image/jpeg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Balthazar&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../../style.css?v=lovable_recreation_v1">
+</head>
+<body class="bg-[#FAF7F2] text-[#2E2C29] antialiased selection:bg-[#F2E7D3] selection:text-[#3B0D16]">
+
+  <!-- Top Royal Announcement Bar -->
+<div class="bg-royal py-2 text-center text-[0.62rem] tracking-[0.24em] uppercase text-[#FFFDF9] px-4">
+  <div class="container-luxe flex items-center justify-between">
+    <span class="hidden sm:inline opacity-80">EST. 2024 · JAIPUR ATELIER</span>
+    <span class="mx-auto font-medium">Complimentary Insured Shipping Across India &amp; Worldwide</span>
+    <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
+      <span>WhatsApp Concierge: +91 63770 61020</span>
+    </a>
+  </div>
+</div>
+
+<!-- Main Header Bar -->
+<header class="sticky top-0 z-40 border-b border-[#E5DFD5] bg-[#FAF7F2]/95 backdrop-blur transition-all duration-300">
+  <div class="container-luxe grid grid-cols-[auto_1fr_auto] items-center gap-4 py-4">
+    <!-- Left: Mobile Menu Toggle & Search -->
+    <div class="flex items-center gap-2">
+      <button type="button" onclick="toggleMobileMenu()" aria-label="Open menu" class="grid h-10 w-10 shrink-0 place-items-center lg:hidden text-[#2E2C29] hover:text-[#581825]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="6" y2="6"></line>
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="hidden items-center gap-2 lg:flex" role="search">
+        <label for="header-site-search" class="sr-only">Search jewellery</label>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#736E65]">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.34-4.34"></path>
+        </svg>
+        <input id="header-site-search" type="text" placeholder="Search..." oninput="handleHeaderSearch(this.value)" class="w-32 border-b border-[#E5DFD5] bg-transparent py-1 text-xs tracking-widest uppercase placeholder:text-[#736E65] focus:outline-none focus:border-[#C5A059] xl:w-40 text-[#2E2C29]">
+      </div>
+    </div>
+
+    <!-- Center: Brand Logo Lockup -->
+    <div class="flex justify-center">
+      <a aria-label="HOUSE OF JEWELUX" class="group inline-flex flex-col items-center leading-none" href="../../">
+        <span class="font-display text-[0.62rem] tracking-[0.42em] text-[#736E65] uppercase">HOUSE OF</span>
+        <span class="font-display uppercase tracking-[0.28em] text-[#581825] transition-colors group-hover:text-[#3B0D16] text-xl sm:text-2xl font-normal">JEWELUX</span>
+        <span class="hairline mt-1 max-w-[6.5rem] opacity-70"></span>
+      </a>
+    </div>
+
+    <!-- Right: Currency, Wishlist, Cart, Account -->
+    <nav aria-label="Account and cart" class="flex items-center justify-end gap-1 sm:gap-2">
+      <!-- Currency Selector -->
+      <div class="flex items-center border border-[#E5DFD5] rounded-sm px-2 py-1 bg-[#FCFAF7] mr-1">
+        <select id="global-currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-[0.7rem] tracking-wider uppercase font-medium text-[#2E2C29] outline-none cursor-pointer">
+          <option value="INR" selected>INR (₹)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="AED">AED (د.إ)</option>
+        </select>
+      </div>
+
+      <a aria-label="Wishlist" href="../../wishlist/" class="relative grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
+        </svg>
+        <span id="wishlist-badge-count" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#581825] text-[9px] font-semibold text-white">0</span>
+      </a>
+
+      <button onclick="toggleCartDrawer()" aria-label="Cart" class="relative grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+          <path d="M3.103 6.034h17.794"></path>
+          <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path>
+        </svg>
+        <span id="cart-badge-count" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#581825] text-[9px] font-semibold text-white">0</span>
+      </button>
+
+      <a aria-label="Account" href="../../account/" class="hidden sm:grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Bottom Tier: Desktop Navigation Menu -->
+  <nav aria-label="Main" class="hidden justify-center gap-8 pb-3.5 lg:flex border-t border-[#E5DFD5]/60 pt-2.5">
+    <a href="../../shop/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">SHOP</a>
+<a href="../../collections/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#2E2C29] font-medium transition-colors">COLLECTIONS</a>
+<a href="../../about/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">ABOUT</a>
+<a href="../../blog/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">JOURNAL</a>
+<a href="../../appointment/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">BOOK APPOINTMENT</a>
+<a href="../../custom-order/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">CUSTOM ORDER</a>
+<a href="../../contact/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">CONTACT</a>
+
+  </nav>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div id="mobile-nav-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden">
+  <div class="fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-[#FAF7F2] p-6 shadow-2xl flex flex-col justify-between transform -translate-x-full transition-transform duration-300" id="mobile-drawer-panel">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-[#E5DFD5]">
+        <span class="font-display tracking-[0.25em] uppercase text-lg text-[#581825]">HOUSE OF JEWELUX</span>
+        <button onclick="toggleMobileMenu()" class="p-2 text-[#736E65] hover:text-[#2E2C29]" aria-label="Close menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <nav class="mt-8 flex flex-col space-y-4">
+        <a href="../../" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Home</a>
+        <a href="../../shop/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Shop All Jewellery</a>
+        <a href="../../collections/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Collections</a>
+        <a href="../../about/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Our Story &amp; Craft</a>
+        <a href="../../blog/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">The Journal</a>
+        <a href="../../appointment/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Book Appointment</a>
+        <a href="../../custom-order/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Custom Order</a>
+        <a href="../../contact/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Contact Us</a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-[#E5DFD5] space-y-3 text-xs text-[#736E65]">
+      <p class="flex items-center gap-2"><span class="font-medium">WhatsApp:</span> +91 63770 61020</p>
+      <p class="flex items-center gap-2"><span class="font-medium">Jaipur Atelier:</span> Rajasthan, India</p>
+      <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" class="block w-full py-2.5 text-center text-xs tracking-widest uppercase bg-[#581825] text-white rounded-sm">Message Concierge</a>
+    </div>
+  </div>
+</div>
+
+
+  <main id="main">
+    
+        <div class="container-luxe py-14 text-center md:py-20 border-b border-[#E5DFD5]">
+          <p class="eyebrow text-[#3B0D16]">LIGHT, HELD STILL</p>
+          <h1 class="mt-3 text-4xl sm:text-5xl md:text-6xl font-display font-light">Diamond Collection</h1>
+          <p class="mt-4 max-w-xl mx-auto text-sm leading-relaxed text-[#736E65]">Precision-set stones in open galleries, so brilliance comes from the cut and setting rather than ostentation.</p>
+        </div>
+
+        <div class="container-luxe py-12 md:py-16">
+          <div class="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" id="collection-grid-diamond">
+            <!-- Loaded dynamically from data.js based on category/collection -->
+          </div>
+          <div class="mt-12 text-center">
+            <a href="../../shop/" class="inline-block rounded-sm border border-[#581825] px-8 py-3.5 text-[0.7rem] tracking-[0.22em] uppercase text-[#581825] transition-colors hover:bg-[#581825] hover:text-white">
+              Explore All 50 Pieces
+            </a>
+          </div>
+        </div>
+        
+  </main>
+
+  <footer class="mt-24 border-t border-[#E5DFD5] bg-[#F3EFE8]/70">
+  <div class="container-luxe grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-5">
+    <!-- Col 1: Brand & Letter -->
+    <div class="lg:col-span-2">
+      <p class="font-display text-2xl tracking-[0.22em] uppercase text-[#581825]">HOUSE OF JEWELUX</p>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-[#736E65]">
+        Royal heritage, modern brilliance. Fine Indian temple jewellery, sacred artistry, and 925 sterling silver finished by hand in Jaipur, priced to be worn rather than stored in a safe.
+      </p>
+      <form class="mt-8 max-w-sm" onsubmit="event.preventDefault(); alert('Thank you for joining The Jewelux Circle.');">
+        <label for="footer-newsletter" class="eyebrow text-[#3B0D16]">The Jewelux Letter</label>
+        <div class="mt-3 flex gap-2">
+          <input id="footer-newsletter" type="email" required placeholder="Your email address" class="min-w-0 flex-1 border-b border-[#E5DFD5] bg-transparent py-2 text-sm focus:border-[#C5A059] focus:outline-none text-[#2E2C29]">
+          <button type="submit" class="shrink-0 rounded-sm bg-[#581825] px-5 py-2 text-[0.65rem] tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-90">Join</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Col 2: Shop -->
+    <nav aria-label="Shop">
+      <h3 class="eyebrow text-[#3B0D16]">Shop</h3>
+      <ul class="mt-4 space-y-3 text-sm text-[#736E65]">
+        <li><a href="../../shop/" class="link-underline transition-colors hover:text-[#2E2C29]">All Jewellery</a></li>
+        <li><a href="../../collections/" class="link-underline transition-colors hover:text-[#2E2C29]">Collections</a></li>
+        <li><a href="../../collections/gold/" class="link-underline transition-colors hover:text-[#2E2C29]">Gold Heritage</a></li>
+        <li><a href="../../collections/silver/" class="link-underline transition-colors hover:text-[#2E2C29]">The Jewelux Silver</a></li>
+        <li><a href="../../wishlist/" class="link-underline transition-colors hover:text-[#2E2C29]">Wishlist</a></li>
+        <li><a href="../../cart/" class="link-underline transition-colors hover:text-[#2E2C29]">Cart</a></li>
+      </ul>
+    </nav>
+
+    <!-- Col 3: Client Care -->
+    <nav aria-label="Client Care">
+      <h3 class="eyebrow text-[#3B0D16]">Client Care</h3>
+      <ul class="mt-4 space-y-3 text-sm text-[#736E65]">
+        <li><a href="../../faq/" class="link-underline transition-colors hover:text-[#2E2C29]">FAQ</a></li>
+        <li><a href="../../shipping/" class="link-underline transition-colors hover:text-[#2E2C29]">Shipping Policy</a></li>
+        <li><a href="../../returns/" class="link-underline transition-colors hover:text-[#2E2C29]">Returns &amp; Exchange</a></li>
+        <li><a href="../../appointment/" class="link-underline transition-colors hover:text-[#2E2C29]">Book an Appointment</a></li>
+        <li><a href="../../custom-order/" class="link-underline transition-colors hover:text-[#2E2C29]">Custom Order</a></li>
+      </ul>
+    </nav>
+
+    <!-- Col 4: House -->
+    <nav aria-label="House">
+      <h3 class="eyebrow text-[#3B0D16]">House</h3>
+      <ul class="mt-4 space-y-3 text-sm text-[#736E65]">
+        <li><a href="../../about/" class="link-underline transition-colors hover:text-[#2E2C29]">Our Story &amp; Craft</a></li>
+        <li><a href="../../blog/" class="link-underline transition-colors hover:text-[#2E2C29]">The Journal</a></li>
+        <li><a href="../../contact/" class="link-underline transition-colors hover:text-[#2E2C29]">Contact Us</a></li>
+        <li><a href="../../privacy/" class="link-underline transition-colors hover:text-[#2E2C29]">Privacy Policy</a></li>
+        <li><a href="../../terms/" class="link-underline transition-colors hover:text-[#2E2C29]">Terms of Service</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Bottom Salon Address & Social Bar -->
+  <div class="container-luxe grid gap-4 border-t border-[#E5DFD5] py-8 text-xs text-[#736E65] md:grid-cols-2">
+    <ul class="space-y-2">
+      <li class="flex items-start gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>Jaipur Atelier &amp; Salon: Rajasthan, India • Founder &amp; Creative Director: Yuvraj Soni</span>
+      </li>
+      <li class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg>
+        <a class="link-underline" href="tel:+916377061020">+91 63770 61020 (Direct &amp; WhatsApp)</a>
+      </li>
+      <li class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+        <a class="link-underline" href="mailto:houseofjewelux@gmail.com">houseofjewelux@gmail.com</a>
+      </li>
+    </ul>
+
+    <div class="flex flex-col gap-4 md:items-end">
+      <div class="flex gap-3">
+        <a href="https://instagram.com/houseofjewelux" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-full border border-[#E5DFD5] transition-colors hover:border-[#C5A059] hover:text-[#581825]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+        </a>
+        <a href="https://facebook.com/houseofjewelux" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="grid h-9 w-9 place-items-center rounded-full border border-[#E5DFD5] transition-colors hover:border-[#C5A059] hover:text-[#581825]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="grid h-9 w-9 place-items-center rounded-full border border-[#E5DFD5] transition-colors hover:border-[#C5A059] hover:text-[#581825]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </a>
+      </div>
+      <p>India &amp; Global Currencies (₹ INR, $ USD, € EUR, £ GBP, د.إ AED) • Secure Insured Delivery</p>
+      <p>&copy; 2026 HOUSE OF JEWELUX. All rights reserved. Indian Temple Artistry &amp; 925 Sterling Silver.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Concierge Pill -->
+<a href="https://wa.me/916377061020?text=Hello%20HOUSE%20OF%20JEWELUX%2C%20I'd%20like%20to%20enquire%20about%20your%20jewellery%20collections." target="_blank" rel="noopener noreferrer" class="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-[#581825] px-4 py-3 text-white shadow-lift transition-transform duration-300 hover:scale-105 focus-visible:scale-105 border border-[#F2E7D3]/40">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+  <span class="text-[0.7rem] tracking-[0.18em] uppercase font-semibold">WhatsApp Us</span>
+</a>
+
+
+  <script src="../../data.js?v=master_v2"></script>
+  <script src="../../app.js?v=lovable_app_v1"></script>
+</body>
+</html>
