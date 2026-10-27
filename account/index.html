@@ -49,136 +49,153 @@
     </div>
 
     <!-- Center: Brand Logo Lockup -->
+    <!-- Center: Official Brand Logo Lockup -->
     <div class="flex justify-center">
-      <a aria-label="HOUSE OF JEWELUX" class="group inline-flex flex-col items-center leading-none" href="../">
-        <span class="font-display text-[0.62rem] tracking-[0.42em] text-[#736E65] uppercase">HOUSE OF</span>
-        <span class="font-display uppercase tracking-[0.28em] text-[#581825] transition-colors group-hover:text-[#3B0D16] text-xl sm:text-2xl font-normal">JEWELUX</span>
-        <span class="hairline mt-1 max-w-[6.5rem] opacity-70"></span>
+      <a aria-label="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" class="inline-flex items-center justify-center py-0.5 group" href="../../">
+        <img src="../../brand-identity/house_of_jewelux_horizontal_logo_transparent.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" class="h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]">
       </a>
     </div>
-
-    <!-- Right: Currency, Wishlist, Cart, Account -->
-    <nav aria-label="Account and cart" class="flex items-center justify-end gap-1 sm:gap-2">
-      <!-- Currency Selector -->
-      <div class="flex items-center border border-[#E5DFD5] rounded-sm px-2 py-1 bg-[#FCFAF7] mr-1">
-        <select id="global-currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-[0.7rem] tracking-wider uppercase font-medium text-[#2E2C29] outline-none cursor-pointer">
-          <option value="INR" selected>INR (₹)</option>
-          <option value="USD">USD ($)</option>
-          <option value="EUR">EUR (€)</option>
-          <option value="GBP">GBP (£)</option>
-          <option value="AED">AED (د.إ)</option>
-        </select>
-      </div>
-
-      <a aria-label="Wishlist" href="../wishlist/" class="relative grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
-        </svg>
-        <span id="wishlist-badge-count" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#581825] text-[9px] font-semibold text-white">0</span>
-      </a>
-
-      <button onclick="toggleCartDrawer()" aria-label="Cart" class="relative grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
-          <path d="M3.103 6.034h17.794"></path>
-          <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path>
-        </svg>
-        <span id="cart-badge-count" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#581825] text-[9px] font-semibold text-white">0</span>
-      </button>
-
-      <a aria-label="Account" href="../account/" class="hidden sm:grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </a>
-    </nav>
-  </div>
-
-  <!-- Bottom Tier: Desktop Navigation Menu -->
-  <nav aria-label="Main" class="hidden justify-center gap-8 pb-3.5 lg:flex border-t border-[#E5DFD5]/60 pt-2.5">
-    <a href="../shop/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">SHOP</a>
-<a href="../collections/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">COLLECTIONS</a>
-<a href="../about/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">ABOUT</a>
-<a href="../blog/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">JOURNAL</a>
-<a href="../appointment/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">BOOK APPOINTMENT</a>
-<a href="../custom-order/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">CUSTOM ORDER</a>
-<a href="../contact/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">CONTACT</a>
-
-  </nav>
-</header>
-
-<!-- Mobile Navigation Drawer -->
-<div id="mobile-nav-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden">
-  <div class="fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-[#FAF7F2] p-6 shadow-2xl flex flex-col justify-between transform -translate-x-full transition-transform duration-300" id="mobile-drawer-panel">
-    <div>
-      <div class="flex items-center justify-between pb-6 border-b border-[#E5DFD5]">
-        <span class="font-display tracking-[0.25em] uppercase text-lg text-[#581825]">HOUSE OF JEWELUX</span>
-        <button onclick="toggleMobileMenu()" class="p-2 text-[#736E65] hover:text-[#2E2C29]" aria-label="Close menu">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-      <nav class="mt-8 flex flex-col space-y-4">
-        <a href="../" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Home</a>
-        <a href="../shop/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Shop All Jewellery</a>
-        <a href="../collections/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Collections</a>
-        <a href="../about/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Our Story &amp; Craft</a>
-        <a href="../blog/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">The Journal</a>
-        <a href="../appointment/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Book Appointment</a>
-        <a href="../custom-order/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Custom Order</a>
-        <a href="../contact/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Contact Us</a>
-      </nav>
-    </div>
-    <div class="pt-6 border-t border-[#E5DFD5] space-y-3 text-xs text-[#736E65]">
-      <p class="flex items-center gap-2"><span class="font-medium">WhatsApp:</span> +91 63770 61020</p>
-      <p class="flex items-center gap-2"><span class="font-medium">Jaipur Atelier:</span> Rajasthan, India</p>
-      <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" class="block w-full py-2.5 text-center text-xs tracking-widest uppercase bg-[#581825] text-white rounded-sm">Message Concierge</a>
-    </div>
-  </div>
 </div>
 
 
-  <main id="main">
-    
-    <div class="container-luxe py-14 text-center md:py-20 border-b border-[#E5DFD5]">
-      <p class="eyebrow text-[#3B0D16]">Client Portal</p>
-      <h1 class="mt-3 text-4xl sm:text-5xl md:text-6xl font-display font-light">My Account</h1>
-      <p class="mt-4 max-w-xl mx-auto text-sm leading-relaxed text-[#736E65]">
-        Track your custom commissions, saved pieces, and private salon appointments.
+    <main id="main">
+    <div class="container-luxe py-12 text-center md:py-16 border-b border-[#E5DFD5]">
+      <p class="eyebrow text-[#3B0D16]">The Jewelux Circle</p>
+      <h1 class="mt-2 text-3xl sm:text-4xl md:text-5xl font-display font-light">Client Sanctuary &amp; Loyalty Wallet</h1>
+      <p class="mt-3 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed text-[#736E65]">
+        Track your fine silver orders, exclusive VIP rewards, celebratory privileges, and bespoke salon commissions.
       </p>
     </div>
 
-    <div class="container-luxe max-w-xl py-12 md:py-16">
-      <div class="rounded-sm border border-[#E5DFD5] bg-[#FCFAF7] p-8 shadow-sm text-center space-y-6">
-        <div class="w-16 h-16 mx-auto rounded-full bg-[#F3EFE8] flex items-center justify-center text-[#581825]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    <div class="container-luxe max-w-4xl py-12">
+      <!-- 1. Logged In Portal View -->
+      <div id="account-portal-view" class="space-y-8">
+        <!-- Client Header Card -->
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 sm:p-8 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4 text-center sm:text-left">
+            <div class="w-16 h-16 rounded-full bg-[#581825] text-[#C5A059] flex items-center justify-center font-serif text-2xl font-bold border-2 border-[#C5A059]">
+              HJ
+            </div>
+            <div>
+              <div class="flex items-center gap-2 justify-center sm:justify-start">
+                <h2 id="client-name" class="font-serif text-xl sm:text-2xl font-semibold text-[#581825]">Radhika Singhania</h2>
+                <span id="client-tier-badge" class="px-2.5 py-0.5 rounded-full text-[0.62rem] font-medium tier-badge-gold">Gold Collector</span>
+              </div>
+              <p id="client-phone-email" class="text-xs text-[#736E65] mt-1">+91 98201 44521 • radhika@example.com</p>
+              <p class="text-[0.65rem] text-emerald-700 flex items-center gap-1 mt-1 justify-center sm:justify-start">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                WhatsApp White-Glove Updates Active
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-col sm:items-end gap-2 text-center sm:text-right">
+            <span class="text-[0.65rem] tracking-widest uppercase text-[#736E65]">Jewelux Reward Balance</span>
+            <span id="client-points" class="font-serif text-2xl font-bold text-[#581825]">1,250 Points</span>
+            <span class="text-[0.62rem] text-[#736E65]">Worth ₹1,250 on your next fine silver acquisition</span>
+          </div>
         </div>
-        <h2 class="text-2xl font-serif text-[#2E2C29]">Welcome to House of Jewelux</h2>
-        <p class="text-xs text-[#736E65] leading-relaxed">
-          Orders are fulfilled via our White-Glove Concierge service with full door-to-door insurance. To trace an active bespoke commission, enter your mobile number or contact Yuvraj Soni and the concierge team directly.
-        </p>
-        <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" class="inline-block w-full rounded-sm bg-[#581825] py-3 text-[0.7rem] tracking-[0.22em] uppercase text-white font-semibold">
-          Connect With Personal Concierge
-        </a>
+
+        <!-- Birthday & Referral Banners -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Birthday Card -->
+          <div class="bg-[#FCFAF7] border border-[#C5A059] rounded-lg p-5 flex items-start gap-4 shadow-sm">
+            <div class="text-2xl">🎂</div>
+            <div class="space-y-1">
+              <h3 class="font-serif text-sm font-semibold text-[#581825]">Annual Celebration Privilege</h3>
+              <p class="text-xs text-[#736E65]">Enjoy a <strong>20% Birthday Privilege</strong> across our entire 50-piece 925 silver catalogue.</p>
+              <div class="pt-1 flex items-center gap-2">
+                <span class="font-mono text-xs bg-[#581825] text-white px-2 py-0.5 rounded font-semibold tracking-wider">JEWELUX20</span>
+                <span class="text-[0.65rem] text-[#8C6D37]">Valid in birthday month</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referral Card -->
+          <div class="bg-[#FCFAF7] border border-[#E5DFD5] rounded-lg p-5 flex items-start gap-4 shadow-sm">
+            <div class="text-2xl">👑</div>
+            <div class="space-y-1">
+              <h3 class="font-serif text-sm font-semibold text-[#581825]">Invite a Fellow Connoisseur</h3>
+              <p class="text-xs text-[#736E65]">Give a friend ₹500 off. Receive 500 reward points when they place their first order.</p>
+              <div class="pt-1 flex items-center gap-2">
+                <span id="client-ref-code" class="font-mono text-xs bg-[#F3EFE8] text-[#581825] px-2 py-0.5 rounded border border-[#E5DFD5] font-semibold">JEWELUX-VIP500</span>
+                <button onclick="shareReferral()" class="text-xs text-[#581825] hover:underline font-medium">Share via WhatsApp &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders History Section -->
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#E5DFD5]">
+            <h3 class="font-serif text-lg font-semibold text-[#581825]">Your Atelier Acquisitions</h3>
+            <span class="text-xs text-[#736E65]">Insured White-Glove Deliveries</span>
+          </div>
+          <div id="client-orders-list" class="space-y-4 divide-y divide-[#E5DFD5]">
+            <!-- Rendered by client script -->
+          </div>
+        </div>
+
+        <div class="text-center pt-4">
+          <button onclick="logoutCustomer()" class="text-xs text-[#736E65] hover:text-[#581825] underline uppercase tracking-wider">
+            Sign Out of The Jewelux Circle
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Registration / Login Form (if no profile) -->
+      <div id="account-login-view" class="hidden max-w-md mx-auto bg-white border border-[#E5DFD5] rounded-lg p-6 sm:p-8 shadow-sm space-y-6 text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-[#FAF7F2] border border-[#C5A059] flex items-center justify-center font-serif text-xl font-bold text-[#581825]">
+          HJ
+        </div>
+        <div>
+          <h2 class="font-serif text-xl font-semibold text-[#2E2C29]">Join The Jewelux Circle</h2>
+          <p class="text-xs text-[#736E65] mt-1">Access orders, bespoke salon appointments, and birthday privileges.</p>
+        </div>
+
+        <form id="customer-auth-form" class="space-y-4 text-left text-xs">
+          <div>
+            <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1 font-medium">Full Name *</label>
+            <input id="auth-name" type="text" required placeholder="e.g. Radhika Singhania" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+          </div>
+          <div>
+            <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1 font-medium">WhatsApp / Mobile *</label>
+            <input id="auth-phone" type="tel" required placeholder="+91 98201 44521" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+          </div>
+          <div>
+            <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1 font-medium">Email Address *</label>
+            <input id="auth-email" type="email" required placeholder="radhika@example.com" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+          </div>
+          <div>
+            <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1 font-medium">Birthday (Month &amp; Day)</label>
+            <input id="auth-birthday" type="text" placeholder="MM-DD (e.g. 11-14)" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+          </div>
+          <label class="flex items-start gap-2 pt-1 cursor-pointer">
+            <input id="auth-consent" type="checkbox" checked class="mt-0.5 rounded text-[#581825]">
+            <span class="text-[0.65rem] text-[#736E65] leading-relaxed">
+              I agree to receive order confirmations, birthday privileges, and private collection previews via WhatsApp in accordance with the DPDP Act 2023.
+            </span>
+          </label>
+          <button type="submit" class="w-full bg-[#581825] text-white py-3 rounded text-xs tracking-widest uppercase font-semibold hover:opacity-90">
+            Access My Client Portal
+          </button>
+        </form>
       </div>
     </div>
-    
   </main>
 
   <footer class="mt-24 border-t border-[#E5DFD5] bg-[#F3EFE8]/70">
   <div class="container-luxe grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-5">
-    <!-- Col 1: Brand & Letter -->
+        <!-- Col 1: Brand & Letter -->
     <div class="lg:col-span-2">
-      <p class="font-display text-2xl tracking-[0.22em] uppercase text-[#581825]">HOUSE OF JEWELUX</p>
+      <div class="mb-4">
+        <img src="../../brand-identity/house_of_jewelux_official_logo_transparent.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" class="h-16 w-auto object-contain">
+      </div>
+      <p class="font-display text-xl tracking-[0.22em] uppercase text-[#581825] font-semibold">HOUSE OF JEWELUX</p>
+      <p class="text-[0.62rem] tracking-[0.32em] uppercase text-[#8C6D37] mt-0.5 font-medium">WHERE ELEGANCE BECOMES ETERNAL</p>
       <p class="mt-4 max-w-sm text-sm leading-relaxed text-[#736E65]">
         Royal heritage, modern brilliance. Fine Indian temple jewellery, sacred artistry, and 925 sterling silver finished by hand in Jaipur, priced to be worn rather than stored in a safe.
       </p>
-      <form class="mt-8 max-w-sm" onsubmit="event.preventDefault(); alert('Thank you for joining The Jewelux Circle.');">
-        <label for="footer-newsletter" class="eyebrow text-[#3B0D16]">The Jewelux Letter</label>
-        <div class="mt-3 flex gap-2">
-          <input id="footer-newsletter" type="email" required placeholder="Your email address" class="min-w-0 flex-1 border-b border-[#E5DFD5] bg-transparent py-2 text-sm focus:border-[#C5A059] focus:outline-none text-[#2E2C29]">
-          <button type="submit" class="shrink-0 rounded-sm bg-[#581825] px-5 py-2 text-[0.65rem] tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-90">Join</button>
-        </div>
+    </div>
       </form>
     </div>
 
@@ -264,5 +281,110 @@
 
   <script src="../data.js?v=master_v2"></script>
   <script src="../app.js?v=lovable_app_v1"></script>
+
+  <script>
+    function renderCustomerPortal() {
+      let cust = JSON.parse(localStorage.getItem('jewelux_current_user') || 'null');
+      const allCusts = JSON.parse(localStorage.getItem('jewelux_customers') || '[]');
+      if (!cust && allCusts.length) {
+        cust = allCusts[0];
+        localStorage.setItem('jewelux_current_user', JSON.stringify(cust));
+      }
+
+      const portalView = document.getElementById('account-portal-view');
+      const loginView = document.getElementById('account-login-view');
+
+      if (!cust) {
+        if (portalView) portalView.classList.add('hidden');
+        if (loginView) loginView.classList.remove('hidden');
+        return;
+      }
+
+      if (portalView) portalView.classList.remove('hidden');
+      if (loginView) loginView.classList.add('hidden');
+
+      // Populate user info
+      document.getElementById('client-name').textContent = cust.name;
+      document.getElementById('client-phone-email').textContent = `${cust.phone} • ${cust.email}`;
+      document.getElementById('client-tier-badge').textContent = cust.tier || 'Silver Connoisseur';
+      document.getElementById('client-points').textContent = `${(cust.points || 500).toLocaleString('en-IN')} Points`;
+      document.getElementById('client-ref-code').textContent = cust.referralCode || 'JEWELUX-VIP500';
+
+      // Populate orders
+      const orders = JSON.parse(localStorage.getItem('jewelux_orders') || '[]');
+      const ordContainer = document.getElementById('client-orders-list');
+      if (ordContainer) {
+        if (!orders.length) {
+          ordContainer.innerHTML = '<p class="text-xs text-[#736E65] py-4">No acquisitions placed yet. Your orders will appear here automatically.</p>';
+        } else {
+          ordContainer.innerHTML = orders.map(o => `
+            <div class="pt-4 first:pt-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-medium text-[#581825]">${o.id}</span>
+                  <span class="text-[#736E65]">• ${o.date}</span>
+                  <span class="px-2 py-0.5 rounded text-[0.6rem] bg-emerald-100 text-emerald-800 font-medium">${o.status}</span>
+                </div>
+                <p class="font-serif text-sm font-medium text-[#2E2C29] mt-1">${o.items.map(i => i.name).join(', ')}</p>
+                <p class="text-[#736E65] text-[0.65rem] mt-0.5">Valuation: ₹${o.total.toLocaleString('en-IN')} • Mode: ${o.paymentMethod}</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="window.printInvoice('${o.id}')" class="bg-[#FAF7F2] border border-[#E5DFD5] hover:border-[#581825] px-3 py-1.5 rounded text-[0.65rem] uppercase tracking-wider font-semibold text-[#581825]">
+                  Invoice
+                </button>
+                <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello Concierge, I would like an update on my order ' + o.id)}" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] text-white px-3 py-1.5 rounded text-[0.65rem] uppercase tracking-wider font-semibold">
+                  Track
+                </a>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    document.getElementById('customer-auth-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('auth-name').value.trim();
+      const phone = document.getElementById('auth-phone').value.trim();
+      const email = document.getElementById('auth-email').value.trim();
+      const birthday = document.getElementById('auth-birthday').value.trim();
+      const consent = document.getElementById('auth-consent').checked;
+
+      const newCust = {
+        name,
+        phone,
+        email,
+        birthday,
+        whatsappOptIn: consent,
+        totalSpendINR: 0,
+        ordersCount: 0,
+        tier: 'Silver Connoisseur',
+        points: 500, // 500 bonus welcome points
+        referralCode: 'JEWELUX-' + name.split(' ')[0].toUpperCase() + '500'
+      };
+
+      const existingCusts = JSON.parse(localStorage.getItem('jewelux_customers') || '[]');
+      existingCusts.unshift(newCust);
+      localStorage.setItem('jewelux_customers', JSON.stringify(existingCusts));
+      localStorage.setItem('jewelux_current_user', JSON.stringify(newCust));
+
+      renderCustomerPortal();
+    });
+
+    function logoutCustomer() {
+      localStorage.removeItem('jewelux_current_user');
+      renderCustomerPortal();
+    }
+
+    function shareReferral() {
+      const cust = JSON.parse(localStorage.getItem('jewelux_current_user') || '{}');
+      const code = cust.referralCode || 'JEWELUX-VIP500';
+      const msg = `Namaste! I invite you to discover House of Jewelux — Indian Fine Silver & Temple Jewellery. Use my VIP privilege code *${code}* to enjoy ₹500 off your first handcrafted piece: https://houseofjewelux.com/`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCustomerPortal);
+  </script>
+
 </body>
 </html>

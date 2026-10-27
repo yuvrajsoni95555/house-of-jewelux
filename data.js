@@ -29,6 +29,39 @@ const JEWELUX_DATA = {
     AED: { symbol: 'AED ', rate: 3.67, label: 'AED (د.إ)' }
   },
 
+  coupons: {
+    "FIRSTLUX": { code: "FIRSTLUX", discountPercent: 10, description: "10% Welcome Privilege for First Acquisition" },
+    "DIWALI2026": { code: "DIWALI2026", discountPercent: 15, description: "15% Royal Festive Celebration Privilege" },
+    "JEWELUX20": { code: "JEWELUX20", discountPercent: 20, description: "20% Exclusive VIP Patron & Birthday Privilege" },
+    "SILVER500": { code: "SILVER500", flatDiscountINR: 500, description: "₹500 Patron Referral Privilege" }
+  },
+
+  loyaltyTiers: [
+    { id: "silver", name: "Silver Connoisseur", minSpendINR: 0, maxSpendINR: 25000, pointsMultiplier: 1.0, badge: "Silver Patron", perk: "Complimentary Insured Express Delivery & Annual Silver Polishing Service" },
+    { id: "gold", name: "Gold Collector", minSpendINR: 25001, maxSpendINR: 100000, pointsMultiplier: 1.25, badge: "Gold Patron", perk: "Priority Atelier Access, 15% Birthday Privilege & Direct WhatsApp Concierge" },
+    { id: "royal", name: "Royal Patron", minSpendINR: 100001, maxSpendINR: 999999999, pointsMultiplier: 1.5, badge: "Royal Sovereign", perk: "Private Jaipur Atelier Viewing, Bespoke Custom Commissions & 20% Celebration Privilege" }
+  ],
+
+  aiKnowledge: {
+    assistantName: "Aria",
+    assistantTitle: "Senior Gemological & Styling Concierge",
+    intro: "Namaste! Welcome to House of Jewelux. I am Aria, your personal gemological and jewellery styling assistant. How may I assist your acquisition today?",
+    occasions: {
+      wedding: "For bridal celebrations and royal weddings, we recommend our Temple Nakshi Heritage choker suites, uncut Moissanite chandbalis, and antique filigree kadas crafted in 925 silver with liquid micron gold.",
+      sangeet: "For Sangeet and festive evenings, choose pieces with kinetic light: our dancing peacock jhumkas, multi-layer pearl haar strings, and brilliant cocktail rings.",
+      office: "For daily poise, explore our floating moissanite solitaire pendants, sleek comfort-fit eternity bands, and minimal silver cuffs with anti-tarnish rhodium finish.",
+      gifting: "Fine silver jewellery is the ultimate auspicious gift. We recommend our Celestial Radiance 925 Solitaire Ring, Amore Couple Bands, or Peacock Lapel Pin, accompanied by a luxury velvet box and BIS Hallmark Certificate."
+    },
+    silverCare: [
+      "Keep away from direct contact with perfumes, hairsprays, and harsh cosmetics.",
+      "Store individually in the provided House of Jewelux airtight anti-tarnish velvet pouches.",
+      "Wipe gently with the microfiber polishing cloth provided with every acquisition.",
+      "Our pieces feature liquid rhodium and micron gold plating for superior anti-tarnish protection.",
+      "Complimentary lifetime inspection and professional cleaning at our Jaipur salon."
+    ],
+    hallmarkGuarantee: "Every silver creation at House of Jewelux is crafted from solid 92.5% pure silver, alloyed exclusively with copper and zinc (100% nickel-free and hypoallergenic), stamped with the official Bureau of Indian Standards (BIS) 925 Hallmark."
+  },
+
                                     categories: [
     { id: 'all', name: 'All Silver Jewels', hash: '#shop', url: '/shop', subtitle: 'BIS Hallmarked 925 Sterling Silver', icon: '✦', isPrimary: false },
     { id: 'temple-jewellery', alias: ['temple-heritage', 'sacred-artistry'], name: 'Temple Jewellery', hash: '#temple-jewellery', url: '/shop?cat=temple-jewellery', subtitle: 'Sacred Artistry & Traditional Nakshi in Silver', icon: '🛕', isPrimary: true },
@@ -39,9 +72,7 @@ const JEWELUX_DATA = {
     { id: 'micron-gold', name: 'Micron Gold Plated', hash: '#micron-gold', url: '/shop?cat=micron-gold', subtitle: 'Solid 925 Silver with 18K/22K Micro Gold Plating', icon: '⚜️', isPrimary: false },
     { id: 'silver-jewellery', name: 'Rhodium Silver', hash: '#silver-jewellery', url: '/shop?cat=silver-jewellery', subtitle: 'Solid 925 Silver with Anti-Tarnish Rhodium', icon: '⚪', isPrimary: false },
     { id: 'diamond-jewellery', name: 'Diamond & Moissanite', hash: '#diamond-jewellery', url: '/shop?cat=diamond-jewellery', subtitle: 'Certified Solitaires & Pavé Set in 925 Silver', icon: '✨', isPrimary: false },
-    { id: 'heritage-jewellery', name: 'Heritage Jewellery', hash: '#heritage-jewellery', url: '/shop?cat=heritage-jewellery', subtitle: 'Generational Indian Silver Heirlooms', icon: '👑', isPrimary: false },
-    { id: 'bespoke-jewellery', name: 'Bespoke / Custom', hash: '#bespoke-studio', url: '/#bespoke-studio', subtitle: 'Private Atelier Silver Commissions', icon: '🛠️', isPrimary: false }
-  ],
+    { id: 'heritage-jewellery', name: 'Heritage Jewellery', hash: '#heritage-jewellery', url: '/shop?cat=heritage-jewellery', subtitle: 'Generational Indian Silver Heirlooms', icon: '👑', isPrimary: false }],
 
   collections: [
     {
@@ -1694,47 +1725,6 @@ const JEWELUX_DATA = {
     returns: "We offer an unconditional 14-day return guarantee. If your piece does not evoke absolute wonder upon opening the jewel box, contact our WhatsApp Concierge for complimentary insured pickup and a 100% full refund.",
     authenticity: "Zero fake claims covenant: Every piece is accompanied by stamped hallmarking (925 for silver, BIS 750/916 for gold) and specialist authenticity inspection. We never use base metals or faux plastic stones."
   },
-
-  bespokeStudio: {
-    metals: [
-      { id: 'micro-gold', name: 'Solid 925 Silver (Micron Gold Plated)', color: '#DECCA8', specular: '#FFF8EC', priceBase: 106, isSilver: true },
-      { id: 'rhodium-silver', name: 'Solid 925 Silver (Anti-Tarnish Rhodium)', color: '#E8EBF0', specular: '#FFFFFF', priceBase: 93, isSilver: true },
-      { id: 'rose-gold', name: 'Solid 925 Silver (Micron Rose Gold)', color: '#E5B299', specular: '#FFEAE0', priceBase: 106, isSilver: true },
-      { id: 'antique-gold', name: 'Solid 925 Silver (Antique Heritage Gold)', color: '#C99A45', specular: '#FFF8EC', priceBase: 114, isSilver: true },
-      // Backward-compatible aliases
-      { id: 'liquid-silver', name: 'Solid 925 Silver (Anti-Tarnish Rhodium)', color: '#E8EBF0', specular: '#FFFFFF', priceBase: 93, isSilver: true },
-      { id: 'yellow-gold', name: 'Solid 925 Silver (Micron Gold Plated)', color: '#DECCA8', specular: '#FFF8EC', priceBase: 106, isSilver: true }
-    ],
-    gems: [
-      { id: 'diamond', name: 'Certified Lab Diamond', color: '#FFFFFF', dispersion: 0.044, pricePerCarat: 54 },
-      { id: 'ruby', name: 'Burma Ruby (Pigeon Blood)', color: '#9E1224', dispersion: 0.038, pricePerCarat: 48 },
-      { id: 'emerald', name: 'Colombian Emerald', color: '#0A7A50', dispersion: 0.044, pricePerCarat: 52 },
-      { id: 'sapphire', name: 'Royal Ceylon Sapphire', color: '#123680', dispersion: 0.040, pricePerCarat: 50 },
-      { id: 'moissanite', name: 'D-Flawless Moissanite (Certified)', color: '#FFFFFF', dispersion: 0.104, pricePerCarat: 26 },
-      { id: 'solitaire-vvs', name: 'VVS Solitaire (Fine White)', color: '#FFFFFF', dispersion: 0.040, pricePerCarat: 38 },
-      { id: 'champagne-solitaire', name: 'Vintage Champagne Solitaire', color: '#F7E7CE', dispersion: 0.038, pricePerCarat: 34 }
-    ],
-    cuts: [
-      { id: 'round', name: 'Round Brilliant', ratio: 1.0 },
-      { id: 'princess', name: 'Princess', ratio: 1.0 },
-      { id: 'oval', name: 'Oval', ratio: 1.08 },
-      { id: 'emerald-cut', name: 'Emerald Cut', ratio: 1.15 },
-      { id: 'radiant', name: 'Radiant Cut', ratio: 1.14 },
-      { id: 'heart', name: 'Heart', ratio: 1.10 },
-      { id: 'asscher', name: 'Asscher Cut', ratio: 1.05 },
-      { id: 'marquise', name: 'Marquise', ratio: 1.20 },
-      { id: 'pear', name: 'Pear / Teardrop', ratio: 1.12 },
-      { id: 'cushion', name: 'Cushion', ratio: 1.06 },
-      { id: 'elongated-cushion', name: 'Elongated Cushion', ratio: 1.12 },
-      { id: 'hexagonal', name: 'Hexagonal', ratio: 1.10 }
-    ],
-    carats: [
-      { weight: 1.0, label: '1.00 Carat' },
-      { weight: 1.75, label: '1.75 Carat' },
-      { weight: 2.5, label: '2.50 Carat (Flagship)' },
-      { weight: 4.0, label: '4.00 Carat (Statement)' }
-    ]
-  },
   hi: {
     announcement: "द ज्वेलक्स कलेक्शन 2026 — 925 हॉलमार्क फाइन सिल्वर और एंटी-टार्निश रोडियम • मुफ़्त बीमाकृत डिलीवरी",
     nav_all: "सभी गहने",
@@ -1743,7 +1733,6 @@ const JEWELUX_DATA = {
     nav_gold: "रॉयल गोल्ड वॉल्ट",
     nav_craftsmanship: "कारीगरी",
     nav_about: "हमारे बारे में",
-    nav_bespoke: "3D रिंग स्टूडियो",
     nav_studio: "फाउंडर स्टूडियो",
     cta_add_bag: "बैग में जोड़ें",
     cta_acquire_now: "अभी खरीदें",
@@ -1763,7 +1752,6 @@ const JEWELUX_DATA = {
     nav_gold: "Le Coffre d'Or",
     nav_craftsmanship: "Savoir-Faire",
     nav_about: "Maison",
-    nav_bespoke: "Studio 3D Sur-Mesure",
     nav_studio: "Studio Fondateur",
     cta_add_bag: "Ajouter au Panier",
     cta_acquire_now: "Acquérir",
@@ -1783,7 +1771,6 @@ const JEWELUX_DATA = {
     nav_gold: "Il Caveau d'Oro",
     nav_craftsmanship: "Artigianato",
     nav_about: "La Maison",
-    nav_bespoke: "Studio 3D su Misura",
     nav_studio: "Studio Fondatore",
     cta_add_bag: "Aggiungi al Carrello",
     cta_acquire_now: "Acquista Ora",

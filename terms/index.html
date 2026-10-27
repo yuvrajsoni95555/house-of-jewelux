@@ -49,92 +49,12 @@
     </div>
 
     <!-- Center: Brand Logo Lockup -->
+    <!-- Center: Official Brand Logo Lockup -->
     <div class="flex justify-center">
-      <a aria-label="HOUSE OF JEWELUX" class="group inline-flex flex-col items-center leading-none" href="../">
-        <span class="font-display text-[0.62rem] tracking-[0.42em] text-[#736E65] uppercase">HOUSE OF</span>
-        <span class="font-display uppercase tracking-[0.28em] text-[#581825] transition-colors group-hover:text-[#3B0D16] text-xl sm:text-2xl font-normal">JEWELUX</span>
-        <span class="hairline mt-1 max-w-[6.5rem] opacity-70"></span>
+      <a aria-label="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" class="inline-flex items-center justify-center py-0.5 group" href="../../">
+        <img src="../../brand-identity/house_of_jewelux_horizontal_logo_transparent.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" class="h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]">
       </a>
     </div>
-
-    <!-- Right: Currency, Wishlist, Cart, Account -->
-    <nav aria-label="Account and cart" class="flex items-center justify-end gap-1 sm:gap-2">
-      <!-- Currency Selector -->
-      <div class="flex items-center border border-[#E5DFD5] rounded-sm px-2 py-1 bg-[#FCFAF7] mr-1">
-        <select id="global-currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-[0.7rem] tracking-wider uppercase font-medium text-[#2E2C29] outline-none cursor-pointer">
-          <option value="INR" selected>INR (₹)</option>
-          <option value="USD">USD ($)</option>
-          <option value="EUR">EUR (€)</option>
-          <option value="GBP">GBP (£)</option>
-          <option value="AED">AED (د.إ)</option>
-        </select>
-      </div>
-
-      <a aria-label="Wishlist" href="../wishlist/" class="relative grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
-        </svg>
-        <span id="wishlist-badge-count" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#581825] text-[9px] font-semibold text-white">0</span>
-      </a>
-
-      <button onclick="toggleCartDrawer()" aria-label="Cart" class="relative grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
-          <path d="M3.103 6.034h17.794"></path>
-          <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path>
-        </svg>
-        <span id="cart-badge-count" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#581825] text-[9px] font-semibold text-white">0</span>
-      </button>
-
-      <a aria-label="Account" href="../account/" class="hidden sm:grid h-10 w-10 place-items-center text-[#2E2C29] hover:text-[#581825] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </a>
-    </nav>
-  </div>
-
-  <!-- Bottom Tier: Desktop Navigation Menu -->
-  <nav aria-label="Main" class="hidden justify-center gap-8 pb-3.5 lg:flex border-t border-[#E5DFD5]/60 pt-2.5">
-    <a href="../shop/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">SHOP</a>
-<a href="../collections/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">COLLECTIONS</a>
-<a href="../about/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">ABOUT</a>
-<a href="../blog/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">JOURNAL</a>
-<a href="../appointment/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">BOOK APPOINTMENT</a>
-<a href="../custom-order/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">CUSTOM ORDER</a>
-<a href="../contact/" class="link-underline text-[0.68rem] tracking-[0.26em] uppercase text-[#736E65] hover:text-[#2E2C29] transition-colors">CONTACT</a>
-
-  </nav>
-</header>
-
-<!-- Mobile Navigation Drawer -->
-<div id="mobile-nav-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden">
-  <div class="fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-[#FAF7F2] p-6 shadow-2xl flex flex-col justify-between transform -translate-x-full transition-transform duration-300" id="mobile-drawer-panel">
-    <div>
-      <div class="flex items-center justify-between pb-6 border-b border-[#E5DFD5]">
-        <span class="font-display tracking-[0.25em] uppercase text-lg text-[#581825]">HOUSE OF JEWELUX</span>
-        <button onclick="toggleMobileMenu()" class="p-2 text-[#736E65] hover:text-[#2E2C29]" aria-label="Close menu">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-      <nav class="mt-8 flex flex-col space-y-4">
-        <a href="../" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Home</a>
-        <a href="../shop/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Shop All Jewellery</a>
-        <a href="../collections/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Collections</a>
-        <a href="../about/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Our Story &amp; Craft</a>
-        <a href="../blog/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">The Journal</a>
-        <a href="../appointment/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Book Appointment</a>
-        <a href="../custom-order/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Custom Order</a>
-        <a href="../contact/" class="text-sm tracking-[0.2em] uppercase text-[#2E2C29] py-2 border-b border-[#E5DFD5]/40">Contact Us</a>
-      </nav>
-    </div>
-    <div class="pt-6 border-t border-[#E5DFD5] space-y-3 text-xs text-[#736E65]">
-      <p class="flex items-center gap-2"><span class="font-medium">WhatsApp:</span> +91 63770 61020</p>
-      <p class="flex items-center gap-2"><span class="font-medium">Jaipur Atelier:</span> Rajasthan, India</p>
-      <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" class="block w-full py-2.5 text-center text-xs tracking-widest uppercase bg-[#581825] text-white rounded-sm">Message Concierge</a>
-    </div>
-  </div>
 </div>
 
 
@@ -158,18 +78,17 @@
 
   <footer class="mt-24 border-t border-[#E5DFD5] bg-[#F3EFE8]/70">
   <div class="container-luxe grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-5">
-    <!-- Col 1: Brand & Letter -->
+        <!-- Col 1: Brand & Letter -->
     <div class="lg:col-span-2">
-      <p class="font-display text-2xl tracking-[0.22em] uppercase text-[#581825]">HOUSE OF JEWELUX</p>
+      <div class="mb-4">
+        <img src="../../brand-identity/house_of_jewelux_official_logo_transparent.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" class="h-16 w-auto object-contain">
+      </div>
+      <p class="font-display text-xl tracking-[0.22em] uppercase text-[#581825] font-semibold">HOUSE OF JEWELUX</p>
+      <p class="text-[0.62rem] tracking-[0.32em] uppercase text-[#8C6D37] mt-0.5 font-medium">WHERE ELEGANCE BECOMES ETERNAL</p>
       <p class="mt-4 max-w-sm text-sm leading-relaxed text-[#736E65]">
         Royal heritage, modern brilliance. Fine Indian temple jewellery, sacred artistry, and 925 sterling silver finished by hand in Jaipur, priced to be worn rather than stored in a safe.
       </p>
-      <form class="mt-8 max-w-sm" onsubmit="event.preventDefault(); alert('Thank you for joining The Jewelux Circle.');">
-        <label for="footer-newsletter" class="eyebrow text-[#3B0D16]">The Jewelux Letter</label>
-        <div class="mt-3 flex gap-2">
-          <input id="footer-newsletter" type="email" required placeholder="Your email address" class="min-w-0 flex-1 border-b border-[#E5DFD5] bg-transparent py-2 text-sm focus:border-[#C5A059] focus:outline-none text-[#2E2C29]">
-          <button type="submit" class="shrink-0 rounded-sm bg-[#581825] px-5 py-2 text-[0.65rem] tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-90">Join</button>
-        </div>
+    </div>
       </form>
     </div>
 

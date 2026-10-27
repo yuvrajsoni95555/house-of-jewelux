@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Admin &amp; CRM Portal — HOUSE OF JEWELUX</title>
+  <link rel="icon" href="../images/house_of_jewelux_official_logo.jpg" type="image/jpeg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Balthazar&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-[#FAF7F2] text-[#2E2C29] antialiased">
+
+  <!-- PIN Protection Gate -->
+  <div id="admin-login-gate" class="fixed inset-0 z-50 bg-[#FAF7F2] flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-[#FCFAF7] border border-[#C5A059] p-8 rounded-lg shadow-2xl text-center space-y-6">
+      <img src="../brand-identity/house_of_jewelux_official_logo_transparent.png" alt="HOUSE OF JEWELUX" class="h-20 w-auto mx-auto object-contain">
+      <div>
+        <h1 class="font-serif text-2xl font-semibold text-[#581825]">Atelier Executive Portal</h1>
+        <p class="text-xs text-[#736E65] mt-1 tracking-widest uppercase">Restricted Administrative Access</p>
+      </div>
+
+      <form id="admin-pin-form" class="space-y-4">
+        <div>
+          <label class="block text-xs uppercase tracking-widest text-[#736E65] mb-2 font-medium">Enter Master Executive PIN</label>
+          <input id="admin-pin-input" type="password" maxlength="8" placeholder="••••" class="w-48 mx-auto text-center tracking-[0.5em] text-2xl font-mono bg-white border border-[#E5DFD5] rounded p-2 focus:outline-none focus:border-[#581825]">
+        </div>
+        <p id="admin-pin-error" class="text-xs text-red-600 hidden font-medium">Invalid Executive PIN. Please try again.</p>
+        <button type="submit" class="w-full bg-[#581825] text-white py-3 rounded text-xs tracking-widest uppercase font-semibold hover:opacity-90">
+          Unlock Executive Dashboard
+        </button>
+      </form>
+      <p class="text-[0.65rem] text-[#736E65]">Default Founder PIN: <strong>1985</strong> • Authorized Jaipur Atelier Staff Only</p>
+    </div>
+  </div>
+
+  <!-- Dashboard Main Workspace -->
+  <div id="admin-dashboard-app" class="hidden min-h-screen flex flex-col">
+    <!-- Top Bar -->
+    <header class="bg-[#581825] text-white border-b border-[#C5A059]/40 sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img src="../brand-identity/house_of_jewelux_horizontal_logo_transparent.png" alt="HOUSE OF JEWELUX" class="h-8 w-auto object-contain brightness-200">
+        <span class="text-xs uppercase tracking-[0.2em] font-semibold text-[#F2E7D3] border-l border-[#C5A059]/40 pl-4 hidden sm:inline">Executive Portal</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../" target="_blank" class="text-xs tracking-wider uppercase text-[#F2E7D3] hover:underline flex items-center gap-1">
+          <span>View Live Store &rarr;</span>
+        </a>
+        <button onclick="adminLogout()" class="bg-[#3B0D16] border border-[#C5A059]/40 hover:bg-[#2A080F] text-xs px-3 py-1.5 rounded uppercase tracking-wider text-white">
+          Lock Portal
+        </button>
+      </div>
+    </header>
+
+    <!-- Sub Navigation Tabs -->
+    <nav class="bg-[#F3EFE8] border-b border-[#E5DFD5] px-6 py-2.5 flex items-center gap-4 overflow-x-auto text-xs">
+      <button class="admin-tab-btn active font-semibold text-[#581825] border-b-2 border-[#581825] pb-1 uppercase tracking-wider" data-tab="overview">Overview &amp; Metrics</button>
+      <button class="admin-tab-btn text-[#736E65] hover:text-[#581825] pb-1 uppercase tracking-wider" data-tab="orders">Orders (<span id="tab-orders-count">0</span>)</button>
+      <button class="admin-tab-btn text-[#736E65] hover:text-[#581825] pb-1 uppercase tracking-wider" data-tab="customers">Customer CRM (<span id="tab-customers-count">0</span>)</button>
+      <button class="admin-tab-btn text-[#736E65] hover:text-[#581825] pb-1 uppercase tracking-wider" data-tab="inventory">Catalogue Inventory (50 SKUs)</button>
+      <button class="admin-tab-btn text-[#736E65] hover:text-[#581825] pb-1 uppercase tracking-wider" data-tab="campaigns">WhatsApp Campaigns</button>
+      <button class="admin-tab-btn text-[#736E65] hover:text-[#581825] pb-1 uppercase tracking-wider" data-tab="export">CSV Export &amp; Backup</button>
+    </nav>
+
+    <!-- Main Content Panels -->
+    <main class="flex-1 p-6 max-w-7xl mx-auto w-full space-y-8">
+      
+      <!-- TAB 1: OVERVIEW -->
+      <section id="tab-panel-overview" class="admin-tab-panel space-y-6">
+        <!-- 4 Key Metrics Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border border-[#E5DFD5] p-5 rounded-lg shadow-sm">
+            <span class="text-[0.65rem] tracking-widest uppercase text-[#736E65] font-semibold">Total Gross Revenue</span>
+            <p id="metric-revenue" class="text-2xl font-serif font-bold text-[#581825] mt-1">₹0</p>
+            <p class="text-[0.62rem] text-emerald-700 mt-1">✦ Insured Orders Valuation</p>
+          </div>
+          <div class="bg-white border border-[#E5DFD5] p-5 rounded-lg shadow-sm">
+            <span class="text-[0.65rem] tracking-widest uppercase text-[#736E65] font-semibold">Orders Fulfilled</span>
+            <p id="metric-orders" class="text-2xl font-serif font-bold text-[#2E2C29] mt-1">0</p>
+            <p class="text-[0.62rem] text-[#736E65] mt-1">✦ Live Armored Dispatches</p>
+          </div>
+          <div class="bg-white border border-[#E5DFD5] p-5 rounded-lg shadow-sm">
+            <span class="text-[0.65rem] tracking-widest uppercase text-[#736E65] font-semibold">VIP Registered Clients</span>
+            <p id="metric-customers" class="text-2xl font-serif font-bold text-[#2E2C29] mt-1">0</p>
+            <p class="text-[0.62rem] text-[#736E65] mt-1">✦ WhatsApp Opt-In Verified</p>
+          </div>
+          <div class="bg-white border border-[#E5DFD5] p-5 rounded-lg shadow-sm">
+            <span class="text-[0.65rem] tracking-widest uppercase text-[#736E65] font-semibold">Active Catalog SKUs</span>
+            <p class="text-2xl font-serif font-bold text-[#581825] mt-1">50</p>
+            <p class="text-[0.62rem] text-emerald-700 mt-1">✦ 100% Solid BIS 925 Silver</p>
+          </div>
+        </div>
+
+        <!-- Recent Orders Snapshot -->
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#E5DFD5]">
+            <h2 class="font-serif text-lg font-semibold text-[#581825]">Recent Armored Orders</h2>
+            <button onclick="switchTab('orders')" class="text-xs text-[#581825] font-medium hover:underline">View All Orders &rarr;</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-[#736E65] border-b border-[#E5DFD5] pb-2">
+                  <th class="py-2">Order ID</th>
+                  <th>Client</th>
+                  <th>Valuation</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="overview-recent-orders" class="divide-y divide-[#E5DFD5]/60"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ORDERS MANAGEMENT -->
+      <section id="tab-panel-orders" class="admin-tab-panel hidden space-y-4">
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5DFD5]">
+            <div>
+              <h2 class="font-serif text-lg font-semibold text-[#581825]">All Client Orders</h2>
+              <p class="text-xs text-[#736E65]">Manage dispatch stages, update statuses, and send WhatsApp tracking alerts.</p>
+            </div>
+            <button onclick="exportOrdersCSV()" class="bg-[#581825] text-white px-4 py-2 rounded text-xs uppercase tracking-wider font-semibold hover:opacity-90">
+              Download Orders CSV
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-[#736E65] border-b border-[#E5DFD5] pb-2">
+                  <th class="py-2.5">Order ID</th>
+                  <th>Date</th>
+                  <th>Client &amp; Contact</th>
+                  <th>Pieces</th>
+                  <th>Total</th>
+                  <th>Mode</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-table-body" class="divide-y divide-[#E5DFD5]/60"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CUSTOMER CRM -->
+      <section id="tab-panel-customers" class="admin-tab-panel hidden space-y-4">
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5DFD5]">
+            <div>
+              <h2 class="font-serif text-lg font-semibold text-[#581825]">Customer CRM &amp; VIP Loyalty Club</h2>
+              <p class="text-xs text-[#736E65]">Profiles, birthdays, spend tiers, and consent-based WhatsApp marketing.</p>
+            </div>
+            <button onclick="exportCustomersCSV()" class="bg-[#581825] text-white px-4 py-2 rounded text-xs uppercase tracking-wider font-semibold hover:opacity-90">
+              Download Customers CSV
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-[#736E65] border-b border-[#E5DFD5] pb-2">
+                  <th class="py-2.5">Client Name</th>
+                  <th>Phone / WhatsApp</th>
+                  <th>Email</th>
+                  <th>Birthday</th>
+                  <th>Loyalty Tier</th>
+                  <th>Spend</th>
+                  <th>Points</th>
+                  <th>WhatsApp Wish</th>
+                </tr>
+              </thead>
+              <tbody id="admin-customers-table-body" class="divide-y divide-[#E5DFD5]/60"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: CATALOGUE INVENTORY (50 SKUs) -->
+      <section id="tab-panel-inventory" class="admin-tab-panel hidden space-y-4">
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5DFD5]">
+            <div>
+              <h2 class="font-serif text-lg font-semibold text-[#581825]">50 Fine Silver Jewellery SKUs</h2>
+              <p class="text-xs text-[#736E65]">Update stock status, view specifications, and manage online inventory.</p>
+            </div>
+            <button onclick="exportInventoryCSV()" class="bg-[#581825] text-white px-4 py-2 rounded text-xs uppercase tracking-wider font-semibold hover:opacity-90">
+              Download Inventory CSV
+            </button>
+          </div>
+          <div class="overflow-x-auto max-h-[650px]">
+            <table class="w-full text-left text-xs">
+              <thead class="sticky top-0 bg-[#F3EFE8]">
+                <tr class="text-[#736E65] border-b border-[#E5DFD5]">
+                  <th class="py-2.5 px-2">Image</th>
+                  <th>SKU ID</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Metal &amp; Stone</th>
+                  <th>Price (INR)</th>
+                  <th>Stock Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-inventory-table-body" class="divide-y divide-[#E5DFD5]/60"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: WHATSAPP CAMPAIGNS -->
+      <section id="tab-panel-campaigns" class="admin-tab-panel hidden space-y-4">
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 shadow-sm space-y-6">
+          <div>
+            <h2 class="font-serif text-lg font-semibold text-[#581825]">WhatsApp Marketing &amp; Concierge Broadcaster</h2>
+            <p class="text-xs text-[#736E65]">Compose consent-based luxury campaigns with merge tags and launch direct broadcasts.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="space-y-3">
+              <label class="block text-xs uppercase font-semibold text-[#736E65]">Select Campaign Template</label>
+              <select id="campaign-template-select" onchange="loadCampaignTemplate(this.value)" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+                <option value="diwali">Diwali Royal Festive Preview (15% Off)</option>
+                <option value="wedding">Wedding Season Solitaire Concierge</option>
+                <option value="birthday">VIP Birthday 20% Privilege Wish</option>
+                <option value="silver">New 925 Silver Flagship Edit</option>
+              </select>
+            </div>
+            <div class="md:col-span-2 space-y-3">
+              <label class="block text-xs uppercase font-semibold text-[#736E65]">Message Content (Merge Tags: {{name}}, {{tier}})</label>
+              <textarea id="campaign-message-text" rows="7" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-3 text-xs font-mono"></textarea>
+              <button onclick="launchBroadcast()" class="bg-[#25D366] text-white px-5 py-2.5 rounded text-xs uppercase tracking-wider font-semibold hover:opacity-90 flex items-center gap-2">
+                <span>Launch WhatsApp Broadcaster &rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: CSV EXPORT & BACKUP -->
+      <section id="tab-panel-export" class="admin-tab-panel hidden space-y-4">
+        <div class="bg-white border border-[#E5DFD5] rounded-lg p-6 shadow-sm space-y-6">
+          <div>
+            <h2 class="font-serif text-lg font-semibold text-[#581825]">Data Sovereignty &amp; CSV Backup Suite</h2>
+            <p class="text-xs text-[#736E65]">Export complete store datasets to standard CSV format or backup store records.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-5 border border-[#E5DFD5] rounded-lg bg-[#FCFAF7] space-y-3">
+              <h3 class="font-serif font-semibold text-base text-[#581825]">Orders History</h3>
+              <p class="text-xs text-[#736E65]">Complete transaction history, order valuations, shipping addresses, and payment modes.</p>
+              <button onclick="exportOrdersCSV()" class="w-full bg-[#581825] text-white py-2 rounded text-xs uppercase tracking-wider font-semibold">Download Orders CSV</button>
+            </div>
+            <div class="p-5 border border-[#E5DFD5] rounded-lg bg-[#FCFAF7] space-y-3">
+              <h3 class="font-serif font-semibold text-base text-[#581825]">Customer CRM</h3>
+              <p class="text-xs text-[#736E65]">Client contact database, WhatsApp opt-in status, birthday calendar, and loyalty tiers.</p>
+              <button onclick="exportCustomersCSV()" class="w-full bg-[#581825] text-white py-2 rounded text-xs uppercase tracking-wider font-semibold">Download CRM CSV</button>
+            </div>
+            <div class="p-5 border border-[#E5DFD5] rounded-lg bg-[#FCFAF7] space-y-3">
+              <h3 class="font-serif font-semibold text-base text-[#581825]">Catalogue SKUs</h3>
+              <p class="text-xs text-[#736E65]">50 real product specifications, BIS Hallmark tags, metal details, and prices.</p>
+              <button onclick="exportInventoryCSV()" class="w-full bg-[#581825] text-white py-2 rounded text-xs uppercase tracking-wider font-semibold">Download Inventory CSV</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../data.js"></script>
+  <script>
+    // Executive PIN Verification
+    const MASTER_PIN = '1985';
+
+    function checkAuth() {
+      if (sessionStorage.getItem('jewelux_admin_authenticated') === 'true') {
+        document.getElementById('admin-login-gate').classList.add('hidden');
+        document.getElementById('admin-dashboard-app').classList.remove('hidden');
+        renderDashboard();
+      }
+    }
+
+    document.getElementById('admin-pin-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pin = document.getElementById('admin-pin-input')?.value;
+      if (pin === MASTER_PIN) {
+        sessionStorage.setItem('jewelux_admin_authenticated', 'true');
+        document.getElementById('admin-login-gate').classList.add('hidden');
+        document.getElementById('admin-dashboard-app').classList.remove('hidden');
+        renderDashboard();
+      } else {
+        document.getElementById('admin-pin-error').classList.remove('hidden');
+      }
+    });
+
+    function adminLogout() {
+      sessionStorage.removeItem('jewelux_admin_authenticated');
+      window.location.reload();
+    }
+
+    // Tabs
+    const tabBtns = document.querySelectorAll('.admin-tab-btn');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        switchTab(tab);
+      });
+    });
+
+    function switchTab(tabId) {
+      tabBtns.forEach(b => {
+        const isActive = b.getAttribute('data-tab') === tabId;
+        b.classList.toggle('active', isActive);
+        b.classList.toggle('text-[#581825]', isActive);
+        b.classList.toggle('border-b-2', isActive);
+        b.classList.toggle('border-[#581825]', isActive);
+        b.classList.toggle('font-semibold', isActive);
+        b.classList.toggle('text-[#736E65]', !isActive);
+      });
+      document.querySelectorAll('.admin-tab-panel').forEach(p => {
+        p.classList.toggle('hidden', p.id !== `tab-panel-${tabId}`);
+      });
+    }
+
+    function renderDashboard() {
+      const orders = JSON.parse(localStorage.getItem('jewelux_orders') || '[]');
+      const customers = JSON.parse(localStorage.getItem('jewelux_customers') || '[]');
+      const prods = (window.JEWELUX_DATA && window.JEWELUX_DATA.products) ? window.JEWELUX_DATA.products : [];
+
+      // Metrics
+      const totalRev = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+      document.getElementById('metric-revenue').textContent = `₹${totalRev.toLocaleString('en-IN')}`;
+      document.getElementById('metric-orders').textContent = orders.length;
+      document.getElementById('metric-customers').textContent = customers.length;
+      document.getElementById('tab-orders-count').textContent = orders.length;
+      document.getElementById('tab-customers-count').textContent = customers.length;
+
+      // Recent orders on overview
+      const recBody = document.getElementById('overview-recent-orders');
+      if (recBody) {
+        recBody.innerHTML = orders.slice(0, 5).map(o => `
+          <tr class="hover:bg-[#FAF7F2]">
+            <td class="py-3 font-mono font-medium text-[#581825]">${o.id}</td>
+            <td><strong>${o.customer.name}</strong><br><small class="text-[#736E65]">${o.customer.phone}</small></td>
+            <td class="font-semibold">₹${o.total.toLocaleString('en-IN')}</td>
+            <td>${o.paymentMethod}</td>
+            <td><span class="px-2 py-0.5 rounded text-[0.6rem] bg-emerald-100 text-emerald-800 font-medium">${o.status}</span></td>
+            <td>
+              <a href="https://wa.me/${o.customer.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello ' + o.customer.name + ', your House of Jewelux order ' + o.id + ' status is: ' + o.status)}" target="_blank" class="text-[#581825] hover:underline text-xs">WhatsApp &rarr;</a>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Orders Table
+      const ordBody = document.getElementById('admin-orders-table-body');
+      if (ordBody) {
+        ordBody.innerHTML = orders.map(o => `
+          <tr class="hover:bg-[#FAF7F2]">
+            <td class="py-3 font-mono font-medium text-[#581825]">${o.id}</td>
+            <td class="text-[#736E65]">${o.date}</td>
+            <td><strong>${o.customer.name}</strong><br><small class="text-[#736E65]">${o.customer.phone}</small></td>
+            <td>${o.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td>
+            <td class="font-semibold text-[#581825]">₹${o.total.toLocaleString('en-IN')}</td>
+            <td>${o.paymentMethod}</td>
+            <td>
+              <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-[#FAF7F2] border border-[#E5DFD5] rounded text-[0.7rem] p-1">
+                <option value="Confirmed & Insured" ${o.status.includes('Confirmed') ? 'selected' : ''}>Confirmed &amp; Insured</option>
+                <option value="In Handcrafting" ${o.status.includes('Handcrafting') ? 'selected' : ''}>In Handcrafting</option>
+                <option value="Armored Courier Dispatched" ${o.status.includes('Dispatched') ? 'selected' : ''}>Dispatched</option>
+                <option value="Delivered" ${o.status.includes('Delivered') ? 'selected' : ''}>Delivered</option>
+              </select>
+            </td>
+            <td>
+              <a href="https://wa.me/${o.customer.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Namaste ' + o.customer.name + '! Your House of Jewelux order ' + o.id + ' is currently: ' + o.status + '. Thank you for choosing Indian Fine Jewellery.')}" target="_blank" class="text-xs bg-[#25D366] text-white px-2 py-1 rounded inline-block">WhatsApp</a>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Customers Table
+      const custBody = document.getElementById('admin-customers-table-body');
+      if (custBody) {
+        custBody.innerHTML = customers.map(c => `
+          <tr class="hover:bg-[#FAF7F2]">
+            <td class="py-3 font-medium text-[#2E2C29]">${c.name}</td>
+            <td class="font-mono text-[#736E65]">${c.phone}</td>
+            <td class="text-[#736E65]">${c.email}</td>
+            <td>${c.birthday || '—'}</td>
+            <td><span class="px-2 py-0.5 rounded text-[0.6rem] tier-badge-${c.tier.toLowerCase().includes('royal') ? 'royal' : (c.tier.toLowerCase().includes('gold') ? 'gold' : 'silver')}">${c.tier}</span></td>
+            <td class="font-semibold">₹${(c.totalSpendINR || 0).toLocaleString('en-IN')}</td>
+            <td>${c.points || 0}</td>
+            <td>
+              <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Namaste ' + c.name + '! Wishing you a glorious birthday from the House of Jewelux. Celebrate with our exclusive 20% privilege code: BDAY-2026. Discover: https://houseofjewelux.com/')}" target="_blank" class="text-xs bg-[#581825] text-white px-2 py-1 rounded inline-block">Send B'day Wish</a>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Inventory Table
+      const invBody = document.getElementById('admin-inventory-table-body');
+      if (invBody) {
+        invBody.innerHTML = prods.map(p => `
+          <tr class="hover:bg-[#FAF7F2]">
+            <td class="py-2 px-2"><img src="../${p.image}" class="w-10 h-10 object-cover rounded bg-[#F3EFE8]" alt="${p.name}"></td>
+            <td class="font-mono text-[0.65rem] text-[#581825] font-semibold">${p.id}</td>
+            <td class="font-serif font-medium text-[#2E2C29]">${p.name}</td>
+            <td class="uppercase text-[0.65rem] text-[#736E65]">${p.category}</td>
+            <td class="text-[0.65rem] text-[#736E65] max-w-xs truncate">${p.stone || p.metal}</td>
+            <td class="font-semibold text-[#581825]">₹${Math.round(p.priceUSD * 83.5).toLocaleString('en-IN')}</td>
+            <td>
+              <span class="px-2 py-0.5 rounded text-[0.6rem] bg-emerald-100 text-emerald-800 font-medium">In Stock (BIS 925)</span>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Load initial campaign
+      loadCampaignTemplate('diwali');
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+      const orders = JSON.parse(localStorage.getItem('jewelux_orders') || '[]');
+      const ord = orders.find(o => o.id === orderId);
+      if (ord) {
+        ord.status = newStatus;
+        localStorage.setItem('jewelux_orders', JSON.stringify(orders));
+        alert(`Order #${orderId} status updated to: ${newStatus}`);
+      }
+    }
+
+    // Campaign templates
+    const CAMPAIGNS = {
+      diwali: `Namaste {{name}}! 🪔✨\\n\\nHouse of Jewelux invites you to welcome auspicious abundance this festive season. Explore our handcrafted Temple Nakshi Collection and Fine 925 Silver Solitaires finished by hand in Jaipur.\\n\\nEnjoy an exclusive 15% Festive Privilege with code *DIWALI2026*.\\n\\nExplore The Collection: https://houseofjewelux.com/collections/\\nComplimentary Insured Courier across India.`,
+      wedding: `Namaste {{name}}! 👑\\n\\nPlanning wedding or festive jewellery? Discover the House of Jewelux Bridal & Couples Collection. Handcrafted Temple Chokers, Uncut Moissanite Chandbalis, and BIS 925 Hallmarked Couple Bands.\\n\\nBook a private salon consultation with Founder Yuvraj Soni: https://houseofjewelux.com/appointment/`,
+      birthday: `Namaste {{name}}! 🎂✨\\n\\nWishing you joy and eternal elegance on your special day. As a cherished {{tier}} patron, please enjoy a complimentary 20% Birthday Privilege on any fine silver creation this month with code *JEWELUX20*.\\n\\nDiscover your celebratory piece: https://houseofjewelux.com/shop/`,
+      silver: `Namaste {{name}}! ✦\\n\\nAnnouncing The Jewelux 925 Silver Edit — 50 new creations combining royal heritage with anti-tarnish rhodium and liquid micron gold finish. Every piece carries the official BIS 925 Hallmark.\\n\\nExplore now: https://houseofjewelux.com/jewelux-collection/`
+    };
+
+    function loadCampaignTemplate(type) {
+      const txt = document.getElementById('campaign-message-text');
+      if (txt) txt.value = CAMPAIGNS[type] || '';
+    }
+
+    function launchBroadcast() {
+      const customers = JSON.parse(localStorage.getItem('jewelux_customers') || '[]');
+      const txt = document.getElementById('campaign-message-text').value;
+      if (!customers.length) {
+        alert('No registered customers found in CRM database.');
+        return;
+      }
+      const firstCust = customers[0];
+      const personalized = txt.replace(/\{\{name\}\}/g, firstCust.name).replace(/\{\{tier\}\}/g, firstCust.tier);
+      const url = `https://wa.me/${firstCust.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(personalized)}`;
+      window.open(url, '_blank');
+    }
+
+    // CSV Exporters
+    function exportOrdersCSV() {
+      const orders = JSON.parse(localStorage.getItem('jewelux_orders') || '[]');
+      let csv = "Order ID,Date,Client Name,Phone,Email,Address,Items,Subtotal INR,GST INR,Total INR,Payment Mode,Status\\n";
+      orders.forEach(o => {
+        const itemsStr = o.items.map(i => `${i.name}(${i.qty})`).join('; ').replace(/,/g, '');
+        csv += `"${o.id}","${o.date}","${o.customer.name}","${o.customer.phone}","${o.customer.email}","${o.customer.address}","${itemsStr}",${o.subtotal},${o.gst},${o.total},"${o.paymentMethod}","${o.status}"\\n`;
+      });
+      downloadBlob(csv, 'house_of_jewelux_orders.csv', 'text/csv');
+    }
+
+    function exportCustomersCSV() {
+      const customers = JSON.parse(localStorage.getItem('jewelux_customers') || '[]');
+      let csv = "Client Name,Phone,Email,Birthday,Loyalty Tier,Total Spend INR,Orders Count,Reward Points,Referral Code\\n";
+      customers.forEach(c => {
+        csv += `"${c.name}","${c.phone}","${c.email}","${c.birthday || ''}","${c.tier}",${c.totalSpendINR || 0},${c.ordersCount || 0},${c.points || 0},"${c.referralCode || ''}"\\n`;
+      });
+      downloadBlob(csv, 'house_of_jewelux_customers_crm.csv', 'text/csv');
+    }
+
+    function exportInventoryCSV() {
+      const prods = (window.JEWELUX_DATA && window.JEWELUX_DATA.products) ? window.JEWELUX_DATA.products : [];
+      let csv = "SKU ID,Name,Category,Collection,Price USD,Price INR,Metal,Stone,Purity,Badge,Stock Status\\n";
+      prods.forEach(p => {
+        csv += `"${p.id}","${p.name}","${p.category}","${p.collection || ''}",${p.priceUSD},${Math.round(p.priceUSD * 83.5)},"${p.metal || ''}","${p.stone || ''}","${p.purity || ''}","${p.badge || ''}","In Stock"\\n`;
+      });
+      downloadBlob(csv, 'house_of_jewelux_inventory_50_skus.csv', 'text/csv');
+    }
+
+    function downloadBlob(content, filename, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+
+    // Auto check on load
+    checkAuth();
+  </script>
+</body>
+</html>

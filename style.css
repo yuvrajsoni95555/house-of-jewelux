@@ -816,3 +816,137 @@ footer, footer p, footer a, footer li, .caption-text, .announcement-bar {
     transform: translateY(0);
   }
 }
+
+
+/* ========================================================
+   HOUSE OF JEWELUX - AI CONCIERGE, CHECKOUT & CRM STYLES
+   ======================================================== */
+
+/* AI Concierge Floating Pill & Chatbot Window */
+#ai-concierge-pill {
+  box-shadow: 0 10px 25px -5px rgba(88, 24, 37, 0.35), 0 0 15px rgba(197, 160, 89, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#ai-concierge-pill:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 30px -4px rgba(88, 24, 37, 0.45), 0 0 20px rgba(197, 160, 89, 0.3);
+}
+
+#ai-concierge-window {
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 25px 60px -15px rgba(29, 24, 21, 0.3), 0 0 35px rgba(197, 160, 89, 0.15);
+  animation: conciergeWindowIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+#ai-concierge-window.is-active {
+  display: flex;
+}
+@keyframes conciergeWindowIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ai-bubble-bot {
+  background: #FCFAF7;
+  border-left: 3px solid #C5A059;
+  border-top: 1px solid #E5DFD5;
+  border-right: 1px solid #E5DFD5;
+  border-bottom: 1px solid #E5DFD5;
+  border-radius: 0 12px 12px 12px;
+  color: #2E2C29;
+}
+.ai-bubble-user {
+  background: #581825;
+  color: #FFFDF9;
+  border-radius: 12px 0 12px 12px;
+}
+
+.ai-chip {
+  background: #F3EFE8;
+  border: 1px solid #E5DFD5;
+  color: #581825;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.ai-chip:hover {
+  background: #581825;
+  color: #FFFDF9;
+  border-color: #581825;
+}
+
+/* White-Glove Checkout Modal */
+#checkout-modal {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#checkout-modal.is-active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.payment-tab-btn {
+  border: 1px solid #E5DFD5;
+  background: #FCFAF7;
+  color: #736E65;
+  transition: all 0.2s ease;
+}
+.payment-tab-btn.active {
+  border-color: #581825;
+  background: #FAF7F2;
+  color: #581825;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(88, 24, 37, 0.08);
+}
+
+/* Loyalty Tier Badges */
+.tier-badge-silver {
+  background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
+  color: #1E293B;
+  border: 1px solid #94A3B8;
+}
+.tier-badge-gold {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  color: #78350F;
+  border: 1px solid #F59E0B;
+}
+.tier-badge-royal {
+  background: linear-gradient(135deg, #581825 0%, #3B0D16 100%);
+  color: #FDFBF7;
+  border: 1px solid #C5A059;
+}
+
+/* Print Invoice Styling */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #invoice-printable, #invoice-printable * {
+    visibility: visible;
+  }
+  #invoice-printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white !important;
+    padding: 24px;
+    color: black !important;
+  }
+  header, footer, #ai-concierge-pill, #ai-concierge-window, a[href*="wa.me"] {
+    display: none !important;
+  }
+}

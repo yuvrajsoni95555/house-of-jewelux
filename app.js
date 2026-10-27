@@ -2203,3 +2203,875 @@ window.addEventListener('load', autoInitJeweluxPages);
 setTimeout(autoInitJeweluxPages, 100);
 setTimeout(autoInitJeweluxPages, 500);
 
+
+
+// ========================================================
+// HOUSE OF JEWELUX - AI CONCIERGE, WHITE-GLOVE CHECKOUT & CUSTOMER CRM MODULE
+// ========================================================
+
+(function() {
+  'use strict';
+
+  // Seed default orders & customer data if not present
+  if (!localStorage.getItem('jewelux_orders')) {
+    const defaultOrders = [
+      {
+        id: 'HJ-2026-94812',
+        date: '2026-10-25',
+        customer: {
+          name: 'Priyanka Sharma',
+          phone: '+91 98201 44521',
+          email: 'priyanka.s@example.com',
+          address: '402, Royal Palms, Bandra West, Mumbai, Maharashtra - 400050'
+        },
+        items: [
+          { id: 'HJ-RNG-001', name: 'The Celestial Radiance 925 Solitaire Ring', priceUSD: 185, qty: 1 }
+        ],
+        subtotal: 15448,
+        gst: 463,
+        discount: 1545,
+        total: 14366,
+        currency: 'INR',
+        paymentMethod: 'Instant UPI (Google Pay)',
+        status: 'Confirmed & Insured'
+      },
+      {
+        id: 'HJ-2026-88124',
+        date: '2026-10-22',
+        customer: {
+          name: 'Vikramaditya Rathore',
+          phone: '+91 94140 22391',
+          email: 'v.rathore@example.com',
+          address: '12, Civil Lines, Jaipur, Rajasthan - 302006'
+        },
+        items: [
+          { id: 'HJ-EAR-001', name: 'The Mayura Royal Heritage Jhumkas', priceUSD: 210, qty: 1 },
+          { id: 'HJ-BRC-001', name: 'The Kalinga Sacred Elephant Kada', priceUSD: 295, qty: 1 }
+        ],
+        subtotal: 42168,
+        gst: 1265,
+        discount: 0,
+        total: 43433,
+        currency: 'INR',
+        paymentMethod: 'Credit Card (RuPay)',
+        status: 'Delivered'
+      }
+    ];
+    localStorage.setItem('jewelux_orders', JSON.stringify(defaultOrders));
+  }
+
+  if (!localStorage.getItem('jewelux_customers')) {
+    const defaultCustomers = [
+      {
+        name: 'Priyanka Sharma',
+        phone: '+91 98201 44521',
+        email: 'priyanka.s@example.com',
+        birthday: '11-14',
+        anniversary: '02-18',
+        whatsappOptIn: true,
+        totalSpendINR: 14366,
+        ordersCount: 1,
+        tier: 'Silver Connoisseur',
+        points: 718,
+        referralCode: 'JEWELUX-PRIYANKA500'
+      },
+      {
+        name: 'Vikramaditya Rathore',
+        phone: '+91 94140 22391',
+        email: 'v.rathore@example.com',
+        birthday: '10-30',
+        anniversary: '12-04',
+        whatsappOptIn: true,
+        totalSpendINR: 43433,
+        ordersCount: 1,
+        tier: 'Gold Collector',
+        points: 2171,
+        referralCode: 'JEWELUX-VIKRAM500'
+      }
+    ];
+    localStorage.setItem('jewelux_customers', JSON.stringify(defaultCustomers));
+  }
+
+  // 1. AI SHOPPING CONCIERGE ("ARIA")
+  function initAIConcierge() {
+    if (document.getElementById('ai-concierge-pill')) return;
+
+    // Inject Launcher Pill (Bottom-Left)
+    const pill = document.createElement('div');
+    pill.id = 'ai-concierge-pill';
+    pill.className = 'fixed bottom-5 left-5 z-40 flex items-center gap-2.5 bg-[#581825] border border-[#C5A059]/60 px-4 py-2.5 rounded-full cursor-pointer text-white shadow-xl hover:scale-105 transition-transform duration-300';
+    pill.innerHTML = `
+      <div class="w-6 h-6 rounded-full bg-[#C5A059] flex items-center justify-center text-[#581825] font-serif font-bold text-xs shrink-0">HJ</div>
+      <div class="flex flex-col text-left">
+        <span class="text-[0.62rem] tracking-[0.2em] uppercase font-semibold text-[#F2E7D3] leading-none">Jewelux AI Concierge</span>
+        <span class="text-[0.55rem] text-[#F3EFE8]/80 leading-tight mt-0.5">Aria · Gemological Guide</span>
+      </div>
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-1"></span>
+    `;
+    document.body.appendChild(pill);
+
+    // Inject Chat Window
+    const win = document.createElement('div');
+    win.id = 'ai-concierge-window';
+    win.className = 'fixed bottom-20 left-4 sm:left-6 z-50 w-[360px] sm:w-[400px] max-w-[calc(100vw-32px)] h-[540px] max-h-[82vh] bg-[#FAF7F2] border border-[#C5A059]/40 rounded-xl shadow-2xl flex flex-col overflow-hidden';
+    win.innerHTML = `
+      <!-- Header -->
+      <div class="bg-[#581825] p-4 text-white flex items-center justify-between border-b border-[#C5A059]/30">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-[#FCFAF7] border border-[#C5A059] flex items-center justify-center text-[#581825] font-serif font-bold text-sm">HJ</div>
+          <div>
+            <h3 class="font-serif text-sm font-semibold tracking-wide text-[#FAF7F2]">Aria · Jewelux AI Concierge</h3>
+            <p class="text-[0.6rem] text-[#C5A059] flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+              Jaipur Atelier Online • BIS 925 Specialist
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="https://wa.me/916377061020?text=Hello%20Aria%2C%20I%20am%20chatting%20with%20the%20AI%20Concierge%20and%20would%20like%20to%20speak%20with%20a%20human%20curator." target="_blank" rel="noopener noreferrer" title="Transfer to Human WhatsApp Concierge" class="text-xs bg-[#C5A059] hover:bg-[#b08b47] text-[#3B0D16] px-2 py-1 rounded text-[0.6rem] font-semibold tracking-wider uppercase transition-colors">
+            WhatsApp
+          </a>
+          <button id="close-ai-concierge" class="text-[#FAF7F2]/70 hover:text-white p-1 text-lg leading-none" aria-label="Close Concierge">&times;</button>
+        </div>
+      </div>
+
+      <!-- Quick Prompt Chips -->
+      <div class="bg-[#F3EFE8] px-3 py-2 border-b border-[#E5DFD5] flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
+        <button class="ai-chip" data-prompt="Show me 925 Solitaire Rings">💎 Solitaires</button>
+        <button class="ai-chip" data-prompt="What jewellery should I wear for a Sangeet?">🥻 Saree Styling</button>
+        <button class="ai-chip" data-prompt="How do I clean and care for 925 silver?">✨ Silver Care</button>
+        <button class="ai-chip" data-prompt="Explain BIS 925 Hallmark certification">📜 BIS Hallmark</button>
+        <button class="ai-chip" data-prompt="Show gifting jewellery under ₹15,000">🎁 Gifting Under ₹15k</button>
+      </div>
+
+      <!-- Messages Stream -->
+      <div id="ai-messages-list" class="flex-1 p-4 overflow-y-auto space-y-3.5 text-xs">
+        <div class="ai-bubble-bot p-3 max-w-[90%] space-y-2">
+          <p class="leading-relaxed">Namaste! Welcome to <strong>HOUSE OF JEWELUX</strong>. I am Aria, your personal gemological and styling concierge.</p>
+          <p class="leading-relaxed text-[#736E65]">You may ask me about our 50 handcrafted 925 sterling silver creations, sacred temple jewellery, styling guides, ring sizing, or care tips.</p>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <form id="ai-concierge-form" class="p-3 bg-[#FAF7F2] border-t border-[#E5DFD5] flex items-center gap-2">
+        <input id="ai-user-input" type="text" placeholder="Ask about rings, temple jhumkas, silver care..." class="flex-1 bg-white border border-[#E5DFD5] rounded-full px-4 py-2 text-xs text-[#2E2C29] placeholder:text-[#A8A29E] focus:outline-none focus:border-[#581825]">
+        <button type="submit" class="w-8 h-8 rounded-full bg-[#581825] text-white flex items-center justify-center hover:bg-[#3B0D16] transition-colors shrink-0" aria-label="Send query">
+          <svg class="w-3.5 h-3.5 rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+        </button>
+      </form>
+    `;
+    document.body.appendChild(win);
+
+    // Toggle logic
+    pill.addEventListener('click', () => {
+      win.classList.toggle('is-active');
+      if (win.classList.contains('is-active')) {
+        document.getElementById('ai-user-input')?.focus();
+      }
+    });
+
+    document.getElementById('close-ai-concierge')?.addEventListener('click', () => {
+      win.classList.remove('is-active');
+    });
+
+    // Chip click handlers
+    win.querySelectorAll('.ai-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const prompt = chip.getAttribute('data-prompt');
+        sendUserMessage(prompt);
+      });
+    });
+
+    // Form submit
+    document.getElementById('ai-concierge-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('ai-user-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      sendUserMessage(text);
+    });
+
+    function sendUserMessage(text) {
+      const list = document.getElementById('ai-messages-list');
+      if (!list) return;
+
+      // Render user bubble
+      const uBubble = document.createElement('div');
+      uBubble.className = 'ai-bubble-user p-3 max-w-[85%] ml-auto text-left';
+      uBubble.textContent = text;
+      list.appendChild(uBubble);
+      list.scrollTop = list.scrollHeight;
+
+      // Typing indicator
+      const typing = document.createElement('div');
+      typing.id = 'ai-typing';
+      typing.className = 'ai-bubble-bot p-2 max-w-[50%] text-[#736E65] italic text-[0.65rem] flex items-center gap-1.5';
+      typing.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-bounce"></span> Aria is consulting the Jaipur Atelier archives...';
+      list.appendChild(typing);
+      list.scrollTop = list.scrollHeight;
+
+      setTimeout(() => {
+        typing.remove();
+        const reply = generateAIResponse(text);
+        renderBotResponse(reply);
+      }, 500);
+    }
+
+    function renderBotResponse(reply) {
+      const list = document.getElementById('ai-messages-list');
+      if (!list) return;
+
+      const botBubble = document.createElement('div');
+      botBubble.className = 'ai-bubble-bot p-3.5 max-w-[92%] space-y-2.5';
+      botBubble.innerHTML = reply;
+      list.appendChild(botBubble);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    function generateAIResponse(query) {
+      const q = query.toLowerCase();
+      const prods = (window.STORE && window.STORE.products) ? window.STORE.products : [];
+
+      // 1. Care / Cleaning / Tarnish
+      if (q.includes('clean') || q.includes('care') || q.includes('tarnish') || q.includes('store') || q.includes('black')) {
+        return `
+          <p class="font-semibold text-[#581825]">Atelier 925 Silver Care Ritual:</p>
+          <ul class="list-disc pl-4 space-y-1 text-[#736E65]">
+            <li><strong>Anti-Tarnish Layer:</strong> Every House of Jewelux piece is electroplated in liquid rhodium or micron gold to prevent oxidation.</li>
+            <li><strong>Storage:</strong> Keep pieces in the airtight velvet zip-pouch provided with your acquisition.</li>
+            <li><strong>Perfumes:</strong> Always apply lotions and perfumes before wearing your jewellery.</li>
+            <li><strong>Wipe:</strong> Use our microfiber polishing cloth after every wear.</li>
+          </ul>
+          <p class="pt-1 text-[#3B0D16]">We also offer complimentary lifetime ultrasonic cleaning at our Jaipur salon!</p>
+        `;
+      }
+
+      // 2. BIS Hallmark / Authenticity
+      if (q.includes('hallmark') || q.includes('bis') || q.includes('purity') || q.includes('certificate') || q.includes('authentic') || q.includes('gold')) {
+        return `
+          <p class="font-semibold text-[#581825]">Bureau of Indian Standards (BIS) 925 Certification:</p>
+          <p class="leading-relaxed text-[#736E65]">Every silver creation at House of Jewelux is crafted from solid <strong>92.5% pure silver</strong>, stamped with the official BIS 925 Hallmark and our Atelier maker's mark.</p>
+          <p class="text-[#736E65]">Our stones are certified D-Flawless laboratory-grown moissanites and fine diamonds, nickel-free and 100% hypoallergenic. Each order arrives with a wax-sealed Certificate of Authenticity.</p>
+        `;
+      }
+
+      // 3. Styling / Occasions
+      if (q.includes('saree') || q.includes('wedding') || q.includes('sangeet') || q.includes('bridal') || q.includes('reception')) {
+        const templePieces = prods.filter(p => p.category === 'necklaces' || p.category === 'earrings').slice(0, 2);
+        let itemsHtml = templePieces.map(p => `
+          <div class="flex items-center gap-2 p-1.5 bg-[#FAF7F2] rounded border border-[#E5DFD5]">
+            <img src="${p.image}" class="w-10 h-10 object-cover rounded" alt="${p.name}">
+            <div class="flex-1">
+              <p class="font-serif font-medium text-[0.7rem] text-[#2E2C29] line-clamp-1">${p.name}</p>
+              <p class="text-[0.65rem] text-[#581825] font-semibold">${window.formatPrice ? window.formatPrice(p.priceUSD) : '₹' + Math.round(p.priceUSD * 83.5)}</p>
+            </div>
+          </div>
+        `).join('');
+
+        return `
+          <p class="font-semibold text-[#581825]">Royal Occasion & Saree Styling:</p>
+          <p class="leading-relaxed text-[#736E65]">For silk Kanjeevarams and wedding lehengas, contrast is paramount. Pair a bold Temple Choker with multi-tier Mayura Jhumkas.</p>
+          <div class="space-y-1.5 pt-1">${itemsHtml}</div>
+          <a href="collections/bridal/" class="inline-block mt-1 font-semibold text-[#581825] hover:underline">Explore Bridal &amp; Couples Collection &rarr;</a>
+        `;
+      }
+
+      // 4. Category matching: Rings, Solitaires, Earrings, Necklaces, Bracelets, Brooches
+      let matchedCategory = null;
+      if (q.includes('ring') || q.includes('solitaire') || q.includes('band')) matchedCategory = 'rings';
+      else if (q.includes('earring') || q.includes('jhumka') || q.includes('chandbali') || q.includes('stud')) matchedCategory = 'earrings';
+      else if (q.includes('necklace') || q.includes('choker') || q.includes('haar') || q.includes('collar') || q.includes('pendant')) matchedCategory = 'necklaces';
+      else if (q.includes('bracelet') || q.includes('cuff') || q.includes('kada')) matchedCategory = 'bracelets';
+      else if (q.includes('brooch') || q.includes('pin') || q.includes('kalgi')) matchedCategory = 'brooches';
+
+      // 5. Price filter matching
+      let maxPrice = Infinity;
+      if (q.includes('under 10') || q.includes('under 10,000') || q.includes('under 10k')) maxPrice = 10000;
+      else if (q.includes('under 15') || q.includes('under 15,000') || q.includes('under 15k')) maxPrice = 15000;
+      else if (q.includes('under 20') || q.includes('under 20,000') || q.includes('under 20k')) maxPrice = 20000;
+
+      let matchedProducts = prods;
+      if (matchedCategory) {
+        matchedProducts = matchedProducts.filter(p => p.category === matchedCategory);
+      }
+      if (maxPrice < Infinity) {
+        matchedProducts = matchedProducts.filter(p => (p.priceUSD * 83.5) <= maxPrice);
+      }
+
+      if (matchedProducts.length > 0) {
+        const top3 = matchedProducts.slice(0, 3);
+        let itemsHtml = top3.map(p => `
+          <div class="flex items-center gap-2 p-2 bg-[#FAF7F2] rounded border border-[#E5DFD5]">
+            <img src="${p.image}" class="w-11 h-11 object-cover rounded bg-[#F3EFE8]" alt="${p.name}">
+            <div class="flex-1">
+              <p class="font-serif font-medium text-[0.7rem] text-[#2E2C29] line-clamp-1">${p.name}</p>
+              <p class="text-[0.62rem] text-[#736E65]">${p.stone || p.metal}</p>
+              <p class="text-[0.68rem] text-[#581825] font-semibold mt-0.5">${window.formatPrice ? window.formatPrice(p.priceUSD) : '₹' + Math.round(p.priceUSD * 83.5)}</p>
+            </div>
+            <button onclick="window.addToCart('${p.id}'); showToast('Added to Shopping Bag', '👑');" class="text-[0.6rem] bg-[#581825] text-white px-2 py-1 rounded hover:opacity-90">
+              Acquire
+            </button>
+          </div>
+        `).join('');
+
+        return `
+          <p class="font-semibold text-[#581825]">Atelier Recommendations for you:</p>
+          <div class="space-y-1.5">${itemsHtml}</div>
+          <p class="text-[0.62rem] text-[#736E65] pt-1">Complimentary insured delivery & 15-day exchange included with every order.</p>
+        `;
+      }
+
+      // Default fallback
+      return `
+        <p class="leading-relaxed">At House of Jewelux, our artisans in Jaipur hand-finish each piece in solid <strong>BIS 925 Hallmarked Silver</strong>, liquid micron gold, and anti-tarnish rhodium.</p>
+        <p class="text-[#736E65] leading-relaxed">May I guide you through our <em>Rings, Earrings, Necklaces, Bracelets</em>, or <em>Haute Brooches</em>? Or would you prefer to connect with Yuvraj Soni on WhatsApp for a custom bespoke commission?</p>
+        <div class="pt-1">
+          <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello Concierge, I have a question: ' + query)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[0.65rem] tracking-wider uppercase font-semibold text-[#581825] hover:underline">
+            <span>Ask WhatsApp Concierge directly &rarr;</span>
+          </a>
+        </div>
+      `;
+    }
+  }
+
+  // 2. WHITE-GLOVE INDIAN CHECKOUT MODAL
+  function initCheckoutSystem() {
+    if (document.getElementById('checkout-modal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'checkout-modal';
+    modal.className = 'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto';
+    modal.innerHTML = `
+      <div class="bg-[#FAF7F2] border border-[#C5A059] rounded-lg max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+        <!-- Header -->
+        <div class="bg-[#581825] p-5 text-white flex items-center justify-between border-b border-[#C5A059]/40">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#FCFAF7] border border-[#C5A059] flex items-center justify-center text-[#581825] font-serif font-bold text-base">HJ</div>
+            <div>
+              <h2 class="font-serif text-lg font-semibold tracking-wide text-[#FAF7F2]">White-Glove Order Checkout</h2>
+              <p class="text-[0.65rem] text-[#C5A059] tracking-widest uppercase">Direct from Jaipur Atelier • Armored Insured Transit</p>
+            </div>
+          </div>
+          <button id="close-checkout-modal-btn" class="text-[#FAF7F2]/70 hover:text-white text-2xl leading-none" aria-label="Close Checkout">&times;</button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+          <!-- Step 1: Customer & Delivery Details -->
+          <div class="space-y-3">
+            <h3 class="text-xs font-serif font-semibold tracking-widest uppercase text-[#581825] pb-1 border-b border-[#E5DFD5]">
+              1. Delivery Address &amp; Client Details
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1">Full Name *</label>
+                <input id="chk-name" type="text" required placeholder="e.g. Radhika Singhania" class="w-full bg-white border border-[#E5DFD5] rounded-sm p-2 text-xs text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              </div>
+              <div>
+                <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1">WhatsApp / Phone *</label>
+                <input id="chk-phone" type="tel" required placeholder="+91 98765 43210" class="w-full bg-white border border-[#E5DFD5] rounded-sm p-2 text-xs text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1">Email Address *</label>
+                <input id="chk-email" type="email" required placeholder="radhika@example.com" class="w-full bg-white border border-[#E5DFD5] rounded-sm p-2 text-xs text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1">Delivery Street Address *</label>
+                <input id="chk-address" type="text" required placeholder="Flat/Bungalow, Street, Landmark" class="w-full bg-white border border-[#E5DFD5] rounded-sm p-2 text-xs text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              </div>
+              <div>
+                <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1">City &amp; State *</label>
+                <input id="chk-city" type="text" required placeholder="Jaipur, Rajasthan" class="w-full bg-white border border-[#E5DFD5] rounded-sm p-2 text-xs text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              </div>
+              <div>
+                <label class="block text-[0.65rem] tracking-widest uppercase text-[#736E65] mb-1">PIN Code *</label>
+                <input id="chk-pincode" type="text" required placeholder="302001" maxlength="6" class="w-full bg-white border border-[#E5DFD5] rounded-sm p-2 text-xs text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              </div>
+            </div>
+
+            <!-- Gift Packaging Toggle -->
+            <label class="flex items-start gap-2 pt-2 cursor-pointer text-xs text-[#2E2C29]">
+              <input id="chk-gift" type="checkbox" checked class="mt-0.5 rounded text-[#581825]">
+              <span>Include complimentary signature royal velvet box, satin ribbon, and wax-sealed BIS Hallmark Certificate.</span>
+            </label>
+          </div>
+
+          <!-- Step 2: Privilege Coupon -->
+          <div class="bg-[#FCFAF7] border border-[#E5DFD5] p-3.5 rounded-sm space-y-2">
+            <label class="block text-[0.65rem] tracking-widest uppercase text-[#581825] font-semibold">Have a Privilege Coupon?</label>
+            <div class="flex gap-2">
+              <input id="chk-coupon" type="text" placeholder="e.g. FIRSTLUX, DIWALI2026, JEWELUX20" class="flex-1 bg-white border border-[#E5DFD5] rounded-sm px-3 py-1.5 text-xs uppercase tracking-wider text-[#2E2C29] focus:outline-none focus:border-[#581825]">
+              <button id="chk-apply-coupon" type="button" class="bg-[#581825] text-white px-4 py-1.5 text-xs uppercase tracking-widest font-semibold hover:opacity-90">Apply</button>
+            </div>
+            <p id="chk-coupon-msg" class="text-[0.65rem] text-[#8C6D37] hidden"></p>
+          </div>
+
+          <!-- Step 3: Valuation Breakdown -->
+          <div class="bg-[#F3EFE8] border border-[#E5DFD5] p-4 rounded-sm space-y-2 text-xs">
+            <div class="flex justify-between text-[#736E65]">
+              <span>Acquisition Pieces Subtotal</span>
+              <span id="chk-subtotal-val" class="font-medium text-[#2E2C29]">₹0</span>
+            </div>
+            <div id="chk-discount-row" class="flex justify-between text-emerald-700 hidden">
+              <span>Privilege Discount</span>
+              <span id="chk-discount-val">-₹0</span>
+            </div>
+            <div class="flex justify-between text-[#736E65]">
+              <span>Precious Metal Tax (3% GST)</span>
+              <span id="chk-gst-val" class="font-medium text-[#2E2C29]">₹0</span>
+            </div>
+            <div class="flex justify-between text-[#736E65]">
+              <span>Insured White-Glove Courier</span>
+              <span class="font-semibold text-emerald-700">Complimentary (₹0)</span>
+            </div>
+            <div class="pt-2 border-t border-[#E5DFD5] flex justify-between text-sm font-serif font-bold text-[#581825]">
+              <span>Total Valuation Payable</span>
+              <span id="chk-total-val" class="text-base text-[#581825]">₹0</span>
+            </div>
+          </div>
+
+          <!-- Step 4: Payment Method Selection -->
+          <div class="space-y-3">
+            <h3 class="text-xs font-serif font-semibold tracking-widest uppercase text-[#581825] pb-1 border-b border-[#E5DFD5]">
+              2. Select Payment Method
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <button type="button" class="payment-tab-btn active p-2.5 rounded-sm text-center font-medium" data-method="upi">Instant UPI / QR</button>
+              <button type="button" class="payment-tab-btn p-2.5 rounded-sm text-center font-medium" data-method="card">Cards</button>
+              <button type="button" class="payment-tab-btn p-2.5 rounded-sm text-center font-medium" data-method="netbanking">NetBanking</button>
+              <button type="button" class="payment-tab-btn p-2.5 rounded-sm text-center font-medium" data-method="cod">Cash on Delivery</button>
+            </div>
+
+            <!-- UPI Container -->
+            <div id="pay-panel-upi" class="p-4 bg-white border border-[#E5DFD5] rounded-sm space-y-3 text-center">
+              <p class="text-xs font-medium text-[#2E2C29]">Scan to Pay via Any UPI App (Google Pay, PhonePe, Paytm, BHIM)</p>
+              <div class="inline-block p-2 bg-white border border-[#C5A059] rounded shadow-sm">
+                <img id="chk-upi-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=yuvrajsoni@upi&pn=HOUSE+OF+JEWELUX" alt="UPI QR Code" class="w-36 h-36 mx-auto">
+              </div>
+              <div class="flex items-center justify-center gap-2 text-xs text-[#736E65]">
+                <span>UPI ID: <strong class="text-[#581825]">yuvrajsoni@upi</strong></span>
+                <button type="button" onclick="navigator.clipboard.writeText('yuvrajsoni@upi'); alert('UPI ID copied!');" class="underline text-[0.65rem] text-[#581825]">Copy</button>
+              </div>
+            </div>
+
+            <!-- Card Container -->
+            <div id="pay-panel-card" class="p-4 bg-white border border-[#E5DFD5] rounded-sm space-y-3 hidden text-xs">
+              <div>
+                <label class="block text-[0.65rem] uppercase text-[#736E65] mb-1">Card Number</label>
+                <input type="text" placeholder="4111 •••• •••• 1111 (RuPay / Visa / Mastercard)" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[0.65rem] uppercase text-[#736E65] mb-1">Valid Thru</label>
+                  <input type="text" placeholder="MM/YY" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+                </div>
+                <div>
+                  <label class="block text-[0.65rem] uppercase text-[#736E65] mb-1">CVV</label>
+                  <input type="password" placeholder="•••" maxlength="4" class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+                </div>
+              </div>
+              <p class="text-[0.62rem] text-[#736E65]">Protected by 256-bit Bank Grade SSL Encryption with 3D Secure OTP authentication.</p>
+            </div>
+
+            <!-- Netbanking Container -->
+            <div id="pay-panel-netbanking" class="p-4 bg-white border border-[#E5DFD5] rounded-sm space-y-2 hidden text-xs">
+              <label class="block text-[0.65rem] uppercase text-[#736E65]">Select Primary Indian Bank</label>
+              <select class="w-full bg-[#FAF7F2] border border-[#E5DFD5] rounded p-2 text-xs">
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>State Bank of India (SBI)</option>
+                <option>Axis Bank</option>
+                <option>Kotak Mahindra Bank</option>
+                <option>Punjab National Bank</option>
+              </select>
+            </div>
+
+            <!-- COD Container -->
+            <div id="pay-panel-cod" class="p-4 bg-white border border-[#E5DFD5] rounded-sm space-y-2 hidden text-xs text-[#736E65]">
+              <p>Cash on Delivery is available for verified domestic pin codes across India.</p>
+              <p class="text-[0.65rem] text-[#581825] font-semibold">Note: A ₹200 refundable authenticity token or phone verification applies to confirm physical salon dispatch.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="bg-[#F3EFE8] p-4 border-t border-[#E5DFD5] flex flex-col sm:flex-row gap-3">
+          <button id="btn-complete-order" type="button" class="flex-1 bg-[#581825] text-white py-3.5 text-center text-xs tracking-widest uppercase font-semibold hover:opacity-90 transition-opacity">
+            Confirm &amp; Place Insured Order
+          </button>
+          <button id="btn-whatsapp-order" type="button" class="sm:flex-initial bg-[#25D366] text-white px-5 py-3.5 text-center text-xs tracking-wider uppercase font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5">
+            <span>WhatsApp Order</span>
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Modal Events
+    document.getElementById('close-checkout-modal-btn')?.addEventListener('click', closeCheckoutModal);
+
+    // Payment tab toggles
+    const tabBtns = modal.querySelectorAll('.payment-tab-btn');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const method = btn.getAttribute('data-method');
+        ['upi', 'card', 'netbanking', 'cod'].forEach(m => {
+          const el = document.getElementById(`pay-panel-${m}`);
+          if (el) el.classList.toggle('hidden', m !== method);
+        });
+      });
+    });
+
+    // Apply Coupon
+    document.getElementById('chk-apply-coupon')?.addEventListener('click', () => {
+      const input = document.getElementById('chk-coupon');
+      const msg = document.getElementById('chk-coupon-msg');
+      if (!input || !msg) return;
+      const code = input.value.trim().toUpperCase();
+      const coupons = (window.STORE && window.STORE.coupons) ? window.STORE.coupons : {};
+
+      if (coupons[code]) {
+        window.appState.promoCodeApplied = code;
+        window.appState.discountPercent = coupons[code].discountPercent || 0;
+        msg.textContent = `Privilege applied: ${coupons[code].description}`;
+        msg.classList.remove('hidden', 'text-red-600');
+        msg.classList.add('text-emerald-700');
+      } else {
+        window.appState.promoCodeApplied = null;
+        window.appState.discountPercent = 0;
+        msg.textContent = 'Invalid privilege coupon code.';
+        msg.classList.remove('hidden', 'text-emerald-700');
+        msg.classList.add('text-red-600');
+      }
+      updateCheckoutValuation();
+    });
+
+    // Place Order Button
+    document.getElementById('btn-complete-order')?.addEventListener('click', () => {
+      executeOrderPlacement(false);
+    });
+
+    // WhatsApp Order Button
+    document.getElementById('btn-whatsapp-order')?.addEventListener('click', () => {
+      executeOrderPlacement(true);
+    });
+  }
+
+  function updateCheckoutValuation() {
+    const cart = (window.appState && window.appState.cart) ? window.appState.cart : [];
+    const prods = (window.STORE && window.STORE.products) ? window.STORE.products : [];
+
+    let subtotalUSD = 0;
+    cart.forEach(item => {
+      const p = prods.find(x => x.id === item.id);
+      if (p) subtotalUSD += (p.priceUSD * (item.qty || 1));
+    });
+
+    const subtotalINR = Math.round(subtotalUSD * 83.5);
+    const discountPercent = (window.appState && window.appState.discountPercent) ? window.appState.discountPercent : 0;
+    const discountINR = Math.round(subtotalINR * (discountPercent / 100));
+    const taxableINR = Math.max(0, subtotalINR - discountINR);
+    const gstINR = Math.round(taxableINR * 0.03); // 3% fine jewellery GST
+    const totalINR = taxableINR + gstINR;
+
+    const subEl = document.getElementById('chk-subtotal-val');
+    const discRow = document.getElementById('chk-discount-row');
+    const discEl = document.getElementById('chk-discount-val');
+    const gstEl = document.getElementById('chk-gst-val');
+    const totEl = document.getElementById('chk-total-val');
+    const qrImg = document.getElementById('chk-upi-qr');
+
+    if (subEl) subEl.textContent = `₹${subtotalINR.toLocaleString('en-IN')}`;
+    if (discRow) {
+      discRow.classList.toggle('hidden', discountINR <= 0);
+      if (discEl) discEl.textContent = `-₹${discountINR.toLocaleString('en-IN')}`;
+    }
+    if (gstEl) gstEl.textContent = `₹${gstINR.toLocaleString('en-IN')}`;
+    if (totEl) totEl.textContent = `₹${totalINR.toLocaleString('en-IN')}`;
+
+    if (qrImg) {
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=yuvrajsoni@upi&pn=HOUSE+OF+JEWELUX&am=${totalINR}&cu=INR`;
+    }
+  }
+
+  function executeOrderPlacement(openWhatsApp) {
+    const name = document.getElementById('chk-name')?.value.trim();
+    const phone = document.getElementById('chk-phone')?.value.trim();
+    const email = document.getElementById('chk-email')?.value.trim();
+    const address = document.getElementById('chk-address')?.value.trim();
+    const city = document.getElementById('chk-city')?.value.trim();
+    const pincode = document.getElementById('chk-pincode')?.value.trim();
+    const isGift = document.getElementById('chk-gift')?.checked;
+
+    if (!name || !phone || !email || !address || !pincode) {
+      alert('Please fill in all mandatory delivery details.');
+      return;
+    }
+
+    const cart = (window.appState && window.appState.cart) ? window.appState.cart : [];
+    if (!cart.length) {
+      alert('Your shopping bag is empty.');
+      return;
+    }
+
+    const prods = (window.STORE && window.STORE.products) ? window.STORE.products : [];
+    let itemsDetails = [];
+    let subtotalUSD = 0;
+    cart.forEach(item => {
+      const p = prods.find(x => x.id === item.id);
+      if (p) {
+        subtotalUSD += (p.priceUSD * (item.qty || 1));
+        itemsDetails.push({
+          id: p.id,
+          name: p.name,
+          metal: p.metal,
+          priceUSD: p.priceUSD,
+          priceINR: Math.round(p.priceUSD * 83.5),
+          qty: item.qty || 1
+        });
+      }
+    });
+
+    const subtotalINR = Math.round(subtotalUSD * 83.5);
+    const discountPercent = (window.appState && window.appState.discountPercent) ? window.appState.discountPercent : 0;
+    const discountINR = Math.round(subtotalINR * (discountPercent / 100));
+    const taxableINR = Math.max(0, subtotalINR - discountINR);
+    const gstINR = Math.round(taxableINR * 0.03);
+    const totalINR = taxableINR + gstINR;
+
+    const activeTab = document.querySelector('.payment-tab-btn.active');
+    const paymentMethod = activeTab ? activeTab.textContent.trim() : 'Instant UPI';
+
+    const orderId = 'HJ-2026-' + Math.floor(10000 + Math.random() * 90000);
+    const newOrder = {
+      id: orderId,
+      date: new Date().toISOString().split('T')[0],
+      customer: {
+        name,
+        phone,
+        email,
+        address: `${address}, ${city} - ${pincode}`,
+        giftPackaging: isGift
+      },
+      items: itemsDetails,
+      subtotal: subtotalINR,
+      discount: discountINR,
+      gst: gstINR,
+      total: totalINR,
+      currency: 'INR',
+      paymentMethod,
+      status: 'Confirmed & Insured'
+    };
+
+    // Save order
+    const existingOrders = JSON.parse(localStorage.getItem('jewelux_orders') || '[]');
+    existingOrders.unshift(newOrder);
+    localStorage.setItem('jewelux_orders', JSON.stringify(existingOrders));
+
+    // Update customer in CRM
+    const existingCusts = JSON.parse(localStorage.getItem('jewelux_customers') || '[]');
+    let cust = existingCusts.find(c => c.phone === phone || c.email === email);
+    if (!cust) {
+      cust = {
+        name,
+        phone,
+        email,
+        birthday: '',
+        whatsappOptIn: true,
+        totalSpendINR: totalINR,
+        ordersCount: 1,
+        tier: totalINR > 100000 ? 'Royal Patron' : (totalINR > 25000 ? 'Gold Collector' : 'Silver Connoisseur'),
+        points: Math.round(totalINR * 0.05),
+        referralCode: 'JEWELUX-' + name.split(' ')[0].toUpperCase() + '500'
+      };
+      existingCusts.push(cust);
+    } else {
+      cust.totalSpendINR += totalINR;
+      cust.ordersCount += 1;
+      cust.points += Math.round(totalINR * 0.05);
+      cust.tier = cust.totalSpendINR > 100000 ? 'Royal Patron' : (cust.totalSpendINR > 25000 ? 'Gold Collector' : 'Silver Connoisseur');
+    }
+    localStorage.setItem('jewelux_customers', JSON.stringify(existingCusts));
+    localStorage.setItem('jewelux_current_user', JSON.stringify(cust));
+
+    // Clear cart
+    window.appState.cart = [];
+    localStorage.removeItem('jewelux_cart');
+    if (typeof updateBadges === 'function') updateBadges();
+    if (typeof renderCartPage === 'function') renderCartPage();
+
+    closeCheckoutModal();
+
+    // Show Confirmation Screen
+    showOrderConfirmationScreen(newOrder);
+
+    // If WhatsApp order requested, route directly
+    if (openWhatsApp) {
+      let waMsg = `👑 *HOUSE OF JEWELUX — NEW ORDER CONFIRMATION* 👑\n`;
+      waMsg += `*Order ID:* ${newOrder.id}\n`;
+      waMsg += `*Client Name:* ${name}\n`;
+      waMsg += `*Phone:* ${phone}\n`;
+      waMsg += `*Delivery Address:* ${address}, ${city} - ${pincode}\n`;
+      waMsg += `*Gift Packaging:* ${isGift ? 'Yes (Royal Velvet Box & Wax Seal)' : 'Standard Luxury Packaging'}\n\n`;
+      waMsg += `*Acquisition Pieces:*\n`;
+      newOrder.items.forEach((it, i) => {
+        waMsg += `${i+1}. ${it.name} (Qty: ${it.qty}) — ₹${it.priceINR.toLocaleString('en-IN')}\n`;
+      });
+      waMsg += `\n*Subtotal:* ₹${subtotalINR.toLocaleString('en-IN')}\n`;
+      if (discountINR > 0) waMsg += `*Privilege Discount:* -₹${discountINR.toLocaleString('en-IN')}\n`;
+      waMsg += `*GST (3%):* ₹${gstINR.toLocaleString('en-IN')}\n`;
+      waMsg += `*Armored Courier:* Complimentary\n`;
+      waMsg += `*Total Valuation:* ₹${totalINR.toLocaleString('en-IN')}\n`;
+      waMsg += `*Payment Mode:* ${paymentMethod}\n\n`;
+      waMsg += `Kindly confirm dispatch schedule and tracking details. Thank you!`;
+
+      window.open(`https://wa.me/916377061020?text=${encodeURIComponent(waMsg)}`, '_blank');
+    }
+  }
+
+  function showOrderConfirmationScreen(order) {
+    const confModal = document.createElement('div');
+    confModal.className = 'fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto';
+    confModal.innerHTML = `
+      <div class="bg-[#FAF7F2] border border-[#C5A059] rounded-lg max-w-xl w-full p-6 sm:p-8 text-center space-y-6 shadow-2xl">
+        <div class="w-16 h-16 mx-auto rounded-full bg-[#581825] text-[#C5A059] flex items-center justify-center text-3xl font-serif">
+          ✓
+        </div>
+        <div>
+          <span class="text-[0.65rem] tracking-[0.25em] uppercase text-[#8C6D37] font-semibold">Acquisition Confirmed</span>
+          <h2 class="mt-1 font-serif text-2xl sm:text-3xl font-semibold text-[#581825]">Thank You, ${order.customer.name}</h2>
+          <p class="text-xs text-[#736E65] mt-1">Order #${order.id} is confirmed and scheduled for armored dispatch.</p>
+        </div>
+
+        <div class="bg-[#FCFAF7] border border-[#E5DFD5] p-4 rounded text-left text-xs space-y-2">
+          <p><strong>Insured Total:</strong> ₹${order.total.toLocaleString('en-IN')}</p>
+          <p><strong>Destination:</strong> ${order.customer.address}</p>
+          <p><strong>Transit Method:</strong> White-Glove Armored Courier (2-4 Days)</p>
+          <p><strong>Certification:</strong> Stamped BIS 925 Hallmark &amp; Authenticity Dossier</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <button onclick="window.printInvoice('${order.id}')" class="flex-1 bg-[#581825] text-white py-3 rounded text-xs uppercase tracking-widest font-semibold hover:opacity-90">
+            Print Official Invoice
+          </button>
+          <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello Concierge, I would like to track my order ' + order.id)}" target="_blank" rel="noopener noreferrer" class="flex-1 bg-[#25D366] text-white py-3 rounded text-xs uppercase tracking-widest font-semibold hover:opacity-90 flex items-center justify-center gap-1.5">
+            Track on WhatsApp
+          </a>
+        </div>
+        <button onclick="this.closest('.fixed').remove(); window.location.href = window.location.pathname.includes('/cart/') ? '../' : '';" class="text-xs text-[#736E65] hover:text-[#581825] underline">
+          Return to Atelier Homepage
+        </button>
+      </div>
+    `;
+    document.body.appendChild(confModal);
+  }
+
+  window.openCheckoutModal = function() {
+    initCheckoutSystem();
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+      modal.classList.add('is-active');
+      updateCheckoutValuation();
+    }
+  };
+
+  window.closeCheckoutModal = function() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) modal.classList.remove('is-active');
+  };
+
+  // Print Invoice
+  window.printInvoice = function(orderId) {
+    const orders = JSON.parse(localStorage.getItem('jewelux_orders') || '[]');
+    const order = orders.find(o => o.id === orderId) || orders[0];
+    if (!order) return;
+
+    let prn = document.getElementById('invoice-printable');
+    if (!prn) {
+      prn = document.createElement('div');
+      prn.id = 'invoice-printable';
+      document.body.appendChild(prn);
+    }
+
+    let itemsRows = order.items.map((it, i) => `
+      <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 8px;">${i+1}</td>
+        <td style="padding: 8px;"><strong>${it.name}</strong><br><small style="color: #666;">${it.metal || 'BIS 925 Sterling Silver'}</small></td>
+        <td style="padding: 8px; text-align: center;">${it.qty}</td>
+        <td style="padding: 8px; text-align: right;">₹${it.priceINR ? it.priceINR.toLocaleString('en-IN') : (it.priceUSD * 83.5).toLocaleString('en-IN')}</td>
+      </tr>
+    `).join('');
+
+    prn.innerHTML = `
+      <div style="font-family: 'Times New Roman', serif; max-width: 800px; margin: 0 auto; color: #111;">
+        <div style="text-align: center; border-bottom: 2px solid #581825; padding-bottom: 16px;">
+          <h1 style="font-size: 26px; letter-spacing: 4px; text-transform: uppercase; color: #581825; margin: 0;">HOUSE OF JEWELUX</h1>
+          <p style="font-size: 11px; letter-spacing: 3px; color: #8C6D37; margin: 4px 0 0;">WHERE ELEGANCE BECOMES ETERNAL</p>
+          <p style="font-size: 11px; color: #666; margin: 4px 0 0;">Jaipur Atelier, Rajasthan, India • WhatsApp Concierge: +91 63770 61020 • houseofjewelux@gmail.com</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin: 24px 0; font-size: 12px;">
+          <div>
+            <p><strong>INVOICE TO:</strong></p>
+            <p>${order.customer.name}</p>
+            <p>${order.customer.phone}</p>
+            <p>${order.customer.address}</p>
+          </div>
+          <div style="text-align: right;">
+            <p><strong>INVOICE NUMBER:</strong> ${order.id}</p>
+            <p><strong>DATE:</strong> ${order.date}</p>
+            <p><strong>PAYMENT MODE:</strong> ${order.paymentMethod}</p>
+            <p><strong>STATUS:</strong> ${order.status}</p>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 20px 0;">
+          <thead>
+            <tr style="background: #F3EFE8; border-bottom: 1px solid #581825;">
+              <th style="padding: 8px; text-align: left;">#</th>
+              <th style="padding: 8px; text-align: left;">Article &amp; Specification</th>
+              <th style="padding: 8px; text-align: center;">Qty</th>
+              <th style="padding: 8px; text-align: right;">Valuation</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsRows}
+          </tbody>
+        </table>
+
+        <div style="float: right; width: 280px; font-size: 12px; margin-top: 10px;">
+          <div style="display: flex; justify-content: space-between; padding: 4px 0;"><span>Subtotal:</span><span>₹${order.subtotal.toLocaleString('en-IN')}</span></div>
+          ${order.discount ? `<div style="display: flex; justify-content: space-between; padding: 4px 0; color: #166534;"><span>Privilege Discount:</span><span>-₹${order.discount.toLocaleString('en-IN')}</span></div>` : ''}
+          <div style="display: flex; justify-content: space-between; padding: 4px 0;"><span>GST (3%):</span><span>₹${order.gst.toLocaleString('en-IN')}</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 4px 0;"><span>Insured Courier:</span><span>Complimentary</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 2px solid #581825; font-size: 15px; font-weight: bold; color: #581825;"><span>Total Valuation:</span><span>₹${order.total.toLocaleString('en-IN')}</span></div>
+        </div>
+        <div style="clear: both;"></div>
+
+        <div style="margin-top: 40px; border-top: 1px dashed #ccc; padding-top: 16px; font-size: 10px; color: #555; text-align: center;">
+          <p>Every piece listed above is guaranteed solid 925 Sterling Silver, stamped with official BIS Hallmark certification.</p>
+          <p>Founder &amp; Creative Director: Yuvraj Soni • House of Jewelux Atelier, Jaipur, India</p>
+        </div>
+      </div>
+    `;
+
+    window.print();
+  };
+
+  // 3. AUTO INITIALIZE
+  function bootstrapLuxeFeatures() {
+    initAIConcierge();
+    initCheckoutSystem();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrapLuxeFeatures);
+  } else {
+    bootstrapLuxeFeatures();
+  }
+  window.addEventListener('load', bootstrapLuxeFeatures);
+
+})();
