@@ -53,6 +53,10 @@
         this.animateProductGrids();
         this.animateCategoryCards();
         this.animateCraftsmanshipTimeline();
+        // Delegate extended page motion to the unified Motion Design System
+        if (window.HJ_MOTION_DS && window.HJ_MOTION_DS.refreshTriggers) {
+          window.HJ_MOTION_DS.refreshTriggers();
+        }
         ScrollTrigger.refresh();
       });
     },

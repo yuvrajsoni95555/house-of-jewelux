@@ -3223,3 +3223,360 @@ img {
     display: none !important;
   }
 }
+
+/* ===================================================================
+   HOUSE OF JEWELUX — UNIFIED MOTION DESIGN SYSTEM
+   Ultra-Premium Cinematic Luxury Motion Tokens & Utilities
+   =================================================================== */
+
+/* Motion Timing Tokens */
+:root {
+  --motion-duration-fast: 0.25s;
+  --motion-duration-base: 0.5s;
+  --motion-duration-slow: 0.8s;
+  --motion-duration-cinematic: 1.2s;
+  --motion-ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --motion-ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-stagger-short: 0.06s;
+  --motion-stagger-base: 0.1s;
+  --motion-stagger-long: 0.15s;
+
+  /* Reduced motion override */
+  --motion-reduced: 0.01ms;
+}
+
+/* ===================================================================
+   GLOBAL MOTION UTILITIES
+   =================================================================== */
+
+/* Entrance opacity + slide */
+.motion-fade-in {
+  opacity: 0;
+}
+.motion-slide-up {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+.motion-slide-down {
+  opacity: 0;
+  transform: translate3d(0, -30px, 0);
+}
+.motion-scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+}
+.motion-reveal-clip {
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Stagger children */
+.motion-stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+/* Reveal text split */
+.motion-text-reveal {
+  overflow: hidden;
+}
+.motion-text-reveal .char {
+  display: inline-block;
+  transform: translate3d(0, 100%, 0);
+  opacity: 0;
+}
+
+/* Parallax layers */
+.motion-parallax {
+  will-change: transform;
+}
+
+/* Button press states */
+.btn-press:active {
+  transform: scale(0.96);
+}
+
+/* Wishlist heart states */
+.wishlist-heart {
+  transform-origin: center;
+  transition: transform 0.25s var(--motion-ease-luxury);
+}
+.wishlist-heart.loved {
+  animation: heartPulse 0.4s var(--motion-ease-back);
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* Add to cart confirmation */
+.added-toast {
+  position: fixed;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: var(--color-deep-heritage-brown);
+  color: var(--color-champagne-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s var(--motion-ease-luxury);
+}
+.added-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* Loader spinner */
+.motion-loader {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-warm-stone-light);
+  border-top-color: var(--color-antique-gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Cart item slide */
+.cart-item-enter {
+  opacity: 0;
+  transform: translate3d(20px, 0, 0);
+}
+
+/* Accordion pane */
+.pdp-accordion-pane {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s var(--motion-ease-luxury), opacity 0.3s ease;
+}
+.pdp-accordion-item.active .pdp-accordion-pane {
+  max-height: 600px;
+  opacity: 1;
+  padding-bottom: 1.25rem;
+}
+
+/* Drawer entries */
+.slide-drawer.active .drawer-header,
+.slide-drawer.active .drawer-body > * {
+  animation: drawerSlideIn 0.4s var(--motion-ease-luxury) both;
+}
+.slide-drawer.active .drawer-body > * {
+  animation-delay: 0.1s;
+}
+@keyframes drawerSlideIn {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Back to top */
+.back-to-top {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 48px;
+  height: 48px;
+  background: var(--color-deep-heritage-brown);
+  color: var(--color-champagne-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 80;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 30px, 0);
+  transition: all 0.4s var(--motion-ease-luxury);
+  box-shadow: var(--shadow-lg);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+.back-to-top:hover {
+  background: var(--color-antique-gold);
+  color: #140F0D;
+  transform: translate3d(0, -3px, 0);
+}
+
+/* Search overlay */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-warm-ivory);
+  z-index: 1100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--motion-ease-luxury);
+}
+.search-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Navigation underline indicator */
+.nav-underline-indicator {
+  position: absolute;
+  height: 2px;
+  background: var(--color-antique-gold);
+  border-radius: 1px;
+  pointer-events: none;
+  transition: all 0.35s var(--motion-ease-luxury);
+  z-index: 1;
+}
+
+/* Sticky header states */
+.site-header.sticky-compact {
+  height: 56px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-antique-gold);
+  outline-offset: 2px;
+}
+
+/* ===================================================================
+   PAGE-SPECIFIC MOTION CLASSES
+   =================================================================== */
+
+/* About page */
+.about-story-reveal {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+}
+.about-image-reveal {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+/* Craftsmanship */
+.craft-step-card {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+.craft-step-number {
+  transform: scale(0.6);
+  opacity: 0;
+}
+
+/* Collection hero */
+.collection-hero-text > * {
+  opacity: 0;
+}
+.collection-hero-title {
+  transform: translate3d(0, 20px, 0);
+}
+.collection-hero-sub {
+  transform: translate3d(0, 20px, 0);
+  opacity-delay: 0.2s;
+}
+
+/* PDP gallery */
+.pdp-gallery-item {
+  opacity: 0;
+  transform: scale(0.94);
+}
+.pdp-main-image {
+  transition: transform 0.5s var(--motion-ease-luxury);
+}
+.pdp-thumb-active {
+  border-color: var(--color-antique-gold);
+  box-shadow: 0 0 0 3px rgba(184, 151, 88, 0.15);
+}
+
+/* Contact form */
+.contact-field {
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
+}
+.contact-field.filled {
+  animation: fieldPop 0.3s var(--motion-ease-back) both;
+}
+@keyframes fieldPop {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Footer */
+.footer-reveal > * {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+
+/* Tablet adaptations */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .motion-slide-up {
+    transform: translate3d(0, 20px, 0);
+  }
+  .cinematic-hero-viewport {
+    height: 75vh;
+    min-height: 600px;
+  }
+}
+
+/* Mobile adaptations */
+@media (max-width: 767px) {
+  .motion-slide-up {
+    transform: translate3d(0, 16px, 0);
+  }
+  .collection-hero-wide {
+    height: 260px !important;
+  }
+  .back-to-top {
+    right: 1rem;
+    bottom: 72px; /* above mobile bottom nav */
+    width: 44px;
+    height: 44px;
+  }
+  .cinematic-hero-viewport {
+    height: 70vh;
+    min-height: 520px;
+  }
+}
+
+/* Reduced motion: disable all JS-driven motion */
+@media (prefers-reduced-motion: reduce) {
+  .motion-fade-in,
+  .motion-slide-up,
+  .motion-slide-down,
+  .motion-scale-in,
+  .motion-reveal-clip,
+  .motion-stagger > *,
+  .about-story-reveal,
+  .about-image-reveal,
+  .craft-step-card,
+  .collection-hero-text > *,
+  .pdp-gallery-item,
+  .contact-field,
+  .footer-reveal > * {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .motion-text-reveal .char {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .added-toast.show {
+    transform: translateX(-50%) translateY(0) !important;
+  }
+}

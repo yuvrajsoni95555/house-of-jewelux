@@ -85,12 +85,26 @@
   async function loadProducts() {
     try {
       const res = await fetch('/api/products');
-      const data = await res.json();
-      if (data.success) {
-        state.products = data.products;
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.products) {
+          state.products = data.products;
+          handleRoute();
+          return;
+        }
       }
     } catch (err) {
-      console.warn('API fetch failed, falling back to embedded products', err);
+      console.warn('API fetch failed, trying static products file', err);
+    }
+
+    try {
+      const staticRes = await fetch('./data/products.json');
+      if (staticRes.ok) {
+        const staticData = await staticRes.json();
+        state.products = Array.isArray(staticData) ? staticData : (staticData.products || []);
+      }
+    } catch (e) {
+      console.warn('Static products fetch failed', e);
     }
     handleRoute();
   }
@@ -1430,6 +1444,357 @@
     `;
   }
 
+  // ==================== VIEW: CONTACT PAGE (Animated Contact Section) ====================
+  function renderContactPage(container) {
+    container.innerHTML = `
+      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
+          <div class="section-header about-story-reveal">
+            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.75rem;">Atelier Concierge</span>
+            <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Contact the House of Jewelux</h2>
+            <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Reach our private salon concierge in Jaipur, schedule a bespoke consultation, or inquire about any creation in our catalogue. We respond within 24 business hours.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 4rem 0 6rem;">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+            
+            <!-- Left: Contact Details -->
+            <div class="about-story-reveal" style="display: flex; flex-direction: column; gap: 2rem;">
+              <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2rem;">
+                <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Atelier & Salon</h3>
+                <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-antique-gold); flex-shrink: 0; margin-top: 2px;">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <div>
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted);">Jaipur Creative Atelier</div>
+                    <div style="font-weight: 600; color: var(--color-deep-heritage-brown);">Rajasthan, India</div>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-antique-gold); flex-shrink: 0; margin-top: 2px;">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 0 7H4.11a2 2 0 0 1-2-1.72V7.24a2 2 0 0 1 2-2h3c2.37 0 4.42 1.64 5.18 4H20a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2z"></path>
+                  </svg>
+                  <div>
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted);">Direct Concierge</div>
+                    <div style="font-weight: 600; color: var(--color-deep-heritage-brown);">+91 63770 61020</div>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-antique-gold); flex-shrink: 0; margin-top: 2px;">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <div>
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted);">Email</div>
+                    <div style="font-weight: 600; color: var(--color-deep-heritage-brown);">houseofjewelux@gmail.com</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 1rem;">
+                <a href="https://wa.me/916377061020" target="_blank" class="btn-gold" style="flex: 1; padding: 0.9rem; font-size: 0.8rem;">WhatsApp Concierge</a>
+                <a href="#appointment" onclick="window.HJ.openAppointmentModal()" class="btn-primary" style="flex: 1; padding: 0.9rem; font-size: 0.8rem;">Book Appointment</a>
+              </div>
+            </div>
+
+            <!-- Right: Contact Form -->
+            <div class="about-story-reveal">
+              <form id="contact-form" style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;">
+                <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Send a Private Enquiry</h3>
+                <p style="font-size: 0.8rem; color: var(--color-stone-muted); margin-bottom: 1rem;">All fields are required unless marked otherwise.</p>
+                
+                <div class="contact-field form-grid-2">
+                  <div class="form-field">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" class="form-input" required placeholder="Your noble name" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" class="form-input" required placeholder="patron@domain.com" />
+                  </div>
+                </div>
+
+                <div class="contact-field form-field">
+                  <label class="form-label">Mobile Phone *</label>
+                  <input type="tel" class="form-input" required placeholder="+91 98765 43210" />
+                </div>
+
+                <div class="contact-field form-field">
+                  <label class="form-label">Subject *</label>
+                  <select class="form-input" required>
+                    <option value="">Select an enquiry type</option>
+                    <option value="bespoke">Bespoke & Custom Commission</option>
+                    <option value="appointment">Private Salon Appointment</option>
+                    <option value="product">Product Information</option>
+                    <option value="wholesale">Wholesale & Atelier Partnership</option>
+                    <option value="other">General Enquiry</option>
+                  </select>
+                </div>
+
+                <div class="contact-field form-field">
+                  <label class="form-label">Message *</label>
+                  <textarea class="form-input form-textarea" rows="4" required placeholder="How may we assist you?"></textarea>
+                </div>
+
+                <button type="submit" class="btn-gold" style="width: fit-content; align-self: flex-start; padding: 0.9rem 2rem; font-size: 0.82rem;">Send Enquiry ✦</button>
+                <div id="contact-form-message" style="margin-top: 1rem; font-size: 0.82rem; min-height: 1.2rem;"></div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    `;
+
+    // Form submission with motion feedback
+    const form = document.getElementById('contact-form');
+    const messageEl = document.getElementById('contact-form-message');
+    if (form && messageEl) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        
+        gsap.to(btn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1, onComplete: () => {
+          btn.textContent = 'Sending…';
+          gsap.to(btn, { opacity: 0.7, duration: 0.2 });
+          
+          // Simulate form submission (no fake checkout, just UI feedback)
+          setTimeout(() => {
+            gsap.to(btn, { opacity: 1, scale: 1, duration: 0.2, onComplete: () => {
+              btn.textContent = 'Sent ✦';
+              gsap.to(btn, { backgroundColor: 'var(--color-antique-gold)', color: '#140F0D', duration: 0.3 });
+              messageEl.innerHTML = '<span style="color: #2E7D32;">✓ Your enquiry has been sent to our atelier concierge.</span>';
+              gsap.fromTo(messageEl, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 });
+              
+              setTimeout(() => {
+                btn.textContent = originalText;
+                gsap.to(btn, { backgroundColor: '', color: '', duration: 0.3 });
+                messageEl.innerHTML = '';
+              }, 2500);
+            }});
+          }, 1200);
+        }});
+      });
+    }
+  }
+
+  // ==================== VIEW: FAQ PAGE (Animated Editorial Accordions) ====================
+  function renderFAQPage(container) {
+    container.innerHTML = `
+      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
+        <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.75rem;">Maison FAQ</span>
+          <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Frequently Asked Questions</h2>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
+          <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+            Everything you need to know about acquiring from House of Jewelux — hallmarking, shipping, care, and bespoke commissions.
+          </p>
+        </div>
+      </section>
+
+      <section style="padding: 4rem 0 6rem;">
+        <div class="container" style="max-width: 720px; margin: 0 auto;">
+          <div class="pdp-accordion-item active about-story-reveal">
+            <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
+              <span>Is every piece BIS 925 hallmarked?</span>
+              <span>▾</span>
+            </div>
+            <div class="pdp-accordion-pane">
+              Yes. Every House of Jewelux creation is stamped with the official Bureau of Indian Standards (BIS) 925 Hallmark certifying 92.5% pure silver content.
+            </div>
+          </div>
+          <div class="pdp-accordion-item about-story-reveal">
+            <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
+              <span>What is your return policy?</span>
+              <span>▾</span>
+            </div>
+            <div class="pdp-accordion-pane">
+              We offer a complimentary 14-day hassle-free return and exchange window with free door-to-door insured courier pickup across all verified Indian PIN codes.
+            </div>
+          </div>
+          <div class="pdp-accordion-item about-story-reveal">
+            <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
+              <span>Do you offer international shipping?</span>
+              <span>▾</span>
+            </div>
+            <div class="pdp-accordion-pane">
+              Currently, we ship across India via insured armored courier. International enquiries can be directed to our concierge at +91 63770 61020.
+            </div>
+          </div>
+          <div class="pdp-accordion-item about-story-reveal">
+            <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
+              <span>How long does craftsmanship take?</span>
+              <span>▾</span>
+            </div>
+            <div class="pdp-accordion-pane">
+              Each piece passes through nine stages of bench craftsmanship in our Jaipur atelier. Standard pieces typically ship within 5-7 business days; bespoke commissions require 4-6 weeks.
+            </div>
+          </div>
+          <div class="pdp-accordion-item about-story-reveal">
+            <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
+              <span>Do you offer bespoke commissions?</span>
+              <span>▾</span>
+            </div>
+            <div class="pdp-accordion-pane">
+              Yes. Our Bespoke Goldsmith Studio accepts private commissions for wedding suites, heirloom redesigns, and custom designs. Book a private consultation to begin.
+            </div>
+          </div>
+          <div class="pdp-accordion-item about-story-reveal">
+            <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
+              <span>Are your gemstones ethically sourced?</span>
+              <span>▾</span>
+            </div>
+            <div class="pdp-accordion-pane">
+              We use certified conflict-free laboratory-grown moissanites and diamonds, and ethically sourced gemstones with full gemological inspection cards.
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  // ==================== VIEW: CUSTOM ORDER / BESPOKE PAGE (Animated Enquiry Form) ====================
+  function renderCustomOrderPage(container) {
+    container.innerHTML = `
+      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
+        <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.75rem;">Bespoke Goldsmith Studio</span>
+          <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Commission a Bespoke Creation</h2>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
+          <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+            Work directly with Master Goldsmith Yuvraj Soni to create a one-of-a-kind heirloom. From concept sketch to final hallmark certification, every detail is yours.
+          </p>
+        </div>
+      </section>
+
+      <section style="padding: 4rem 0 6rem;">
+        <div class="container" style="max-width: 640px; margin: 0 auto;">
+          <form id="bespoke-form" style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Bespoke Commission Enquiry</h3>
+            <p style="font-size: 0.8rem; color: var(--color-stone-muted); margin-bottom: 1rem;">Share your vision. Our atelier concierge will respond within 24 business hours.</p>
+
+            <div class="contact-field form-grid-2">
+              <div class="form-field">
+                <label class="form-label">Full Name *</label>
+                <input type="text" class="form-input" required placeholder="Your noble name" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Email Address *</label>
+                <input type="email" class="form-input" required placeholder="patron@domain.com" />
+              </div>
+            </div>
+
+            <div class="contact-field form-grid-2">
+              <div class="form-field">
+                <label class="form-label">Mobile Phone *</label>
+                <input type="tel" class="form-input" required placeholder="+91 98765 43210" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Budget Range *</label>
+                <select class="form-input" required>
+                  <option value="">Select budget band</option>
+                  <option value="under-25k">Under ₹25,000</option>
+                  <option value="25k-50k">₹25,000 – ₹50,000</option>
+                  <option value="50k-1lakh">₹50,000 – ₹1,00,000</option>
+                  <option value="above-1lakh">Above ₹1,00,000</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="contact-field form-field">
+              <label class="form-label">Jewellery Type *</label>
+              <select class="form-input" required>
+                <option value="">Select category</option>
+                <option value="ring">Ring / Solitaire</option>
+                <option value="earrings">Earrings</option>
+                <option value="necklace">Necklace / Choker</option>
+                <option value="bracelet">Bracelet / Bangle</option>
+                <option value="brooch">Brooch / Pin</option>
+                <option value="wedding-suite">Wedding Suite</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="contact-field form-field">
+              <label class="form-label">Design Description *</label>
+              <textarea class="form-input form-textarea" rows="4" required placeholder="Describe your vision — motifs, gemstones, metals, inspiration..."></textarea>
+            </div>
+
+            <div class="contact-field form-field">
+              <label class="form-label">Reference Images (optional)</label>
+              <input type="file" class="form-input" accept="image/*" multiple />
+            </div>
+
+            <button type="submit" class="btn-gold" style="width: fit-content; align-self: flex-start; padding: 0.9rem 2rem; font-size: 0.82rem;">Submit Commission ✦</button>
+            <div id="bespoke-form-message" style="margin-top: 1rem; font-size: 0.82rem; min-height: 1.2rem;"></div>
+          </form>
+        </div>
+      </section>
+    `;
+
+    const form = document.getElementById('bespoke-form');
+    const messageEl = document.getElementById('bespoke-form-message');
+    if (form && messageEl) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        
+        gsap.to(btn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1, onComplete: () => {
+          btn.textContent = 'Submitting…';
+          gsap.to(btn, { opacity: 0.7, duration: 0.2 });
+          
+          // Submit to real API
+          const formData = new FormData(form);
+          const data = {
+            fullName: formData.get('fullName') || '',
+            phone: formData.get('mobile') || formData.get('phone') || '',
+            email: formData.get('email') || '',
+            jewelleryType: formData.get('jewelleryType') || '',
+            metalPreference: '',
+            budgetBand: formData.get('budgetRange') || '',
+            description: formData.get('designDescription') || formData.get('description') || ''
+          };
+          
+          fetch('/api/custom-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+          .then(res => res.json())
+          .then(result => {
+            gsap.to(btn, { opacity: 1, scale: 1, duration: 0.2, onComplete: () => {
+              btn.textContent = 'Submitted ✦';
+              gsap.to(btn, { backgroundColor: 'var(--color-antique-gold)', color: '#140F0D', duration: 0.3 });
+              messageEl.innerHTML = '<span style="color: #2E7D32;">✓ ' + (result.message || 'Your bespoke commission has been submitted.') + '</span>';
+              gsap.fromTo(messageEl, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 });
+              
+              setTimeout(() => {
+                btn.textContent = originalText;
+                gsap.to(btn, { backgroundColor: '', color: '', duration: 0.3 });
+                messageEl.innerHTML = '';
+              }, 2500);
+            }});
+          })
+          .catch(err => {
+            gsap.to(btn, { opacity: 1, scale: 1, duration: 0.2, onComplete: () => {
+              btn.textContent = originalText;
+              messageEl.innerHTML = '<span style="color: #B22222;">✗ Submission failed. Please contact concierge directly.</span>';
+              gsap.fromTo(messageEl, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 });
+            }});
+          });
+        }});
+      });
+    }
+  }
+
   // ==================== GLOBAL PUBLIC API ====================
   window.HJ = {
     navigate: function (route) { navigate(route); },
@@ -1454,6 +1819,10 @@
       }
       saveCart();
       window.HJ.openCart();
+      // Toast notification
+      if (window.HJ_MOTION_DS) {
+        window.HJ_MOTION_DS.showAddedToast(prod.name);
+      }
     },
 
     updateCartQty: function (productId, delta) {
