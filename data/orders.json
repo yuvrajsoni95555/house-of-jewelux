@@ -1,0 +1,82 @@
+[
+  {
+    "orderId": "HJ-ORD-2026-7701",
+    "orderDate": "2026-11-18T07:33:35.549Z",
+    "customer": {
+      "fullName": "Yuvraj Soni",
+      "email": "yuvrajsoni@example.com",
+      "phone": "+916377061020"
+    },
+    "shippingAddress": {
+      "address": "Jaipur Atelier, C-Scheme",
+      "city": "Jaipur",
+      "pincode": "302001",
+      "state": "Rajasthan"
+    },
+    "items": [
+      {
+        "id": "HJ-EAR-001",
+        "name": "The Lumina Teardrop Solitaire Earrings",
+        "price": 14613,
+        "quantity": 1,
+        "size": "Standard",
+        "metal": "BIS 925 Rhodium Silver",
+        "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
+        "lineTotal": 14613
+      }
+    ],
+    "pricing": {
+      "subtotal": 14613,
+      "discount": 1461,
+      "couponCode": "FIRSTLUX",
+      "giftBoxFee": 0,
+      "shipping": 0,
+      "grandTotal": 13152
+    },
+    "paymentMethod": "bank_transfer",
+    "paymentStatus": "Paid",
+    "orderStatus": "Confirmed & In Atelier Goldsmithing",
+    "trackingNumber": "HJ-TRK-736071IN",
+    "estimatedDelivery": "3 - 5 Business Days via Insured Courier"
+  },
+  {
+    "orderId": "HJ-ORD-2026-1221",
+    "orderDate": "2026-11-18T07:24:58.536Z",
+    "customer": {
+      "fullName": "Yuvraj Soni",
+      "email": "yuvrajsoni@example.com",
+      "phone": "+916377061020"
+    },
+    "shippingAddress": {
+      "address": "Civil Lines",
+      "city": "Jaipur",
+      "pincode": "302001",
+      "state": "Rajasthan"
+    },
+    "items": [
+      {
+        "id": "HJ-EAR-001",
+        "name": "The Lumina Teardrop Solitaire Earrings",
+        "price": 14613,
+        "quantity": 1,
+        "size": "Standard",
+        "metal": "BIS 925 Sterling Silver",
+        "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=1000&q=85",
+        "lineTotal": 14613
+      }
+    ],
+    "pricing": {
+      "subtotal": 14613,
+      "discount": 1461,
+      "couponCode": "FIRSTLUX",
+      "giftBoxFee": 0,
+      "shipping": 0,
+      "grandTotal": 13152
+    },
+    "paymentMethod": "bank_transfer",
+    "paymentStatus": "Pending Verification",
+    "orderStatus": "Pending Verification",
+    "trackingNumber": "HJ-TRK-298893IN",
+    "estimatedDelivery": "3 - 5 Business Days via Insured Courier"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "FIRSTLUX": {
+    "code": "FIRSTLUX",
+    "discountPercent": 10,
+    "description": "10% Welcome Privilege for First Acquisition"
+  },
+  "DIWALI2026": {
+    "code": "DIWALI2026",
+    "discountPercent": 15,
+    "description": "15% Royal Festive Celebration Privilege"
+  },
+  "JEWELUX20": {
+    "code": "JEWELUX20",
+    "discountPercent": 20,
+    "description": "20% Exclusive VIP Patron & Birthday Privilege"
+  },
+  "SILVER500": {
+    "code": "SILVER500",
+    "flatDiscountINR": 500,
+    "description": "₹500 Patron Referral Privilege"
+  }
+}

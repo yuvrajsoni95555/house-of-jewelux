@@ -1,0 +1,72 @@
+[
+  {
+    "id": "rings",
+    "handle": "rings",
+    "name": "Rings & Solitaires",
+    "subtitle": "Timeless Bands & Regal Cocktail Rings",
+    "count": 10,
+    "image": "images/authentic_solitaire_ring.jpg",
+    "banner": "images/authentic_solitaire_ring.jpg",
+    "description": "Hand-forged in solid 925 sterling silver with liquid rhodium and 18K yellow gold, set with VVS1 diamond simulants and authentic gemstones."
+  },
+  {
+    "id": "earrings",
+    "handle": "earrings",
+    "name": "The Earrings Suite",
+    "subtitle": "Solitaire Studs, Drops, Chandbalis & Jhumkas",
+    "count": 10,
+    "image": "images/authentic_earrings_macro.jpg",
+    "banner": "images/authentic_earrings_macro.jpg",
+    "description": "From featherweight daily huggies to ornate royal Rajputana chandeliers crafted with hypoallergenic 925 silver posts."
+  },
+  {
+    "id": "necklaces",
+    "handle": "necklaces",
+    "name": "Necklaces & Chokers",
+    "subtitle": "Hasli Chokers, Pendants & Regal Ranimon",
+    "count": 10,
+    "image": "images/authentic_diamond_choker.jpg",
+    "banner": "images/authentic_diamond_choker.jpg",
+    "description": "Majestic neckpieces inspired by the royal courts of Rajasthan, featuring intricate floral openwork and bezel-set brilliants."
+  },
+  {
+    "id": "bracelets",
+    "handle": "bracelets",
+    "name": "Bracelets & Bangles",
+    "subtitle": "Kadas, Tennis Cuffs & Articulated Links",
+    "count": 10,
+    "image": "images/authentic_bracelet_lifestyle.jpg",
+    "banner": "images/authentic_bracelet_lifestyle.jpg",
+    "description": "Ergonomically contoured cuffs and hinged Jaipur kadas with double-locking royal security clasps."
+  },
+  {
+    "id": "brooches",
+    "handle": "brooches",
+    "name": "Royal Brooches & Pins",
+    "subtitle": "Falcon Crests, Temple Sarpech & Lapel Jewels",
+    "count": 10,
+    "image": "images/user_falcon_brooch_white.jpg",
+    "banner": "images/user_falcon_brooch_white.jpg",
+    "description": "Haute joaillerie crests for celebratory sherwanis and tailored velvet dinner jackets, featuring museum-grade filigree."
+  },
+  {
+    "id": "temple-jewellery",
+    "handle": "temple-jewellery",
+    "name": "Sacred Temple Nakshi",
+    "subtitle": "Hand-Chiseled Balaji, Lakshmi & Peacock Motifs",
+    "count": 10,
+    "image": "images/user_balaji_temple_pendant.jpg",
+    "banner": "images/user_balaji_temple_pendant.jpg",
+    "description": "Devotional goldsmith bench artistry embodying centuries of sacred Indian temple architecture."
+  },
+  {
+    "id": "festive-edit",
+    "handle": "festive-edit",
+    "name": "Festive & Bridal Edit",
+    "subtitle": "Royal Ceremonial & Wedding Masterpieces",
+    "count": 15,
+    "image": "images/authentic_indian_bridal.jpg",
+    "banner": "images/authentic_indian_bridal.jpg",
+    "description": "Curated ceremonial suites designed for brides, royal occasions, and generational heirlooms."
+  }
+]

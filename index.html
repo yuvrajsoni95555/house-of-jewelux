@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>House of Jewelux — Where Elegance Becomes Eternal | Fine Indian Jewellery</title>
+  <meta name="description" content="Discover generationally crafted fine Indian jewellery in solid 925 sterling silver and 18K gold. BIS hallmarked temple nakshi, solitaires, and bespoke atelier creations.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand-identity/favicon-32x32.png">
+  <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
+  <base href="/">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Cinematic Route Transition Curtain -->
+  <div id="route-transition-curtain" class="route-transition-curtain"></div>
+
+  <!-- ==================== 1. ANNOUNCEMENT BAR (MATCHING PALMONAS) ==================== -->
+  <aside class="announcement-bar" aria-label="Store Announcements">
+    <div class="announcement-ticker">
+      <div class="announcement-item">
+        <span class="announcement-sparkle">✦</span>
+        <span>INDIAN FINE JEWELLERY • SACRED TEMPLE NAKSHI • BIS 925 HALLMARKED</span>
+      </div>
+      <div class="announcement-item">
+        <span class="announcement-sparkle">✦</span>
+        <span>COMPLIMENTARY FULLY INSURED ARMORED TRANSIT ACROSS INDIA</span>
+      </div>
+      <div class="announcement-item">
+        <span class="announcement-sparkle">✦</span>
+        <span>USE PRIVILEGE CODE <strong>FIRSTLUX</strong> FOR 10% OFF YOUR FIRST ACQUISITION</span>
+      </div>
+      <div class="announcement-item">
+        <span class="announcement-sparkle">✦</span>
+        <span>JAIPUR ATELIER & NEW DELHI SALON • PRIVATE SALON SUITE APPOINTMENTS AVAILABLE</span>
+      </div>
+      <div class="announcement-item">
+        <span class="announcement-sparkle">✦</span>
+        <span>INSURED ARMORED TRANSIT • REAL-TIME CONSIGNMENT TRACKING ACTIVE</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== 2. MAIN HEADER (1:1 RECREATION) ==================== -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <!-- Desktop Header Row -->
+      <div class="header-main-desktop">
+        <!-- Left: Official Brand Logo -->
+        <div class="header-left-col">
+          <a href="#home" class="brand-logo-link" aria-label="House of Jewelux Home">
+            <img class="brand-logo-img" src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" />
+          </a>
+        </div>
+
+        <!-- Center: Search Pill (Matching Palmonas with Fine Loupe) -->
+        <div class="header-search-wrap" onclick="window.HJ.openSearch()">
+          <div class="search-pill-box">
+            <input type="text" placeholder="Search products..." readonly />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10.5" cy="10.5" r="7"></circle>
+              <circle cx="10.5" cy="10.5" r="4" stroke-dasharray="1 2" opacity="0.6"></circle>
+              <line x1="15.8" y1="15.8" x2="21" y2="21"></line>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right: Pincode, Stores, Wishlist, Account, Bag -->
+        <div class="header-right-actions">
+          <!-- Jaipur Jewels Inspired Utility Actions -->
+          <button class="header-utility-link" onclick="window.HJ.openAppointmentModal()" title="Book Private Consultation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Appointment</span>
+          </button>
+
+          <button class="header-utility-link" onclick="window.HJ.openTrackOrderModal()" title="Track Your Consignment">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span>Track Order</span>
+          </button>
+          <button class="pincode-btn" onclick="window.HJ.openPincodeModal()" aria-label="Delivery Pincode">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C8 2 4.8 5.2 4.8 9.3C4.8 15 12 22 12 22C12 22 19.2 15 19.2 9.3C19.2 5.2 16 2 12 2Z"></path>
+              <circle cx="12" cy="9.3" r="2.8"></circle>
+            </svg>
+            <span id="header-pincode-label">Enter Pincode</span>
+          </button>
+
+          <!-- Atelier / Stores Icon -->
+          <a href="#contact" class="header-icon-action" aria-label="Atelier Consultations" title="Jaipur Atelier">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21H21M5 21V10M19 21V10M9 21V13M15 21V13"></path>
+              <path d="M2.5 10C2.5 10 7 5 12 5C17 5 21.5 10 21.5 10H2.5Z"></path>
+              <circle cx="12" cy="3" r="1.2" fill="currentColor"></circle>
+            </svg>
+          </a>
+
+          <!-- Wishlist Heart -->
+          <a href="#wishlist" class="header-icon-action" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20.5L3.8 12.3C1.8 10.3 1.8 7.1 3.8 5.1C5.8 3.1 9 3.1 11 5.1L12 6.1L13 5.1C15 3.1 18.2 3.1 20.2 5.1C22.2 7.1 22.2 10.3 20.2 12.3L12 20.5Z"></path>
+            </svg>
+            <span id="wishlist-badge" class="badge-count" style="display: none;">0</span>
+          </a>
+
+          <!-- Patron Account -->
+          <a href="#account" class="header-icon-action" aria-label="Patron Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="12" rx="9" ry="10.5"></ellipse>
+              <circle cx="12" cy="8.5" r="3"></circle>
+              <path d="M6.5 17.5C7.8 15 9.8 14 12 14C14.2 14 16.2 15 17.5 17.5"></path>
+            </svg>
+          </a>
+
+          <!-- Shopping Bag -->
+          <button class="header-icon-action" onclick="window.HJ.openCart()" aria-label="Shopping Bag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5.5 8.5L4 21H20L18.5 8.5H5.5Z"></path>
+              <path d="M9 11V6.5C9 4.8 10.3 3.5 12 3.5C13.7 3.5 15 4.8 15 6.5V11"></path>
+              <circle cx="12" cy="11.5" r="0.9" fill="currentColor"></circle>
+            </svg>
+            <span id="cart-badge" class="badge-count" style="display: none;">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Header (1:1 with Palmonas Mobile) -->
+      <div class="header-main-mobile">
+        <div class="mobile-top-bar">
+          <button class="mobile-menu-toggle" onclick="window.HJ.openMobileMenu()" aria-label="Open Navigation">
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+              <line x1="2" y1="4" x2="20" y2="4"></line>
+              <line x1="5" y1="14" x2="17" y2="14"></line>
+            </svg>
+          </button>
+          
+          <div class="mobile-logo-wrap">
+            <a href="#home" aria-label="House of Jewelux Home">
+              <img class="mobile-logo-img" src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" />
+            </a>
+          </div>
+
+          <div class="mobile-top-icons">
+            <a href="#wishlist" class="header-icon-action" aria-label="Wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20.5L3.8 12.3C1.8 10.3 1.8 7.1 3.8 5.1C5.8 3.1 9 3.1 11 5.1L12 6.1L13 5.1C15 3.1 18.2 3.1 20.2 5.1C22.2 7.1 22.2 10.3 20.2 12.3L12 20.5Z"></path>
+              </svg>
+            </a>
+            <button class="header-icon-action" onclick="window.HJ.openCart()" aria-label="Shopping Bag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5.5 8.5L4 21H20L18.5 8.5H5.5Z"></path>
+                <path d="M9 11V6.5C9 4.8 10.3 3.5 12 3.5C13.7 3.5 15 4.8 15 6.5V11"></path>
+                <circle cx="12" cy="11.5" r="0.9" fill="currentColor"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="mobile-search-row" onclick="window.HJ.openSearch()">
+          <div class="search-pill-box" style="padding: 0.45rem 1rem;">
+            <input type="text" placeholder="Search products..." readonly />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
+              <circle cx="10.5" cy="10.5" r="7"></circle>
+              <line x1="15.8" y1="15.8" x2="21" y2="21"></line>
+            </svg>
+          </div>
+        </div>
+
+        <div class="mobile-pincode-row" onclick="window.HJ.openPincodeModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8 2 4.8 5.2 4.8 9.3C4.8 15 12 22 12 22C12 22 19.2 15 19.2 9.3C19.2 5.2 16 2 12 2Z"></path>
+            <circle cx="12" cy="9.3" r="2.8"></circle>
+          </svg>
+          <span id="mobile-pincode-label">Enter Pincode</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Ribbon Navigation -->
+    <nav class="nav-ribbon" aria-label="Product Categories">
+      <div class="container">
+        <ul class="nav-ribbon-list">
+          <li><a href="#collections/new-arrivals" class="nav-ribbon-link highlight" style="color: var(--color-royal-lac);">What's New ✦</a></li>
+          <li><a href="#collections/rings" class="nav-ribbon-link">Rings</a></li>
+          <li><a href="#collections/earrings" class="nav-ribbon-link">Earrings</a></li>
+          <li><a href="#collections/necklaces" class="nav-ribbon-link">Necklaces</a></li>
+          <li><a href="#collections/bracelets" class="nav-ribbon-link">Bracelets & Bangles</a></li>
+          <li><a href="#collections/brooches" class="nav-ribbon-link">Brooches & Pins</a></li>
+          <li><a href="#collections/temple-jewellery" class="nav-ribbon-link">Temple Nakshi</a></li>
+          <li><a href="#craftsmanship" class="nav-ribbon-link">Craftsmanship</a></li>
+          <li><a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="nav-ribbon-link highlight">Book Appointment</a></li>
+          <li><a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal()" class="nav-ribbon-link">Track Order</a></li>
+          <li class="nav-has-mega">
+            <a href="#collections/signature-collection" class="nav-ribbon-link">Demifine® Collection ▾</a>
+            <div class="mega-menu">
+              <div>
+                <div class="mega-col-title">Earrings Suite</div>
+                <ul class="mega-links">
+                  <li><a href="#collections/earrings">Solitaire Studs</a></li>
+                  <li><a href="#collections/earrings">Pavé Huggie Hoops</a></li>
+                  <li><a href="#collections/earrings">Chandelier Drops</a></li>
+                  <li><a href="#collections/earrings">Architectural Ear Cuffs</a></li>
+                </ul>
+              </div>
+              <div>
+                <div class="mega-col-title">Rings & Bands</div>
+                <ul class="mega-links">
+                  <li><a href="#collections/rings">Solitaire Promise Rings</a></li>
+                  <li><a href="#collections/rings">Amore Couple Bands</a></li>
+                  <li><a href="#collections/rings">Empress Emerald Cuts</a></li>
+                  <li><a href="#collections/rings">Pavé Crisscross Bands</a></li>
+                </ul>
+              </div>
+              <div>
+                <div class="mega-col-title">Necklaces & Cuffs</div>
+                <ul class="mega-links">
+                  <li><a href="#collections/necklaces">Tennis Collars</a></li>
+                  <li><a href="#collections/bracelets">Riviera Tennis Bracelets</a></li>
+                  <li><a href="#collections/brooches">Royal Falcon Lapel Pins</a></li>
+                  <li><a href="#collections/temple-jewellery">Sacred Nakshi Sets</a></li>
+                </ul>
+              </div>
+              <div class="mega-featured">
+                <img src="images/authentic_earrings_macro.jpg" alt="The Lumina Drops - Authentic Model Studio View" />
+                <span style="font-family: var(--font-serif); font-size: 0.8rem; font-weight: 700;">The Lumina Drops</span>
+                <span style="font-size: 0.75rem; color: var(--color-gold-dark);">₹14,613</span>
+              </div>
+            </div>
+          </li>
+          <li><a href="#collections/curated-favorites" class="nav-ribbon-link">Founder's Curation</a></li>
+          <li><a href="#collections/temple-jewellery" class="nav-ribbon-link">Temple Heritage</a></li>
+          <li><a href="#custom-order" class="nav-ribbon-link highlight" style="color: var(--color-gold-dark);">Bespoke Studio</a></li>
+          <li><a href="#about" class="nav-ribbon-link">About Us ▾</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Capsule Tab Selector (Home, Demifine, Silver, Gold) -->
+    <div class="capsule-filter-bar">
+      <div class="capsule-pill-container">
+        <span class="capsule-tab active" onclick="window.HJ.navigate('home')">Home</span>
+        <span class="capsule-tab" onclick="window.HJ.navigate('collections/signature-collection')">Demifine®</span>
+        <span class="capsule-tab" onclick="window.HJ.navigate('collections/earrings')">Silver</span>
+        <span class="capsule-tab" onclick="window.HJ.navigate('collections/temple-jewellery')">Gold</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 3. MAIN DYNAMIC APP CONTAINER ==================== -->
+  <main id="app-view">
+    <!-- Populated dynamically by app.js based on route -->
+  </main>
+
+  <!-- ==================== 4. SLIDE-OVER DRAWERS & MODALS ==================== -->
+  <div id="drawer-backdrop" class="drawer-backdrop" onclick="window.HJ.closeCart()"></div>
+
+  <!-- Shopping Bag Drawer -->
+  <div id="cart-drawer" class="slide-drawer" role="dialog" aria-modal="true" aria-label="Shopping Bag">
+    <div class="drawer-header">
+      <div class="drawer-title">Shopping Bag</div>
+      <button class="drawer-close-btn" onclick="window.HJ.closeCart()" aria-label="Close Bag">×</button>
+    </div>
+    <div id="cart-drawer-body" class="drawer-body"></div>
+    <div id="cart-drawer-footer" class="drawer-footer"></div>
+  </div>
+
+  <!-- Live Search Drawer -->
+  <div id="search-drawer" class="slide-drawer" role="dialog" aria-modal="true" aria-label="Search Vault">
+    <div class="drawer-header">
+      <div class="drawer-title">Search Products</div>
+      <button class="drawer-close-btn" onclick="window.HJ.closeCart()" aria-label="Close Search">×</button>
+    </div>
+    <div class="drawer-body">
+      <div style="margin-bottom: 1.5rem;">
+        <input type="text" id="live-search-input" class="form-input" placeholder="Type design, stone, or category..." oninput="window.HJ.liveSearch(this.value)" />
+      </div>
+      <div style="margin-bottom: 0.75rem; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--color-taupe);">Popular Searches:</div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <button class="payment-pill-badge" onclick="document.getElementById('live-search-input').value='Earrings'; window.HJ.liveSearch('Earrings');">Earrings</button>
+        <button class="payment-pill-badge" onclick="document.getElementById('live-search-input').value='Tennis'; window.HJ.liveSearch('Tennis');">Tennis Bracelet</button>
+        <button class="payment-pill-badge" onclick="document.getElementById('live-search-input').value='Temple'; window.HJ.liveSearch('Temple');">Temple Nakshi</button>
+        <button class="payment-pill-badge" onclick="document.getElementById('live-search-input').value='Solitaire'; window.HJ.liveSearch('Solitaire');">Solitaire Ring</button>
+      </div>
+      <div id="search-live-results"></div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-menu-drawer" class="slide-drawer from-left" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <div class="drawer-header">
+      <img src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" style="height: 32px;" />
+      <button class="drawer-close-btn" onclick="window.HJ.closeCart()" aria-label="Close Menu">×</button>
+    </div>
+    <div class="drawer-body" style="padding: 1.5rem 1rem;">
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+        <li><a href="#collections/earrings" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;">✦ Earrings Collection</a></li>
+        <li><a href="#collections/rings" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;">✦ Rings & Solitaires</a></li>
+        <li><a href="#collections/necklaces" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;">✦ Necklaces & Chokers</a></li>
+        <li><a href="#collections/bracelets" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;">✦ Bracelets & Cuffs</a></li>
+        <li><a href="#collections/brooches" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;">✦ Brooches & Pins</a></li>
+        <li><a href="#collections/temple-jewellery" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;">✦ Temple Nakshi Heritage</a></li>
+        <li><a href="#custom-order" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; color: var(--color-gold-dark);">✦ Bespoke Goldsmith Studio</a></li>
+        <li style="border-top: 1px solid var(--color-border-light); padding-top: 1rem;"><a href="#about" onclick="window.HJ.closeCart()">About The Atelier</a></li>
+        <li><a href="#contact" onclick="window.HJ.closeCart()">Atelier & Salon Consultations</a></li>
+        <li><a href="#faq" onclick="window.HJ.closeCart()">Frequently Asked Questions</a></li>
+        <li><a href="#admin" onclick="window.HJ.closeCart()" style="color: var(--color-taupe);">Atelier Admin Portal</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pincode Modal -->
+  <div id="pincode-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1020; align-items: center; justify-content: center;">
+    <div style="background: #FFFFFF; border-radius: 8px; padding: 2rem; max-width: 400px; width: 90%; text-align: center;">
+      <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">Select Delivery Pincode</h3>
+      <p style="font-size: 0.8rem; color: var(--color-taupe); margin-bottom: 1.25rem;">Enter your 6-digit Indian PIN code to view delivery speed and armored courier availability.</p>
+      <input type="text" id="modal-pincode-input" class="form-input" placeholder="e.g. 302001 or 110001" maxlength="6" style="margin-bottom: 1rem;" />
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn-primary" style="flex: 1;" onclick="window.HJ.saveModalPincode()">Set Pincode</button>
+        <button class="btn-outline" style="flex: 1; color: #000; border-color: #CCC;" onclick="document.getElementById('pincode-modal').style.display='none'">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 5. FOOTER (1:1 RECREATION) ==================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <!-- Newsletter -->
+      <div class="footer-newsletter-wrap">
+        <h3 class="newsletter-title">Enter The House of Jewelux Circle</h3>
+        <p class="newsletter-subtitle">Receive private salon invitations, new collection debuts, and your 10% welcome privilege with code <strong>FIRSTLUX</strong>.</p>
+        <form class="newsletter-form" onsubmit="alert('Welcome to the House of Jewelux Circle. Use code FIRSTLUX for 10% off.'); event.preventDefault();">
+          <input type="email" class="newsletter-input" placeholder="Enter your email address" required />
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+
+      <!-- Footer Columns Grid -->
+      <div class="footer-columns-grid">
+        <!-- Col 1: Brand Info -->
+        <div class="footer-brand-col">
+          <img class="footer-logo" src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" />
+          <p class="footer-desc">
+            Where Elegance Becomes Eternal.<br>
+            Handcrafted in solid 925 sterling silver with liquid rhodium and 18K micron gold finish. Honoring generational Indian goldsmithing and sacred temple heritage.
+          </p>
+          <div style="font-size: 0.8rem; color: var(--color-espresso);">
+            <strong>Jaipur Creative Atelier & Salon:</strong><br>
+            Rajasthan, India<br>
+            Direct Concierge: <strong>+91 63770 61020</strong><br>
+            Email: <strong>houseofjewelux@gmail.com</strong>
+          </div>
+        </div>
+
+        <!-- Col 2: Categories -->
+        <div>
+          <h4 class="footer-col-title">Categories</h4>
+          <ul class="footer-links-list">
+            <li><a href="#collections/earrings">Earrings for Women</a></li>
+            <li><a href="#collections/rings">Solitaire Rings</a></li>
+            <li><a href="#collections/necklaces">Necklaces & Pendants</a></li>
+            <li><a href="#collections/bracelets">Tennis Bracelets</a></li>
+            <li><a href="#collections/brooches">Royal Falcon Brooches</a></li>
+            <li><a href="#collections/temple-jewellery">Temple Nakshi Jewellery</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Curations -->
+        <div>
+          <h4 class="footer-col-title">Curated Edits</h4>
+          <ul class="footer-links-list">
+            <li><a href="#collections/festive-edit">Diwali & Festive Edit</a></li>
+            <li><a href="#collections/best-sellers">Best Sellers</a></li>
+            <li><a href="#collections/curated-favorites">Founder’s Curation</a></li>
+            <li><a href="#custom-order">Bespoke Goldsmith Studio</a></li>
+            <li><a href="#craftsmanship">The 10-Stage Craft Method</a></li>
+            <li><a href="#admin">Atelier Admin Access</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Client Care -->
+        <div>
+          <h4 class="footer-col-title">Client Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" style="color: var(--color-gold-dark); font-weight: 600;">✦ Book Salon Appointment</a></li>
+            <li><a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal()" style="color: var(--color-gold-dark); font-weight: 600;">✦ Track Your Order</a></li>
+            <li><a href="#contact">Contact Concierge</a></li>
+            <li><a href="https://wa.me/916377061020" target="_blank">WhatsApp Direct Support</a></li>
+            <li><a href="#faq">Frequently Asked Questions</a></li>
+            <li><a href="#account">Patron Account Portal</a></li>
+            <li><a href="#shipping">Insured Shipping Covenant</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Policies -->
+        <div>
+          <h4 class="footer-col-title">Policies</h4>
+          <ul class="footer-links-list">
+            <li><a href="#shipping">Insured Shipping Policy</a></li>
+            <li><a href="#returns">14-Day Return & Exchange</a></li>
+            <li><a href="#warranty">Lifetime Maintenance Covenant</a></li>
+            <li><a href="#privacy">Patron Privacy Covenant</a></li>
+            <li><a href="#terms">Terms of Authenticity</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          © 2026 HOUSE OF JEWELUX. All rights reserved. Where Elegance Becomes Eternal. Stamped BIS 925 Hallmarked.
+        </div>
+        <div class="footer-payment-icons">
+          <span class="payment-pill-badge" title="BHIM UPI">
+            <svg viewBox="0 0 54 20" style="height: 14px; width: auto;"><path d="M7 3L16 10L7 17H2L11 10L2 3H7Z M19 3L28 10L19 17H14L23 10L14 3H19Z" fill="currentColor"/><text x="32" y="15" font-size="12" font-weight="700" font-family="'Montserrat', sans-serif" fill="currentColor">UPI</text></svg>
+          </span>
+          <span class="payment-pill-badge" title="Visa">
+            <svg viewBox="0 0 54 18" style="height: 12px; width: auto;"><path d="M20 1L14.3 17H10.7L6.6 4.3C6.4 3.5 6.1 3.2 5.4 2.8C4.2 2.2 2.2 1.6 0.6 1.2L0.7 0.4H7.4C8.3 0.4 9.1 1 9.3 2.1L11 12L15.2 0.4H20ZM37.3 11.7C37.3 7.2 31.6 6.9 31.6 4.9C31.6 4.2 32.3 3.5 33.7 3.3C34.4 3.2 36.3 3.1 38.3 4.2L39.1 0.5C38 0.1 36.5 -0.3 34.6 -0.3C29.2 -0.3 25.4 2.6 25.4 6.9C25.4 10.1 28.1 11.9 30.2 13C32.3 14.1 33.1 14.8 33.1 15.8C33.1 17.3 31.3 18 29.7 18C27.2 18 25.7 17.5 24.3 16.8L23.4 20.7C24.9 21.4 27.6 22 30.2 22C35.9 22 39.7 19.1 39.7 14.5L37.3 11.7ZM49.1 0.4H45.2C44.3 0.4 43.6 0.9 43.2 1.8L36.8 17.4H42.7L43.9 14H49.3L49.8 17.4H55L49.1 0.4ZM45.5 10.6L47.5 4.8L48.7 10.6H45.5ZM24.4 0.4L19.8 17.4H14.1L18.7 0.4H24.4Z" fill="currentColor"/></svg>
+          </span>
+          <span class="payment-pill-badge" title="Mastercard">
+            <svg viewBox="0 0 40 24" style="height: 16px; width: auto;"><circle cx="14" cy="12" r="9" fill="currentColor" opacity="0.85"/><circle cx="26" cy="12" r="9" fill="currentColor" opacity="0.65"/></svg>
+          </span>
+          <span class="payment-pill-badge" title="RuPay">
+            <svg viewBox="0 0 54 18" style="height: 13px; width: auto;"><text x="0" y="14" font-size="13" font-weight="800" font-family="'Montserrat', sans-serif" letter-spacing="0.04em" fill="currentColor">RuPay</text><polygon points="46 4 52 9 46 14" fill="currentColor"/></svg>
+          </span>
+          <span class="payment-pill-badge" title="Google Pay">
+            <svg viewBox="0 0 48 18" style="height: 13px; width: auto;"><text x="2" y="14" font-size="12" font-weight="700" font-family="'Montserrat', sans-serif" fill="currentColor">G Pay</text></svg>
+          </span>
+          <span class="payment-pill-badge" title="BIS 925 Hallmark Certified">
+            <svg viewBox="0 0 42 20" style="height: 15px; width: auto;"><polygon points="12 2 22 18 2 18" fill="none" stroke="currentColor" stroke-width="1.3"/><text x="12" y="15" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor">925</text><text x="26" y="14" font-size="9" font-family="'Cinzel', serif" font-weight="700" fill="currentColor">BIS</text></svg>
+          </span>
+          <span class="payment-pill-badge" title="100% Insured Transit Across India">
+            <svg viewBox="0 0 56 20" style="height: 14px; width: auto;"><path d="M8 2L2 5V11C2 15 8 18 8 18C8 18 14 15 14 11V5L8 2Z" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="18" y="14" font-size="8.5" font-weight="600" font-family="'Montserrat', sans-serif" letter-spacing="0.04em" fill="currentColor">INSURED</text></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== 6. MOBILE BOTTOM NAVIGATION (1:1 WITH PALMONAS) ==================== -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Bottom App Bar">
+    <a href="#home" class="mobile-bottom-tab active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M3 21H21M5 21V10M19 21V10M9 21V13M15 21V13"></path>
+        <path d="M2.5 10C2.5 10 7 5 12 5C17 5 21.5 10 21.5 10H2.5Z"></path>
+        <circle cx="12" cy="3" r="1" fill="currentColor"></circle>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="#collections/earrings" class="mobile-bottom-tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <polygon points="12 3 20 8 12 13 4 8 12 3"></polygon>
+        <polygon points="12 13 20 8 20 16 12 21 4 16 4 8 12 13"></polygon>
+      </svg>
+      <span>Silver</span>
+    </a>
+    <a href="#collections/temple-jewellery" class="mobile-bottom-tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <circle cx="12" cy="12" r="8.5"></circle>
+        <circle cx="12" cy="12" r="4.5" stroke-dasharray="1 2"></circle>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+      </svg>
+      <span>Gold</span>
+    </a>
+    <a href="javascript:void(0)" onclick="window.HJ.openCart()" class="mobile-bottom-tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M5.5 8.5L4 21H20L18.5 8.5H5.5Z"></path>
+        <path d="M9 11V6.5C9 4.8 10.3 3.5 12 3.5C13.7 3.5 15 4.8 15 6.5V11"></path>
+        <circle cx="12" cy="11.5" r="0.9" fill="currentColor"></circle>
+      </svg>
+      <span>Bag</span>
+    </a>
+  </nav>
+
+  <script src="/vendor/gsap.min.js"></script>
+  <script src="/vendor/ScrollTrigger.min.js"></script>
+  <script src="/motion-engine.js"></script>
+  <script src="/hero-cinematic.js"></script>
+  <script src="/app.js"></script>
+
+  <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
+  <div id="appointment-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(4px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">
+    <div style="background: var(--color-warm-ivory); border: 1px solid var(--color-antique-gold); border-radius: var(--radius-sm); max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative;">
+      <button onclick="window.HJ.closeAppointmentModal()" style="position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-deep-heritage-brown);">&times;</button>
+      
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-antique-gold); font-weight: 600;">Private Atelier Consultation</span>
+        <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.3rem 0;">Book an Appointment</h3>
+        <p style="font-size: 0.82rem; color: var(--color-stone-muted);">Experience generational goldsmithing with our senior gemologist in Jaipur, New Delhi, or via private video concierge.</p>
+      </div>
+
+      <form id="appointment-form" onsubmit="window.HJ.submitAppointment(event)">
+        <div class="form-row-2col" style="margin-bottom: 1rem;">
+          <div>
+            <label class="form-label" style="font-size: 0.75rem;">Full Name *</label>
+            <input type="text" id="apt-name" class="form-input" required placeholder="Your noble name" />
+          </div>
+          <div>
+            <label class="form-label" style="font-size: 0.75rem;">Phone Number *</label>
+            <input type="tel" id="apt-phone" class="form-input" required placeholder="+91 98765 43210" />
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-size: 0.75rem;">Email Address *</label>
+          <input type="email" id="apt-email" class="form-input" required placeholder="patron@houseofjewelux.com" />
+        </div>
+
+        <div class="form-row-2col" style="margin-bottom: 1rem;">
+          <div>
+            <label class="form-label" style="font-size: 0.75rem;">Preferred Date *</label>
+            <input type="date" id="apt-date" class="form-input" required />
+          </div>
+          <div>
+            <label class="form-label" style="font-size: 0.75rem;">Preferred Time *</label>
+            <select id="apt-time" class="form-input" required>
+              <option value="11:00 - 12:30 IST">11:00 - 12:30 IST (Morning)</option>
+              <option value="14:00 - 15:30 IST">14:00 - 15:30 IST (Afternoon)</option>
+              <option value="16:00 - 17:30 IST" selected>16:00 - 17:30 IST (High Tea)</option>
+              <option value="18:30 - 20:00 IST">18:30 - 20:00 IST (Evening)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-size: 0.75rem;">Consultation Experience *</label>
+          <select id="apt-type" class="form-input" required>
+            <option value="Private Jaipur Atelier Experience">Private Jaipur Atelier Experience (Civil Lines Palace)</option>
+            <option value="New Delhi VIP Salon Suite">New Delhi VIP Salon Suite</option>
+            <option value="Virtual High-Jewellery Video Concierge">Virtual High-Jewellery Video Concierge</option>
+            <option value="Bespoke Wedding & Polki Bridal Suite">Bespoke Wedding & Polki Bridal Suite</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label class="form-label" style="font-size: 0.75rem;">Specific Jewellery Interests or Requests</label>
+          <textarea id="apt-notes" class="form-input" rows="2" placeholder="e.g. Royal Falcon Brooch, Solitaire bands, uncut polki choker..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.9rem; font-size: 0.82rem; letter-spacing: 0.15em;">Confirm Salon Reservation</button>
+      </form>
+      <div id="apt-confirmation" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== TRACK YOUR ORDER MODAL (JAIPUR JEWELS) ==================== -->
+  <div id="track-order-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(4px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">
+    <div style="background: var(--color-warm-ivory); border: 1px solid var(--color-antique-gold); border-radius: var(--radius-sm); max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative;">
+      <button onclick="window.HJ.closeTrackOrderModal()" style="position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-deep-heritage-brown);">&times;</button>
+      
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-antique-gold); font-weight: 600;">Real-Time Logistics Telemetry</span>
+        <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.3rem 0;">Track Your Consignment</h3>
+        <p style="font-size: 0.82rem; color: var(--color-stone-muted);">Enter your Order ID (e.g. <strong>HJ-ORD-2026-7701</strong>) or registered patron phone number.</p>
+      </div>
+
+      <form id="track-form" onsubmit="window.HJ.submitTrackOrder(event)">
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+          <input type="text" id="track-input" class="form-input" style="flex: 1;" placeholder="HJ-ORD-2026-XXXX or +91..." required />
+          <button type="submit" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem; white-space: nowrap;">Track Now</button>
+        </div>
+      </form>
+
+      <div id="track-result-box" style="display: none;"></div>
+    </div>
+  </div>
+
+</body>
+</html>

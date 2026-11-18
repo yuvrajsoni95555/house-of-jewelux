@@ -1,0 +1,28 @@
+[
+  {
+    "id": "HJ-APT-2026-1461",
+    "createdAt": "2026-11-18T09:26:21.351Z",
+    "fullName": "Lady Aishwarya Rao",
+    "email": "aishwarya.rao@luxury.in",
+    "phone": "+91 99887 66554",
+    "appointmentDate": "2026-11-28",
+    "preferredTime": "15:00 - 16:30 IST",
+    "consultationType": "Virtual High-Jewellery Video Concierge",
+    "interests": "Fine Jewellery & Bespoke Commissions",
+    "notes": "",
+    "status": "Confirmed & Concierge Assigned"
+  },
+  {
+    "id": "HJ-APT-2026-101",
+    "createdAt": "2026-11-18T10:30:00.000Z",
+    "fullName": "Princess Radhika Singhania",
+    "phone": "+91 98290 12345",
+    "email": "radhika.singhania@heritage.in",
+    "appointmentDate": "2026-11-25",
+    "preferredTime": "15:00 - 16:30 IST",
+    "consultationType": "Private Jaipur Atelier Experience",
+    "interests": "Bespoke Royal Polki Choker & Bridal Suite",
+    "notes": "Looking for custom emerald and uncut diamond setting for royal wedding ceremonial.",
+    "status": "Confirmed & Salon Suite Reserved"
+  }
+]
