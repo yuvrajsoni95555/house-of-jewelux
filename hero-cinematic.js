@@ -25,6 +25,8 @@
   let isMuted = true;
   let sceneTimer = null;
   let audioCtx = null;
+  let isHeroVisible = false;
+  let animationPaused = false;
 
   // Mouse Parallax State
   let targetMouseX = 0;
@@ -136,17 +138,19 @@
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = p.color + alpha + ')';
-      ctx.shadowColor = 'rgba(218, 185, 128, 0.6)';
-      ctx.shadowBlur = p.radius * 3;
       ctx.fill();
     }
-    ctx.shadowBlur = 0; // reset
   }
 
   /**
    * Main Render Loop (120 FPS Target with Lerp Mouse Parallax)
    */
   function animationLoop() {
+    if (animationPaused || !isHeroVisible || !heroContainer || !document.body.contains(heroContainer)) {
+      rafId = null;
+      return;
+    }
+
     // Smooth lerp mouse parallax
     mouseX += (targetMouseX - mouseX) * 0.06;
     mouseY += (targetMouseY - mouseY) * 0.06;
@@ -397,7 +401,9 @@
     `;
 
     heroContainer = document.getElementById('cinematic-hero-viewport');
+    setupHeroObserver();
     canvas = document.getElementById('hero-particle-canvas');
+    isHeroVisible = true;
     if (canvas) {
       ctx = canvas.getContext('2d');
       resizeCanvas();
@@ -486,7 +492,51 @@
     }
   };
 
-  // Keyboard navigation
+  // Pause animation when tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    animationPaused = document.hidden;
+    if (!animationPaused && rafId === null) {
+      rafId = requestAnimationFrame(animationLoop);
+    }
+  });
+
+  // Efficient IntersectionObserver replacing scroll event polling
+  let heroObserver = null;
+  function setupHeroObserver() {
+    if (!heroContainer) return;
+    if (heroObserver) {
+      heroObserver.disconnect();
+      heroObserver = null;
+    }
+
+    if ('IntersectionObserver' in window) {
+      heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isHeroVisible = entry.isIntersecting;
+          if (isHeroVisible && !animationPaused) {
+            if (rafId === null) {
+              rafId = requestAnimationFrame(animationLoop);
+            }
+          } else {
+            if (rafId !== null) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
+          }
+        });
+      }, { rootMargin: '50px 0px 50px 0px', threshold: 0.02 });
+      heroObserver.observe(heroContainer);
+    } else {
+      isHeroVisible = true;
+    }
+  }
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+    clearTimeout(sceneTimer);
+  });
   window.addEventListener('keydown', e => {
     if (!heroContainer) return;
     if (e.key === 'ArrowRight') {

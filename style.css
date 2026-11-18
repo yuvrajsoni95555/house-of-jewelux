@@ -100,7 +100,6 @@
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -2710,7 +2709,6 @@ img {
 }
 
 .parallax-plane {
-  transition: transform 0.1s ease-out;
   will-change: transform;
 }
 
@@ -3115,9 +3113,9 @@ img {
 }
 
 .site-header.scrolled {
-  background: rgba(250, 248, 245, 0.95);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px rgba(35, 28, 22, 0.06);
+  background: rgba(250, 248, 245, 0.98);
+  box-shadow: 0 4px 20px rgba(35, 28, 22, 0.05);
+  border-bottom-color: rgba(216, 206, 194, 0.8);
 }
 
 .site-header.header-hide {
@@ -3162,12 +3160,13 @@ img {
 
 /* 5. Product Card Micro-Elevation & Image Swap */
 .product-card {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-  will-change: transform;
+  border: 1px solid var(--color-warm-stone-light);
+  will-change: transform, opacity;
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(35, 28, 22, 0.08);
+  border-color: var(--color-antique-gold);
   box-shadow: 0 14px 32px rgba(35, 28, 22, 0.08);
   border-color: var(--color-antique-gold);
 }
@@ -3440,11 +3439,7 @@ img {
 }
 
 /* Sticky header states */
-.site-header.sticky-compact {
-  height: 56px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
+/* .site-header.sticky-compact removed to eliminate layout shift / reflow */
 
 /* Focus visible for accessibility */
 :focus-visible {
@@ -3485,7 +3480,7 @@ img {
 }
 .collection-hero-sub {
   transform: translate3d(0, 20px, 0);
-  opacity-delay: 0.2s;
+  transition-delay: 0.2s;
 }
 
 /* PDP gallery */
@@ -3578,5 +3573,87 @@ img {
   }
   .added-toast.show {
     transform: translateX(-50%) translateY(0) !important;
+  }
+}
+
+/* ===================================================================
+   HOUSE OF JEWELUX — LUXURY ACQUISITION TOAST
+   =================================================================== */
+.acquisition-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: none;
+  background: var(--color-warm-ivory);
+  border: 1px solid var(--color-antique-gold);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 36px rgba(35, 28, 22, 0.16);
+  padding: 0.85rem 1.25rem;
+  font-family: var(--font-sans);
+  pointer-events: auto;
+}
+
+.acquisition-toast.active {
+  display: block;
+}
+
+.acquisition-toast .toast-content {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.acquisition-toast .toast-gem {
+  color: var(--color-antique-gold);
+  font-size: 1.1rem;
+}
+
+.acquisition-toast .toast-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.acquisition-toast .toast-title {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-stone-muted);
+  font-weight: 600;
+}
+
+.acquisition-toast .toast-item-name {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+  font-weight: 600;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.acquisition-toast .toast-view-btn {
+  background: var(--color-charcoal);
+  color: var(--color-warm-ivory);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.acquisition-toast .toast-view-btn:hover {
+  background: var(--color-antique-gold);
+}
+
+@media (max-width: 768px) {
+  .acquisition-toast {
+    bottom: 80px;
+    right: 16px;
+    left: 16px;
   }
 }

@@ -128,15 +128,23 @@
   function handleRoute() {
     const route = getRoute();
     state.currentRoute = route;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Fast instant scroll reset on route change without fighting native gestures
+    const urlParams = new URLSearchParams(window.location.search);
+    const scrollTarget = parseInt(urlParams.get('scrollY') || '0', 10);
+    if (scrollTarget > 0) {
+      setTimeout(() => window.scrollTo(0, scrollTarget), 120);
+    } else {
+      window.scrollTo(0, 0);
+    }
 
     const appView = document.getElementById('app-view');
     if (!appView) return;
 
     if (route === 'home' || route === '') {
       renderHomePage(appView);
-    } else if (route.startsWith('collections/')) {
-      const colId = route.split('/')[1] || 'all';
+    } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/')) {
+      const colId = route.startsWith('collections/') ? (route.split('/')[1] || 'all') : 'all';
       renderCollectionPage(appView, colId);
     } else if (route.startsWith('products/')) {
       const prodId = route.split('/')[1];
@@ -346,7 +354,7 @@
             </p>
           </div>
 
-          <div class="products-grid">
+          <div class="products-grid motion-stagger">
             ${newArrivals.map(renderProductCard).join('')}
           </div>
 
@@ -391,7 +399,7 @@
             </a>
 
             <a href="#collections/bracelets" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/authentic_bracelet_lifestyle.jpg" alt="Bracelets & Bangles" />
+              <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets & Bangles" />
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Bracelets & Bangles</div>
                 <div class="cat-showcase-count">10 Styles • Double-Lock Clasp</div>
@@ -426,7 +434,7 @@
             <div class="section-divider"><span class="section-divider-gem"></span></div>
           </div>
 
-          <div class="products-grid">
+          <div class="products-grid motion-stagger">
             ${bestSellers.map(renderProductCard).join('')}
           </div>
 
@@ -666,11 +674,11 @@
   // ==================== VIEW 2: COLLECTION PAGE (1:1 WITH PALMONAS /collections/earrings) ====================
   function renderCollectionPage(container, collectionId) {
     let filtered = [...state.products];
-    let title = "Earrings";
-    let subtitle = "Statement for every occasion";
-    let heroImg = "images/authentic_earrings_stone.jpg";
+    let title = "The Complete Haute Joaillerie Vault";
+    let subtitle = "All 50 Masterpieces • Rings • Earrings • Necklaces • Bracelets • Royal Brooches • Temple Nakshi";
+    let heroImg = "images/user_flagship_hero_model.jpg";
 
-    if (collectionId !== 'all') {
+    if (collectionId && collectionId !== 'all' && collectionId !== 'all-jewellery') {
       if (['earrings', 'rings', 'necklaces', 'bracelets', 'brooches'].includes(collectionId)) {
         filtered = filtered.filter(p => p.category === collectionId);
         const cat = state.categories.find(c => c.id === collectionId);
@@ -771,11 +779,13 @@
             <div class="filter-group">
               <div class="filter-group-title">Product type</div>
               <div class="filter-pills-row">
-                <button class="filter-pill ${collectionId === 'earrings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/earrings')">Earrings</button>
+                <button class="filter-pill ${(!collectionId || collectionId === 'all') ? 'active' : ''}" onclick="window.HJ.navigate('collections/all')">All Creations (${state.products.length})</button>
                 <button class="filter-pill ${collectionId === 'rings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/rings')">Rings</button>
+                <button class="filter-pill ${collectionId === 'earrings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/earrings')">Earrings</button>
                 <button class="filter-pill ${collectionId === 'necklaces' ? 'active' : ''}" onclick="window.HJ.navigate('collections/necklaces')">Necklaces</button>
-                <button class="filter-pill ${collectionId === 'bracelets' ? 'active' : ''}" onclick="window.HJ.navigate('collections/bracelets')">Bracelets</button>
-                <button class="filter-pill ${collectionId === 'brooches' ? 'active' : ''}" onclick="window.HJ.navigate('collections/brooches')">Brooches</button>
+                <button class="filter-pill ${collectionId === 'bracelets' ? 'active' : ''}" onclick="window.HJ.navigate('collections/bracelets')">Bracelets & Bangles</button>
+                <button class="filter-pill ${collectionId === 'brooches' ? 'active' : ''}" onclick="window.HJ.navigate('collections/brooches')">Brooches & Pins</button>
+                <button class="filter-pill ${collectionId === 'temple-jewellery' ? 'active' : ''}" onclick="window.HJ.navigate('collections/temple-jewellery')">Temple Nakshi</button>
               </div>
             </div>
 
@@ -814,7 +824,7 @@
           </aside>
 
           <!-- RIGHT: 4-COLUMN PRODUCT GRID (MATCHING PALMONAS) -->
-          <main class="products-grid">
+          <main class="products-grid motion-stagger">
             ${filtered.length > 0 
               ? filtered.map(renderProductCard).join('') 
               : `<div style="grid-column: 1 / -1; padding: 4rem; text-align: center; color: var(--color-taupe);">No creations found. <br><button class="btn-primary" style="margin-top: 1rem;" onclick="window.HJ.clearFilters()">Reset Filters</button></div>`
@@ -1512,22 +1522,22 @@
                 <div class="contact-field form-grid-2">
                   <div class="form-field">
                     <label class="form-label">Full Name *</label>
-                    <input type="text" class="form-input" required placeholder="Your noble name" />
+                    <input name="fullName" type="text" class="form-input" required placeholder="Your noble name" />
                   </div>
                   <div class="form-field">
                     <label class="form-label">Email Address *</label>
-                    <input type="email" class="form-input" required placeholder="patron@domain.com" />
+                    <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
                   </div>
                 </div>
 
                 <div class="contact-field form-field">
                   <label class="form-label">Mobile Phone *</label>
-                  <input type="tel" class="form-input" required placeholder="+91 98765 43210" />
+                  <input name="phone" type="tel" class="form-input" required placeholder="+91 98765 43210" />
                 </div>
 
                 <div class="contact-field form-field">
                   <label class="form-label">Subject *</label>
-                  <select class="form-input" required>
+                  <select name="subject" class="form-input" required>
                     <option value="">Select an enquiry type</option>
                     <option value="bespoke">Bespoke & Custom Commission</option>
                     <option value="appointment">Private Salon Appointment</option>
@@ -1539,7 +1549,7 @@
 
                 <div class="contact-field form-field">
                   <label class="form-label">Message *</label>
-                  <textarea class="form-input form-textarea" rows="4" required placeholder="How may we assist you?"></textarea>
+                  <textarea name="message" class="form-input form-textarea" rows="4" required placeholder="How may we assist you?"></textarea>
                 </div>
 
                 <button type="submit" class="btn-gold" style="width: fit-content; align-self: flex-start; padding: 0.9rem 2rem; font-size: 0.82rem;">Send Enquiry ✦</button>
@@ -1683,22 +1693,22 @@
             <div class="contact-field form-grid-2">
               <div class="form-field">
                 <label class="form-label">Full Name *</label>
-                <input type="text" class="form-input" required placeholder="Your noble name" />
+                <input name="fullName" type="text" class="form-input" required placeholder="Your noble name" />
               </div>
               <div class="form-field">
                 <label class="form-label">Email Address *</label>
-                <input type="email" class="form-input" required placeholder="patron@domain.com" />
+                <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
               </div>
             </div>
 
             <div class="contact-field form-grid-2">
               <div class="form-field">
                 <label class="form-label">Mobile Phone *</label>
-                <input type="tel" class="form-input" required placeholder="+91 98765 43210" />
+                <input type="tel" name="phone" class="form-input" required placeholder="+91 98765 43210" />
               </div>
               <div class="form-field">
                 <label class="form-label">Budget Range *</label>
-                <select class="form-input" required>
+                <select name="budgetRange" class="form-input" required>
                   <option value="">Select budget band</option>
                   <option value="under-25k">Under ₹25,000</option>
                   <option value="25k-50k">₹25,000 – ₹50,000</option>
@@ -1710,7 +1720,7 @@
 
             <div class="contact-field form-field">
               <label class="form-label">Jewellery Type *</label>
-              <select class="form-input" required>
+              <select name="jewelleryType" class="form-input" required>
                 <option value="">Select category</option>
                 <option value="ring">Ring / Solitaire</option>
                 <option value="earrings">Earrings</option>
@@ -1724,12 +1734,12 @@
 
             <div class="contact-field form-field">
               <label class="form-label">Design Description *</label>
-              <textarea class="form-input form-textarea" rows="4" required placeholder="Describe your vision — motifs, gemstones, metals, inspiration..."></textarea>
+              <textarea name="description" class="form-input form-textarea" rows="4" required placeholder="Describe your vision — motifs, gemstones, metals, inspiration..."></textarea>
             </div>
 
             <div class="contact-field form-field">
               <label class="form-label">Reference Images (optional)</label>
-              <input type="file" class="form-input" accept="image/*" multiple />
+              <input name="referenceImages" type="file" class="form-input" accept="image/*" multiple />
             </div>
 
             <button type="submit" class="btn-gold" style="width: fit-content; align-self: flex-start; padding: 0.9rem 2rem; font-size: 0.82rem;">Submit Commission ✦</button>
@@ -1793,6 +1803,174 @@
         }});
       });
     }
+  }
+
+  // ==================== VIEW: CART PAGE ====================
+  function renderCartPage(container) {
+    if (state.cart.length === 0) {
+      container.innerHTML = `
+        <section style="padding: 5rem 0 6rem;">
+          <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <div style="font-size: 4rem; margin-bottom: 1.5rem;">🛍️</div>
+            <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Your Shopping Bag is Empty</h2>
+            <p style="color: var(--color-stone-muted); margin-bottom: 2rem;">No creations in your bag yet. Explore our atelier collections.</p>
+            <a href="#collections/all" class="btn-primary">Browse Collections</a>
+          </div>
+        </section>
+      `;
+      return;
+    }
+
+    const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = subtotal >= 2500 ? 0 : 250;
+    const grandTotal = subtotal + shipping;
+
+    container.innerHTML = `
+      <section style="padding: 3rem 0 6rem;">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start;">
+            
+            <!-- Cart Items -->
+            <div>
+              <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Shopping Bag</h2>
+              ${state.cart.map(item => `
+                <div style="display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--color-warm-stone-light);">
+                  <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-antique-white);" />
+                  <div>
+                    <a href="#products/${item.handle || item.id}" style="font-family: var(--font-serif); font-size: 1rem; font-weight: 600; color: var(--color-deep-heritage-brown); text-decoration: none;">${item.name}</a>
+                    <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.25rem;">${item.metal || 'BIS 925 Silver'} • Qty: ${item.quantity}</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--color-deep-heritage-brown);">
+                    <span>${formatPrice(item.price * item.quantity)}</span>
+                    <button onclick="window.HJ.removeFromCart('${item.id}')" style="color: var(--color-accent-crimson); font-size: 0.7rem; text-decoration: underline;">Remove</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Order Summary -->
+            <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2rem; position: sticky; top: 120px;">
+              <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-deep-heritage-brown);">Order Summary</h3>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--color-taupe);">
+                <span>Subtotal (${state.cart.reduce((s, i) => s + i.quantity, 0)} items)</span>
+                <span>${formatPrice(subtotal)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--color-taupe);">
+                <span>Armored Insured Courier</span>
+                <span>${shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
+              </div>
+              <div style="border-top: 1px solid var(--color-warm-stone-light); padding-top: 1rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--color-deep-heritage-brown);">
+                  <span>Grand Total</span>
+                  <span>${formatPrice(grandTotal)}</span>
+                </div>
+              </div>
+              <a href="#checkout" class="btn-gold" style="width: 100%; padding: 1rem; text-align: center; display: block;">Proceed to Checkout</a>
+              <p style="font-size: 0.7rem; color: var(--color-stone-muted); margin-top: 1rem; text-align: center;">Secure payment via UPI, Cards, Net Banking & COD</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  // ==================== VIEW: WISHLIST PAGE ====================
+  function renderWishlistPage(container) {
+    if (state.wishlist.length === 0) {
+      container.innerHTML = `
+        <section style="padding: 5rem 0 6rem;">
+          <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <div style="font-size: 4rem; margin-bottom: 1.5rem;">💖</div>
+            <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Your Wishlist is Empty</h2>
+            <p style="color: var(--color-stone-muted); margin-bottom: 2rem;">Save your favourite creations by tapping the heart on any product card.</p>
+            <a href="#collections/all" class="btn-primary">Browse Collections</a>
+          </div>
+        </section>
+      `;
+      return;
+    }
+
+    const wishlistProducts = state.products.filter(p => state.wishlist.includes(p.id));
+
+    container.innerHTML = `
+      <section style="padding: 3rem 0 6rem;">
+        <div class="container">
+          <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Saved Creations</h2>
+          <div class="products-grid motion-stagger">
+            ${wishlistProducts.map(p => renderProductCard(p)).join('')}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  // ==================== VIEW: CRAFTSMANSHIP PAGE ====================
+  function renderCraftsmanshipPage(container) {
+    container.innerHTML = `
+      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
+        <div class="container" style="max-width: 800px; text-align: center;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.75rem;">Jaipur Bench Artistry</span>
+          <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">The 9-Stage Goldsmithing Journey</h2>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
+          <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+            Every House of Jewelux creation passes through nine sacred stages of bench craftsmanship in our Jaipur atelier, honoring centuries of Indian goldsmithing heritage.
+          </p>
+        </div>
+      </section>
+
+      <section style="padding: 5rem 0 6rem;">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">01</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Inspiration & Sacred Architecture</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Studying Jaipur royal archways, jharokha screens, and ceremonial iconography from Mughal and Rajput archives.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">02</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Exploration & Gemology</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and Zambian rough.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">03</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Concept & Gouache Rendering</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Hand-drawn gouache jewel illustrations capturing light reflections, prong heights, and 3D ergonomics.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">04</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Jewellery Proportions</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Precision CAD modeling and wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">05</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Material Assay</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">XRF laser testing guaranteeing 92.5% pure elemental silver alloyed strictly with hypoallergenic deox copper.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">06</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Bench Forging & Kundan</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Traditional silversmith hammer forging, hand-pierced openwork, and 24K pure gold leaf foil setting.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">07</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Liquid Rhodium & 18K Micron</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">08</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">BIS Hallmark Certification</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Official Bureau of Indian Standards laser assay verification stamp applied with unique identification mark.</p>
+            </div>
+            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
+              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">09</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Armored Coffer Acquisition</h4>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Placed in our signature emerald velvet presentation box and dispatched via insured armored courier.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
   }
 
   // ==================== GLOBAL PUBLIC API ====================
