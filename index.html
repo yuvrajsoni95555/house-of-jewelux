@@ -358,26 +358,11 @@
       box-shadow: 0 6px 20px rgba(168, 132, 98, 0.35) !important;
     }
 
-    /* HUD Controls */
-    .hero-hud-top-right .hud-pill-btn {
-      background: rgba(26, 18, 14, 0.78) !important;
-      backdrop-filter: blur(12px) !important;
-      -webkit-backdrop-filter: blur(12px) !important;
-      border: 1px solid rgba(168, 132, 98, 0.45) !important;
-      color: #FFFFFF !important;
-      font-size: 0.72rem !important;
-      letter-spacing: 0.12em !important;
-      text-transform: uppercase !important;
-      font-weight: 600 !important;
-      padding: 0.5rem 1rem !important;
-      border-radius: 9999px !important;
-    }
-
-    .hero-hud-top-right .hud-pill-btn.skip-btn {
-      background: linear-gradient(135deg, #CDB498 0%, #A88462 100%) !important;
-      color: #1A120E !important;
-      border: none !important;
-      font-weight: 700 !important;
+    /* HUD Controls (Removed Top-Right Buttons per brand spec) */
+    .hero-hud-top-right {
+      display: none !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
     }
   </style>
 </head>
@@ -809,10 +794,10 @@
 
   <script src="/vendor/gsap.min.js"></script>
   <script src="/vendor/ScrollTrigger.min.js"></script>
-  <script src="/motion-engine.js?v=20261119_palette_v5"></script>
-  <script src="/hero-cinematic.js?v=20261119_palette_v5"></script>
-  <script src="/app.js?v=20261119_palette_v5"></script>
-  <script src="/visual-editor.js?v=20261119_palette_v5" defer></script>
+  <script src="/motion-engine.js?v=20261119_hero_v6"></script>
+  <script src="/hero-cinematic.js?v=20261119_hero_v6"></script>
+  <script src="/app.js?v=20261119_hero_v6"></script>
+  <script src="/visual-editor.js?v=20261119_hero_v6" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
   <div id="appointment-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(6px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">

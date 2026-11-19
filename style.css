@@ -3386,15 +3386,11 @@ img {
   box-shadow: 0 6px 20px rgba(197, 160, 89, 0.35) !important;
 }
 
-/* HUD Controls */
+/* HUD Controls (Removed Top-Right Buttons per brand spec) */
 .hero-hud-top-right {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  z-index: 10;
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }
 
 .hud-pill-btn {

@@ -253,56 +253,23 @@
     const earringsFeatured = state.products.filter(p => p.category === 'earrings').slice(0, 4);
 
     container.innerHTML = `
-      <!-- A. PREMIUM HERO SECTION (ITALIAN LUXURY EDITORIAL × INDIAN HERITAGE) -->
+      <!-- A. PREMIUM HERO SECTION (CINEMATIC ODYSSEY) -->
       <section class="hero-slider" id="hero-slider">
-        <div class="hero-slide active" style="background: #181412;">
-          <img class="hero-bg" src="images/user_flagship_hero_model.jpg" alt="House of Jewelux Editorial Campaign - Masterpiece Handcrafted Diamond & Gold Fine Necklace" />
-          <div class="grand-hero-gradient-overlay"></div>
-          <div class="container hero-flagship-container" style="position: relative; height: 100%; display: flex; align-items: center; z-index: 4;">
-            <div class="hero-editorial-card">
-              <div class="hero-grand-logo-wrap">
-                <a href="#home" aria-label="House of Jewelux" style="display: inline-block;">
-                  <img src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" class="hero-flagship-logo-img" />
-                </a>
-              </div>
-              <div class="hero-provenance-bar">
-                <span class="hero-provenance-tag">✦ JAIPUR HAUTE JOAILLERIE</span>
-                <span class="hero-provenance-dot">•</span>
-                <span class="hero-provenance-tag">BIS 925 HALLMARKED</span>
-                <span class="hero-provenance-dot">•</span>
-                <span class="hero-provenance-tag">18K GOLD & CERTIFIED DIAMONDS</span>
-              </div>
-              <h1 class="hero-title hero-title-luxe">
-                <span class="hero-title-line1">AN ART OF ELEGANCE.</span>
-                <span class="hero-title-line2">A LEGACY OF ETERNITY.</span>
-              </h1>
-              <p class="hero-subtitle hero-subtitle-luxe">
-                Generationally forged in our Jaipur atelier with solid 925 sterling silver, liquid platinum-rhodium, and 18K champagne gold. Where royal Indian court artistry meets Italian luxury editorial clarity.
-              </p>
-              <div class="hero-craft-triad">
-                <div class="craft-triad-item">
-                  <span class="craft-triad-icon">🏛</span>
-                  <span class="craft-triad-text">Civil Lines Atelier</span>
-                </div>
-                <div class="craft-triad-item">
-                  <span class="craft-triad-icon">⚖</span>
-                  <span class="craft-triad-text">BIS 925 Stamped Purity</span>
-                </div>
-                <div class="craft-triad-item">
-                  <span class="craft-triad-icon">💎</span>
-                  <span class="craft-triad-text">Certified Solitaires</span>
-                </div>
-              </div>
-              <div class="hero-ctas hero-ctas-luxe">
-                <a href="#collections/all" class="hero-btn-primary">
-                  <span>Explore Collections</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-                </a>
-                <button onclick="window.HJ.openAppointmentModal()" class="hero-btn-secondary">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                  <span>Book Private Atelier</span>
-                </button>
-              </div>
+        <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center;">
+          <div class="scene-content-center" style="text-align: center; max-width: 680px; padding: 2rem; z-index: 4;">
+            <div class="opening-emblem-wrap">
+              <img src="/brand-identity/jewelux-official-emblem.png" alt="House of Jewelux Royal Monogram" class="opening-monogram-img" style="max-height: 90px; width: auto;" />
+            </div>
+            <div class="opening-brand-sub" style="margin-top: 1rem; color: var(--color-champagne-gold); font-size: 0.8rem; letter-spacing: 0.25em;">
+              <span class="sparkle-diamond">✦</span>
+              <span>JAIPUR ATELIER • ESTABLISHED 1926</span>
+              <span class="sparkle-diamond">✦</span>
+            </div>
+            <h2 class="opening-cinematic-title" style="font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: #FFFFFF; margin: 1rem 0; letter-spacing: 0.08em;">
+              The Journey of Eternal Elegance
+            </h2>
+            <div class="opening-scroll-hint" style="color: var(--color-warm-ivory); opacity: 0.85; font-size: 0.85rem; letter-spacing: 0.15em;">
+              <span>Entering the Haute Joaillerie Sanctum</span>
             </div>
           </div>
         </div>
@@ -1900,11 +1867,6 @@
         </div>
       </section>
     `;
-
-    // Initialize Cinematic Hero Engine (The Journey of Eternal Elegance)
-    if (window.HJ_HERO && window.HJ_HERO.init) {
-      setTimeout(() => window.HJ_HERO.init(), 60);
-    }
   }
 
   function renderCartDrawer() {

@@ -3,10 +3,10 @@
  * "THE JOURNEY OF ETERNAL ELEGANCE"
  * 
  * Features:
- * - 4-Scene Architectural & Jewellery Odyssey (Prelude, Heritage, Creations, Climax)
+ * - 3-Scene Architectural & Jewellery Odyssey (Prelude, Heritage, Creations)
  * - Canvas 2D Gold Particle & Caustic Ray Simulation (120 FPS adaptive)
  * - Multi-Plane 3D Matrix Perspective & Cursor Parallax
- * - Chapter Timeline Scrubbing (01 PRELUDE, 02 HERITAGE, 03 CREATIONS, 04 CLIMAX)
+ * - Chapter Timeline Scrubbing (01 PRELUDE, 02 HERITAGE, 03 CREATIONS)
  * - Web Audio API Synthetic Ambient Harmonic Chime (Muted by default)
  * - Seamless Scroll Dissolve without scroll hijacking
  * - Full Keyboard & Reduced-Motion Accessibility
@@ -34,12 +34,11 @@
   let mouseX = 0;
   let mouseY = 0;
 
-  // Scene Configuration
+  // Scene Configuration (3 Cinematic Chapters)
   const SCENE_DURATIONS = {
     1: 4500, // Atmospheric Opening
     2: 4500, // Royal Jharokha Portals
-    3: 5000, // High Jewellery Odyssey
-    4: 7000  // Grand Editorial Climax
+    3: 5000  // High Jewellery Odyssey
   };
 
   /**
@@ -173,8 +172,8 @@
    * Scene Transition Controller
    */
   function goToScene(sceneNum, triggerAudio = true) {
-    if (sceneNum < 1) sceneNum = 4;
-    if (sceneNum > 4) sceneNum = 1;
+    if (sceneNum < 1) sceneNum = 3;
+    if (sceneNum > 3) sceneNum = 1;
 
     currentScene = sceneNum;
     clearTimeout(sceneTimer);
@@ -191,7 +190,7 @@
       }
     });
 
-    // Update Chapter Indicators
+    // Update Chapter Indicators (3 scenes)
     const indicators = heroContainer.querySelectorAll('.chapter-indicator-dot');
     indicators.forEach(dot => {
       const targetNum = parseInt(dot.getAttribute('data-target-scene'), 10);
@@ -208,14 +207,13 @@
       const names = {
         1: '01 • THE PRELUDE',
         2: '02 • ROYAL HERITAGE',
-        3: '03 • BENCH MASTERPIECES',
-        4: '04 • ETERNAL CLIMAX'
+        3: '03 • BENCH MASTERPIECES'
       };
       label.textContent = names[currentScene] || '';
     }
 
     if (triggerAudio) {
-      const freqs = { 1: 396, 2: 432, 3: 528, 4: 639 };
+      const freqs = { 1: 396, 2: 432, 3: 528 };
       playHarmonicChime(freqs[currentScene] || 432);
     }
 
@@ -325,111 +323,21 @@
           </div>
 
           <div style="position: absolute; bottom: 4.5rem; width: 100%; text-align: center; z-index: 5;">
-            <button onclick="window.HJ_HERO.goToScene(4)" class="btn-gold" style="padding: 0.75rem 2rem; font-size: 0.78rem;">
-              Enter The Grand Climax ✦
-            </button>
+            <a href="#collections/all" class="btn-gold" style="padding: 0.75rem 2.2rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+              <span>Explore Complete Collection</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
           </div>
         </div>
 
-        <!-- ==================== SCENE 04: THE GRAND LUXURY FLAGSHIP REVEAL ==================== -->
-        <div class="cinematic-scene" data-scene="4">
-          <img src="images/user_flagship_hero_model.jpg" alt="House of Jewelux High Jewellery Campaign" class="grand-hero-campaign-bg parallax-plane" data-depth="0.02" />
-          <div class="grand-hero-gradient-overlay"></div>
-
-          <div class="container hero-flagship-container" style="position: relative; height: 100%; display: flex; align-items: center; z-index: 4;">
-            
-            <!-- LUXURY EDITORIAL ASYMMETRIC SANCTUM CARD (DIFFERENT PATTERN & 100% GENUINE) -->
-            <div class="hero-editorial-card parallax-plane" data-depth="0.04">
-              
-              <!-- 1. ENLARGED PROMINENT LUXURY LOGO WITH GOLD REFLECTION -->
-              <div class="hero-grand-logo-wrap">
-                <a href="#home" aria-label="House of Jewelux" style="display: inline-block;">
-                  <img src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" class="hero-flagship-logo-img" />
-                </a>
-              </div>
-
-              <!-- 2. GENUINE JAIPUR HERITAGE & BIS 925 PURITY PROVENANCE BAR -->
-              <div class="hero-provenance-bar">
-                <span class="hero-provenance-tag">✦ JAIPUR HAUTE JOAILLERIE</span>
-                <span class="hero-provenance-dot">•</span>
-                <span class="hero-provenance-tag">BIS 925 HALLMARKED</span>
-                <span class="hero-provenance-dot">•</span>
-                <span class="hero-provenance-tag">18K GOLD & CERTIFIED DIAMONDS</span>
-              </div>
-
-              <!-- 3. LUMINOUS, LIGHT, RADIANT HERO TITLE (WORDS MADE LIGHT & ULTRA-LUXE) -->
-              <h1 class="hero-title hero-title-luxe">
-                <span class="hero-title-line1">AN ART OF ELEGANCE.</span>
-                <span class="hero-title-line2">A LEGACY OF ETERNITY.</span>
-              </h1>
-
-              <!-- 4. REFINED EDITORIAL SUBTITLE (HIGH CONTRAST & ELEGANT) -->
-              <p class="hero-subtitle hero-subtitle-luxe">
-                Generationally forged in our Jaipur atelier with solid 925 sterling silver, liquid platinum-rhodium, and 18K champagne gold. Where royal Indian court artistry meets Italian luxury editorial clarity.
-              </p>
-
-              <!-- 5. THREE TRUST & CRAFT PILLARS (AUTHENTICITY & VALUE) -->
-              <div class="hero-craft-triad">
-                <div class="craft-triad-item">
-                  <span class="craft-triad-icon">🏛</span>
-                  <span class="craft-triad-text">Civil Lines Atelier</span>
-                </div>
-                <div class="craft-triad-item">
-                  <span class="craft-triad-icon">⚖</span>
-                  <span class="craft-triad-text">BIS 925 Stamped Purity</span>
-                </div>
-                <div class="craft-triad-item">
-                  <span class="craft-triad-icon">💎</span>
-                  <span class="craft-triad-text">Certified Solitaires</span>
-                </div>
-              </div>
-
-              <!-- 6. HIGH-CONTRAST PERFECT LUXURY CTAs -->
-              <div class="hero-ctas hero-ctas-luxe">
-                <a href="#collections/all" class="hero-btn-primary">
-                  <span>Explore Collections</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-                </a>
-                <button onclick="window.HJ.openAppointmentModal()" class="hero-btn-secondary">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                  <span>Book Private Atelier</span>
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- ==================== HUD INTERACTIVE CONTROLS ==================== -->
-        <!-- Top Right Controls: Sound, Play/Pause, Skip -->
-        <div class="hero-hud-top-right">
-          <button id="hero-audio-btn" class="hud-pill-btn" onclick="window.HJ_HERO.toggleAudio()" title="Toggle Ambient Harmonic Sound">
-            <svg id="hero-sound-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
-            <span id="hero-audio-label">Sound Muted</span>
-          </button>
-
-          <button id="hero-play-btn" class="hud-pill-btn" onclick="window.HJ_HERO.togglePlay()" title="Play / Pause Experience">
-            <span id="hero-play-icon">⏸</span>
-          </button>
-
-          <button class="hud-pill-btn skip-btn" onclick="window.HJ_HERO.skipToBoutique()" title="Skip directly to Catalogue">
-            <span>Skip to Boutique ▾</span>
-          </button>
-        </div>
-
-        <!-- Bottom Left Chapter Timeline -->
+        <!-- Bottom Left Chapter Timeline (3 Scenes) -->
         <div class="hero-hud-bottom-left">
           <div class="chapter-timeline-wrap">
             <div id="hero-chapter-name" class="chapter-active-label">01 • THE PRELUDE</div>
             <div class="chapter-dots-row">
-              <button class="chapter-indicator-dot active" data-target-scene="1" onclick="window.HJ_HERO.goToScene(1)"></button>
-              <button class="chapter-indicator-dot" data-target-scene="2" onclick="window.HJ_HERO.goToScene(2)"></button>
-              <button class="chapter-indicator-dot" data-target-scene="3" onclick="window.HJ_HERO.goToScene(3)"></button>
-              <button class="chapter-indicator-dot" data-target-scene="4" onclick="window.HJ_HERO.goToScene(4)"></button>
+              <button class="chapter-indicator-dot active" data-target-scene="1" onclick="window.HJ_HERO.goToScene(1)" title="Scene 1: The Prelude"></button>
+              <button class="chapter-indicator-dot" data-target-scene="2" onclick="window.HJ_HERO.goToScene(2)" title="Scene 2: Royal Heritage"></button>
+              <button class="chapter-indicator-dot" data-target-scene="3" onclick="window.HJ_HERO.goToScene(3)" title="Scene 3: Bench Masterpieces"></button>
             </div>
           </div>
         </div>
@@ -474,15 +382,15 @@
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(animationLoop);
 
-      // Check URL for direct scene parameter (e.g. #scene=3 or ?scene=3)
+      // Check URL for direct scene parameter (e.g. #scene=2 or ?scene=2)
       const urlParams = new URLSearchParams(window.location.search);
       const urlScene = parseInt(urlParams.get('scene') || (window.location.hash.match(/scene=(\d)/) || [])[1], 10);
 
-      // Default directly to Scene 04 (Flagship Editorial Hero), with journey chapters accessible
-      goToScene(urlScene && urlScene >= 1 && urlScene <= 4 ? urlScene : 4, false);
+      // Default directly to Scene 01 (Prelude Opening), with journey chapters accessible
+      goToScene(urlScene && urlScene >= 1 && urlScene <= 3 ? urlScene : 1, false);
     } else {
-      // Reduced motion fallback directly to Scene 04
-      goToScene(4, false);
+      // Reduced motion fallback directly to Scene 01
+      goToScene(1, false);
     }
   }
 
