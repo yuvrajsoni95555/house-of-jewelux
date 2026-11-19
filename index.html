@@ -25,7 +25,121 @@
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261119c">
+  <link rel="stylesheet" href="/style.css?v=20261119_lux_v3">
+  <style id="bulletproof-luxury-footer-styles">
+    /* High-Priority Ultra-Luxurious Footer Styles */
+    .site-footer {
+      background: #241C15 !important;
+      color: #F5EFEB !important;
+      display: block !important;
+      position: relative !important;
+      z-index: 10 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      padding-top: 3.5rem !important;
+      padding-bottom: 2.5rem !important;
+    }
+    .site-footer * {
+      visibility: visible !important;
+    }
+    .footer-container {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .footer-newsletter-wrap {
+      text-align: center !important;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.25) !important;
+      background: rgba(255, 253, 246, 0.04) !important;
+      border: 1px solid rgba(197, 160, 89, 0.15) !important;
+      border-radius: 16px !important;
+      padding: 2.5rem 1.25rem !important;
+      margin: 0 auto 3.5rem !important;
+      max-width: 760px !important;
+    }
+    .footer-newsletter-wrap .newsletter-title {
+      color: #FFFFFF !important;
+      font-family: var(--font-serif) !important;
+      font-size: clamp(1.4rem, 2.5vw, 2.1rem) !important;
+      margin: 0.4rem 0 0.6rem !important;
+      letter-spacing: -0.01em !important;
+    }
+    .footer-newsletter-wrap .newsletter-subtitle {
+      color: rgba(245, 239, 235, 0.8) !important;
+      font-size: 0.88rem !important;
+      line-height: 1.7 !important;
+      max-width: 650px !important;
+      margin: 0 auto 1.5rem !important;
+    }
+    .footer-columns-grid {
+      display: grid !important;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr !important;
+      gap: 2.5rem !important;
+      padding-bottom: 3.5rem !important;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.2) !important;
+    }
+    @media (max-width: 991px) {
+      .footer-columns-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem !important;
+      }
+    }
+    @media (max-width: 580px) {
+      .footer-columns-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2.25rem !important;
+      }
+      .footer-brand-col {
+        text-align: center !important;
+        align-items: center !important;
+      }
+      .footer-brand-col .footer-logo {
+        margin: 0 auto !important;
+      }
+      .footer-brand-col > div:last-child {
+        justify-content: center !important;
+      }
+    }
+    .footer-col-title {
+      color: #FFFFFF !important;
+      font-family: var(--font-serif) !important;
+      font-size: 0.92rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.14em !important;
+      text-transform: uppercase !important;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.3) !important;
+      padding-bottom: 0.5rem !important;
+      margin-bottom: 1rem !important;
+    }
+    .footer-links-list {
+      list-style: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.65rem !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .footer-links-list a {
+      color: rgba(245, 239, 235, 0.78) !important;
+      font-size: 0.85rem !important;
+      text-decoration: none !important;
+      transition: color 0.2s ease, transform 0.2s ease !important;
+      display: inline-block !important;
+    }
+    .footer-links-list a:hover {
+      color: #D4AF37 !important;
+      transform: translateX(4px) !important;
+    }
+    .footer-desc {
+      color: rgba(245, 239, 235, 0.8) !important;
+      font-size: 0.85rem !important;
+      line-height: 1.8 !important;
+    }
+    @media (max-width: 767px) {
+      .site-footer {
+        padding-bottom: calc(95px + env(safe-area-inset-bottom, 15px)) !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Cinematic Route Transition Curtain -->
@@ -273,7 +387,7 @@
       </div>
 
       <!-- MULTI-COLUMN EXPANDED FOOTER (SECTIONS A, B, C, D, E, F) -->
-      <div class="footer-columns-grid" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr; gap: 2.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(197, 160, 89, 0.2);">
+      <div class="footer-columns-grid">
         
         <!-- SECTION A & F: BRAND IDENTITY & ATELIER CONCIERGE -->
         <div class="footer-brand-col">
@@ -455,10 +569,10 @@
 
   <script src="/vendor/gsap.min.js"></script>
   <script src="/vendor/ScrollTrigger.min.js"></script>
-  <script src="/motion-engine.js?v=20261119c"></script>
-  <script src="/hero-cinematic.js?v=20261119c"></script>
-  <script src="/app.js?v=20261119c"></script>
-  <script src="/visual-editor.js?v=20261119c" defer></script>
+  <script src="/motion-engine.js?v=20261119_lux_v3"></script>
+  <script src="/hero-cinematic.js?v=20261119_lux_v3"></script>
+  <script src="/app.js?v=20261119_lux_v3"></script>
+  <script src="/visual-editor.js?v=20261119_lux_v3" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
   <div id="appointment-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(6px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">
