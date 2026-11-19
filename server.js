@@ -426,6 +426,43 @@ app.patch('/api/admin/products/:productId', (req, res) => {
   res.json({ success: true, product: products[index] });
 });
 
+// 7.1 Visual On-Page Editor Batch Save API
+app.post('/api/admin/editor-save', (req, res) => {
+  const { products: updatedProducts, config: updatedConfig, overrides } = req.body || {};
+  let updatedCount = 0;
+
+  if (updatedProducts && Array.isArray(updatedProducts)) {
+    const products = readJSON('products.json');
+    updatedProducts.forEach(u => {
+      const idx = products.findIndex(p => p.id && p.id.toLowerCase() === (u.id || '').toLowerCase());
+      if (idx !== -1) {
+        if (u.price !== undefined) products[idx].price = Number(u.price);
+        if (u.originalPrice !== undefined) products[idx].originalPrice = Number(u.originalPrice);
+        if (u.name !== undefined) products[idx].name = u.name;
+        if (u.description !== undefined) products[idx].description = u.description;
+        if (u.image !== undefined) products[idx].image = u.image;
+        if (u.badge !== undefined) products[idx].badge = u.badge;
+        updatedCount++;
+      }
+    });
+    writeJSON('products.json', products);
+  }
+
+  if (updatedConfig && typeof updatedConfig === 'object') {
+    const cfg = readJSON('storeConfig.json', {});
+    Object.assign(cfg, updatedConfig);
+    writeJSON('storeConfig.json', cfg);
+  }
+
+  if (overrides && typeof overrides === 'object') {
+    const existing = readJSON('page_overrides.json', {});
+    Object.assign(existing, overrides);
+    writeJSON('page_overrides.json', existing);
+  }
+
+  res.json({ success: true, updatedProductsCount: updatedCount, message: 'All on-page changes successfully saved to disk.' });
+});
+
 // 8. Custom / Bespoke Order API
 app.post('/api/custom-order', (req, res) => {
   const { fullName, phone, email, jewelleryType, metalPreference, budgetBand, description } = req.body;

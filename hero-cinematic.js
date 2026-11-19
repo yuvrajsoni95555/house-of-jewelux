@@ -407,6 +407,7 @@
     if (canvas) {
       ctx = canvas.getContext('2d');
       resizeCanvas();
+      window.removeEventListener('resize', resizeCanvas);
       window.addEventListener('resize', resizeCanvas);
     }
 

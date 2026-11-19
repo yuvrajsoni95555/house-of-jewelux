@@ -220,9 +220,6 @@
               start: 'top 96%',
               toggleActions: 'play none none none',
               once: true
-            },
-            onComplete: () => {
-              gsap.set(el, { clearProps: 'transform,opacity' });
             }
           }
         );
@@ -249,9 +246,6 @@
               start: 'top 96%',
               toggleActions: 'play none none none',
               once: true
-            },
-            onComplete: () => {
-              gsap.set(img, { clearProps: 'clipPath,transform,opacity' });
             }
           }
         );
@@ -283,10 +277,6 @@
                 start: 'top 96%',
                 toggleActions: 'play none none none',
                 once: true
-              },
-              onComplete: () => {
-                // Clear inline styles once animated so native CSS hover rules take over
-                gsap.set(card, { clearProps: 'transform,scale,opacity' });
               }
             }
           );
@@ -314,9 +304,6 @@
             start: 'top 96%',
             toggleActions: 'play none none none',
             once: true
-          },
-          onComplete: () => {
-            gsap.set(items, { clearProps: 'transform,opacity' });
           }
         }
       );
@@ -346,9 +333,6 @@
               start: 'top 96%',
               toggleActions: 'play none none none',
               once: true
-            },
-            onComplete: () => {
-              gsap.set(step, { clearProps: 'transform,opacity' });
             }
           }
         );
