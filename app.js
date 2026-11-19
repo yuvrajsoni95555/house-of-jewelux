@@ -89,23 +89,43 @@
         const data = await res.json();
         if (data && data.success && data.products) {
           state.products = data.products;
-          handleRoute();
-          return;
         }
       }
     } catch (err) {
       console.warn('API fetch failed, trying static products file', err);
     }
 
+    if (!state.products || state.products.length === 0) {
+      try {
+        const staticRes = await fetch('./data/products.json');
+        if (staticRes.ok) {
+          const staticData = await staticRes.json();
+          state.products = Array.isArray(staticData) ? staticData : (staticData.products || []);
+        }
+      } catch (e) {
+        console.warn('Static products fetch failed', e);
+      }
+    }
+
+    // Load rich categories
     try {
-      const staticRes = await fetch('./data/products.json');
-      if (staticRes.ok) {
-        const staticData = await staticRes.json();
-        state.products = Array.isArray(staticData) ? staticData : (staticData.products || []);
+      const catRes = await fetch('/api/categories');
+      if (catRes.ok) {
+        const catData = await catRes.json();
+        if (catData && catData.success && catData.categories) {
+          state.categories = Array.isArray(catData.categories) ? catData.categories : (catData.categories.categories || []);
+        }
       }
     } catch (e) {
-      console.warn('Static products fetch failed', e);
+      try {
+        const staticCat = await fetch('./data/categories.json');
+        if (staticCat.ok) {
+          const scData = await staticCat.json();
+          state.categories = Array.isArray(scData) ? scData : (scData.categories || []);
+        }
+      } catch (err) {}
     }
+
     handleRoute();
   }
 
@@ -143,8 +163,21 @@
 
     if (route === 'home' || route === '') {
       renderHomePage(appView);
-    } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/') || route === 'silver' || route === 'gold' || route === 'diamond') {
-      const colId = route.startsWith('collections/') ? (route.split('/')[1] || 'all') : (route === 'silver' ? 'silver-category' : route === 'gold' ? 'gold-category' : route === 'diamond' ? 'diamond-category' : 'all');
+    } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/') || ['gold', 'silver', 'diamond', 'gemstone', 'gold-category', 'silver-category', 'diamond-category', 'gemstone-category'].includes(route)) {
+      let colId = 'all';
+      if (route.startsWith('collections/')) {
+        colId = route.split('/')[1] || 'all';
+      } else if (['gold', 'silver', 'diamond', 'gemstone'].includes(route)) {
+        colId = route;
+      } else if (route === 'gold-category') {
+        colId = 'gold';
+      } else if (route === 'silver-category') {
+        colId = 'silver';
+      } else if (route === 'diamond-category') {
+        colId = 'diamond';
+      } else if (route === 'gemstone-category') {
+        colId = 'gemstone';
+      }
       renderCollectionPage(appView, colId);
     } else if (route.startsWith('products/')) {
       const prodId = route.split('/')[1];
@@ -169,10 +202,8 @@
       renderAdminDashboard(appView);
     } else if (route === 'about') {
       renderAboutPage(appView);
-    } else if (route === 'craftsmanship') {
+    } else if (route === 'craftsmanship' || route === 'custom-order') {
       renderCraftsmanshipPage(appView);
-    } else if (route === 'custom-order') {
-      renderCustomOrderPage(appView);
     } else if (route === 'contact') {
       renderContactPage(appView);
     } else if (route === 'faq') {
@@ -332,6 +363,138 @@
         </div>
       </section>
 
+      
+      <!-- THREE PILLARS OF PRECIOUS ADORNMENT (GOLD, SILVER, DIAMOND) -->
+      <section class="material-pillars-section">
+        <div class="container">
+          <div class="section-header" style="text-align: center;">
+            <div class="section-pretitle" style="color: var(--color-royal-lac);">Haute Joaillerie Integrity</div>
+            <h2 class="section-title">The Three Pillars of Precious Adornment</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+            <p style="max-width: 680px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.7;">
+              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery — uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
+            </p>
+          </div>
+
+          <div class="material-pillars-grid">
+            <!-- PILLAR 1: GOLD JEWELLERY -->
+            <a href="#collections/gold" class="material-pillar-card">
+              <div class="material-pillar-img-wrap">
+                <img src="images/authentic_earrings_macro.jpg" alt="Gold Jewellery at House of Jewelux" class="material-pillar-img" />
+                <span class="material-pillar-badge">18K & 22K Solid Vermeil</span>
+              </div>
+              <div class="material-pillar-body">
+                <h3 class="material-pillar-title">
+                  <span>Gold Jewellery</span>
+                  <span style="font-size: 0.85rem; font-family: var(--font-sans); color: #A88462;">17 Pieces</span>
+                </h3>
+                <p class="material-pillar-desc">
+                  Ancestral warmth and royal court radiance. Mastercrafted with thick 18K and 22K champagne gold vermeil layering over solid precious foundations for lifetime brilliance.
+                </p>
+                <div class="material-pillar-footer">
+                  <span>Explore Gold Suites</span>
+                  <span>→</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- PILLAR 2: SILVER JEWELLERY -->
+            <a href="#collections/silver" class="material-pillar-card">
+              <div class="material-pillar-img-wrap">
+                <img src="images/authentic_solitaire_ring.jpg" alt="Silver Jewellery at House of Jewelux" class="material-pillar-img" />
+                <span class="material-pillar-badge">Solid BIS 925 Hallmarked</span>
+              </div>
+              <div class="material-pillar-body">
+                <h3 class="material-pillar-title">
+                  <span>Silver Jewellery</span>
+                  <span style="font-size: 0.85rem; font-family: var(--font-sans); color: #A88462;">50 Pieces</span>
+                </h3>
+                <p class="material-pillar-desc">
+                  Every creation is hand-forged in certified solid 925 sterling silver, sealed with an anti-tarnish liquid platinum-rhodium mirror polish. 100% skin safe and hypoallergenic.
+                </p>
+                <div class="material-pillar-footer">
+                  <span>Explore Silver Creations</span>
+                  <span>→</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- PILLAR 3: DIAMOND & GEMSTONE JEWELLERY -->
+            <a href="#collections/diamond" class="material-pillar-card">
+              <div class="material-pillar-img-wrap">
+                <img src="images/authentic_diamond_choker.jpg" alt="Diamond & Gemstone Jewellery at House of Jewelux" class="material-pillar-img" />
+                <span class="material-pillar-badge">Certified Solitaires & Gems</span>
+              </div>
+              <div class="material-pillar-body">
+                <h3 class="material-pillar-title">
+                  <span>Diamond & Gemstones</span>
+                  <span style="font-size: 0.85rem; font-family: var(--font-sans); color: #A88462;">45 Pieces</span>
+                </h3>
+                <p class="material-pillar-desc">
+                  Uncompromising optical perfection. Featuring certified VVS1 Hearts & Arrows solitaires, vivid Colombian emeralds, Basra pearls, and royal polki settings.
+                </p>
+                <div class="material-pillar-footer">
+                  <span>Explore Diamond & Gems</span>
+                  <span>→</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURATED DESIGN & INSPIRATION COLLECTIONS SHOWCASE -->
+      <section style="padding: 4.5rem 0; background: var(--color-soft-offwhite); border-top: 1px solid var(--color-warm-stone); border-bottom: 1px solid var(--color-warm-stone);">
+        <div class="container">
+          <div class="section-header" style="text-align: center;">
+            <div class="section-pretitle">The 17 Archetypes of Haute Joaillerie</div>
+            <h2 class="section-title">Curated Design Collections</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted);">
+              From sacred temple nakshi to modern sculptural art and animal wildlife motifs, explore our masterfully articulated design themes.
+            </p>
+          </div>
+
+          <div class="curated-collections-grid">
+            <a href="#collections/temple-jewellery" class="curated-col-card">
+              <img src="images/user_balaji_temple_pendant.jpg" alt="Temple & South Indian Heritage" />
+              <div class="curated-col-overlay">
+                <span class="curated-col-badge">Sacred Devotion</span>
+                <h4 class="curated-col-title">Temple & Heritage</h4>
+                <span class="curated-col-count">Architectural Nakshi • 10 Pieces</span>
+              </div>
+            </a>
+
+            <a href="#collections/nature-inspired" class="curated-col-card">
+              <img src="images/user_falcon_brooch_emerald.jpg" alt="Nature, Wildlife & Fauna" />
+              <div class="curated-col-overlay">
+                <span class="curated-col-badge">Living Majesty</span>
+                <h4 class="curated-col-title">Nature & Wildlife</h4>
+                <span class="curated-col-count">Falcon, Peacock & Floral • 10 Pieces</span>
+              </div>
+            </a>
+
+            <a href="#collections/modern-art" class="curated-col-card">
+              <img src="images/authentic_diamond_choker.jpg" alt="Modern Art & Sculptural" />
+              <div class="curated-col-overlay">
+                <span class="curated-col-badge">Contemporary Vision</span>
+                <h4 class="curated-col-title">Modern Art & Sculptural</h4>
+                <span class="curated-col-count">Geometric Forms • 8 Pieces</span>
+              </div>
+            </a>
+
+            <a href="#collections/bridal-jewellery" class="curated-col-card">
+              <img src="images/authentic_indian_bridal.jpg" alt="Bridal & Ceremonial Suites" />
+              <div class="curated-col-overlay">
+                <span class="curated-col-badge">Royal Celebration</span>
+                <h4 class="curated-col-title">Bridal & Occasion</h4>
+                <span class="curated-col-count">Grand Chokers & Jhumkas • 10 Pieces</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- C. WHAT'S NEW / NEW ARRIVALS (JAIPUR JEWELS SECTION 5.C) -->
       <section style="padding: 4rem 0 3rem; background: var(--color-warm-ivory);">
         <div class="container">
@@ -436,7 +599,16 @@
             <div class="section-divider"><span class="section-divider-gem"></span></div>
           </div>
 
-          <div class="products-grid motion-stagger">
+          <!-- Material Filter Tabs Bar -->
+          <div class="material-filter-bar">
+            <button class="material-filter-btn active" onclick="window.HJ.filterHomeProducts('all', this)">All Jewellery (50)</button>
+            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('gold', this)">✦ Gold Jewellery (17)</button>
+            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('silver', this)">✦ Silver Jewellery (50)</button>
+            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('diamond', this)">✦ Diamond & Solitaires (45)</button>
+            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('gemstone', this)">✦ Precious Gemstones (13)</button>
+          </div>
+
+          <div class="products-grid motion-stagger" id="home-featured-products-grid">
             ${bestSellers.map(renderProductCard).join('')}
           </div>
 
@@ -716,34 +888,43 @@
     let heroImg = "images/user_flagship_hero_model.jpg";
 
     if (collectionId && collectionId !== 'all' && collectionId !== 'all-jewellery') {
-      if (['earrings', 'rings', 'necklaces', 'bracelets', 'brooches'].includes(collectionId)) {
-        filtered = filtered.filter(p => p.category === collectionId);
+      if (['gold', 'gold-category'].includes(collectionId)) {
+        filtered = filtered.filter(p => (p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold || (p.metal && p.metal.toLowerCase().includes('gold')));
+        title = "Gold Jewellery Collection";
+        subtitle = "18K Champagne Gold & Royal Vermeil Finishes • Ancestral Grandeur (17 Pieces)";
+        heroImg = "images/authentic_earrings_macro.jpg";
+      } else if (['silver', 'silver-category'].includes(collectionId)) {
+        filtered = filtered.filter(p => (p.materials && p.materials.includes('silver')) || p.primaryMaterial === 'silver' || (p.metal && p.metal.toLowerCase().includes('silver')));
+        title = "Silver Jewellery Collection";
+        subtitle = "Solid 925 Sterling Silver in Liquid Platinum-Rhodium • BIS 925 Hallmarked (50 Pieces)";
+        heroImg = "images/authentic_solitaire_ring.jpg";
+      } else if (['diamond', 'diamond-category'].includes(collectionId)) {
+        filtered = filtered.filter(p => (p.materials && p.materials.includes('diamond')) || p.primaryMaterial === 'diamond' || (p.stone && (p.stone.toLowerCase().includes('diamond') || p.stone.toLowerCase().includes('moissanite'))));
+        title = "Diamond Jewellery Collection";
+        subtitle = "Certified VVS1 Solitaires & Pavé Brilliants • Hearts & Arrows Precision (45 Pieces)";
+        heroImg = "images/authentic_diamond_choker.jpg";
+      } else if (['gemstone', 'gemstone-category'].includes(collectionId)) {
+        filtered = filtered.filter(p => (p.materials && p.materials.includes('gemstone')) || p.primaryMaterial === 'gemstone' || (p.stone && (p.stone.toLowerCase().includes('emerald') || p.stone.toLowerCase().includes('sapphire') || p.stone.toLowerCase().includes('pearl') || p.stone.toLowerCase().includes('polki'))));
+        title = "Precious Gemstone Jewellery";
+        subtitle = "Colombian Emeralds, Ceylon Sapphires, Basra Pearls & Royal Polki (13 Pieces)";
+        heroImg = "images/user_falcon_brooch_emerald.jpg";
+      } else if (['earrings', 'rings', 'necklaces', 'bracelets', 'brooches'].includes(collectionId)) {
+        filtered = filtered.filter(p => p.category === collectionId || p.productType === collectionId);
         const cat = state.categories.find(c => c.id === collectionId);
         if (cat) {
           title = cat.name;
           subtitle = cat.subtitle;
         }
-        if (collectionId === 'rings') {
-          heroImg = "images/authentic_rings_couple_hands.jpg";
-        } else if (collectionId === 'necklaces') {
-          heroImg = "images/authentic_diamond_choker.jpg";
-        } else if (collectionId === 'bracelets') {
-          heroImg = "images/authentic_bracelet_bangles.jpg";
-        } else if (collectionId === 'brooches') {
-          heroImg = "images/authentic_mens_sherwani_jewel.jpg";
-        } else if (collectionId === 'earrings') {
-          heroImg = "images/authentic_earrings_stone.jpg";
-        }
+        if (collectionId === 'rings') heroImg = "images/authentic_rings_couple_hands.jpg";
+        else if (collectionId === 'necklaces') heroImg = "images/authentic_diamond_choker.jpg";
+        else if (collectionId === 'bracelets') heroImg = "images/authentic_bracelet_bangles.jpg";
+        else if (collectionId === 'brooches') heroImg = "images/authentic_mens_sherwani_jewel.jpg";
+        else if (collectionId === 'earrings') heroImg = "images/authentic_earrings_stone.jpg";
       } else if (collectionId === 'new-arrivals') {
         filtered = filtered.filter(p => p.isNew || p.badge === 'New' || p.id.includes('BRO') || p.id.includes('TEM'));
         title = "What's New • Newly Unveiled Creations";
         subtitle = "Freshly forged bench creations from our Jaipur atelier";
         heroImg = "images/user_flagship_hero_model.jpg";
-      } else if (collectionId === 'temple-jewellery') {
-        filtered = filtered.filter(p => p.collection === 'temple-heritage' || p.category === 'necklaces');
-        title = "The Temple Collection";
-        subtitle = "Sacred Indian architectural nakshi in pure silver";
-        heroImg = "images/authentic_temple_heritage.jpg";
       } else if (collectionId === 'best-sellers') {
         filtered = filtered.filter(p => p.badge === 'Bestseller');
         title = "Best Sellers";
@@ -754,25 +935,19 @@
         title = "Festive & Diwali Edit";
         subtitle = "Ceremonial chokers, chandelier earrings, and statement rings";
         heroImg = "images/authentic_indian_bridal.jpg";
+      } else {
+        // Any of the 17 design & inspiration collections
+        filtered = filtered.filter(p => (p.collections && p.collections.includes(collectionId)) || p.collection === collectionId || (p.tags && p.tags.includes(collectionId)));
+        const cat = state.categories.find(c => c.id === collectionId);
+        if (cat) {
+          title = cat.name;
+          subtitle = cat.subtitle;
+          if (cat.banner) heroImg = cat.banner;
+        } else {
+          title = collectionId.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ') + " Collection";
+          subtitle = "Curated Haute Joaillerie Masterpieces from House of Jewelux";
+        }
       }
-    }
-
-    // Material category filtering (Silver / Gold / Diamond)
-    if (collectionId === 'silver-category') {
-      filtered = filtered.filter(p => p.isSilver && !p.isGold);
-      title = "Silver Jewellery";
-      subtitle = "Solid 925 Sterling Silver Creations • Anti-Tarnish Rhodium Finish • BIS Hallmarked";
-      heroImg = "images/authentic_solitaire_ring.jpg";
-    } else if (collectionId === 'gold-category') {
-      filtered = filtered.filter(p => p.isGold);
-      title = "Gold Jewellery";
-      subtitle = "18K Gold Finish & Vermeil Masterpieces • Royal Goldsmith Heritage • BIS Hallmarked";
-      heroImg = "images/authentic_rings_couple_hands.jpg";
-    } else if (collectionId === 'diamond-category') {
-      filtered = filtered.filter(p => p.stone && (p.stone.toLowerCase().includes('diamond') || p.stone.toLowerCase().includes('moissanite')));
-      title = "Diamond Jewellery";
-      subtitle = "Certified VVS1 Stones • Hearts & Arrows Cut • Eternal Brilliance • BIS Hallmarked";
-      heroImg = "images/authentic_diamond_ring_macro.jpg";
     }
 
     // Apply active sidebar filters
@@ -958,21 +1133,21 @@
               <span style="color: var(--color-stone-muted);">| ${p.reviewsCount || 108} Reviews</span>
             </div>
 
-            <!-- Capsule Trust Pills (Bespoke 2D Heritage SVG System) -->
+            <!-- Capsule Trust Pills (Truthful Material Specifications) -->
             <div class="pdp-trust-capsules-row">
               <span class="trust-capsule">
                 <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
                   <polygon points="12 2 14.5 9.5 22 12 14.5 14.5 12 22 9.5 14.5 2 12 9.5 9.5 12 2"></polygon>
                   <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
                 </svg>
-                Anti-Tarnish
+                Anti-Tarnish Barrier
               </span>
               <span class="trust-capsule">
                 <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
                   <path d="M12 2.5C12 2.5 5 11 5 15.5C5 19.1 8.1 22 12 22C15.9 22 19 15.5 19 15.5C19 11 12 2.5 12 2.5Z"></path>
                   <path d="M12 18V13M10 15C10 15 11 13 12 13C13 13 14 15 14 15"></path>
                 </svg>
-                Skin Safe Jewellery
+                Hypoallergenic
               </span>
               <span class="trust-capsule">
                 <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
@@ -982,7 +1157,7 @@
                   <circle cx="19.5" cy="6" r="1" fill="currentColor"></circle>
                   <line x1="3" y1="18" x2="21" y2="18" stroke-width="1.5"></line>
                 </svg>
-                18K Micro Gold Finish
+                ${(p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold ? '18K Gold Micron Finish' : 'Liquid Rhodium Finish'}
               </span>
               <span class="trust-capsule">
                 <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">

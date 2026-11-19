@@ -1,72 +1,288 @@
 [
   {
+    "id": "gold",
+    "handle": "gold",
+    "name": "Gold Jewellery",
+    "subtitle": "18K Champagne Gold & Royal Micro-Gold Masterpieces",
+    "description": "Impeccably finished gold jewellery radiating timeless warmth, forged in rich 18K and 22K gold over precious metals.",
+    "image": "images/authentic_earrings_macro.jpg",
+    "banner": "images/authentic_earrings_macro.jpg",
+    "count": 17,
+    "group": "material"
+  },
+  {
+    "id": "silver",
+    "handle": "silver",
+    "name": "Silver Jewellery",
+    "subtitle": "Solid 925 Sterling Silver in Liquid Platinum-Rhodium",
+    "description": "Mastercrafted in solid 925 sterling silver with a lifetime anti-tarnish rhodium barrier and stamped BIS certification.",
+    "image": "images/authentic_solitaire_ring.jpg",
+    "banner": "images/authentic_solitaire_ring.jpg",
+    "count": 50,
+    "group": "material"
+  },
+  {
+    "id": "diamond",
+    "handle": "diamond",
+    "name": "Diamond Jewellery",
+    "subtitle": "Certified VVS1 Solitaires & Pavé Brilliants",
+    "description": "Conflict-free certified solitaires, Hearts & Arrows brilliant cuts, and micro-pavé halos capturing eternal light.",
+    "image": "images/authentic_diamond_choker.jpg",
+    "banner": "images/authentic_diamond_choker.jpg",
+    "count": 45,
+    "group": "material"
+  },
+  {
+    "id": "gemstone",
+    "handle": "gemstone",
+    "name": "Precious Gemstone Jewellery",
+    "subtitle": "Colombian Emeralds, Ceylon Sapphires & South Sea Pearls",
+    "description": "Vivid Colombian emeralds, deep Ceylon royal sapphires, and natural Basra pearls handset by master Jaipur stone setters.",
+    "image": "images/user_falcon_brooch_emerald.jpg",
+    "banner": "images/user_falcon_brooch_emerald.jpg",
+    "count": 13,
+    "group": "material"
+  },
+  {
+    "id": "fine-jewellery",
+    "handle": "fine-jewellery",
+    "name": "Fine Jewellery",
+    "subtitle": "Certified Solitaires & Masterpiece High Jewellery",
+    "description": "Exquisite high jewellery suites, certified solitaires, and museum-grade masterworks crafted with unmatched precision.",
+    "image": "images/authentic_diamond_choker.jpg",
+    "banner": "images/authentic_diamond_choker.jpg",
+    "count": 31,
+    "group": "collection"
+  },
+  {
+    "id": "temple-jewellery",
+    "handle": "temple-jewellery",
+    "name": "Temple Jewellery",
+    "subtitle": "Sacred Indian Sanctuaries & Balaji Nakshi",
+    "description": "Devotional bench goldsmithing embodying centuries of sacred Indian temple architecture, Balaji icons, and royal deity motifs.",
+    "image": "images/user_balaji_temple_pendant.jpg",
+    "banner": "images/user_balaji_temple_pendant.jpg",
+    "count": 3,
+    "group": "collection"
+  },
+  {
+    "id": "south-indian-temple",
+    "handle": "south-indian-temple",
+    "name": "South Indian Temple Jewellery",
+    "subtitle": "Hand-Chiseled Nakshi & Dravidian Heritage",
+    "description": "Inspired by the stone-carved gopurams of Tamil Nadu and sacred temple dancers, crafted in pure metal and micro gold.",
+    "image": "images/user_balaji_temple_pendant.jpg",
+    "banner": "images/user_balaji_temple_pendant.jpg",
+    "count": 3,
+    "group": "collection"
+  },
+  {
+    "id": "heritage-jewellery",
+    "handle": "heritage-jewellery",
+    "name": "Indian Heritage Jewellery",
+    "subtitle": "Rajputana Court Regalia & Mughal Grandeur",
+    "description": "Heirlooms carrying the generational aura of royal Jaipur courts, imperial durbars, and timeless Indian majesty.",
+    "image": "images/user_falcon_brooch_white.jpg",
+    "banner": "images/user_falcon_brooch_white.jpg",
+    "count": 8,
+    "group": "collection"
+  },
+  {
+    "id": "traditional-jewellery",
+    "handle": "traditional-jewellery",
+    "name": "Traditional Jewellery",
+    "subtitle": "Uncut Polki, Jhumkas & Ceremonial Masterpieces",
+    "description": "Time-honoured Indian ceremonial jewellery passed down through generations, celebrating cultural legacy and festive pride.",
+    "image": "images/authentic_polki_craft.jpg",
+    "banner": "images/authentic_polki_craft.jpg",
+    "count": 8,
+    "group": "collection"
+  },
+  {
+    "id": "modern-art",
+    "handle": "modern-art",
+    "name": "Modern Art Jewellery",
+    "subtitle": "Avant-Garde Geometries & Fluid Sculptures",
+    "description": "Where abstract sculpture meets fine jewellery: bold negative space, kinetic silhouettes, and contemporary artistic balance.",
+    "image": "images/authentic_earrings_macro.jpg",
+    "banner": "images/authentic_earrings_macro.jpg",
+    "count": 24,
+    "group": "collection"
+  },
+  {
+    "id": "contemporary-jewellery",
+    "handle": "contemporary-jewellery",
+    "name": "Contemporary Jewellery",
+    "subtitle": "Sleek European Poise & Minimalist Precision",
+    "description": "Designed for the global cosmopolitan lifestyle: clean lines, architectural elegance, and refined everyday luxury.",
+    "image": "images/authentic_solitaire_ring.jpg",
+    "banner": "images/authentic_solitaire_ring.jpg",
+    "count": 28,
+    "group": "collection"
+  },
+  {
+    "id": "architectural-jewellery",
+    "handle": "architectural-jewellery",
+    "name": "Architectural & Sculptural Jewellery",
+    "subtitle": "Royal Arches, Torques & Structural Symmetry",
+    "description": "Wearable architecture capturing the vaulting arches of royal pavilions, tensioned cuffs, and calculated dimensional poise.",
+    "image": "images/authentic_bracelet_bangles.jpg",
+    "banner": "images/authentic_bracelet_bangles.jpg",
+    "count": 22,
+    "group": "collection"
+  },
+  {
+    "id": "nature-inspired",
+    "handle": "nature-inspired",
+    "name": "Nature-Inspired Jewellery",
+    "subtitle": "Organic Splendour, Dewdrops & Celestial Radiance",
+    "description": "Fine jewellery honouring the natural realm: fluid leaves, celestial constellations, dew-kissed petals, and precious stones.",
+    "image": "images/authentic_diamond_ring_macro.jpg",
+    "banner": "images/authentic_diamond_ring_macro.jpg",
+    "count": 17,
+    "group": "collection"
+  },
+  {
+    "id": "floral-botanical",
+    "handle": "floral-botanical",
+    "name": "Floral & Botanical Jewellery",
+    "subtitle": "Royal Fleur, Golden Palms & Blooming Pavé",
+    "description": "Intricate botanical motifs rendered in precious metal, capturing the immortal grace of blooming flora and royal palace gardens.",
+    "image": "images/authentic_diamond_ring_macro.jpg",
+    "banner": "images/authentic_diamond_ring_macro.jpg",
+    "count": 6,
+    "group": "collection"
+  },
+  {
+    "id": "animal-wildlife",
+    "handle": "animal-wildlife",
+    "name": "Animal & Wildlife-Inspired Jewellery",
+    "subtitle": "Imperial Crests, Falcon Wings & Sacred Fauna",
+    "description": "Majestic fauna rendered with anatomical reverence, featuring sovereign falcons, royal peacocks, and jewel-encrusted butterflies.",
+    "image": "images/user_falcon_brooch_emerald.jpg",
+    "banner": "images/user_falcon_brooch_emerald.jpg",
+    "count": 11,
+    "group": "collection"
+  },
+  {
+    "id": "peacock-collection",
+    "handle": "peacock-collection",
+    "name": "Peacock-Inspired Jewellery",
+    "subtitle": "Mayura Plumes, Zambian Emeralds & Royal Grace",
+    "description": "Celebrating the national bird of India through regal peacock feather brooches, emerald plumes, and vibrant pavé plumage.",
+    "image": "images/user_falcon_brooch_emerald.jpg",
+    "banner": "images/user_falcon_brooch_emerald.jpg",
+    "count": 4,
+    "group": "collection"
+  },
+  {
+    "id": "butterfly-collection",
+    "handle": "butterfly-collection",
+    "name": "Butterfly-Inspired Jewellery",
+    "subtitle": "Filigree Wings, Floating Diamonds & Metamorphosis",
+    "description": "Ethereal butterfly and dragonfly silhouettes featuring gossamer openwork, natural Basra pearls, and luminous diamond pavé.",
+    "image": "images/user_falcon_brooch_white.jpg",
+    "banner": "images/user_falcon_brooch_white.jpg",
+    "count": 3,
+    "group": "collection"
+  },
+  {
+    "id": "bird-inspired",
+    "handle": "bird-inspired",
+    "name": "Bird-Inspired Jewellery",
+    "subtitle": "Avian Heraldry, Sovereign Falcons & Freedom",
+    "description": "Symbolic bird iconography embodying nobility, foresight, and sovereign royal pride across lapel pins and statement crests.",
+    "image": "images/user_falcon_brooch_white.jpg",
+    "banner": "images/user_falcon_brooch_white.jpg",
+    "count": 5,
+    "group": "collection"
+  },
+  {
+    "id": "statement-jewellery",
+    "handle": "statement-jewellery",
+    "name": "Statement Jewellery",
+    "subtitle": "Grand Regal Chokers & Unapologetic Presence",
+    "description": "Showstopping high-jewellery centerpieces that command attention at diplomatic galas, celebratory soirees, and red carpet entries.",
+    "image": "images/authentic_diamond_choker.jpg",
+    "banner": "images/authentic_diamond_choker.jpg",
+    "count": 11,
+    "group": "collection"
+  },
+  {
+    "id": "bridal-jewellery",
+    "handle": "bridal-jewellery",
+    "name": "Bridal & Occasion Jewellery",
+    "subtitle": "Royal Ceremonial Suites & Eternal Heirlooms",
+    "description": "Masterpiece mangalsutras, regal bridal chokers, jhumkas, and eternity bands crafted for Indian weddings and royal celebrations.",
+    "image": "images/authentic_indian_bridal.jpg",
+    "banner": "images/authentic_indian_bridal.jpg",
+    "count": 17,
+    "group": "collection"
+  },
+  {
+    "id": "everyday-luxury",
+    "handle": "everyday-luxury",
+    "name": "Everyday Luxury Jewellery",
+    "subtitle": "Effortless Comfort Huggies & Daily Solitaires",
+    "description": "Understated, featherweight fine jewellery designed for effortless everyday wear, office elegance, and casual luxury.",
+    "image": "images/authentic_solitaire_ring.jpg",
+    "banner": "images/authentic_solitaire_ring.jpg",
+    "count": 17,
+    "group": "collection"
+  },
+  {
     "id": "rings",
     "handle": "rings",
     "name": "Rings & Solitaires",
     "subtitle": "Timeless Bands & Regal Cocktail Rings",
-    "count": 10,
+    "description": "Hand-forged rings set with certified solitaires, micro-pavé ribbons, and royal cocktail crowns.",
     "image": "images/authentic_solitaire_ring.jpg",
     "banner": "images/authentic_solitaire_ring.jpg",
-    "description": "Hand-forged in solid 925 sterling silver with liquid rhodium and 18K yellow gold, set with VVS1 diamond simulants and authentic gemstones."
+    "count": 10,
+    "group": "product_type"
   },
   {
     "id": "earrings",
     "handle": "earrings",
     "name": "The Earrings Suite",
     "subtitle": "Solitaire Studs, Drops, Chandbalis & Jhumkas",
-    "count": 10,
+    "description": "From featherweight daily huggies to ornate royal Rajputana chandeliers with hypoallergenic posts.",
     "image": "images/authentic_earrings_macro.jpg",
     "banner": "images/authentic_earrings_macro.jpg",
-    "description": "From featherweight daily huggies to ornate royal Rajputana chandeliers crafted with hypoallergenic 925 silver posts."
+    "count": 10,
+    "group": "product_type"
   },
   {
     "id": "necklaces",
     "handle": "necklaces",
     "name": "Necklaces & Chokers",
     "subtitle": "Hasli Chokers, Pendants & Regal Ranimon",
-    "count": 10,
+    "description": "Majestic neckpieces inspired by royal Indian court jewellery, featuring intricate openwork and solitaires.",
     "image": "images/authentic_diamond_choker.jpg",
     "banner": "images/authentic_diamond_choker.jpg",
-    "description": "Majestic neckpieces inspired by the royal courts of Rajasthan, featuring intricate floral openwork and bezel-set brilliants."
+    "count": 10,
+    "group": "product_type"
   },
   {
     "id": "bracelets",
     "handle": "bracelets",
-    "name": "Bracelets & Bangles",
-    "subtitle": "Kadas, Tennis Cuffs & Articulated Links",
-    "count": 10,
+    "name": "Bracelets & Cuffs",
+    "subtitle": "Tennis Cuffs, Torque Bangles & Articulated Links",
+    "description": "Ergonomically contoured cuffs and tennis bracelets with double-locking royal security clasps.",
     "image": "images/authentic_bracelet_bangles.jpg",
     "banner": "images/authentic_bracelet_bangles.jpg",
-    "description": "Ergonomically contoured cuffs and hinged Jaipur kadas with double-locking royal security clasps."
+    "count": 10,
+    "group": "product_type"
   },
   {
     "id": "brooches",
     "handle": "brooches",
     "name": "Royal Brooches & Pins",
     "subtitle": "Falcon Crests, Temple Sarpech & Lapel Jewels",
-    "count": 10,
+    "description": "Haute joaillerie crests for celebratory sherwanis and tailored velvet dinner jackets.",
     "image": "images/user_falcon_brooch_white.jpg",
     "banner": "images/user_falcon_brooch_white.jpg",
-    "description": "Haute joaillerie crests for celebratory sherwanis and tailored velvet dinner jackets, featuring museum-grade filigree."
-  },
-  {
-    "id": "temple-jewellery",
-    "handle": "temple-jewellery",
-    "name": "Sacred Temple Nakshi",
-    "subtitle": "Hand-Chiseled Balaji, Lakshmi & Peacock Motifs",
     "count": 10,
-    "image": "images/user_balaji_temple_pendant.jpg",
-    "banner": "images/user_balaji_temple_pendant.jpg",
-    "description": "Devotional goldsmith bench artistry embodying centuries of sacred Indian temple architecture."
-  },
-  {
-    "id": "festive-edit",
-    "handle": "festive-edit",
-    "name": "Festive & Bridal Edit",
-    "subtitle": "Royal Ceremonial & Wedding Masterpieces",
-    "count": 15,
-    "image": "images/authentic_indian_bridal.jpg",
-    "banner": "images/authentic_indian_bridal.jpg",
-    "description": "Curated ceremonial suites designed for brides, royal occasions, and generational heirlooms."
+    "group": "product_type"
   }
 ]

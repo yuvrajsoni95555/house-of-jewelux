@@ -65,7 +65,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-001 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-001 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "fine-jewellery",
+      "modern-art",
+      "nature-inspired"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-002",
@@ -133,7 +147,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-002 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-002 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-003",
@@ -201,7 +226,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-003 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-003 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "modern-art",
+      "statement-jewellery"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-004",
@@ -269,7 +308,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-004 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-004 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-005",
@@ -337,7 +388,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-005 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-005 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "modern-art"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-006",
@@ -405,7 +468,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-006 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-006 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "bridal-jewellery",
+      "everyday-luxury",
+      "fine-jewellery"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-007",
@@ -473,7 +547,22 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-007 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-007 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "fine-jewellery",
+      "heritage-jewellery",
+      "modern-art",
+      "traditional-jewellery"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-008",
@@ -541,7 +630,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-008 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-008 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "fine-jewellery",
+      "floral-botanical",
+      "nature-inspired"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-009",
@@ -609,7 +710,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-009 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-009 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "fine-jewellery",
+      "modern-art"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-RNG-010",
@@ -677,7 +792,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-010 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-010 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "bridal-jewellery",
+      "fine-jewellery",
+      "nature-inspired",
+      "statement-jewellery"
+    ],
+    "productType": "rings"
   },
   {
     "id": "HJ-EAR-001",
@@ -745,7 +872,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-001 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-001 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "everyday-luxury",
+      "fine-jewellery",
+      "floral-botanical",
+      "nature-inspired"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-002",
@@ -813,7 +952,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-002 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-002 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "everyday-luxury"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-003",
@@ -881,7 +1031,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-003 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-003 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "animal-wildlife",
+      "bird-inspired",
+      "statement-jewellery"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-004",
@@ -949,7 +1110,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-004 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-004 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "everyday-luxury",
+      "fine-jewellery",
+      "peacock-collection"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-005",
@@ -1017,7 +1192,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-005 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-005 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "fine-jewellery",
+      "modern-art",
+      "nature-inspired"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-006",
@@ -1085,7 +1274,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-006 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-006 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "modern-art"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-007",
@@ -1153,7 +1353,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-007 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-007 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "contemporary-jewellery",
+      "modern-art"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-008",
@@ -1221,7 +1433,17 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-008 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-008 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "everyday-luxury",
+      "nature-inspired"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-009",
@@ -1289,7 +1511,17 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-009 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-009 - Zero AI Imagery",
+    "materials": [
+      "silver"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "modern-art"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-EAR-010",
@@ -1357,7 +1589,23 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-010 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-010 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "bridal-jewellery",
+      "fine-jewellery",
+      "heritage-jewellery",
+      "south-indian-temple",
+      "temple-jewellery",
+      "traditional-jewellery"
+    ],
+    "productType": "earrings"
   },
   {
     "id": "HJ-BRC-001",
@@ -1424,7 +1672,17 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-001 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-001 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "everyday-luxury",
+      "fine-jewellery"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-002",
@@ -1491,7 +1749,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-002 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-002 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "modern-art"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-003",
@@ -1558,7 +1827,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-003 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-003 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "gold",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "modern-art"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-004",
@@ -1625,7 +1906,17 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-004 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-004 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "architectural-jewellery",
+      "bridal-jewellery"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-005",
@@ -1692,7 +1983,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-005 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-005 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "animal-wildlife",
+      "bird-inspired",
+      "everyday-luxury",
+      "fine-jewellery"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-006",
@@ -1759,7 +2062,20 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-006 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-006 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "modern-art"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-007",
@@ -1826,7 +2142,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-007 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-007 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "fine-jewellery",
+      "peacock-collection"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-008",
@@ -1893,7 +2221,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-008 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-008 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "fine-jewellery",
+      "modern-art"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-009",
@@ -1960,7 +2302,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-009 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-009 - Zero AI Imagery",
+    "materials": [
+      "silver"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "heritage-jewellery",
+      "modern-art",
+      "traditional-jewellery"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-BRC-010",
@@ -2027,7 +2381,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-010 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-010 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "contemporary-jewellery",
+      "everyday-luxury",
+      "modern-art",
+      "nature-inspired"
+    ],
+    "productType": "bracelets"
   },
   {
     "id": "HJ-NCK-001",
@@ -2094,7 +2460,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-001 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-001 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "modern-art",
+      "nature-inspired"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-002",
@@ -2161,7 +2541,25 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-002 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-002 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "modern-art",
+      "peacock-collection",
+      "statement-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-003",
@@ -2229,7 +2627,17 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-003 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-003 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "everyday-luxury",
+      "fine-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-004",
@@ -2296,7 +2704,22 @@
       }
     ],
     "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
-    "imageVerification": "Client-Supplied Verified Reference Photography (Lord Venkateswara Sacred Nakshi Pendant Spec HJ-NCK-004)"
+    "imageVerification": "Client-Supplied Verified Reference Photography (Lord Venkateswara Sacred Nakshi Pendant Spec HJ-NCK-004)",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "bridal-jewellery",
+      "heritage-jewellery",
+      "south-indian-temple",
+      "temple-jewellery",
+      "traditional-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-005",
@@ -2363,7 +2786,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-005 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-005 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "everyday-luxury",
+      "fine-jewellery",
+      "statement-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-006",
@@ -2430,7 +2864,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-006 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-006 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "bridal-jewellery",
+      "everyday-luxury",
+      "fine-jewellery",
+      "statement-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-007",
@@ -2498,7 +2944,18 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-007 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-007 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "nature-inspired"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-008",
@@ -2565,7 +3022,20 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-008 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-008 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "bridal-jewellery",
+      "fine-jewellery",
+      "statement-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-009",
@@ -2632,7 +3102,22 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-009 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-009 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "heritage-jewellery",
+      "modern-art",
+      "traditional-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-NCK-010",
@@ -2699,7 +3184,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-010 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-010 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "statement-jewellery"
+    ],
+    "productType": "necklaces"
   },
   {
     "id": "HJ-BRO-001",
@@ -2767,7 +3264,24 @@
       }
     ],
     "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
-    "imageVerification": "Client-Supplied Verified Reference Photography (Royal Falcon Polki Brooch Spec HJ-BRO-001)"
+    "imageVerification": "Client-Supplied Verified Reference Photography (Royal Falcon Polki Brooch Spec HJ-BRO-001)",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "animal-wildlife",
+      "bird-inspired",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "heritage-jewellery",
+      "modern-art",
+      "nature-inspired",
+      "statement-jewellery",
+      "traditional-jewellery"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-002",
@@ -2834,7 +3348,22 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-002 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-002 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "gold",
+    "collections": [
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "fine-jewellery",
+      "floral-botanical",
+      "nature-inspired",
+      "statement-jewellery"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-003",
@@ -2901,7 +3430,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-003 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-003 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond"
+    ],
+    "primaryMaterial": "diamond",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "modern-art",
+      "nature-inspired"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-004",
@@ -2968,7 +3509,24 @@
       }
     ],
     "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
-    "imageVerification": "Client-Supplied Verified Reference Photography (Diamond Jaguars on Octagonal Emerald Spec HJ-BRO-004)"
+    "imageVerification": "Client-Supplied Verified Reference Photography (Diamond Jaguars on Octagonal Emerald Spec HJ-BRO-004)",
+    "materials": [
+      "silver",
+      "gold",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "bird-inspired",
+      "heritage-jewellery",
+      "nature-inspired",
+      "peacock-collection",
+      "south-indian-temple",
+      "temple-jewellery",
+      "traditional-jewellery"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-005",
@@ -3035,7 +3593,17 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-005 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-005 - Zero AI Imagery",
+    "materials": [
+      "silver"
+    ],
+    "primaryMaterial": "silver",
+    "collections": [
+      "architectural-jewellery",
+      "contemporary-jewellery",
+      "modern-art"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-006",
@@ -3102,7 +3670,24 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-006 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-006 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "architectural-jewellery",
+      "bridal-jewellery",
+      "butterfly-collection",
+      "contemporary-jewellery",
+      "floral-botanical",
+      "modern-art",
+      "nature-inspired"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-007",
@@ -3168,7 +3753,19 @@
       }
     ],
     "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
-    "imageVerification": "Client-Supplied Verified Reference Photography (Royal Elephant Polki & Emerald Brooch Spec HJ-BRO-007)"
+    "imageVerification": "Client-Supplied Verified Reference Photography (Royal Elephant Polki & Emerald Brooch Spec HJ-BRO-007)",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "gold",
+    "collections": [
+      "floral-botanical",
+      "nature-inspired",
+      "statement-jewellery"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-008",
@@ -3235,7 +3832,19 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-008 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-008 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "butterfly-collection",
+      "nature-inspired"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-009",
@@ -3301,7 +3910,26 @@
       }
     ],
     "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
-    "imageVerification": "Client-Supplied Verified Reference Photography (Dual Swan Diamond & Morganite Brooch Spec HJ-BRO-009)"
+    "imageVerification": "Client-Supplied Verified Reference Photography (Dual Swan Diamond & Morganite Brooch Spec HJ-BRO-009)",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond",
+      "gemstone"
+    ],
+    "primaryMaterial": "gemstone",
+    "collections": [
+      "animal-wildlife",
+      "architectural-jewellery",
+      "butterfly-collection",
+      "contemporary-jewellery",
+      "floral-botanical",
+      "heritage-jewellery",
+      "modern-art",
+      "nature-inspired",
+      "traditional-jewellery"
+    ],
+    "productType": "brooches"
   },
   {
     "id": "HJ-BRO-010",
@@ -3368,6 +3996,21 @@
       }
     ],
     "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-010 - Zero AI Imagery"
+    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-010 - Zero AI Imagery",
+    "materials": [
+      "silver",
+      "gold",
+      "diamond"
+    ],
+    "primaryMaterial": "gold",
+    "collections": [
+      "animal-wildlife",
+      "architectural-jewellery",
+      "bird-inspired",
+      "contemporary-jewellery",
+      "fine-jewellery",
+      "modern-art"
+    ],
+    "productType": "brooches"
   }
 ]

@@ -64,14 +64,30 @@ app.get('/api/products', (req, res) => {
   const products = readJSON('products.json');
   let result = [...products];
 
-  const { category, collection, search, metal, sort, min_price, max_price } = req.query;
+  const { category, collection, material, search, metal, sort, min_price, max_price } = req.query;
 
   if (category && category !== 'all') {
-    result = result.filter(p => p.category.toLowerCase() === category.toLowerCase());
+    const cat = category.toLowerCase();
+    result = result.filter(p => (p.category && p.category.toLowerCase() === cat) || (p.productType && p.productType.toLowerCase() === cat));
   }
 
   if (collection && collection !== 'all') {
-    result = result.filter(p => (p.collection || '').toLowerCase() === collection.toLowerCase());
+    const col = collection.toLowerCase();
+    result = result.filter(p => 
+      (p.collection && p.collection.toLowerCase() === col) || 
+      (Array.isArray(p.collections) && p.collections.map(c => c.toLowerCase()).includes(col))
+    );
+  }
+
+  if (material && material !== 'all') {
+    const mat = material.toLowerCase();
+    result = result.filter(p => 
+      (Array.isArray(p.materials) && p.materials.map(m => m.toLowerCase()).includes(mat)) || 
+      (p.primaryMaterial && p.primaryMaterial.toLowerCase() === mat) ||
+      (p.metal && p.metal.toLowerCase().includes(mat)) ||
+      (mat === 'diamond' && p.stone && p.stone.toLowerCase().includes('diamond')) ||
+      (mat === 'gold' && (p.isGold || (p.metal && p.metal.toLowerCase().includes('gold'))))
+    );
   }
 
   if (metal) {

@@ -4624,3 +4624,238 @@ img {
   text-align: center !important;
 }
 
+
+
+/* ==================== THREE PILLARS OF PRECIOUS ADORNMENT ==================== */
+.material-pillars-section {
+  padding: 4.5rem 0 3.5rem;
+  background: #FAF7F2;
+  border-bottom: 1px solid rgba(168, 132, 98, 0.18);
+}
+
+.material-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .material-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.material-pillar-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 132, 98, 0.22);
+  box-shadow: 0 10px 30px rgba(26, 18, 14, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.material-pillar-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 50px rgba(26, 18, 14, 0.12);
+  border-color: #A88462;
+}
+
+.material-pillar-img-wrap {
+  position: relative;
+  height: 290px;
+  width: 100%;
+  overflow: hidden;
+  background: #1A120E;
+}
+
+.material-pillar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.material-pillar-card:hover .material-pillar-img {
+  transform: scale(1.06);
+}
+
+.material-pillar-badge {
+  position: absolute;
+  top: 1.1rem;
+  left: 1.1rem;
+  background: rgba(26, 18, 14, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(168, 132, 98, 0.45);
+  color: #D5C4AE;
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.material-pillar-body {
+  padding: 1.75rem 1.6rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.material-pillar-title {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  color: #1A120E;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.material-pillar-desc {
+  font-size: 0.85rem;
+  color: #5A524C;
+  line-height: 1.65;
+  margin: 0 0 1.25rem;
+  flex: 1;
+}
+
+.material-pillar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(168, 132, 98, 0.15);
+  padding-top: 1rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #A88462;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Material Filter Bar */
+.material-filter-bar {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.material-filter-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1px solid rgba(168, 132, 98, 0.3);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #3A2418;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.material-filter-btn:hover,
+.material-filter-btn.active {
+  background: #1A120E;
+  color: #FAF7F2;
+  border-color: #1A120E;
+}
+
+/* Curated Collections Showcase */
+.curated-collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.25rem;
+}
+
+@media (max-width: 992px) {
+  .curated-collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .curated-collections-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.curated-col-card {
+  position: relative;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1A120E;
+  text-decoration: none;
+  color: #FFFFFF;
+  display: block;
+  border: 1px solid rgba(168, 132, 98, 0.25);
+  transition: transform 0.35s ease, border-color 0.35s ease;
+}
+
+.curated-col-card:hover {
+  transform: translateY(-5px);
+  border-color: #D5C4AE;
+}
+
+.curated-col-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.72);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+}
+
+.curated-col-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(0.62);
+}
+
+.curated-col-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26,18,14,0.1) 0%, rgba(26,18,14,0.85) 75%, rgba(26,18,14,0.95) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.curated-col-badge {
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #D5C4AE;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.curated-col-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+  color: #FFFFFF;
+}
+
+.curated-col-count {
+  font-size: 0.72rem;
+  color: rgba(250, 247, 242, 0.75);
+}
