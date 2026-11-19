@@ -27,40 +27,62 @@
      HOUSE OF JEWELUX — OFF-WHITE HERITAGE LUXURY PALETTE
      Fine European Editorial & Indian Royal Maison Identity
      =================================================================== */
-  /* Pépite-Inspired Organic Luxury Palette (Swiss/Italian Warm Eggshell & Cacao) */
-  --color-warm-ivory: #FFFDF6;          /* Primary eggshell canvas (Pépite signature) */
-  --color-soft-offwhite: #FFF7E9;       /* Warm butter ivory (Pépite card canvas) */
-  --color-antique-white: #FAF5ED;       /* Soft inset contrast */
-  --color-champagne-beige: #F4ECE0;     /* Pill backgrounds, search inputs */
-  --color-champagne-light: #FBF7EE;     /* Subtle interactive highlight */
-  
-  /* Hairline Borders & Structural Frames */
-  --color-warm-stone: #E8DFD3;          /* Soft organic hairline borders */
-  --color-warm-stone-light: #F2ECE3;    /* Internal card rules */
-  --color-stone-muted: #7A6E63;         /* Eyebrows, uppercase tags, metadata */
-  --color-stone-subtle: #9E9285;        /* Secondary captions */
-  
-  /* Deep Roasted Cacao Espresso & Charcoal (Pépite Contrast) */
-  --color-deep-heritage-brown: #2F241A; /* Primary headers & luxury Didone serifs */
-  --color-espresso: #2F241A;            /* Rich contrast body copy */
-  --color-charcoal: #1F1710;            /* Grounded deep tone */
-  --color-subtle-charcoal: #2F241A;     /* Organic footer background */
-  
-  /* Pépite Organic Radius Tokens */
+  /* ===================================================================
+     HOUSE OF JEWELUX — OFFICIAL MASTER BRAND COLOR PALETTE
+     Directly matched to Master Swatches:
+     #1A120E • #3A2418 • #6B4A2E • #A88462 • #D5C4AE • #4A4A46
+     =================================================================== */
+
+  /* Swatch #1: #1A120E (Obsidian Noir Cacao - deepest grounding tone) */
+  --color-charcoal: #1A120E;            /* Exact Swatch #1 */
+  --color-subtle-charcoal: #1A120E;     /* Exact Swatch #1 */
+  --color-cacao-deep: #1A120E;          /* Exact Swatch #1 */
+
+  /* Swatch #2: #3A2418 (Rich Heritage Mahogany / Bronze Espresso - headings & serifs) */
+  --color-deep-heritage-brown: #3A2418; /* Exact Swatch #2 */
+  --color-espresso: #3A2418;            /* Exact Swatch #2 */
+  --color-bronze-mahogany: #3A2418;     /* Exact Swatch #2 */
+
+  /* Swatch #3: #6B4A2E (Warm Amber Cognac Leather - mid-tone hover, accents, rich keylines) */
+  --color-muted-gold-dark: #6B4A2E;     /* Exact Swatch #3 */
+  --color-cognac-amber: #6B4A2E;        /* Exact Swatch #3 */
+
+  /* Swatch #4: #A88462 (Warm Dune Gold / Antique Champagne Ochre - primary gold accent) */
+  --color-muted-gold: #A88462;          /* Exact Swatch #4 */
+  --color-muted-gold-soft: #BFA082;     /* Gold tint */
+  --color-muted-gold-light: #E0CFC0;    /* Filigree highlight */
+  --color-gold: #A88462;                /* Exact Swatch #4 */
+  --color-antique-gold: #A88462;        /* Exact Swatch #4 */
+  --color-champagne-gold: #CBB296;      /* Luminous gold tint */
+
+  /* Swatch #5: #D5C4AE (Alabaster Silk Linen / Cashmere Cream - canvas, cards, borders) */
+  --color-champagne-beige: #D5C4AE;     /* Exact Swatch #5 */
+  --color-warm-stone: #D5C4AE;          /* Exact Swatch #5 */
+  --color-warm-stone-light: #E8DFD3;    /* Soft internal card rule */
+  --color-warm-ivory: #FAF7F2;          /* Clean cashmere silk canvas tint */
+  --color-soft-offwhite: #F4EFE6;       /* Card canvas */
+  --color-antique-white: #EDE5D8;       /* Inset contrast */
+  --color-champagne-light: #FAF7F2;     /* Subtle interactive highlight */
+
+  /* Swatch #6: #4A4A46 (Mineral Slate Stone - metadata, captions, secondary copy) */
+  --color-stone-muted: #4A4A46;         /* Exact Swatch #6 */
+  --color-stone-subtle: #6D6D69;        /* Tertiary captions */
+  --color-taupe: #4A4A46;               /* Exact Swatch #6 */
+
+  --color-accent-crimson: #8F2A38;      /* Royal ruby accent for special badges */
+
+  /* Organic Card Radius & Shadows */
   --radius-pepite-card: 24px;
   --radius-pepite-card-lg: 30px;
   --radius-pepite-pill: 9999px;
   --radius-pepite-btn: 9999px;
-  --shadow-pepite-card: 0 10px 30px rgba(47, 36, 26, 0.05);
-  --shadow-pepite-hover: 0 16px 42px rgba(47, 36, 26, 0.10);
-  --shadow-pepite-header: 0 10px 32px rgba(47, 36, 26, 0.07);
-  
-  /* Refined Muted Royal Gold & Metallics */
-  --color-muted-gold: #B89758;          /* Antique gold accent (noble, not yellow) */
-  --color-muted-gold-soft: #CBB084;     /* Secondary gold sheen & fine lines */
-  --color-muted-gold-light: #E5D6BD;    /* Micro-borders & filigree accents */
-  --color-muted-gold-dark: #8C6D37;     /* Hover states & active controls */
-  --color-accent-crimson: #8F2A38;      /* Royal lac/ruby accent for discount badges */
+  --shadow-pepite-card: 0 10px 30px rgba(26, 18, 14, 0.05);
+  --shadow-pepite-hover: 0 16px 42px rgba(26, 18, 14, 0.10);
+  --shadow-pepite-header: 0 10px 32px rgba(26, 18, 14, 0.07);
+
+  /* Master Gold Gradients built directly from Swatches #3, #4 & #5 */
+  --gradient-gold: linear-gradient(135deg, #FAF7F2 0%, #D5C4AE 25%, #A88462 65%, #6B4A2E 100%);
+  --gradient-gold-subtle: linear-gradient(180deg, rgba(168, 132, 98, 0.18) 0%, rgba(168, 132, 98, 0.03) 100%);
 
   /* Standard Aliases for Complete Backwards Compatibility */
   --color-ivory: var(--color-warm-ivory);
@@ -77,8 +99,8 @@
   --color-taupe: var(--color-stone-muted);
   --color-taupe-light: var(--color-stone-subtle);
   --color-espresso-deep: var(--color-subtle-charcoal);
-  --gradient-gold: linear-gradient(135deg, #F5EBDA 0%, #DECCA8 35%, #B89758 70%, #8C6D37 100%);
-  --gradient-gold-subtle: linear-gradient(180deg, rgba(203, 176, 132, 0.18) 0%, rgba(184, 151, 88, 0.04) 100%);
+  --gradient-gold: linear-gradient(135deg, #F5EBDA 0%, #DECCA8 35%, #A88462 70%, #8C6D37 100%);
+  --gradient-gold-subtle: linear-gradient(180deg, rgba(203, 176, 132, 0.18) 0%, rgba(168, 132, 98, 0.04) 100%);
 
   /* UI Tokens */
   --header-height-desktop: 70px;
@@ -90,10 +112,10 @@
   --radius-full: 9999px;
 
   /* Subtle Heritage Shadows (Soft, Ambient, Diffuse) */
-  --shadow-sm: 0 1px 3px rgba(35, 28, 22, 0.04);
-  --shadow-md: 0 4px 14px rgba(35, 28, 22, 0.06);
-  --shadow-lg: 0 12px 30px rgba(35, 28, 22, 0.08);
-  --shadow-drawer: -6px 0 28px rgba(35, 28, 22, 0.12);
+  --shadow-sm: 0 1px 3px rgba(26, 18, 14, 0.04);
+  --shadow-md: 0 4px 14px rgba(26, 18, 14, 0.06);
+  --shadow-lg: 0 12px 30px rgba(26, 18, 14, 0.08);
+  --shadow-drawer: -6px 0 28px rgba(26, 18, 14, 0.12);
 
   /* Typography */
   --font-serif: 'Cinzel', 'Cormorant Garamond', 'Lawrence', serif;
@@ -190,7 +212,7 @@ img {
   overflow: hidden;
   position: relative;
   z-index: 100;
-  border-bottom: 1px solid rgba(184, 151, 88, 0.22);
+  border-bottom: 1px solid rgba(168, 132, 98, 0.22);
 }
 
 .announcement-ticker {
@@ -230,7 +252,7 @@ img {
   z-index: 90;
   background: var(--color-warm-ivory);
   border-bottom: 1px solid var(--color-warm-stone);
-  box-shadow: 0 2px 10px rgba(35, 28, 22, 0.03);
+  box-shadow: 0 2px 10px rgba(26, 18, 14, 0.03);
 }
 
 /* Desktop Header Row */
@@ -266,7 +288,7 @@ img {
   height: 44px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 1px 2px rgba(35, 28, 22, 0.08));
+  filter: drop-shadow(0 1px 2px rgba(26, 18, 14, 0.08));
   transition: transform 0.25s ease;
 }
 
@@ -304,7 +326,7 @@ img {
 .search-pill-box:hover, .search-pill-box:focus-within {
   background: var(--color-soft-offwhite);
   border-color: var(--color-muted-gold);
-  box-shadow: 0 0 0 3px rgba(184, 151, 88, 0.12);
+  box-shadow: 0 0 0 3px rgba(168, 132, 98, 0.12);
 }
 
 .search-pill-box input {
@@ -433,7 +455,7 @@ img {
   height: 34px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 1px 2px rgba(35, 28, 22, 0.08));
+  filter: drop-shadow(0 1px 2px rgba(26, 18, 14, 0.08));
 }
 
 .mobile-top-icons {
@@ -618,7 +640,7 @@ img {
 .capsule-tab.active {
   background: var(--color-champagne-beige);
   color: var(--color-deep-heritage-brown);
-  box-shadow: 0 1px 4px rgba(35, 28, 22, 0.08);
+  box-shadow: 0 1px 4px rgba(26, 18, 14, 0.08);
 }
 
 /* ===================================================================
@@ -866,13 +888,13 @@ img {
   border-radius: 50%;
   padding: 2.5px;
   background: var(--color-muted-gold-soft);
-  box-shadow: 0 4px 12px rgba(35, 28, 22, 0.05);
+  box-shadow: 0 4px 12px rgba(26, 18, 14, 0.05);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .category-circle-item:hover .category-circle-img-wrap {
   transform: translateY(-2px) scale(1.06);
-  box-shadow: 0 6px 18px rgba(184, 151, 88, 0.22);
+  box-shadow: 0 6px 18px rgba(168, 132, 98, 0.22);
   background: var(--color-muted-gold);
 }
 
@@ -1081,7 +1103,7 @@ img {
   padding: 0.4rem 0.9rem;
   border-radius: var(--radius-full);
   border: none;
-  box-shadow: 0 4px 12px rgba(47, 36, 26, 0.15);
+  box-shadow: 0 4px 12px rgba(26, 18, 14, 0.15);
 }
 
 /* Wishlist Button */
@@ -1100,7 +1122,7 @@ img {
   justify-content: center;
   color: var(--color-deep-heritage-brown);
   border: 1px solid var(--color-warm-stone-light);
-  box-shadow: 0 4px 12px rgba(47, 36, 26, 0.08);
+  box-shadow: 0 4px 12px rgba(26, 18, 14, 0.08);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1140,7 +1162,7 @@ img {
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--color-deep-heritage-brown);
-  box-shadow: 0 4px 12px rgba(47, 36, 26, 0.06);
+  box-shadow: 0 4px 12px rgba(26, 18, 14, 0.06);
 }
 
 .card-offer-highlight {
@@ -1769,7 +1791,7 @@ img {
   display: none;
   grid-template-columns: repeat(4, 1fr);
   z-index: 95;
-  box-shadow: 0 -2px 10px rgba(35, 28, 22, 0.04);
+  box-shadow: 0 -2px 10px rgba(26, 18, 14, 0.04);
 }
 
 @media (max-width: 991px) {
@@ -2253,9 +2275,9 @@ img {
    FOOTER — Pépite Editorial Maison Design
    =================================================================== */
 .site-footer {
-  background: #241C15 !important;
-  color: #F5EFEB !important;
-  border-top: 1px solid rgba(197, 160, 89, 0.25);
+  background: #1A120E !important;
+  color: #FAF7F2 !important;
+  border-top: 1px solid rgba(168, 132, 98, 0.25);
   padding-top: 4rem;
   margin-top: auto;
   position: relative;
@@ -2281,7 +2303,7 @@ img {
 .newsletter-subtitle {
   font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: rgba(245, 239, 235, 0.8) !important;
+  color: rgba(250, 247, 242, 0.82) !important;
   margin-bottom: 1.5rem;
   line-height: 1.7;
 }
@@ -2296,7 +2318,7 @@ img {
 .newsletter-input {
   flex-grow: 1;
   padding: 0.9rem 1.25rem;
-  border: 1px solid rgba(197, 160, 89, 0.4);
+  border: 1px solid rgba(168, 132, 98, 0.4);
   border-radius: var(--radius-full);
   font-family: var(--font-sans);
   font-size: 0.85rem;
@@ -2308,12 +2330,12 @@ img {
 
 .newsletter-input:focus {
   border-color: var(--color-muted-gold);
-  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2);
+  box-shadow: 0 0 0 3px rgba(168, 132, 98, 0.2);
 }
 
 .newsletter-btn {
   background: var(--color-muted-gold);
-  color: #181412;
+  color: #1A120E;
   font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 700;
@@ -2327,8 +2349,8 @@ img {
 }
 
 .newsletter-btn:hover {
-  background: #FFF;
-  color: #181412;
+  background: #D5C4AE;
+  color: #1A120E;
   transform: translateY(-2px);
 }
 
@@ -2337,7 +2359,7 @@ img {
   grid-template-columns: 1.6fr repeat(4, 1fr);
   gap: 2.5rem;
   padding-bottom: 3.5rem;
-  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  border-bottom: 1px solid rgba(168, 132, 98, 0.25);
 }
 
 @media (max-width: 991px) {
@@ -2370,7 +2392,7 @@ img {
 .footer-desc {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: rgba(245, 239, 235, 0.8) !important;
+  color: rgba(250, 247, 242, 0.85) !important;
   line-height: 1.8;
   max-width: 100%;
 }
@@ -2383,7 +2405,7 @@ img {
   text-transform: uppercase;
   color: #FFFFFF !important;
   margin-bottom: 1.25rem;
-  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  border-bottom: 1px solid rgba(168, 132, 98, 0.35);
   padding-bottom: 0.5rem;
 }
 
@@ -2397,7 +2419,7 @@ img {
 .footer-links-list a {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: rgba(245, 239, 235, 0.78) !important;
+  color: rgba(250, 247, 242, 0.8) !important;
   transition: all 0.25s ease;
 }
 
@@ -2418,7 +2440,7 @@ img {
 .footer-copyright {
   font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: rgba(245, 239, 235, 0.7) !important;
+  color: rgba(250, 247, 242, 0.75) !important;
 }
 
 .footer-payment-icons {
@@ -2438,7 +2460,7 @@ img {
   justify-content: center;
   height: 30px;
   color: var(--color-deep-heritage-brown);
-  box-shadow: 0 1px 2px rgba(35, 28, 22, 0.04);
+  box-shadow: 0 1px 2px rgba(26, 18, 14, 0.04);
   transition: all 0.3s ease;
 }
 
@@ -2632,7 +2654,7 @@ img {
 .cat-showcase-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(47, 36, 26, 0.05) 0%, rgba(47, 36, 26, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(26, 18, 14, 0.05) 0%, rgba(26, 18, 14, 0.7) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -2762,7 +2784,7 @@ img {
   background: var(--color-warm-ivory);
   border-color: var(--color-antique-gold);
   color: var(--color-antique-gold);
-  box-shadow: 0 0 0 4px rgba(184, 151, 88, 0.2);
+  box-shadow: 0 0 0 4px rgba(168, 132, 98, 0.2);
 }
 
 .timeline-step-label {
@@ -2782,7 +2804,7 @@ img {
   background: var(--color-soft-offwhite);
   border: 1px solid var(--color-warm-stone);
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  box-shadow: 0 12px 30px rgba(35, 28, 22, 0.15);
+  box-shadow: 0 12px 30px rgba(26, 18, 14, 0.15);
   max-height: 400px;
   overflow-y: auto;
   z-index: 100;
@@ -2917,7 +2939,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 4px 25px rgba(184, 151, 88, 0.45));
+  filter: drop-shadow(0 4px 25px rgba(168, 132, 98, 0.45));
 }
 
 .specular-light-sweep {
@@ -2991,15 +3013,15 @@ img {
 .jharokha-portal-left {
   left: 0;
   background: linear-gradient(90deg, rgba(20, 15, 13, 0.95) 0%, rgba(20, 15, 13, 0.6) 70%, transparent 100%),
-              radial-gradient(ellipse at left, rgba(184, 151, 88, 0.25) 0%, transparent 70%);
-  border-right: 1px solid rgba(184, 151, 88, 0.25);
+              radial-gradient(ellipse at left, rgba(168, 132, 98, 0.25) 0%, transparent 70%);
+  border-right: 1px solid rgba(168, 132, 98, 0.25);
 }
 
 .jharokha-portal-right {
   right: 0;
   background: linear-gradient(-90deg, rgba(20, 15, 13, 0.95) 0%, rgba(20, 15, 13, 0.6) 70%, transparent 100%),
-              radial-gradient(ellipse at right, rgba(184, 151, 88, 0.25) 0%, transparent 70%);
-  border-left: 1px solid rgba(184, 151, 88, 0.25);
+              radial-gradient(ellipse at right, rgba(168, 132, 98, 0.25) 0%, transparent 70%);
+  border-left: 1px solid rgba(168, 132, 98, 0.25);
 }
 
 @media (max-width: 768px) {
@@ -3061,7 +3083,7 @@ img {
 .macro-jewel-card {
   background: rgba(30, 23, 19, 0.75);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(184, 151, 88, 0.35);
+  border: 1px solid rgba(168, 132, 98, 0.35);
   border-radius: var(--radius-sm);
   padding: 1.25rem;
   width: 280px;
@@ -3074,7 +3096,7 @@ img {
 .macro-jewel-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: var(--color-antique-gold);
-  box-shadow: 0 16px 40px rgba(184, 151, 88, 0.25);
+  box-shadow: 0 16px 40px rgba(168, 132, 98, 0.25);
 }
 
 .macro-jewel-card.featured {
@@ -3453,7 +3475,7 @@ img {
 .chapter-indicator-dot.active {
   width: 44px;
   background: var(--color-antique-gold);
-  box-shadow: 0 0 10px rgba(184, 151, 88, 0.6);
+  box-shadow: 0 0 10px rgba(168, 132, 98, 0.6);
 }
 
 .hero-scroll-prompt {
@@ -3509,7 +3531,7 @@ img {
 
 .site-header.scrolled {
   background: rgba(250, 248, 245, 0.98);
-  box-shadow: 0 4px 20px rgba(35, 28, 22, 0.05);
+  box-shadow: 0 4px 20px rgba(26, 18, 14, 0.05);
   border-bottom-color: rgba(216, 206, 194, 0.8);
 }
 
@@ -3560,9 +3582,9 @@ img {
 }
 
 .product-card:hover {
-  box-shadow: 0 14px 32px rgba(35, 28, 22, 0.08);
+  box-shadow: 0 14px 32px rgba(26, 18, 14, 0.08);
   border-color: var(--color-antique-gold);
-  box-shadow: 0 14px 32px rgba(35, 28, 22, 0.08);
+  box-shadow: 0 14px 32px rgba(26, 18, 14, 0.08);
   border-color: var(--color-antique-gold);
 }
 
@@ -3591,7 +3613,7 @@ img {
 
 .form-input:focus {
   border-color: var(--color-antique-gold);
-  box-shadow: 0 0 0 3px rgba(184, 151, 88, 0.15);
+  box-shadow: 0 0 0 3px rgba(168, 132, 98, 0.15);
   background: #FFFFFF;
 }
 
@@ -3888,7 +3910,7 @@ img {
 }
 .pdp-thumb-active {
   border-color: var(--color-antique-gold);
-  box-shadow: 0 0 0 3px rgba(184, 151, 88, 0.15);
+  box-shadow: 0 0 0 3px rgba(168, 132, 98, 0.15);
 }
 
 /* Contact form */
@@ -3991,7 +4013,7 @@ img {
   background: var(--color-warm-ivory);
   border: 1px solid var(--color-antique-gold);
   border-radius: var(--radius-sm);
-  box-shadow: 0 12px 36px rgba(35, 28, 22, 0.16);
+  box-shadow: 0 12px 36px rgba(26, 18, 14, 0.16);
   padding: 0.85rem 1.25rem;
   font-family: var(--font-sans);
   pointer-events: auto;
@@ -4080,15 +4102,15 @@ img {
   background: rgba(255, 253, 246, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(47, 36, 26, 0.09);
+  border: 1px solid rgba(26, 18, 14, 0.09);
   box-shadow: var(--shadow-pepite-header);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, background 0.35s ease;
 }
 
 .site-header.scrolled {
   background: rgba(255, 253, 246, 0.98);
-  box-shadow: 0 12px 36px rgba(47, 36, 26, 0.09);
-  border-color: rgba(47, 36, 26, 0.12);
+  box-shadow: 0 12px 36px rgba(26, 18, 14, 0.09);
+  border-color: rgba(26, 18, 14, 0.12);
 }
 
 .site-header.header-hide {
@@ -4106,7 +4128,7 @@ img {
 
 .header-search-wrap .search-pill-box {
   background: var(--color-champagne-beige);
-  border: 1px solid rgba(47, 36, 26, 0.08);
+  border: 1px solid rgba(26, 18, 14, 0.08);
   border-radius: var(--radius-pepite-pill);
   height: 40px;
   padding: 0 1rem;
@@ -4141,7 +4163,7 @@ img {
 }
 
 .floating-nav-link:hover, .floating-nav-link.active {
-  background: rgba(47, 36, 26, 0.06);
+  background: rgba(26, 18, 14, 0.06);
   color: var(--color-espresso);
 }
 
@@ -4167,7 +4189,7 @@ img {
   background: var(--color-muted-gold-dark);
   color: #FFFFFF;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(47, 36, 26, 0.2);
+  box-shadow: 0 8px 24px rgba(26, 18, 14, 0.2);
 }
 
 /* 2. Pépite Signature Circular Action Badge (↗) */
@@ -4179,8 +4201,8 @@ img {
   height: 42px;
   border-radius: 50%;
   background: var(--color-warm-ivory);
-  border: 1px solid rgba(47, 36, 26, 0.09);
-  box-shadow: 0 4px 14px rgba(47, 36, 26, 0.08);
+  border: 1px solid rgba(26, 18, 14, 0.09);
+  box-shadow: 0 4px 14px rgba(26, 18, 14, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4203,7 +4225,7 @@ img {
 .product-card {
   border-radius: var(--radius-pepite-card) !important;
   background: #FFFFFF !important;
-  border: 1px solid rgba(47, 36, 26, 0.07) !important;
+  border: 1px solid rgba(26, 18, 14, 0.07) !important;
   box-shadow: var(--shadow-pepite-card) !important;
   overflow: hidden;
   position: relative;
@@ -4213,7 +4235,7 @@ img {
 .product-card:hover {
   transform: translateY(-7px) !important;
   box-shadow: var(--shadow-pepite-hover) !important;
-  border-color: rgba(184, 151, 88, 0.35) !important;
+  border-color: rgba(168, 132, 98, 0.35) !important;
 }
 
 .product-card-media {
@@ -4225,15 +4247,15 @@ img {
   border-radius: var(--radius-pepite-card-lg) !important;
   overflow: hidden;
   box-shadow: var(--shadow-pepite-card);
-  border: 1px solid rgba(47, 36, 26, 0.08);
+  border: 1px solid rgba(26, 18, 14, 0.08);
 }
 
 .trust-item {
   border-radius: var(--radius-pepite-card) !important;
   background: var(--color-soft-offwhite) !important;
   padding: 1.5rem !important;
-  border: 1px solid rgba(47, 36, 26, 0.07) !important;
-  box-shadow: 0 4px 18px rgba(47, 36, 26, 0.03);
+  border: 1px solid rgba(26, 18, 14, 0.07) !important;
+  box-shadow: 0 4px 18px rgba(26, 18, 14, 0.03);
 }
 
 .craft-step-card, div[style*="background: var(--color-warm-ivory)"] {
@@ -4263,7 +4285,7 @@ img {
   font-weight: 600 !important;
   font-size: 0.8rem !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.09) !important;
+  border: 1px solid rgba(26, 18, 14, 0.09) !important;
   color: var(--color-espresso) !important;
   transition: all 0.25s ease !important;
 }
@@ -4346,7 +4368,7 @@ img {
 
 .btn-primary:hover, .btn-gold:hover, .btn-outline:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 10px 28px rgba(47, 36, 26, 0.16) !important;
+  box-shadow: 0 10px 28px rgba(26, 18, 14, 0.16) !important;
 }
 
 .btn-primary:active, .btn-gold:active, .btn-outline:active {
@@ -4357,12 +4379,12 @@ img {
 .form-input, .form-select {
   border-radius: var(--radius-pepite-pill) !important;
   background: #FFFFFF !important;
-  border: 1px solid rgba(47, 36, 26, 0.12) !important;
+  border: 1px solid rgba(26, 18, 14, 0.12) !important;
   color: var(--color-espresso) !important;
   font-family: var(--font-sans) !important;
   font-size: 0.86rem !important;
   padding: 0.85rem 1.45rem !important;
-  box-shadow: 0 2px 8px rgba(47, 36, 26, 0.02) !important;
+  box-shadow: 0 2px 8px rgba(26, 18, 14, 0.02) !important;
   transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
 
@@ -4374,7 +4396,7 @@ img {
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   outline: none !important;
   border-color: var(--color-muted-gold) !important;
-  box-shadow: 0 0 0 3px rgba(184, 151, 88, 0.18) !important;
+  box-shadow: 0 0 0 3px rgba(168, 132, 98, 0.18) !important;
 }
 
 /* PDP (Product Detail Page) Luxury Pebble Architecture */
@@ -4385,7 +4407,7 @@ img {
 .pdp-gallery-item {
   border-radius: var(--radius-pepite-card) !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.08) !important;
+  border: 1px solid rgba(26, 18, 14, 0.08) !important;
   overflow: hidden !important;
   box-shadow: var(--shadow-pepite-card) !important;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
@@ -4409,16 +4431,16 @@ img {
 .trust-capsule {
   border-radius: var(--radius-pepite-pill) !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.08) !important;
+  border: 1px solid rgba(26, 18, 14, 0.08) !important;
   padding: 0.45rem 1rem !important;
   color: var(--color-espresso) !important;
-  box-shadow: 0 2px 8px rgba(47, 36, 26, 0.03) !important;
+  box-shadow: 0 2px 8px rgba(26, 18, 14, 0.03) !important;
 }
 
 .pdp-limited-offer-card, .pdp-check-delivery-box {
   border-radius: var(--radius-pepite-card) !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.07) !important;
+  border: 1px solid rgba(26, 18, 14, 0.07) !important;
   padding: 1.6rem !important;
   box-shadow: var(--shadow-pepite-card) !important;
 }
@@ -4434,7 +4456,7 @@ img {
   border-radius: var(--radius-pepite-pill) !important;
   background: #FFFFFF !important;
   overflow: hidden !important;
-  border: 1px solid rgba(47, 36, 26, 0.12) !important;
+  border: 1px solid rgba(26, 18, 14, 0.12) !important;
   display: flex !important;
   padding: 0.25rem 0.35rem 0.25rem 1.15rem !important;
 }
@@ -4466,7 +4488,7 @@ img {
 
 .pdp-accordion-item {
   border-radius: 18px !important;
-  border: 1px solid rgba(47, 36, 26, 0.08) !important;
+  border: 1px solid rgba(26, 18, 14, 0.08) !important;
   background: var(--color-warm-ivory) !important;
   margin-bottom: 0.85rem !important;
   overflow: hidden !important;
@@ -4483,7 +4505,7 @@ img {
   border-radius: var(--radius-pepite-pill) !important;
   background: rgba(255, 253, 246, 0.96) !important;
   backdrop-filter: blur(14px) !important;
-  border: 1px solid rgba(47, 36, 26, 0.1) !important;
+  border: 1px solid rgba(26, 18, 14, 0.1) !important;
   box-shadow: var(--shadow-pepite-hover) !important;
   padding: 0.75rem 1.5rem !important;
   display: flex !important;
@@ -4494,8 +4516,8 @@ img {
 .pepite-modal-card {
   border-radius: var(--radius-pepite-card-lg) !important;
   background: var(--color-warm-ivory) !important;
-  border: 1px solid rgba(47, 36, 26, 0.09) !important;
-  box-shadow: 0 25px 70px rgba(47, 36, 26, 0.22) !important;
+  border: 1px solid rgba(26, 18, 14, 0.09) !important;
+  box-shadow: 0 25px 70px rgba(26, 18, 14, 0.22) !important;
   padding: 2.5rem !important;
   position: relative !important;
 }
@@ -4504,7 +4526,7 @@ img {
   width: 38px !important;
   height: 38px !important;
   border-radius: 50% !important;
-  background: rgba(47, 36, 26, 0.06) !important;
+  background: rgba(26, 18, 14, 0.06) !important;
   border: none !important;
   display: flex !important;
   align-items: center !important;
@@ -4527,7 +4549,7 @@ img {
   background: var(--color-soft-offwhite) !important;
   padding: 1rem !important;
   margin-bottom: 0.75rem !important;
-  border: 1px solid rgba(47, 36, 26, 0.06) !important;
+  border: 1px solid rgba(26, 18, 14, 0.06) !important;
 }
 
 .cart-item-img {
@@ -4538,7 +4560,7 @@ img {
 .qty-control-row {
   border-radius: var(--radius-pepite-pill) !important;
   background: #FFFFFF !important;
-  border: 1px solid rgba(47, 36, 26, 0.1) !important;
+  border: 1px solid rgba(26, 18, 14, 0.1) !important;
   padding: 0.2rem 0.5rem !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -4548,7 +4570,7 @@ img {
 .free-shipping-progress-box {
   border-radius: 18px !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.07) !important;
+  border: 1px solid rgba(26, 18, 14, 0.07) !important;
   padding: 1rem 1.25rem !important;
 }
 
@@ -4556,7 +4578,7 @@ img {
 .pepite-story-card {
   border-radius: var(--radius-pepite-card) !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.07) !important;
+  border: 1px solid rgba(26, 18, 14, 0.07) !important;
   padding: 2.25rem !important;
   box-shadow: var(--shadow-pepite-card) !important;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
@@ -4570,7 +4592,7 @@ img {
 .craft-step-card {
   border-radius: var(--radius-pepite-card) !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.07) !important;
+  border: 1px solid rgba(26, 18, 14, 0.07) !important;
   padding: 2rem !important;
   box-shadow: var(--shadow-pepite-card) !important;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
@@ -4579,7 +4601,7 @@ img {
 .craft-step-card:hover {
   transform: translateY(-6px) !important;
   box-shadow: var(--shadow-pepite-hover) !important;
-  border-color: rgba(184, 151, 88, 0.35) !important;
+  border-color: rgba(168, 132, 98, 0.35) !important;
 }
 
 .pepite-number-badge {
@@ -4594,7 +4616,7 @@ img {
 .pepite-quote-box {
   border-radius: var(--radius-pepite-card-lg) !important;
   background: var(--color-soft-offwhite) !important;
-  border: 1px solid rgba(47, 36, 26, 0.08) !important;
+  border: 1px solid rgba(26, 18, 14, 0.08) !important;
   padding: 3rem 2.5rem !important;
   box-shadow: var(--shadow-pepite-card) !important;
   text-align: center !important;

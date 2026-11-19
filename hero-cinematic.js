@@ -99,7 +99,7 @@
         speedY: -Math.random() * 0.6 - 0.2, // gentle upward float
         pulseSpeed: Math.random() * 0.03 + 0.015,
         pulseOffset: Math.random() * Math.PI * 2,
-        color: Math.random() > 0.4 ? 'rgba(218, 185, 128, ' : 'rgba(245, 235, 218, '
+        color: Math.random() > 0.4 ? 'rgba(168, 132, 98, ' : 'rgba(213, 196, 174, '
       });
     }
   }
@@ -113,9 +113,9 @@
 
     // Subtle Volumetric Light Beam from Top Right
     const grad = ctx.createRadialGradient(w * 0.85, 0, 10, w * 0.7, h * 0.5, w * 0.8);
-    grad.addColorStop(0, 'rgba(218, 185, 128, 0.08)');
-    grad.addColorStop(0.5, 'rgba(184, 151, 88, 0.03)');
-    grad.addColorStop(1, 'rgba(20, 15, 13, 0)');
+    grad.addColorStop(0, 'rgba(168, 132, 98, 0.08)');
+    grad.addColorStop(0.5, 'rgba(107, 74, 46, 0.04)');
+    grad.addColorStop(1, 'rgba(26, 18, 14, 0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
 
