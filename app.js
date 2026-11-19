@@ -364,7 +364,7 @@
         <div class="container">
           <div class="section-header" style="text-align: center; margin-bottom: 2.75rem;">
             <div class="section-pretitle" style="letter-spacing: 0.24em; font-size: 0.76rem; text-transform: uppercase; color: var(--color-stone-muted); margin-bottom: 0.6rem; font-weight: 600;">Haute Joaillerie Integrity</div>
-            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.15rem, 4vw, 2.5rem); letter-spacing: 0.03em; text-transform: uppercase; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.3; padding: 0 0.75rem;">The Three Pillars of<br class="mobile-only-br" /> Precious Adornment</h2>
+            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.25rem, 4vw, 2.5rem); letter-spacing: 0.02em; text-transform: none; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.3; padding: 0 0.75rem;">The Three Pillars of<br class="mobile-only-br" /> Precious Adornment</h2>
             <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #A88462; font-size: 0.95rem; margin-bottom: 1rem;">
               <span>✦</span>
             </div>
@@ -409,7 +409,7 @@
               <img src="images/user_balaji_temple_pendant.jpg" alt="Temple & South Indian Heritage" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Sacred Devotion</span>
-                <h4 class="curated-col-title">Temple & Heritage</h4>
+                <h3 class="curated-col-title">Temple & Heritage</h3>
                 <span class="curated-col-count">Architectural Nakshi • 10 Pieces</span>
               </div>
             </a>
@@ -418,7 +418,7 @@
               <img src="images/user_falcon_brooch_emerald.jpg" alt="Nature, Wildlife & Fauna" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Living Majesty</span>
-                <h4 class="curated-col-title">Nature & Wildlife</h4>
+                <h3 class="curated-col-title">Nature & Wildlife</h3>
                 <span class="curated-col-count">Falcon, Peacock & Floral • 10 Pieces</span>
               </div>
             </a>
@@ -427,7 +427,7 @@
               <img src="images/authentic_diamond_choker.jpg" alt="Modern Art & Sculptural" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Contemporary Vision</span>
-                <h4 class="curated-col-title">Modern Art & Sculptural</h4>
+                <h3 class="curated-col-title">Modern Art & Sculptural</h3>
                 <span class="curated-col-count">Geometric Forms • 8 Pieces</span>
               </div>
             </a>
@@ -436,7 +436,7 @@
               <img src="images/authentic_indian_bridal.jpg" alt="Bridal & Ceremonial Suites" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Royal Celebration</span>
-                <h4 class="curated-col-title">Bridal & Occasion</h4>
+                <h3 class="curated-col-title">Bridal & Occasion</h3>
                 <span class="curated-col-count">Grand Chokers & Jhumkas • 10 Pieces</span>
               </div>
             </a>
@@ -550,7 +550,7 @@
 
           <!-- Material Filter Tabs Bar -->
           <div class="material-filter-bar">
-            <button class="material-filter-btn active" onclick="window.HJ.filterHomeProducts('all', this)">All Jewellery (50)</button>
+            <button class="material-filter-btn active" onclick="window.HJ.filterHomeProducts('all', this)"><span aria-hidden="true">✦</span> All Jewellery (50)</button>
             <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('gold', this)">✦ Gold Jewellery (17)</button>
             <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('silver', this)">✦ Silver Jewellery (50)</button>
             <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('diamond', this)">✦ Diamond & Solitaires (45)</button>
@@ -619,7 +619,7 @@
             </div>
           </div>
 
-          <div class="step-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 4rem;">
+          <div class="step-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem;">
             <div class="step-card">
               <span class="step-number">01</span>
               <h3 class="step-title">Inspiration & Sacred Architecture</h3>
