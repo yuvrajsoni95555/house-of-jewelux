@@ -122,7 +122,7 @@ app.get('/api/products', (req, res) => {
     result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
   }
 
-  res.json({ success: true, count: result.length, products: result });
+  res.json({ success: true, count: result.length, total: result.length, products: result });
 });
 
 // 2. Single Product API by handle or ID
@@ -577,7 +577,7 @@ app.post('/api/appointments', (req, res) => {
   appointments.unshift(newAppointment);
   writeJSON('appointments.json', appointments);
 
-  res.json({
+  res.status(201).json({
     success: true,
     appointmentId,
     appointment: newAppointment,

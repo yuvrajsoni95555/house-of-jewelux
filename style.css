@@ -3872,40 +3872,40 @@ img {
 
 /* About page */
 .about-story-reveal {
-  opacity: 0;
-  transform: translate3d(0, 40px, 0);
+  opacity: 1;
+  transform: none;
 }
 .about-image-reveal {
-  clip-path: inset(0 100% 0 0);
-  opacity: 0;
+  clip-path: none;
+  opacity: 1;
 }
 
 /* Craftsmanship */
 .craft-step-card {
-  opacity: 0;
-  transform: translate3d(0, 30px, 0);
+  opacity: 1;
+  transform: none;
 }
 .craft-step-number {
-  transform: scale(0.6);
-  opacity: 0;
+  transform: none;
+  opacity: 1;
 }
 
 /* Collection hero */
 .collection-hero-text > * {
-  opacity: 0;
+  opacity: 1;
 }
 .collection-hero-title {
-  transform: translate3d(0, 20px, 0);
+  transform: none;
 }
 .collection-hero-sub {
-  transform: translate3d(0, 20px, 0);
+  transform: none;
   transition-delay: 0.2s;
 }
 
 /* PDP gallery */
 .pdp-gallery-item {
-  opacity: 0;
-  transform: scale(0.94);
+  opacity: 1 !important;
+  transform: none !important;
 }
 .pdp-main-image {
   transition: transform 0.5s var(--motion-ease-luxury);
@@ -3917,8 +3917,8 @@ img {
 
 /* Contact form */
 .contact-field {
-  opacity: 0;
-  transform: translate3d(0, 15px, 0);
+  opacity: 1 !important;
+  transform: none !important;
 }
 .contact-field.filled {
   animation: fieldPop 0.3s var(--motion-ease-back) both;
@@ -4627,24 +4627,75 @@ img {
 
 
 /* ==================== THREE PILLARS OF PRECIOUS ADORNMENT ==================== */
+.mobile-only-br {
+  display: none;
+}
+@media (max-width: 600px) {
+  .mobile-only-br {
+    display: inline;
+  }
+}
+
 .material-pillars-section {
-  padding: 4.5rem 0 3.5rem;
-  background: #FAF7F2;
-  border-bottom: 1px solid rgba(168, 132, 98, 0.18);
+  padding: 4.5rem 0 4.5rem;
+  background: radial-gradient(ellipse at 50% 0%, #FAF6EE 0%, #F5ECE0 100%);
+  position: relative;
+  border-bottom: 1px solid rgba(168, 132, 98, 0.2);
+}
+
+.material-pillars-section .section-title {
+  font-size: clamp(1.4rem, 4.8vw, 2.6rem);
+  line-height: 1.25;
+  letter-spacing: 0.03em;
+  padding: 0 0.5rem;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .material-pillars-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.75rem;
-  margin-top: 2.5rem;
+  max-width: 1180px;
+  margin: 0 auto;
 }
 
 @media (max-width: 900px) {
   .material-pillars-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1.5rem;
+    max-width: 480px;
   }
+}
+
+.material-pillar-card-luxury {
+  position: relative;
+  display: block;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(42, 23, 16, 0.16);
+  border: 1px solid rgba(168, 132, 98, 0.35);
+  background: #240808;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease;
+  text-decoration: none;
+}
+
+.material-pillar-card-luxury:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 24px 50px rgba(42, 23, 16, 0.28), 0 0 24px rgba(168, 132, 98, 0.35);
+  border-color: #A88462;
+}
+
+.material-pillar-card-luxury img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 23px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.material-pillar-card-luxury:hover img {
+  transform: scale(1.025);
 }
 
 .material-pillar-card {

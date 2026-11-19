@@ -291,12 +291,7 @@
             <div class="hero-brand-center-lockup">
               <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
             </div>
-            <div class="opening-brand-sub" style="margin-top: 1rem; color: var(--color-champagne-gold); font-size: 0.8rem; letter-spacing: 0.25em;">
-              <span class="sparkle-diamond">✦</span>
-              <span>JAIPUR ATELIER • ESTABLISHED 1926</span>
-              <span class="sparkle-diamond">✦</span>
-            </div>
-            <div style="margin-top: 1.75rem;">
+            <div style="margin-top: 1.5rem;">
               <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
                 <span>Explore The Collections</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
@@ -364,80 +359,34 @@
       </section>
 
       
-      <!-- THREE PILLARS OF PRECIOUS ADORNMENT (GOLD, SILVER, DIAMOND) -->
+      <!-- THREE PILLARS OF PRECIOUS ADORNMENT (PHOTO 3 LUXURY EDITORIAL CARDS) -->
       <section class="material-pillars-section">
         <div class="container">
-          <div class="section-header" style="text-align: center;">
-            <div class="section-pretitle" style="color: var(--color-royal-lac);">Haute Joaillerie Integrity</div>
-            <h2 class="section-title">The Three Pillars of Precious Adornment</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p style="max-width: 680px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.7;">
-              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery — uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
+          <div class="section-header" style="text-align: center; margin-bottom: 2.75rem;">
+            <div class="section-pretitle" style="letter-spacing: 0.24em; font-size: 0.76rem; text-transform: uppercase; color: var(--color-stone-muted); margin-bottom: 0.6rem; font-weight: 600;">Haute Joaillerie Integrity</div>
+            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.15rem, 4vw, 2.5rem); letter-spacing: 0.03em; text-transform: uppercase; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.3; padding: 0 0.75rem;">The Three Pillars of<br class="mobile-only-br" /> Precious Adornment</h2>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #A88462; font-size: 0.95rem; margin-bottom: 1rem;">
+              <span>✦</span>
+            </div>
+            <p style="max-width: 760px; margin: 0 auto; font-family: var(--font-serif); font-style: italic; font-size: clamp(1rem, 1.4vw, 1.15rem); color: #3A2418; line-height: 1.65; letter-spacing: 0.01em;">
+              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery – uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
             </p>
           </div>
 
           <div class="material-pillars-grid">
-            <!-- PILLAR 1: GOLD JEWELLERY -->
-            <a href="#collections/gold" class="material-pillar-card">
-              <div class="material-pillar-img-wrap">
-                <img src="images/authentic_earrings_macro.jpg" alt="Gold Jewellery at House of Jewelux" class="material-pillar-img" />
-                <span class="material-pillar-badge">18K & 22K Solid Vermeil</span>
-              </div>
-              <div class="material-pillar-body">
-                <h3 class="material-pillar-title">
-                  <span>Gold Jewellery</span>
-                  <span style="font-size: 0.85rem; font-family: var(--font-sans); color: #A88462;">17 Pieces</span>
-                </h3>
-                <p class="material-pillar-desc">
-                  Ancestral warmth and royal court radiance. Mastercrafted with thick 18K and 22K champagne gold vermeil layering over solid precious foundations for lifetime brilliance.
-                </p>
-                <div class="material-pillar-footer">
-                  <span>Explore Gold Suites</span>
-                  <span>→</span>
-                </div>
-              </div>
+            <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
+            <a href="#craftsmanship" class="material-pillar-card-luxury" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
+              <img src="images/pillars/pillar_heritage_craftsmanship@2x.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." width="636" height="580" loading="lazy" />
             </a>
 
-            <!-- PILLAR 2: SILVER JEWELLERY -->
-            <a href="#collections/silver" class="material-pillar-card">
-              <div class="material-pillar-img-wrap">
-                <img src="images/authentic_solitaire_ring.jpg" alt="Silver Jewellery at House of Jewelux" class="material-pillar-img" />
-                <span class="material-pillar-badge">Solid BIS 925 Hallmarked</span>
-              </div>
-              <div class="material-pillar-body">
-                <h3 class="material-pillar-title">
-                  <span>Silver Jewellery</span>
-                  <span style="font-size: 0.85rem; font-family: var(--font-sans); color: #A88462;">50 Pieces</span>
-                </h3>
-                <p class="material-pillar-desc">
-                  Every creation is hand-forged in certified solid 925 sterling silver, sealed with an anti-tarnish liquid platinum-rhodium mirror polish. 100% skin safe and hypoallergenic.
-                </p>
-                <div class="material-pillar-footer">
-                  <span>Explore Silver Creations</span>
-                  <span>→</span>
-                </div>
-              </div>
+            <!-- PILLAR 2: TIMELESS ELEGANCE -->
+            <a href="#collections/all" class="material-pillar-card-luxury" aria-label="Timeless Elegance — Classic beauty, always in style.">
+              <img src="images/pillars/pillar_timeless_elegance@2x.jpg" alt="Timeless Elegance — Classic beauty, always in style." width="622" height="580" loading="lazy" />
             </a>
 
-            <!-- PILLAR 3: DIAMOND & GEMSTONE JEWELLERY -->
-            <a href="#collections/diamond" class="material-pillar-card">
-              <div class="material-pillar-img-wrap">
-                <img src="images/authentic_diamond_choker.jpg" alt="Diamond & Gemstone Jewellery at House of Jewelux" class="material-pillar-img" />
-                <span class="material-pillar-badge">Certified Solitaires & Gems</span>
-              </div>
-              <div class="material-pillar-body">
-                <h3 class="material-pillar-title">
-                  <span>Diamond & Gemstones</span>
-                  <span style="font-size: 0.85rem; font-family: var(--font-sans); color: #A88462;">45 Pieces</span>
-                </h3>
-                <p class="material-pillar-desc">
-                  Uncompromising optical perfection. Featuring certified VVS1 Hearts & Arrows solitaires, vivid Colombian emeralds, Basra pearls, and royal polki settings.
-                </p>
-                <div class="material-pillar-footer">
-                  <span>Explore Diamond & Gems</span>
-                  <span>→</span>
-                </div>
-              </div>
+            <!-- PILLAR 3: GLOBAL LUXURY -->
+            <a href="#collections/diamond" class="material-pillar-card-luxury" aria-label="Global Luxury — A world of sophistication, within your reach.">
+              <img src="images/pillars/pillar_global_luxury@2x.jpg" alt="Global Luxury — A world of sophistication, within your reach." width="634" height="580" loading="lazy" />
             </a>
           </div>
         </div>

@@ -208,53 +208,44 @@
     animateHeadlines: function () {
       const titles = document.querySelectorAll('.section-title, .section-pretitle, .about-story-reveal');
       titles.forEach(el => {
-        gsap.fromTo(el,
-          { y: 24, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: LUXURY_EASE,
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 96%',
-              toggleActions: 'play none none none',
-              once: true
-            }
+        gsap.from(el, {
+          y: 16,
+          duration: 0.7,
+          ease: LUXURY_EASE,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 96%',
+            toggleActions: 'play none none none',
+            once: true
           }
-        );
+        });
       });
     },
 
     /**
-     * Editorial Image Mask Reveals (clip-path inset with subtle Y glide)
+     * Editorial Image Mask Reveals
      */
     animateEditorialImageMasks: function () {
       const images = document.querySelectorAll('.cat-showcase-card, .editorial-image-reveal, .about-image-reveal, .lookbook-banner');
       images.forEach((img, i) => {
-        gsap.fromTo(img,
-          { clipPath: 'inset(10% 0% 0% 0%)', opacity: 0, y: 16 },
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            opacity: 1,
-            y: 0,
-            duration: 0.85,
-            delay: (i % 3) * 0.08,
-            ease: LUXURY_EASE,
-            scrollTrigger: {
-              trigger: img,
-              start: 'top 96%',
-              toggleActions: 'play none none none',
-              once: true
-            }
+        gsap.from(img, {
+          y: 16,
+          duration: 0.7,
+          delay: (i % 3) * 0.06,
+          ease: LUXURY_EASE,
+          scrollTrigger: {
+            trigger: img,
+            start: 'top 96%',
+            toggleActions: 'play none none none',
+            once: true
           }
-        );
+        });
       });
     },
 
     /**
      * Staggered Product Cards Cascade
-     * Uses pure translate3d and opacity for zero layout thrashing
+     * Uses pure translate3d for zero layout thrashing
      */
     animateProductGrids: function () {
       const grids = document.querySelectorAll('.products-grid');
@@ -263,23 +254,18 @@
         if (!cards.length) return;
 
         cards.forEach((card, idx) => {
-          gsap.fromTo(card,
-            { y: 20, opacity: 0, scale: 0.98 },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 0.6,
-              delay: (idx % 4) * 0.06,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: card,
-                start: 'top 96%',
-                toggleActions: 'play none none none',
-                once: true
-              }
+          gsap.from(card, {
+            y: 16,
+            duration: 0.55,
+            delay: (idx % 4) * 0.05,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 96%',
+              toggleActions: 'play none none none',
+              once: true
             }
-          );
+          });
         });
       });
     },
@@ -291,22 +277,18 @@
       const items = document.querySelectorAll('.trust-item');
       if (!items.length) return;
 
-      gsap.fromTo(items,
-        { y: 18, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.65,
-          stagger: 0.06,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: items[0],
-            start: 'top 96%',
-            toggleActions: 'play none none none',
-            once: true
-          }
+      gsap.from(items, {
+        y: 14,
+        duration: 0.55,
+        stagger: 0.05,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: items[0],
+          start: 'top 96%',
+          toggleActions: 'play none none none',
+          once: true
         }
-      );
+      });
     },
 
     /**
@@ -316,26 +298,22 @@
       const craftSection = document.getElementById('craftsmanship-section');
       if (!craftSection) return;
 
-      const steps = craftSection.querySelectorAll('.craft-step-card, div[style*="background: var(--color-warm-ivory)"]');
+      const steps = craftSection.querySelectorAll('.craft-step-card');
       if (!steps.length) return;
 
       steps.forEach((step, idx) => {
-        gsap.fromTo(step,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            delay: (idx % 3) * 0.06,
-            ease: LUXURY_EASE,
-            scrollTrigger: {
-              trigger: step,
-              start: 'top 96%',
-              toggleActions: 'play none none none',
-              once: true
-            }
+        gsap.from(step, {
+          y: 16,
+          duration: 0.55,
+          delay: (idx % 3) * 0.05,
+          ease: LUXURY_EASE,
+          scrollTrigger: {
+            trigger: step,
+            start: 'top 96%',
+            toggleActions: 'play none none none',
+            once: true
           }
-        );
+        });
       });
     },
 

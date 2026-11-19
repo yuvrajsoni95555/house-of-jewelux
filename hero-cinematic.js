@@ -249,12 +249,7 @@
             <div class="hero-brand-center-lockup">
               <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
             </div>
-            <div class="opening-brand-sub" style="margin-top: 1rem;">
-              <span class="sparkle-diamond">✦</span>
-              <span>JAIPUR ATELIER • ESTABLISHED 1926</span>
-              <span class="sparkle-diamond">✦</span>
-            </div>
-            <div style="margin-top: 1.75rem;">
+            <div style="margin-top: 1.5rem;">
               <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
                 <span>Explore The Collections</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
