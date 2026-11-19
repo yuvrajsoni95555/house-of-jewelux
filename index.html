@@ -4,7 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>House of Jewelux — Where Elegance Becomes Eternal | Fine Indian Jewellery</title>
-  <meta name="description" content="Discover generationally crafted fine Indian jewellery in solid 925 sterling silver and 18K gold. BIS hallmarked temple nakshi, solitaires, and bespoke atelier creations.">
+  <meta name="description" content="Discover generationally crafted fine Indian jewellery in solid 925 sterling silver, 18K gold and diamonds. BIS hallmarked temple nakshi, solitaires, and bespoke atelier creations. Silver, Gold & Diamond jewellery from Jaipur Atelier.">
+  <meta name="keywords" content="House of Jewelux, silver jewellery, gold jewellery, diamond jewellery, BIS 925 hallmarked, Jaipur atelier, fine Indian jewellery, bespoke jewellery">
+  <meta name="author" content="House of Jewelux">
+  <link rel="canonical" href="https://houseofjewelux.com/">
+  
+  <!-- Security & HTTPS Enforcement Headers -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  <script>
+    // Immediate Client-Side HTTPS Redirection for production domains
+    if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      location.replace('https://' + location.hostname + location.pathname + location.search + location.hash);
+    }
+  </script>
+
   <link rel="icon" type="image/png" sizes="32x32" href="/brand-identity/favicon-32x32.png">
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
@@ -232,124 +248,175 @@
     </div>
   </div>
 
-  <!-- ==================== 5. FOOTER (1:1 RECREATION) ==================== -->
-    <!-- Pépite Organic Wave Transition to Dark Cacao Footer -->
+  <!-- ==================== 5. COMPLETE PREMIUM EXPANDED LUXURY FOOTER ==================== -->
+  <!-- Organic Wave Transition to Dark Espresso Footer -->
   <div class="pepite-wave-divider">
     <svg viewBox="0 0 1440 60" fill="none" preserveAspectRatio="none">
-      <path d="M0,0 C360,50 720,10 1080,45 C1260,60 1440,25 1440,25 L1440,60 L0,60 Z" fill="#2F241A"></path>
+      <path d="M0,0 C360,50 720,10 1080,45 C1260,60 1440,25 1440,25 L1440,60 L0,60 Z" fill="#241C15"></path>
     </svg>
   </div>
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" style="background: #241C15; color: #F5EFEB;">
     <div class="container footer-reveal">
-      <!-- Newsletter -->
-      <div class="footer-newsletter-wrap">
-        <h3 class="newsletter-title">Enter The House of Jewelux Circle</h3>
-        <p class="newsletter-subtitle">Receive private salon invitations, new collection debuts, and your 10% welcome privilege with code <strong>FIRSTLUX</strong>.</p>
-        <form class="newsletter-form" onsubmit="alert('Welcome to the House of Jewelux Circle. Use code FIRSTLUX for 10% off.'); event.preventDefault();">
-          <input type="email" class="newsletter-input" placeholder="Enter your email address" required />
-          <button type="submit" class="newsletter-btn">Subscribe</button>
+      
+      <!-- SECTION G: NEWSLETTER SUBSCRIPTION (LIVE API BACKEND INTEGRATION) -->
+      <div class="footer-newsletter-wrap" style="border-bottom: 1px solid rgba(197, 160, 89, 0.25); padding-bottom: 3.5rem; margin-bottom: 3.5rem;">
+        <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.24em; color: var(--color-muted-gold); font-weight: 700;">Privileged Access</span>
+        <h3 class="newsletter-title" style="font-family: var(--font-serif); font-size: 2.2rem; color: #FFF; margin: 0.4rem 0 0.6rem;">Enter The House of Jewelux Salon Circle</h3>
+        <p class="newsletter-subtitle" style="color: rgba(245, 239, 235, 0.75); max-width: 680px; margin: 0 auto 1.5rem; font-size: 0.9rem; line-height: 1.7;">
+          Receive private invitations to private salon viewings, newly unveiled high-jewellery suites, and priority acquisitions. Enjoy your 10% welcome privilege with code <strong>FIRSTLUX</strong>.
+        </p>
+        <form class="newsletter-form" onsubmit="window.HJ.subscribeNewsletter(event)" style="max-width: 520px; margin: 0 auto; display: flex; gap: 0.5rem;">
+          <input type="email" class="newsletter-input" placeholder="Enter your email address (e.g. patron@domain.com)" required style="flex: 1; padding: 0.85rem 1.25rem; border-radius: 9999px; border: 1px solid rgba(197, 160, 89, 0.4); background: rgba(0,0,0,0.3); color: #FFF;" />
+          <button type="submit" class="newsletter-btn" style="padding: 0.85rem 1.75rem; border-radius: 9999px; background: var(--color-muted-gold); color: #181412; font-weight: 700; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem;">Subscribe</button>
         </form>
+        <div id="newsletter-feedback" style="display: none; margin-top: 1rem; text-align: center;"></div>
       </div>
 
-      <!-- Footer Columns Grid -->
-      <div class="footer-columns-grid">
-        <!-- Col 1: Brand Info -->
+      <!-- MULTI-COLUMN EXPANDED FOOTER (SECTIONS A, B, C, D, E, F) -->
+      <div class="footer-columns-grid" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr; gap: 2.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(197, 160, 89, 0.2);">
+        
+        <!-- SECTION A & F: BRAND IDENTITY & ATELIER CONCIERGE -->
         <div class="footer-brand-col">
-          <img class="footer-logo" src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX — Where Elegance Becomes Eternal" />
-          <p class="footer-desc">
-            Where Elegance Becomes Eternal.<br>
-            Handcrafted in solid 925 sterling silver with liquid rhodium and 18K micron gold finish. Honoring generational Indian goldsmithing and sacred temple heritage.
+          <a href="#home" aria-label="House of Jewelux Home">
+            <img class="footer-logo" src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" style="height: 38px; width: auto; filter: brightness(1.1);" />
+          </a>
+          <div style="font-family: var(--font-serif); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-muted-gold); font-weight: 600;">Where Elegance Becomes Eternal</div>
+          <p class="footer-desc" style="font-size: 0.84rem; color: rgba(245, 239, 235, 0.75); line-height: 1.8; margin-bottom: 1rem;">
+            An Indian fine jewellery maison born in Jaipur, uniting generational goldsmithing with contemporary luxury design. Every creation is hand-forged in BIS hallmarked 925 sterling silver, 18K solid vermeil, and certified diamonds.
           </p>
-          <div style="font-size: 0.8rem; color: var(--color-espresso);">
-            <strong>Jaipur Creative Atelier & Salon:</strong><br>
-            Rajasthan, India<br>
-            Direct Concierge: <strong>+91 63770 61020</strong><br>
-            Email: <strong>houseofjewelux@gmail.com</strong>
+          
+          <div style="font-size: 0.82rem; color: rgba(245, 239, 235, 0.85); line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+            <div style="margin-bottom: 0.35rem;"><strong>Jaipur Atelier:</strong> Civil Lines Palace Road, Jaipur, Rajasthan 302006</div>
+            <div style="margin-bottom: 0.35rem;"><strong>Direct Concierge:</strong> <a href="tel:+916377061020" style="color: var(--color-muted-gold); text-decoration: underline;">+91 63770 61020</a></div>
+            <div style="margin-bottom: 0.35rem;"><strong>Official Email:</strong> <a href="mailto:houseofjewelux@gmail.com" style="color: var(--color-muted-gold); text-decoration: underline;">houseofjewelux@gmail.com</a></div>
+            <div style="font-size: 0.76rem; color: rgba(245, 239, 235, 0.6); margin-top: 0.4rem;">Salon Hours: Mon – Sat, 10:30 AM – 8:00 PM IST</div>
+          </div>
+
+          <!-- SECTION H: OFFICIAL SOCIAL CHANNELS -->
+          <div style="display: flex; gap: 0.75rem; margin-top: 1rem; align-items: center;">
+            <a href="https://wa.me/916377061020" target="_blank" rel="noopener noreferrer" title="WhatsApp Concierge" style="width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; color: #25D366; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+              <svg viewBox="0 0 24 24" style="width: 17px; height: 17px;" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.434 5.176L2 22l4.957-1.394C8.411 21.493 10.15 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+            </a>
+            <a href="https://instagram.com/houseofjewelux" target="_blank" rel="noopener noreferrer" title="Instagram Atelier" style="width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; color: #E1306C; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+              <svg viewBox="0 0 24 24" style="width: 17px; height: 17px;" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="mailto:houseofjewelux@gmail.com" title="Direct Email" style="width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+              <svg viewBox="0 0 24 24" style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            </a>
+            <a href="tel:+916377061020" title="Direct Salon Line" style="width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+              <svg viewBox="0 0 24 24" style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
           </div>
         </div>
 
-        <!-- Col 2: Categories -->
+        <!-- SECTION B: SHOP JEWELLERY -->
         <div>
-          <h4 class="footer-col-title">Categories</h4>
-          <ul class="footer-links-list">
-            <li><a href="#collections/earrings">Earrings for Women</a></li>
-            <li><a href="#collections/rings">Solitaire Rings</a></li>
-            <li><a href="#collections/necklaces">Necklaces & Pendants</a></li>
-            <li><a href="#collections/bracelets">Tennis Bracelets</a></li>
-            <li><a href="#collections/brooches">Royal Falcon Brooches</a></li>
-            <li><a href="#collections/temple-jewellery">Temple Nakshi Jewellery</a></li>
+          <h4 class="footer-col-title" style="color: #FFF; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 0.5rem; margin-bottom: 1rem;">Shop Jewellery</h4>
+          <ul class="footer-links-list" style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <li><a href="#collections/all" style="color: rgba(245, 239, 235, 0.75);">All Jewellery (50)</a></li>
+            <li><a href="#collections/silver-category" style="color: var(--color-muted-gold); font-weight: 600;">✦ Silver Jewellery</a></li>
+            <li><a href="#collections/gold-category" style="color: var(--color-muted-gold); font-weight: 600;">✦ Gold Jewellery</a></li>
+            <li><a href="#collections/diamond-category" style="color: var(--color-muted-gold); font-weight: 600;">✦ Diamond Jewellery</a></li>
+            <li><a href="#collections/rings" style="color: rgba(245, 239, 235, 0.75);">Solitaire Rings</a></li>
+            <li><a href="#collections/earrings" style="color: rgba(245, 239, 235, 0.75);">Regal Earrings</a></li>
+            <li><a href="#collections/necklaces" style="color: rgba(245, 239, 235, 0.75);">Necklaces & Collars</a></li>
+            <li><a href="#collections/bracelets" style="color: rgba(245, 239, 235, 0.75);">Tennis Bracelets</a></li>
+            <li><a href="#collections/brooches" style="color: rgba(245, 239, 235, 0.75);">Falcon Brooches</a></li>
+            <li><a href="#collections/temple-jewellery" style="color: rgba(245, 239, 235, 0.75);">Temple Heritage</a></li>
+            <li><a href="#collections/new-arrivals" style="color: rgba(245, 239, 235, 0.75);">New Arrivals</a></li>
+            <li><a href="#collections/best-sellers" style="color: rgba(245, 239, 235, 0.75);">Best Sellers</a></li>
           </ul>
         </div>
 
-        <!-- Col 3: Curations -->
+        <!-- SECTION C: CUSTOMER SERVICE -->
         <div>
-          <h4 class="footer-col-title">Curated Edits</h4>
-          <ul class="footer-links-list">
-            <li><a href="#collections/festive-edit">Diwali & Festive Edit</a></li>
-            <li><a href="#collections/best-sellers">Best Sellers</a></li>
-            <li><a href="#collections/curated-favorites">Founder’s Curation</a></li>
-            <li><a href="#custom-order">Bespoke Goldsmith Studio</a></li>
-            <li><a href="#craftsmanship">The 10-Stage Craft Method</a></li>
-            <li><a href="#admin">Atelier Admin Access</a></li>
+          <h4 class="footer-col-title" style="color: #FFF; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 0.5rem; margin-bottom: 1rem;">Client Concierge</h4>
+          <ul class="footer-links-list" style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <li><a href="#contact" style="color: rgba(245, 239, 235, 0.75);">Contact Concierge</a></li>
+            <li><a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" style="color: var(--color-muted-gold); font-weight: 600;">✦ Book Salon Appointment</a></li>
+            <li><a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal()" style="color: var(--color-muted-gold); font-weight: 600;">✦ Track Consignment</a></li>
+            <li><a href="#faq" style="color: rgba(245, 239, 235, 0.75);">Frequently Asked Questions</a></li>
+            <li><a href="#shipping-policy" style="color: rgba(245, 239, 235, 0.75);">Shipping Information</a></li>
+            <li><a href="#size-guide" style="color: rgba(245, 239, 235, 0.75);">Ring & Bracelet Size Guide</a></li>
+            <li><a href="#jewellery-care" style="color: rgba(245, 239, 235, 0.75);">Jewellery Care Guide</a></li>
+            <li><a href="#account" style="color: rgba(245, 239, 235, 0.75);">Patron Account Portal</a></li>
+            <li><a href="https://wa.me/916377061020" target="_blank" style="color: #25D366; font-weight: 600;">WhatsApp Direct Support</a></li>
           </ul>
         </div>
 
-        <!-- Col 4: Client Care -->
+        <!-- SECTION D: ABOUT HOUSE OF JEWELUX -->
         <div>
-          <h4 class="footer-col-title">Client Care</h4>
-          <ul class="footer-links-list">
-            <li><a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" style="color: var(--color-gold-dark); font-weight: 600;">✦ Book Salon Appointment</a></li>
-            <li><a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal()" style="color: var(--color-gold-dark); font-weight: 600;">✦ Track Your Order</a></li>
-            <li><a href="#contact">Contact Concierge</a></li>
-            <li><a href="https://wa.me/916377061020" target="_blank">WhatsApp Direct Support</a></li>
-            <li><a href="#faq">Frequently Asked Questions</a></li>
-            <li><a href="#account">Patron Account Portal</a></li>
-            <li><a href="#shipping">Insured Shipping Covenant</a></li>
+          <h4 class="footer-col-title" style="color: #FFF; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 0.5rem; margin-bottom: 1rem;">Maison & Craft</h4>
+          <ul class="footer-links-list" style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <li><a href="#about" style="color: rgba(245, 239, 235, 0.75);">About House of Jewelux</a></li>
+            <li><a href="#about" style="color: rgba(245, 239, 235, 0.75);">Our Story & Jaipur Legacy</a></li>
+            <li><a href="#about" style="color: rgba(245, 239, 235, 0.75);">Maison Philosophy</a></li>
+            <li><a href="#craftsmanship" style="color: rgba(245, 239, 235, 0.75);">Jaipur Goldsmithing</a></li>
+            <li><a href="#craftsmanship" style="color: rgba(245, 239, 235, 0.75);">The 10-Stage Craft Method</a></li>
+            <li><a href="#custom-order" style="color: var(--color-muted-gold); font-weight: 600;">✦ Bespoke Atelier Studio</a></li>
+            <li><a href="#collections/all" style="color: rgba(245, 239, 235, 0.75);">The Master Vault</a></li>
+            <li><a href="#admin" style="color: rgba(245, 239, 235, 0.45); font-size: 0.75rem;">Atelier Admin Access</a></li>
           </ul>
         </div>
 
-        <!-- Col 5: Policies -->
+        <!-- SECTION E: LEGAL & POLICIES -->
         <div>
-          <h4 class="footer-col-title">Policies</h4>
-          <ul class="footer-links-list">
-            <li><a href="#shipping">Insured Shipping Policy</a></li>
-            <li><a href="#returns">14-Day Return & Exchange</a></li>
-            <li><a href="#warranty">Lifetime Maintenance Covenant</a></li>
-            <li><a href="#privacy">Patron Privacy Covenant</a></li>
-            <li><a href="#terms">Terms of Authenticity</a></li>
+          <h4 class="footer-col-title" style="color: #FFF; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 0.5rem; margin-bottom: 1rem;">Policies & Legal</h4>
+          <ul class="footer-links-list" style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <li><a href="#shipping-policy" style="color: rgba(245, 239, 235, 0.75);">Insured Shipping Policy</a></li>
+            <li><a href="#returns-policy" style="color: rgba(245, 239, 235, 0.75);">14-Day Returns & Refunds</a></li>
+            <li><a href="#exchange-policy" style="color: rgba(245, 239, 235, 0.75);">Exchange Privilege</a></li>
+            <li><a href="#cancellation-policy" style="color: rgba(245, 239, 235, 0.75);">Cancellation Policy</a></li>
+            <li><a href="#privacy-policy" style="color: rgba(245, 239, 235, 0.75);">Patron Privacy Covenant</a></li>
+            <li><a href="#terms-conditions" style="color: rgba(245, 239, 235, 0.75);">Terms & Conditions</a></li>
+            <li><a href="#cookie-policy" style="color: rgba(245, 239, 235, 0.75);">Cookie Policy</a></li>
+            <li><a href="#warranty" style="color: var(--color-muted-gold); font-weight: 600;">✦ Lifetime Craft Covenant</a></li>
           </ul>
         </div>
       </div>
 
-      <!-- Bottom Bar -->
-      <div class="footer-bottom-bar">
-        <div class="footer-copyright">
-          © 2026 HOUSE OF JEWELUX. All rights reserved. Where Elegance Becomes Eternal. Stamped BIS 925 Hallmarked.
+      <!-- SECTION J & I: BOTTOM COPYRIGHT & TRUST / PAYMENT BADGES -->
+      <div class="footer-bottom-bar" style="padding: 2.5rem 0 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+        <div>
+          <div class="footer-copyright" style="font-size: 0.8rem; color: rgba(245, 239, 235, 0.7); margin-bottom: 0.35rem;">
+            © <span id="copyright-year">2026</span> HOUSE OF JEWELUX. All rights reserved. Where Elegance Becomes Eternal. Stamped BIS 925 Hallmarked.
+          </div>
+          <div style="font-size: 0.75rem; color: rgba(245, 239, 235, 0.5); display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="#privacy-policy" style="color: rgba(245, 239, 235, 0.6);">Privacy Policy</a>
+            <span>•</span>
+            <a href="#terms-conditions" style="color: rgba(245, 239, 235, 0.6);">Terms & Conditions</a>
+            <span>•</span>
+            <a href="#shipping-policy" style="color: rgba(245, 239, 235, 0.6);">Insured Shipping</a>
+            <span>•</span>
+            <a href="#returns-policy" style="color: rgba(245, 239, 235, 0.6);">14-Day Returns</a>
+            <span>•</span>
+            <a href="#size-guide" style="color: rgba(245, 239, 235, 0.6);">Size Guide</a>
+          </div>
         </div>
-        <div class="footer-payment-icons">
-          <span class="payment-pill-badge" title="BHIM UPI">
-            <svg viewBox="0 0 54 20" style="height: 14px; width: auto;"><path d="M7 3L16 10L7 17H2L11 10L2 3H7Z M19 3L28 10L19 17H14L23 10L14 3H19Z" fill="currentColor"/><text x="32" y="15" font-size="12" font-weight="700" font-family="'Montserrat', sans-serif" fill="currentColor">UPI</text></svg>
+
+        <!-- SECTION I: VERIFIED PAYMENT AND TRUST BADGES -->
+        <div class="footer-payment-icons" style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+          <span class="payment-pill-badge" title="BIS 925 Hallmark Certified" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(197,160,89,0.3); color: var(--color-muted-gold); padding: 0.3rem 0.65rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-weight: 700;">
+            <svg viewBox="0 0 42 20" style="height: 14px; width: auto;"><polygon points="12 2 22 18 2 18" fill="none" stroke="currentColor" stroke-width="1.3"/><text x="12" y="15" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor">925</text><text x="26" y="14" font-size="9" font-family="'Cinzel', serif" font-weight="700" fill="currentColor">BIS</text></svg>
+            <span>BIS Hallmarked</span>
           </span>
-          <span class="payment-pill-badge" title="Visa">
-            <svg viewBox="0 0 54 18" style="height: 12px; width: auto;"><path d="M20 1L14.3 17H10.7L6.6 4.3C6.4 3.5 6.1 3.2 5.4 2.8C4.2 2.2 2.2 1.6 0.6 1.2L0.7 0.4H7.4C8.3 0.4 9.1 1 9.3 2.1L11 12L15.2 0.4H20ZM37.3 11.7C37.3 7.2 31.6 6.9 31.6 4.9C31.6 4.2 32.3 3.5 33.7 3.3C34.4 3.2 36.3 3.1 38.3 4.2L39.1 0.5C38 0.1 36.5 -0.3 34.6 -0.3C29.2 -0.3 25.4 2.6 25.4 6.9C25.4 10.1 28.1 11.9 30.2 13C32.3 14.1 33.1 14.8 33.1 15.8C33.1 17.3 31.3 18 29.7 18C27.2 18 25.7 17.5 24.3 16.8L23.4 20.7C24.9 21.4 27.6 22 30.2 22C35.9 22 39.7 19.1 39.7 14.5L37.3 11.7ZM49.1 0.4H45.2C44.3 0.4 43.6 0.9 43.2 1.8L36.8 17.4H42.7L43.9 14H49.3L49.8 17.4H55L49.1 0.4ZM45.5 10.6L47.5 4.8L48.7 10.6H45.5ZM24.4 0.4L19.8 17.4H14.1L18.7 0.4H24.4Z" fill="currentColor"/></svg>
-          </span>
-          <span class="payment-pill-badge" title="Mastercard">
-            <svg viewBox="0 0 40 24" style="height: 16px; width: auto;"><circle cx="14" cy="12" r="9" fill="currentColor" opacity="0.85"/><circle cx="26" cy="12" r="9" fill="currentColor" opacity="0.65"/></svg>
-          </span>
-          <span class="payment-pill-badge" title="RuPay">
-            <svg viewBox="0 0 54 18" style="height: 13px; width: auto;"><text x="0" y="14" font-size="13" font-weight="800" font-family="'Montserrat', sans-serif" letter-spacing="0.04em" fill="currentColor">RuPay</text><polygon points="46 4 52 9 46 14" fill="currentColor"/></svg>
-          </span>
-          <span class="payment-pill-badge" title="Google Pay">
-            <svg viewBox="0 0 48 18" style="height: 13px; width: auto;"><text x="2" y="14" font-size="12" font-weight="700" font-family="'Montserrat', sans-serif" fill="currentColor">G Pay</text></svg>
-          </span>
-          <span class="payment-pill-badge" title="BIS 925 Hallmark Certified">
-            <svg viewBox="0 0 42 20" style="height: 15px; width: auto;"><polygon points="12 2 22 18 2 18" fill="none" stroke="currentColor" stroke-width="1.3"/><text x="12" y="15" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor">925</text><text x="26" y="14" font-size="9" font-family="'Cinzel', serif" font-weight="700" fill="currentColor">BIS</text></svg>
-          </span>
-          <span class="payment-pill-badge" title="100% Insured Transit Across India">
+          <span class="payment-pill-badge" title="100% Insured Armored Courier Transit Across India" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(197,160,89,0.3); color: var(--color-muted-gold); padding: 0.3rem 0.65rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-weight: 700;">
             <svg viewBox="0 0 56 20" style="height: 14px; width: auto;"><path d="M8 2L2 5V11C2 15 8 18 8 18C8 18 14 15 14 11V5L8 2Z" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="18" y="14" font-size="8.5" font-weight="600" font-family="'Montserrat', sans-serif" letter-spacing="0.04em" fill="currentColor">INSURED</text></svg>
+            <span>Insured Armored Transit</span>
+          </span>
+          <span class="payment-pill-badge" title="BHIM UPI Direct" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #FFF; padding: 0.3rem 0.65rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
+            UPI / QR
+          </span>
+          <span class="payment-pill-badge" title="Visa / Mastercard / RuPay" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #FFF; padding: 0.3rem 0.65rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
+            Cards / NetBanking
+          </span>
+          <span class="payment-pill-badge" title="Cash on Delivery Available" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #FFF; padding: 0.3rem 0.65rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
+            COD Available
           </span>
         </div>
       </div>
+    </div>
+  </footer>
     </div>
   </footer>
 
@@ -481,6 +548,10 @@
       <div id="track-result-box" style="display: none;"></div>
     </div>
   </div>
+
+<script>
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>

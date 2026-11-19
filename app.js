@@ -143,8 +143,8 @@
 
     if (route === 'home' || route === '') {
       renderHomePage(appView);
-    } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/')) {
-      const colId = route.startsWith('collections/') ? (route.split('/')[1] || 'all') : 'all';
+    } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/') || route === 'silver' || route === 'gold' || route === 'diamond') {
+      const colId = route.startsWith('collections/') ? (route.split('/')[1] || 'all') : (route === 'silver' ? 'silver-category' : route === 'gold' ? 'gold-category' : route === 'diamond' ? 'diamond-category' : 'all');
       renderCollectionPage(appView, colId);
     } else if (route.startsWith('products/')) {
       const prodId = route.split('/')[1];
@@ -177,8 +177,9 @@
       renderContactPage(appView);
     } else if (route === 'faq') {
       renderFAQPage(appView);
-    } else if (['shipping', 'returns', 'warranty', 'privacy', 'terms'].includes(route)) {
-      renderPolicyPage(appView, route);
+    } else if (['shipping', 'shipping-policy', 'returns', 'returns-policy', 'exchange', 'exchange-policy', 'cancellation', 'cancellation-policy', 'privacy', 'privacy-policy', 'terms', 'terms-conditions', 'cookies', 'cookie-policy', 'care-guide', 'jewellery-care', 'size-guide', 'warranty'].includes(route)) {
+      const normalizedKey = route.replace('-policy', '').replace('-conditions', '').replace('jewellery-', '');
+      renderPolicyPage(appView, normalizedKey);
     } else {
       const matchedCat = state.categories.find(c => c.id === route);
       if (matchedCat) {
@@ -755,6 +756,24 @@
       }
     }
 
+    // Material category filtering (Silver / Gold / Diamond)
+    if (collectionId === 'silver-category') {
+      filtered = filtered.filter(p => p.isSilver && !p.isGold);
+      title = "Silver Jewellery";
+      subtitle = "Solid 925 Sterling Silver Creations • Anti-Tarnish Rhodium Finish • BIS Hallmarked";
+      heroImg = "images/authentic_solitaire_ring.jpg";
+    } else if (collectionId === 'gold-category') {
+      filtered = filtered.filter(p => p.isGold);
+      title = "Gold Jewellery";
+      subtitle = "18K Gold Finish & Vermeil Masterpieces • Royal Goldsmith Heritage • BIS Hallmarked";
+      heroImg = "images/authentic_rings_couple_hands.jpg";
+    } else if (collectionId === 'diamond-category') {
+      filtered = filtered.filter(p => p.stone && (p.stone.toLowerCase().includes('diamond') || p.stone.toLowerCase().includes('moissanite')));
+      title = "Diamond Jewellery";
+      subtitle = "Certified VVS1 Stones • Hearts & Arrows Cut • Eternal Brilliance • BIS Hallmarked";
+      heroImg = "images/authentic_diamond_ring_macro.jpg";
+    }
+
     // Apply active sidebar filters
     if (state.activeFilters.metal) {
       filtered = filtered.filter(p => p.metal.toLowerCase().includes(state.activeFilters.metal.toLowerCase()));
@@ -810,6 +829,17 @@
         <div class="collection-main-layout">
           <!-- LEFT: PILL FILTERS SIDEBAR (1:1 WITH PALMONAS) -->
           <aside class="filters-sidebar">
+            <!-- Material Category Pills -->
+            <div class="filter-group">
+              <div class="filter-group-title">Material Category</div>
+              <div class="filter-pills-row">
+                <button class="filter-pill ${collectionId === 'silver-category' || collectionId === 'gold-category' || collectionId === 'diamond-category' ? '' : (collectionId === 'all' || !collectionId) ? 'active' : ''}" onclick="window.HJ.navigate('collections/all')">All Materials</button>
+                <button class="filter-pill ${collectionId === 'silver-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/silver-category')">Silver Jewellery</button>
+                <button class="filter-pill ${collectionId === 'gold-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/gold-category')">Gold Jewellery</button>
+                <button class="filter-pill ${collectionId === 'diamond-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/diamond-category')">Diamond Jewellery</button>
+              </div>
+            </div>
+
             <!-- Product Type Pills -->
             <div class="filter-group">
               <div class="filter-group-title">Product type</div>
@@ -1410,7 +1440,44 @@
         </div>
       </section>
 
-      <!-- C. THE THREE INVIOLABLE PILLARS (PEBBLE CARDS) -->
+      <!-- D. MATERIAL OVERVIEW: SILVER • GOLD • DIAMOND -->
+      <section style="padding: 5rem 0; background: var(--color-warm-ivory);">
+        <div class="container">
+          <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+            <div class="section-pretitle" style="color: var(--color-muted-gold);">Material Mastery</div>
+            <h2 class="section-title">Three Houses of Creation</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+            <!-- Silver -->
+            <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.08); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-size: 1.5rem;">Ag</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Silver Jewellery</h3>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Solid 925 sterling silver with liquid platinum-rhodium finish. Hereditary Rajasthani silversmithing, BIS 925 hallmarked, hypoallergenic and water-safe.</p>
+              <a href="#collections/silver-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Silver Collection ↗</a>
+            </div>
+
+            <!-- Gold -->
+            <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.12); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-size: 1.5rem;">Au</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Gold Jewellery</h3>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">18K gold finish and vermeil over BIS 925 silver. Royal haute joaillerie treatments, champagne gold plating, and micron-thick luxury finishes.</p>
+              <a href="#collections/gold-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Gold Collection ↗</a>
+            </div>
+
+            <!-- Diamond -->
+            <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.6); border: 1px solid var(--color-warm-stone-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-stone-muted); font-size: 1.5rem;">💎</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Diamond Jewellery</h3>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Certified VVS1 laboratory diamonds and moissanites. Hearts & Arrows cut, micropavé settings, eternal brilliance with BIS hallmark certification.</p>
+              <a href="#collections/diamond-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Diamond Collection ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- E. ATELIER STATISTICS RIBBON -->
       <section style="padding: 4.5rem 0; background: var(--color-soft-offwhite); border-top: 1px solid rgba(47,36,26,0.06); border-bottom: 1px solid rgba(47,36,26,0.06);">
         <div class="container">
           <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
@@ -1495,17 +1562,307 @@
     `;
   }
 
-  function renderPolicyPage(container, key) {
+  function renderPolicyPage(container, rawKey) {
+    const key = (rawKey || 'shipping').toLowerCase();
+    const policies = {
+      shipping: {
+        title: "Insured Armored Transit & Shipping Policy",
+        subtitle: "Complimentary Fully Insured Armored Delivery Across India • Global Priority Transit",
+        badge: "Armored Logistics Protocol",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Domestic Armored Transit Across India</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
+              Every creation leaving our Jaipur atelier is transported via specialized armored courier services (BlueDart Apex Air & Sequel Secure Logistics). All consignments are 100% insured from bench to your doorstep.
+            </p>
+            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
+              <li><strong>Transit Timeline:</strong> 2 to 4 business days across all metro locations (Delhi NCR, Mumbai, Bengaluru, Hyderabad, Chennai, Kolkata, Pune). 3 to 5 business days for regional and non-metro pin codes.</li>
+              <li><strong>Complimentary Shipping:</strong> Enjoy complimentary insured delivery on all acquisitions valued at ₹2,500 and above. A flat fee of ₹250 applies to orders below ₹2,500.</li>
+              <li><strong>Mandatory OTP Verification:</strong> To ensure complete asset safety, high-jewellery parcels require a verified OTP or signature upon delivery. Couriers will never leave parcels unattended.</li>
+            </ul>
+          </div>
+
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Global International Shipping</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
+              House of Jewelux dispatches worldwide to the United States, United Kingdom, European Union, United Arab Emirates, Singapore, and Australia via fully insured FedEx Priority International and DHL Express.
+            </p>
+            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
+              <li><strong>International Transit Time:</strong> 4 to 7 business days, subject to local customs inspection.</li>
+              <li><strong>Customs & Duties:</strong> International orders are shipped DAP (Delivered at Place). Local import taxes, if applicable, are coordinated directly with the courier.</li>
+            </ul>
+          </div>
+
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Real-Time Consignment Tracking</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Once dispatched, you will receive an encrypted tracking link and consignment ID via SMS and WhatsApp. You may track your consignment at any time using our <a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal()" style="color: var(--color-antique-gold); font-weight: 600; text-decoration: underline;">Real-Time Tracking Console</a>.
+            </p>
+          </div>
+        `
+      },
+      returns: {
+        title: "14-Day Patron Inspection & Returns Covenant",
+        subtitle: "Uncompromising Quality Guarantee • Full Refund or Exchange Privilege",
+        badge: "Client Trust Covenant",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. 14-Day Inspection Period</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
+              We want you to hold, inspect, and experience your House of Jewelux piece in person with complete peace of mind. You have 14 days from the date of confirmed delivery to initiate a return or exchange.
+            </p>
+            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
+              <li><strong>Condition Requirements:</strong> Items must be unworn, undamaged, and returned in original condition with security tags attached, BIS hallmark certification card, and the signature emerald velvet coffer.</li>
+              <li><strong>Complimentary Reverse Pickup:</strong> We arrange an insured armored courier pickup directly from your doorstep at zero cost to you.</li>
+            </ul>
+          </div>
+
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Refund Processing</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Upon arrival at our Jaipur atelier, our master gemologists verify the piece and laser hallmarks within 24 to 48 hours. Once verified, 100% of the purchase amount is credited back to your original payment method (bank account, UPI, or card) within 3 to 5 business days. For Cash on Delivery acquisitions, refunds are transferred securely via NEFT/UPI.
+            </p>
+          </div>
+
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Custom & Bespoke Commissions</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Bespoke custom commissions and personalized laser engravings are final sale due to their one-of-a-kind fabrication, but remain fully covered under our Lifetime Structural Craftsmanship Warranty.
+            </p>
+          </div>
+        `
+      },
+      exchange: {
+        title: "Complimentary Exchange Privilege",
+        subtitle: "Ring Resizing & Style Upgrades with White-Glove Support",
+        badge: "Flawless Fit Guarantee",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Complimentary First Ring Resize</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              If your solitaire ring or eternity band is slightly too snug or loose, our Jaipur bench jewelers provide one complimentary ring resizing within 30 days of acquisition. We coordinate two-way insured armored courier transit.
+            </p>
+          </div>
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Style Exchanges</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Within 14 days of receipt, you may exchange any standard collection creation for another item of equal value, or pay the difference for a higher-tier creation. Connect with our dedicated WhatsApp Concierge at <strong>+91 63770 61020</strong> to coordinate an instant exchange.
+            </p>
+          </div>
+        `
+      },
+      cancellation: {
+        title: "Order Cancellation Policy",
+        subtitle: "Clear, Fair Guidelines for Immediate Cancellations",
+        badge: "Patron Flexibility",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Prior to Courier Dispatch</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Standard collection orders may be cancelled at any time before dispatch with a 100% immediate full refund. Simply email <a href="mailto:houseofjewelux@gmail.com" style="color: var(--color-antique-gold); font-weight: 600;">houseofjewelux@gmail.com</a> or WhatsApp our concierge at <strong>+91 63770 61020</strong> with your Order ID.
+            </p>
+          </div>
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. After Courier Dispatch</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              If your order has already left the atelier with an active armored tracking number, the consignment cannot be intercepted in transit. Please accept delivery and initiate an immediate return under our 14-Day Return Covenant.
+            </p>
+          </div>
+        `
+      },
+      privacy: {
+        title: "Patron Privacy & Data Protection Covenant",
+        subtitle: "256-Bit SSL Encryption • Strict Confidentiality • Zero Third-Party Selling",
+        badge: "Confidentiality Assured",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Commitment to Discretion</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              House of Jewelux operates with the utmost discretion. We collect only essential information required to fulfill your high-jewellery commissions, provide armored logistics delivery, and maintain your provenance certificate records.
+            </p>
+          </div>
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. 256-Bit SSL/TLS Encryption</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              All data transmitted through our website is secured with bank-grade 256-bit SSL encryption. We adhere strictly to the Information Technology Act (2000) and global GDPR data protection standards. We will never sell, lease, or monetize your contact details.
+            </p>
+          </div>
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Payment Processing Safety</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Financial transactions are executed directly via PCI-DSS Level 1 compliant gateways (Razorpay, Stripe, and RBI-regulated BHIM UPI). House of Jewelux never views or stores your credit/debit card numbers or CVV codes.
+            </p>
+          </div>
+        `
+      },
+      terms: {
+        title: "Terms of Authenticity & Atelier Service",
+        subtitle: "Official Legal Standards Governing House of Jewelux Acquisitions",
+        badge: "Atelier Code of Honor",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Hallmarking & Material Authenticity</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Every creation sold under the House of Jewelux mark is manufactured in verified solid 925 sterling silver or 18K solid vermeil, stamped with the Bureau of Indian Standards (BIS) hallmark. Diamond jewelry features certified lab-grown moissanites or certified diamonds with disclosed origins.
+            </p>
+          </div>
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Intellectual Property</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              All jewellery designs, architectural sketches, photographs, brand trademarks, logos, and digital assets displayed on this website are protected intellectual property of House of Jewelux. Unauthorized reproduction, replication, or distribution is strictly prohibited.
+            </p>
+          </div>
+        `
+      },
+      cookies: {
+        title: "Cookie & Preference Policy",
+        subtitle: "Transparent Information on How We Respect Your Digital Privacy",
+        badge: "Data Transparency",
+        content: `
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Essential Cookies & Local Preferences</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              We utilize essential local storage and first-party session cookies exclusively to preserve your shopping bag contents, wishlist favorites, and localized currency selection. We do not deploy invasive cross-site tracking cookies. You may clear your browser cookies at any time via your browser settings without affecting checkout integrity.
+            </p>
+          </div>
+        `
+      },
+      care: {
+        title: "The Art of Fine Jewellery Care",
+        subtitle: "Preserving the Eternal Brilliance of Silver, Gold & Diamonds",
+        badge: "Master Goldsmith Care Guide",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Solid 925 Silver & Liquid Rhodium Care</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
+              House of Jewelux silver pieces are electroplated in pure liquid platinum-rhodium to prevent tarnishing and maintain a mirrored brilliance.
+            </p>
+            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
+              <li>Wipe gently with the provided ultra-soft microfiber polishing cloth after each wear.</li>
+              <li>Avoid chemical silver dips or abrasive pastes, which can strip protective rhodium plating.</li>
+              <li>Remove your jewellery prior to swimming in chlorinated pools or bathing in thermal sulfur springs.</li>
+            </ul>
+          </div>
+
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. 18K Micron Gold Vermeil Preservation</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
+              Our micron gold vermeil utilizes a thick 2.5-micron layer of real 18K gold over solid sterling silver.
+            </p>
+            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
+              <li>Apply perfumes, body lotions, hairsprays, and cosmetics <em>before</em> putting on your jewellery.</li>
+              <li>Store each piece individually in its velvet presentation coffer to prevent delicate chains and stones from scratching.</li>
+            </ul>
+          </div>
+
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Diamond & Moissanite Cleansing</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              To restore maximum optical dispersion and scintillation: soak for 5 minutes in a bowl of lukewarm water with 2 drops of mild dishwashing liquid. Gently brush behind the pavilion facet with a soft-bristled baby toothbrush, rinse under running lukewarm water, and pat dry with a lint-free cloth.
+            </p>
+          </div>
+        `
+      },
+      size: {
+        title: "International Size & Dimension Guide",
+        subtitle: "Accurate Measurement Specifications for Rings, Bangles & Necklaces",
+        badge: "Jaipur Atelier Sizing Chart",
+        content: `
+          <div class="pepite-story-card" style="margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Indian & International Ring Sizing Chart</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+                <thead>
+                  <tr style="background: rgba(184,151,88,0.12); color: var(--color-espresso); font-family: var(--font-serif);">
+                    <th style="padding: 0.75rem; border: 1px solid var(--color-warm-stone-light);">Indian Size</th>
+                    <th style="padding: 0.75rem; border: 1px solid var(--color-warm-stone-light);">US Size</th>
+                    <th style="padding: 0.75rem; border: 1px solid var(--color-warm-stone-light);">UK Size</th>
+                    <th style="padding: 0.75rem; border: 1px solid var(--color-warm-stone-light);">Inner Diameter (mm)</th>
+                    <th style="padding: 0.75rem; border: 1px solid var(--color-warm-stone-light);">Inner Circumference (mm)</th>
+                  </tr>
+                </thead>
+                <tbody style="color: var(--color-stone-muted);">
+                  <tr><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light); font-weight: 600;">8</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">4.5</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">I</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">15.3 mm</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">48.0 mm</td></tr>
+                  <tr><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light); font-weight: 600;">10</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">5.5</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">K</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">16.1 mm</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">50.6 mm</td></tr>
+                  <tr><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light); font-weight: 600;">12 (Most Popular)</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">6.0</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">L 1/2</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">16.5 mm</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">51.8 mm</td></tr>
+                  <tr><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light); font-weight: 600;">14 (Standard)</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">7.0</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">N</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">17.3 mm</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">54.4 mm</td></tr>
+                  <tr><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light); font-weight: 600;">16</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">7.5</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">P</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">17.7 mm</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">55.6 mm</td></tr>
+                  <tr><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light); font-weight: 600;">18</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">8.5</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">Q 1/2</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">18.5 mm</td><td style="padding: 0.6rem; border: 1px solid var(--color-warm-stone-light);">58.1 mm</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Bracelet & Necklace Dimensions</h3>
+            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
+              <li><strong>Tennis Bracelets & Cuffs:</strong> Standard length is 7.0 inches (17.8 cm) with double-safety lock. Petite 6.5 inches and Large 7.5 inches available upon request.</li>
+              <li><strong>Necklace Drops:</strong> Choker (14-16 inches / collarbone), Princess (18 inches / most versatile drop), Matinee (20-22 inches / low neckline), Opera (30 inches / royal ceremonial).</li>
+            </ul>
+          </div>
+        `
+      },
+      warranty: {
+        title: "Lifetime Craftsmanship Covenant",
+        subtitle: "Unconditional Protection Against Manufacturing Flaws",
+        badge: "Lifetime Atelier Covenant",
+        content: `
+          <div class="pepite-story-card">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Lifetime Metal & Setting Integrity</h3>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Every creation forged by our Jaipur artisans carries an unconditional lifetime craftsmanship warranty against metal porosity, clasp structural failure, and prong security. If a stone loosens under normal daily wear, send your piece to our atelier for complimentary resetting, ultrasonic cleansing, and rhodium rejuvenation.
+            </p>
+          </div>
+        `
+      }
+    };
+
+    const pol = policies[key] || policies.shipping;
+
     container.innerHTML = `
-      <section style="background: var(--color-ivory-soft); padding: 4rem 0; text-align: center;">
-        <div class="container" style="max-width: 700px;">
-          <h1 style="font-family: var(--font-serif); font-size: 2.4rem; text-transform: capitalize;">${key} Policy</h1>
-          <p style="color: var(--color-taupe); margin-top: 0.5rem;">House of Jewelux Official Standards • November 2026</p>
+      <!-- A. POLICY HERO -->
+      <section style="background: var(--color-warm-ivory); padding: 5rem 0 3rem; text-align: center;">
+        <div class="container" style="max-width: 860px;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ ${pol.badge}</span>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 2.8rem; line-height: 1.2; margin: 0.5rem 0 1rem; color: var(--color-deep-heritage-brown);">${pol.title}</h1>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 1.25rem;"><span class="section-divider-gem"></span></div>
+          <p class="about-story-reveal" style="font-size: 1.05rem; color: var(--color-stone-muted); line-height: 1.8; max-width: 720px; margin: 0 auto;">
+            ${pol.subtitle}
+          </p>
         </div>
       </section>
-      <section style="padding: 4rem 0;">
-        <div class="container" style="max-width: 760px; line-height: 1.8;">
-          <p>At House of Jewelux, client trust is absolute. All items are shipped in insured armored transit with complimentary 14-day return and exchange privileges.</p>
+
+      <!-- B. POLICY QUICK NAVIGATION & BODY -->
+      <section style="padding: 3rem 0 6rem; background: var(--color-warm-ivory);">
+        <div class="container">
+          <!-- Policy Tab Pills -->
+          <div style="display: flex; gap: 0.65rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem;">
+            <a href="#shipping-policy" class="filter-pill ${key === 'shipping' ? 'active' : ''}">Shipping Policy</a>
+            <a href="#returns-policy" class="filter-pill ${key === 'returns' ? 'active' : ''}">14-Day Returns</a>
+            <a href="#exchange-policy" class="filter-pill ${key === 'exchange' ? 'active' : ''}">Exchange Privilege</a>
+            <a href="#cancellation-policy" class="filter-pill ${key === 'cancellation' ? 'active' : ''}">Cancellation Policy</a>
+            <a href="#jewellery-care" class="filter-pill ${key === 'care' ? 'active' : ''}">Jewellery Care Guide</a>
+            <a href="#size-guide" class="filter-pill ${key === 'size' ? 'active' : ''}">Size Guide</a>
+            <a href="#privacy-policy" class="filter-pill ${key === 'privacy' ? 'active' : ''}">Privacy Covenant</a>
+            <a href="#terms-conditions" class="filter-pill ${key === 'terms' ? 'active' : ''}">Terms & Conditions</a>
+            <a href="#warranty" class="filter-pill ${key === 'warranty' ? 'active' : ''}">Lifetime Warranty</a>
+          </div>
+
+          <div style="max-width: 860px; margin: 0 auto;">
+            ${pol.content}
+
+            <!-- Concierge Callout -->
+            <div class="pepite-story-card" style="margin-top: 3rem; background: rgba(184,151,88,0.06); border: 1px solid var(--color-muted-gold-light); text-align: center; padding: 2.5rem 1.5rem;">
+              <h4 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.5rem;">Have Questions Regarding Our Policies?</h4>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-bottom: 1.5rem; max-width: 540px; margin-left: auto; margin-right: auto;">
+                Our private salon concierge is available directly on WhatsApp and telephone to assist with custom requests, sizing queries, and consignment tracking.
+              </p>
+              <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://wa.me/916377061020" target="_blank" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Chat on WhatsApp</a>
+                <a href="#contact" class="btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Contact Salon Suite</a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     `;
@@ -2088,10 +2445,10 @@
       <section style="background: var(--color-warm-ivory); padding: 5rem 0 2rem; text-align: center;">
         <div class="container" style="max-width: 860px;">
           <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Jaipur Bench Artistry • Stamped BIS 925</span>
-          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">The 9-Stage Goldsmithing Journey</h1>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">The 10-Stage Goldsmithing Journey</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
-            Every House of Jewelux creation passes through the hands of master goldsmiths across nine sacred bench stages in Rajasthan, honoring centuries of royal Indian court metallurgy.
+            Every House of Jewelux creation passes through ten sacred bench stages in Rajasthan, honoring centuries of royal Indian court metallurgy and contemporary haute joaillerie precision.
           </p>
         </div>
       </section>
@@ -2114,62 +2471,68 @@
         </div>
       </section>
 
-      <!-- C. THE 9 DOCUMENTARY STAGES (PÉPITE PEBBLE GRID) -->
+      <!-- C. THE 10 DOCUMENTARY STAGES (PÉPITE PEBBLE GRID) -->
       <section id="craftsmanship-section" style="padding: 4rem 0 6rem; background: var(--color-soft-offwhite); border-top: 1px solid rgba(47,36,26,0.06); border-bottom: 1px solid rgba(47,36,26,0.06);">
         <div class="container">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.75rem;">
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">01</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Inspiration & Sacred Architecture</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Studying Jaipur royal archways, jharokha latticework, and ceremonial iconography from Mughal and Rajput court archives.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Inspiration & Research</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Studying Jaipur royal archways, jharokha latticework, Mughal and Rajput court iconography, and contemporary design trends to spark each new concept.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">02</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Exploration & Gemology</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and uncut Zambian crystals.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Concept & Design</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Hand-sketched creative direction, proportions, motif development, and design refinement in gouache watercolor on architect's paper.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">03</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Concept & Gouache Rendering</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Scale hand-painted gouache illustrations capturing light refraction angles, bezel heights, and 3D ergonomics.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Technical Design & CAD</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Precision 3D CAD modeling, dimensional specification, and high-resolution wax printing ensuring micro-comfort shanks and flawless wear balance.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">04</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Jewellery Proportions & CAD</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Precision 3D modeling and high-resolution wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Material Selection</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Certified 92.5% pure sterling silver, conflict-free VVS1 laboratory stones, Zambian emeralds, and hypoallergenic deoxidized copper alloy selection.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">05</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Material Assay & 925 Silver</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Laser XRF spectrometry testing guaranteeing 92.5% elemental silver alloyed strictly with skin-safe deoxidized copper.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Metal Preparation</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Alloying, melting, and material readiness — pure silver mixed with deoxidized copper, flux preparation, and crucible heating for bench forging.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">06</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Bench Forging & Kundan</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Traditional anvil hammer forging, hand-pierced filigree openwork, and 24K pure gold leaf foil kundan setting.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Forming & Shaping</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Traditional anvil hammer forging, hand-pierced filigree openwork, casting, and fabrication techniques shaping each silhouette.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">07</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Liquid Rhodium & 18K Micron</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring anti-tarnish, waterproof luminosity.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Stone Preparation & Setting</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Stone grading, bezel and prong setting, pavé placement, and secure gemstone mounting under microscope magnification.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">08</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">BIS Hallmark Certification</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Official Bureau of Indian Standards laser assay verification stamp applied with unique identification mark.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Polishing & Finishing</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Surface finishing, hand polishing, liquid rhodium electroplating, and 18K micron gold flashing for anti-tarnish luminosity.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">09</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Armored Coffer Acquisition</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Enclosed inside our signature emerald velvet presentation coffer and dispatched via insured armored courier across India.</p>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Quality Inspection</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Laser XRF spectrometry hallmark verification, craftsmanship checklist, measurement validation, and BIS 925 laser assay stamping.</p>
+            </div>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">10</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Final Presentation</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Final ultrasonic cleansing, emerald velvet presentation coffer packaging, and insured armored courier dispatch across India.</p>
             </div>
           </div>
 
@@ -2433,6 +2796,58 @@
           renderAdminDashboard(document.getElementById('app-view'));
         }
       } catch (e) {}
+    },
+
+    subscribeNewsletter: async function (e) {
+      if (e) e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input[type="email"]');
+      const feedback = document.getElementById('newsletter-feedback') || form.querySelector('.newsletter-feedback');
+      if (!input || !input.value.trim()) return;
+      const email = input.value.trim();
+
+      // Email validation regex
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (feedback) {
+          feedback.innerHTML = '<span style="color: #ef4444; font-size: 0.85rem;">Please enter a valid email address.</span>';
+          feedback.style.display = 'block';
+        } else {
+          alert('Please enter a valid email address.');
+        }
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (data.success) {
+          input.value = '';
+          if (feedback) {
+            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Salon Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+            feedback.style.display = 'block';
+          } else {
+            alert(data.message || 'Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
+          }
+        }
+      } catch (err) {
+        // Fallback for static hosting
+        const subscribers = JSON.parse(localStorage.getItem('hj_subscribers') || '[]');
+        if (!subscribers.includes(email.toLowerCase())) {
+          subscribers.push(email.toLowerCase());
+          localStorage.setItem('hj_subscribers', JSON.stringify(subscribers));
+        }
+        input.value = '';
+        if (feedback) {
+          feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Salon Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+          feedback.style.display = 'block';
+        } else {
+          alert('Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
+        }
+      }
     }
   };
 
