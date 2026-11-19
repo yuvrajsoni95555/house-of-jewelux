@@ -25,7 +25,7 @@
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261119_lux_v3">
+  <link rel="stylesheet" href="/style.css?v=20261119_hero_lux_v4">
   <style id="bulletproof-luxury-footer-styles">
     /* High-Priority Ultra-Luxurious Footer Styles */
     .site-footer {
@@ -138,6 +138,246 @@
       .site-footer {
         padding-bottom: calc(95px + env(safe-area-inset-bottom, 15px)) !important;
       }
+    }
+
+    /* ==================== ULTRA-LUXE EDITORIAL HERO FLAGSHIP REDESIGN ==================== */
+    .grand-hero-gradient-overlay {
+      position: absolute !important;
+      inset: 0 !important;
+      background: linear-gradient(
+        90deg,
+        rgba(14, 10, 8, 0.94) 0%,
+        rgba(14, 10, 8, 0.82) 40%,
+        rgba(14, 10, 8, 0.5) 68%,
+        rgba(14, 10, 8, 0.15) 100%
+      ) !important;
+      z-index: 2 !important;
+    }
+
+    .hero-editorial-card {
+      position: relative !important;
+      z-index: 5 !important;
+      max-width: 680px !important;
+      background: linear-gradient(135deg, rgba(24, 18, 14, 0.78) 0%, rgba(20, 15, 12, 0.52) 100%) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(197, 160, 89, 0.32) !important;
+      border-left: 3px solid #C5A059 !important;
+      border-radius: 20px !important;
+      padding: 2.5rem 2.75rem !important;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+      margin-left: 0 !important;
+    }
+
+    @media (max-width: 767px) {
+      .hero-editorial-card {
+        padding: 1.6rem 1.25rem !important;
+        border-radius: 16px !important;
+        max-width: 100% !important;
+        background: linear-gradient(135deg, rgba(20, 15, 12, 0.9) 0%, rgba(20, 15, 12, 0.75) 100%) !important;
+      }
+    }
+
+    /* 1. Enlarged Brand Logo */
+    .hero-grand-logo-wrap {
+      margin-bottom: 1.25rem !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    .hero-flagship-logo-img {
+      height: 84px !important;
+      width: auto !important;
+      max-width: 380px !important;
+      object-fit: contain !important;
+      filter: brightness(1.2) drop-shadow(0 4px 18px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 14px rgba(197, 160, 89, 0.4)) !important;
+      transition: transform 0.3s ease !important;
+    }
+
+    .hero-flagship-logo-img:hover {
+      transform: scale(1.02) !important;
+    }
+
+    @media (max-width: 767px) {
+      .hero-flagship-logo-img {
+        height: 58px !important;
+        max-width: 270px !important;
+      }
+    }
+
+    /* 2. Provenance Authenticity Bar */
+    .hero-provenance-bar {
+      display: inline-flex !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 0.5rem !important;
+      padding: 0.4rem 0.95rem !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+      border: 1px solid rgba(197, 160, 89, 0.35) !important;
+      border-radius: 9999px !important;
+      margin-bottom: 1.15rem !important;
+    }
+
+    .hero-provenance-tag {
+      font-family: var(--font-sans) !important;
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.16em !important;
+      text-transform: uppercase !important;
+      color: #DECCA8 !important;
+    }
+
+    .hero-provenance-dot {
+      color: rgba(197, 160, 89, 0.5) !important;
+      font-size: 0.75rem !important;
+    }
+
+    /* 3. Luminous, Light, High-Contrast Hero Title */
+    .hero-title-luxe {
+      font-family: var(--font-serif) !important;
+      font-size: clamp(2.2rem, 5.2vw, 3.8rem) !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.015em !important;
+      margin: 0.4rem 0 1.25rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .hero-title-line1 {
+      color: #FFFFFF !important;
+      text-shadow: 0 4px 22px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+      font-weight: 600 !important;
+    }
+
+    .hero-title-line2 {
+      background: linear-gradient(135deg, #FFF9EF 0%, #E8D3A7 35%, #D4AF37 70%, #AA823E 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.75)) !important;
+      font-weight: 500 !important;
+      font-style: italic !important;
+    }
+
+    /* 4. Luxury Subtitle */
+    .hero-subtitle-luxe {
+      font-family: var(--font-sans) !important;
+      font-size: 0.96rem !important;
+      color: rgba(245, 239, 235, 0.92) !important;
+      line-height: 1.75 !important;
+      margin-bottom: 1.4rem !important;
+      max-width: 580px !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    /* 5. Craft Triad Authenticity Badges */
+    .hero-craft-triad {
+      display: flex !important;
+      gap: 1.25rem !important;
+      flex-wrap: wrap !important;
+      padding: 0.8rem 0 !important;
+      margin-bottom: 1.65rem !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .craft-triad-item {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.45rem !important;
+      font-size: 0.75rem !important;
+      color: rgba(245, 239, 235, 0.9) !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+    }
+
+    .craft-triad-icon {
+      font-size: 0.88rem !important;
+      color: #D4AF37 !important;
+    }
+
+    /* 6. Buttons with Crystal-Clear High Contrast */
+    .hero-ctas-luxe {
+      display: flex !important;
+      gap: 1rem !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+    }
+
+    .hero-btn-primary {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.6rem !important;
+      background: linear-gradient(135deg, #E6C88A 0%, #C5A059 50%, #A37F39 100%) !important;
+      color: #140F0D !important;
+      font-family: var(--font-sans) !important;
+      font-size: 0.82rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      padding: 0.95rem 2.2rem !important;
+      border-radius: 9999px !important;
+      border: none !important;
+      cursor: pointer !important;
+      box-shadow: 0 6px 25px rgba(197, 160, 89, 0.45) !important;
+      text-decoration: none !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .hero-btn-primary:hover {
+      background: #FFFFFF !important;
+      color: #140F0D !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .hero-btn-secondary {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.6rem !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1.5px solid rgba(230, 200, 138, 0.65) !important;
+      color: #FFFFFF !important;
+      font-family: var(--font-sans) !important;
+      font-size: 0.82rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.1em !important;
+      text-transform: uppercase !important;
+      padding: 0.95rem 2rem !important;
+      border-radius: 9999px !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .hero-btn-secondary:hover {
+      background: rgba(197, 160, 89, 0.25) !important;
+      border-color: #FFFFFF !important;
+      color: #FFFFFF !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(197, 160, 89, 0.35) !important;
+    }
+
+    /* HUD Controls */
+    .hero-hud-top-right .hud-pill-btn {
+      background: rgba(20, 15, 13, 0.78) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(197, 160, 89, 0.45) !important;
+      color: #FFFFFF !important;
+      font-size: 0.72rem !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      font-weight: 600 !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: 9999px !important;
+    }
+
+    .hero-hud-top-right .hud-pill-btn.skip-btn {
+      background: linear-gradient(135deg, #DEBA76 0%, #C5A059 100%) !important;
+      color: #140F0D !important;
+      border: none !important;
+      font-weight: 700 !important;
     }
   </style>
 </head>
@@ -569,10 +809,10 @@
 
   <script src="/vendor/gsap.min.js"></script>
   <script src="/vendor/ScrollTrigger.min.js"></script>
-  <script src="/motion-engine.js?v=20261119_lux_v3"></script>
-  <script src="/hero-cinematic.js?v=20261119_lux_v3"></script>
-  <script src="/app.js?v=20261119_lux_v3"></script>
-  <script src="/visual-editor.js?v=20261119_lux_v3" defer></script>
+  <script src="/motion-engine.js?v=20261119_hero_lux_v4"></script>
+  <script src="/hero-cinematic.js?v=20261119_hero_lux_v4"></script>
+  <script src="/app.js?v=20261119_hero_lux_v4"></script>
+  <script src="/visual-editor.js?v=20261119_hero_lux_v4" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
   <div id="appointment-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(6px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">

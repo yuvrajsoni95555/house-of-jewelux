@@ -3149,8 +3149,219 @@ img {
 .grand-hero-gradient-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(20, 15, 13, 0.92) 0%, rgba(20, 15, 13, 0.6) 50%, rgba(20, 15, 13, 0.2) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(14, 10, 8, 0.94) 0%,
+    rgba(14, 10, 8, 0.82) 40%,
+    rgba(14, 10, 8, 0.5) 68%,
+    rgba(14, 10, 8, 0.15) 100%
+  ) !important;
   z-index: 2;
+}
+
+/* Glass Editorial Sanctum Card - High Luxury Asymmetric Pattern */
+.hero-editorial-card {
+  position: relative;
+  z-index: 5;
+  max-width: 680px;
+  background: linear-gradient(135deg, rgba(24, 18, 14, 0.78) 0%, rgba(20, 15, 12, 0.52) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(197, 160, 89, 0.32);
+  border-left: 3px solid #C5A059;
+  border-radius: 20px;
+  padding: 2.5rem 2.75rem;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  margin-left: 0;
+}
+
+@media (max-width: 767px) {
+  .hero-editorial-card {
+    padding: 1.6rem 1.25rem;
+    border-radius: 16px;
+    max-width: 100%;
+    background: linear-gradient(135deg, rgba(20, 15, 12, 0.9) 0%, rgba(20, 15, 12, 0.75) 100%);
+  }
+}
+
+/* 1. Enlarged Brand Logo */
+.hero-grand-logo-wrap {
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.hero-flagship-logo-img {
+  height: 84px !important;
+  width: auto !important;
+  max-width: 380px !important;
+  object-fit: contain;
+  filter: brightness(1.2) drop-shadow(0 4px 18px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 14px rgba(197, 160, 89, 0.4));
+  transition: transform 0.3s ease;
+}
+
+.hero-flagship-logo-img:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 767px) {
+  .hero-flagship-logo-img {
+    height: 58px !important;
+    max-width: 270px !important;
+  }
+}
+
+/* 2. Provenance Authenticity Bar */
+.hero-provenance-bar {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: 9999px;
+  margin-bottom: 1.15rem;
+}
+
+.hero-provenance-tag {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #DECCA8;
+}
+
+.hero-provenance-dot {
+  color: rgba(197, 160, 89, 0.5);
+  font-size: 0.75rem;
+}
+
+/* 3. Luminous, Light, High-Contrast Hero Title */
+.hero-title-luxe {
+  font-family: var(--font-serif) !important;
+  font-size: clamp(2.2rem, 5.2vw, 3.8rem) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.015em !important;
+  margin: 0.4rem 0 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.hero-title-line1 {
+  color: #FFFFFF !important;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+  font-weight: 600 !important;
+}
+
+.hero-title-line2 {
+  background: linear-gradient(135deg, #FFF9EF 0%, #E8D3A7 35%, #D4AF37 70%, #AA823E 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.75)) !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+}
+
+/* 4. Luxury Subtitle */
+.hero-subtitle-luxe {
+  font-family: var(--font-sans) !important;
+  font-size: 0.96rem !important;
+  color: rgba(245, 239, 235, 0.92) !important;
+  line-height: 1.75 !important;
+  margin-bottom: 1.4rem !important;
+  max-width: 580px !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 5. Craft Triad Authenticity Badges */
+.hero-craft-triad {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 0.8rem 0;
+  margin-bottom: 1.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.craft-triad-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  color: rgba(245, 239, 235, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.craft-triad-icon {
+  font-size: 0.88rem;
+  color: #D4AF37;
+}
+
+/* 6. Buttons with Crystal-Clear High Contrast */
+.hero-ctas-luxe {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #E6C88A 0%, #C5A059 50%, #A37F39 100%) !important;
+  color: #140F0D !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  padding: 0.95rem 2.2rem !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 25px rgba(197, 160, 89, 0.45) !important;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.hero-btn-primary:hover {
+  background: #FFFFFF !important;
+  color: #140F0D !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35) !important;
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1.5px solid rgba(230, 200, 138, 0.65) !important;
+  color: #FFFFFF !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  padding: 0.95rem 2rem !important;
+  border-radius: 9999px !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(197, 160, 89, 0.25) !important;
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(197, 160, 89, 0.35) !important;
 }
 
 /* HUD Controls */
@@ -3165,16 +3376,17 @@ img {
 }
 
 .hud-pill-btn {
-  background: rgba(24, 20, 18, 0.65);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(184, 151, 88, 0.4);
-  color: var(--color-warm-ivory);
+  background: rgba(20, 15, 13, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  color: #FFFFFF;
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 600;
-  padding: 0.45rem 0.85rem;
-  border-radius: var(--radius-full);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -3183,20 +3395,20 @@ img {
 }
 
 .hud-pill-btn:hover {
-  background: rgba(184, 151, 88, 0.2);
+  background: rgba(197, 160, 89, 0.2);
   border-color: var(--color-antique-gold);
-  color: var(--color-champagne-gold);
+  color: #FFFFFF;
 }
 
 .hud-pill-btn.skip-btn {
-  background: var(--color-antique-gold);
+  background: linear-gradient(135deg, #DEBA76 0%, #C5A059 100%);
   color: #140F0D;
-  border-color: var(--color-antique-gold);
+  border: none;
   font-weight: 700;
 }
 
 .hud-pill-btn.skip-btn:hover {
-  background: var(--color-champagne-gold);
+  background: #FFFFFF;
   color: #140F0D;
 }
 

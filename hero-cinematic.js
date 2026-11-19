@@ -331,27 +331,71 @@
           </div>
         </div>
 
-        <!-- ==================== SCENE 04: THE GRAND HERO REVEAL ==================== -->
+        <!-- ==================== SCENE 04: THE GRAND LUXURY FLAGSHIP REVEAL ==================== -->
         <div class="cinematic-scene" data-scene="4">
-          <img src="images/user_flagship_hero_model.jpg" alt="House of Jewelux Editorial Campaign" class="grand-hero-campaign-bg parallax-plane" data-depth="0.02" />
+          <img src="images/user_flagship_hero_model.jpg" alt="House of Jewelux High Jewellery Campaign" class="grand-hero-campaign-bg parallax-plane" data-depth="0.02" />
           <div class="grand-hero-gradient-overlay"></div>
 
-          <div class="container" style="position: relative; height: 100%; display: flex; align-items: center; z-index: 4;">
-            <div class="hero-content parallax-plane" data-depth="0.04">
+          <div class="container hero-flagship-container" style="position: relative; height: 100%; display: flex; align-items: center; z-index: 4;">
+            
+            <!-- LUXURY EDITORIAL ASYMMETRIC SANCTUM CARD (DIFFERENT PATTERN & 100% GENUINE) -->
+            <div class="hero-editorial-card parallax-plane" data-depth="0.04">
+              
+              <!-- 1. ENLARGED PROMINENT LUXURY LOGO WITH GOLD REFLECTION -->
               <div class="hero-grand-logo-wrap">
-                <img src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" style="height: 48px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));" />
+                <a href="#home" aria-label="House of Jewelux" style="display: inline-block;">
+                  <img src="/brand-identity/house_of_jewelux_horizontal_logo.png" alt="HOUSE OF JEWELUX" class="hero-flagship-logo-img" />
+                </a>
               </div>
-              <span class="hero-badge-pill" style="margin-top: 1rem;">✦ Indian Royal Heritage • Stamped BIS 925</span>
-              <h1 class="hero-title" style="font-size: 3.4rem; line-height: 1.1; margin: 0.6rem 0 1rem;">
-                An Art of Elegance.<br>A Legacy of Eternity.
+
+              <!-- 2. GENUINE JAIPUR HERITAGE & BIS 925 PURITY PROVENANCE BAR -->
+              <div class="hero-provenance-bar">
+                <span class="hero-provenance-tag">✦ JAIPUR HAUTE JOAILLERIE</span>
+                <span class="hero-provenance-dot">•</span>
+                <span class="hero-provenance-tag">BIS 925 HALLMARKED</span>
+                <span class="hero-provenance-dot">•</span>
+                <span class="hero-provenance-tag">18K GOLD & CERTIFIED DIAMONDS</span>
+              </div>
+
+              <!-- 3. LUMINOUS, LIGHT, RADIANT HERO TITLE (WORDS MADE LIGHT & ULTRA-LUXE) -->
+              <h1 class="hero-title hero-title-luxe">
+                <span class="hero-title-line1">AN ART OF ELEGANCE.</span>
+                <span class="hero-title-line2">A LEGACY OF ETERNITY.</span>
               </h1>
-              <p class="hero-subtitle" style="max-width: 540px; font-size: 0.95rem; color: #E8E2D8; line-height: 1.65; margin-bottom: 2rem;">
-                Generationally forged in our Jaipur atelier with solid 925 sterling silver, liquid platinum-rhodium, and 18K champagne gold. Where royal Indian artistry meets Italian luxury editorial clarity.
+
+              <!-- 4. REFINED EDITORIAL SUBTITLE (HIGH CONTRAST & ELEGANT) -->
+              <p class="hero-subtitle hero-subtitle-luxe">
+                Generationally forged in our Jaipur atelier with solid 925 sterling silver, liquid platinum-rhodium, and 18K champagne gold. Where royal Indian court artistry meets Italian luxury editorial clarity.
               </p>
-              <div class="hero-ctas">
-                <a href="#collections/all" class="btn-gold">Explore Collections</a>
-                <button onclick="window.HJ.openAppointmentModal()" class="btn-outline">Book Private Atelier Appointment</button>
+
+              <!-- 5. THREE TRUST & CRAFT PILLARS (AUTHENTICITY & VALUE) -->
+              <div class="hero-craft-triad">
+                <div class="craft-triad-item">
+                  <span class="craft-triad-icon">🏛</span>
+                  <span class="craft-triad-text">Civil Lines Atelier</span>
+                </div>
+                <div class="craft-triad-item">
+                  <span class="craft-triad-icon">⚖</span>
+                  <span class="craft-triad-text">BIS 925 Stamped Purity</span>
+                </div>
+                <div class="craft-triad-item">
+                  <span class="craft-triad-icon">💎</span>
+                  <span class="craft-triad-text">Certified Solitaires</span>
+                </div>
               </div>
+
+              <!-- 6. HIGH-CONTRAST PERFECT LUXURY CTAs -->
+              <div class="hero-ctas hero-ctas-luxe">
+                <a href="#collections/all" class="hero-btn-primary">
+                  <span>Explore Collections</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                </a>
+                <button onclick="window.HJ.openAppointmentModal()" class="hero-btn-secondary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>Book Private Atelier</span>
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
@@ -434,7 +478,8 @@
       const urlParams = new URLSearchParams(window.location.search);
       const urlScene = parseInt(urlParams.get('scene') || (window.location.hash.match(/scene=(\d)/) || [])[1], 10);
 
-      goToScene(urlScene && urlScene >= 1 && urlScene <= 4 ? urlScene : 1, false);
+      // Default directly to Scene 04 (Flagship Editorial Hero), with journey chapters accessible
+      goToScene(urlScene && urlScene >= 1 && urlScene <= 4 ? urlScene : 4, false);
     } else {
       // Reduced motion fallback directly to Scene 04
       goToScene(4, false);
