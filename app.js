@@ -196,61 +196,49 @@
 
   // ==================== COMPONENT: PRODUCT CARD (1:1 PALMONAS) ====================
   function renderProductCard(p) {
-    const isWishlisted = state.wishlist.includes(p.id);
-    const offerPrice = Math.round(p.price * 0.9);
+    const isWished = state.wishlist.includes(p.id);
+    const mainImg = p.images && p.images[0] ? p.images[0] : (p.image || 'images/authentic_earrings_macro.jpg');
+    const hoverImg = p.images && p.images[1] ? p.images[1] : (p.hoverImage || mainImg);
+    const badgeText = p.badge || (p.isNew ? 'New Arrival' : 'BIS 925 Hallmark');
 
     return `
-      <div class="product-card" data-id="${p.id}">
-        <div class="product-card-media">
-          <!-- Ribbon Fold Badge (Matching Palmonas) -->
-          <div class="card-ribbon-badge">${p.badge || 'Bestseller'}</div>
+      <div class="product-card" data-product-id="${p.id}">
+        <!-- Pépite Signature Circular Action Badge (↗) -->
+        <div class="pepite-action-badge" onclick="window.HJ.navigate('products/${p.handle || p.id}')" title="View Masterpiece">
+          ↗
+        </div>
 
-          <!-- Heart Wishlist Icon -->
-          <button class="card-wishlist-btn ${isWishlisted ? 'active' : ''}" 
+        <div class="product-card-media">
+          <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}">
+            <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="lazy" />
+            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.name} - Atelier Detail" loading="lazy" />
+          </a>
+          <span class="card-badge" style="border-radius: 9999px; font-size: 0.65rem; padding: 0.25rem 0.65rem; background: rgba(255, 253, 246, 0.95); color: var(--color-espresso); font-weight: 700; border: 1px solid rgba(47,36,26,0.08);">${badgeText}</span>
+          <button class="card-wishlist-btn ${isWished ? 'active' : ''}" 
                   onclick="window.HJ.toggleWishlist('${p.id}', event)" 
-                  aria-label="Save to Wishlist">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="${isWishlisted ? 'var(--color-accent-crimson)' : 'none'}" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                  aria-label="Save to Wishlist"
+                  style="border-radius: 50%; background: rgba(255,253,246,0.92);">
+            <svg viewBox="0 0 24 24" fill="${isWished ? 'var(--color-royal-lac)' : 'none'}" stroke="currentColor" stroke-width="1.3">
               <path d="M12 20.5L3.8 12.3C1.8 10.3 1.8 7.1 3.8 5.1C5.8 3.1 9 3.1 11 5.1L12 6.1L13 5.1C15 3.1 18.2 3.1 20.2 5.1C22.2 7.1 22.2 10.3 20.2 12.3L12 20.5Z"></path>
             </svg>
           </button>
-
-          <a href="#products/${p.handle || p.id}">
-            <img class="product-card-img main-img" src="${p.image}" alt="${p.name}" loading="lazy" />
-            <img class="product-card-img hover-img" src="${p.hoverImage || p.image}" alt="${p.name} Alternate Angle" loading="lazy" />
-          </a>
-
-          <!-- Cycling Offer Pill (Matching Palmonas) -->
-          <div class="card-offer-pill">
-            <span>Privilege <strong>FIRSTLUX</strong></span>
-            <span class="card-offer-highlight">Get for ${formatPrice(offerPrice)}</span>
-          </div>
         </div>
-
-        <div class="product-card-body">
-          <div class="card-rating-row">
-            <span class="card-stars">★★★★★</span>
-            <span>${p.rating || '4.9'} (${p.reviewsCount || 48})</span>
-          </div>
-
-          <h3 class="product-card-title">
+        <div class="product-card-body" style="padding: 1.25rem 1.15rem 1.35rem;">
+          <div class="card-cat-line" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'} • ${p.purity || 'BIS 925'}</div>
+          <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
             <a href="#products/${p.handle || p.id}">${p.name}</a>
           </h3>
-
-          <div class="card-metal-tag">Solid 925 Silver • 18K Micron Finish</div>
-
-          <div class="product-card-pricing">
-            <span class="current-price">${formatPrice(p.price)}</span>
-            <span class="compare-price">${formatPrice(p.compareAtPrice)}</span>
-            <span class="discount-pill">${p.discountPercent}% OFF</span>
+          <div class="card-rating-row" style="margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--color-stone-muted);">
+            <span style="color: var(--color-muted-gold);">★</span>
+            <span style="font-weight: 600; color: var(--color-espresso);">${p.rating || '4.9'}</span>
+            <span>(${p.reviewCount || '28'} patrons)</span>
           </div>
-
-          <button class="card-add-btn" onclick="window.HJ.addToCart('${p.id}', 1, event)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5.5 8.5L4 21H20L18.5 8.5H5.5Z"></path>
-              <path d="M9 11V6.5C9 4.8 10.3 3.5 12 3.5C13.7 3.5 15 4.8 15 6.5V11"></path>
-              <circle cx="12" cy="11.5" r="0.9" fill="currentColor"></circle>
-            </svg>
-            Add to Bag
+          <div class="card-price-row" style="display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.85rem;">
+            <span class="card-price-current" style="font-size: 1.1rem; font-weight: 700; color: var(--color-espresso);">${formatPrice(p.price)}</span>
+            <span class="card-price-original" style="font-size: 0.82rem; color: var(--color-stone-subtle); text-decoration: line-through;">${formatPrice(p.originalPrice)}</span>
+          </div>
+          <button class="card-add-btn" onclick="window.HJ.addToCart('${p.id}', 1, event)" style="border-radius: 9999px; height: 38px; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;">
+            Add To Bag
           </button>
         </div>
       </div>
@@ -375,7 +363,9 @@
 
           <div class="category-grid-showcase">
             <a href="#collections/rings" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/authentic_solitaire_ring.jpg" alt="Rings & Solitaires" />
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/authentic_solitaire_ring.jpg" alt="Rings & Solitaires" />
+              </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Rings & Solitaires</div>
                 <div class="cat-showcase-count">10 Masterpieces • Stamped 925</div>
@@ -383,7 +373,9 @@
             </a>
 
             <a href="#collections/earrings" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/authentic_earrings_macro.jpg" alt="The Earrings Suite" />
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/authentic_earrings_macro.jpg" alt="The Earrings Suite" />
+              </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">The Earrings Suite</div>
                 <div class="cat-showcase-count">10 Designs • Comfort Posts</div>
@@ -391,7 +383,9 @@
             </a>
 
             <a href="#collections/necklaces" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/authentic_diamond_choker.jpg" alt="Necklaces & Chokers" />
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/authentic_diamond_choker.jpg" alt="Necklaces & Chokers" />
+              </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Necklaces & Chokers</div>
                 <div class="cat-showcase-count">10 Creations • Liquid Rhodium</div>
@@ -399,7 +393,9 @@
             </a>
 
             <a href="#collections/bracelets" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets & Bangles" />
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets & Bangles" />
+              </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Bracelets & Bangles</div>
                 <div class="cat-showcase-count">10 Styles • Double-Lock Clasp</div>
@@ -407,7 +403,9 @@
             </a>
 
             <a href="#collections/brooches" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/user_falcon_brooch_white.jpg" alt="Royal Brooches & Pins" />
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/user_falcon_brooch_white.jpg" alt="Royal Brooches & Pins" />
+              </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Royal Brooches & Pins</div>
                 <div class="cat-showcase-count">10 Sovereign Crests • Jaipur Bench</div>
@@ -415,7 +413,9 @@
             </a>
 
             <a href="#collections/temple-jewellery" class="cat-showcase-card">
-              <img class="cat-showcase-img" src="images/user_balaji_temple_pendant.jpg" alt="Sacred Temple Nakshi" />
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/user_balaji_temple_pendant.jpg" alt="Sacred Temple Nakshi" />
+              </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Temple Nakshi Heritage</div>
                 <div class="cat-showcase-count">10 Sacred Motifs • 22K Micro Gold</div>
@@ -480,56 +480,91 @@
             <div class="section-pretitle">Jaipur Bench Artistry</div>
             <h2 class="section-title">The 9-Stage Goldsmithing Journey</h2>
             <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.85rem; color: var(--color-stone-muted);">
+            <p class="section-intro">
               Every House of Jewelux creation passes through the hands of master goldsmiths across nine sacred stages of bench craftsmanship in Rajasthan.
             </p>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2.5rem;">
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">01</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Inspiration & Sacred Architecture</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Studying Jaipur royal archways, jharokha screens, and ceremonial iconography from Mughal and Rajput archives.</p>
+          <div class="editorial-pair">
+            <div class="editorial-content">
+              <h3>The Nine Stages of Creation</h3>
+              <p>From inspiration to final presentation, each piece embodies generations of Jaipur goldsmithing heritage, refined for the modern connoisseur.</p>
+              <a href="#craftsmanship" class="btn-gold">Explore the Journey ✦</a>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">02</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Exploration & Gemology</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and Zambian rough.</p>
+            <div class="editorial-image">
+              <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier" />
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">03</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Concept & Gouache Rendering</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Hand-drawn gouache jewel illustrations capturing light reflections, prong heights, and 3D ergonomics.</p>
+          </div>
+
+          <div class="step-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 4rem;">
+            <div class="step-card">
+              <span class="step-number">01</span>
+              <h3 class="step-title">Inspiration & Sacred Architecture</h3>
+              <p class="step-desc">Studying Jaipur royal archways, jharokha screens, and ceremonial iconography from Mughal and Rajput archives.</p>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">04</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Jewellery Proportions</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Precision CAD modeling and wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
+            <div class="step-card">
+              <span class="step-number">02</span>
+              <h3 class="step-title">Exploration & Gemology</h3>
+              <p class="step-desc">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and Zambian rough.</p>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">05</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Material Assay</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">XRF laser testing guaranteeing 92.5% pure elemental silver alloyed strictly with hypoallergenic deox copper.</p>
+            <div class="step-card">
+              <span class="step-number">03</span>
+              <h3 class="step-title">Concept & Gouache Rendering</h3>
+              <p class="step-desc">Hand-drawn gouache jewel illustrations capturing light reflections, prong heights, and 3D ergonomics.</p>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">06</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Bench Forging & Kundan</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Traditional silversmith hammer forging, hand-pierced openwork, and 24K pure gold leaf foil setting.</p>
+            <div class="step-card">
+              <span class="step-number">04</span>
+              <h3 class="step-title">Jewellery Proportions</h3>
+              <p class="step-desc">Precision CAD modeling and wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">07</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Liquid Rhodium & 18K Micron</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
+            <div class="step-card">
+              <span class="step-number">05</span>
+              <h3 class="step-title">Material Assay</h3>
+              <p class="step-desc">XRF laser testing guaranteeing 92.5% pure elemental silver alloyed with hypoallergenic deox copper.</p>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">08</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">BIS Hallmark Certification</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Official Bureau of Indian Standards laser assay verification stamp applied with unique identification mark.</p>
+            <div class="step-card">
+              <span class="step-number">06</span>
+              <h3 class="step-title">Bench Forging & Kundan</h3>
+              <p class="step-desc">Traditional silversmith hammer forging, hand-pierced openwork, and 24K pure gold leaf foil setting.</p>
             </div>
-            <div style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">09</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Armored Coffer Acquisition</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Placed in our signature emerald velvet presentation box and dispatched via insured armored courier.</p>
+            <div class="step-card">
+              <span class="step-number">07</span>
+              <h3 class="step-title">Liquid Rhodium & 18K Micron</h3>
+              <p class="step-desc">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-number">08</span>
+              <h3 class="step-title">BIS Hallmark Certification</h3>
+              <p class="step-desc">Official Bureau of Indian Standards laser assay verification stamp with unique identification mark.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-number">09</span>
+              <h3 class="step-title">Armored Coffer Acquisition</h3>
+              <p class="step-desc">Placed in our signature emerald velvet presentation box and dispatched via insured armored courier.</p>
+            </div>
+          </div>
+
+          <!-- Customer Testimonials -->
+          <div style="text-align: center; margin: 6rem 0 4rem;">
+            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 1rem;">Client Stories</span>
+            <h2 class="section-title">They Have Discovered Their Eternal Piece</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+          </div>
+          <div class="testimonial-grid">
+            <div class="testimonial-card">
+              <p class="testimonial-text">"The Celestial Radiance ring is breathtaking — every detail speaks of generations of craftsmanship. I wear it every day and it still catches the light like the first day."</p>
+              <span class="testimonial-author">Caroline B.</span>
+              <span class="testimonial-role">Jaipur, Rajasthan</span>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"A true discovery. The Lumina earrings have a subtle chocolate-cacao warmth that complements everything I own. Zero guilt, all pleasure."</p>
+              <span class="testimonial-author">Karen D.</span>
+              <span class="testimonial-role">New Delhi</span>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-text">"Bespoke commission with Master Goldsmith Yuvraj Soni was seamless. My vision came to life exactly as I imagined it."</p>
+              <span class="testimonial-author">Jérémie C.</span>
+              <span class="testimonial-role">Mumbai, Maharashtra</span>
             </div>
           </div>
         </div>
@@ -1327,58 +1362,137 @@
   // ==================== VIEW 7: CONTENT PAGES ====================
   function renderAboutPage(container) {
     container.innerHTML = `
-      <section style="background: var(--color-ivory-soft); padding: 4rem 0; text-align: center;">
-        <div class="container" style="max-width: 800px;">
-          <span class="hero-badge-pill">The Jaipur Atelier</span>
-          <h1 style="font-family: var(--font-serif); font-size: 2.8rem; margin: 0.5rem 0 1rem;">Where Elegance Becomes Eternal</h1>
-          <p style="font-size: 1.05rem; color: var(--color-taupe); line-height: 1.7;">
-            Founded by Yuvraj Soni in Jaipur, Rajasthan, House of Jewelux was born to unite royal Indian temple nakshi craft with modern fine jewellery poise.
+      <!-- A. EDITORIAL ABOUT HERO -->
+      <section style="background: var(--color-warm-ivory); padding: 5rem 0 3rem; text-align: center;">
+        <div class="container" style="max-width: 860px;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ The Jaipur Atelier • Stamped BIS 925 Hallmark</span>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Where Elegance Becomes Eternal</h1>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
+          <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
+            Founded by Yuvraj Soni in Jaipur, Rajasthan, House of Jewelux was born to unite royal Indian temple nakshi craft with modern European haute joaillerie poise. We reject disposable jewellery. Every silhouette is sculpted from solid 925 sterling silver, plated in liquid platinum-rhodium and 18K micron gold, and officially certified.
           </p>
         </div>
       </section>
-      <section style="padding: 5rem 0;">
+
+      <!-- B. ASYMMETRIC EDITORIAL STORY (PÉPITE ARCHITECTURE) -->
+      <section style="padding: 4rem 0 5rem; background: var(--color-warm-ivory);">
         <div class="container">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 4rem; align-items: center;">
-            <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-md);">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 4rem; align-items: center;">
+            <!-- Left: Editorial Photo in Pebble Frame with Circular Badge -->
+            <div class="about-image-reveal" style="position: relative; border-radius: var(--radius-pepite-card-lg); overflow: hidden; box-shadow: var(--shadow-pepite-hover); border: 1px solid rgba(47,36,26,0.08);">
+              <div class="pepite-action-badge" onclick="window.HJ.navigate('craftsmanship')" title="Discover Craftsmanship" style="position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;">
+                ↗
+              </div>
               <img src="images/authentic_atelier_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - Micro Stone Setting & Pure 925 Silver Forging" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;" />
-              <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(26,20,16,0.9) 0%, transparent 100%); padding: 1.5rem; color: #FFF;">
-                <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-gold-light);">Jaipur Atelier Workbench</span>
-                <div style="font-size: 0.9rem; font-weight: 600;">Authentic Handcraftsmanship & Stone Setting</div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(31,23,16,0.92) 0%, rgba(31,23,16,0) 100%); padding: 2rem 1.75rem 1.5rem; color: #FFF;">
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Jaipur Atelier Workbench</span>
+                <div style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; margin-top: 0.35rem;">Authentic Handcraftsmanship & Sacred Stone Setting</div>
               </div>
             </div>
-            <div>
-              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-gold-dark);">Jaipur Heritage • Royal Craft</span>
-              <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1.25rem;">Centuries of Artistry. Refined for Now.</h2>
-              <p style="color: var(--color-taupe); line-height: 1.8; margin-bottom: 1.25rem;">
-                Every creation is forged in certified 92.5% pure silver, finished in liquid platinum-rhodium and 18K micron gold, and certified by the Bureau of Indian Standards.
+
+            <!-- Right: The Maison Manifesto -->
+            <div class="about-story-reveal">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-muted-gold); font-weight: 700;">Maison Manifesto • Royal Provenance</span>
+              <h2 style="font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.25; margin: 0.6rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Centuries of Heritage. Refined for Now.</h2>
+              <p style="color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem;">
+                Every creation begins at our bench in Rajasthan, where fourth-generation silversmiths harmonize ancestral hammer-forging with micron electroplating. We do not mass-produce. Over 40 hours of artisanal hand-sculpting, microscope stone-setting, and Bureau of Indian Standards laser inspection are poured into every design.
               </p>
-              <p style="color: var(--color-taupe); line-height: 1.8; margin-bottom: 1.5rem;">
-                From ancestral temple nakshi reliefs to contemporary micro-pavé tension settings, each silhouette undergoes over 40 hours of artisanal hand-sculpting, polishing, and laser inspection.
+              <p style="color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 2rem; font-size: 0.95rem;">
+                Whether you acquire a royal falcon brooch crowned with Zambian emeralds or an architectural solitaire ring, you hold a tangible heirloom crafted to endure across generations.
               </p>
-              <div style="display: flex; gap: 2rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
-                <div>
-                  <div style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-espresso); font-weight: 700;">BIS 925</div>
-                  <div style="font-size: 0.75rem; color: var(--color-taupe);">Certified Purity Stamped</div>
-                </div>
-                <div>
-                  <div style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-espresso); font-weight: 700;">100%</div>
-                  <div style="font-size: 0.75rem; color: var(--color-taupe);">Authentic Atelier Craft</div>
-                </div>
-                <div>
-                  <div style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-espresso); font-weight: 700;">0% AI</div>
-                  <div style="font-size: 0.75rem; color: var(--color-taupe);">Verified Real Photography</div>
-                </div>
+              
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#collections/all" class="btn-primary">Explore All 50 Pieces ↗</a>
+                <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-outline">Book Private Salon</a>
               </div>
             </div>
           </div>
         </div>
       </section>
-    `;
 
-    // Initialize Cinematic Hero Engine (The Journey of Eternal Elegance)
-    if (window.HJ_HERO && window.HJ_HERO.init) {
-      setTimeout(() => window.HJ_HERO.init(), 60);
-    }
+      <!-- C. THE THREE INVIOLABLE PILLARS (PEBBLE CARDS) -->
+      <section style="padding: 4.5rem 0; background: var(--color-soft-offwhite); border-top: 1px solid rgba(47,36,26,0.06); border-bottom: 1px solid rgba(47,36,26,0.06);">
+        <div class="container">
+          <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+            <div class="section-pretitle" style="color: var(--color-muted-gold);">The Pillars of Permanence</div>
+            <h2 class="section-title">The Three House Commitments</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.75rem;">
+            <div class="pepite-story-card about-story-reveal">
+              <div class="pepite-number-badge">01</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Generational Bench Artistry</h3>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
+                Hand-forged by hereditary Rajasthani goldsmiths. Every curve, openwork jali, and prong is sculpted manually using ancestral hammers and diamond gravers.
+              </p>
+            </div>
+
+            <div class="pepite-story-card about-story-reveal">
+              <div class="pepite-number-badge">02</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Stamped Material Purity</h3>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
+                Solid 92.5% elemental sterling silver alloyed strictly with deoxidized copper. Stamped with the official Bureau of Indian Standards (BIS) hallmark.
+              </p>
+            </div>
+
+            <div class="pepite-story-card about-story-reveal">
+              <div class="pepite-number-badge">03</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Lifetime Maintenance Covenant</h3>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
+                Triple-layer liquid platinum-rhodium and 18K micron gold shielding. Every acquisition includes complimentary lifetime ultrasonic cleansing and refinishing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- D. FOUNDER'S LETTER (PÉPITE LUXURY QUOTE BOX) -->
+      <section style="padding: 5rem 0; background: var(--color-warm-ivory);">
+        <div class="container" style="max-width: 920px;">
+          <div class="pepite-quote-box about-story-reveal">
+            <span style="font-size: 2.5rem; color: var(--color-muted-gold); line-height: 1; font-family: var(--font-serif);">“</span>
+            <p style="font-family: var(--font-serif); font-size: 1.45rem; line-height: 1.7; color: var(--color-deep-heritage-brown); margin: 0.5rem 0 1.75rem; font-style: italic;">
+              True luxury is not about novelty or fleeting seasonal trends. It is about holding an object so meticulously conceived and generationally forged that it carries the soul of its craftsmen into your family's future.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+              <div style="text-align: center;">
+                <div style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--color-deep-heritage-brown);">Yuvraj Soni</div>
+                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-stone-muted); margin-top: 0.2rem;">Master Goldsmith & Founder • House of Jewelux</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- E. ATELIER STATISTICS RIBBON -->
+      <section style="padding: 3rem 0 5rem; background: var(--color-warm-ivory);">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
+              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">50</div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Authentic Creations</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Rings, Earrings, Brooches, Temple</div>
+            </div>
+            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
+              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">100%</div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">BIS 925 Certified</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Laser stamped purity hallmark</div>
+            </div>
+            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
+              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">40+</div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Hours Per Masterpiece</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Artisanal bench handcrafting</div>
+            </div>
+            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
+              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">19,000+</div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Indian PIN Codes</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Insured armored courier transit</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
   }
 
   function renderPolicyPage(container, key) {
@@ -1457,112 +1571,122 @@
   // ==================== VIEW: CONTACT PAGE (Animated Contact Section) ====================
   function renderContactPage(container) {
     container.innerHTML = `
-      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
-        <div class="container" style="max-width: 800px; margin: 0 auto;">
-          <div class="section-header about-story-reveal">
-            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.75rem;">Atelier Concierge</span>
-            <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Contact the House of Jewelux</h2>
-            <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Reach our private salon concierge in Jaipur, schedule a bespoke consultation, or inquire about any creation in our catalogue. We respond within 24 business hours.
-            </p>
-          </div>
+      <!-- A. EDITORIAL CONTACT HERO -->
+      <section style="background: var(--color-warm-ivory); padding: 5rem 0 2rem; text-align: center;">
+        <div class="container" style="max-width: 860px;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Atelier Concierge</span>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Contact the House of Jewelux</h1>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
+          <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 760px; margin: 0 auto;">
+            Reach our private salon concierge in Jaipur, schedule an appointment, or inquire regarding any creation in our vault. We respond personally within 24 business hours.
+          </p>
         </div>
       </section>
 
-      <section style="padding: 4rem 0 6rem;">
+      <!-- B. CONTACT CARDS & PRIVATE ENQUIRY FORM -->
+      <section style="padding: 3rem 0 6rem; background: var(--color-warm-ivory);">
         <div class="container">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 3.5rem; align-items: start;">
             
-            <!-- Left: Contact Details -->
-            <div class="about-story-reveal" style="display: flex; flex-direction: column; gap: 2rem;">
-              <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2rem;">
-                <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Atelier & Salon</h3>
-                <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-antique-gold); flex-shrink: 0; margin-top: 2px;">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <div>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted);">Jaipur Creative Atelier</div>
-                    <div style="font-weight: 600; color: var(--color-deep-heritage-brown);">Rajasthan, India</div>
+            <!-- Left: Contact Details & Salon Hours -->
+            <div class="about-story-reveal" style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div class="pepite-story-card">
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Atelier & Salon</span>
+                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.4rem 0 1.5rem;">Jaipur Creative Atelier</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.35rem;">
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div>
+                      <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Location</div>
+                      <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">Jaipur, Rajasthan, India</div>
+                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Private salon consultations strictly by prior reservation.</div>
+                    </div>
                   </div>
-                </div>
-                <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-antique-gold); flex-shrink: 0; margin-top: 2px;">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 0 7H4.11a2 2 0 0 1-2-1.72V7.24a2 2 0 0 1 2-2h3c2.37 0 4.42 1.64 5.18 4H20a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2z"></path>
-                  </svg>
-                  <div>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted);">Direct Concierge</div>
-                    <div style="font-weight: 600; color: var(--color-deep-heritage-brown);">+91 63770 61020</div>
-                  </div>
-                </div>
-                <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-antique-gold); flex-shrink: 0; margin-top: 2px;">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
-                  <div>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted);">Email</div>
-                    <div style="font-weight: 600; color: var(--color-deep-heritage-brown);">houseofjewelux@gmail.com</div>
-                  </div>
-                </div>
-              </div>
 
-              <div style="display: flex; gap: 1rem;">
-                <a href="https://wa.me/916377061020" target="_blank" class="btn-gold" style="flex: 1; padding: 0.9rem; font-size: 0.8rem;">WhatsApp Concierge</a>
-                <a href="#appointment" onclick="window.HJ.openAppointmentModal()" class="btn-primary" style="flex: 1; padding: 0.9rem; font-size: 0.8rem;">Book Appointment</a>
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 0 7H4.11a2 2 0 0 1-2-1.72V7.24a2 2 0 0 1 2-2h3c2.37 0 4.42 1.64 5.18 4H20a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2z"></path></svg>
+                    </div>
+                    <div>
+                      <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Direct Concierge Telephone</div>
+                      <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">+91 63770 61020</div>
+                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Available Monday – Saturday, 10:00 – 19:30 IST.</div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div>
+                      <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Client Care Email</div>
+                      <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">houseofjewelux@gmail.com</div>
+                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Inquiries, bespoke commissions & authentication.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(47,36,26,0.08); display: flex; gap: 0.85rem; flex-wrap: wrap;">
+                  <a href="https://wa.me/916377061020" target="_blank" class="btn-gold" style="flex: 1; min-width: 170px; padding: 0.75rem 1.25rem; font-size: 0.75rem;">WhatsApp Concierge ↗</a>
+                  <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-primary" style="flex: 1; min-width: 170px; padding: 0.75rem 1.25rem; font-size: 0.75rem;">Book Appointment</a>
+                </div>
               </div>
             </div>
 
-            <!-- Right: Contact Form -->
+            <!-- Right: Private Enquiry Form -->
             <div class="about-story-reveal">
-              <form id="contact-form" style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;">
-                <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Send a Private Enquiry</h3>
-                <p style="font-size: 0.8rem; color: var(--color-stone-muted); margin-bottom: 1rem;">All fields are required unless marked otherwise.</p>
-                
-                <div class="contact-field form-grid-2">
-                  <div class="form-field">
-                    <label class="form-label">Full Name *</label>
+              <form id="contact-form" class="pepite-story-card" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Direct Patron Dispatch</span>
+                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0;">Send a Private Enquiry</h3>
+                <p style="font-size: 0.82rem; color: var(--color-stone-muted); margin-bottom: 0.5rem;">All fields marked with an asterisk are required.</p>
+
+                <div class="form-row-2col">
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Full Name *</label>
                     <input name="fullName" type="text" class="form-input" required placeholder="Your noble name" />
                   </div>
-                  <div class="form-field">
-                    <label class="form-label">Email Address *</label>
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address *</label>
                     <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
                   </div>
                 </div>
 
-                <div class="contact-field form-field">
-                  <label class="form-label">Mobile Phone *</label>
-                  <input name="phone" type="tel" class="form-input" required placeholder="+91 98765 43210" />
+                <div class="form-row-2col">
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Phone Number</label>
+                    <input name="phone" type="tel" class="form-input" placeholder="+91 98765 43210" />
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Subject of Inquiry *</label>
+                    <select name="subject" class="form-select" required>
+                      <option value="acquisition">Private Piece Acquisition</option>
+                      <option value="bespoke">Bespoke Goldsmithing Commission</option>
+                      <option value="appointment">Jaipur Salon Appointment</option>
+                      <option value="consign">Armored Consignment Telemetry</option>
+                      <option value="press">Press & Editorial Editorial</option>
+                    </select>
+                  </div>
                 </div>
 
-                <div class="contact-field form-field">
-                  <label class="form-label">Subject *</label>
-                  <select name="subject" class="form-input" required>
-                    <option value="">Select an enquiry type</option>
-                    <option value="bespoke">Bespoke & Custom Commission</option>
-                    <option value="appointment">Private Salon Appointment</option>
-                    <option value="product">Product Information</option>
-                    <option value="wholesale">Wholesale & Atelier Partnership</option>
-                    <option value="other">General Enquiry</option>
-                  </select>
+                <div>
+                  <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Message *</label>
+                  <textarea name="message" class="form-textarea" rows="4" required placeholder="How may our atelier concierge assist you?"></textarea>
                 </div>
 
-                <div class="contact-field form-field">
-                  <label class="form-label">Message *</label>
-                  <textarea name="message" class="form-input form-textarea" rows="4" required placeholder="How may we assist you?"></textarea>
-                </div>
-
-                <button type="submit" class="btn-gold" style="width: fit-content; align-self: flex-start; padding: 0.9rem 2rem; font-size: 0.82rem;">Send Enquiry ✦</button>
-                <div id="contact-form-message" style="margin-top: 1rem; font-size: 0.82rem; min-height: 1.2rem;"></div>
+                <button type="submit" class="btn-primary" style="padding: 1rem 2rem; font-size: 0.82rem; letter-spacing: 0.12em; align-self: flex-start;">
+                  Transmit Dispatch ✦
+                </button>
+                <div id="contact-form-message" style="margin-top: 0.5rem; font-size: 0.82rem; min-height: 1.2rem;"></div>
               </form>
             </div>
-
           </div>
         </div>
       </section>
     `;
 
-    // Form submission with motion feedback
     const form = document.getElementById('contact-form');
     const messageEl = document.getElementById('contact-form-message');
     if (form && messageEl) {
@@ -1673,78 +1797,130 @@
   // ==================== VIEW: CUSTOM ORDER / BESPOKE PAGE (Animated Enquiry Form) ====================
   function renderCustomOrderPage(container) {
     container.innerHTML = `
-      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
-        <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
-          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.75rem;">Bespoke Goldsmith Studio</span>
-          <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Commission a Bespoke Creation</h2>
-          <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
-          <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-            Work directly with Master Goldsmith Yuvraj Soni to create a one-of-a-kind heirloom. From concept sketch to final hallmark certification, every detail is yours.
+      <!-- A. EDITORIAL BESPOKE HERO -->
+      <section style="background: var(--color-warm-ivory); padding: 5rem 0 2rem; text-align: center;">
+        <div class="container" style="max-width: 860px;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ The Bespoke Goldsmith Studio</span>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Commission a Bespoke Creation</h1>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
+          <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 760px; margin: 0 auto;">
+            Work directly with Master Goldsmith Yuvraj Soni to create a one-of-a-kind heirloom. From initial gouache concept sketches to final BIS 925 laser hallmarking, every facet is conceived exclusively for you.
           </p>
         </div>
       </section>
 
-      <section style="padding: 4rem 0 6rem;">
-        <div class="container" style="max-width: 640px; margin: 0 auto;">
-          <form id="bespoke-form" style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone); border-radius: var(--radius-sm); padding: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Bespoke Commission Enquiry</h3>
-            <p style="font-size: 0.8rem; color: var(--color-stone-muted); margin-bottom: 1rem;">Share your vision. Our atelier concierge will respond within 24 business hours.</p>
+      <!-- B. BESPOKE ATELIER WORKFLOW & ENQUIRY FORM -->
+      <section style="padding: 3rem 0 6rem; background: var(--color-warm-ivory);">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 3.5rem; align-items: start;">
+            
+            <!-- Left: The 4-Step Bespoke Journey -->
+            <div class="about-story-reveal" style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div class="pepite-story-card">
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Atelier Protocol</span>
+                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.4rem 0 1.25rem;">The Bespoke Commissioning Path</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div class="pepite-number-badge" style="font-size: 1.3rem !important; margin: 0;">01</div>
+                    <div>
+                      <div style="font-family: var(--font-serif); font-weight: 700; color: var(--color-espresso); font-size: 1rem;">Private Consultation & Vision</div>
+                      <p style="font-size: 0.82rem; color: var(--color-stone-muted); line-height: 1.6; margin-top: 0.2rem;">One-on-one video session or Jaipur salon meeting to define your stone selections, metal alloys, and symbolic motifs.</p>
+                    </div>
+                  </div>
 
-            <div class="contact-field form-grid-2">
-              <div class="form-field">
-                <label class="form-label">Full Name *</label>
-                <input name="fullName" type="text" class="form-input" required placeholder="Your noble name" />
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div class="pepite-number-badge" style="font-size: 1.3rem !important; margin: 0;">02</div>
+                    <div>
+                      <div style="font-family: var(--font-serif); font-weight: 700; color: var(--color-espresso); font-size: 1rem;">Scale Gouache Jewel Rendering</div>
+                      <p style="font-size: 0.82rem; color: var(--color-stone-muted); line-height: 1.6; margin-top: 0.2rem;">Master Goldsmith Yuvraj Soni creates a scale gouache watercolor painting capturing light reflections and prong proportions.</p>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div class="pepite-number-badge" style="font-size: 1.3rem !important; margin: 0;">03</div>
+                    <div>
+                      <div style="font-family: var(--font-serif); font-weight: 700; color: var(--color-espresso); font-size: 1rem;">3D Proportions & Comfort Wax</div>
+                      <p style="font-size: 0.82rem; color: var(--color-stone-muted); line-height: 1.6; margin-top: 0.2rem;">Physical wax cast delivered to verify exact finger fit, weight distribution, and tactile ergonomics prior to bench forging.</p>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div class="pepite-number-badge" style="font-size: 1.3rem !important; margin: 0;">04</div>
+                    <div>
+                      <div style="font-family: var(--font-serif); font-weight: 700; color: var(--color-espresso); font-size: 1rem;">Bench Forging & BIS 925 Hallmark</div>
+                      <p style="font-size: 0.82rem; color: var(--color-stone-muted); line-height: 1.6; margin-top: 0.2rem;">Cast in certified 925 silver, plated in liquid rhodium, stamped with BIS hallmark, and delivered via armored courier.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(47,36,26,0.08); display: flex; gap: 1rem; align-items: center;">
+                  <a href="https://wa.me/916377061020?text=Hello%20Master%20Goldsmith%20Yuvraj%20Soni,%20I%20would%20like%20to%20discuss%20a%20bespoke%20jewellery%20commission." target="_blank" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Instant WhatsApp Concierge ↗</a>
+                </div>
               </div>
-              <div class="form-field">
-                <label class="form-label">Email Address *</label>
-                <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
-              </div>
             </div>
 
-            <div class="contact-field form-grid-2">
-              <div class="form-field">
-                <label class="form-label">Mobile Phone *</label>
-                <input type="tel" name="phone" class="form-input" required placeholder="+91 98765 43210" />
-              </div>
-              <div class="form-field">
-                <label class="form-label">Budget Range *</label>
-                <select name="budgetRange" class="form-input" required>
-                  <option value="">Select budget band</option>
-                  <option value="under-25k">Under ₹25,000</option>
-                  <option value="25k-50k">₹25,000 – ₹50,000</option>
-                  <option value="50k-1lakh">₹50,000 – ₹1,00,000</option>
-                  <option value="above-1lakh">Above ₹1,00,000</option>
-                </select>
-              </div>
-            </div>
+            <!-- Right: The Bespoke Commission Form -->
+            <div class="about-story-reveal">
+              <form id="bespoke-form" class="pepite-story-card" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Private Commission Dossier</span>
+                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0;">Submit Your Vision</h3>
+                <p style="font-size: 0.82rem; color: var(--color-stone-muted); margin-bottom: 0.5rem;">Our senior atelier concierge will review your requirements and respond within 24 business hours.</p>
 
-            <div class="contact-field form-field">
-              <label class="form-label">Jewellery Type *</label>
-              <select name="jewelleryType" class="form-input" required>
-                <option value="">Select category</option>
-                <option value="ring">Ring / Solitaire</option>
-                <option value="earrings">Earrings</option>
-                <option value="necklace">Necklace / Choker</option>
-                <option value="bracelet">Bracelet / Bangle</option>
-                <option value="brooch">Brooch / Pin</option>
-                <option value="wedding-suite">Wedding Suite</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+                <div class="form-row-2col">
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Full Name *</label>
+                    <input name="fullName" type="text" class="form-input" required placeholder="Your noble name" />
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address *</label>
+                    <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
+                  </div>
+                </div>
 
-            <div class="contact-field form-field">
-              <label class="form-label">Design Description *</label>
-              <textarea name="description" class="form-input form-textarea" rows="4" required placeholder="Describe your vision — motifs, gemstones, metals, inspiration..."></textarea>
-            </div>
+                <div class="form-row-2col">
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Mobile Phone *</label>
+                    <input type="tel" name="phone" class="form-input" required placeholder="+91 98765 43210" />
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Budget Band *</label>
+                    <select name="budgetRange" class="form-select" required>
+                      <option value="">Select budget band</option>
+                      <option value="under-25k">Under ₹25,000</option>
+                      <option value="25k-50k">₹25,000 – ₹50,000</option>
+                      <option value="50k-1lakh">₹50,000 – ₹1,00,000</option>
+                      <option value="above-1lakh">Above ₹1,00,000 (Haute Heritage)</option>
+                    </select>
+                  </div>
+                </div>
 
-            <div class="contact-field form-field">
-              <label class="form-label">Reference Images (optional)</label>
-              <input name="referenceImages" type="file" class="form-input" accept="image/*" multiple />
-            </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Jewellery Category *</label>
+                  <select name="jewelleryType" class="form-select" required>
+                    <option value="">Select category</option>
+                    <option value="ring">Solitaire / Royal Seal Ring</option>
+                    <option value="earrings">The Earrings Suite / Jhumkas</option>
+                    <option value="necklace">Necklace / Royal Choker</option>
+                    <option value="bracelet">Tennis Bracelet / Royal Bangle</option>
+                    <option value="brooch">Sovereign Falcon Brooch / Crest</option>
+                    <option value="temple">Temple Nakshi Medallion</option>
+                    <option value="wedding-suite">Complete Bridal Haute Suite</option>
+                  </select>
+                </div>
 
-            <button type="submit" class="btn-gold" style="width: fit-content; align-self: flex-start; padding: 0.9rem 2rem; font-size: 0.82rem;">Submit Commission ✦</button>
-            <div id="bespoke-form-message" style="margin-top: 1rem; font-size: 0.82rem; min-height: 1.2rem;"></div>
-          </form>
+                <div>
+                  <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Design Vision & Specifications *</label>
+                  <textarea name="description" class="form-textarea" rows="4" required placeholder="Describe your dream creation: preferred gemstones, motifs, engraving, metal finish..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="padding: 1rem 2rem; font-size: 0.82rem; letter-spacing: 0.12em; align-self: flex-start;">
+                  Submit Bespoke Commission Dossier ✦
+                </button>
+                <div id="bespoke-form-message" style="margin-top: 0.5rem; font-size: 0.82rem; min-height: 1.2rem;"></div>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
     `;
@@ -1908,65 +2084,98 @@
   // ==================== VIEW: CRAFTSMANSHIP PAGE ====================
   function renderCraftsmanshipPage(container) {
     container.innerHTML = `
-      <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
-        <div class="container" style="max-width: 800px; text-align: center;">
-          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.75rem;">Jaipur Bench Artistry</span>
-          <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">The 9-Stage Goldsmithing Journey</h2>
-          <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
-          <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-            Every House of Jewelux creation passes through nine sacred stages of bench craftsmanship in our Jaipur atelier, honoring centuries of Indian goldsmithing heritage.
+      <!-- A. EDITORIAL CRAFTSMANSHIP HERO -->
+      <section style="background: var(--color-warm-ivory); padding: 5rem 0 2rem; text-align: center;">
+        <div class="container" style="max-width: 860px;">
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Jaipur Bench Artistry • Stamped BIS 925</span>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">The 9-Stage Goldsmithing Journey</h1>
+          <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
+          <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
+            Every House of Jewelux creation passes through the hands of master goldsmiths across nine sacred bench stages in Rajasthan, honoring centuries of royal Indian court metallurgy.
           </p>
         </div>
       </section>
 
-      <section style="padding: 5rem 0 6rem;">
+      <!-- B. ATELIER BENCH PHOTOGRAPHY BANNER -->
+      <section style="padding: 1.5rem 0 4rem; background: var(--color-warm-ivory);">
         <div class="container">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">01</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Inspiration & Sacred Architecture</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Studying Jaipur royal archways, jharokha screens, and ceremonial iconography from Mughal and Rajput archives.</p>
+          <div class="about-image-reveal" style="position: relative; height: 380px; border-radius: var(--radius-pepite-card-lg); overflow: hidden; box-shadow: var(--shadow-pepite-card); border: 1px solid rgba(47,36,26,0.08);">
+            <img src="images/authentic_polki_craft.jpg" alt="Jaipur Goldsmithing Bench" style="width: 100%; height: 100%; object-fit: cover;" />
+            <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(31,23,16,0.85) 0%, rgba(31,23,16,0.1) 60%);"></div>
+            <div style="position: absolute; bottom: 2.5rem; left: 2.5rem; right: 2.5rem; color: #FFFFFF; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-muted-gold); font-weight: 700;">Atelier Bench Camera</span>
+                <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.35rem 0;">Living Goldsmith Heritage at Bench</h3>
+                <p style="font-size: 0.88rem; color: #E8E2D8; max-width: 600px;">Generational silversmiths applying hand gravers, liquid flux, and open flame to solid 925 sterling silver.</p>
+              </div>
+              <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-gold" style="padding: 0.75rem 1.75rem; font-size: 0.78rem;">Experience in Salon ↗</a>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">02</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Exploration & Gemology</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and Zambian rough.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- C. THE 9 DOCUMENTARY STAGES (PÉPITE PEBBLE GRID) -->
+      <section id="craftsmanship-section" style="padding: 4rem 0 6rem; background: var(--color-soft-offwhite); border-top: 1px solid rgba(47,36,26,0.06); border-bottom: 1px solid rgba(47,36,26,0.06);">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem;">
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">01</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Inspiration & Sacred Architecture</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Studying Jaipur royal archways, jharokha latticework, and ceremonial iconography from Mughal and Rajput court archives.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">03</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Concept & Gouache Rendering</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Hand-drawn gouache jewel illustrations capturing light reflections, prong heights, and 3D ergonomics.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">02</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Exploration & Gemology</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and uncut Zambian crystals.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">04</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Jewellery Proportions</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Precision CAD modeling and wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">03</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Concept & Gouache Rendering</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Scale hand-painted gouache illustrations capturing light refraction angles, bezel heights, and 3D ergonomics.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">05</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Material Assay</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">XRF laser testing guaranteeing 92.5% pure elemental silver alloyed strictly with hypoallergenic deox copper.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">04</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Jewellery Proportions & CAD</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Precision 3D modeling and high-resolution wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">06</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Bench Forging & Kundan</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Traditional silversmith hammer forging, hand-pierced openwork, and 24K pure gold leaf foil setting.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">05</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Material Assay & 925 Silver</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Laser XRF spectrometry testing guaranteeing 92.5% elemental silver alloyed strictly with skin-safe deoxidized copper.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">07</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Liquid Rhodium & 18K Micron</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">06</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Bench Forging & Kundan</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Traditional anvil hammer forging, hand-pierced filigree openwork, and 24K pure gold leaf foil kundan setting.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">08</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">BIS Hallmark Certification</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Official Bureau of Indian Standards laser assay verification stamp applied with unique identification mark.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">07</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Liquid Rhodium & 18K Micron</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring anti-tarnish, waterproof luminosity.</p>
             </div>
-            <div class="craft-step-card about-story-reveal" style="background: var(--color-warm-ivory); padding: 1.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone);">
-              <div style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-antique-gold); font-weight: 700;">09</div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin: 0.4rem 0; color: var(--color-deep-heritage-brown);">Armored Coffer Acquisition</h4>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); line-height: 1.6;">Placed in our signature emerald velvet presentation box and dispatched via insured armored courier.</p>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">08</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">BIS Hallmark Certification</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Official Bureau of Indian Standards laser assay verification stamp applied with unique identification mark.</p>
             </div>
+
+            <div class="craft-step-card about-story-reveal">
+              <div class="pepite-number-badge">09</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Armored Coffer Acquisition</h4>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Enclosed inside our signature emerald velvet presentation coffer and dispatched via insured armored courier across India.</p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 3.5rem;">
+            <a href="#collections/all" class="btn-primary" style="margin-right: 1rem;">Explore Master Catalogue (50) ↗</a>
+            <a href="#custom-order" class="btn-outline">Commission Bespoke Creation</a>
           </div>
         </div>
       </section>
