@@ -313,50 +313,50 @@
             <div class="trust-item">
               <div class="trust-icon" style="color: var(--color-muted-gold);">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <polygon points="12 3 21 19 3 19 12 3"></polygon>
-                  <text x="12" y="16.5" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">925</text>
+                  <path d="M6 3h12l4 6-10 12L2 9l4-6z"></path>
+                  <path d="M10 3l-2 6 4 12 4-12-2-6"></path>
+                  <path d="M2 9h20"></path>
                 </svg>
               </div>
               <div>
-                <div class="trust-text-title">BIS 925 Hallmarked</div>
-                <div class="trust-text-sub">Stamped purity on every creation</div>
+                <div class="trust-text-title">Gold & Silver Authenticity</div>
+                <div class="trust-text-sub">Quality, purity & craftsmanship you can trust</div>
               </div>
             </div>
             <div class="trust-item">
               <div class="trust-icon" style="color: var(--color-muted-gold);">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <polygon points="12 2 14.5 9.5 22 12 14.5 14.5 12 22 9.5 14.5 2 12 9.5 9.5 12 2"></polygon>
-                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                  <path d="M12 3c0 4.5-3.5 8-8 8 4.5 0 8 3.5 8 8 0-4.5 3.5-8 8-8-4.5 0-8-3.5-8-8z"></path>
+                  <circle cx="19" cy="5" r="1.5"></circle>
                 </svg>
               </div>
               <div>
-                <div class="trust-text-title">Anti-Tarnish & Waterproof</div>
-                <div class="trust-text-sub">Liquid Rhodium & 18K Micro Gold</div>
+                <div class="trust-text-title">Exceptional Finish & Durability</div>
+                <div class="trust-text-sub">Beautifully crafted with premium-quality finishes</div>
               </div>
             </div>
             <div class="trust-item">
               <div class="trust-icon" style="color: var(--color-muted-gold);">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <path d="M12 2.5C12 2.5 5 11 5 15.5C5 19.1 8.1 22 12 22C15.9 22 19 15.5 19 15.5C19 11 12 2.5 12 2.5Z"></path>
-                  <path d="M12 18V13M10 15C10 15 11 13 12 13C13 13 14 15 14 15"></path>
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                  <path d="M12 8c-1.5 0-2.5 1-2.5 2.5 0 2 2.5 3.5 2.5 3.5s2.5-1.5 2.5-3.5C14.5 9 13.5 8 12 8z"></path>
                 </svg>
               </div>
               <div>
-                <div class="trust-text-title">100% Skin-Friendly</div>
-                <div class="trust-text-sub">Hypoallergenic & Nickel-Free</div>
+                <div class="trust-text-title">Comfort Meets Elegance</div>
+                <div class="trust-text-sub">Thoughtfully designed for comfort and timeless beauty</div>
               </div>
             </div>
             <div class="trust-item">
               <div class="trust-icon" style="color: var(--color-muted-gold);">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <path d="M12 2L3 6V12C3 17.5 12 22 12 22C12 22 21 17.5 21 12V6L12 2Z"></path>
-                  <circle cx="12" cy="11" r="2"></circle>
-                  <path d="M12 13V16"></path>
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
                 </svg>
               </div>
               <div>
-                <div class="trust-text-title">Insured Armored Courier</div>
-                <div class="trust-text-sub">Complimentary transit across India</div>
+                <div class="trust-text-title">Secure & Insured Delivery</div>
+                <div class="trust-text-sub">Safe and secure jewellery delivery across India</div>
               </div>
             </div>
           </div>
