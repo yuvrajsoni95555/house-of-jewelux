@@ -671,11 +671,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
             <div>
               <div class="section-pretitle" style="text-align: left;">Maison Philosophy</div>
-              <h2 style="font-family: var(--font-serif); font-size: 2.3rem; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">
-                Generational Indian Artistry × European Italian Poise
+              <h2 style="font-family: var(--font-serif); font-size: 2.3rem; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown); line-height: 1.2;">
+                GENERATIONAL INDIAN<br>ARTISTRY × MODERN<br>MINIMALISM
               </h2>
               <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem;">
-                House of Jewelux was established in Jaipur to bridge the majesty of royal Indian court jewellery with the understated clarity of Italian luxury design. We reject disposable fashion jewellery. Every item is carved from solid 925 sterling silver, dipped in liquid platinum-rhodium, and stamped with the Bureau of Indian Standards hallmark.
+                House of Jewelux was established in Jaipur to bridge the majesty of royal Indian court jewellery with the clean lines of contemporary design. We reject disposable fashion jewellery. Every piece is masterfully crafted in hallmarked gold and solid 925 sterling silver—finished with precision and stamped with the Bureau of Indian Standards (BIS) hallmark for guaranteed purity.
               </p>
               <div style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <div>
