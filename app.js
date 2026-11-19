@@ -256,20 +256,20 @@
       <!-- A. PREMIUM HERO SECTION (CINEMATIC ODYSSEY) -->
       <section class="hero-slider" id="hero-slider">
         <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center;">
-          <div class="scene-content-center" style="text-align: center; max-width: 680px; padding: 2rem; z-index: 4;">
-            <div class="opening-emblem-wrap">
-              <img src="/brand-identity/jewelux-official-emblem.png" alt="House of Jewelux Royal Monogram" class="opening-monogram-img" style="max-height: 90px; width: auto;" />
+          <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="hero-brand-center-lockup">
+              <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
             </div>
             <div class="opening-brand-sub" style="margin-top: 1rem; color: var(--color-champagne-gold); font-size: 0.8rem; letter-spacing: 0.25em;">
               <span class="sparkle-diamond">✦</span>
               <span>JAIPUR ATELIER • ESTABLISHED 1926</span>
               <span class="sparkle-diamond">✦</span>
             </div>
-            <h2 class="opening-cinematic-title" style="font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: #FFFFFF; margin: 1rem 0; letter-spacing: 0.08em;">
-              The Journey of Eternal Elegance
-            </h2>
-            <div class="opening-scroll-hint" style="color: var(--color-warm-ivory); opacity: 0.85; font-size: 0.85rem; letter-spacing: 0.15em;">
-              <span>Entering the Haute Joaillerie Sanctum</span>
+            <div style="margin-top: 1.75rem;">
+              <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+                <span>Explore The Collections</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+              </a>
             </div>
           </div>
         </div>

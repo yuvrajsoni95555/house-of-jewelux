@@ -245,19 +245,20 @@
 
         <!-- ==================== SCENE 01: THE ATMOSPHERIC PRELUDE ==================== -->
         <div class="cinematic-scene active" data-scene="1">
-          <div class="scene-content-center parallax-plane" data-depth="0.03">
-            <div class="opening-emblem-wrap">
-              <img src="/brand-identity/jewelux-official-emblem.png" alt="House of Jewelux Royal Monogram" class="opening-monogram-img" />
-              <div class="specular-light-sweep"></div>
+          <div class="scene-content-center parallax-plane" data-depth="0.03" style="text-align: center; max-width: 800px; padding: 1.5rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="hero-brand-center-lockup">
+              <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
             </div>
-            <div class="opening-brand-sub">
+            <div class="opening-brand-sub" style="margin-top: 1rem;">
               <span class="sparkle-diamond">✦</span>
               <span>JAIPUR ATELIER • ESTABLISHED 1926</span>
               <span class="sparkle-diamond">✦</span>
             </div>
-            <h2 class="opening-cinematic-title">The Journey of Eternal Elegance</h2>
-            <div class="opening-scroll-hint">
-              <span>Entering the Haute Joaillerie Sanctum</span>
+            <div style="margin-top: 1.75rem;">
+              <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+                <span>Explore The Collections</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+              </a>
             </div>
           </div>
         </div>
