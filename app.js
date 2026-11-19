@@ -363,30 +363,31 @@
       <section class="material-pillars-section">
         <div class="container">
           <div class="section-header" style="text-align: center; margin-bottom: 2.75rem;">
-            <div class="section-pretitle" style="letter-spacing: 0.24em; font-size: 0.76rem; text-transform: uppercase; color: var(--color-stone-muted); margin-bottom: 0.6rem; font-weight: 600;">Haute Joaillerie Integrity</div>
-            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.25rem, 4vw, 2.5rem); letter-spacing: 0.02em; text-transform: none; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.3; padding: 0 0.75rem;">The Three Pillars of<br class="mobile-only-br" /> Precious Adornment</h2>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #A88462; font-size: 0.95rem; margin-bottom: 1rem;">
-              <span>✦</span>
+            <div class="section-pretitle" style="letter-spacing: 0.28em; font-size: 0.74rem; text-transform: uppercase; color: #6B4A2E; margin-bottom: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.85rem;">
+              <span style="height: 1px; width: 45px; background: rgba(168, 132, 98, 0.45); display: inline-block;"></span>
+              <span>HOUSE OF JEWELUX</span>
+              <span style="height: 1px; width: 45px; background: rgba(168, 132, 98, 0.45); display: inline-block;"></span>
             </div>
-            <p style="max-width: 760px; margin: 0 auto; font-family: var(--font-serif); font-style: italic; font-size: clamp(1rem, 1.4vw, 1.15rem); color: #3A2418; line-height: 1.65; letter-spacing: 0.01em;">
-              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery – uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
+            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.4rem, 3.8vw, 2.35rem); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.25; padding: 0 0.5rem;">THE THREE PILLARS OF PRECIOUS ADORNMENT</h2>
+            <p style="max-width: 760px; margin: 0 auto; font-family: var(--font-serif); font-style: italic; font-size: clamp(0.95rem, 1.3vw, 1.1rem); color: #3A2418; line-height: 1.6; letter-spacing: 0.01em;">
+              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery — uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
             </p>
           </div>
 
           <div class="material-pillars-grid">
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
             <a href="#craftsmanship" class="material-pillar-card-luxury" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
-              <img src="images/pillars/pillar_heritage_craftsmanship@2x.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." width="636" height="580" loading="lazy" />
+              <img src="images/pillars/pillar_heritage_craftsmanship@2x.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." width="650" height="406" loading="lazy" />
             </a>
 
             <!-- PILLAR 2: TIMELESS ELEGANCE -->
             <a href="#collections/all" class="material-pillar-card-luxury" aria-label="Timeless Elegance — Classic beauty, always in style.">
-              <img src="images/pillars/pillar_timeless_elegance@2x.jpg" alt="Timeless Elegance — Classic beauty, always in style." width="622" height="580" loading="lazy" />
+              <img src="images/pillars/pillar_timeless_elegance@2x.jpg" alt="Timeless Elegance — Classic beauty, always in style." width="634" height="406" loading="lazy" />
             </a>
 
             <!-- PILLAR 3: GLOBAL LUXURY -->
             <a href="#collections/diamond" class="material-pillar-card-luxury" aria-label="Global Luxury — A world of sophistication, within your reach.">
-              <img src="images/pillars/pillar_global_luxury@2x.jpg" alt="Global Luxury — A world of sophistication, within your reach." width="634" height="580" loading="lazy" />
+              <img src="images/pillars/pillar_global_luxury@2x.jpg" alt="Global Luxury — A world of sophistication, within your reach." width="648" height="406" loading="lazy" />
             </a>
           </div>
         </div>
