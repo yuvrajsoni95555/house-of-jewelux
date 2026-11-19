@@ -1430,7 +1430,7 @@
             </div>
             <button class="btn-outline" style="color: var(--color-espresso); border-color: var(--color-border);" onclick="window.HJ.handleLogout()">Sign Out</button>
           </div>
-          <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 2rem;">
+          <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone-light); border-radius: var(--radius-sm); padding: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 1.5rem;">Acquisition History</h3>
             <p style="color: var(--color-taupe);">Orders and certified BIS hallmark records will appear here.</p>
           </div>
@@ -1487,7 +1487,7 @@
             <div class="kpi-card"><div class="kpi-label">Pending Verification</div><div class="kpi-value" style="color: #D32F2F;">${metrics.pendingVerification}</div></div>
             <div class="kpi-card"><div class="kpi-label">Vault Pieces</div><div class="kpi-value">${metrics.totalProducts}</div></div>
           </div>
-          <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 1.5rem;">
+          <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone-light); border-radius: var(--radius-sm); padding: 1.5rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 1rem;">Orders & Bank Verification</h3>
             <table class="admin-table">
               <thead><tr><th>Order ID</th><th>Customer</th><th>Payment</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
@@ -2073,7 +2073,7 @@
                 
                 <div style="display: flex; flex-direction: column; gap: 1.35rem;">
                   <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-champagne-light); display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                     </div>
                     <div>
@@ -2084,7 +2084,7 @@
                   </div>
 
                   <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-champagne-light); display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 0 7H4.11a2 2 0 0 1-2-1.72V7.24a2 2 0 0 1 2-2h3c2.37 0 4.42 1.64 5.18 4H20a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2z"></path></svg>
                     </div>
                     <div>
@@ -2095,7 +2095,7 @@
                   </div>
 
                   <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-champagne-light); display: flex; align-items: center; justify-content: center; color: var(--color-muted-gold); border: 1px solid rgba(47,36,26,0.08); flex-shrink: 0;">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     </div>
                     <div>

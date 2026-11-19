@@ -55,14 +55,16 @@
   --color-antique-gold: #A88462;        /* Exact Swatch #4 */
   --color-champagne-gold: #CBB296;      /* Luminous gold tint */
 
-  /* Swatch #5: #D5C4AE (Alabaster Silk Linen / Cashmere Cream - canvas, cards, borders) */
-  --color-champagne-beige: #D5C4AE;     /* Exact Swatch #5 */
+  /* Swatch #5: #D5C4AE (Master Champagne Beige / Warm Sandstone - Foundational Website Base Theme) */
+  --color-champagne-beige: #D5C4AE;     /* Exact Swatch #5 - Core Canvas Theme */
   --color-warm-stone: #D5C4AE;          /* Exact Swatch #5 */
-  --color-warm-stone-light: #E8DFD3;    /* Soft internal card rule */
-  --color-warm-ivory: #FAF7F2;          /* Clean cashmere silk canvas tint */
-  --color-soft-offwhite: #F4EFE6;       /* Card canvas */
-  --color-antique-white: #EDE5D8;       /* Inset contrast */
-  --color-champagne-light: #FAF7F2;     /* Subtle interactive highlight */
+  --color-warm-stone-light: #DFD0BE;    /* Soft internal card rule on #D5C4AE */
+  --color-warm-ivory: #D5C4AE;          /* Anchored directly to #D5C4AE as Base Canvas */
+  --color-soft-offwhite: #E4D7C5;       /* Elevated card canvas with soft luminous warmth */
+  --color-antique-white: #CDB9A0;       /* Richer contrast section / inset wells */
+  --color-champagne-light: #EDE3D4;     /* Subtle interactive highlight / pill cards */
+  --color-card-canvas: #E4D7C5;         /* Tonal card container on #D5C4AE */
+  --color-card-inset: #F5EFE6;          /* Luminous jewelry showcase background */
 
   /* Swatch #6: #4A4A46 (Mineral Slate Stone - metadata, captions, secondary copy) */
   --color-stone-muted: #4A4A46;         /* Exact Swatch #6 */
@@ -81,8 +83,8 @@
   --shadow-pepite-header: 0 10px 32px rgba(26, 18, 14, 0.07);
 
   /* Master Gold Gradients built directly from Swatches #3, #4 & #5 */
-  --gradient-gold: linear-gradient(135deg, #FAF7F2 0%, #D5C4AE 25%, #A88462 65%, #6B4A2E 100%);
-  --gradient-gold-subtle: linear-gradient(180deg, rgba(168, 132, 98, 0.18) 0%, rgba(168, 132, 98, 0.03) 100%);
+  --gradient-gold: linear-gradient(135deg, #EDE3D4 0%, #D5C4AE 25%, #A88462 65%, #6B4A2E 100%);
+  --gradient-gold-subtle: linear-gradient(180deg, rgba(168, 132, 98, 0.22) 0%, rgba(213, 196, 174, 0.08) 100%);
 
   /* Standard Aliases for Complete Backwards Compatibility */
   --color-ivory: var(--color-warm-ivory);
@@ -99,8 +101,6 @@
   --color-taupe: var(--color-stone-muted);
   --color-taupe-light: var(--color-stone-subtle);
   --color-espresso-deep: var(--color-subtle-charcoal);
-  --gradient-gold: linear-gradient(135deg, #F5EBDA 0%, #DECCA8 35%, #A88462 70%, #8C6D37 100%);
-  --gradient-gold-subtle: linear-gradient(180deg, rgba(203, 176, 132, 0.18) 0%, rgba(168, 132, 98, 0.04) 100%);
 
   /* UI Tokens */
   --header-height-desktop: 70px;
@@ -548,8 +548,8 @@ img {
   left: 50%;
   transform: translateX(-50%);
   width: 760px;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
+  background: var(--color-soft-offwhite);
+  border: 1px solid var(--color-warm-stone);
   box-shadow: var(--shadow-lg);
   border-radius: var(--radius-sm);
   padding: 1.75rem;
@@ -1343,8 +1343,8 @@ img {
 
 /* Sticky Filter & Sort Bar (Matching Palmonas) */
 .collection-controls-bar {
-  background: #FFFFFF;
-  border-bottom: 1px solid var(--color-border);
+  background: var(--color-champagne-beige);
+  border-bottom: 1px solid var(--color-warm-stone-light);
   padding: 0.85rem 0;
   position: sticky;
   top: var(--header-height-desktop);
@@ -1384,9 +1384,9 @@ img {
   font-weight: 600;
   color: var(--color-espresso);
   padding: 0.5rem 1rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
-  background: #FFFFFF;
+  background: var(--color-soft-offwhite);
 }
 
 .sort-select {
@@ -1395,9 +1395,9 @@ img {
   font-weight: 500;
   color: var(--color-espresso);
   padding: 0.5rem 1rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
-  background: #FFFFFF;
+  background: var(--color-soft-offwhite);
   cursor: pointer;
   outline: none;
 }
@@ -1453,12 +1453,12 @@ img {
 
 .filter-pill {
   padding: 0.4rem 0.85rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-full);
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--color-espresso);
-  background: #FFFFFF;
+  background: var(--color-soft-offwhite);
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -1469,7 +1469,7 @@ img {
 
 .filter-pill.active {
   background: var(--color-espresso);
-  color: #FFFFFF;
+  color: var(--color-champagne-light);
   border-color: var(--color-espresso);
 }
 
@@ -1528,8 +1528,8 @@ img {
 .pdp-gallery-item {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border-light);
+  background: var(--color-soft-offwhite);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -1737,8 +1737,8 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #FFFFFF;
-  border-top: 1px solid var(--color-border);
+  background: var(--color-champagne-beige);
+  border-top: 1px solid var(--color-warm-stone-light);
   padding: 0.85rem 1.5rem;
   z-index: 80;
   display: flex;
@@ -1757,7 +1757,7 @@ img {
 }
 
 .sticky-btn-buy {
-  background: #FFFFFF;
+  background: var(--color-soft-offwhite);
   color: var(--color-espresso);
   border: 1px solid var(--color-espresso);
   padding: 0.85rem 2.2rem;
@@ -1769,7 +1769,7 @@ img {
 
 .sticky-btn-cart {
   background: var(--color-espresso);
-  color: #FFFFFF;
+  color: var(--color-champagne-light);
   padding: 0.85rem 2.2rem;
   font-weight: 700;
   font-size: 0.85rem;
@@ -2076,8 +2076,8 @@ img {
 }
 
 .checkout-form-box {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
+  background: var(--color-soft-offwhite);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
   padding: 2rem;
 }
@@ -2122,12 +2122,12 @@ img {
 .form-input, .form-select, .form-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
   font-family: inherit;
   font-size: 0.85rem;
   color: var(--color-espresso);
-  background: #FFFFFF;
+  background: var(--color-champagne-light);
   outline: none;
 }
 
@@ -2170,7 +2170,7 @@ img {
 }
 
 .bank-transfer-box {
-  background: #FFFFFF;
+  background: var(--color-soft-offwhite);
   border: 1px solid var(--color-gold-light);
   border-radius: var(--radius-sm);
   padding: 1rem;
@@ -2180,8 +2180,8 @@ img {
 }
 
 .order-success-card {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
+  background: var(--color-soft-offwhite);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
   padding: 3rem 2rem;
   text-align: center;
@@ -2229,8 +2229,8 @@ img {
 }
 
 .kpi-card {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
+  background: var(--color-soft-offwhite);
+  border: 1px solid var(--color-warm-stone-light);
   border-radius: var(--radius-sm);
   padding: 1.25rem;
 }
@@ -2253,8 +2253,8 @@ img {
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
+  background: var(--color-soft-offwhite);
+  border: 1px solid var(--color-warm-stone-light);
   font-size: 0.85rem;
 }
 
@@ -4245,8 +4245,8 @@ img {
 /* 3. Pépite Pebble Card Architecture */
 .product-card {
   border-radius: var(--radius-pepite-card) !important;
-  background: #FFFFFF !important;
-  border: 1px solid rgba(26, 18, 14, 0.07) !important;
+  background: var(--color-soft-offwhite) !important;
+  border: 1px solid rgba(26, 18, 14, 0.08) !important;
   box-shadow: var(--shadow-pepite-card) !important;
   overflow: hidden;
   position: relative;
@@ -4399,7 +4399,7 @@ img {
 /* Inputs & Form Fields: Smooth Pebble & Pill System */
 .form-input, .form-select {
   border-radius: var(--radius-pepite-pill) !important;
-  background: #FFFFFF !important;
+  background: var(--color-champagne-light) !important;
   border: 1px solid rgba(26, 18, 14, 0.12) !important;
   color: var(--color-espresso) !important;
   font-family: var(--font-sans) !important;
@@ -4469,13 +4469,13 @@ img {
 .pdp-coupon-dashed {
   border-radius: 16px !important;
   border: 1px dashed var(--color-muted-gold) !important;
-  background: #FFFFFF !important;
+  background: var(--color-champagne-light) !important;
   padding: 0.85rem 1.25rem !important;
 }
 
 .pdp-check-delivery-box .delivery-input-group {
   border-radius: var(--radius-pepite-pill) !important;
-  background: #FFFFFF !important;
+  background: var(--color-champagne-light) !important;
   overflow: hidden !important;
   border: 1px solid rgba(26, 18, 14, 0.12) !important;
   display: flex !important;
@@ -4524,7 +4524,7 @@ img {
 
 .sticky-pdp-bar {
   border-radius: var(--radius-pepite-pill) !important;
-  background: rgba(255, 253, 246, 0.96) !important;
+  background: rgba(213, 196, 174, 0.96) !important;
   backdrop-filter: blur(14px) !important;
   border: 1px solid rgba(26, 18, 14, 0.1) !important;
   box-shadow: var(--shadow-pepite-hover) !important;
@@ -4580,7 +4580,7 @@ img {
 
 .qty-control-row {
   border-radius: var(--radius-pepite-pill) !important;
-  background: #FFFFFF !important;
+  background: var(--color-champagne-light) !important;
   border: 1px solid rgba(26, 18, 14, 0.1) !important;
   padding: 0.2rem 0.5rem !important;
   display: inline-flex !important;
@@ -4719,7 +4719,7 @@ img {
 
 .material-pillar-card {
   position: relative;
-  background: #FFFFFF;
+  background: var(--color-soft-offwhite);
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(168, 132, 98, 0.22);
@@ -4824,7 +4824,7 @@ img {
 .material-filter-btn {
   padding: 0.6rem 1.4rem;
   border-radius: 9999px;
-  background: #FFFFFF;
+  background: var(--color-champagne-light);
   border: 1px solid rgba(168, 132, 98, 0.3);
   font-size: 0.78rem;
   font-weight: 600;
