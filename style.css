@@ -3687,10 +3687,18 @@ img {
   100% { transform: scale(1); }
 }
 
-/* Footer */
+/* Footer: ALWAYS visible with natural content-driven height */
 .footer-reveal > * {
-  opacity: 0;
-  transform: translate3d(0, 30px, 0);
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+/* Ensure footer content never gets covered by fixed mobile bottom navigation */
+@media (max-width: 767px) {
+  .site-footer {
+    padding-bottom: calc(85px + env(safe-area-inset-bottom, 12px)) !important;
+  }
 }
 
 /* Tablet adaptations */

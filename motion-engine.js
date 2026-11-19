@@ -340,31 +340,11 @@
     },
 
     /**
-     * Editorial Footer Entrance
+     * Editorial Footer Entrance (Safely rendered with CSS to guarantee 100% visibility)
      */
     animateFooter: function () {
-      const footer = document.querySelector('.site-footer');
-      if (!footer) return;
-
-      const cols = footer.querySelectorAll('.footer-col, .footer-bottom-row');
-      if (!cols.length) return;
-
-      gsap.fromTo(cols,
-        { opacity: 0, y: 25 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: footer,
-            start: 'top 92%',
-            toggleActions: 'play none none none',
-            once: true
-          }
-        }
-      );
+      // Footer remains 100% visible at all times with natural CSS styling
+      return;
     },
 
     /**
