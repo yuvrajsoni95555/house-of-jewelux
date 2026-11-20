@@ -87,7 +87,7 @@ const createOrder = (req, res, next) => {
     const state = String(shippingAddress.state || '').trim();
     const pincode = String(shippingAddress.pincode || '').trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phoneDigits.length < 10 || phoneDigits.length > 15 ||
-        addressLine.length < 5 || city.length < 2 || state.length < 2 || !/^[A-Za-z0-9 -]{4,10}$/.test(pincode)) {
+        addressLine.length < 5 || city.length < 2 || state.length < 2 || !/^[0-9]{6}$/.test(pincode)) {
       return res.status(400).json({ success: false, error: 'Please provide a valid email, phone number and complete shipping address.' });
     }
 
