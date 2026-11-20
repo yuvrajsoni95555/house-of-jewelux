@@ -2913,31 +2913,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ customer, shippingAddress, items: state.cart, paymentMethod, couponCode: state.appliedCoupon })
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success && data.order) {
-            order = data.order;
-          }
+        const data = await res.json();
+        if (!res.ok || !data || !data.success || !data.order) {
+          throw new Error((data && data.error) || 'We could not place your order. Please try again.');
         }
+        order = data.order;
       } catch (err) {
-        console.warn('API order placement unavailable, using resilient fallback', err);
-      }
-
-      if (!order) {
-        // Resilient fallback for static hosting / offline
-        const orderId = `HJ-ORD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-        order = {
-          orderId,
-          orderDate: new Date().toISOString(),
-          orderStatus: 'Confirmed & Hallmarked by Jaipur Atelier',
-          customer,
-          shippingAddress,
-          paymentMethod,
-          items: [...state.cart]
-        };
-        const localOrders = JSON.parse(localStorage.getItem('hj_orders') || '[]');
-        localOrders.unshift(order);
-        localStorage.setItem('hj_orders', JSON.stringify(localOrders));
+        console.error('Order placement failed:', err);
+        alert(err.message || 'Order service is temporarily unavailable. Your cart has been kept; please try again.');
+        return;
       }
 
       state.cart = [];
@@ -2947,9 +2931,9 @@
         <div class="container" style="padding: 4rem 0 6rem;">
           <div class="order-success-card">
             <div class="success-check-icon">✓</div>
-            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1rem;">Acquisition Confirmed</h1>
-            <p>Order ID: <strong>${order.orderId}</strong> | Status: <strong>${order.orderStatus}</strong></p>
-            <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">A formal receipt and BIS Hallmarking dispatch notification have been sent to <strong>${customer.email || 'your email'}</strong>.</p>
+            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1rem;">Order Received</h1>
+            <p>Order ID: <strong>${order.orderId}</strong> | Status: <strong>${order.orderStatus}</strong></p><p style="font-size:0.88rem;color:#9A6B25;margin-top:.5rem;">Payment status: <strong>${order.payment && order.payment.status ? order.payment.status : 'Payment Pending'}</strong>. Your order is not confirmed until payment is verified.</p>
+            <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">Your order request has been received. Payment instructions and confirmation will be shared once the payment process is configured. We have not sent a receipt to <strong>${customer.email || 'your email'}</strong>.</p>
             <div style="margin: 2rem 0;">
               <a href="#collections/all" class="btn-primary">Continue Browsing</a>
               <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I just placed Order ' + order.orderId)}" target="_blank" class="btn-gold" style="margin-left: 1rem;">WhatsApp Concierge</a>
