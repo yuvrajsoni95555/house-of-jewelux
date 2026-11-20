@@ -74,7 +74,7 @@ const editorSave = (req, res, next) => {
         const idx = products.findIndex(p => p.id && p.id.toLowerCase() === String(u.id || '').toLowerCase());
         if (idx !== -1) {
           ['name','description','image','badge'].forEach(k => { if (u[k] !== undefined) products[idx][k] = u[k]; });
-          ['price','originalPrice'].forEach(k => { if (u[k] !== undefined && Number.isFinite(Number(u[k])) && Number(u[k]) >= 0) products[idx][k] = Number(u[k]); });
+          ['price'].forEach(k => { if (u[k] !== undefined && Number.isFinite(Number(u[k])) && Number(u[k]) >= 0) products[idx][k] = Number(u[k]); });
           updatedCount++;
         }
       });
