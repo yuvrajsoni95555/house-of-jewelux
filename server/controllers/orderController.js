@@ -22,8 +22,9 @@ const validateCart = (req, res, next) => {
     for (const item of items) {
       const prod = products.find(p => p.id === item.id);
       if (!prod) continue;
-      const qty = Math.max(1, parseInt(item.quantity) || 1);
-      const itemTotal = prod.price * qty;
+      const qty = Number.parseInt(item.quantity, 10);
+      if (!Number.isInteger(qty) || qty < 1 || qty > 10) return res.status(400).json({ success: false, error: 'Each product quantity must be between 1 and 10.' });
+      const itemTotal = Number(prod.price) * qty;
       subtotal += itemTotal;
       validatedItems.push({
         id: prod.id,
@@ -76,8 +77,18 @@ const createOrder = (req, res, next) => {
       isGiftBox
     } = req.body;
 
-    if (!customer || !shippingAddress || !items || items.length === 0) {
-      return res.status(400).json({ success: false, error: 'Missing mandatory checkout information' });
+    if (!customer || typeof customer !== 'object' || !shippingAddress || typeof shippingAddress !== 'object' || !Array.isArray(items) || items.length === 0 || items.length > 30) {
+      return res.status(400).json({ success: false, error: 'Missing or invalid checkout information' });
+    }
+    const email = String(customer.email || '').trim();
+    const phoneDigits = String(customer.phone || '').replace(/\\D/g, '');
+    const addressLine = String(shippingAddress.addressLine || shippingAddress.address || '').trim();
+    const city = String(shippingAddress.city || '').trim();
+    const state = String(shippingAddress.state || '').trim();
+    const pincode = String(shippingAddress.pincode || '').trim();
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || phoneDigits.length < 10 || phoneDigits.length > 15 ||
+        addressLine.length < 5 || city.length < 2 || state.length < 2 || !/^[A-Za-z0-9 -]{4,10}$/.test(pincode)) {
+      return res.status(400).json({ success: false, error: 'Please provide a valid email, phone number and complete shipping address.' });
     }
 
     const allowedPaymentMethods = ['advance_payment'];
@@ -104,7 +115,7 @@ const createOrder = (req, res, next) => {
         id: prod.id,
         name: prod.name,
         price: prod.price,
-        metal: prod.metal || 'BIS 925 Sterling Silver',
+        metal: prod.metal || 'See product specifications',
         quantity: qty,
         image: prod.image,
         itemTotal
@@ -140,14 +151,14 @@ const createOrder = (req, res, next) => {
       orderStatus: 'Awaiting Payment',
       customer: {
         name: customer.name || customer.fullName || 'Valued Connoisseur',
-        email: customer.email || '',
-        phone: customer.phone || ''
+        email,
+        phone: phoneDigits
       },
       shippingAddress: {
-        addressLine: shippingAddress.addressLine || shippingAddress.address || '',
-        city: shippingAddress.city || '',
-        state: shippingAddress.state || '',
-        pincode: shippingAddress.pincode || '',
+        addressLine,
+        city,
+        state,
+        pincode,
         country: 'India'
       },
       payment: {
@@ -168,7 +179,7 @@ const createOrder = (req, res, next) => {
     };
 
     orders.unshift(newOrder);
-    writeJSON('orders.json', orders);
+    if (!writeJSON('orders.json', orders)) return res.status(500).json({ success: false, error: 'Unable to save your order. Please try again.' });
 
     res.status(201).json({
       success: true,
