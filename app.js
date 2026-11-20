@@ -712,7 +712,7 @@
             <div class="step-card">
               <span class="step-number">06</span>
               <h3 class="step-title">Bench Forging & Kundan</h3>
-              <p class="step-desc">Traditional silversmith hammer forging, hand-pierced openwork, and 24K pure gold leaf foil setting.</p>
+              <p class="step-desc">Traditional Indian jewellery forms and decorative techniques inform the look and character of selected designs.</p>
             </div>
             <div class="step-card">
               <span class="step-number">07</span>
@@ -748,7 +748,7 @@
               <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
                   <span>✦</span>
-                  <span>Personal 1-on-1 session with Master Goldsmith Yuvraj Soni</span>
+                  <span>Personal guidance from the House of Jewelux team</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
                   <span>✦</span>
@@ -838,16 +838,16 @@
                 GENERATIONAL INDIAN<br>ARTISTRY × MODERN<br>MINIMALISM
               </h2>
               <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem;">
-                House of Jewelux was established in Jaipur to bridge the majesty of royal Indian court jewellery with the clean lines of contemporary design. We reject disposable fashion jewellery. Our collections bring together gold, silver and diamond jewellery, shaped by Indian heritage craftsmanship and contemporary minimal design. Exact metal, finish and stone details are listed on individual product pages.
+                Founded in Jaipur, House of Jewelux brings Indian heritage influences together with contemporary minimalism. Our collections span gold, silver and diamond jewellery, balancing expressive detail with refined simplicity. Product-specific material, finish and stone information is shared on individual product pages where available.
               </p>
               <div style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">100%</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Product-specific details</div>
+                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Gold</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Fine Jewellery</div>
                 </div>
                 <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">0%</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Nickel / Irritants</div>
+                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Silver</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Indian Heritage</div>
                 </div>
                 <div>
                   <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Jewellery</div>
@@ -856,7 +856,7 @@
               </div>
             </div>
             <div>
-              <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - House of Jewelux" style="width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone); box-shadow: 0 15px 40px rgba(35, 28, 22, 0.12);" />
+              <img src="images/authentic_polki_craft.jpg" alt="Jewellery craftsmanship inspired by Jaipur heritage" style="width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone); box-shadow: 0 15px 40px rgba(35, 28, 22, 0.12);" />
             </div>
           </div>
         </div>
@@ -1489,7 +1489,7 @@
               <div class="pepite-action-badge" onclick="window.HJ.navigate('craftsmanship')" title="Discover Craftsmanship" style="position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;">
                 ↗
               </div>
-              <img src="images/authentic_atelier_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - Micro Stone Setting & Pure 925 Silver Forging" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;" />
+              <img src="images/authentic_atelier_craft.jpg" alt="Jewellery-making inspiration rooted in Indian heritage" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;" />
               <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(31,23,16,0.92) 0%, rgba(31,23,16,0) 100%); padding: 2rem 1.75rem 1.5rem; color: #FFF;">
                 <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Jaipur Atelier Workbench</span>
                 <div style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; margin-top: 0.35rem;">Authentic Handcraftsmanship & Sacred Stone Setting</div>
@@ -1501,10 +1501,10 @@
               <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-muted-gold); font-weight: 700;">Maison Manifesto • Royal Provenance</span>
               <h2 style="font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.25; margin: 0.6rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Centuries of Heritage. Refined for Now.</h2>
               <p style="color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem;">
-                Every creation begins at our bench in Rajasthan, where fourth-generation silversmiths harmonize ancestral hammer-forging with micron electroplating. We do not mass-produce. Over 40 hours of artisanal hand-sculpting, microscope stone-setting, and Bureau of Indian Standards laser inspection are poured into every design.
+                Rooted in Jaipur, House of Jewelux draws on India's rich jewellery heritage while embracing contemporary forms. Our designs bring together gold, silver and diamond jewellery with careful attention to silhouette, proportion and detail. Exact materials, finishes and stone information are provided for each design where available.
               </p>
               <p style="color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 2rem; font-size: 0.95rem;">
-                Whether you acquire a royal falcon brooch crowned with Zambian emeralds or an architectural solitaire ring, you hold a tangible heirloom crafted to endure across generations.
+                From statement brooches and heritage-inspired designs to refined rings and everyday pieces, each collection is created to feel distinctive, elegant and enduring.
               </p>
               
               <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -1558,22 +1558,22 @@
         <div class="container">
           <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
             <div class="section-pretitle" style="color: var(--color-muted-gold);">The Pillars of Permanence</div>
-            <h2 class="section-title">The Three House Commitments</h2>
+            <h2 class="section-title">The House of Jewelux Approach</h2>
             <div class="section-divider"><span class="section-divider-gem"></span></div>
           </div>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.75rem;">
             <div class="pepite-story-card about-story-reveal">
               <div class="pepite-number-badge">01</div>
-              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Generational Bench Artistry</h3>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Heritage-Inspired Design</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
-                Hand-forged by hereditary Rajasthani goldsmiths. Every curve, openwork jali, and prong is sculpted manually using ancestral hammers and diamond gravers.
+                Indian architectural details, traditional motifs and sculptural forms inspire designs that feel relevant to contemporary wardrobes.
               </p>
             </div>
 
             <div class="pepite-story-card about-story-reveal">
               <div class="pepite-number-badge">02</div>
-              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Stamped Material Purity</h3>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Product-Specific Information</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
                 Metal composition, finish and any applicable hallmark information are confirmed against the details for each individual piece.
               </p>
@@ -1596,12 +1596,12 @@
           <div class="pepite-quote-box about-story-reveal">
             <span style="font-size: 2.5rem; color: var(--color-muted-gold); line-height: 1; font-family: var(--font-serif);">“</span>
             <p style="font-family: var(--font-serif); font-size: 1.45rem; line-height: 1.7; color: var(--color-deep-heritage-brown); margin: 0.5rem 0 1.75rem; font-style: italic;">
-              True luxury is not about novelty or fleeting seasonal trends. It is about holding an object so meticulously conceived and generationally forged that it carries the soul of its craftsmen into your family's future.
+              True luxury is a balance of meaning and modernity — designs inspired by heritage, shaped with intention and made to be treasured beyond passing trends.
             </p>
             <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
               <div style="text-align: center;">
                 <div style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--color-deep-heritage-brown);">Yuvraj Soni</div>
-                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-stone-muted); margin-top: 0.2rem;">Master Goldsmith & Founder • House of Jewelux</div>
+                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-stone-muted); margin-top: 0.2rem;">Founder • House of Jewelux</div>
               </div>
             </div>
           </div>
@@ -1930,7 +1930,7 @@
           <img class="cart-item-img" src="${item.image}" alt="${item.name}" />
           <div class="cart-item-info">
             <a href="#products/${item.handle || item.id}" onclick="window.HJ.closeCart()" class="cart-item-name">${item.name}</a>
-            <div class="cart-item-variant">${item.metal || '925 Silver'}</div>
+            <div class="cart-item-variant">${item.metal || 'See product specifications'}</div>
             <div class="qty-control-row">
               <button class="qty-btn" onclick="window.HJ.updateCartQty('${item.id}', -1)">-</button>
               <span class="qty-display">${item.quantity}</span>
