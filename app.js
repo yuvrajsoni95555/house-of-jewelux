@@ -1220,7 +1220,7 @@
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const discount = state.discountAmount || 0;
     const shipping = null;
-    const grandTotal = Math.max(0, subtotal - discount + shipping);
+    const grandTotal = Math.max(0, subtotal - discount + (shipping || 0));
 
     container.innerHTML = `
       <div class="container checkout-container">
@@ -1918,12 +1918,10 @@
     }
 
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const progressPercent = Math.min(100, Math.round((subtotal / 2500) * 100));
 
     drawerBody.innerHTML = `
       <div class="free-shipping-progress-box">
         Delivery charges and estimated delivery timelines will be confirmed before payment.
-        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${progressPercent}%;"></div></div>
       </div>
       ${state.cart.map(item => `
         <div class="cart-item-row">
