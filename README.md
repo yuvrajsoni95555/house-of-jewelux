@@ -13,7 +13,7 @@
 
 House of Jewelux brings Indian heritage influences together with contemporary minimalism. The collections span gold, silver and diamond jewellery, with an emphasis on considered design and timeless elegance.
 
-Product-specific material, finish, stone, weight and image details must be verified against the exact item before payment. Where catalogue photography is marked as representative, the exact product photograph is confirmed with the customer before payment.
+Product-specific material, finish, stone, weight and image details must be verified against the exact item before payment. Where catalogue photography is marked as representative, the exact product photograph should be confirmed with the team before payment.
 
 ---
 
