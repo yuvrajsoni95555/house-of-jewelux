@@ -888,7 +888,7 @@
         subtitle = "Explore silver jewellery with product-specific material and finish details.";
         heroImg = "images/authentic_solitaire_ring.jpg";
       } else if (['diamond', 'diamond-category'].includes(collectionId)) {
-        filtered = filtered.filter(p => (p.materials && p.materials.includes('diamond')) || p.primaryMaterial === 'diamond' || (p.stone && (p.stone.toLowerCase().includes('diamond') || p.stone.toLowerCase().includes('moissanite'))));
+        filtered = filtered.filter(p => (p.materials && p.materials.includes('diamond')) || p.primaryMaterial === 'diamond' || (p.stone && p.stone.toLowerCase().includes('diamond')));
         title = "Diamond Jewellery Collection";
         subtitle = "Explore diamond jewellery with stone and setting details listed by design.";
         heroImg = "images/authentic_diamond_choker.jpg";
