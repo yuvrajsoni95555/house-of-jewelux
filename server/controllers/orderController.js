@@ -81,12 +81,12 @@ const createOrder = (req, res, next) => {
       return res.status(400).json({ success: false, error: 'Missing or invalid checkout information' });
     }
     const email = String(customer.email || '').trim();
-    const phoneDigits = String(customer.phone || '').replace(/\\D/g, '');
+    const phoneDigits = String(customer.phone || '').replace(/\D/g, '');
     const addressLine = String(shippingAddress.addressLine || shippingAddress.address || '').trim();
     const city = String(shippingAddress.city || '').trim();
     const state = String(shippingAddress.state || '').trim();
     const pincode = String(shippingAddress.pincode || '').trim();
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || phoneDigits.length < 10 || phoneDigits.length > 15 ||
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phoneDigits.length < 10 || phoneDigits.length > 15 ||
         addressLine.length < 5 || city.length < 2 || state.length < 2 || !/^[A-Za-z0-9 -]{4,10}$/.test(pincode)) {
       return res.status(400).json({ success: false, error: 'Please provide a valid email, phone number and complete shipping address.' });
     }
@@ -108,8 +108,9 @@ const createOrder = (req, res, next) => {
     for (const item of items) {
       const prod = products.find(p => p.id === item.id);
       if (!prod) continue;
-      const qty = Math.max(1, parseInt(item.quantity) || 1);
-      const itemTotal = prod.price * qty;
+      const qty = Number.parseInt(item.quantity, 10);
+      if (!Number.isInteger(qty) || qty < 1 || qty > 10) return res.status(400).json({ success: false, error: 'Each product quantity must be between 1 and 10.' });
+      const itemTotal = Number(prod.price) * qty;
       subtotal += itemTotal;
       orderItems.push({
         id: prod.id,
