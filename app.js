@@ -1156,7 +1156,7 @@
               <div class="pdp-accordion-pane">
                 ${p.description}
                 <br><br>
-                Please refer to the product specifications for exact material, finish and hallmark details.
+                Product specifications are based on current catalogue records. Please confirm exact material, finish, stone and any applicable hallmark details with our team before payment.
               </div>
             </div>
 
@@ -1632,7 +1632,7 @@
             <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
               <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">Craft</div>
               <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Indian Heritage Craft</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Artisanal bench handcrafting</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Thoughtful jewellery design</div>
             </div>
             <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
               <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">19,000+</div>
