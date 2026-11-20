@@ -1718,68 +1718,36 @@
     const key = (rawKey || 'shipping').toLowerCase();
     const policies = {
       shipping: {
-        title: "Insured Armored Transit & Shipping Policy",
-        subtitle: "Complimentary Fully Insured Armored Delivery Across India • Global Priority Transit",
-        badge: "Armored Logistics Protocol",
+        title: "Shipping Information",
+        subtitle: "Delivery details are confirmed before payment",
+        badge: "Delivery Information",
         content: `
-          <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Domestic Armored Transit Across India</h3>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              Every creation leaving our Jaipur atelier is transported via specialized armored courier services (BlueDart Apex Air & Sequel Secure Logistics). All consignments are 100% insured from bench to your doorstep.
-            </p>
-            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              <li><strong>Transit Timeline:</strong> 2 to 4 business days across all metro locations (Delhi NCR, Mumbai, Bengaluru, Hyderabad, Chennai, Kolkata, Pune). 3 to 5 business days for regional and non-metro pin codes.</li>
-              <li><strong>Complimentary Shipping:</strong> Enjoy complimentary insured delivery on all acquisitions valued at ₹2,500 and above. A flat fee of ₹250 applies to orders below ₹2,500.</li>
-              <li><strong>Mandatory OTP Verification:</strong> To ensure complete asset safety, high-jewellery parcels require a verified OTP or signature upon delivery. Couriers will never leave parcels unattended.</li>
-            </ul>
-          </div>
-
-          <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Global International Shipping</h3>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              House of Jewelux dispatches worldwide to the United States, United Kingdom, European Union, United Arab Emirates, Singapore, and Australia via fully insured FedEx Priority International and DHL Express.
-            </p>
-            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
-              <li><strong>International Transit Time:</strong> 4 to 7 business days, subject to local customs inspection.</li>
-              <li><strong>Customs & Duties:</strong> International orders are shipped DAP (Delivered at Place). Local import taxes, if applicable, are coordinated directly with the courier.</li>
-            </ul>
-          </div>
-
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Real-Time Consignment Tracking</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Order Processing & Dispatch</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Once dispatched, you will receive an encrypted tracking link and consignment ID via SMS and WhatsApp. You may track your consignment at any time using our <a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal()" style="color: var(--color-antique-gold); font-weight: 600; text-decoration: underline;">Real-Time Tracking Console</a>.
+              Orders are prepared for dispatch after advance payment is received and verified. Available delivery options, applicable charges and estimated timelines will be confirmed with you before payment.
+            </p>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Tracking details will be shared after dispatch. Please contact the House of Jewelux team before ordering if you need delivery outside India.
             </p>
           </div>
         `
       },
       returns: {
-        title: "14-Day Patron Inspection & Returns Covenant",
-        subtitle: "Uncompromising Quality Guarantee • Full Refund or Exchange Privilege",
-        badge: "Client Trust Covenant",
+        title: "Returns & Refunds",
+        subtitle: "Please confirm eligibility and terms before placing an order",
+        badge: "Customer Support",
         content: `
-          <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. 14-Day Inspection Period</h3>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              We want you to hold, inspect, and experience your House of Jewelux piece in person with complete peace of mind. You have 14 days from the date of confirmed delivery to initiate a return or exchange.
-            </p>
-            <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
-              <li><strong>Condition Requirements:</strong> Items must be unworn, undamaged, and returned in original condition with security tags attached, BIS hallmark certification card, and the signature emerald velvet coffer.</li>
-              <li><strong>Complimentary Reverse Pickup:</strong> We arrange an insured armored courier pickup directly from your doorstep at zero cost to you.</li>
-            </ul>
-          </div>
-
-          <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Refund Processing</h3>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Upon arrival at our Jaipur atelier, our master gemologists verify the piece and laser hallmarks within 24 to 48 hours. Once verified, 100% of the purchase amount is credited back to your original payment method (bank account, UPI, or card) within 3 to 5 business days. Cash on Delivery is not available.
-            </p>
-          </div>
-
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Custom Orders</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Return & Exchange Requests</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Custom jewellery commissions are not currently offered.
+              Return and exchange eligibility, applicable time limits, item-condition requirements and any shipping charges must be confirmed with the House of Jewelux team before purchase. Please obtain written confirmation before sending an item back.
+            </p>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              If an item arrives damaged or differs from the order, contact customer support promptly with your order number and clear photographs so the team can review the issue.
+            </p>
+            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
+              Refund method and processing time will be confirmed once a return is approved.
             </p>
           </div>
         `
