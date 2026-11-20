@@ -208,8 +208,8 @@ const getOrderById = (req, res, next) => {
 
 const trackOrder = (req, res, next) => {
   try {
-    const { orderId, query } = req.body;
-    const searchId = (orderId || query || '').trim().toUpperCase();
+    const { orderId, query } = req.body || {};
+    const searchId = String(orderId || query || '').trim().toUpperCase().slice(0, 50);
 
     if (!searchId) {
       return res.status(400).json({ success: false, error: 'Please enter a valid Order ID.' });
@@ -221,7 +221,7 @@ const trackOrder = (req, res, next) => {
     if (!matched) {
       return res.status(404).json({
         success: false,
-        error: `No consignment found for "${searchId}". Please verify your Order ID or contact Maison Concierge at +91 90799 98793.`
+        error: `No order was found for the supplied Order ID. Please check the ID or contact House of Jewelux customer support at +91 90799 98793.`
       });
     }
 
@@ -230,7 +230,7 @@ const trackOrder = (req, res, next) => {
       order: {
         orderId: matched.orderId,
         orderDate: matched.orderDate,
-        orderStatus: matched.orderStatus || 'Processing in Jaipur Atelier',
+        orderStatus: matched.orderStatus || 'Order received',
         paymentStatus: (matched.payment && matched.payment.status) || 'Payment Pending',
         trackingNumber: matched.trackingNumber || 'Not assigned yet',
         courierPartner: 'To be assigned',
