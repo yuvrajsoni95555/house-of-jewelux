@@ -393,10 +393,10 @@
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "Centuries-old artistry, forever cherished."
+                  "Heritage-inspired forms, thoughtfully reimagined."
                 </div>
                 <div class="material-pillar-desc">
-                  Devotional bench goldsmithing embodying Jaipur royal artistry, hand-chiseled nakshi engraving, and ancestral hammer-forging.
+                  Inspired by Indian temple traditions, intricate motifs and the quiet elegance of jewellery design.
                 </div>
                 <div class="material-pillar-footer">
                   <span>Explore Atelier</span>
@@ -596,7 +596,7 @@
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Temple Nakshi Heritage</div>
-                <div class="cat-showcase-count">10 Sacred Motifs • 22K Micro Gold</div>
+                <div class="cat-showcase-count">Temple-inspired designs</div>
               </div>
             </a>
           </div>
@@ -665,17 +665,17 @@
         <div class="container">
           <div class="section-header">
             <div class="section-pretitle">Jaipur Bench Artistry</div>
-            <h2 class="section-title">The 9-Stage Goldsmithing Journey</h2>
+            <h2 class="section-title">Inspired by Heritage, Designed for Today</h2>
             <div class="section-divider"><span class="section-divider-gem"></span></div>
             <p class="section-intro">
-              Every House of Jewelux creation passes through the hands of master goldsmiths across nine sacred stages of bench craftsmanship in Rajasthan.
+              Our collections draw inspiration from Indian heritage motifs, considered design and a contemporary sense of elegance.
             </p>
           </div>
 
           <div class="editorial-pair">
             <div class="editorial-content">
-              <h3>The Nine Stages of Creation</h3>
-              <p>From inspiration to final presentation, each piece embodies generations of Jaipur goldsmithing heritage, refined for the modern connoisseur.</p>
+              <h3>From Inspiration to Design</h3>
+              <p>Each design brings together heritage references and a refined, contemporary point of view.</p>
               <a href="#craftsmanship" class="btn-gold">Explore the Journey ✦</a>
             </div>
             <div class="editorial-image">
@@ -880,7 +880,7 @@
       if (['gold', 'gold-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold || (p.metal && p.metal.toLowerCase().includes('gold')));
         title = "Gold Jewellery Collection";
-        subtitle = "18K Champagne Gold & Royal Vermeil Finishes • Ancestral Grandeur (17 Pieces)";
+        subtitle = "Discover gold jewellery inspired by Indian heritage and contemporary design.";
         heroImg = "images/user_floral_diamond_earrings.jpg";
       } else if (['silver', 'silver-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('silver')) || p.primaryMaterial === 'silver' || (p.metal && p.metal.toLowerCase().includes('silver')));
@@ -1005,7 +1005,7 @@
               <div class="filter-pills-row">
                 <button class="filter-pill ${state.activeFilters.metal === '' ? 'active' : ''}" onclick="window.HJ.toggleMetalFilter('', false)">All</button>
                 <button class="filter-pill ${state.activeFilters.metal === 'Rhodium' ? 'active' : ''}" onclick="window.HJ.toggleMetalFilter('Rhodium', true)">Pure Silver</button>
-                <button class="filter-pill ${state.activeFilters.metal === 'Gold' ? 'active' : ''}" onclick="window.HJ.toggleMetalFilter('Gold', true)">18K Gold Finish</button>
+                <button class="filter-pill ${state.activeFilters.metal === 'Gold' ? 'active' : ''}" onclick="window.HJ.toggleMetalFilter('Gold', true)">Gold Finish</button>
                 <button class="filter-pill ${state.activeFilters.metal === 'Rose' ? 'active' : ''}" onclick="window.HJ.toggleMetalFilter('Rose', true)">Rose Gold</button>
               </div>
             </div>
@@ -1762,12 +1762,12 @@
       care: {
         title: "The Art of Fine Jewellery Care",
         subtitle: "Preserving the Eternal Brilliance of Silver, Gold & Diamonds",
-        badge: "Master Goldsmith Care Guide",
+        badge: "Jewellery Care Guide",
         content: `
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Solid 925 Silver & Liquid Rhodium Care</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Caring for Silver Jewellery</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              House of Jewelux silver pieces are electroplated in pure liquid platinum-rhodium to prevent tarnishing and maintain a mirrored brilliance.
+              Silver jewellery may require care specific to its finish. Check the individual product details or contact our team if you are unsure which cleaning method is suitable.
             </p>
             <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
               <li>Wipe gently with the provided ultra-soft microfiber polishing cloth after each wear.</li>
@@ -1777,9 +1777,9 @@
           </div>
 
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. 18K Micron Gold Vermeil Preservation</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Caring for Gold-Finish Jewellery</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              Our micron gold vermeil utilizes a thick 2.5-micron layer of real 18K gold over solid sterling silver.
+              Gold-finish jewellery can be sensitive to friction, moisture and chemicals. Keep pieces dry, apply perfume before wearing and store separately.
             </p>
             <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
               <li>Apply perfumes, body lotions, hairsprays, and cosmetics <em>before</em> putting on your jewellery.</li>
@@ -1788,7 +1788,7 @@
           </div>
 
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Diamond & Moissanite Cleansing</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Caring for Gemstone Jewellery</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
               To restore maximum optical dispersion and scintillation: soak for 5 minutes in a bowl of lukewarm water with 2 drops of mild dishwashing liquid. Gently brush behind the pavilion facet with a soft-bristled baby toothbrush, rinse under running lukewarm water, and pat dry with a lint-free cloth.
             </p>
@@ -2285,10 +2285,10 @@
       <section style="background: var(--color-warm-ivory); padding: 5rem 0 2rem; text-align: center;">
         <div class="container" style="max-width: 860px;">
           <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Jaipur Roots • Indian Heritage Craft</span>
-          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">The 10-Stage Goldsmithing Journey</h1>
+          <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Indian Heritage, Contemporary Design</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
-            Every House of Jewelux creation passes through ten sacred bench stages in Rajasthan, honoring centuries of royal Indian court metallurgy and contemporary haute joaillerie precision.
+            House of Jewelux brings together Indian heritage influences and contemporary minimalism across gold, silver and diamond jewellery.
           </p>
         </div>
       </section>
@@ -2303,7 +2303,7 @@
               <div>
                 <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-muted-gold); font-weight: 700;">Atelier Bench Camera</span>
                 <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.35rem 0;">Living Goldsmith Heritage at Bench</h3>
-                <p style="font-size: 0.88rem; color: #E8E2D8; max-width: 600px;">Generational silversmiths applying hand gravers, liquid flux, and open flame to solid 925 sterling silver.</p>
+                <p style="font-size: 0.88rem; color: #E8E2D8; max-width: 600px;">Traditional jewellery-making techniques and intricate details inspire the House of Jewelux collections.</p>
               </div>
               <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-gold" style="padding: 0.75rem 1.75rem; font-size: 0.78rem;">Request Online Consultation ↗</a>
             </div>
