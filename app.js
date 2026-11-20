@@ -679,7 +679,7 @@
               <a href="#craftsmanship" class="btn-gold">Explore the Journey ✦</a>
             </div>
             <div class="editorial-image">
-              <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier" />
+              <img src="images/authentic_polki_craft.jpg" alt="Jewellery-making inspiration rooted in Indian heritage" />
             </div>
           </div>
 
@@ -835,7 +835,7 @@
             <div>
               <div class="section-pretitle" style="text-align: left;">Maison Philosophy</div>
               <h2 style="font-family: var(--font-serif); font-size: 2.3rem; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown); line-height: 1.2;">
-                GENERATIONAL INDIAN<br>ARTISTRY × MODERN<br>MINIMALISM
+                INDIAN HERITAGE<br>× CONTEMPORARY<br>MINIMALISM
               </h2>
               <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem;">
                 Founded in Jaipur, House of Jewelux brings Indian heritage influences together with contemporary minimalism. Our collections span gold, silver and diamond jewellery, balancing expressive detail with refined simplicity. Product-specific material, finish and stone information is shared on individual product pages where available.
@@ -1760,7 +1760,7 @@
         `
       },
       care: {
-        title: "The Art of Fine Jewellery Care",
+        title: "Jewellery Care Guide",
         subtitle: "Preserving the Eternal Brilliance of Silver, Gold & Diamonds",
         badge: "Jewellery Care Guide",
         content: `
@@ -2360,7 +2360,7 @@
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">08</div>
               <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Polishing & Finishing</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Surface finishing, hand polishing, liquid rhodium electroplating, and 18K micron gold flashing for anti-tarnish luminosity.</p>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Finishing choices are selected to suit the individual metal, design and intended appearance.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
