@@ -1,41 +1,42 @@
-# HOUSE OF JEWELUX — TESTING & QUALITY ASSURANCE PROTOCOL
+# HOUSE OF JEWELUX — TESTING GUIDE
 
-## 1. Automated API Regression Suite
+## Automated checks
 
-The project includes an automated Python test suite that exercises all 22 REST API endpoints across status codes, payload validations, calculations, and errors.
-
-```bash
-# Ensure server is running:
-npm start
-
-# Run API test suite:
-python scripts/test_all_apis.py
-```
-
-### Coverage:
-- Product listing & multi-facet filtering (Gold, Silver, Diamond, Collections, Price bands)
-- Single product retrieval & 404 validation
-- Cart recalculation & coupon discount verification (`FIRSTLUX`)
-- Order creation & consignment telemetry tracking
-- Salon appointment bookings with HTTP 201 status
-- Admin authentication & overview statistics
-
----
-
-## 2. Asset & Data Integrity Audit
-
-Verifies that all 50 products and 26 categories in `data/` reference physical, existing assets on disk:
+Install dependencies:
 
 ```bash
-python scripts/audit_assets_and_data.py
+npm install
 ```
 
----
-
-## 3. Multi-Route Visual Inspection
-
-Captures automated headless Chrome screenshots across 27 routes and 3 viewports (1440px Desktop, 768px Tablet, 390px Mobile):
+Run the Node test suite:
 
 ```bash
-python scripts/multi_route_visual_qa.py
+npm test
 ```
+
+The current automated suite covers:
+- Valid admin session acceptance.
+- Rejection of missing and tampered admin tokens.
+- Admin login rate limiting.
+
+The GitHub Actions workflow also runs JavaScript syntax checks and `npm test` on pushes to the repair branches and pull requests targeting `main`.
+
+## Manual verification still required
+
+Automated tests do not replace end-to-end checks. Before launch, test:
+
+1. Admin login, logout, token expiry and every protected admin action.
+2. Customer registration/login and legacy password migration.
+3. Cart totals, coupon handling and advance-payment-only checkout.
+4. Order tracking using a real test order ID.
+5. Consultation request creation and admin visibility.
+6. Newsletter subscription success and persistence failure.
+7. Mobile/tablet/desktop layouts, keyboard navigation and accessibility.
+8. The deployed hosting environment with persistent database storage.
+
+## Known limitations
+
+- The repository does not contain the previously documented Python API suite or headless Chrome multi-route screenshot scripts.
+- Current automated tests are focused security tests, not full endpoint coverage.
+- The latest workflow status must be checked on the current pull-request head before merge.
+- Live payment, email and courier integrations are not configured.
