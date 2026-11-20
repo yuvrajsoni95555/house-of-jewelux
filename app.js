@@ -2369,7 +2369,7 @@
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">09</div>
               <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Quality Inspection</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Laser XRF spectrometry hallmark verification, craftsmanship checklist, measurement validation, and BIS 925 laser assay stamping.</p>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Product details, finish and any applicable hallmark information are reviewed before dispatch.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
