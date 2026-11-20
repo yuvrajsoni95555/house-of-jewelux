@@ -2765,7 +2765,7 @@
         edits[id] = el.innerHTML;
       });
       localStorage.setItem('hj_saved_editor_edits', JSON.stringify(edits));
-      alert('✓ Live website edits saved successfully to this browser session!');
+      alert('Edits saved in this browser only. They have not been published to the live website.');
     },
 
     resetEditorEdits: function () {
