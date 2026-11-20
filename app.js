@@ -608,138 +608,12 @@
         </div>
       </section>
 
-      <!-- E. FEATURED JEWELLERY / BEST SELLERS (SECTION 5.F) -->
-      <section style="padding: 4.5rem 0 3.5rem; background: var(--color-warm-ivory);">
+      <!-- E. CLIENT STORIES / TESTIMONIALS -->
+      <section style="padding: 5rem 0; background: var(--color-warm-ivory); border-top: 1px solid var(--color-warm-stone);">
         <div class="container">
-          <div class="section-header">
-            <div class="section-pretitle">The Master Edit</div>
-            <h2 class="section-title">Founder's Most Coveted Creations</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-          </div>
-
-          <!-- Material Filter Tabs Bar -->
-          <div class="material-filter-bar">
-            <button class="material-filter-btn active" onclick="window.HJ.filterHomeProducts('all', this)"><span aria-hidden="true">✦</span> All Jewellery (50)</button>
-            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('gold', this)">✦ Gold Jewellery (17)</button>
-            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('silver', this)">✦ Silver Jewellery (50)</button>
-            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('diamond', this)">✦ Diamond & Solitaires (45)</button>
-            <button class="material-filter-btn" onclick="window.HJ.filterHomeProducts('gemstone', this)">✦ Precious Gemstones (13)</button>
-          </div>
-
-          <div class="products-grid motion-stagger" id="home-featured-products-grid">
-            ${bestSellers.map(renderProductCard).join('')}
-          </div>
-
-          <div style="text-align: center; margin-top: 3rem;">
-            <a href="#collections/all" class="btn-primary">View Complete Catalogue</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- F. FEATURED EDITORIAL COLLECTION SHOWCASE (SECTION 5.E) -->
-      <section style="padding: 3rem 0 4.5rem; background: var(--color-warm-ivory);">
-        <div class="container">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
-            <div style="position: relative; height: 440px; border-radius: var(--radius-sm); overflow: hidden; background: #181412;">
-              <img src="images/user_falcon_brooch_emerald.jpg" alt="The Sovereign Falcon Crest Collection" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" />
-              <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(24,20,18,0.92) 0%, transparent 60%);"></div>
-              <div style="position: absolute; bottom: 2rem; left: 2rem; right: 2rem; color: #FFFFFF;">
-                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-champagne-gold);">Haute Joaillerie Series</span>
-                <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.4rem 0 0.8rem;">The Sovereign Falcon Edit</h3>
-                <p style="font-size: 0.85rem; color: #E8E2D8; margin-bottom: 1.25rem;">Royal heraldic crests hand-set with Zambian emerald eyes and 5A diamond pavé wings for celebratory sherwanis.</p>
-                <a href="#collections/brooches" class="btn-gold" style="padding: 0.65rem 1.5rem; font-size: 0.75rem;">Explore Falcon Crests</a>
-              </div>
-            </div>
-
-            <div style="position: relative; height: 440px; border-radius: var(--radius-sm); overflow: hidden; background: #181412;">
-              <img src="images/user_royal_bridal_suite.jpg" alt="Festive & Bridal High Jewellery" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" />
-              <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(24,20,18,0.92) 0%, transparent 60%);"></div>
-              <div style="position: absolute; bottom: 2rem; left: 2rem; right: 2rem; color: #FFFFFF;">
-                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-champagne-gold);">Royal Ceremonial</span>
-                <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.4rem 0 0.8rem;">Festive & Bridal Masterpieces</h3>
-                <p style="font-size: 0.85rem; color: #E8E2D8; margin-bottom: 1.25rem;">Regal bridal neckpieces, jhumkas and hathphool designed for brides seeking heirloom longevity.</p>
-                <a href="#collections/festive-edit" class="btn-gold" style="padding: 0.65rem 1.5rem; font-size: 0.75rem;">Discover Bridal Edit</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- G. HERITAGE & CRAFTSMANSHIP: THE 9-STAGE GOLDSMITH JOURNEY (SECTION 5.G) -->
-      <section id="craftsmanship-section" style="padding: 5rem 0; background: var(--color-antique-white); border-top: 1px solid var(--color-warm-stone); border-bottom: 1px solid var(--color-warm-stone);">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-pretitle">Jaipur Bench Artistry</div>
-            <h2 class="section-title">The 9-Stage Goldsmithing Journey</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p class="section-intro">
-              Every House of Jewelux creation passes through the hands of master goldsmiths across nine sacred stages of bench craftsmanship in Rajasthan.
-            </p>
-          </div>
-
-          <div class="editorial-pair">
-            <div class="editorial-content">
-              <h3>The Nine Stages of Creation</h3>
-              <p>From inspiration to final presentation, each piece embodies generations of Jaipur goldsmithing heritage, refined for the modern connoisseur.</p>
-              <a href="#craftsmanship" class="btn-gold">Explore the Journey ✦</a>
-            </div>
-            <div class="editorial-image">
-              <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier" />
-            </div>
-          </div>
-
-          <div class="step-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem;">
-            <div class="step-card">
-              <span class="step-number">01</span>
-              <h3 class="step-title">Inspiration & Sacred Architecture</h3>
-              <p class="step-desc">Studying Jaipur royal archways, jharokha screens, and ceremonial iconography from Mughal and Rajput archives.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">02</span>
-              <h3 class="step-title">Exploration & Gemology</h3>
-              <p class="step-desc">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and Zambian rough.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">03</span>
-              <h3 class="step-title">Concept & Gouache Rendering</h3>
-              <p class="step-desc">Hand-drawn gouache jewel illustrations capturing light reflections, prong heights, and 3D ergonomics.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">04</span>
-              <h3 class="step-title">Jewellery Proportions</h3>
-              <p class="step-desc">Precision CAD modeling and wax printing ensuring micro-comfort shanks and flawless daily wear balance.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">05</span>
-              <h3 class="step-title">Material Assay</h3>
-              <p class="step-desc">XRF laser testing guaranteeing 92.5% pure elemental silver alloyed with hypoallergenic deox copper.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">06</span>
-              <h3 class="step-title">Bench Forging & Kundan</h3>
-              <p class="step-desc">Traditional silversmith hammer forging, hand-pierced openwork, and 24K pure gold leaf foil setting.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">07</span>
-              <h3 class="step-title">Liquid Rhodium & 18K Micron</h3>
-              <p class="step-desc">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">08</span>
-              <h3 class="step-title">BIS Hallmark Certification</h3>
-              <p class="step-desc">Official Bureau of Indian Standards laser assay verification stamp with unique identification mark.</p>
-            </div>
-            <div class="step-card">
-              <span class="step-number">09</span>
-              <h3 class="step-title">Armored Coffer Acquisition</h3>
-              <p class="step-desc">Placed in our signature emerald velvet presentation box and dispatched via insured armored courier.</p>
-            </div>
-          </div>
-
-          <!-- Customer Testimonials -->
-          <div style="text-align: center; margin: 6rem 0 4rem;">
-            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 1rem;">Client Stories</span>
-            <h2 class="section-title">They Have Discovered Their Eternal Piece</h2>
+          <div style="text-align: center; margin-bottom: 3.5rem;">
+            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 1rem; border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.08); font-weight: 600;">Client Stories</span>
+            <h2 class="section-title" style="color: #1A120E;">They Have Discovered Their Eternal Piece</h2>
             <div class="section-divider"><span class="section-divider-gem"></span></div>
           </div>
           <div class="testimonial-grid">
@@ -762,33 +636,33 @@
         </div>
       </section>
 
-      <!-- H. BOOK AN APPOINTMENT (JAIPUR JEWELS SECTION 5.H) -->
+      <!-- F. BOOK AN APPOINTMENT (JAIPUR JEWELS SECTION 5.H) -->
       <section class="appointment-banner-section" id="appointment-section">
         <div class="container">
           <div class="appointment-banner-grid">
             <div>
-              <span class="hero-badge-pill" style="border-color: var(--color-antique-gold); color: var(--color-champagne-gold);">Atelier Experience</span>
-              <h2 style="font-family: var(--font-serif); font-size: 2.4rem; margin: 0.75rem 0 1rem; color: var(--color-warm-ivory);">
+              <span class="hero-badge-pill" style="border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.1); font-weight: 600;">Atelier Experience</span>
+              <h2 style="font-family: var(--font-serif); font-size: 2.5rem; margin: 0.85rem 0 1rem; color: #1A120E; line-height: 1.25; font-weight: 500;">
                 Book a Private Salon Consultation
               </h2>
-              <p style="color: #DCD4C7; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              <p style="color: #3D2D24; font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.75rem; max-width: 540px;">
                 Step inside our private salon in Jaipur or connect via encrypted video concierge. Our senior goldsmiths will guide you through custom diamond sizing, bridal curations, and bespoke jewellery commissions.
               </p>
-              <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
-                <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
-                  <span>✦</span>
+              <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.85rem; font-size: 0.92rem; color: #2A1D15; font-weight: 500;">
+                  <span style="color: #8C6D46; font-size: 1rem;">✦</span>
                   <span>Personal 1-on-1 session with Master Goldsmith Yuvraj Soni</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
-                  <span>✦</span>
+                <div style="display: flex; align-items: center; gap: 0.85rem; font-size: 0.92rem; color: #2A1D15; font-weight: 500;">
+                  <span style="color: #8C6D46; font-size: 1rem;">✦</span>
                   <span>Hands-on gemological inspection of uncut Polki & VVS1 solitaires</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
-                  <span>✦</span>
+                <div style="display: flex; align-items: center; gap: 0.85rem; font-size: 0.92rem; color: #2A1D15; font-weight: 500;">
+                  <span style="color: #8C6D46; font-size: 1rem;">✦</span>
                   <span>Complimentary ring sizing & bespoke gouache sketch rendering</span>
                 </div>
               </div>
-              <a href="https://wa.me/916377061020?text=Hello%20House%20of%20Jewelux,%20I%20would%20like%20to%20schedule%20a%20private%20atelier%20consultation." target="_blank" class="btn-outline" style="border-color: var(--color-antique-gold); color: var(--color-warm-ivory);">
+              <a href="https://wa.me/916377061020?text=Hello%20House%20of%20Jewelux,%20I%20would%20like%20to%20schedule%20a%20private%20atelier%20consultation." target="_blank" class="btn-outline" style="border: 1.5px solid #2B1E16; color: #1A120E; font-weight: 600; padding: 0.85rem 1.8rem; background: transparent;">
                 Instant WhatsApp Concierge (+91 63770 61020)
               </a>
             </div>
