@@ -1503,7 +1503,7 @@
 
   // ==================== VIEW 6: ADMIN ====================
   async function renderAdminDashboard(container) {
-    const isAuthed = sessionStorage.getItem('hj_admin_authed');
+    const isAuthed = sessionStorage.getItem('hj_admin_token');
     if (!isAuthed) {
       container.innerHTML = `
         <div class="container" style="padding: 5rem 0; max-width: 440px;">
@@ -1512,7 +1512,7 @@
             <form onsubmit="window.HJ.adminLogin(event)">
               <div class="form-field">
                 <label class="form-label">Master Atelier PIN</label>
-                <input type="password" id="admin-pin-input" class="form-input" required placeholder="Enter Master PIN (2026)" />
+                <input type="password" id="admin-pin-input" class="form-input" required placeholder="Enter your secure admin PIN" />
               </div>
               <button type="submit" class="btn-primary" style="width: 100%;">Authorize Dashboard</button>
             </form>
@@ -1525,7 +1525,7 @@
     let metrics = { totalRevenue: 13152, totalOrders: 1, pendingVerification: 1, totalProducts: 50 };
     let recentOrders = [];
     try {
-      const res = await fetch('/api/admin/overview');
+      const res = await fetch('/api/admin/overview', { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('hj_admin_token') } });
       const data = await res.json();
       if (data.success) {
         metrics = data.metrics;
@@ -1540,7 +1540,7 @@
             <span style="font-family: var(--font-serif); font-size: 1.1rem;">HOUSE OF JEWELUX</span>
             <span style="font-size: 0.75rem; background: var(--color-gold); color: #000; padding: 0.2rem 0.5rem; border-radius: 2px;">Admin Suite</span>
           </div>
-          <button onclick="sessionStorage.removeItem('hj_admin_authed'); window.HJ.navigate('home');" style="color: #FFF; font-size: 0.8rem; text-decoration: underline;">Exit</button>
+          <button onclick="sessionStorage.removeItem('hj_admin_token'); window.HJ.navigate('home');" style="color: #FFF; font-size: 0.8rem; text-decoration: underline;">Exit</button>
         </div>
         <div class="container" style="padding-top: 2.5rem;">
           <div class="admin-kpi-grid">
@@ -2985,14 +2985,22 @@
     toggleMetalFilter: function (metal, isChecked) { state.activeFilters.metal = isChecked ? metal : ''; handleRoute(); },
     clearFilters: function () { state.activeFilters = { category: 'all', metal: '', minPrice: 0, maxPrice: 200000, sort: 'popular' }; handleRoute(); },
 
-    adminLogin: function (e) {
+    adminLogin: async function (e) {
       e.preventDefault();
-      const pin = document.getElementById('admin-pin-input').value;
-      if (pin === '2026' || pin === '1122') {
-        sessionStorage.setItem('hj_admin_authed', 'true');
+      const pinInput = document.getElementById('admin-pin-input');
+      const pin = pinInput ? pinInput.value : '';
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success || !data.token) throw new Error(data.error || 'Admin sign-in failed.');
+        sessionStorage.setItem('hj_admin_token', data.token);
         renderAdminDashboard(document.getElementById('app-view'));
-      } else {
-        alert('Invalid PIN. Use 2026.');
+      } catch (err) {
+        alert(err.message || 'Unable to sign in. Check your admin credentials and server configuration.');
       }
     },
 
@@ -3000,7 +3008,7 @@
       try {
         const res = await fetch(`/api/admin/orders/${orderId}`, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('hj_admin_token') },
           body: JSON.stringify({ paymentStatus: 'Paid', orderStatus: 'Confirmed & Sent to Goldsmith' })
         });
         const data = await res.json();
