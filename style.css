@@ -2357,7 +2357,7 @@ img {
 
 .footer-columns-grid {
   display: grid;
-  grid-template-columns: 1.6fr repeat(4, 1fr);
+  grid-template-columns: 1.6fr repeat(3, 1fr);
   gap: 2.5rem;
   padding-bottom: 3.5rem;
   border-bottom: 1px solid rgba(168, 132, 98, 0.25);
