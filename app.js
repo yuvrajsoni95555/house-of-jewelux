@@ -2679,7 +2679,8 @@
           body: JSON.stringify({ email })
         });
         const data = await res.json();
-        if (data.success) {
+        if (!res.ok || !data.success) throw new Error(data.error || 'Subscription could not be completed.');
+        {
           input.value = '';
           if (feedback) {
             feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Thank you for joining House of Jewelux updates! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
@@ -2878,9 +2879,9 @@
         consultationType: getValue('apt-type') || 'Online Consultation',
         notes: getValue('apt-notes')
       };
-      const phoneDigits = payload.phone.replace(/\\D/g, '');
+      const phoneDigits = payload.phone.replace(/\D/g, '');
       if (!payload.fullName || phoneDigits.length < 10 || phoneDigits.length > 15 ||
-          !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(payload.email) || !payload.appointmentDate) {
+          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email) || !payload.appointmentDate) {
         alert('Please enter a valid name, phone number, email address and preferred date.');
         return;
       }
