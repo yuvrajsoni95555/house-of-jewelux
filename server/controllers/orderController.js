@@ -22,8 +22,9 @@ const validateCart = (req, res, next) => {
     for (const item of items) {
       const prod = products.find(p => p.id === item.id);
       if (!prod) continue;
-      const qty = Math.max(1, parseInt(item.quantity) || 1);
-      const itemTotal = prod.price * qty;
+      const qty = Number.parseInt(item.quantity, 10);
+      if (!Number.isInteger(qty) || qty < 1 || qty > 10) return res.status(400).json({ success: false, error: 'Each product quantity must be between 1 and 10.' });
+      const itemTotal = Number(prod.price) * qty;
       subtotal += itemTotal;
       validatedItems.push({
         id: prod.id,
@@ -48,8 +49,8 @@ const validateCart = (req, res, next) => {
       }
     }
 
-    const shipping = subtotal >= 2500 ? 0 : 250;
-    const grandTotal = Math.max(0, subtotal - discount + shipping);
+    const shipping = null;
+    const grandTotal = Math.max(0, subtotal - discount + (shipping || 0));
 
     res.json({
       success: true,
@@ -76,8 +77,24 @@ const createOrder = (req, res, next) => {
       isGiftBox
     } = req.body;
 
-    if (!customer || !shippingAddress || !items || items.length === 0) {
-      return res.status(400).json({ success: false, error: 'Missing mandatory checkout information' });
+    if (!customer || typeof customer !== 'object' || !shippingAddress || typeof shippingAddress !== 'object' || !Array.isArray(items) || items.length === 0 || items.length > 30) {
+      return res.status(400).json({ success: false, error: 'Missing or invalid checkout information' });
+    }
+    const email = String(customer.email || '').trim();
+    const phoneDigits = String(customer.phone || '').replace(/\D/g, '');
+    const addressLine = String(shippingAddress.addressLine || shippingAddress.address || '').trim();
+    const city = String(shippingAddress.city || '').trim();
+    const state = String(shippingAddress.state || '').trim();
+    const pincode = String(shippingAddress.pincode || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phoneDigits.length < 10 || phoneDigits.length > 15 ||
+        addressLine.length < 5 || city.length < 2 || state.length < 2 || !/^[1-9][0-9]{5}$/.test(pincode)) {
+      return res.status(400).json({ success: false, error: 'Please provide a valid email, phone number and complete shipping address.' });
+    }
+
+    const allowedPaymentMethods = ['advance_payment'];
+    const selectedPaymentMethod = paymentMethod || 'advance_payment';
+    if (!allowedPaymentMethods.includes(selectedPaymentMethod)) {
+      return res.status(400).json({ success: false, error: 'Only advance payment is accepted. Cash on Delivery is not available.' });
     }
 
     const products = readJSON('products.json');
@@ -91,14 +108,15 @@ const createOrder = (req, res, next) => {
     for (const item of items) {
       const prod = products.find(p => p.id === item.id);
       if (!prod) continue;
-      const qty = Math.max(1, parseInt(item.quantity) || 1);
-      const itemTotal = prod.price * qty;
+      const qty = Number.parseInt(item.quantity, 10);
+      if (!Number.isInteger(qty) || qty < 1 || qty > 10) return res.status(400).json({ success: false, error: 'Each product quantity must be between 1 and 10.' });
+      const itemTotal = Number(prod.price) * qty;
       subtotal += itemTotal;
       orderItems.push({
         id: prod.id,
         name: prod.name,
         price: prod.price,
-        metal: prod.metal || 'BIS 925 Sterling Silver',
+        metal: prod.metal || 'See product specifications',
         quantity: qty,
         image: prod.image,
         itemTotal
@@ -121,33 +139,32 @@ const createOrder = (req, res, next) => {
       }
     }
 
-    const shipping = subtotal >= 2500 ? 0 : 250;
+    const shipping = null;
     const giftBoxCost = isGiftBox ? 150 : 0;
-    const grandTotal = Math.max(0, subtotal - discount + shipping + giftBoxCost);
+    const grandTotal = Math.max(0, subtotal - discount + (shipping || 0) + giftBoxCost);
 
-    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-    const orderId = `HJ-ORD-2026-${randomSuffix}`;
-    const trackingNumber = `HJ-TRK-${Math.floor(100000 + Math.random() * 900000)}IN`;
+    const orderId = `HJ-ORD-${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
+    const trackingNumber = '';
 
     const newOrder = {
       orderId,
       orderDate: new Date().toISOString(),
-      orderStatus: 'Confirmed by Jaipur Atelier',
+      orderStatus: 'Awaiting Payment',
       customer: {
         name: customer.name || customer.fullName || 'Valued Connoisseur',
-        email: customer.email || '',
-        phone: customer.phone || ''
+        email,
+        phone: phoneDigits
       },
       shippingAddress: {
-        addressLine: shippingAddress.addressLine || shippingAddress.address || '',
-        city: shippingAddress.city || '',
-        state: shippingAddress.state || '',
-        pincode: shippingAddress.pincode || '',
+        addressLine,
+        city,
+        state,
+        pincode,
         country: 'India'
       },
       payment: {
-        method: paymentMethod || 'cod',
-        status: paymentMethod === 'cod' ? 'Pending upon Armored Handover' : 'Paid & Verified'
+        method: selectedPaymentMethod,
+        status: 'Payment Pending'
       },
       pricing: {
         subtotal,
@@ -159,11 +176,11 @@ const createOrder = (req, res, next) => {
       },
       items: orderItems,
       trackingNumber,
-      estimatedDelivery: '3 - 5 Business Days via Sequel Secure Logistics'
+      estimatedDelivery: 'Estimated delivery will be shared after order confirmation'
     };
 
     orders.unshift(newOrder);
-    writeJSON('orders.json', orders);
+    if (!writeJSON('orders.json', orders)) return res.status(500).json({ success: false, error: 'Unable to save your order. Please try again.' });
 
     res.status(201).json({
       success: true,
@@ -191,24 +208,20 @@ const getOrderById = (req, res, next) => {
 
 const trackOrder = (req, res, next) => {
   try {
-    const { orderId, query } = req.body;
-    const searchId = (orderId || query || '').trim().toUpperCase();
+    const { orderId, query } = req.body || {};
+    const searchId = String(orderId || query || '').trim().toUpperCase().slice(0, 50);
 
     if (!searchId) {
-      return res.status(400).json({ success: false, error: 'Please enter a valid Order ID (e.g. HJ-ORD-2026-7701)' });
+      return res.status(400).json({ success: false, error: 'Please enter a valid Order ID.' });
     }
 
     const orders = readJSON('orders.json');
-    const matched = orders.find(o => 
-      o.orderId.toUpperCase() === searchId || 
-      (o.trackingNumber && o.trackingNumber.toUpperCase() === searchId) ||
-      (o.customer && (o.customer.email.toUpperCase() === searchId || o.customer.phone.replace(/[^0-9]/g, '') === searchId.replace(/[^0-9]/g, '')))
-    );
+    const matched = orders.find(o => String(o.orderId || '').toUpperCase() === searchId);
 
     if (!matched) {
       return res.status(404).json({
         success: false,
-        error: `No consignment found for "${searchId}". Please verify your Order ID or contact Maison Concierge at +91 63770 61020.`
+        error: `No order was found for the supplied Order ID. Please check the ID or contact House of Jewelux customer support at +91 90799 98793.`
       });
     }
 
@@ -217,12 +230,12 @@ const trackOrder = (req, res, next) => {
       order: {
         orderId: matched.orderId,
         orderDate: matched.orderDate,
-        orderStatus: matched.orderStatus || 'Processing in Jaipur Atelier',
-        paymentStatus: matched.paymentStatus || 'Paid',
-        trackingNumber: matched.trackingNumber || 'HJ-TRK-749102IN',
-        courierPartner: 'Sequel Secure Armored Logistics & Blue Dart Apex',
-        estimatedDelivery: matched.estimatedDelivery || '3 - 5 Business Days with White-Glove Armored Transit',
-        shippingCity: matched.shippingAddress ? `${matched.shippingAddress.city}, ${matched.shippingAddress.state}` : 'Jaipur, Rajasthan',
+        orderStatus: matched.orderStatus || 'Order received',
+        paymentStatus: (matched.payment && matched.payment.status) || 'Payment Pending',
+        trackingNumber: matched.trackingNumber || 'Not assigned yet',
+        courierPartner: 'To be assigned',
+        estimatedDelivery: matched.estimatedDelivery || 'Shared after dispatch',
+        shippingCity: matched.shippingAddress ? `${matched.shippingAddress.city}, ${matched.shippingAddress.state}` : '',
         itemCount: matched.items ? matched.items.length : 1,
         items: (matched.items || []).map(i => ({
           name: i.name,

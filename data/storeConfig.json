@@ -1,18 +1,13 @@
 {
-  "whatsappNumber": "+916377061020",
-  "whatsappWelcome": "Hello House of Jewelux Concierge! I would like to inquire about fine jewellery and bespoke commissions.",
+  "whatsappNumber": "+919079998793",
+  "whatsappWelcome": "Hello House of Jewelux team. I would like to know more about your gold, silver and diamond jewellery collections.",
   "founderName": "Yuvraj Soni",
   "founderTitle": "Founder & Creative Director",
   "conciergeEmail": "houseofjewelux@gmail.com",
-  "founderPinHash": "a20a2b7bb0842d5cf8a0c06c626421fd51ec103925c1819a51271f2779afa730",
-  "announcementText": "✦ INDIAN FINE JEWELLERY • TEMPLE JEWELLERY • 925 SILVER • DESIGNED & MADE IN INDIA",
+  "announcementText": "✦ INDIAN HERITAGE • GOLD • SILVER • DIAMOND JEWELLERY",
   "heroHeadline": "Where Elegance Becomes Eternal",
-  "heroSubtitle": "An Indian silver jewellery brand bringing together traditional craftsmanship, sacred temple artistry and refined contemporary design. Solid 925 silver finished in micron gold and anti-tarnish rhodium plating.",
+  "heroSubtitle": "An Indian jewellery brand bringing heritage influences and contemporary minimalism together across gold, silver and diamond jewellery.",
   "heroCtaText": "Explore The Jewelux Collection",
-  "heroCtaHash": "/jewelux-collection",
-  "freeShippingThresholdUSD": 250,
-  "shippingDaysDomestic": "2 - 4 Business Days (Armored White-Glove)",
-  "shippingDaysInternational": "4 - 7 Business Days (Fully Insured FedEx Priority)",
-  "returnsGuaranteeDays": 14,
+  "heroCtaHash": "#collections/all",
   "silverSpotlightEnabled": false
 }

@@ -6,10 +6,6 @@
     "category": "rings",
     "collection": "silver-edit",
     "price": 15448,
-    "compareAtPrice": 20899,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 38,
     "badge": "Bestseller",
     "tag": "Silver Flagship",
     "image": "images/authentic_solitaire_ring.jpg",
@@ -20,14 +16,14 @@
       "images/authentic_chelsea_ring.jpg",
       "images/authentic_rings_couple_hands.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
-    "stone": "2.5ct Certified Lab Moissanite (D-Flawless)",
-    "purity": "Stamped 925 Hallmarked",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
+    "stone": "2.5ct Lab Moissanite",
+    "purity": "925 Sterling Silver",
     "cut": "Hearts & Arrows Ideal Brilliant",
-    "clarity": "VVS1 Laboratory Certified",
+    "clarity": "",
     "dimensions": "8.5mm Center Stone • 2.0mm Pavé Band",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
-    "description": "Architectural 6-prong crown setting cradling a radiant 2.5-carat lab-grown moissanite. Dipped in liquid rhodium for lifelong anti-tarnish luster.",
+    "certificate": "",
+    "description": "Architectural 6-prong crown setting cradling a radiant 2.5-carat lab-grown moissanite. Dipped in liquid rhodium for bright, polished appearance.",
     "isSilver": true,
     "isGold": false,
     "isNew": true,
@@ -41,36 +37,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
-        "value": "2.5ct Certified Lab Moissanite (D-Flawless)"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "2.5ct Lab Moissanite"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-001 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "architectural-jewellery",
       "contemporary-jewellery",
@@ -88,10 +68,6 @@
     "category": "rings",
     "collection": "eternal-couples",
     "price": 20040,
-    "compareAtPrice": 27099,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 45,
     "badge": "Bridal Favorite",
     "tag": "Couple Sanctuary",
     "image": "images/authentic_diamond_ring_macro.jpg",
@@ -102,14 +78,14 @@
       "images/authentic_rings_couple_hands.jpg",
       "images/authentic_solitaire_ring.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Micro-Pavé Fine Lab Diamonds",
-    "purity": "Stamped 925 Silver",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant Pavé",
-    "clarity": "VVS1 Eye-Clean",
+    "clarity": "",
     "dimensions": "His: 5.0mm Brushed Band • Hers: 3.2mm Pavé Band",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
-    "description": "Designed for lifelong companionship. His band features brushed rhodium satin with beveled comfort-fit edges; hers glistens with a continuous channel of micro-pavé diamonds.",
+    "certificate": "",
+    "description": "Designed for lasting companionship. His band features brushed rhodium satin with beveled comfort-fit edges; hers glistens with a continuous channel of micro-pavé diamonds.",
     "isSilver": true,
     "isGold": false,
     "isNew": true,
@@ -123,31 +99,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Micro-Pavé Fine Lab Diamonds"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-002 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -167,10 +127,6 @@
     "category": "rings",
     "collection": "silver-edit",
     "price": 18370,
-    "compareAtPrice": 24799,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 52,
     "badge": "Limited Edition",
     "tag": "Art Deco Atelier",
     "image": "images/authentic_chelsea_ring.jpg",
@@ -181,13 +137,13 @@
       "images/authentic_solitaire_ring.jpg",
       "images/authentic_diamond_ring_macro.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "3.0ct Emerald-Cut Moissanite with French Pavé Halo",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Step-Cut Emerald Facet",
-    "clarity": "FL / VVS1 Flawless",
+    "clarity": "",
     "dimensions": "9x7mm Center Stone • 1.8mm Halo Rim",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Inspired by timeless regal aesthetics, step-cut facets generate hypnotic hall-of-mirrors light dispersion encircled by a delicate French pavé border.",
     "isSilver": true,
     "isGold": false,
@@ -202,35 +158,19 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "3.0ct Emerald-Cut Moissanite with French Pavé Halo"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-003 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond",
-      "gemstone"
+      "gemstone",
+      "moissanite"
     ],
     "primaryMaterial": "gemstone",
     "collections": [
@@ -249,12 +189,8 @@
     "category": "rings",
     "collection": "gold-vault",
     "price": 48430,
-    "compareAtPrice": 65399,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 59,
     "badge": "Atelier Spotlight",
-    "tag": "Bespoke Joaillerie",
+    "tag": "Featured Design Joaillerie",
     "image": "images/authentic_rings_couple_hands.jpg",
     "hoverImage": "images/authentic_solitaire_ring.jpg",
     "gallery": [
@@ -263,13 +199,13 @@
       "images/authentic_diamond_ring_macro.jpg",
       "images/authentic_chelsea_ring.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "2.2ct Marquise Cut Lab Diamond",
-    "purity": "18K Gold Plated 925 Hallmarked",
+    "purity": "925 Silver with 18K Gold Plating",
     "cut": "Marquise Modified Brilliant",
-    "clarity": "VVS1 D-Color",
+    "clarity": "",
     "dimensions": "12x6mm Center Stone",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "An elongated marquise silhouette that flatters the finger with graceful symmetry, finished in warm warm antique champagne gold.",
     "isSilver": true,
     "isGold": true,
@@ -284,31 +220,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "2.2ct Marquise Cut Lab Diamond"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-004 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -329,10 +249,6 @@
     "category": "rings",
     "collection": "silver-edit",
     "price": 13778,
-    "compareAtPrice": 18599,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 66,
     "badge": "Everyday Luxury",
     "tag": "Modern Architectural",
     "image": "images/authentic_solitaire_ring.jpg",
@@ -343,13 +259,13 @@
       "images/authentic_chelsea_ring.jpg",
       "images/authentic_rings_couple_hands.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Dual Ribbon Micro-Pavé Moissanites",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "4.5mm Tapered Width",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Interlocking sculptural bands symbolizing intertwined journeys. Flawless micro-pavé gems reflect radiant ambient luminescence.",
     "isSilver": true,
     "isGold": false,
@@ -364,34 +280,18 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Dual Ribbon Micro-Pavé Moissanites"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-005 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
     "primaryMaterial": "silver",
     "collections": [
@@ -409,10 +309,6 @@
     "category": "rings",
     "collection": "silver-edit",
     "price": 16283,
-    "compareAtPrice": 21999,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 73,
     "badge": "New Arrival",
     "tag": "Bridal Promise",
     "image": "images/authentic_diamond_ring_macro.jpg",
@@ -423,13 +319,13 @@
       "images/authentic_rings_couple_hands.jpg",
       "images/authentic_solitaire_ring.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "2.0ct Oval Brilliant Moissanite",
-    "purity": "925 Stamped & Rhodium Dipped",
+    "purity": "925 Sterling Silver with Rhodium Finish",
     "cut": "Oval Brilliant Facet",
-    "clarity": "VVS1 Flawless",
+    "clarity": "",
     "dimensions": "10x7mm Oval Center",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "A graceful oval brilliant solitaire held in an understated 4-prong low-profile cradle, engineered for effortless daily comfort.",
     "isSilver": true,
     "isGold": false,
@@ -444,36 +340,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "2.0ct Oval Brilliant Moissanite"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-006 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "bridal-jewellery",
       "everyday-luxury",
@@ -488,10 +368,6 @@
     "category": "rings",
     "collection": "eternal-couples",
     "price": 14613,
-    "compareAtPrice": 19699,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 80,
     "badge": "Unisex Icon",
     "tag": "Heirloom Signet",
     "image": "images/authentic_chelsea_ring.jpg",
@@ -502,13 +378,13 @@
       "images/authentic_solitaire_ring.jpg",
       "images/authentic_diamond_ring_macro.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Center Flush-Set Baguette Diamond Accent",
-    "purity": "Solid 925 Silver",
+    "purity": "925 Sterling Silver",
     "cut": "Step Cut Baguette",
-    "clarity": "VS1",
+    "clarity": "",
     "dimensions": "6.0mm Face Width",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Subtle minimalism with substantial weight. Features a satin-brushed face with mirror-polished inner shank.",
     "isSilver": true,
     "isGold": false,
@@ -523,31 +399,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Center Flush-Set Baguette Diamond Accent"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-007 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -571,10 +431,6 @@
     "category": "rings",
     "collection": "silver-edit",
     "price": 17535,
-    "compareAtPrice": 23699,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 87,
     "badge": "Romantic Edit",
     "tag": "Haute Teardrop",
     "image": "images/authentic_rings_couple_hands.jpg",
@@ -585,13 +441,13 @@
       "images/authentic_diamond_ring_macro.jpg",
       "images/authentic_chelsea_ring.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "1.8ct Pear Cut Lab Diamond",
-    "purity": "925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Pear Modified Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "9x6mm Pear Stone",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Sensuous teardrop shape capturing feminine grace, set on a whispered knife-edge shank finished in romantic rose gold.",
     "isSilver": true,
     "isGold": true,
@@ -606,31 +462,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "1.8ct Pear Cut Lab Diamond"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-008 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -651,10 +491,6 @@
     "category": "rings",
     "collection": "eternal-couples",
     "price": 12525,
-    "compareAtPrice": 16899,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 94,
     "badge": "Bridal Essential",
     "tag": "Bridal Contoured",
     "image": "images/authentic_solitaire_ring.jpg",
@@ -665,13 +501,13 @@
       "images/authentic_chelsea_ring.jpg",
       "images/authentic_rings_couple_hands.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Pavé Diamond Accent V-Curve",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "2.2mm Contoured Ribbon",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Articulated gently in a delicate chevron contour designed to sit flush against any solitaire or promise ring.",
     "isSilver": true,
     "isGold": false,
@@ -686,31 +522,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Diamond Accent V-Curve"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-009 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -733,10 +553,6 @@
     "category": "rings",
     "collection": "silver-edit",
     "price": 19205,
-    "compareAtPrice": 25899,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 101,
     "badge": "High Sparkle",
     "tag": "Eternity Statement",
     "image": "images/authentic_diamond_ring_macro.jpg",
@@ -747,13 +563,13 @@
       "images/authentic_rings_couple_hands.jpg",
       "images/authentic_solitaire_ring.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "3 Rows of Flawless Lab Moissanites",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant Micro-Pavé",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "4.8mm Full Eternity Band",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Over 70 handset laboratory moissanites arranged in three luminous tiers, radiating uninterrupted fire from every viewing angle.",
     "isSilver": true,
     "isGold": false,
@@ -768,34 +584,18 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "3 Rows of Flawless Lab Moissanites"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-RNG-010 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
     "primaryMaterial": "silver",
     "collections": [
@@ -813,10 +613,6 @@
     "category": "earrings",
     "collection": "silver-edit",
     "price": 14613,
-    "compareAtPrice": 19699,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 108,
     "badge": "Bestseller",
     "tag": "Drop Solitaire",
     "image": "images/authentic_earrings_hoop.jpg",
@@ -827,13 +623,13 @@
       "images/authentic_earrings_stone.jpg",
       "images/authentic_earrings_macro.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
-    "stone": "2.0ct Each Certified Pear Moissanites",
-    "purity": "Stamped 925",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
+    "stone": "2.0ct Each Pear Moissanites",
+    "purity": "925 Sterling Silver",
     "cut": "Pear Brilliant",
-    "clarity": "VVS1 Laboratory Certified",
+    "clarity": "",
     "dimensions": "18mm Total Drop • 7x5mm Center Gems",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Suspended from delicate pavé studs, these faceted teardrops catch ambient twilight, swaying effortlessly with every step.",
     "isSilver": true,
     "isGold": false,
@@ -848,36 +644,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
-        "value": "2.0ct Each Certified Pear Moissanites"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "2.0ct Each Pear Moissanites"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-001 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "everyday-luxury",
       "fine-jewellery",
@@ -893,10 +673,6 @@
     "category": "earrings",
     "collection": "everyday-icons",
     "price": 11690,
-    "compareAtPrice": 15799,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 115,
     "badge": "Essential",
     "tag": "Everyday Icon",
     "image": "images/authentic_earrings_huggie.jpg",
@@ -907,13 +683,13 @@
       "images/authentic_earrings_macro.jpg",
       "images/authentic_earrings_hoop.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Dual-Row Micro-Pavé Diamonds",
-    "purity": "925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "12mm Diameter • 2.5mm Width",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Ergonomic click-latch closure huggies sculpted for daily wear. Seamless comfort whether seated in boardrooms or dining in Venice.",
     "isSilver": true,
     "isGold": true,
@@ -928,31 +704,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Dual-Row Micro-Pavé Diamonds"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-002 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -968,14 +728,10 @@
   {
     "id": "HJ-EAR-003",
     "handle": "the-cascade-chandelier-diamond-drops-hj-ear-003",
-    "name": "The Cascade Chandelier Diamond Drops",
+    "name": "The Cascade Chandelier Moissanite Drops",
     "category": "earrings",
     "collection": "silver-edit",
     "price": 24215,
-    "compareAtPrice": 32699,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 122,
     "badge": "Red Carpet Edit",
     "tag": "Gala Chandelier",
     "image": "images/authentic_earrings_stone.jpg",
@@ -986,13 +742,13 @@
       "images/authentic_earrings_hoop.jpg",
       "images/authentic_earrings_huggie.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Graduated Moissanite Drops & Marquis Links",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round & Marquise Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "52mm Dramatic Drop",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Dramatic articulated chandeliers engineered to dance with candlelight. Feather-light balance prevents earlobe fatigue.",
     "isSilver": true,
     "isGold": false,
@@ -1007,36 +763,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Graduated Moissanite Drops & Marquis Links"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-003 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "animal-wildlife",
       "bird-inspired",
@@ -1047,14 +787,10 @@
   {
     "id": "HJ-EAR-004",
     "handle": "the-royal-colombian-emerald-halo-studs-hj-ear-004",
-    "name": "The Royal Colombian Emerald Halo Studs",
+    "name": "The Royal Emerald Halo Studs",
     "category": "earrings",
     "collection": "gold-vault",
     "price": 31730,
-    "compareAtPrice": 42799,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 129,
     "badge": "Atelier Masterpiece",
     "tag": "Haute Emerald",
     "image": "images/authentic_earrings_macro.jpg",
@@ -1065,13 +801,13 @@
       "images/authentic_earrings_huggie.jpg",
       "images/authentic_earrings_stone.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
-    "stone": "Lab-Grown Colombian Emeralds with Diamond Halos",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
+    "stone": "Lab-Grown Emeralds with Diamond Halos",
     "purity": "18K Gold over 925 Silver",
     "cut": "Octagonal Step Cut",
-    "clarity": "VVS Vivid Green",
+    "clarity": "",
     "dimensions": "8x6mm Emerald Center",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Vivid deep verdant emeralds encircled by sixteen micro-pavé halos. An opulent tribute to classic royal European dynasty jewels.",
     "isSilver": true,
     "isGold": true,
@@ -1086,31 +822,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
-        "value": "Lab-Grown Colombian Emeralds with Diamond Halos"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "Lab-Grown Emeralds with Diamond Halos"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-004 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -1133,10 +853,6 @@
     "category": "earrings",
     "collection": "silver-edit",
     "price": 10855,
-    "compareAtPrice": 14699,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 136,
     "badge": "Timeless",
     "tag": "Daily Classic",
     "image": "images/authentic_earrings_hoop.jpg",
@@ -1147,13 +863,13 @@
       "images/authentic_earrings_stone.jpg",
       "images/authentic_earrings_macro.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
-    "stone": "1.5ct Each D-Flawless Moissanite",
-    "purity": "Stamped 925",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
+    "stone": "1.5ct Each Moissanite",
+    "purity": "925 Sterling Silver",
     "cut": "Hearts & Arrows Round Ideal",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "7.5mm Diameter",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "The quintessential diamond studs. Minimalist four-claw architecture maximizes light transmission through the pavilion facets.",
     "isSilver": true,
     "isGold": false,
@@ -1168,36 +884,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
-        "value": "1.5ct Each D-Flawless Moissanite"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "1.5ct Each Moissanite"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-005 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "architectural-jewellery",
       "contemporary-jewellery",
@@ -1215,10 +915,6 @@
     "category": "earrings",
     "collection": "everyday-icons",
     "price": 12943,
-    "compareAtPrice": 17499,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 143,
     "badge": "Editorial Pick",
     "tag": "Sculptural Cuff",
     "image": "images/authentic_earrings_huggie.jpg",
@@ -1229,13 +925,13 @@
       "images/authentic_earrings_macro.jpg",
       "images/authentic_earrings_hoop.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Pavé Ribbons on Inner Flange",
-    "purity": "925 Stamped",
+    "purity": "925",
     "cut": "Micro Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "20mm Curvature",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Sweeping curved silhouette that hugs the ear cartilage without requiring piercing. Modern Roman minimalism at its finest.",
     "isSilver": true,
     "isGold": false,
@@ -1250,31 +946,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Ribbons on Inner Flange"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-006 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -1290,14 +970,10 @@
   {
     "id": "HJ-EAR-007",
     "handle": "the-bellini-south-sea-pearl-drops-hj-ear-007",
-    "name": "The Bellini South Sea Pearl Drops",
+    "name": "The Bellini Pearl Drops",
     "category": "earrings",
     "collection": "gold-vault",
     "price": 22963,
-    "compareAtPrice": 30999,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 150,
     "badge": "Bridal Luxury",
     "tag": "Pearl Heirlooms",
     "image": "images/authentic_earrings_stone.jpg",
@@ -1308,13 +984,13 @@
       "images/authentic_earrings_hoop.jpg",
       "images/authentic_earrings_huggie.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
-    "stone": "11mm Luminous South Sea Pearl Drops",
-    "purity": "18K Gold Plated 925",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
+    "stone": "11mm Luminous Pearl Drops",
+    "purity": "925 Silver with 18K Gold Plating",
     "cut": "Natural Spheroid Pearl",
-    "clarity": "AAA High Luster",
+    "clarity": "",
     "dimensions": "11mm Pearl • 28mm Full Drop",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Silken, unblemished luster pearls suspended below champagne gold diamond-set ribbons. Soft, warm vanilla luminescence.",
     "isSilver": true,
     "isGold": true,
@@ -1329,31 +1005,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
-        "value": "11mm Luminous South Sea Pearl Drops"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "11mm Luminous Pearl Drops"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-007 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -1374,10 +1034,6 @@
     "category": "earrings",
     "collection": "silver-edit",
     "price": 16283,
-    "compareAtPrice": 21999,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 157,
     "badge": "Signature",
     "tag": "Starlight Collection",
     "image": "images/authentic_earrings_macro.jpg",
@@ -1388,13 +1044,13 @@
       "images/authentic_earrings_huggie.jpg",
       "images/authentic_earrings_stone.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Pavé Diamond Multi-Ray Starburst",
-    "purity": "925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "25mm Drop",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Scintillating eight-pointed northern stars cascading from delicate pavé studs, echoing the eternal nocturnal heavens.",
     "isSilver": true,
     "isGold": false,
@@ -1409,31 +1065,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Diamond Multi-Ray Starburst"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-008 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -1452,10 +1092,6 @@
     "category": "earrings",
     "collection": "silver-edit",
     "price": 18370,
-    "compareAtPrice": 24799,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 164,
     "badge": "Modern Couture",
     "tag": "Art Deco",
     "image": "images/authentic_earrings_hoop.jpg",
@@ -1466,13 +1102,13 @@
       "images/authentic_earrings_stone.jpg",
       "images/authentic_earrings_macro.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Step-Cut Baguettes & Triangle Facets",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Baguette Step Cut",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "34mm Linear Drop",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Crisp geometric lines reminiscent of Milanese architectural arches, balancing razor-sharp modernism with haute joaillerie sparkle.",
     "isSilver": true,
     "isGold": false,
@@ -1487,31 +1123,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Step-Cut Baguettes & Triangle Facets"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-009 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver"
     ],
@@ -1530,10 +1150,6 @@
     "category": "earrings",
     "collection": "temple-heritage",
     "price": 25885,
-    "compareAtPrice": 34899,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 171,
     "badge": "Heritage Bride",
     "tag": "Temple Grandeur",
     "image": "images/authentic_earrings_huggie.jpg",
@@ -1544,13 +1160,13 @@
       "images/authentic_earrings_macro.jpg",
       "images/authentic_earrings_hoop.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Uncut Polki Moissanites & Seed Pearls",
     "purity": "925 Core with 22K Gold Finish",
     "cut": "Traditional Polki Flat Slice",
-    "clarity": "Authentic Antique Cut",
+    "clarity": "",
     "dimensions": "42mm Bell Drop",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Reinvented temple bell jhumkas with suspended pearl fringe, echoing centuries of divine Indian wedding celebrations.",
     "isSilver": true,
     "isGold": true,
@@ -1565,36 +1181,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Uncut Polki Moissanites & Seed Pearls"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-EAR-010 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
-      "diamond",
-      "gemstone"
+      "gemstone",
+      "moissanite"
     ],
     "primaryMaterial": "gemstone",
     "collections": [
@@ -1614,10 +1214,6 @@
     "category": "bracelets",
     "collection": "silver-edit",
     "price": 21710,
-    "compareAtPrice": 29299,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 178,
     "badge": "Bestseller",
     "tag": "Tennis Masterpiece",
     "image": "images/authentic_bracelet_gemstones.jpg",
@@ -1627,14 +1223,14 @@
       "images/authentic_bracelet_tennis.jpg",
       "images/authentic_bracelet_bangles.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "58 Individually Set Lab Moissanites (4mm)",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Hearts & Arrows Round Ideal",
-    "clarity": "VVS1 D-Flawless",
+    "clarity": "",
     "dimensions": "7.0 inches • Double-Safety Clasp",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
-    "description": "Continuous line of pure light. Hand-articulated four-prong link segments flex naturally with the wrist; dual-safety box clasp ensures lifetime security.",
+    "certificate": "",
+    "description": "Continuous line of pure light. Hand-articulated four-prong link segments flex naturally with the wrist; dual-safety box clasp ensures secure fastening.",
     "isSilver": true,
     "isGold": false,
     "isNew": true,
@@ -1648,36 +1244,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "58 Individually Set Lab Moissanites (4mm)"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-001 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "everyday-luxury",
       "fine-jewellery"
@@ -1691,10 +1271,6 @@
     "category": "bracelets",
     "collection": "silver-edit",
     "price": 17535,
-    "compareAtPrice": 23699,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 185,
     "badge": "Statement Icon",
     "tag": "Sculptural Silver",
     "image": "images/authentic_bracelet_tennis.jpg",
@@ -1704,13 +1280,13 @@
       "images/authentic_bracelet_bangles.jpg",
       "images/authentic_bracelet_gemstones.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Twin Pavé Finials with Moissanite Accents",
     "purity": "Heavyweight 925 Silver (32 Grams)",
     "cut": "Micro-Pavé Terminals",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "62mm Internal Diameter (Malleable Fit)",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Heavyweight solid silver torc cuff hand-shaped by master Indian silversmiths. Features a smooth mirror-burnished body ending in faceted diamond finials.",
     "isSilver": true,
     "isGold": false,
@@ -1725,36 +1301,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Twin Pavé Finials with Moissanite Accents"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-002 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "architectural-jewellery",
       "contemporary-jewellery",
@@ -1769,12 +1329,8 @@
     "category": "bracelets",
     "collection": "gold-vault",
     "price": 28390,
-    "compareAtPrice": 38299,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 192,
     "badge": "Luxury Link",
-    "tag": "Bespoke Links",
+    "tag": "Featured Design Links",
     "image": "images/authentic_bracelet_bangles.jpg",
     "hoverImage": "images/authentic_bracelet_gemstones.jpg",
     "gallery": [
@@ -1782,13 +1338,13 @@
       "images/authentic_bracelet_gemstones.jpg",
       "images/authentic_bracelet_tennis.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Alternating Channel Baguette Diamonds",
-    "purity": "18K Gold Plated 925",
+    "purity": "925 Silver with 18K Gold Plating",
     "cut": "Precision Step-Cut Baguettes",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "7.2 inches • 3.8mm Width",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Architectural link bars inset with channel-set baguette stones. Warm warm antique champagne gold finish reflects opulent evening grandeur.",
     "isSilver": true,
     "isGold": true,
@@ -1803,31 +1359,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Alternating Channel Baguette Diamonds"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-003 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -1848,10 +1388,6 @@
     "category": "bracelets",
     "collection": "eternal-couples",
     "price": 15865,
-    "compareAtPrice": 21399,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 199,
     "badge": "Newlywed Favorite",
     "tag": "Bridal Sanctuary",
     "image": "images/authentic_bracelet_gemstones.jpg",
@@ -1861,13 +1397,13 @@
       "images/authentic_bracelet_tennis.jpg",
       "images/authentic_bracelet_bangles.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Pavé Set Interlocking Lovers Knot Charm",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "Adjustable 6.5 to 7.5 inches",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "An unbroken knot sculpted in gleaming silver, celebrating everlasting marital devotion. Includes an adjustable extension chain.",
     "isSilver": true,
     "isGold": false,
@@ -1882,31 +1418,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Set Interlocking Lovers Knot Charm"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-004 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -1925,10 +1445,6 @@
     "category": "bracelets",
     "collection": "everyday-icons",
     "price": 12108,
-    "compareAtPrice": 16299,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 206,
     "badge": "Stacking Essential",
     "tag": "Everyday Delicate",
     "image": "images/authentic_bracelet_tennis.jpg",
@@ -1938,13 +1454,13 @@
       "images/authentic_bracelet_bangles.jpg",
       "images/authentic_bracelet_gemstones.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "5 Bezel-Set Solitaire Stations",
-    "purity": "925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "6.8 inches + 1 inch Extender",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Five shimmering bezel-set diamond stations spaced symmetrically along a feather-light diamond-cut cable chain.",
     "isSilver": true,
     "isGold": false,
@@ -1959,31 +1475,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "5 Bezel-Set Solitaire Stations"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-005 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -2004,10 +1504,6 @@
     "category": "bracelets",
     "collection": "gold-vault",
     "price": 24633,
-    "compareAtPrice": 33299,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 213,
     "badge": "New Arrival",
     "tag": "Mesh Joaillerie",
     "image": "images/authentic_bracelet_bangles.jpg",
@@ -2017,13 +1513,13 @@
       "images/authentic_bracelet_gemstones.jpg",
       "images/authentic_bracelet_tennis.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Pavé Diamond Bar Centerpiece",
-    "purity": "18K Vermeil Stamped 925",
+    "purity": "925 Silver with 18K Gold Vermeil",
     "cut": "Pavé Setting",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "8mm Flexible Mesh Band",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Woven with the fluidity of silken fabric, this Milanese mesh band contours smoothly to the wrist with an opulent magnetic buckle.",
     "isSilver": true,
     "isGold": true,
@@ -2038,31 +1534,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Diamond Bar Centerpiece"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-006 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -2084,10 +1564,6 @@
     "category": "bracelets",
     "collection": "silver-edit",
     "price": 14613,
-    "compareAtPrice": 19699,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 40,
     "badge": "Color Accent",
     "tag": "Verdant Pop",
     "image": "images/authentic_bracelet_gemstones.jpg",
@@ -2097,13 +1573,13 @@
       "images/authentic_bracelet_tennis.jpg",
       "images/authentic_bracelet_bangles.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
-    "stone": "1.2ct Vivid Green Lab Colombian Emerald",
-    "purity": "Stamped 925",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
+    "stone": "1.2ct Vivid Green Lab Emerald",
+    "purity": "925 Sterling Silver",
     "cut": "Emerald Step Cut",
-    "clarity": "Eye-Clean Vivid",
+    "clarity": "",
     "dimensions": "7x5mm Center Stone",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "A single hypnotic green emerald suspended on an ultra-fine platinum-finished sterling silver trace chain.",
     "isSilver": true,
     "isGold": false,
@@ -2118,31 +1594,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
-        "value": "1.2ct Vivid Green Lab Colombian Emerald"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "1.2ct Vivid Green Lab Emerald"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-007 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond",
@@ -2163,10 +1623,6 @@
     "category": "bracelets",
     "collection": "eternal-couples",
     "price": 22545,
-    "compareAtPrice": 30399,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 47,
     "badge": "Couples Pair",
     "tag": "Couple Cuff Pair",
     "image": "images/authentic_bracelet_tennis.jpg",
@@ -2176,13 +1632,13 @@
       "images/authentic_bracelet_bangles.jpg",
       "images/authentic_bracelet_gemstones.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Flush-Set Solitaire Diamond on Hers",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "His: 8mm Cuff • Hers: 5mm Cuff",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Matching cuff pair with internal engraved covenant coordinates. Subtle exterior geometry designed for modern lovers.",
     "isSilver": true,
     "isGold": false,
@@ -2197,31 +1653,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Flush-Set Solitaire Diamond on Hers"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-008 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -2244,10 +1684,6 @@
     "category": "bracelets",
     "collection": "silver-edit",
     "price": 13360,
-    "compareAtPrice": 17999,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 54,
     "badge": "Sleek Modern",
     "tag": "Liquid Silver",
     "image": "images/authentic_bracelet_bangles.jpg",
@@ -2257,13 +1693,13 @@
       "images/authentic_bracelet_gemstones.jpg",
       "images/authentic_bracelet_tennis.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Mirror-Faceted Solid Links",
     "purity": "Solid 925",
     "cut": "Diamond-Cut Beveled Edges",
-    "clarity": "Mirror Luster",
+    "clarity": "",
     "dimensions": "5.5mm Width • 7.0 inches",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Fluid herringbone ribbon links that drape across the wrist like liquid chrome, catching every subtle shift of ambient lighting.",
     "isSilver": true,
     "isGold": false,
@@ -2278,31 +1714,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Mirror-Faceted Solid Links"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-009 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver"
     ],
@@ -2323,10 +1743,6 @@
     "category": "bracelets",
     "collection": "silver-edit",
     "price": 18788,
-    "compareAtPrice": 25399,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 61,
     "badge": "Chic Layering",
     "tag": "Orbit Double Wrap",
     "image": "images/authentic_bracelet_gemstones.jpg",
@@ -2336,13 +1752,13 @@
       "images/authentic_bracelet_tennis.jpg",
       "images/authentic_bracelet_bangles.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Twin Orbit Rings with Micro-Pavé Diamonds",
-    "purity": "925 Stamped",
+    "purity": "925",
     "cut": "Micro Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "Adjustable Double Wrap",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Double-wrapping fine snake chain held by an interlocking pavé celestial orbit ring. Modern European layering at its finest.",
     "isSilver": true,
     "isGold": false,
@@ -2357,31 +1773,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Twin Orbit Rings with Micro-Pavé Diamonds"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRC-010 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -2402,10 +1802,6 @@
     "category": "necklaces",
     "collection": "eternal-couples",
     "price": 23380,
-    "compareAtPrice": 31599,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 68,
     "badge": "Bridal Spotlight",
     "tag": "Contemporary Necklace",
     "image": "images/authentic_temple_heritage.jpg",
@@ -2415,14 +1811,14 @@
       "images/authentic_temple_sacred.jpg",
       "images/authentic_necklace_hero.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "1.5ct Solitaire with Double Pavé Halo & Micro-Pavé Solitaires",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant Hearts & Arrows",
-    "clarity": "VVS1 Flawless",
+    "clarity": "",
     "dimensions": "16-18 inch Adjustable Chain • 12mm Pendant",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
-    "description": "Sculpted in solid BIS Hallmarked 925 Sterling Silver with anti-tarnish rhodium plating and micro-pavé lab moissanites. Modern architectural elegance reflecting contemporary fine jewellery design.",
+    "certificate": "",
+    "description": "Sculpted in solid 925 Sterling Silver with rhodium plating and micro-pavé lab moissanites. Modern architectural elegance reflecting contemporary fine jewellery design.",
     "isSilver": true,
     "isGold": false,
     "isNew": true,
@@ -2436,31 +1832,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "1.5ct Solitaire with Double Pavé Halo & Micro-Pavé Solitaires"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-001 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -2479,14 +1859,10 @@
   {
     "id": "HJ-NCK-002",
     "handle": "the-empress-emerald-diamond-regal-choker-hj-nck-002",
-    "name": "The Empress Emerald & Diamond Regal Choker",
+    "name": "The Empress Emerald & Moissanite Regal Choker",
     "category": "necklaces",
     "collection": "gold-vault",
     "price": 104375,
-    "compareAtPrice": 140899,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 75,
     "badge": "Masterpiece",
     "tag": "Haute Joaillerie",
     "image": "images/authentic_temple_sacred.jpg",
@@ -2496,14 +1872,14 @@
       "images/authentic_necklace_hero.jpg",
       "images/authentic_temple_heritage.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
-    "stone": "18.5 carats Certified Colombian Emeralds & D-Flawless Moissanite",
-    "purity": "18K Gold Vermeil Stamped",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
+    "stone": "18.5 carats Emeralds & Moissanite",
+    "purity": "925 Silver with 18K Gold Vermeil",
     "cut": "Step Cut Octagonal & Marquis",
-    "clarity": "VVS Royal Green",
+    "clarity": "",
     "dimensions": "15.5 inch Articulated Choker",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
-    "description": "Our atelier masterpiece. Cascading vibrant verdant emeralds accented by pear-cut lab diamonds. Delivered in handcrafted velvet archival trunk.",
+    "certificate": "",
+    "description": "Our atelier masterpiece. Cascading vibrant verdant emeralds accented by pear-cut lab diamonds. Delivered in careful presentation.",
     "isSilver": true,
     "isGold": true,
     "isNew": false,
@@ -2517,36 +1893,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
-        "value": "18.5 carats Certified Colombian Emeralds & D-Flawless Moissanite"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "18.5 carats Emeralds & Moissanite"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-002 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
-      "diamond",
-      "gemstone"
+      "gemstone",
+      "moissanite"
     ],
     "primaryMaterial": "gemstone",
     "collections": [
@@ -2568,10 +1928,6 @@
     "category": "necklaces",
     "collection": "silver-edit",
     "price": 13778,
-    "compareAtPrice": 18599,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 82,
     "badge": "Everyday Icon",
     "tag": "Floating Diamond",
     "image": "images/authentic_necklace_hero.jpg",
@@ -2582,13 +1938,13 @@
       "images/authentic_necklace_chain.jpg",
       "images/authentic_temple_sacred.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "1.5ct Round Brilliant Lab Moissanite",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Hearts & Arrows Round Ideal",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "7.5mm Floating Bezel • 16-18 inch Chain",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Minimally held in an invisible floating bezel setting that allows light to pour through the girdle from all 360 degrees.",
     "isSilver": true,
     "isGold": false,
@@ -2603,36 +1959,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "1.5ct Round Brilliant Lab Moissanite"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-003 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "everyday-luxury",
       "fine-jewellery"
@@ -2646,10 +1986,6 @@
     "category": "necklaces",
     "collection": "temple-heritage",
     "price": 37575,
-    "compareAtPrice": 50699,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 89,
     "badge": "Heirloom Edition",
     "tag": "Temple Heritage",
     "image": "images/user_balaji_temple_pendant.jpg",
@@ -2659,13 +1995,13 @@
       "images/authentic_temple_heritage.jpg",
       "images/authentic_necklace_hero.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
-    "stone": "Uncut Polki Moissanites & Basra Pearl Cluster",
-    "purity": "22K Gold Finish on 925 Silver",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
+    "stone": "Uncut Polki Moissanites & Pearl Cluster",
+    "purity": "925 Silver with 22K Gold Finish",
     "cut": "Polki Flat Cut",
-    "clarity": "Authentic Heritage Finish",
+    "clarity": "",
     "dimensions": "32mm Hand-Chased Locket Pendant",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Hand-engraved sacred floral mandala locket opening to hold personal memories or vows, suspended from a hand-twisted gold rope chain.",
     "isSilver": true,
     "isGold": true,
@@ -2680,36 +2016,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
-        "value": "Uncut Polki Moissanites & Basra Pearl Cluster"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "Uncut Polki Moissanites & Pearl Cluster"
       }
     ],
-    "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
+    "imageStatus": "Client-supplied reference photography",
     "imageVerification": "Client-Supplied Verified Reference Photography (Lord Venkateswara Sacred Nakshi Pendant Spec HJ-NCK-004)",
     "materials": [
       "silver",
       "gold",
-      "diamond",
-      "gemstone"
+      "gemstone",
+      "moissanite"
     ],
     "primaryMaterial": "gemstone",
     "collections": [
@@ -2724,14 +2044,10 @@
   {
     "id": "HJ-NCK-005",
     "handle": "the-riviera-diamond-tennis-collar-hj-nck-005",
-    "name": "The Riviera Diamond Tennis Collar",
+    "name": "The Riviera Moissanite Tennis Collar",
     "category": "necklaces",
     "collection": "silver-edit",
     "price": 43420,
-    "compareAtPrice": 58599,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 96,
     "badge": "Gala Statement",
     "tag": "Tennis Collar",
     "image": "images/authentic_temple_heritage.jpg",
@@ -2741,13 +2057,13 @@
       "images/authentic_temple_sacred.jpg",
       "images/authentic_necklace_hero.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Graduated 3mm to 6mm Lab Moissanites",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "16 inches Graduated Line Collar",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "A full 16-inch continuous river of fire. Stones graduate subtly toward a breathtaking 6mm center gem resting on the collarbone.",
     "isSilver": true,
     "isGold": false,
@@ -2762,36 +2078,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Graduated 3mm to 6mm Lab Moissanites"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-005 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "everyday-luxury",
       "fine-jewellery",
@@ -2806,10 +2106,6 @@
     "category": "necklaces",
     "collection": "silver-edit",
     "price": 16283,
-    "compareAtPrice": 21999,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 103,
     "badge": "Versatile Glamour",
     "tag": "Lariat Silhouette",
     "image": "images/authentic_temple_sacred.jpg",
@@ -2819,13 +2115,13 @@
       "images/authentic_necklace_hero.jpg",
       "images/authentic_temple_heritage.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Pavé Slider Ring with Pear Moissanite Drop",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Pear & Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "20 inch Chain • Adjustable Y-Drop Length",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Adjustable pavé slide mechanism transforms this necklace from a high choker to a plunging décolletage accent in seconds.",
     "isSilver": true,
     "isGold": false,
@@ -2840,34 +2136,18 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Slider Ring with Pear Moissanite Drop"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-006 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
     "primaryMaterial": "silver",
     "collections": [
@@ -2885,10 +2165,6 @@
     "category": "necklaces",
     "collection": "silver-edit",
     "price": 12525,
-    "compareAtPrice": 16899,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 110,
     "badge": "Personalized",
     "tag": "Zodiac Keepsake",
     "image": "images/authentic_necklace_hero.jpg",
@@ -2899,13 +2175,13 @@
       "images/authentic_necklace_chain.jpg",
       "images/authentic_temple_sacred.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Flush-Set Star Diamonds & Deep Blue Enamel",
-    "purity": "925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Micro Round Cut",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "18mm Medallion Disc",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Celestial celestial dome featuring hand-drilled constellation stars filled with brilliant diamonds against satin-brushed silver.",
     "isSilver": true,
     "isGold": false,
@@ -2920,31 +2196,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Flush-Set Star Diamonds & Deep Blue Enamel"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-007 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -2960,14 +2220,10 @@
   {
     "id": "HJ-NCK-008",
     "handle": "the-royal-sapphire-halo-duchess-necklace-hj-nck-008",
-    "name": "The Royal Sapphire Halo Duchess Necklace",
+    "name": "The Royal Blue Sapphire Necklace",
     "category": "necklaces",
     "collection": "gold-vault",
     "price": 32983,
-    "compareAtPrice": 44499,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 117,
     "badge": "Royal Edit",
     "tag": "Royal Sapphire",
     "image": "images/authentic_necklace_chain.jpg",
@@ -2977,13 +2233,13 @@
       "images/authentic_necklace_hero.jpg",
       "images/authentic_temple_heritage.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
-    "stone": "3.5ct Royal Ceylon Blue Sapphire with Halo",
-    "purity": "925 Core 18K White Finish",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
+    "stone": "3.5ct Royal Blue Sapphire with Halo",
+    "purity": "925 Silver with 18K White Finish",
     "cut": "Oval Brilliant Facet",
-    "clarity": "Deep Royal Blue Eye-Clean",
+    "clarity": "",
     "dimensions": "10x8mm Sapphire • 18 inch Chain",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Velvety midnight blue sapphire radiating regal poise, encircled by a scintillation halo of micropavé diamonds.",
     "isSilver": true,
     "isGold": true,
@@ -2998,31 +2254,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
-        "value": "3.5ct Royal Ceylon Blue Sapphire with Halo"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "3.5ct Royal Blue Sapphire with Halo"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-008 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -3044,11 +2284,7 @@
     "category": "necklaces",
     "collection": "eternal-couples",
     "price": 14195,
-    "compareAtPrice": 19199,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 124,
-    "badge": "Bespoke Engraved",
+    "badge": "Featured Design",
     "tag": "Couple Monogram",
     "image": "images/authentic_temple_heritage.jpg",
     "hoverImage": "images/authentic_temple_sacred.jpg",
@@ -3057,13 +2293,13 @@
       "images/authentic_temple_sacred.jpg",
       "images/authentic_necklace_hero.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Twin Diamond Bezel Points",
-    "purity": "Solid 925 Stamped",
+    "purity": "Solid 925",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "30x6mm Heavy Bar",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Sleek architectural silver ingot hand-inscribed with couple initials or milestone dates. Weighted luxury feel.",
     "isSilver": true,
     "isGold": false,
@@ -3078,31 +2314,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Twin Diamond Bezel Points"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-009 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond"
@@ -3126,10 +2346,6 @@
     "category": "necklaces",
     "collection": "gold-vault",
     "price": 26720,
-    "compareAtPrice": 36099,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 131,
     "badge": "Runway Pick",
     "tag": "Baroque Statement",
     "image": "images/authentic_temple_sacred.jpg",
@@ -3139,13 +2355,13 @@
       "images/authentic_necklace_hero.jpg",
       "images/authentic_temple_heritage.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Sculptural Freshwater Baroque Pearl Centerpiece",
     "purity": "18K Vermeil over 925 Silver",
     "cut": "Organic Baroque Pearl & Pavé Ring",
-    "clarity": "Luminous Mirror Orient",
+    "clarity": "",
     "dimensions": "16 inch Paperclip Links • 22mm Pearl",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Each organic baroque pearl is unique, hung from hand-assembled paperclip oval links finished in champagne gold.",
     "isSilver": true,
     "isGold": true,
@@ -3160,31 +2376,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Sculptural Freshwater Baroque Pearl Centerpiece"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-NCK-010 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -3205,10 +2405,6 @@
     "category": "brooches",
     "collection": "silver-edit",
     "price": 24215,
-    "compareAtPrice": 32699,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 138,
     "badge": "Signature Brooch",
     "tag": "Haute Brooch",
     "image": "images/user_falcon_brooch_white.jpg",
@@ -3219,13 +2415,13 @@
       "images/authentic_brooch_flower.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Baguette Cut Wing Feathers & Ruby Eye Accent",
-    "purity": "Stamped 925 Hallmarked",
+    "purity": "925 Sterling Silver",
     "cut": "Step Cut Baguettes & Micro-Pavé",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "48mm Wingspan • Dual Locking Pin Clasp",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "A magnificent falcon in mid-descent. Baguette-cut diamonds form plumage edges while the eye glints with an intense pigeon-blood ruby.",
     "isSilver": true,
     "isGold": false,
@@ -3240,30 +2436,14 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Baguette Cut Wing Feathers & Ruby Eye Accent"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
+    "imageStatus": "Client-supplied reference photography",
     "imageVerification": "Client-Supplied Verified Reference Photography (Royal Falcon Polki Brooch Spec HJ-BRO-001)",
     "materials": [
       "silver",
@@ -3290,10 +2470,6 @@
     "category": "brooches",
     "collection": "gold-vault",
     "price": 17535,
-    "compareAtPrice": 23699,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 145,
     "badge": "Heritage Lapel",
     "tag": "Royal Pin",
     "image": "images/authentic_brooch_antique.jpg",
@@ -3303,13 +2479,13 @@
       "images/authentic_brooch_flower.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Pavé Diamond Petals with Dewdrop Moissanite",
-    "purity": "18K Vermeil over 925",
+    "purity": "925 Silver with 18K Gold Vermeil",
     "cut": "Round Brilliant Pavé",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "32mm Height",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "The regal heraldic fleur-de-lis of Florence sculpted in warm champagne gold, encrusted with brilliant pavé diamonds.",
     "isSilver": true,
     "isGold": true,
@@ -3324,31 +2500,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Pavé Diamond Petals with Dewdrop Moissanite"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-002 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",
@@ -3372,10 +2532,6 @@
     "category": "brooches",
     "collection": "silver-edit",
     "price": 15448,
-    "compareAtPrice": 20899,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 152,
     "badge": "Editorial Favorite",
     "tag": "Celestial Brooch",
     "image": "images/authentic_brooch_flower.jpg",
@@ -3385,13 +2541,13 @@
       "images/authentic_brooch_antique.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Graduated Moissanites on Crescent Arc",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "36mm Diameter",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "A poetic crescent moon sheltering a suspended starlight diamond. Designed to adorn silk scarves, tuxedo lapels, or evening capes.",
     "isSilver": true,
     "isGold": false,
@@ -3406,36 +2562,20 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Graduated Moissanites on Crescent Arc"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-003 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
-      "diamond"
+      "moissanite"
     ],
-    "primaryMaterial": "diamond",
+    "primaryMaterial": "silver",
     "collections": [
       "architectural-jewellery",
       "contemporary-jewellery",
@@ -3451,10 +2591,6 @@
     "category": "brooches",
     "collection": "temple-heritage",
     "price": 30060,
-    "compareAtPrice": 40599,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 159,
     "badge": "Heirloom Edition",
     "tag": "Verdant Peacock",
     "image": "images/user_jaguar_emerald_brooch.jpg",
@@ -3464,13 +2600,13 @@
       "images/user_ganesha_leaf_brooch.jpg",
       "images/user_elephant_brooch.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
-    "stone": "Central Colombian Emerald with Blue Sapphire Eye",
-    "purity": "925 Silver Core 22K Gold Finish",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
+    "stone": "Central Emerald with Blue Sapphire Eye",
+    "purity": "925 Silver with 22K Gold Finish",
     "cut": "Cabochon Emerald & Brilliant Pavé",
-    "clarity": "Deep Vivid Hue",
+    "clarity": "",
     "dimensions": "55mm Length",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Capturing the sacred national emblem of India. Detailed filigree feathers bloom outward from a vivid royal green emerald center.",
     "isSilver": true,
     "isGold": true,
@@ -3485,30 +2621,14 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
-        "value": "Central Colombian Emerald with Blue Sapphire Eye"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "Central Emerald with Blue Sapphire Eye"
       }
     ],
-    "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
+    "imageStatus": "Client-supplied reference photography",
     "imageVerification": "Client-Supplied Verified Reference Photography (Diamond Jaguars on Octagonal Emerald Spec HJ-BRO-004)",
     "materials": [
       "silver",
@@ -3535,10 +2655,6 @@
     "category": "brooches",
     "collection": "silver-edit",
     "price": 20040,
-    "compareAtPrice": 27099,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 166,
     "badge": "Vintage Revival",
     "tag": "Art Deco Sunburst",
     "image": "images/authentic_brooch_flower.jpg",
@@ -3548,13 +2664,13 @@
       "images/authentic_brooch_antique.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Faceted Baguettes in Radial Arrangement",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Step Cut Baguettes",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "40mm Symmetrical Brooch",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Sun rays of step-cut crystal facets bursting from an octagonal center. Pure 1920s Art Deco architectural elegance.",
     "isSilver": true,
     "isGold": false,
@@ -3569,31 +2685,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Faceted Baguettes in Radial Arrangement"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-005 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver"
     ],
@@ -3612,10 +2712,6 @@
     "category": "brooches",
     "collection": "eternal-couples",
     "price": 16283,
-    "compareAtPrice": 21999,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 173,
     "badge": "Bridal Icon",
     "tag": "Bridal Ribbon",
     "image": "images/authentic_brooch_antique.jpg",
@@ -3625,13 +2721,13 @@
       "images/authentic_brooch_flower.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
-    "stone": "Fluid Pavé Ribbon Bow with South Sea Pearl Drop",
-    "purity": "925 Hallmarked",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
+    "stone": "Fluid Pavé Ribbon Bow with Pearl Drop",
+    "purity": "925 Sterling Silver",
     "cut": "Pavé & AAA Pearl",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "38mm Width • 10mm Pearl Drop",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Sensuously tied silken bow sculpted in silver, carrying a suspended glowing pearl. Ideal for bridal bouquets or silk sashes.",
     "isSilver": true,
     "isGold": false,
@@ -3646,31 +2742,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
-        "value": "Fluid Pavé Ribbon Bow with South Sea Pearl Drop"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
+        "value": "Fluid Pavé Ribbon Bow with Pearl Drop"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-006 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond",
@@ -3696,10 +2776,6 @@
     "category": "brooches",
     "collection": "gold-vault",
     "price": 19205,
-    "compareAtPrice": 25899,
-    "discountPercent": 26,
-    "rating": "4.9",
-    "reviewsCount": 180,
     "badge": "Botanical",
     "tag": "Botanical Haute",
     "image": "images/user_elephant_brooch.jpg",
@@ -3708,14 +2784,14 @@
       "images/user_elephant_brooch.jpg",
       "images/user_ganesha_leaf_brooch.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Micro-Pavé Vein Accents",
     "purity": "18K Gold Finish 925",
     "cut": "Micro Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "50mm Linear Frond",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
-    "description": "Organic palm frond with hand-hammered texture along each leaf, bisected by a brilliant row of micro-pavé diamonds.",
+    "certificate": "",
+    "description": "Organic palm frond with textured detailing along each leaf, bisected by a brilliant row of micro-pavé diamonds.",
     "isSilver": true,
     "isGold": true,
     "isNew": false,
@@ -3729,30 +2805,14 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Micro-Pavé Vein Accents"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
+    "imageStatus": "Client-supplied reference photography",
     "imageVerification": "Client-Supplied Verified Reference Photography (Royal Elephant Polki & Emerald Brooch Spec HJ-BRO-007)",
     "materials": [
       "silver",
@@ -3774,10 +2834,6 @@
     "category": "brooches",
     "collection": "silver-edit",
     "price": 22128,
-    "compareAtPrice": 29899,
-    "discountPercent": 26,
-    "rating": "5.0",
-    "reviewsCount": 187,
     "badge": "Collector Piece",
     "tag": "Filigree Creature",
     "image": "images/authentic_brooch_antique.jpg",
@@ -3787,13 +2843,13 @@
       "images/authentic_brooch_flower.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Anti-Tarnish Rhodium Finish)",
+    "metal": "925 Sterling Silver ( Rhodium Finish)",
     "stone": "Filigree Wings Inset with Lab Diamonds & Sapphires",
-    "purity": "Stamped 925",
+    "purity": "925 Sterling Silver",
     "cut": "Faceted Marquise & Round",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "44mm Wingspan",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Symbol of spiritual transformation. Openwork filigree wings catch backlighting with translucent diamond-bright clarity.",
     "isSilver": true,
     "isGold": false,
@@ -3808,31 +2864,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "Rhodium Finish"
       },
       {
         "label": "Stone Type",
         "value": "Filigree Wings Inset with Lab Diamonds & Sapphires"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-008 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "diamond",
@@ -3849,14 +2889,10 @@
   {
     "id": "HJ-BRO-009",
     "handle": "the-monarch-butterfly-basra-pearl-brooch-hj-bro-009",
-    "name": "The Monarch Butterfly Basra Pearl Brooch",
+    "name": "The Monarch Butterfly Pearl Brooch",
     "category": "brooches",
     "collection": "temple-heritage",
     "price": 25885,
-    "compareAtPrice": 34899,
-    "discountPercent": 26,
-    "rating": "4.7",
-    "reviewsCount": 194,
     "badge": "Exquisite",
     "tag": "Pearl Butterfly",
     "image": "images/user_swan_diamond_brooch.jpg",
@@ -3865,13 +2901,13 @@
       "images/user_swan_diamond_brooch.jpg",
       "images/user_falcon_brooch_white.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Natural Teardrop Pearl Body & Pavé Wings",
     "purity": "925 Core 18K Finish",
     "cut": "Natural Organic Pearl & Pavé",
-    "clarity": "High Luster",
+    "clarity": "",
     "dimensions": "40mm Width",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Opulent monarch wings carved with micro-pavé veins framing an incandescent genuine natural pearl thorax.",
     "isSilver": true,
     "isGold": true,
@@ -3886,30 +2922,14 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Natural Teardrop Pearl Body & Pavé Wings"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Physical Client Reference - Zero AI Imagery",
+    "imageStatus": "Client-supplied reference photography",
     "imageVerification": "Client-Supplied Verified Reference Photography (Dual Swan Diamond & Morganite Brooch Spec HJ-BRO-009)",
     "materials": [
       "silver",
@@ -3938,10 +2958,6 @@
     "category": "brooches",
     "collection": "gold-vault",
     "price": 14613,
-    "compareAtPrice": 19699,
-    "discountPercent": 26,
-    "rating": "4.8",
-    "reviewsCount": 201,
     "badge": "Sartorial Minimal",
     "tag": "Sartorial Quill",
     "image": "images/authentic_brooch_antique.jpg",
@@ -3951,13 +2967,13 @@
       "images/authentic_brooch_flower.jpg",
       "images/authentic_atelier_craft.jpg"
     ],
-    "metal": "BIS Hallmarked 925 Sterling Silver (Micron Gold Plated)",
+    "metal": "925 Sterling Silver (Micron Gold Plated)",
     "stone": "Solitaire Diamond Nib Point",
     "purity": "Solid 925 Core",
     "cut": "Round Brilliant",
-    "clarity": "VVS1",
+    "clarity": "",
     "dimensions": "58mm Sleek Quill Pin",
-    "certificate": "BIS Hallmarked 925 Silver • Specialist Gemological Inspection Card",
+    "certificate": "",
     "description": "Sleek Didone feather quill celebrating literature and diplomacy. Designed with an ultra-fine safety pin mechanism for fine fabrics.",
     "isSilver": true,
     "isGold": true,
@@ -3972,31 +2988,15 @@
       },
       {
         "label": "Plating",
-        "value": "Liquid Rhodium & 18K Micron Gold"
-      },
-      {
-        "label": "Hallmark",
-        "value": "BIS 925 Hallmarked & Stamped"
+        "value": "18K Gold Plating"
       },
       {
         "label": "Stone Type",
         "value": "Solitaire Diamond Nib Point"
-      },
-      {
-        "label": "Hypoallergenic",
-        "value": "100% Nickel-Free & Lead-Free"
-      },
-      {
-        "label": "Water Resistance",
-        "value": "Water-Safe & Anti-Tarnish Coating"
-      },
-      {
-        "label": "Origin",
-        "value": "Designed & Handcrafted in Jaipur, India"
       }
     ],
-    "imageStatus": "Verified Authentic Photography",
-    "imageVerification": "Authentic fine jewellery studio reference for Jaipur Atelier Spec HJ-BRO-010 - Zero AI Imagery",
+    "imageStatus": "Representative category reference — exact SKU photo pending",
+    "imageVerification": "Product-specific image verification pending. Current image is a category reference, not a confirmed photograph of this exact piece.",
     "materials": [
       "silver",
       "gold",

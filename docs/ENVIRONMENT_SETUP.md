@@ -2,7 +2,6 @@
 
 ## 1. Prerequisites
 - **Node.js:** v18.0.0 or later (v20+ Recommended)
-- **Python:** 3.8+ (for automated QA test suites)
 - **Git**
 
 ---
@@ -32,7 +31,18 @@ npm run dev
 | :--- | :---: | :---: | :--- |
 | `PORT` | Number | `3000` | Port on which the HTTP server listens |
 | `NODE_ENV` | String | `development` | Environment mode (`development` or `production`) |
-| `ADMIN_SECRET_PIN` | String | `1926` | Master authentication PIN for the Admin & Visual Editor |
-| `SESSION_SECRET` | String | — | Cryptographic secret for signing session tokens |
+| `ADMIN_SECRET_PIN` | String | — | Required secure admin PIN; use at least 12 random characters |
+| `SESSION_SECRET` | String | — | Required in production; use a random secret of at least 32 characters |
 | `SITE_URL` | String | `http://localhost:3000` | Public domain of the application |
 | `ALLOWED_ORIGINS` | CSV | `localhost:3000,...` | Whitelisted origins for cross-origin requests |
+
+
+## 4. Production security requirements
+
+Before deploying:
+- Set `NODE_ENV=production`.
+- Set `ADMIN_SECRET_PIN` to a unique random value of at least 12 characters. Never use the example placeholder.
+- Set `SESSION_SECRET` to a cryptographically random value of at least 32 characters. Keep it private and consistent across all server instances.
+- Configure secrets in the hosting provider's environment settings. Do not commit a real `.env` file.
+- Admin API endpoints require a signed bearer session issued by `POST /api/admin/login`. Sessions expire after 8 hours.
+- Customer orders remain payment-pending until an administrator verifies receipt of advance payment. The application does not currently integrate a payment gateway; do not describe an order as paid based on the selected payment method.

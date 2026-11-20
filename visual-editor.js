@@ -20,16 +20,14 @@
     return;
   }
 
-  // Master PIN check (Atelier PIN: 2026)
-  if (!isSessionActive) {
-    const enteredPin = prompt('✦ House of Jewelux — Enter Atelier Master PIN to enable On-Page Edit Mode:', '');
-    if (enteredPin !== '2026' && enteredPin !== '1122') {
-      alert('Invalid Atelier PIN. Returning to normal view.');
-      const cleanUrl = window.location.origin + window.location.pathname + window.location.hash.replace('#editor', '');
-      window.history.replaceState({}, document.title, cleanUrl);
-      return;
-    }
-    sessionStorage.setItem('hj_editor_active', 'true');
+  // The visual editor relies on the same server-issued admin session as the admin API.
+  // A client-side flag alone is never treated as authentication.
+  const adminToken = sessionStorage.getItem('hj_admin_token');
+  if (!adminToken) {
+    alert('Please sign in to the admin portal before opening the visual editor.');
+    const cleanUrl = window.location.origin + window.location.pathname + window.location.hash.replace('#editor', '');
+    window.history.replaceState({}, document.title, cleanUrl);
+    return;
   }
 
   // 2. State & Change Tracking
@@ -210,7 +208,7 @@
         <span>Atelier Live Editor</span>
       </div>
       <div class="hj-editor-count" id="hj-editor-count">Click any text or price to edit</div>
-      <button class="hj-editor-btn hj-btn-save" id="hj-btn-save" title="Save changes to local disk & browser">
+      <button class="hj-editor-btn hj-btn-save" id="hj-btn-save" title="Save changes to the server and this browser">
         💾 Save Changes
       </button>
       <button class="hj-editor-btn hj-btn-export" id="hj-btn-export" title="Copy changes to tell Antigravity to push live">
@@ -382,7 +380,7 @@
       };
       const res = await fetch('/api/admin/editor-save', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
         body: JSON.stringify(payload)
       });
       if (res.ok) {
@@ -399,8 +397,8 @@
     }, 2000);
 
     const msg = savedToDisk
-      ? '✦ Changes saved permanently to local files (products.json) and browser storage!'
-      : '✦ Changes saved to your browser! Click "Export for Antigravity" to apply them permanently.';
+      ? 'Changes saved to the server and this browser.'
+      : 'Changes saved only in this browser. The server save did not complete; export the changes before applying them to the live site.';
 
     alert(msg);
   }
