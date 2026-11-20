@@ -2305,7 +2305,7 @@
                 <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.35rem 0;">Living Goldsmith Heritage at Bench</h3>
                 <p style="font-size: 0.88rem; color: #E8E2D8; max-width: 600px;">Generational silversmiths applying hand gravers, liquid flux, and open flame to solid 925 sterling silver.</p>
               </div>
-              <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-gold" style="padding: 0.75rem 1.75rem; font-size: 0.78rem;">Experience in Salon ↗</a>
+              <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-gold" style="padding: 0.75rem 1.75rem; font-size: 0.78rem;">Request Online Consultation ↗</a>
             </div>
           </div>
         </div>
@@ -2682,25 +2682,21 @@
         if (data.success) {
           input.value = '';
           if (feedback) {
-            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Salon Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Thank you for joining House of Jewelux updates! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
             feedback.style.display = 'block';
           } else {
-            alert(data.message || 'Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
+            alert(data.message || 'Thank you for subscribing. Welcome code FIRSTLUX is available for your first order.');
           }
         }
       } catch (err) {
-        // Fallback for static hosting
-        const subscribers = JSON.parse(localStorage.getItem('hj_subscribers') || '[]');
-        if (!subscribers.includes(email.toLowerCase())) {
-          subscribers.push(email.toLowerCase());
-          localStorage.setItem('hj_subscribers', JSON.stringify(subscribers));
-        }
-        input.value = '';
+        console.error('Newsletter subscription failed:', err);
+        const message = 'We could not complete your subscription right now. Please try again or contact our team.';
         if (feedback) {
-          feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Salon Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+          feedback.textContent = message;
+          feedback.style.color = '#ef4444';
           feedback.style.display = 'block';
         } else {
-          alert('Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
+          alert(message);
         }
       }
     },
@@ -2708,6 +2704,12 @@
     toggleEditorMode: function (forceState) {
       const isCurrentlyActive = document.body.classList.contains('hj-editor-active');
       const shouldActivate = forceState !== undefined ? forceState : !isCurrentlyActive;
+
+      if (shouldActivate && !sessionStorage.getItem('hj_admin_token')) {
+        alert('Please sign in to the admin portal before opening the visual editor.');
+        window.location.hash = '#admin';
+        return;
+      }
 
       if (shouldActivate) {
         document.body.classList.add('hj-editor-active');
@@ -2863,54 +2865,41 @@
     submitAppointment: async function (e) {
       if (e) e.preventDefault();
       const form = e ? e.target : document.getElementById('appointment-form');
-      const nameInput = (form && form.querySelector('#apt-name')) || document.getElementById('apt-name');
-      const phoneInput = (form && form.querySelector('#apt-phone')) || document.getElementById('apt-phone');
-      const emailInput = (form && form.querySelector('#apt-email')) || document.getElementById('apt-email');
-      const dateInput = (form && form.querySelector('#apt-date')) || document.getElementById('apt-date');
-      const timeInput = (form && form.querySelector('#apt-time')) || document.getElementById('apt-time');
-      const typeInput = (form && form.querySelector('#apt-type')) || document.getElementById('apt-type');
-      const notesInput = (form && form.querySelector('#apt-notes')) || document.getElementById('apt-notes');
-
-      const payload = {
-        fullName: nameInput ? nameInput.value.trim() : 'Honored Patron',
-        phone: phoneInput ? phoneInput.value.trim() : '',
-        email: emailInput ? emailInput.value.trim() : '',
-        appointmentDate: dateInput ? dateInput.value : new Date().toISOString().split('T')[0],
-        preferredTime: timeInput ? timeInput.value : '16:00 - 17:30 IST',
-        consultationType: typeInput ? typeInput.value : 'Private Jaipur Atelier Experience',
-        notes: notesInput ? notesInput.value.trim() : ''
+      const getValue = (id) => {
+        const field = form && form.querySelector('#' + id);
+        return field ? field.value.trim() : '';
       };
-
-      if (!payload.fullName || !payload.phone) {
-        alert('Please enter your full name and phone number.');
+      const payload = {
+        fullName: getValue('apt-name'),
+        phone: getValue('apt-phone'),
+        email: getValue('apt-email'),
+        appointmentDate: getValue('apt-date'),
+        preferredTime: getValue('apt-time'),
+        consultationType: getValue('apt-type') || 'Online Consultation',
+        notes: getValue('apt-notes')
+      };
+      const phoneDigits = payload.phone.replace(/\\D/g, '');
+      if (!payload.fullName || phoneDigits.length < 10 || phoneDigits.length > 15 ||
+          !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(payload.email) || !payload.appointmentDate) {
+        alert('Please enter a valid name, phone number, email address and preferred date.');
         return;
       }
-
-      let apptId = `HJ-APT-${Math.floor(100000 + Math.random() * 900000)}`;
       try {
         const res = await fetch('/api/appointments', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success && data.appointmentId) {
-            apptId = data.appointmentId;
-          }
+        const data = await res.json();
+        if (!res.ok || !data.success || !data.appointmentId) {
+          throw new Error(data.error || 'We could not submit your consultation request. Please try again.');
         }
+        alert(`Your consultation request has been received. Reference: ${data.appointmentId}. Our team will contact you to confirm availability.`);
+        window.HJ.closeAppointmentModal();
+        if (form) form.reset();
       } catch (err) {
-        console.warn('API appointments offline, saving to local storage', err);
+        alert(err.message || 'Consultation requests are temporarily unavailable. Please contact our team directly.');
       }
-
-      // Store in localStorage for patron reference
-      const existing = JSON.parse(localStorage.getItem('hj_appointments') || '[]');
-      existing.unshift({ appointmentId: apptId, ...payload, createdAt: new Date().toISOString() });
-      localStorage.setItem('hj_appointments', JSON.stringify(existing));
-
-      alert(`✦ PRIVATE SALON APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nPatron: ${payload.fullName}\nDate: ${payload.appointmentDate}\nTime: ${payload.preferredTime}\n\nOur Salon Concierge has reserved your suite and will contact you via phone/WhatsApp at ${payload.phone}.`);
-      window.HJ.closeAppointmentModal();
-      if (form) form.reset();
     },
 
     openTrackOrderModal: function (orderId) {
