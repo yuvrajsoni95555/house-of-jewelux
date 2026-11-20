@@ -769,7 +769,7 @@
             <div>
               <span class="hero-badge-pill" style="border-color: var(--color-antique-gold); color: var(--color-champagne-gold);">Atelier Experience</span>
               <h2 style="font-family: var(--font-serif); font-size: 2.4rem; margin: 0.75rem 0 1rem; color: var(--color-warm-ivory);">
-                Book a Online Consultation Consultation
+                Connect with Our Team
               </h2>
               <p style="color: #DCD4C7; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
                 Connect with the House of Jewelux team for product information, collection guidance and assistance with your jewellery selection.
@@ -847,7 +847,7 @@
           <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-antique-gold); font-weight: 600;">White-Glove Armored Courier Telemetry</span>
           <h2 style="font-family: var(--font-serif); font-size: 2rem; margin: 0.4rem 0 0.8rem; color: var(--color-deep-heritage-brown);">Track Your Consignment</h2>
           <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin-bottom: 1.75rem;">
-            Enter your unique Order Reference ID (e.g. <strong>HJ-ORD-XXXXXXXX</strong>) to view real-time atelier forging milestones, hallmarking certificates, and armored dispatch telemetry.
+            Enter the Order ID from your order confirmation to view the latest available order status and dispatch details.
           </p>
 
           <form onsubmit="window.HJ.submitTrackOrder(event)" style="display: flex; gap: 0.5rem; max-width: 500px; margin: 0 auto;">
@@ -1170,13 +1170,7 @@
                 </svg>
                 ${(p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold ? '18K Gold Micron Finish' : 'Liquid Rhodium Finish'}
               </span>
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <polygon points="12 3 21 19 3 19 12 3"></polygon>
-                  <text x="12" y="16.5" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">925</text>
-                </svg>
-                Material details
-              </span>
+              <span class="trust-capsule">Material details</span>
             </div>
 
             <div class="pdp-urgency-note">
@@ -1184,7 +1178,7 @@
                 <path d="M12 2.5C12 2.5 8 7 8 11.5C8 14.5 10 17 12 17C14 17 16 14.5 16 11.5C16 7 12 2.5 12 2.5Z" fill="rgba(184, 151, 88, 0.25)"></path>
                 <path d="M5 17C5 17 6.5 21 12 21C17.5 21 19 17 19 17H5Z"></path>
               </svg>
-              <span>84 patrons acquired this piece in the last 7 days</span>
+              <span>Explore the design details and specifications below</span>
             </div>
 
             <!-- Limited Time Offers Box (Matching Palmonas) -->
@@ -1227,7 +1221,7 @@
               <div class="pdp-accordion-pane">
                 ${p.description}
                 <br><br>
-                Engineered with generational precision in our Jaipur atelier. Please refer to the product specifications for exact material and hallmark details.
+                Please refer to the product specifications for exact material, finish and hallmark details.
               </div>
             </div>
 
@@ -1255,7 +1249,7 @@
                 <span>▾</span>
               </div>
               <div class="pdp-accordion-pane">
-                <strong>Manufactured By:</strong> House of Jewelux Creative Atelier & Salon, Jaipur, Rajasthan, India.<br>
+                <strong>Brand:</strong> House of Jewelux<br>
                 <strong>Customer Grievance & Concierge:</strong> +91 90799 98793 | houseofjewelux@gmail.com
               </div>
             </div>
@@ -1753,9 +1747,9 @@
         `
       },
       exchange: {
-        title: "Complimentary Exchange Privilege",
-        subtitle: "Ring Resizing & Style Upgrades with White-Glove Support",
-        badge: "Flawless Fit Guarantee",
+        title: "Exchange Requests",
+        subtitle: "Contact our team to confirm exchange eligibility",
+        badge: "Customer Support",
         content: `
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Complimentary First Ring Resize</h3>
