@@ -1111,7 +1111,7 @@
 
 
             <div class="pdp-product-details-note" style="margin:1rem 0;color:var(--color-stone-muted);font-size:.82rem;line-height:1.6;">
-              ${hasPendingImage ? 'The images shown are representative references. Our team will confirm the exact product photographs before payment.' : 'Material, finish, stone and care information is listed in the product specifications below.'}
+              ${hasPendingImage ? 'The images shown are representative references. Please contact our team to confirm the exact product photo before payment.' : 'Material, finish, stone and care information is listed in the product specifications below.'}
             </div>
 
             <!-- Limited Time Offers Box (Matching Palmonas) -->
@@ -1305,7 +1305,7 @@
           <div>
             <div class="checkout-form-box" style="position: sticky; top: calc(var(--header-height-desktop) + 30px);">
               <h3 class="checkout-step-title">Order Summary (${state.cart.length} Pieces)</h3>
-              ${hasPendingProductImages ? '<p style="font-size:.78rem;line-height:1.6;color:#8a642e;margin-bottom:.85rem;">Some catalogue photos are representative references. Exact product photos will be confirmed by our team before payment.</p>' : ''}
+              ${hasPendingProductImages ? '<p style="font-size:.78rem;line-height:1.6;color:#8a642e;margin-bottom:.85rem;">Some catalogue photos are representative references. Please contact our team to confirm exact product photos before payment.</p>' : ''}
               <div style="max-height: 280px; overflow-y: auto; margin-bottom: 1rem;">
                 ${state.cart.map(item => `
                   <div class="cart-item-row" style="padding: 0.75rem 0;">
