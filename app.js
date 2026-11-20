@@ -34,8 +34,8 @@
     },
     appliedCoupon: null,
     discountAmount: 0,
-    deliveryPincode: localStorage.getItem('hj_pincode') || '302001',
-    deliveryCity: localStorage.getItem('hj_city') || 'Jaipur',
+    deliveryPincode: localStorage.getItem('hj_pincode') || '',
+    deliveryCity: localStorage.getItem('hj_city') || '',
     activeFilters: {
       category: 'all',
       metal: '',
@@ -1219,13 +1219,13 @@
 
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const discount = state.discountAmount || 0;
-    const shipping = subtotal >= 2500 ? 0 : 250;
+    const shipping = null;
     const grandTotal = Math.max(0, subtotal - discount + shipping);
 
     container.innerHTML = `
       <div class="container checkout-container">
         <h1 style="font-family: var(--font-serif); font-size: 2.2rem; text-align: center; margin-bottom: 2.5rem;">
-          Secure Atelier Acquisition Protocol
+          Place Your Order Request
         </h1>
 
         <div class="checkout-grid">
@@ -1292,7 +1292,7 @@
               </div>
 
               <button type="submit" class="btn-gold" style="width: 100%; padding: 1.1rem; font-size: 0.95rem;">
-                Authorize & Place Order (${formatPrice(grandTotal)})
+                Submit Order Request (${formatPrice(grandTotal)})
               </button>
             </div>
           </form>
@@ -1334,10 +1334,10 @@
                 ` : ''}
                 <div class="cart-summary-line">
                   <span>Shipping</span>
-                  <span>${shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
+                  <span>${shipping === null ? 'Confirmed before payment' : formatPrice(shipping)}</span>
                 </div>
                 <div class="cart-summary-total">
-                  <span>Grand Total (INR)</span>
+                  <span>Subtotal Before Delivery (INR)</span>
                   <span style="color: var(--color-gold-dark);">${formatPrice(grandTotal)}</span>
                 </div>
               </div>
@@ -1922,7 +1922,7 @@
 
     drawerBody.innerHTML = `
       <div class="free-shipping-progress-box">
-        ${subtotal >= 2500 ? '🎉 You have unlocked <strong>Free Delivery</strong>!' : `Add <strong>${formatPrice(2500 - subtotal)}</strong> more for Free Delivery`}
+        Delivery charges and estimated delivery timelines will be confirmed before payment.
         <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${progressPercent}%;"></div></div>
       </div>
       ${state.cart.map(item => `
