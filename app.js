@@ -1986,7 +1986,7 @@
                     <div>
                       <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Location</div>
                       <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">Jaipur, Rajasthan, India</div>
-                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Private salon consultations strictly by prior reservation.</div>
+                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Online consultations can be requested using the form below.</div>
                     </div>
                   </div>
 
