@@ -376,7 +376,7 @@
             </div>
             <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.4rem, 3.8vw, 2.35rem); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.25; padding: 0 0.5rem;">THE THREE PILLARS OF PRECIOUS ADORNMENT</h2>
             <p style="max-width: 760px; margin: 0 auto; font-family: var(--font-serif); font-style: italic; font-size: clamp(0.95rem, 1.3vw, 1.1rem); color: #3A2418; line-height: 1.6; letter-spacing: 0.01em;">
-              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery — uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
+              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery — bringing Indian heritage influences together with contemporary global design.
             </p>
           </div>
 
@@ -384,7 +384,7 @@
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
             <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Heritage-inspired artistry, reimagined for today.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_heritage_craft_clean.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." loading="lazy" />
+                <img class="material-pillar-img" src="images/pillar_heritage_craft_clean.jpg" alt="Heritage Craftsmanship — Heritage-inspired artistry, reimagined for today." loading="lazy" />
                 <span class="material-pillar-badge">✦ Pillar 01</span>
               </div>
               <div class="material-pillar-body">
