@@ -1353,48 +1353,18 @@
             <div class="checkout-form-box">
               <h3 class="checkout-step-title">3. Payment Method</h3>
               <div class="payment-methods-grid">
-                <!-- Google Pay -->
-                <div class="payment-method-card selected" onclick="window.HJ.selectPaymentMethod('gpay', this)">
+                <div class="payment-method-card selected">
                   <div class="payment-method-header">
                     <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="gpay" checked />
-                      <span>Google Pay (UPI Instant Transfer)</span>
+                      <input type="radio" name="payment_method" value="advance_payment" checked />
+                      <span>Advance Payment (UPI / Bank Transfer)</span>
                     </div>
-                    <span style="font-weight: 700; color: #4285F4;">GPay</span>
+                    <span style="font-size:0.75rem;background:var(--color-gold);padding:0.2rem 0.5rem;border-radius:2px;">Required</span>
                   </div>
                   <div class="payment-method-details">
-                    Pay securely using Google Pay to official merchant VPA: <strong>yuvrajsoni@upi</strong>
+                    Payment instructions will be shared by the House of Jewelux team after your order request. Your order remains pending until the advance payment is received and verified.
                   </div>
                 </div>
-
-                <!-- Paytm / PhonePe -->
-                <div class="payment-method-card" onclick="window.HJ.selectPaymentMethod('phonepe_paytm', this)">
-                  <div class="payment-method-header">
-                    <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="phonepe_paytm" />
-                      <span>PhonePe / Paytm / Any UPI</span>
-                    </div>
-                    <span style="font-weight: 700; color: #5f259f;">UPI</span>
-                  </div>
-                </div>
-
-                <!-- Bank-to-Bank Transfer -->
-                <div class="payment-method-card" onclick="window.HJ.selectPaymentMethod('bank_transfer', this)">
-                  <div class="payment-method-header">
-                    <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="bank_transfer" />
-                      <span>Bank-to-Bank NEFT / RTGS Transfer</span>
-                    </div>
-                    <span style="font-size: 0.75rem; background: var(--color-gold); padding: 0.2rem 0.5rem; border-radius: 2px;">Pending Verification</span>
-                  </div>
-                  <div class="payment-method-details" style="display: none;">
-                    <div class="bank-transfer-box">
-                      <strong>Advance payment required.</strong><br>
-                      Payment instructions will be shared by the House of Jewelux team after the order request is received. Your order will remain pending until payment is verified.
-                    </div>
-                  </div>
-                </div>
-
               </div>
 
               <button type="submit" class="btn-gold" style="width: 100%; padding: 1.1rem; font-size: 0.95rem;">
@@ -2899,7 +2869,7 @@
       const formData = new FormData(form);
       const customer = { fullName: formData.get('fullName'), email: formData.get('email'), phone: formData.get('phone') };
       const shippingAddress = { address: formData.get('address'), city: formData.get('city'), pincode: formData.get('pincode'), state: formData.get('state') };
-      const paymentMethod = formData.get('payment_method') || 'gpay';
+      const paymentMethod = formData.get('payment_method') || 'advance_payment';
 
       let order = null;
       try {
