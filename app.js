@@ -935,24 +935,6 @@
         </div>
       </section>
 
-      <!-- STICKY FILTER & SORT BAR (1:1 WITH PALMONAS) -->
-      <div class="collection-controls-bar">
-        <div class="container">
-          <div class="collection-controls-inner">
-            <span class="collection-item-count">Filters</span>
-
-            <div class="collection-actions-right">
-              <select class="sort-select" onchange="window.HJ.setSort(this.value)">
-                <option value="popular" ${state.activeFilters.sort === 'popular' ? 'selected' : ''}>Sort By: Popular</option>
-                <option value="price_asc" ${state.activeFilters.sort === 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
-                <option value="price_desc" ${state.activeFilters.sort === 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
-                <option value="rating" ${state.activeFilters.sort === 'rating' ? 'selected' : ''}>Customer Rating</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- MAIN 2-COLUMN COLLECTION LAYOUT -->
       <div class="container">
         <div class="collection-main-layout">
@@ -1018,12 +1000,23 @@
           </aside>
 
           <!-- RIGHT: 4-COLUMN PRODUCT GRID (MATCHING PALMONAS) -->
-          <main class="products-grid motion-stagger">
-            ${filtered.length > 0 
-              ? filtered.map(renderProductCard).join('') 
-              : `<div style="grid-column: 1 / -1; padding: 4rem; text-align: center; color: var(--color-taupe);">No creations found. <br><button class="btn-primary" style="margin-top: 1rem;" onclick="window.HJ.clearFilters()">Reset Filters</button></div>`
-            }
-          </main>
+          <div class="products-grid-column">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <span style="font-size: 0.85rem; color: var(--color-stone-muted); font-weight: 500;">✦ Showing <strong>${filtered.length}</strong> Creations</span>
+              <select class="sort-select" onchange="window.HJ.setSort(this.value)">
+                <option value="popular" ${state.activeFilters.sort === 'popular' ? 'selected' : ''}>Sort By: Popular</option>
+                <option value="price_asc" ${state.activeFilters.sort === 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
+                <option value="price_desc" ${state.activeFilters.sort === 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
+                <option value="rating" ${state.activeFilters.sort === 'rating' ? 'selected' : ''}>Customer Rating</option>
+              </select>
+            </div>
+            <main class="products-grid motion-stagger">
+              ${filtered.length > 0 
+                ? filtered.map(renderProductCard).join('') 
+                : `<div style="grid-column: 1 / -1; padding: 4rem; text-align: center; color: var(--color-taupe);">No creations found. <br><button class="btn-primary" style="margin-top: 1rem;" onclick="window.HJ.clearFilters()">Reset Filters</button></div>`
+              }
+            </main>
+          </div>
         </div>
       </div>
     `;

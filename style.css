@@ -1343,12 +1343,7 @@ img {
 
 /* Sticky Filter & Sort Bar (Matching Palmonas) */
 .collection-controls-bar {
-  background: var(--color-champagne-beige);
-  border-bottom: 1px solid var(--color-warm-stone-light);
-  padding: 0.85rem 0;
-  position: sticky;
-  top: var(--header-height-desktop);
-  z-index: 50;
+  display: none !important;
 }
 
 @media (max-width: 991px) {
