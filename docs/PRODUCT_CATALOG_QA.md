@@ -22,6 +22,7 @@ Before the catalogue is treated as launch-ready, upload and map one verified fro
 - Removed unverified gemstone "Certified" wording from the stone summary.
 - Removed placeholder ratings and review counts from the product data.
 - Marked generic reference photography as pending product-specific verification.
+- Removed the uniform 26% compare-at discount from every SKU because no verified original-price evidence was available.
 
 ## Required owner input
 
@@ -31,5 +32,6 @@ Provide the final product-specific:
 3. Stone type and whether natural, lab-grown or simulant.
 4. Hallmark/certificate details only where a real certificate or hallmark is available.
 5. Weight, dimensions and size options.
+6. Final selling price and a genuine reference/MRP price only where it is documented.
 
 Until these details are verified, do not add BIS, diamond certification, gemstone origin, hypoallergenic, water-safe, anti-tarnish lifetime, or warranty claims to product pages.
