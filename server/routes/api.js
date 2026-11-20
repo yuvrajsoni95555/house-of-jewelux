@@ -9,7 +9,7 @@ const appointmentController = require('../controllers/appointmentController');
 const authController = require('../controllers/authController');
 const adminController = require('../controllers/adminController');
 const newsletterController = require('../controllers/newsletterController');
-const { requireAdmin } = require('../middleware/security');
+const { requireAdmin, adminLoginRateLimit } = require('../middleware/security');
 
 router.get('/products', productController.getProducts);
 router.get('/products/:identifier', productController.getProductByIdentifier);
@@ -26,7 +26,7 @@ router.post('/auth/recover-password', authController.recoverPassword);
 router.post('/appointments', appointmentController.createAppointment);
 router.get('/appointments', requireAdmin, appointmentController.getAppointments);
 
-router.post('/admin/login', adminController.adminLogin);
+router.post('/admin/login', adminLoginRateLimit, adminController.adminLogin);
 router.get('/admin/overview', requireAdmin, adminController.getOverview);
 router.patch('/admin/orders/:orderId', requireAdmin, adminController.updateOrder);
 router.patch('/admin/products/:productId', requireAdmin, adminController.updateProduct);
