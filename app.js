@@ -752,7 +752,7 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
                   <span>✦</span>
-                  <span>Hands-on gemological inspection of uncut Polki & VVS1 solitaires</span>
+                  <span>Product-specific stone details and available documentation are shared before purchase.</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
                   <span>✦</span>
@@ -850,8 +850,8 @@
                   <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Nickel / Irritants</div>
                 </div>
                 <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Lifetime</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Polish Covenant</div>
+                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Long-Term</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Jewellery Care</div>
                 </div>
               </div>
             </div>
@@ -917,7 +917,7 @@
       } else if (collectionId === 'best-sellers') {
         filtered = filtered.filter(p => p.badge === 'Bestseller');
         title = "Best Sellers";
-        subtitle = "Most coveted pieces favored by royal patrons";
+        subtitle = "Curated designs selected for their distinctive style";
         heroImg = "images/authentic_hero_editorial.jpg";
       } else if (collectionId === 'festive-edit') {
         filtered = filtered.filter(p => p.price >= 18000);
@@ -1474,7 +1474,7 @@
       <!-- A. EDITORIAL ABOUT HERO -->
       <section style="background: var(--color-warm-ivory); padding: 5rem 0 3rem; text-align: center;">
         <div class="container" style="max-width: 860px;">
-          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ The Jaipur Atelier • Stamped BIS 925 Hallmark</span>
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Jaipur Roots • Indian Heritage Craft</span>
           <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Where Elegance Becomes Eternal</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
@@ -1549,7 +1549,7 @@
             <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
               <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.6); border: 1px solid var(--color-warm-stone-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-stone-muted); font-size: 1.5rem;">💎</div>
               <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Diamond Jewellery</h3>
-              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Certified VVS1 laboratory diamonds and moissanites. Hearts & Arrows cut, micropavé settings, eternal brilliance with BIS hallmark certification.</p>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Explore diamond and gemstone designs, with stone type and setting details listed on each product page.</p>
               <a href="#collections/diamond-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Diamond Collection ↗</a>
             </div>
           </div>
@@ -1687,7 +1687,7 @@
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Complimentary First Ring Resize</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              If your solitaire ring or eternity band is slightly too snug or loose, our Jaipur bench jewelers provide one complimentary ring resizing within 30 days of acquisition. We coordinate two-way insured armored courier transit.
+              If your solitaire ring or eternity band is slightly too snug or loose, please contact customer support to confirm whether resizing is available for your piece and the applicable process.
             </p>
           </div>
           <div class="pepite-story-card">
@@ -2158,7 +2158,7 @@
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              Currently, we ship across India via insured armored courier. International enquiries can be directed to our concierge at +91 90799 98793.
+              Currently, we ship across India via delivery partner. International enquiries can be directed to our concierge at +91 90799 98793.
             </div>
           </div>
           <div class="pdp-accordion-item about-story-reveal">
@@ -2393,7 +2393,7 @@
 
           <div style="text-align: center; margin-top: 3.5rem;">
             <a href="#collections/all" class="btn-primary" style="margin-right: 1rem;">Explore Master Catalogue (50) ↗</a>
-            <a href="#custom-order" class="btn-outline">Commission Bespoke Creation</a>
+            
           </div>
         </div>
       </section>
