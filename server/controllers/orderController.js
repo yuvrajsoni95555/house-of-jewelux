@@ -212,7 +212,7 @@ const trackOrder = (req, res, next) => {
     const searchId = (orderId || query || '').trim().toUpperCase();
 
     if (!searchId) {
-      return res.status(400).json({ success: false, error: 'Please enter a valid Order ID (e.g. HJ-ORD-2026-7701)' });
+      return res.status(400).json({ success: false, error: 'Please enter a valid Order ID.' });
     }
 
     const orders = readJSON('orders.json');
