@@ -2195,8 +2195,8 @@
     }
 
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = subtotal >= 2500 ? 0 : 250;
-    const grandTotal = subtotal + shipping;
+    const shipping = null;
+    const grandTotal = subtotal + (shipping || 0);
 
     container.innerHTML = `
       <section style="padding: 3rem 0 6rem;">
@@ -2230,11 +2230,11 @@
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--color-taupe);">
                 <span>Shipping</span>
-                <span>${shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
+                <span>${shipping === null ? 'Confirmed before payment' : formatPrice(shipping)}</span>
               </div>
               <div style="border-top: 1px solid var(--color-warm-stone-light); padding-top: 1rem; margin-bottom: 1.5rem;">
                 <div style="display: flex; justify-content: space-between; font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--color-deep-heritage-brown);">
-                  <span>Grand Total</span>
+                  <span>Subtotal Before Delivery</span>
                   <span>${formatPrice(grandTotal)}</span>
                 </div>
               </div>
