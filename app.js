@@ -242,7 +242,7 @@
     const isWished = state.wishlist.includes(p.id);
     const mainImg = p.images && p.images[0] ? p.images[0] : (p.image || 'images/authentic_earrings_macro.jpg');
     const hoverImg = p.images && p.images[1] ? p.images[1] : (p.hoverImage || mainImg);
-    const badgeText = p.badge || (p.isNew ? 'New Arrival' : 'Explore Design');
+    const badgeText = p.imageVerification && /pending/i.test(p.imageVerification) ? 'Representative Image' : (p.badge || (p.isNew ? 'New Arrival' : 'Explore Design'));
 
     return `
       <div class="product-card" data-product-id="${p.id}">
