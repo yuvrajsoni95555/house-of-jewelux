@@ -63,15 +63,24 @@
     if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
       location.replace('https://' + location.hostname + location.pathname + location.search + location.hash);
     }
+    // Prevent browser from restoring scroll position to bottom/footer on reload
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
   </script>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/brand-identity/favicon-32x32.png">
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261121_prod_v3">
+  <link rel="stylesheet" href="/style.css?v=20261121_prod_v4">
   <style id="bulletproof-luxury-footer-styles">
     /* High-Priority Ultra-Luxurious Footer Styles - Mapped to Brand Swatches */
+    #app-view {
+      min-height: calc(100vh - 120px) !important;
+      display: block !important;
+    }
     .site-footer {
       background: #1A120E !important;
       color: #FAF7F2 !important;
@@ -600,7 +609,22 @@
 
   <!-- ==================== 3. MAIN DYNAMIC APP CONTAINER ==================== -->
   <main id="app-view">
-    <!-- Populated dynamically by app.js based on route -->
+    <!-- Initial Front Hero Section (Instant First Paint - Eliminates Footer Flash) -->
+    <section class="hero-slider" id="hero-slider">
+      <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center;">
+        <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div class="hero-brand-center-lockup">
+            <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
+          </div>
+          <div style="margin-top: 1.5rem;">
+            <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+              <span>Explore The Collections</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ==================== 4. SLIDE-OVER DRAWERS & MODALS ==================== -->
@@ -875,7 +899,7 @@
   <script src="/vendor/ScrollTrigger.min.js"></script>
   <script src="/motion-engine.js?v=20261120_prod_v2"></script>
   <script src="/hero-cinematic.js?v=20261120_prod_v9"></script>
-  <script src="/app.js?v=20261121_prod_v3"></script>
+  <script src="/app.js?v=20261121_prod_v4"></script>
   <script src="/visual-editor.js?v=20261120_prod_v2" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->

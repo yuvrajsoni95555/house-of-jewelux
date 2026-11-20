@@ -3274,6 +3274,7 @@
   window.addEventListener('hashchange', handleRoute);
   window.addEventListener('DOMContentLoaded', () => {
     updateBadges();
+    handleRoute();
     loadProducts();
     restoreSavedEdits();
     if (sessionStorage.getItem('hj_editor_active') === 'true') {

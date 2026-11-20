@@ -2355,6 +2355,11 @@ img {
   transform: translateY(-2px);
 }
 
+#app-view {
+  min-height: calc(100vh - 120px);
+  display: block;
+}
+
 .footer-columns-grid {
   display: grid;
   grid-template-columns: 1.6fr repeat(3, 1fr);
