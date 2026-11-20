@@ -850,7 +850,7 @@
                   <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Nickel / Irritants</div>
                 </div>
                 <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Long-Term</div>
+                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Jewellery</div>
                   <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Jewellery Care</div>
                 </div>
               </div>
@@ -1541,7 +1541,7 @@
             <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
               <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.12); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-size: 1.5rem;">Au</div>
               <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Gold Jewellery</h3>
-              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">18K gold finish and vermeil over BIS 925 silver. Royal haute joaillerie treatments, champagne gold plating, and micron-thick luxury finishes.</p>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Gold-finish jewellery designs with product-specific base metal and plating details listed on each item.</p>
               <a href="#collections/gold-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Gold Collection ↗</a>
             </div>
 
@@ -1584,9 +1584,9 @@
 
             <div class="pepite-story-card about-story-reveal">
               <div class="pepite-number-badge">03</div>
-              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Lifetime Maintenance Covenant</h3>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Jewellery Care Information</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
-                Triple-layer liquid platinum-rhodium and 18K micron gold shielding. Every acquisition includes complimentary lifetime ultrasonic cleansing and refinishing.
+                Care requirements vary by metal, finish and stone. Please follow the product-specific care guidance and contact customer support if you need assistance.
               </p>
             </div>
           </div>
@@ -1622,12 +1622,12 @@
             </div>
             <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
               <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">100%</div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">BIS 925 Certified</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Laser stamped purity hallmark</div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Material Details</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Listed on each product page</div>
             </div>
             <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
-              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">40+</div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Hours Per Masterpiece</div>
+              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">Craft</div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Indian Heritage Craft</div>
               <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Artisanal bench handcrafting</div>
             </div>
             <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
@@ -1838,14 +1838,14 @@
         `
       },
       warranty: {
-        title: "Lifetime Craftsmanship Covenant",
-        subtitle: "Unconditional Protection Against Manufacturing Flaws",
-        badge: "Lifetime Atelier Covenant",
+        title: "Warranty Information",
+        subtitle: "Coverage is confirmed for each product",
+        badge: "Product Information",
         content: `
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Lifetime Metal & Setting Integrity</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Product-Specific Coverage</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Every creation forged by our Jaipur artisans carries an unconditional lifetime craftsmanship warranty against metal porosity, clasp structural failure, and prong security. If a stone loosens under normal daily wear, send your piece to our atelier for complimentary resetting, ultrasonic cleansing, and rhodium rejuvenation.
+              Warranty coverage, if available, will be stated on the individual product page or confirmed in writing before purchase. Please contact customer support if you need clarification about care, repairs or service eligibility.
             </p>
           </div>
         `
@@ -1925,7 +1925,7 @@
 
     drawerBody.innerHTML = `
       <div class="free-shipping-progress-box">
-        ${subtotal >= 2500 ? '🎉 You have unlocked <strong>Free Insured Armored Delivery</strong>!' : `Add <strong>${formatPrice(2500 - subtotal)}</strong> more for Free Delivery`}
+        ${subtotal >= 2500 ? '🎉 You have unlocked <strong>Free Delivery</strong>!' : `Add <strong>${formatPrice(2500 - subtotal)}</strong> more for Free Delivery`}
         <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${progressPercent}%;"></div></div>
       </div>
       ${state.cart.map(item => `
