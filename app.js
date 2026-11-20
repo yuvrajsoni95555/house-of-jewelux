@@ -572,10 +572,10 @@
 
             <a href="#collections/bracelets" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets & Bangles" />
+                <img class="cat-showcase-img" src="images/authentic_bracelet_bracelets.jpg" alt="Bracelets & Bracelets" />
               </div>
               <div class="cat-showcase-overlay">
-                <div class="cat-showcase-title">Bracelets & Bangles</div>
+                <div class="cat-showcase-title">Bracelets & Bracelets</div>
                 <div class="cat-showcase-count">10 Styles • Double-Lock Clasp</div>
               </div>
             </a>
@@ -906,7 +906,7 @@
         }
         if (collectionId === 'rings') heroImg = "images/authentic_rings_couple_hands.jpg";
         else if (collectionId === 'necklaces') heroImg = "images/authentic_diamond_choker.jpg";
-        else if (collectionId === 'bracelets') heroImg = "images/authentic_bracelet_bangles.jpg";
+        else if (collectionId === 'bracelets') heroImg = "images/authentic_bracelet_bracelets.jpg";
         else if (collectionId === 'brooches') heroImg = "images/authentic_mens_sherwani_jewel.jpg";
         else if (collectionId === 'earrings') heroImg = "images/authentic_earrings_stone.jpg";
       } else if (collectionId === 'new-arrivals') {
@@ -993,7 +993,7 @@
                 <button class="filter-pill ${collectionId === 'rings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/rings')">Rings</button>
                 <button class="filter-pill ${collectionId === 'earrings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/earrings')">Earrings</button>
                 <button class="filter-pill ${collectionId === 'necklaces' ? 'active' : ''}" onclick="window.HJ.navigate('collections/necklaces')">Necklaces</button>
-                <button class="filter-pill ${collectionId === 'bracelets' ? 'active' : ''}" onclick="window.HJ.navigate('collections/bracelets')">Bracelets & Bangles</button>
+                <button class="filter-pill ${collectionId === 'bracelets' ? 'active' : ''}" onclick="window.HJ.navigate('collections/bracelets')">Bracelets & Bracelets</button>
                 <button class="filter-pill ${collectionId === 'brooches' ? 'active' : ''}" onclick="window.HJ.navigate('collections/brooches')">Brooches & Pins</button>
                 <button class="filter-pill ${collectionId === 'temple-jewellery' ? 'active' : ''}" onclick="window.HJ.navigate('collections/temple-jewellery')">Temple Nakshi</button>
               </div>
@@ -1764,43 +1764,44 @@
       },
       care: {
         title: "Jewellery Care Guide",
-        subtitle: "Preserving the Eternal Brilliance of Silver, Gold & Diamonds",
-        badge: "Jewellery Care Guide",
+        subtitle: "Simple care for gold, silver and gemstone jewellery",
+        badge: "Jewellery Care",
         content: `
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Caring for Silver Jewellery</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Silver Jewellery</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              Silver jewellery may require care specific to its finish. Check the individual product details or contact our team if you are unsure which cleaning method is suitable.
+              Care requirements depend on the silver finish and any stones used. Gently wipe with a clean, soft, dry cloth and store separately in a dry place.
             </p>
             <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
-              <li>Wipe gently with the provided ultra-soft microfiber polishing cloth after each wear.</li>
-              <li>Avoid chemical silver dips or abrasive pastes, which can strip protective rhodium plating.</li>
-              <li>Remove your jewellery prior to swimming in chlorinated pools or bathing in thermal sulfur springs.</li>
+              <li>Avoid abrasive pastes, chemical dips and harsh household cleaners.</li>
+              <li>Keep jewellery away from perfume, lotions, chlorine and prolonged moisture.</li>
+              <li>Check the product-specific instructions before using any polishing or cleaning product.</li>
             </ul>
           </div>
 
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Caring for Gold-Finish Jewellery</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Gold and Gold-Finish Jewellery</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1rem;">
-              Gold-finish jewellery can be sensitive to friction, moisture and chemicals. Keep pieces dry, apply perfume before wearing and store separately.
+              Finishes vary by design. To help preserve the surface, put jewellery on after applying perfume, cosmetics and lotions. Remove it before bathing, swimming or exercising.
             </p>
             <ul style="padding-left: 1.25rem; font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.8;">
-              <li>Apply perfumes, body lotions, hairsprays, and cosmetics <em>before</em> putting on your jewellery.</li>
-              <li>Store each piece individually in its velvet presentation coffer to prevent delicate chains and stones from scratching.</li>
+              <li>Wipe gently with a soft, dry cloth after wearing.</li>
+              <li>Store each piece separately to reduce scratches and tangling.</li>
+              <li>Avoid polishing compounds unless the product-specific care instructions recommend them.</li>
             </ul>
           </div>
 
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Caring for Gemstone Jewellery</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Diamond and Gemstone Jewellery</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              To restore maximum optical dispersion and scintillation: soak for 5 minutes in a bowl of lukewarm water with 2 drops of mild dishwashing liquid. Gently brush behind the pavilion facet with a soft-bristled baby toothbrush, rinse under running lukewarm water, and pat dry with a lint-free cloth.
+              Gemstones differ in hardness, porosity and sensitivity. Do not soak jewellery or use ultrasonic, steam or chemical cleaners unless the care instructions for that exact stone and setting explicitly allow it. When unsure, use a soft dry cloth and contact our team for guidance.
             </p>
           </div>
         `
       },
       size: {
         title: "International Size & Dimension Guide",
-        subtitle: "Accurate Measurement Specifications for Rings, Bangles & Necklaces",
+        subtitle: "Measurement guidance for rings, bracelets and necklaces",
         badge: "Jaipur Atelier Sizing Chart",
         content: `
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
@@ -2508,8 +2509,8 @@
         state.deliveryPincode = code;
         localStorage.setItem('hj_pincode', code);
         updateBadges();
-        status.innerHTML = `✓ Delivery availability to PIN <strong>${code}</strong> in 2 - 4 business days.`;
-        status.style.color = '#2E7D32';
+        status.textContent = `PIN ${code} received. Our team will confirm delivery serviceability, charges and estimated timing before payment.`;
+        status.style.color = 'var(--color-stone-muted)';
       } else {
         status.textContent = 'Please enter a valid 6-digit PIN code.';
         status.style.color = '#B22222';
