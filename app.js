@@ -2647,7 +2647,7 @@
         const res = await fetch(`/api/admin/orders/${orderId}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('hj_admin_token') },
-          body: JSON.stringify({ paymentStatus: 'Paid', orderStatus: 'Confirmed & Sent to Goldsmith' })
+          body: JSON.stringify({ paymentStatus: 'Paid', orderStatus: 'Payment Verified — Processing' })
         });
         const data = await res.json();
         if (data.success) {
@@ -2965,7 +2965,12 @@
             </div>`;
         }
       } catch (err) {
-        if (resultBox) resultBox.innerHTML = '<p role="alert" style="padding:1rem;color:#9b2c2c;">' + (err.message || 'Unable to retrieve this order. Please try again.') + '</p>';
+        if (resultBox) {
+          resultBox.textContent = err.message || 'Unable to retrieve this order. Please try again.';
+          resultBox.setAttribute('role', 'alert');
+          resultBox.style.padding = '1rem';
+          resultBox.style.color = '#9b2c2c';
+        }
       }
     }
   };
