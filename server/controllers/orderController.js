@@ -80,6 +80,12 @@ const createOrder = (req, res, next) => {
       return res.status(400).json({ success: false, error: 'Missing mandatory checkout information' });
     }
 
+    const allowedPaymentMethods = ['advance_payment'];
+    const selectedPaymentMethod = paymentMethod || 'advance_payment';
+    if (!allowedPaymentMethods.includes(selectedPaymentMethod)) {
+      return res.status(400).json({ success: false, error: 'Only advance payment is accepted. Cash on Delivery is not available.' });
+    }
+
     const products = readJSON('products.json');
     const coupons = readJSON('coupons.json', {});
     const orders = readJSON('orders.json');
@@ -145,7 +151,7 @@ const createOrder = (req, res, next) => {
         country: 'India'
       },
       payment: {
-        method: paymentMethod || 'online',
+        method: selectedPaymentMethod,
         status: 'Payment Pending'
       },
       pricing: {
