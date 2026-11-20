@@ -125,14 +125,13 @@ const createOrder = (req, res, next) => {
     const giftBoxCost = isGiftBox ? 150 : 0;
     const grandTotal = Math.max(0, subtotal - discount + shipping + giftBoxCost);
 
-    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-    const orderId = `HJ-ORD-2026-${randomSuffix}`;
-    const trackingNumber = `HJ-TRK-${Math.floor(100000 + Math.random() * 900000)}IN`;
+    const orderId = `HJ-ORD-${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
+    const trackingNumber = '';
 
     const newOrder = {
       orderId,
       orderDate: new Date().toISOString(),
-      orderStatus: 'Confirmed by Jaipur Atelier',
+      orderStatus: 'Awaiting Payment',
       customer: {
         name: customer.name || customer.fullName || 'Valued Connoisseur',
         email: customer.email || '',
@@ -146,8 +145,8 @@ const createOrder = (req, res, next) => {
         country: 'India'
       },
       payment: {
-        method: paymentMethod || 'cod',
-        status: paymentMethod === 'cod' ? 'Pending upon Armored Handover' : 'Paid & Verified'
+        method: paymentMethod || 'online',
+        status: 'Payment Pending'
       },
       pricing: {
         subtotal,
@@ -159,7 +158,7 @@ const createOrder = (req, res, next) => {
       },
       items: orderItems,
       trackingNumber,
-      estimatedDelivery: '3 - 5 Business Days via Sequel Secure Logistics'
+      estimatedDelivery: 'Estimated delivery will be shared after order confirmation'
     };
 
     orders.unshift(newOrder);
@@ -199,11 +198,7 @@ const trackOrder = (req, res, next) => {
     }
 
     const orders = readJSON('orders.json');
-    const matched = orders.find(o => 
-      o.orderId.toUpperCase() === searchId || 
-      (o.trackingNumber && o.trackingNumber.toUpperCase() === searchId) ||
-      (o.customer && (o.customer.email.toUpperCase() === searchId || o.customer.phone.replace(/[^0-9]/g, '') === searchId.replace(/[^0-9]/g, '')))
-    );
+    const matched = orders.find(o => String(o.orderId || '').toUpperCase() === searchId);
 
     if (!matched) {
       return res.status(404).json({
@@ -218,11 +213,11 @@ const trackOrder = (req, res, next) => {
         orderId: matched.orderId,
         orderDate: matched.orderDate,
         orderStatus: matched.orderStatus || 'Processing in Jaipur Atelier',
-        paymentStatus: matched.paymentStatus || 'Paid',
-        trackingNumber: matched.trackingNumber || 'HJ-TRK-749102IN',
-        courierPartner: 'Sequel Secure Armored Logistics & Blue Dart Apex',
-        estimatedDelivery: matched.estimatedDelivery || '3 - 5 Business Days with White-Glove Armored Transit',
-        shippingCity: matched.shippingAddress ? `${matched.shippingAddress.city}, ${matched.shippingAddress.state}` : 'Jaipur, Rajasthan',
+        paymentStatus: (matched.payment && matched.payment.status) || 'Payment Pending',
+        trackingNumber: matched.trackingNumber || 'Not assigned yet',
+        courierPartner: 'To be assigned',
+        estimatedDelivery: matched.estimatedDelivery || 'Shared after dispatch',
+        shippingCity: matched.shippingAddress ? `${matched.shippingAddress.city}, ${matched.shippingAddress.state}` : '',
         itemCount: matched.items ? matched.items.length : 1,
         items: (matched.items || []).map(i => ({
           name: i.name,
