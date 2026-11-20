@@ -1057,7 +1057,11 @@
 
   // ==================== VIEW 3: PRODUCT DETAIL PAGE (1:1 WITH PALMONAS ATHENA SOLITAIRE PDP) ====================
   function renderPDP(container, identifier) {
-    const p = state.products.find(item => item.id === identifier || item.handle === identifier) || state.products[0];
+    const p = state.products.find(item => item.id === identifier || item.handle === identifier);
+    if (!p) {
+      container.innerHTML = '<div class="container" style="padding:5rem 1rem;text-align:center;"><h1>Product not found</h1><p style="margin:1rem 0 2rem;color:var(--color-stone-muted);">This product may no longer be available. Explore the current collections instead.</p><a href="#collections/all" class="btn-primary">Explore Collections</a></div>';
+      return;
+    }
     const related = state.products.filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
     const isWishlisted = state.wishlist.includes(p.id);
     const hasPendingImage = Boolean(p.imageVerification && /pending/i.test(p.imageVerification));
@@ -1133,7 +1137,7 @@
 
             <!-- Check Delivery (Matching Palmonas) -->
             <div class="pdp-check-delivery-box">
-              <label>Check delivery</label>
+              <label>Delivery enquiry</label>
               <div class="delivery-input-group">
                 <input type="text" id="pdp-pincode-input" placeholder="Enter pincode" value="${state.deliveryPincode}" maxlength="6" />
                 <button onclick="window.HJ.checkPincode()">Check</button>
