@@ -2687,7 +2687,7 @@
         {
           input.value = '';
           if (feedback) {
-            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Thank you for joining House of Jewelux updates! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Thank you for joining House of Jewelux updates! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first order.</span>';
             feedback.style.display = 'block';
           } else {
             alert(data.message || 'Thank you for subscribing. Welcome code FIRSTLUX is available for your first order.');
