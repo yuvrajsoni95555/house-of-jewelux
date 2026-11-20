@@ -954,8 +954,6 @@
       filtered.sort((a, b) => a.price - b.price);
     } else if (state.activeFilters.sort === 'price_desc') {
       filtered.sort((a, b) => b.price - a.price);
-    } else if (state.activeFilters.sort === 'rating') {
-      filtered.sort((a, b) => Number(b.rating) - Number(a.rating));
     }
 
     container.innerHTML = `
@@ -1043,7 +1041,6 @@
                 <option value="popular" ${state.activeFilters.sort === 'popular' ? 'selected' : ''}>Sort By: Popular</option>
                 <option value="price_asc" ${state.activeFilters.sort === 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
                 <option value="price_desc" ${state.activeFilters.sort === 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
-                <option value="rating" ${state.activeFilters.sort === 'rating' ? 'selected' : ''}>Customer Rating</option>
               </select>
             </div>
             <main class="products-grid motion-stagger">
@@ -1512,7 +1509,7 @@
               
               <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                 <a href="#collections/all" class="btn-primary">Explore All 50 Pieces ↗</a>
-                <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-outline">Book Private Salon</a>
+                <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-outline">Request Online Consultation</a>
               </div>
             </div>
           </div>
@@ -1894,7 +1891,7 @@
               </p>
               <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="https://wa.me/919079998793" target="_blank" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Chat on WhatsApp</a>
-                <a href="#contact" class="btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Contact Salon Suite</a>
+                <a href="#contact" class="btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Contact Our Team</a>
               </div>
             </div>
           </div>
@@ -1965,7 +1962,7 @@
           <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Contact the House of Jewelux</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 760px; margin: 0 auto;">
-            Reach our private salon concierge in Jaipur, schedule an appointment, or inquire regarding any creation in our vault. We respond personally within 24 business hours.
+            Reach the House of Jewelux team for product information, order assistance or collection guidance. We will respond using the contact details you provide.
           </p>
         </div>
       </section>
@@ -1975,11 +1972,11 @@
         <div class="container">
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 3.5rem; align-items: start;">
             
-            <!-- Left: Contact Details & Salon Hours -->
+            <!-- Left: Contact Details -->
             <div class="about-story-reveal" style="display: flex; flex-direction: column; gap: 1.5rem;">
               <div class="pepite-story-card">
-                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Atelier & Salon</span>
-                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.4rem 0 1.5rem;">Jaipur Creative Atelier</h3>
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">House of Jewelux</span>
+                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.4rem 0 1.5rem;">House of Jewelux — Jaipur</h3>
                 
                 <div style="display: flex; flex-direction: column; gap: 1.35rem;">
                   <div style="display: flex; gap: 1rem; align-items: flex-start;">
@@ -2406,7 +2403,7 @@
           price: prod.price,
           image: prod.image,
           handle: prod.handle,
-          metal: 'BIS 925 Rhodium Silver',
+          metal: prod.metal || 'See product specifications',
           quantity: qty
         });
       }
