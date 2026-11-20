@@ -895,7 +895,7 @@
       } else if (['gemstone', 'gemstone-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('gemstone')) || p.primaryMaterial === 'gemstone' || (p.stone && (p.stone.toLowerCase().includes('emerald') || p.stone.toLowerCase().includes('sapphire') || p.stone.toLowerCase().includes('pearl') || p.stone.toLowerCase().includes('polki'))));
         title = "Precious Gemstone Jewellery";
-        subtitle = "Colombian Emeralds, Ceylon Sapphires, Basra Pearls & Royal Polki (13 Pieces)";
+        subtitle = "Emeralds, Sapphires, Pearls & Heritage-Inspired Designs (13 Pieces)";
         heroImg = "images/user_falcon_brooch_emerald.jpg";
       } else if (['earrings', 'rings', 'necklaces', 'bracelets', 'brooches'].includes(collectionId)) {
         filtered = filtered.filter(p => p.category === collectionId || p.productType === collectionId);
