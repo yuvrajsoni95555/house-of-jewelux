@@ -3,6 +3,9 @@
  */
 const crypto = require('crypto');
 const sessions = new Map();
+const loginAttempts = new Map();
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const LOGIN_MAX_ATTEMPTS = 8;
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
 function securityHeaders(req, res, next) {
@@ -15,6 +18,18 @@ function securityHeaders(req, res, next) {
   if (req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
     return res.redirect(301, 'https://' + req.headers.host + req.url);
   }
+  next();
+}
+
+function adminLoginRateLimit(req, res, next) {
+  const key = req.ip || req.socket.remoteAddress || 'unknown';
+  const now = Date.now();
+  const record = loginAttempts.get(key);
+  if (record && now - record.startedAt < LOGIN_WINDOW_MS && record.count >= LOGIN_MAX_ATTEMPTS) {
+    return res.status(429).json({ success: false, error: 'Too many sign-in attempts. Please wait 15 minutes and try again.' });
+  }
+  if (!record || now - record.startedAt >= LOGIN_WINDOW_MS) loginAttempts.set(key, { startedAt: now, count: 1 });
+  else record.count += 1;
   next();
 }
 
@@ -35,4 +50,4 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-module.exports = { securityHeaders, issueAdminSession, requireAdmin };
+module.exports = { securityHeaders, issueAdminSession, requireAdmin, adminLoginRateLimit };
