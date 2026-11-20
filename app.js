@@ -547,7 +547,7 @@
           <div class="category-grid-showcase">
             <a href="#collections/rings" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/authentic_solitaire_ring.jpg" alt="Rings & Solitaires" />
+                <img class="cat-showcase-img" src="images/user_emerald_solitaire_ring.jpg" alt="Rings & Solitaires" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Rings & Solitaires</div>
@@ -567,7 +567,7 @@
 
             <a href="#collections/necklaces" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/authentic_diamond_choker.jpg" alt="Necklaces & Chokers" />
+                <img class="cat-showcase-img" src="images/user_emerald_diamond_choker.jpg" alt="Necklaces & Chokers" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Necklaces & Chokers</div>
