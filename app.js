@@ -829,8 +829,8 @@
                 <div style="margin-bottom: 1.25rem;">
                   <label class="form-label">Consultation Experience</label>
                   <select class="form-input">
-                    <option>Private Jaipur Atelier Experience</option>
-                    <option>New Delhi VIP Salon Suite</option>
+                    <option>Online Consultation</option>
+                    <option>Online Consultation</option>
                     <option>Virtual High-Jewellery Video Concierge</option>
                   </select>
                 </div>
@@ -847,7 +847,7 @@
           <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-antique-gold); font-weight: 600;">White-Glove Armored Courier Telemetry</span>
           <h2 style="font-family: var(--font-serif); font-size: 2rem; margin: 0.4rem 0 0.8rem; color: var(--color-deep-heritage-brown);">Track Your Consignment</h2>
           <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin-bottom: 1.75rem;">
-            Enter your unique Order Reference ID (e.g. <strong>HJ-ORD-2026-7701</strong>) to view real-time atelier forging milestones, hallmarking certificates, and armored dispatch telemetry.
+            Enter your unique Order Reference ID (e.g. <strong>HJ-ORD-XXXXXXXX</strong>) to view real-time atelier forging milestones, hallmarking certificates, and armored dispatch telemetry.
           </p>
 
           <form onsubmit="window.HJ.submitTrackOrder(event)" style="display: flex; gap: 0.5rem; max-width: 500px; margin: 0 auto;">
@@ -1256,7 +1256,7 @@
               </div>
               <div class="pdp-accordion-pane">
                 <strong>Manufactured By:</strong> House of Jewelux Creative Atelier & Salon, Jaipur, Rajasthan, India.<br>
-                <strong>Customer Grievance & Concierge:</strong> +91 63770 61020 | houseofjewelux@gmail.com
+                <strong>Customer Grievance & Concierge:</strong> +91 90799 98793 | houseofjewelux@gmail.com
               </div>
             </div>
 
@@ -1389,24 +1389,12 @@
                   </div>
                   <div class="payment-method-details" style="display: none;">
                     <div class="bank-transfer-box">
-                      <strong>Beneficiary:</strong> HOUSE OF JEWELUX<br>
-                      <strong>Account:</strong> 50200084920193<br>
-                      <strong>IFSC:</strong> HDFC0000128 (Jaipur C-Scheme Branch)<br>
-                      <em>Status will remain <strong>Pending Verification</strong> until validated by administrator.</em>
+                      <strong>Advance payment required.</strong><br>
+                      Payment instructions will be shared by the House of Jewelux team after the order request is received. Your order will remain pending until payment is verified.
                     </div>
                   </div>
                 </div>
 
-                <!-- Cash on Delivery -->
-                <div class="payment-method-card" onclick="window.HJ.selectPaymentMethod('cod', this)">
-                  <div class="payment-method-header">
-                    <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="cod" />
-                      <span>Cash on Delivery (COD)</span>
-                    </div>
-                    <span style="font-size: 0.75rem; color: var(--color-taupe);">Verified PINs</span>
-                  </div>
-                </div>
               </div>
 
               <button type="submit" class="btn-gold" style="width: 100%; padding: 1.1rem; font-size: 0.95rem;">
@@ -2052,7 +2040,7 @@
                 Our online consultation concierge is available directly on WhatsApp and telephone to assist with custom requests, sizing queries, and consignment tracking.
               </p>
               <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="https://wa.me/916377061020" target="_blank" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Chat on WhatsApp</a>
+                <a href="https://wa.me/919079998793" target="_blank" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Chat on WhatsApp</a>
                 <a href="#contact" class="btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Contact Salon Suite</a>
               </div>
             </div>
