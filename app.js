@@ -572,10 +572,10 @@
 
             <a href="#collections/bracelets" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/authentic_bracelet_bracelets.jpg" alt="Bracelets & Bracelets" />
+                <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets" />
               </div>
               <div class="cat-showcase-overlay">
-                <div class="cat-showcase-title">Bracelets & Bracelets</div>
+                <div class="cat-showcase-title">Bracelets</div>
                 <div class="cat-showcase-count">10 Styles • Double-Lock Clasp</div>
               </div>
             </a>
@@ -906,7 +906,7 @@
         }
         if (collectionId === 'rings') heroImg = "images/authentic_rings_couple_hands.jpg";
         else if (collectionId === 'necklaces') heroImg = "images/authentic_diamond_choker.jpg";
-        else if (collectionId === 'bracelets') heroImg = "images/authentic_bracelet_bracelets.jpg";
+        else if (collectionId === 'bracelets') heroImg = "images/authentic_bracelet_bangles.jpg";
         else if (collectionId === 'brooches') heroImg = "images/authentic_mens_sherwani_jewel.jpg";
         else if (collectionId === 'earrings') heroImg = "images/authentic_earrings_stone.jpg";
       } else if (collectionId === 'new-arrivals') {
@@ -993,7 +993,7 @@
                 <button class="filter-pill ${collectionId === 'rings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/rings')">Rings</button>
                 <button class="filter-pill ${collectionId === 'earrings' ? 'active' : ''}" onclick="window.HJ.navigate('collections/earrings')">Earrings</button>
                 <button class="filter-pill ${collectionId === 'necklaces' ? 'active' : ''}" onclick="window.HJ.navigate('collections/necklaces')">Necklaces</button>
-                <button class="filter-pill ${collectionId === 'bracelets' ? 'active' : ''}" onclick="window.HJ.navigate('collections/bracelets')">Bracelets & Bracelets</button>
+                <button class="filter-pill ${collectionId === 'bracelets' ? 'active' : ''}" onclick="window.HJ.navigate('collections/bracelets')">Bracelets</button>
                 <button class="filter-pill ${collectionId === 'brooches' ? 'active' : ''}" onclick="window.HJ.navigate('collections/brooches')">Brooches & Pins</button>
                 <button class="filter-pill ${collectionId === 'temple-jewellery' ? 'active' : ''}" onclick="window.HJ.navigate('collections/temple-jewellery')">Temple Nakshi</button>
               </div>
