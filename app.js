@@ -387,18 +387,75 @@
 
           <div class="material-pillars-grid">
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
-            <a href="#craftsmanship" class="material-pillar-card-luxury" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
-              <img src="images/pillars/pillar_heritage_craftsmanship@2x.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." width="650" height="406" loading="lazy" />
+            <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
+              <div class="material-pillar-img-wrap">
+                <img class="material-pillar-img" src="images/pillar_heritage_craft_clean.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." loading="lazy" />
+                <span class="material-pillar-badge">✦ Pillar 01</span>
+              </div>
+              <div class="material-pillar-body">
+                <div class="material-pillar-title">
+                  <span>Heritage Craftsmanship</span>
+                  <span style="font-size: 1.1rem; color: #A88462;">✦</span>
+                </div>
+                <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
+                  "Centuries-old artistry, forever cherished."
+                </div>
+                <div class="material-pillar-desc">
+                  Devotional bench goldsmithing embodying Jaipur royal artistry, hand-chiseled nakshi engraving, and ancestral hammer-forging.
+                </div>
+                <div class="material-pillar-footer">
+                  <span>Explore Atelier</span>
+                  <span>↗</span>
+                </div>
+              </div>
             </a>
 
             <!-- PILLAR 2: TIMELESS ELEGANCE -->
-            <a href="#collections/all" class="material-pillar-card-luxury" aria-label="Timeless Elegance — Classic beauty, always in style.">
-              <img src="images/pillars/pillar_timeless_elegance@2x.jpg" alt="Timeless Elegance — Classic beauty, always in style." width="634" height="406" loading="lazy" />
+            <a href="#collections/all" class="material-pillar-card" aria-label="Timeless Elegance — Classic beauty, always in style.">
+              <div class="material-pillar-img-wrap">
+                <img class="material-pillar-img" src="images/pillar_timeless_elegance_clean.jpg" alt="Timeless Elegance — Classic beauty, always in style." loading="lazy" />
+                <span class="material-pillar-badge">✦ Pillar 02</span>
+              </div>
+              <div class="material-pillar-body">
+                <div class="material-pillar-title">
+                  <span>Timeless Elegance</span>
+                  <span style="font-size: 1.1rem; color: #A88462;">✦</span>
+                </div>
+                <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
+                  "Classic beauty, always in style."
+                </div>
+                <div class="material-pillar-desc">
+                  Regal bridal diadems, architectural solitaires, and heirloom silhouettes sculpted to transcend fleeting seasonal trends.
+                </div>
+                <div class="material-pillar-footer">
+                  <span>Discover Masterpieces</span>
+                  <span>↗</span>
+                </div>
+              </div>
             </a>
 
             <!-- PILLAR 3: GLOBAL LUXURY -->
-            <a href="#collections/diamond" class="material-pillar-card-luxury" aria-label="Global Luxury — A world of sophistication, within your reach.">
-              <img src="images/pillars/pillar_global_luxury@2x.jpg" alt="Global Luxury — A world of sophistication, within your reach." width="648" height="406" loading="lazy" />
+            <a href="#collections/diamond" class="material-pillar-card" aria-label="Global Luxury — A world of sophistication, within your reach.">
+              <div class="material-pillar-img-wrap">
+                <img class="material-pillar-img" src="images/pillar_global_luxury_clean.jpg" alt="Global Luxury — A world of sophistication, within your reach." loading="lazy" />
+                <span class="material-pillar-badge">✦ Pillar 03</span>
+              </div>
+              <div class="material-pillar-body">
+                <div class="material-pillar-title">
+                  <span>Global Luxury</span>
+                  <span style="font-size: 1.1rem; color: #A88462;">✦</span>
+                </div>
+                <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
+                  "A world of sophistication, within your reach."
+                </div>
+                <div class="material-pillar-desc">
+                  Contemporary luxury aesthetics harmonized with Bureau of Indian Standards (BIS) hallmark certification and insured armored transit.
+                </div>
+                <div class="material-pillar-footer">
+                  <span>View Vault Collections</span>
+                  <span>↗</span>
+                </div>
+              </div>
             </a>
           </div>
         </div>

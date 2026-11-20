@@ -281,15 +281,15 @@
         <!-- ==================== SCENE 03: HIGH JEWELLERY ODYSSEY ==================== -->
         <div class="cinematic-scene" data-scene="3">
           <div class="jewellery-trio-stage parallax-plane" data-depth="0.05">
-            <!-- 1. Falcon Brooch -->
-            <div class="macro-jewel-card" onclick="window.HJ.navigate('products/the-sovereign-crest-royal-falcon-brooch-hj-bro-001')">
+            <!-- 1. Royal Panther Brooch -->
+            <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/brooches')">
               <div class="macro-jewel-img-box">
-                <img src="images/user_falcon_brooch_white.jpg" alt="The Sovereign Falcon Crest Brooch" style="object-position: center 15%;" />
-                <span class="macro-jewel-tag">Haute Heraldry</span>
+                <img src="images/user_royal_panther_brooch.jpg" alt="The Royal Panther Pavé Brooch" style="object-position: center 35%;" />
+                <span class="macro-jewel-tag">Haute Joaillerie</span>
               </div>
               <div class="macro-jewel-info">
-                <div class="macro-jewel-title">The Sovereign Falcon</div>
-                <div class="macro-jewel-sub">Handcrafted Gold & Diamond Wings</div>
+                <div class="macro-jewel-title">The Royal Panther</div>
+                <div class="macro-jewel-sub">Pavé Diamonds & Ruby Eyes</div>
               </div>
             </div>
 
