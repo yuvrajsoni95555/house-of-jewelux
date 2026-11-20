@@ -1522,16 +1522,23 @@
       return;
     }
 
-    let metrics = { totalRevenue: 13152, totalOrders: 1, pendingVerification: 1, totalProducts: 50 };
+    let metrics = { totalRevenue: 0, totalOrders: 0, pendingVerification: 0, totalProducts: 0, totalCustomers: 0 };
     let recentOrders = [];
     try {
       const res = await fetch('/api/admin/overview', { headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('hj_admin_token') } });
       const data = await res.json();
-      if (data.success) {
-        metrics = data.metrics;
-        recentOrders = data.recentOrders;
+      if (res.status === 401) {
+        sessionStorage.removeItem('hj_admin_token');
+        renderAdminDashboard(container);
+        return;
       }
-    } catch (e) {}
+      if (!res.ok || !data.success) throw new Error(data.error || 'Unable to load admin data.');
+      metrics = data.metrics;
+      recentOrders = data.recentOrders;
+    } catch (err) {
+      container.innerHTML = '<div class="container" style="padding:4rem 1rem;"><p role="alert">Admin data could not be loaded. Please refresh or sign in again.</p></div>';
+      return;
+    }
 
     container.innerHTML = `
       <div style="background: var(--color-ivory); min-height: 80vh; padding-bottom: 5rem;">
