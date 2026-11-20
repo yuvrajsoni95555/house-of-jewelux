@@ -1255,7 +1255,7 @@
 
             <!-- STEP 2: SHIPPING ADDRESS -->
             <div class="checkout-form-box" style="margin-bottom: 1.5rem;">
-              <h3 class="checkout-step-title">2. Armored Delivery Address</h3>
+              <h3 class="checkout-step-title">2. Shipping Address</h3>
               <div class="form-field">
                 <label class="form-label">Street Address / Suite / Apartment *</label>
                 <input type="text" name="address" class="form-input" required placeholder="House number, street, landmark" />
@@ -2287,7 +2287,7 @@
       <!-- A. EDITORIAL CRAFTSMANSHIP HERO -->
       <section style="background: var(--color-warm-ivory); padding: 5rem 0 2rem; text-align: center;">
         <div class="container" style="max-width: 860px;">
-          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Jaipur Bench Artistry • Stamped BIS 925</span>
+          <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.85rem;">✦ Jaipur Roots • Indian Heritage Craft</span>
           <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">The 10-Stage Goldsmithing Journey</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
@@ -2375,7 +2375,7 @@
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">10</div>
               <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Final Presentation</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Final ultrasonic cleansing, emerald velvet presentation coffer packaging, and insured armored courier dispatch across India.</p>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Product details and care guidance are shared with each order. Delivery information is confirmed before payment.</p>
             </div>
           </div>
 
@@ -2510,7 +2510,7 @@
         state.deliveryPincode = code;
         localStorage.setItem('hj_pincode', code);
         updateBadges();
-        status.innerHTML = `✓ Armored Courier transit available to PIN <strong>${code}</strong> in 2 - 4 business days.`;
+        status.innerHTML = `✓ Delivery availability to PIN <strong>${code}</strong> in 2 - 4 business days.`;
         status.style.color = '#2E7D32';
       } else {
         status.textContent = 'Please enter a valid 6-digit PIN code.';
