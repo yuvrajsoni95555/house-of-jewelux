@@ -49,8 +49,8 @@ const validateCart = (req, res, next) => {
       }
     }
 
-    const shipping = subtotal >= 2500 ? 0 : 250;
-    const grandTotal = Math.max(0, subtotal - discount + shipping);
+    const shipping = null;
+    const grandTotal = Math.max(0, subtotal - discount + (shipping || 0));
 
     res.json({
       success: true,
@@ -141,7 +141,7 @@ const createOrder = (req, res, next) => {
 
     const shipping = subtotal >= 2500 ? 0 : 250;
     const giftBoxCost = isGiftBox ? 150 : 0;
-    const grandTotal = Math.max(0, subtotal - discount + shipping + giftBoxCost);
+    const grandTotal = Math.max(0, subtotal - discount + (shipping || 0) + giftBoxCost);
 
     const orderId = `HJ-ORD-${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
     const trackingNumber = '';
