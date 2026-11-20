@@ -815,14 +815,14 @@
       <!-- I. TRACK YOUR ORDER ENTRY POINT (JAIPUR JEWELS SECTION 7.8) -->
       <section style="padding: 4rem 0; background: var(--color-soft-offwhite); border-bottom: 1px solid var(--color-warm-stone);">
         <div class="container" style="max-width: 800px; text-align: center;">
-          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-antique-gold); font-weight: 600;">White-Glove Armored Courier Telemetry</span>
+          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-antique-gold); font-weight: 600;">Order Tracking</span>
           <h2 style="font-family: var(--font-serif); font-size: 2rem; margin: 0.4rem 0 0.8rem; color: var(--color-deep-heritage-brown);">Track Your Consignment</h2>
           <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin-bottom: 1.75rem;">
             Enter the Order ID from your order confirmation to view the latest available order status and dispatch details.
           </p>
 
           <form onsubmit="window.HJ.submitTrackOrder(event)" style="display: flex; gap: 0.5rem; max-width: 500px; margin: 0 auto;">
-            <input type="text" class="form-input" style="flex: 1; padding: 0.85rem 1.2rem;" placeholder="HJ-ORD-2026-XXXX" required />
+            <input type="text" class="form-input" style="flex: 1; padding: 0.85rem 1.2rem;" placeholder="HJ-ORD-XXXXXXXX" required />
             <button type="submit" class="btn-primary" style="white-space: nowrap; padding: 0.85rem 1.75rem;">Track Consignment</button>
           </form>
         </div>
@@ -1358,7 +1358,7 @@
         <div class="container" style="padding: 4rem 0 6rem; max-width: 500px;">
           <div class="checkout-form-box">
             <h2 style="font-family: var(--font-serif); font-size: 1.8rem; text-align: center; margin-bottom: 0.5rem;">Patron Sign In</h2>
-            <p style="text-align: center; font-size: 0.85rem; color: var(--color-taupe); margin-bottom: 2rem;">Access your acquisition history and personal atelier commissions.</p>
+            <p style="text-align: center; font-size: 0.85rem; color: var(--color-taupe); margin-bottom: 2rem;">View your account details and order history.</p>
             <form onsubmit="window.HJ.handleLogin(event)">
               <div class="form-field"><label class="form-label">Email Address *</label><input type="email" name="email" class="form-input" required /></div>
               <div class="form-field"><label class="form-label">Password *</label><input type="password" name="password" class="form-input" required /></div>
@@ -1736,9 +1736,9 @@
         badge: "Atelier Code of Honor",
         content: `
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Hallmarking & Material Authenticity</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Product Materials & Documentation</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Every creation sold under the House of Jewelux mark is manufactured in verified solid 925 sterling silver or 18K solid vermeil, stamped with the Bureau of Indian Standards (BIS) hallmark. Diamond jewelry features certified lab-grown moissanites or certified diamonds with disclosed origins.
+              The base metal, plating or finish, stone type and any available certificates are listed for each product where verified. Please contact customer support before purchase if you need clarification about a particular piece.
             </p>
           </div>
           <div class="pepite-story-card">
@@ -1880,7 +1880,7 @@
             <a href="#size-guide" class="filter-pill ${key === 'size' ? 'active' : ''}">Size Guide</a>
             <a href="#privacy-policy" class="filter-pill ${key === 'privacy' ? 'active' : ''}">Privacy Covenant</a>
             <a href="#terms-conditions" class="filter-pill ${key === 'terms' ? 'active' : ''}">Terms & Conditions</a>
-            <a href="#warranty" class="filter-pill ${key === 'warranty' ? 'active' : ''}">Lifetime Warranty</a>
+            <a href="#warranty" class="filter-pill ${key === 'warranty' ? 'active' : ''}">Warranty Information</a>
           </div>
 
           <div style="max-width: 860px; margin: 0 auto;">
@@ -2137,7 +2137,7 @@
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              We offer a complimentary 14-day hassle-free return and exchange window with free door-to-door insured courier pickup across all verified Indian PIN codes.
+              Return and exchange eligibility, timelines and charges must be confirmed with customer support before purchase. Please see the Returns & Refunds policy for details.
             </div>
           </div>
           <div class="pdp-accordion-item about-story-reveal">
