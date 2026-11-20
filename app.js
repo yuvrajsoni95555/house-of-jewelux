@@ -271,11 +271,6 @@
           <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
             <a href="#products/${p.handle || p.id}">${p.name}</a>
           </h3>
-          <div class="card-rating-row" style="margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--color-stone-muted);">
-            <span style="color: var(--color-muted-gold);">★</span>
-            <span style="font-weight: 600; color: var(--color-espresso);">${p.rating || '4.9'}</span>
-            <span>(${p.reviewCount || '28'} patrons)</span>
-          </div>
           <div class="card-price-row" style="display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.85rem;">
             <span class="card-price-current" style="font-size: 1.1rem; font-weight: 700; color: var(--color-espresso);">${formatPrice(p.price)}</span>
             ${(p.compareAtPrice || p.originalPrice) ? `<span class="card-price-original" style="font-size: 0.82rem; color: var(--color-stone-subtle); text-decoration: line-through;">${formatPrice(p.compareAtPrice || p.originalPrice)}</span>` : ''}
@@ -1114,47 +1109,9 @@
 
             <h1 class="pdp-title-h1">${p.name}</h1>
 
-            <div class="pdp-rating-stars-line">
-              <span class="card-stars">★★★★★</span>
-              <span style="font-weight: 700; color: var(--color-deep-heritage-brown);">${p.rating || '4.9'}</span>
-              <span style="color: var(--color-stone-muted);">| ${p.reviewsCount || 108} Reviews</span>
-            </div>
 
-            <!-- Capsule Trust Pills (Truthful Material Specifications) -->
-            <div class="pdp-trust-capsules-row">
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <polygon points="12 2 14.5 9.5 22 12 14.5 14.5 12 22 9.5 14.5 2 12 9.5 9.5 12 2"></polygon>
-                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-                </svg>
-                Anti-Tarnish Barrier
-              </span>
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <path d="M12 2.5C12 2.5 5 11 5 15.5C5 19.1 8.1 22 12 22C15.9 22 19 15.5 19 15.5C19 11 12 2.5 12 2.5Z"></path>
-                  <path d="M12 18V13M10 15C10 15 11 13 12 13C13 13 14 15 14 15"></path>
-                </svg>
-                Hypoallergenic
-              </span>
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <path d="M3 18L4.5 7L9 11.5L12 5L15 11.5L19.5 7L21 18H3Z"></path>
-                  <circle cx="4.5" cy="6" r="1" fill="currentColor"></circle>
-                  <circle cx="12" cy="4" r="1" fill="currentColor"></circle>
-                  <circle cx="19.5" cy="6" r="1" fill="currentColor"></circle>
-                  <line x1="3" y1="18" x2="21" y2="18" stroke-width="1.5"></line>
-                </svg>
-                ${(p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold ? '18K Gold Micron Finish' : 'Liquid Rhodium Finish'}
-              </span>
-              <span class="trust-capsule">Material details</span>
-            </div>
-
-            <div class="pdp-urgency-note">
-              <svg class="urgency-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                <path d="M12 2.5C12 2.5 8 7 8 11.5C8 14.5 10 17 12 17C14 17 16 14.5 16 11.5C16 7 12 2.5 12 2.5Z" fill="rgba(184, 151, 88, 0.25)"></path>
-                <path d="M5 17C5 17 6.5 21 12 21C17.5 21 19 17 19 17H5Z"></path>
-              </svg>
-              <span>Explore the design details and specifications below</span>
+            <div class="pdp-product-details-note" style="margin:1rem 0;color:var(--color-stone-muted);font-size:.82rem;line-height:1.6;">
+              Material, finish, stone and care information is listed in the product specifications below.
             </div>
 
             <!-- Limited Time Offers Box (Matching Palmonas) -->
