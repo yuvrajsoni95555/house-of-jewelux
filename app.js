@@ -479,7 +479,7 @@
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Sacred Devotion</span>
                 <h3 class="curated-col-title">Temple & Heritage</h3>
-                <span class="curated-col-count">Architectural Nakshi • 10 Pieces</span>
+                <span class="curated-col-count">Architectural Nakshi</span>
               </div>
             </a>
 
@@ -488,16 +488,16 @@
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Living Majesty</span>
                 <h3 class="curated-col-title">Nature & Wildlife</h3>
-                <span class="curated-col-count">Panther, Peacock & Fauna • 10 Pieces</span>
+                <span class="curated-col-count">Panther, Peacock & Fauna</span>
               </div>
             </a>
 
             <a href="#collections/modern-art" class="curated-col-card">
-              <img src="images/authentic_diamond_choker.jpg" alt="Modern Art & Sculptural" />
+              <img src="images/authentic_diamond_choker.jpg" alt="House Icons — Exclusive Signature Designs" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Contemporary Vision</span>
-                <h3 class="curated-col-title">Modern Art & Sculptural</h3>
-                <span class="curated-col-count">Geometric Forms • 8 Pieces</span>
+                <h3 class="curated-col-title">House Icons</h3>
+                <span class="curated-col-count">Exclusive Signature Designs</span>
               </div>
             </a>
 
@@ -506,7 +506,7 @@
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Royal Celebration</span>
                 <h3 class="curated-col-title">Bridal & Occasion</h3>
-                <span class="curated-col-count">Grand Chokers & Jhumkas • 10 Pieces</span>
+                <span class="curated-col-count">Grand Chokers & Jhumkas</span>
               </div>
             </a>
           </div>
