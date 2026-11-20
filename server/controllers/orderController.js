@@ -139,7 +139,7 @@ const createOrder = (req, res, next) => {
       }
     }
 
-    const shipping = subtotal >= 2500 ? 0 : 250;
+    const shipping = null;
     const giftBoxCost = isGiftBox ? 150 : 0;
     const grandTotal = Math.max(0, subtotal - discount + (shipping || 0) + giftBoxCost);
 
