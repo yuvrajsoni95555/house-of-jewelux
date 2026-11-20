@@ -449,7 +449,7 @@
                   "A world of sophistication, within your reach."
                 </div>
                 <div class="material-pillar-desc">
-                  Contemporary luxury aesthetics harmonized with Bureau of Indian Standards (BIS) hallmark certification and insured armored transit.
+                  Indian heritage craftsmanship harmonized with contemporary luxury design and thoughtful customer care.
                 </div>
                 <div class="material-pillar-footer">
                   <span>View Vault Collections</span>
@@ -769,7 +769,7 @@
             <div>
               <span class="hero-badge-pill" style="border-color: var(--color-antique-gold); color: var(--color-champagne-gold);">Atelier Experience</span>
               <h2 style="font-family: var(--font-serif); font-size: 2.4rem; margin: 0.75rem 0 1rem; color: var(--color-warm-ivory);">
-                Book a Private Salon Consultation
+                Book a Online Consultation Consultation
               </h2>
               <p style="color: #DCD4C7; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
                 Connect with the House of Jewelux team for product information, collection guidance and assistance with your jewellery selection.
@@ -785,7 +785,7 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
                   <span>✦</span>
-                  <span>Complimentary ring sizing & bespoke gouache sketch rendering</span>
+                  <span>Personal guidance on fit, materials and jewellery care</span>
                 </div>
               </div>
               <a href="https://wa.me/916377061020?text=Hello%20House%20of%20Jewelux,%20I%20would%20like%20to%20schedule%20a%20private%20atelier%20consultation." target="_blank" class="btn-outline" style="border-color: var(--color-antique-gold); color: var(--color-warm-ivory);">
@@ -2042,7 +2042,7 @@
             <div class="pepite-story-card" style="margin-top: 3rem; background: rgba(184,151,88,0.06); border: 1px solid var(--color-muted-gold-light); text-align: center; padding: 2.5rem 1.5rem;">
               <h4 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.5rem;">Have Questions Regarding Our Policies?</h4>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-bottom: 1.5rem; max-width: 540px; margin-left: auto; margin-right: auto;">
-                Our private salon concierge is available directly on WhatsApp and telephone to assist with custom requests, sizing queries, and consignment tracking.
+                Our online consultation concierge is available directly on WhatsApp and telephone to assist with custom requests, sizing queries, and consignment tracking.
               </p>
               <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="https://wa.me/916377061020" target="_blank" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Chat on WhatsApp</a>
