@@ -1141,7 +1141,7 @@
                 <button onclick="window.HJ.checkPincode()">Check</button>
               </div>
               <div id="pincode-status" style="font-size: 0.75rem; color: #2E7D32; margin-top: 0.4rem;">
-                ✓ Armored Courier transit available to ${state.deliveryCity} (${state.deliveryPincode}) in 2 - 4 business days.
+                ✓ Delivery availability and estimated timing for ${state.deliveryCity} (${state.deliveryPincode}) will be confirmed before payment.
               </div>
             </div>
 
@@ -1713,7 +1713,7 @@
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Commitment to Discretion</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              House of Jewelux operates with the utmost discretion. We collect only essential information required to fulfill your high-jewellery commissions, provide armored logistics delivery, and maintain your provenance certificate records.
+              House of Jewelux operates with the utmost discretion. We collect information needed to support customer accounts, process orders and respond to customer service enquiries. Please review this policy for details about how information is handled.
             </p>
           </div>
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
@@ -1873,8 +1873,8 @@
           <!-- Policy Tab Pills -->
           <div style="display: flex; gap: 0.65rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem;">
             <a href="#shipping-policy" class="filter-pill ${key === 'shipping' ? 'active' : ''}">Shipping Policy</a>
-            <a href="#returns-policy" class="filter-pill ${key === 'returns' ? 'active' : ''}">14-Day Returns</a>
-            <a href="#exchange-policy" class="filter-pill ${key === 'exchange' ? 'active' : ''}">Exchange Privilege</a>
+            <a href="#returns-policy" class="filter-pill ${key === 'returns' ? 'active' : ''}">Returns & Refunds</a>
+            <a href="#exchange-policy" class="filter-pill ${key === 'exchange' ? 'active' : ''}">Exchange Requests</a>
             <a href="#cancellation-policy" class="filter-pill ${key === 'cancellation' ? 'active' : ''}">Cancellation Policy</a>
             <a href="#jewellery-care" class="filter-pill ${key === 'care' ? 'active' : ''}">Jewellery Care Guide</a>
             <a href="#size-guide" class="filter-pill ${key === 'size' ? 'active' : ''}">Size Guide</a>
@@ -2173,7 +2173,7 @@
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              We use certified conflict-free laboratory-grown moissanites and diamonds, and ethically sourced gemstones with full gemological inspection cards.
+              Please check the stone details on each product page. Any available certificates or supporting documentation will be listed or confirmed before purchase.
             </div>
           </div>
         </div>
@@ -2214,7 +2214,7 @@
                   <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-antique-white);" />
                   <div>
                     <a href="#products/${item.handle || item.id}" style="font-family: var(--font-serif); font-size: 1rem; font-weight: 600; color: var(--color-deep-heritage-brown); text-decoration: none;">${item.name}</a>
-                    <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.25rem;">${item.metal || 'BIS 925 Silver'} • Qty: ${item.quantity}</div>
+                    <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.25rem;">${item.metal || 'See product details'} • Qty: ${item.quantity}</div>
                   </div>
                   <div style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--color-deep-heritage-brown);">
                     <span>${formatPrice(item.price * item.quantity)}</span>
@@ -2232,7 +2232,7 @@
                 <span>${formatPrice(subtotal)}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--color-taupe);">
-                <span>Armored Insured Courier</span>
+                <span>Shipping</span>
                 <span>${shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
               </div>
               <div style="border-top: 1px solid var(--color-warm-stone-light); padding-top: 1rem; margin-bottom: 1.5rem;">
