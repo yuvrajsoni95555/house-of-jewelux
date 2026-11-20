@@ -655,17 +655,14 @@ img {
 .hero-slider {
   position: relative;
   width: 100%;
-  height: calc(100vh - 120px);
-  min-height: 700px;
-  max-height: 960px;
-  background: #140F0D;
+  height: 720px;
+  background: var(--color-warm-ivory);
   overflow: hidden;
 }
 
 @media (max-width: 768px) {
   .hero-slider {
-    height: 80vh;
-    min-height: 580px;
+    height: 560px;
   }
 }
 
@@ -2939,11 +2936,6 @@ img {
   pointer-events: auto;
   transform: scale(1) translateZ(0);
   z-index: 3;
-}
-
-.cinematic-scene[data-scene="1"].active {
-  transform: none !important;
-  transition: opacity 0.4s ease;
 }
 
 .parallax-plane {
