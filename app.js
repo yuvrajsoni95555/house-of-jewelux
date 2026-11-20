@@ -1772,14 +1772,14 @@
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Refund Processing</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Upon arrival at our Jaipur atelier, our master gemologists verify the piece and laser hallmarks within 24 to 48 hours. Once verified, 100% of the purchase amount is credited back to your original payment method (bank account, UPI, or card) within 3 to 5 business days. For Cash on Delivery acquisitions, refunds are transferred securely via NEFT/UPI.
+              Upon arrival at our Jaipur atelier, our master gemologists verify the piece and laser hallmarks within 24 to 48 hours. Once verified, 100% of the purchase amount is credited back to your original payment method (bank account, UPI, or card) within 3 to 5 business days. Cash on Delivery is not available.
             </p>
           </div>
 
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Custom & Bespoke Commissions</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Custom Orders</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Custom commissions are not currently offered.
+              Custom jewellery commissions are not currently offered.
             </p>
           </div>
         `
@@ -1798,7 +1798,7 @@
           <div class="pepite-story-card">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Style Exchanges</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Within 14 days of receipt, you may exchange any standard collection creation for another item of equal value, or pay the difference for a higher-tier creation. Connect with our dedicated WhatsApp Concierge at <strong>+91 63770 61020</strong> to coordinate an instant exchange.
+              Within 14 days of receipt, you may exchange any standard collection creation for another item of equal value, or pay the difference for a higher-tier creation. Connect with our dedicated WhatsApp Concierge at <strong>+91 90799 98793</strong> to coordinate an instant exchange.
             </p>
           </div>
         `
@@ -1811,7 +1811,7 @@
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Prior to Courier Dispatch</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Standard collection orders may be cancelled at any time before dispatch with a 100% immediate full refund. Simply email <a href="mailto:houseofjewelux@gmail.com" style="color: var(--color-antique-gold); font-weight: 600;">houseofjewelux@gmail.com</a> or WhatsApp our concierge at <strong>+91 63770 61020</strong> with your Order ID.
+              Standard collection orders may be cancelled at any time before dispatch with a 100% immediate full refund. Simply email <a href="mailto:houseofjewelux@gmail.com" style="color: var(--color-antique-gold); font-weight: 600;">houseofjewelux@gmail.com</a> or WhatsApp our concierge at <strong>+91 90799 98793</strong> with your Order ID.
             </p>
           </div>
           <div class="pepite-story-card">
@@ -2116,7 +2116,7 @@
                     </div>
                     <div>
                       <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Direct Concierge Telephone</div>
-                      <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">+91 63770 61020</div>
+                      <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">+91 90799 98793</div>
                       <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Available Monday – Saturday, 10:00 – 19:30 IST.</div>
                     </div>
                   </div>
@@ -2134,7 +2134,7 @@
                 </div>
 
                 <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(47,36,26,0.08); display: flex; gap: 0.85rem; flex-wrap: wrap;">
-                  <a href="https://wa.me/916377061020" target="_blank" class="btn-gold" style="flex: 1; min-width: 170px; padding: 0.75rem 1.25rem; font-size: 0.75rem;">WhatsApp Concierge ↗</a>
+                  <a href="https://wa.me/919079998793" target="_blank" class="btn-gold" style="flex: 1; min-width: 170px; padding: 0.75rem 1.25rem; font-size: 0.75rem;">WhatsApp Concierge ↗</a>
                   <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-primary" style="flex: 1; min-width: 170px; padding: 0.75rem 1.25rem; font-size: 0.75rem;">Book Appointment</a>
                 </div>
               </div>
@@ -2263,7 +2263,7 @@
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              Currently, we ship across India via insured armored courier. International enquiries can be directed to our concierge at +91 63770 61020.
+              Currently, we ship across India via insured armored courier. International enquiries can be directed to our concierge at +91 90799 98793.
             </div>
           </div>
           <div class="pdp-accordion-item about-story-reveal">
@@ -2359,7 +2359,7 @@
                 </div>
 
                 <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(47,36,26,0.08); display: flex; gap: 1rem; align-items: center;">
-                  <a href="https://wa.me/916377061020?text=Hello%20Master%20Goldsmith%20Yuvraj%20Soni,%20I%20would%20like%20to%20discuss%20a%20bespoke%20jewellery%20commission." target="_blank" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Instant WhatsApp Concierge ↗</a>
+                  <a href="https://wa.me/919079998793?text=Hello%20Master%20Goldsmith%20Yuvraj%20Soni,%20I%20would%20like%20to%20discuss%20a%20bespoke%20jewellery%20commission." target="_blank" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Instant WhatsApp Concierge ↗</a>
                 </div>
               </div>
             </div>
@@ -2901,7 +2901,7 @@
             <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">Your order request has been received. Payment instructions and confirmation will be shared once the payment process is configured. We have not sent a receipt to <strong>${customer.email || 'your email'}</strong>.</p>
             <div style="margin: 2rem 0;">
               <a href="#collections/all" class="btn-primary">Continue Browsing</a>
-              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I just placed Order ' + order.orderId)}" target="_blank" class="btn-gold" style="margin-left: 1rem;">WhatsApp Concierge</a>
+              <a href="https://wa.me/919079998793?text=${encodeURIComponent('Hello House of Jewelux Concierge, I just placed Order ' + order.orderId)}" target="_blank" class="btn-gold" style="margin-left: 1rem;">WhatsApp Concierge</a>
             </div>
           </div>
         </div>
