@@ -1060,6 +1060,7 @@
     const p = state.products.find(item => item.id === identifier || item.handle === identifier) || state.products[0];
     const related = state.products.filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
     const isWishlisted = state.wishlist.includes(p.id);
+    const hasPendingImage = Boolean(p.imageVerification && /pending/i.test(p.imageVerification));
 
     container.innerHTML = `
       <div class="container pdp-container">
@@ -1079,7 +1080,7 @@
               <img src="${(p.gallery && p.gallery[3]) || p.hoverImage || p.image}" alt="${p.name} Prongs & Setting" />
             </div>
             <div style="grid-column: 1 / -1; font-size: 0.72rem; color: var(--color-taupe); text-align: center; padding-top: 0.25rem; letter-spacing: 0.04em;">
-              ✦ Authentic Studio Reference Photography • Jaipur Atelier Spec ${p.id} • Zero AI Imagery
+              ${hasPendingImage ? 'Representative category imagery — exact product photography is pending confirmation.' : 'Product images are provided as a visual reference.'}
             </div>
           </div>
 
@@ -1102,13 +1103,13 @@
               </button>
             </div>
 
-            <div class="pdp-tax-line">Inclusive of all taxes</div>
+            <div class="pdp-tax-line">Price shown in INR • Delivery details confirmed before payment</div>
 
             <h1 class="pdp-title-h1">${p.name}</h1>
 
 
             <div class="pdp-product-details-note" style="margin:1rem 0;color:var(--color-stone-muted);font-size:.82rem;line-height:1.6;">
-              Material, finish, stone and care information is listed in the product specifications below.
+              ${hasPendingImage ? 'The images shown are representative references. Our team will confirm the exact product photographs before payment.' : 'Material, finish, stone and care information is listed in the product specifications below.'}
             </div>
 
             <!-- Limited Time Offers Box (Matching Palmonas) -->
@@ -1119,12 +1120,12 @@
                   <path d="M3 6L12 13L21 6"></path>
                   <circle cx="12" cy="13" r="2" fill="currentColor"></circle>
                 </svg>
-                Limited Time Atelier Privileges
+                First Order Welcome Offer
               </div>
               <div class="pdp-coupon-dashed">
                 <div>
                   <div style="font-size: 0.8rem; font-weight: 700;">FIRSTLUX</div>
-                  <div style="font-size: 0.7rem; color: var(--color-taupe);">10% off your entire first acquisition</div>
+                  <div style="font-size: 0.7rem; color: var(--color-taupe);">10% off your first order</div>
                 </div>
                 <button class="btn-primary" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="window.HJ.applyCoupon('FIRSTLUX')">Apply</button>
               </div>
@@ -1138,7 +1139,7 @@
                 <button onclick="window.HJ.checkPincode()">Check</button>
               </div>
               <div id="pincode-status" style="font-size: 0.75rem; color: #2E7D32; margin-top: 0.4rem;">
-                ✓ Delivery availability and estimated timing for ${state.deliveryCity} (${state.deliveryPincode}) will be confirmed before payment.
+                Enter your PIN code for a delivery enquiry. Charges and estimated timelines will be confirmed before payment.
               </div>
             </div>
 
@@ -1219,6 +1220,7 @@
 
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const discount = state.discountAmount || 0;
+    const hasPendingProductImages = state.cart.some(item => { const product = state.products.find(p => p.id === item.id); return product && product.imageVerification && /pending/i.test(product.imageVerification); });
     const shipping = null;
     const grandTotal = Math.max(0, subtotal - discount + (shipping || 0));
 
@@ -1301,6 +1303,7 @@
           <div>
             <div class="checkout-form-box" style="position: sticky; top: calc(var(--header-height-desktop) + 30px);">
               <h3 class="checkout-step-title">Order Summary (${state.cart.length} Pieces)</h3>
+              ${hasPendingProductImages ? '<p style="font-size:.78rem;line-height:1.6;color:#8a642e;margin-bottom:.85rem;">Some catalogue photos are representative references. Exact product photos will be confirmed by our team before payment.</p>' : ''}
               <div style="max-height: 280px; overflow-y: auto; margin-bottom: 1rem;">
                 ${state.cart.map(item => `
                   <div class="cart-item-row" style="padding: 0.75rem 0;">
