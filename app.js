@@ -484,11 +484,11 @@
             </a>
 
             <a href="#collections/nature-inspired" class="curated-col-card">
-              <img src="images/user_falcon_brooch_emerald.jpg" alt="Nature, Wildlife & Fauna" />
+              <img src="images/user_royal_panther_wildlife.jpg" alt="Nature, Wildlife & Fauna" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Living Majesty</span>
                 <h3 class="curated-col-title">Nature & Wildlife</h3>
-                <span class="curated-col-count">Falcon, Peacock & Floral • 10 Pieces</span>
+                <span class="curated-col-count">Panther, Peacock & Fauna • 10 Pieces</span>
               </div>
             </a>
 
@@ -502,7 +502,7 @@
             </a>
 
             <a href="#collections/bridal-jewellery" class="curated-col-card">
-              <img src="images/authentic_indian_bridal.jpg" alt="Bridal & Ceremonial Suites" />
+              <img src="images/user_royal_bridal_suite.jpg" alt="Bridal & Ceremonial Suites" />
               <div class="curated-col-overlay">
                 <span class="curated-col-badge">Royal Celebration</span>
                 <h3 class="curated-col-title">Bridal & Occasion</h3>
@@ -652,7 +652,7 @@
             </div>
 
             <div style="position: relative; height: 440px; border-radius: var(--radius-sm); overflow: hidden; background: #181412;">
-              <img src="images/authentic_indian_bridal.jpg" alt="Festive & Bridal High Jewellery" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" />
+              <img src="images/user_royal_bridal_suite.jpg" alt="Festive & Bridal High Jewellery" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" />
               <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(24,20,18,0.92) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 2rem; left: 2rem; right: 2rem; color: #FFFFFF;">
                 <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-champagne-gold);">Royal Ceremonial</span>
@@ -952,7 +952,7 @@
         filtered = filtered.filter(p => p.price >= 18000);
         title = "Festive & Diwali Edit";
         subtitle = "Ceremonial chokers, chandelier earrings, and statement rings";
-        heroImg = "images/authentic_indian_bridal.jpg";
+        heroImg = "images/user_royal_bridal_suite.jpg";
       } else {
         // Any of the 17 design & inspiration collections
         filtered = filtered.filter(p => (p.collections && p.collections.includes(collectionId)) || p.collection === collectionId || (p.tags && p.tags.includes(collectionId)));
