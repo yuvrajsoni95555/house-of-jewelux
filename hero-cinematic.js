@@ -284,24 +284,24 @@
             <!-- 1. Falcon Brooch -->
             <div class="macro-jewel-card" onclick="window.HJ.navigate('products/the-sovereign-crest-royal-falcon-brooch-hj-bro-001')">
               <div class="macro-jewel-img-box">
-                <img src="images/user_falcon_brooch_white.jpg" alt="The Sovereign Falcon Crest Brooch" />
+                <img src="images/user_falcon_brooch_white.jpg" alt="The Sovereign Falcon Crest Brooch" style="object-position: center 15%;" />
                 <span class="macro-jewel-tag">Haute Heraldry</span>
               </div>
               <div class="macro-jewel-info">
                 <div class="macro-jewel-title">The Sovereign Falcon</div>
-                <div class="macro-jewel-sub">Zambian Emerald & Pavé Wings</div>
+                <div class="macro-jewel-sub">Handcrafted Gold & Diamond Wings</div>
               </div>
             </div>
 
-            <!-- 2. Lumina Drops -->
-            <div class="macro-jewel-card featured" onclick="window.HJ.navigate('products/the-lumina-teardrop-solitaire-earrings-hj-ear-001')">
+            <!-- 2. Royal Nakshi Haar -->
+            <div class="macro-jewel-card featured" onclick="window.HJ.navigate('collections/necklaces')">
               <div class="macro-jewel-img-box">
-                <img src="images/authentic_earrings_macro.jpg" alt="The Lumina Teardrop Solitaires" />
-                <span class="macro-jewel-tag">Solitaire Brilliance</span>
+                <img src="images/user_royal_nakshi_necklace.jpg" alt="The Royal Nakshi Temple Haar" style="object-position: center 40%;" />
+                <span class="macro-jewel-tag">Imperial Heritage</span>
               </div>
               <div class="macro-jewel-info">
-                <div class="macro-jewel-title">The Lumina Teardrop</div>
-                <div class="macro-jewel-sub">VVS1 Hearts & Arrows Solitaire</div>
+                <div class="macro-jewel-title">The Royal Nakshi Haar</div>
+                <div class="macro-jewel-sub">22K Antique Gold & Zambian Emeralds</div>
               </div>
             </div>
 
