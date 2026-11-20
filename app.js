@@ -546,7 +546,7 @@
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Rings & Solitaires</div>
-                <div class="cat-showcase-count">10 Masterpieces • Stamped 925</div>
+                <div class="cat-showcase-count">10 Ring Designs</div>
               </div>
             </a>
 
@@ -1533,7 +1533,7 @@
             <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
               <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.08); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-size: 1.5rem;">Ag</div>
               <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Silver Jewellery</h3>
-              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Solid 925 sterling silver with liquid platinum-rhodium finish. Hereditary Rajasthani silversmithing, BIS 925 hallmarked, hypoallergenic and water-safe.</p>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Explore silver jewellery with product-specific metal, finish and care details shown on each item.</p>
               <a href="#collections/silver-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Silver Collection ↗</a>
             </div>
 
@@ -2062,10 +2062,10 @@
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Subject of Inquiry *</label>
                     <select name="subject" class="form-select" required>
                       <option value="acquisition">Private Piece Acquisition</option>
-                      <option value="bespoke">Product Information</option>
+                      <option value="product-info">Product Information</option>
                       <option value="appointment">Online Consultation</option>
-                      <option value="consign">Armored Consignment Telemetry</option>
-                      <option value="press">Press & Editorial Editorial</option>
+                      <option value="order-support">Order Support</option>
+                      <option value="press">Press & Editorial</option>
                     </select>
                   </div>
                 </div>
