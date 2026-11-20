@@ -712,7 +712,7 @@
             <div class="step-card">
               <span class="step-number">05</span>
               <h3 class="step-title">Material Assay</h3>
-              <p class="step-desc">XRF laser testing guaranteeing 92.5% pure elemental silver alloyed with hypoallergenic deox copper.</p>
+              <p class="step-desc">Material checks and finish reviews appropriate to the individual jewellery design.</p>
             </div>
             <div class="step-card">
               <span class="step-number">06</span>
@@ -721,45 +721,21 @@
             </div>
             <div class="step-card">
               <span class="step-number">07</span>
-              <h3 class="step-title">Liquid Rhodium & 18K Micron</h3>
+              <h3 class="step-title">Surface Finishing</h3>
               <p class="step-desc">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
             </div>
             <div class="step-card">
               <span class="step-number">08</span>
-              <h3 class="step-title">BIS Hallmark Certification</h3>
-              <p class="step-desc">Official Bureau of Indian Standards laser assay verification stamp with unique identification mark.</p>
+              <h3 class="step-title">Product Quality Review</h3>
+              <p class="step-desc">Product details and any applicable hallmark information are checked before dispatch.</p>
             </div>
             <div class="step-card">
               <span class="step-number">09</span>
               <h3 class="step-title">Armored Coffer Acquisition</h3>
-              <p class="step-desc">Placed in our signature emerald velvet presentation box and dispatched via insured armored courier.</p>
+              <p class="step-desc">Prepared for dispatch with care. Delivery details are shared once the order is ready.</p>
             </div>
           </div>
 
-          <!-- Customer Testimonials -->
-          <div style="text-align: center; margin: 6rem 0 4rem;">
-            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 1rem;">Client Stories</span>
-            <h2 class="section-title">They Have Discovered Their Eternal Piece</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-          </div>
-          <div class="testimonial-grid">
-            <div class="testimonial-card">
-              <p class="testimonial-text">"The Celestial Radiance ring is breathtaking — every detail speaks of generations of craftsmanship. I wear it every day and it still catches the light like the first day."</p>
-              <span class="testimonial-author">Caroline B.</span>
-              <span class="testimonial-role">Jaipur, Rajasthan</span>
-            </div>
-            <div class="testimonial-card">
-              <p class="testimonial-text">"A true discovery. The Lumina earrings have a subtle chocolate-cacao warmth that complements everything I own. Zero guilt, all pleasure."</p>
-              <span class="testimonial-author">Karen D.</span>
-              <span class="testimonial-role">New Delhi</span>
-            </div>
-            <div class="testimonial-card">
-              <p class="testimonial-text">"The design felt timeless, thoughtful and beautifully crafted. An elegant addition to my collection."</p>
-              <span class="testimonial-author">Jérémie C.</span>
-              <span class="testimonial-role">Mumbai, Maharashtra</span>
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- H. BOOK AN APPOINTMENT (JAIPUR JEWELS SECTION 5.H) -->
