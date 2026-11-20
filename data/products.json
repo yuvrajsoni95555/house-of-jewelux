@@ -382,7 +382,7 @@
     "stone": "Center Flush-Set Baguette Diamond Accent",
     "purity": "925 Sterling Silver",
     "cut": "Step Cut Baguette",
-    "clarity": "VS1",
+    "clarity": "",
     "dimensions": "6.0mm Face Width",
     "certificate": "",
     "description": "Subtle minimalism with substantial weight. Features a satin-brushed face with mirror-polished inner shank.",
@@ -787,7 +787,7 @@
   {
     "id": "HJ-EAR-004",
     "handle": "the-royal-colombian-emerald-halo-studs-hj-ear-004",
-    "name": "The Royal Colombian Emerald Halo Studs",
+    "name": "The Royal Emerald Halo Studs",
     "category": "earrings",
     "collection": "gold-vault",
     "price": 31730,
@@ -802,10 +802,10 @@
       "images/authentic_earrings_stone.jpg"
     ],
     "metal": "925 Sterling Silver (Micron Gold Plated)",
-    "stone": "Lab-Grown Colombian Emeralds with Diamond Halos",
+    "stone": "Lab-Grown Emeralds with Diamond Halos",
     "purity": "18K Gold over 925 Silver",
     "cut": "Octagonal Step Cut",
-    "clarity": "VVS Vivid Green",
+    "clarity": "",
     "dimensions": "8x6mm Emerald Center",
     "certificate": "",
     "description": "Vivid deep verdant emeralds encircled by sixteen micro-pavé halos. An opulent tribute to classic royal European dynasty jewels.",
@@ -826,7 +826,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "Lab-Grown Colombian Emeralds with Diamond Halos"
+        "value": "Lab-Grown Emeralds with Diamond Halos"
       }
     ],
     "imageStatus": "Representative category reference — exact SKU photo pending",
@@ -970,7 +970,7 @@
   {
     "id": "HJ-EAR-007",
     "handle": "the-bellini-south-sea-pearl-drops-hj-ear-007",
-    "name": "The Bellini South Sea Pearl Drops",
+    "name": "The Bellini Pearl Drops",
     "category": "earrings",
     "collection": "gold-vault",
     "price": 22963,
@@ -985,10 +985,10 @@
       "images/authentic_earrings_huggie.jpg"
     ],
     "metal": "925 Sterling Silver (Micron Gold Plated)",
-    "stone": "11mm Luminous South Sea Pearl Drops",
+    "stone": "11mm Luminous Pearl Drops",
     "purity": "925 Silver with 18K Gold Plating",
     "cut": "Natural Spheroid Pearl",
-    "clarity": "AAA High Luster",
+    "clarity": "",
     "dimensions": "11mm Pearl • 28mm Full Drop",
     "certificate": "",
     "description": "Silken, unblemished luster pearls suspended below champagne gold diamond-set ribbons. Soft, warm vanilla luminescence.",
@@ -1009,7 +1009,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "11mm Luminous South Sea Pearl Drops"
+        "value": "11mm Luminous Pearl Drops"
       }
     ],
     "imageStatus": "Representative category reference — exact SKU photo pending",
@@ -1164,7 +1164,7 @@
     "stone": "Uncut Polki Moissanites & Seed Pearls",
     "purity": "925 Core with 22K Gold Finish",
     "cut": "Traditional Polki Flat Slice",
-    "clarity": "Authentic Antique Cut",
+    "clarity": "",
     "dimensions": "42mm Bell Drop",
     "certificate": "",
     "description": "Reinvented temple bell jhumkas with suspended pearl fringe, echoing centuries of divine Indian wedding celebrations.",
@@ -1574,10 +1574,10 @@
       "images/authentic_bracelet_bangles.jpg"
     ],
     "metal": "925 Sterling Silver ( Rhodium Finish)",
-    "stone": "1.2ct Vivid Green Lab Colombian Emerald",
+    "stone": "1.2ct Vivid Green Lab Emerald",
     "purity": "925 Sterling Silver",
     "cut": "Emerald Step Cut",
-    "clarity": "Eye-Clean Vivid",
+    "clarity": "",
     "dimensions": "7x5mm Center Stone",
     "certificate": "",
     "description": "A single hypnotic green emerald suspended on an ultra-fine platinum-finished sterling silver trace chain.",
@@ -1598,7 +1598,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "1.2ct Vivid Green Lab Colombian Emerald"
+        "value": "1.2ct Vivid Green Lab Emerald"
       }
     ],
     "imageStatus": "Representative category reference — exact SKU photo pending",
@@ -1697,7 +1697,7 @@
     "stone": "Mirror-Faceted Solid Links",
     "purity": "Solid 925",
     "cut": "Diamond-Cut Beveled Edges",
-    "clarity": "Mirror Luster",
+    "clarity": "",
     "dimensions": "5.5mm Width • 7.0 inches",
     "certificate": "",
     "description": "Fluid herringbone ribbon links that drape across the wrist like liquid chrome, catching every subtle shift of ambient lighting.",
@@ -1873,10 +1873,10 @@
       "images/authentic_temple_heritage.jpg"
     ],
     "metal": "925 Sterling Silver (Micron Gold Plated)",
-    "stone": "18.5 carats Colombian Emeralds & Moissanite",
+    "stone": "18.5 carats Emeralds & Moissanite",
     "purity": "925 Silver with 18K Gold Vermeil",
     "cut": "Step Cut Octagonal & Marquis",
-    "clarity": "VVS Royal Green",
+    "clarity": "",
     "dimensions": "15.5 inch Articulated Choker",
     "certificate": "",
     "description": "Our atelier masterpiece. Cascading vibrant verdant emeralds accented by pear-cut lab diamonds. Delivered in careful presentation.",
@@ -1897,7 +1897,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "18.5 carats Colombian Emeralds & Moissanite"
+        "value": "18.5 carats Emeralds & Moissanite"
       }
     ],
     "imageStatus": "Representative category reference — exact SKU photo pending",
@@ -1996,10 +1996,10 @@
       "images/authentic_necklace_hero.jpg"
     ],
     "metal": "925 Sterling Silver (Micron Gold Plated)",
-    "stone": "Uncut Polki Moissanites & Basra Pearl Cluster",
+    "stone": "Uncut Polki Moissanites & Pearl Cluster",
     "purity": "925 Silver with 22K Gold Finish",
     "cut": "Polki Flat Cut",
-    "clarity": "Authentic Heritage Finish",
+    "clarity": "",
     "dimensions": "32mm Hand-Chased Locket Pendant",
     "certificate": "",
     "description": "Hand-engraved sacred floral mandala locket opening to hold personal memories or vows, suspended from a hand-twisted gold rope chain.",
@@ -2020,7 +2020,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "Uncut Polki Moissanites & Basra Pearl Cluster"
+        "value": "Uncut Polki Moissanites & Pearl Cluster"
       }
     ],
     "imageStatus": "Client-supplied reference photography",
@@ -2220,7 +2220,7 @@
   {
     "id": "HJ-NCK-008",
     "handle": "the-royal-sapphire-halo-duchess-necklace-hj-nck-008",
-    "name": "The Royal Sapphire Halo Duchess Necklace",
+    "name": "The Royal Blue Sapphire Necklace",
     "category": "necklaces",
     "collection": "gold-vault",
     "price": 32983,
@@ -2234,10 +2234,10 @@
       "images/authentic_temple_heritage.jpg"
     ],
     "metal": "925 Sterling Silver (Micron Gold Plated)",
-    "stone": "3.5ct Royal Ceylon Blue Sapphire with Halo",
+    "stone": "3.5ct Royal Blue Sapphire with Halo",
     "purity": "925 Silver with 18K White Finish",
     "cut": "Oval Brilliant Facet",
-    "clarity": "Deep Royal Blue Eye-Clean",
+    "clarity": "",
     "dimensions": "10x8mm Sapphire • 18 inch Chain",
     "certificate": "",
     "description": "Velvety midnight blue sapphire radiating regal poise, encircled by a scintillation halo of micropavé diamonds.",
@@ -2258,7 +2258,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "3.5ct Royal Ceylon Blue Sapphire with Halo"
+        "value": "3.5ct Royal Blue Sapphire with Halo"
       }
     ],
     "imageStatus": "Representative category reference — exact SKU photo pending",
@@ -2359,7 +2359,7 @@
     "stone": "Sculptural Freshwater Baroque Pearl Centerpiece",
     "purity": "18K Vermeil over 925 Silver",
     "cut": "Organic Baroque Pearl & Pavé Ring",
-    "clarity": "Luminous Mirror Orient",
+    "clarity": "",
     "dimensions": "16 inch Paperclip Links • 22mm Pearl",
     "certificate": "",
     "description": "Each organic baroque pearl is unique, hung from hand-assembled paperclip oval links finished in champagne gold.",
@@ -2601,10 +2601,10 @@
       "images/user_elephant_brooch.jpg"
     ],
     "metal": "925 Sterling Silver (Micron Gold Plated)",
-    "stone": "Central Colombian Emerald with Blue Sapphire Eye",
+    "stone": "Central Emerald with Blue Sapphire Eye",
     "purity": "925 Silver with 22K Gold Finish",
     "cut": "Cabochon Emerald & Brilliant Pavé",
-    "clarity": "Deep Vivid Hue",
+    "clarity": "",
     "dimensions": "55mm Length",
     "certificate": "",
     "description": "Capturing the sacred national emblem of India. Detailed filigree feathers bloom outward from a vivid royal green emerald center.",
@@ -2625,7 +2625,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "Central Colombian Emerald with Blue Sapphire Eye"
+        "value": "Central Emerald with Blue Sapphire Eye"
       }
     ],
     "imageStatus": "Client-supplied reference photography",
@@ -2722,7 +2722,7 @@
       "images/authentic_atelier_craft.jpg"
     ],
     "metal": "925 Sterling Silver ( Rhodium Finish)",
-    "stone": "Fluid Pavé Ribbon Bow with South Sea Pearl Drop",
+    "stone": "Fluid Pavé Ribbon Bow with Pearl Drop",
     "purity": "925 Sterling Silver",
     "cut": "Pavé & AAA Pearl",
     "clarity": "",
@@ -2746,7 +2746,7 @@
       },
       {
         "label": "Stone Type",
-        "value": "Fluid Pavé Ribbon Bow with South Sea Pearl Drop"
+        "value": "Fluid Pavé Ribbon Bow with Pearl Drop"
       }
     ],
     "imageStatus": "Representative category reference — exact SKU photo pending",
@@ -2889,7 +2889,7 @@
   {
     "id": "HJ-BRO-009",
     "handle": "the-monarch-butterfly-basra-pearl-brooch-hj-bro-009",
-    "name": "The Monarch Butterfly Basra Pearl Brooch",
+    "name": "The Monarch Butterfly Pearl Brooch",
     "category": "brooches",
     "collection": "temple-heritage",
     "price": 25885,
@@ -2905,7 +2905,7 @@
     "stone": "Natural Teardrop Pearl Body & Pavé Wings",
     "purity": "925 Core 18K Finish",
     "cut": "Natural Organic Pearl & Pavé",
-    "clarity": "High Luster",
+    "clarity": "",
     "dimensions": "40mm Width",
     "certificate": "",
     "description": "Opulent monarch wings carved with micro-pavé veins framing an incandescent genuine natural pearl thorax.",
