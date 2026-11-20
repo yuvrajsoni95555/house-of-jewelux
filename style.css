@@ -133,6 +133,10 @@
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 body {
@@ -141,6 +145,8 @@ body {
   color: var(--color-espresso);
   line-height: 1.5;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -1840,8 +1846,8 @@ img {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 440px;
-  max-width: 90vw;
+  width: min(440px, 92vw);
+  max-width: 100vw;
   background: var(--color-warm-ivory);
   border-left: 1px solid var(--color-warm-stone);
   z-index: 1010;
@@ -5032,4 +5038,581 @@ img {
 
 .hj-editor-btn-close:hover {
   color: #FFFFFF;
+}
+
+/* ===================================================================
+   MASTER RESPONSIVE OPTIMIZATION ENGINE
+   Mobile (320px–767px) • Tablet (768px–1024px) • Desktop (1025px–1920px+)
+   =================================================================== */
+
+/* --- 1. GLOBAL FLUID TYPOGRAPHY & TOUCH TARGETS --- */
+:root {
+  --touch-target-min: 44px;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* Ensure no elements break root bounds */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- 2. MOBILE OPTIMIZATIONS (max-width: 767px) --- */
+@media (max-width: 767px) {
+  /* Prevent horizontal blowout */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+
+  /* Safe container padding */
+  .container {
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Mobile Floating Island Header */
+  .site-header {
+    width: calc(100% - 1rem) !important;
+    margin: 0.35rem auto 0.5rem auto !important;
+    padding: 0.35rem 0.75rem !important;
+    border-radius: 9999px !important;
+  }
+
+  .mobile-top-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 48px !important;
+    width: 100% !important;
+  }
+
+  .mobile-top-icons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+  }
+
+  .header-icon-action {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Announcement Bar on Mobile */
+  .announcement-bar {
+    font-size: 0.65rem !important;
+    height: 32px !important;
+    padding: 0 0.5rem !important;
+  }
+
+  /* Cinematic Hero Viewport on Mobile */
+  .cinematic-hero-viewport {
+    height: 78vh !important;
+    min-height: 540px !important;
+    max-height: 720px !important;
+  }
+
+  .hero-flagship-logo-img {
+    height: auto !important;
+    max-width: 230px !important;
+  }
+
+  .hero-title-luxe {
+    font-size: clamp(1.5rem, 6.5vw, 2.2rem) !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .hero-subtitle-luxe {
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem) !important;
+    padding: 0 1rem !important;
+  }
+
+  /* Scene 03: Trio Showcase Swipeable Track on Mobile */
+  .jewellery-trio-stage {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 1rem 1.25rem 2rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .jewellery-trio-stage::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .macro-jewel-card {
+    flex: 0 0 250px !important;
+    width: 250px !important;
+    scroll-snap-align: center !important;
+    padding: 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  .macro-jewel-img-box {
+    height: 180px !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .macro-jewel-title {
+    font-size: 1rem !important;
+  }
+
+  .macro-jewel-sub {
+    font-size: 0.72rem !important;
+  }
+
+  /* Trust Ribbon on Mobile */
+  .trust-ribbon {
+    padding: 1rem 0 !important;
+  }
+
+  .trust-ribbon-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+  }
+
+  .trust-item {
+    padding: 0.85rem 0.75rem !important;
+    gap: 0.5rem !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+
+  .trust-icon {
+    flex-shrink: 0 !important;
+  }
+
+  .trust-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .trust-text-title {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .trust-text-sub {
+    font-size: 0.66rem !important;
+    line-height: 1.35 !important;
+    color: #6D6D69 !important;
+  }
+
+  /* Three Pillars Section on Mobile */
+  .material-pillars-section {
+    padding: 2.75rem 0 !important;
+  }
+
+  .material-pillars-section .section-header {
+    margin-bottom: 1.75rem !important;
+  }
+
+  .material-pillars-section .section-title {
+    font-size: clamp(1.25rem, 5.2vw, 1.8rem) !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .material-pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .material-pillar-card {
+    border-radius: 16px !important;
+  }
+
+  .material-pillar-img-wrap {
+    height: 210px !important;
+  }
+
+  .material-pillar-body {
+    padding: 1.35rem 1.15rem !important;
+  }
+
+  .material-pillar-title {
+    font-size: 1.3rem !important;
+  }
+
+  .material-pillar-desc {
+    font-size: 0.82rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Curated Collections Grid on Mobile (2 Columns) */
+  .curated-collections-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .curated-col-card {
+    height: 210px !important;
+    border-radius: 14px !important;
+  }
+
+  .curated-col-overlay {
+    padding: 0.85rem !important;
+  }
+
+  .curated-col-badge {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .curated-col-title {
+    font-size: 1.05rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .curated-col-count {
+    font-size: 0.65rem !important;
+  }
+
+  /* Shop by Categories Grid on Mobile (2 Columns) */
+  .category-grid-showcase {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .cat-showcase-card {
+    height: 180px !important;
+    border-radius: 14px !important;
+  }
+
+  .cat-showcase-overlay {
+    padding: 0.85rem !important;
+  }
+
+  .cat-showcase-title {
+    font-size: 0.95rem !important;
+  }
+
+  .cat-showcase-count {
+    font-size: 0.65rem !important;
+  }
+
+  /* Product Grid on Mobile (2 Columns) */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .product-card {
+    border-radius: 14px !important;
+  }
+
+  .product-card-body {
+    padding: 0.85rem !important;
+  }
+
+  .product-card-title {
+    font-size: 0.82rem !important;
+    min-height: 2.6em !important;
+    line-height: 1.3 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .product-card-meta {
+    font-size: 0.68rem !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .product-card-price-wrap {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .price-current {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+  }
+
+  .price-original {
+    font-size: 0.75rem !important;
+  }
+
+  .btn-quick-add {
+    padding: 0.45rem 0.75rem !important;
+    font-size: 0.72rem !important;
+    border-radius: 9999px !important;
+  }
+
+  /* Product Detail Page (PDP) on Mobile */
+  .pdp-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+  }
+
+  .pdp-gallery-2x2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pdp-gallery-item {
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  .pdp-actions-sticky {
+    position: sticky !important;
+    bottom: 58px !important;
+    background: rgba(255, 253, 246, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    padding: 0.75rem 1rem !important;
+    margin: 1.5rem -0.85rem 0 !important;
+    box-shadow: 0 -4px 18px rgba(26, 18, 14, 0.08) !important;
+    z-index: 40 !important;
+  }
+
+  /* Modals on Mobile */
+  .pepite-modal-card {
+    padding: 1.5rem 1.15rem !important;
+    border-radius: 18px !important;
+    width: 100% !important;
+    max-width: 95vw !important;
+  }
+
+  .pepite-modal-close {
+    width: 44px !important;
+    height: 44px !important;
+    top: 0.75rem !important;
+    right: 0.75rem !important;
+  }
+
+  /* iOS Auto-Zoom prevention: inputs must be >= 16px font-size */
+  .form-input, input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Footer on Mobile */
+  .footer-newsletter-wrap {
+    padding: 1.75rem 1rem !important;
+    margin-bottom: 2.25rem !important;
+  }
+
+  .footer-newsletter-wrap .newsletter-title {
+    font-size: 1.35rem !important;
+  }
+
+  .newsletter-form {
+    flex-direction: column !important;
+    background: transparent !important;
+    padding: 0 !important;
+    gap: 0.6rem !important;
+  }
+
+  .newsletter-input {
+    background: #FFFFFF !important;
+    border-radius: 9999px !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 16px !important;
+    width: 100% !important;
+  }
+
+  .newsletter-btn {
+    border-radius: 9999px !important;
+    padding: 0.75rem 1.5rem !important;
+    width: 100% !important;
+  }
+
+  .footer-columns-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: center !important;
+  }
+
+  /* Bottom Navigation Bar on Mobile */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 58px !important;
+    background: rgba(255, 253, 246, 0.98) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-top: 1px solid rgba(26, 18, 14, 0.1) !important;
+    z-index: 1000 !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    box-shadow: 0 -4px 18px rgba(26, 18, 14, 0.06) !important;
+  }
+
+  .mobile-bottom-tab {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.65rem !important;
+    color: var(--color-espresso) !important;
+    text-decoration: none !important;
+    gap: 0.2rem !important;
+    padding: 0.4rem 0.6rem !important;
+    min-width: 48px !important;
+  }
+
+  .mobile-bottom-tab.active {
+    color: var(--color-muted-gold-dark) !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* --- 3. TABLET OPTIMIZATIONS (768px to 1024px) --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .site-header {
+    width: calc(100% - 2rem) !important;
+    margin: 0.5rem auto 0.75rem auto !important;
+  }
+
+  .cinematic-hero-viewport {
+    height: 82vh !important;
+    min-height: 620px !important;
+  }
+
+  .jewellery-trio-stage {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+    width: 95% !important;
+  }
+
+  .macro-jewel-card {
+    width: 220px !important;
+    padding: 1rem !important;
+  }
+
+  .macro-jewel-img-box {
+    height: 165px !important;
+  }
+
+  .trust-ribbon-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  .material-pillars-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  .material-pillar-img-wrap {
+    height: 230px !important;
+  }
+
+  .curated-collections-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  .category-grid-showcase {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  .footer-columns-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem !important;
+  }
+}
+
+/* --- 4. COMPUTER & DESKTOP (1025px and up) --- */
+@media (min-width: 1025px) {
+  .site-header {
+    max-width: 1320px !important;
+  }
+
+  .container {
+    max-width: 1320px !important;
+  }
+
+  .cinematic-hero-viewport {
+    height: calc(100vh - 110px) !important;
+    min-height: 720px !important;
+    max-height: 960px !important;
+  }
+
+  .jewellery-trio-stage {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 2rem !important;
+  }
+
+  .macro-jewel-card {
+    width: 290px !important;
+    padding: 1.35rem !important;
+  }
+
+  .macro-jewel-img-box {
+    height: 230px !important;
+  }
+
+  .trust-ribbon-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .material-pillars-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.75rem !important;
+  }
+
+  .curated-collections-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  .category-grid-showcase {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.75rem !important;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .mobile-bottom-nav {
+    display: none !important;
+  }
 }
