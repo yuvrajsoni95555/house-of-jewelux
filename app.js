@@ -3285,75 +3285,43 @@
       if (e) e.preventDefault();
       const input = document.getElementById('track-input');
       const val = input ? input.value.trim() : '';
+      const resultBox = document.getElementById('track-result-box');
       if (!val) {
-        alert('Please enter your Order ID (e.g. HJ-ORD-2026-7701) or phone number.');
+        alert('Please enter your Order ID.');
         return;
       }
-
-      const resultBox = document.getElementById('track-result-box');
       if (resultBox) {
         resultBox.style.display = 'block';
-        resultBox.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--color-stone-muted);">✦ Querying Armored Transit Satellite Telemetry...</div>';
+        resultBox.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--color-stone-muted);">Checking order status...</div>';
       }
-
-      let order = null;
       try {
         const res = await fetch('/api/orders/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: val, orderId: val })
+          body: JSON.stringify({ orderId: val })
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success && data.order) {
-            order = data.order;
-          }
+        const data = await res.json();
+        if (!res.ok || !data.success || !data.order) {
+          throw new Error(data.error || 'No order found. Please check your Order ID.');
+        }
+        const order = data.order;
+        if (resultBox) {
+          resultBox.innerHTML = `
+            <div style="background:var(--color-champagne-beige);border:1px solid var(--color-antique-gold);border-radius:var(--radius-sm);padding:1.5rem;margin-top:1.25rem;">
+              <div style="border-bottom:1px solid rgba(138,90,43,.2);padding-bottom:.85rem;margin-bottom:1rem;">
+                <span style="font-size:.72rem;text-transform:uppercase;color:var(--color-stone-muted);font-weight:600;">Order Number</span>
+                <div style="font-family:var(--font-serif);font-size:1.2rem;font-weight:700;color:var(--color-espresso);">${order.orderId}</div>
+                <strong>${order.orderStatus || 'Order received'}</strong>
+              </div>
+              <div style="font-size:.85rem;color:var(--color-espresso);line-height:1.8;">
+                <div><strong>Payment:</strong> ${order.paymentStatus || 'Payment Pending'}</div>
+                <div><strong>Tracking:</strong> ${order.trackingNumber || 'Not assigned yet'}</div>
+                <div><strong>Estimated delivery:</strong> ${order.estimatedDelivery || 'To be shared after dispatch'}</div>
+              </div>
+            </div>`;
         }
       } catch (err) {
-        console.warn('API tracking offline, falling back to local database', err);
-      }
-
-      if (!order) {
-        // Fallback search in localStorage orders
-        const localOrders = JSON.parse(localStorage.getItem('hj_orders') || '[]');
-        order = localOrders.find(o => 
-          (o.orderId && o.orderId.toLowerCase().includes(val.toLowerCase())) ||
-          (o.customer && o.customer.phone && o.customer.phone.includes(val))
-        );
-      }
-
-      if (!order) {
-        // Provide mock telemetry for demonstration if valid looking ID
-        const displayId = val.toUpperCase().startsWith('HJ-ORD') ? val.toUpperCase() : `HJ-ORD-2026-7701`;
-        order = {
-          orderId: displayId,
-          orderStatus: 'In Transit via Sequel Armored Logistics',
-          trackingNumber: 'HJ-TRK-892341IN',
-          estimatedDelivery: '2 - 3 Business Days',
-          customer: { name: 'Valued Patron', phone: '+91 98765 43210' }
-        };
-      }
-
-      if (resultBox) {
-        resultBox.innerHTML = `
-          <div style="background: var(--color-champagne-beige); border: 1px solid var(--color-antique-gold); border-radius: var(--radius-sm); padding: 1.5rem; margin-top: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(138, 90, 43, 0.2); padding-bottom: 0.85rem; margin-bottom: 1rem;">
-              <div>
-                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--color-stone-muted); font-weight: 600;">Consignment Number</span>
-                <div style="font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--color-espresso);">${order.orderId}</div>
-              </div>
-              <span style="background: rgba(46, 125, 50, 0.12); color: #2E7D32; font-weight: 700; font-size: 0.75rem; padding: 0.35rem 0.8rem; border-radius: 9999px;">✦ ${order.orderStatus || 'In Transit'}</span>
-            </div>
-            <div style="font-size: 0.85rem; color: var(--color-espresso); line-height: 1.6;">
-              <div><strong>Waybill / Armored Tracking:</strong> ${order.trackingNumber || 'HJ-TRK-789231IN'}</div>
-              <div><strong>Estimated Handover:</strong> ${order.estimatedDelivery || '2 - 4 Business Days'}</div>
-              <div><strong>Security Escort:</strong> BIS Certified Armored Transit with GPS Telemetry</div>
-            </div>
-            <div style="margin-top: 1.25rem; text-align: center;">
-              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux, tracking update for ' + order.orderId)}" target="_blank" class="btn-gold" style="padding: 0.6rem 1.4rem; font-size: 0.78rem;">Inquire with Salon Concierge ↗</a>
-            </div>
-          </div>
-        `;
+        if (resultBox) resultBox.innerHTML = '<p role="alert" style="padding:1rem;color:#9b2c2c;">' + (err.message || 'Unable to retrieve this order. Please try again.') + '</p>';
       }
     }
   };
