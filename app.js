@@ -1383,7 +1383,7 @@
                     <img class="cart-item-img" src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px;" />
                     <div class="cart-item-info">
                       <div class="cart-item-name">${item.name}</div>
-                      <div class="cart-item-variant">Qty: ${item.quantity} • ${item.metal || '925 Silver'}</div>
+                      <div class="cart-item-variant">Qty: ${item.quantity} • ${item.metal || 'See product details'}</div>
                     </div>
                     <div class="cart-item-price-col">
                       <span class="cart-item-total">${formatPrice(item.price * item.quantity)}</span>
