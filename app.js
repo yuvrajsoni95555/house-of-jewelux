@@ -382,7 +382,7 @@
 
           <div class="material-pillars-grid">
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
-            <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
+            <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Heritage-inspired artistry, reimagined for today.">
               <div class="material-pillar-img-wrap">
                 <img class="material-pillar-img" src="images/pillar_heritage_craft_clean.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." loading="lazy" />
                 <span class="material-pillar-badge">✦ Pillar 01</span>
@@ -1504,7 +1504,7 @@
             <!-- Right: The Maison Manifesto -->
             <div class="about-story-reveal">
               <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-muted-gold); font-weight: 700;">Maison Manifesto • Royal Provenance</span>
-              <h2 style="font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.25; margin: 0.6rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Centuries of Heritage. Refined for Now.</h2>
+              <h2 style="font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.25; margin: 0.6rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Indian Heritage. Refined for Now.</h2>
               <p style="color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem;">
                 Rooted in Jaipur, House of Jewelux draws on India's rich jewellery heritage while embracing contemporary forms. Our designs bring together gold, silver and diamond jewellery with careful attention to silhouette, proportion and detail. Exact materials, finishes and stone information are provided for each design where available.
               </p>
