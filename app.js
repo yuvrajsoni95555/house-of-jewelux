@@ -47,7 +47,9 @@
 
   function formatPrice(amountINR) {
     const cur = state.currencyRates[state.selectedCurrency] || state.currencyRates.INR;
-    const converted = Math.round(amountINR * cur.rate);
+    const num = Number(amountINR);
+    if (isNaN(num) || num <= 0) return '';
+    const converted = Math.round(num * cur.rate);
     return `${cur.symbol}${converted.toLocaleString('en-IN')}`;
   }
 
@@ -276,7 +278,7 @@
           </div>
           <div class="card-price-row" style="display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.85rem;">
             <span class="card-price-current" style="font-size: 1.1rem; font-weight: 700; color: var(--color-espresso);">${formatPrice(p.price)}</span>
-            <span class="card-price-original" style="font-size: 0.82rem; color: var(--color-stone-subtle); text-decoration: line-through;">${formatPrice(p.originalPrice)}</span>
+            ${(p.compareAtPrice || p.originalPrice) ? `<span class="card-price-original" style="font-size: 0.82rem; color: var(--color-stone-subtle); text-decoration: line-through;">${formatPrice(p.compareAtPrice || p.originalPrice)}</span>` : ''}
           </div>
           <button class="card-add-btn" onclick="window.HJ.addToCart('${p.id}', 1, event)" style="border-radius: 9999px; height: 38px; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;">
             Add To Bag

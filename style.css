@@ -3702,10 +3702,10 @@ img {
   clip-path: inset(0 100% 0 0);
 }
 
-/* Stagger children */
+/* Stagger children - default visible so products are always instantly rendered */
 .motion-stagger > * {
-  opacity: 0;
-  transform: translate3d(0, 20px, 0);
+  opacity: 1 !important;
+  transform: none;
 }
 
 /* Reveal text split */
@@ -4239,6 +4239,8 @@ img {
 
 /* 3. Pépite Pebble Card Architecture */
 .product-card {
+  opacity: 1 !important;
+  visibility: visible !important;
   border-radius: var(--radius-pepite-card) !important;
   background: var(--color-soft-offwhite) !important;
   border: 1px solid rgba(26, 18, 14, 0.08) !important;
