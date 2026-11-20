@@ -16,7 +16,7 @@ const createAppointment = (req, res, next) => {
     const interests = req.body.interests;
     const notes = req.body.notes;
 
-    if (typeof name !== 'string' || !name.trim() || typeof phone !== 'string' || phone.replace(/\\D/g, '').length < 10 || phone.replace(/\\D/g, '').length > 15 || typeof email !== 'string' || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || typeof date !== 'string' || !/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) {
+    if (typeof name !== 'string' || !name.trim() || typeof phone !== 'string' || phone.replace(/\D/g, '').length < 10 || phone.replace(/\D/g, '').length > 15 || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return res.status(400).json({ success: false, error: 'Name, phone number and preferred date are required.' });
     }
 
@@ -25,14 +25,14 @@ const createAppointment = (req, res, next) => {
 
     const newAppointment = {
       appointmentId,
-      name,
-      phone,
-      email: email || '',
+      name: name.trim().slice(0, 100),
+      phone: phone.replace(/\D/g, '').slice(0, 15),
+      email: email.trim().toLowerCase(),
       consultationType: String(consultationType).slice(0, 80),
       date,
       timeSlot: typeof timeSlot === 'string' ? timeSlot.slice(0, 80) : '',
       interests: typeof interests === 'string' ? interests.slice(0, 500) : '',
-      notes: notes || '',
+      notes: typeof notes === 'string' ? notes.slice(0, 1000) : '',
       status: 'Request Received — Awaiting Confirmation',
       createdAt: new Date().toISOString()
     };
