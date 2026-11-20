@@ -134,12 +134,12 @@ const createOrder = (req, res, next) => {
       orderDate: new Date().toISOString(),
       orderStatus: 'Confirmed by Jaipur Atelier',
       customer: {
-        name: customer.name || 'Valued Connoisseur',
+        name: customer.name || customer.fullName || 'Valued Connoisseur',
         email: customer.email || '',
         phone: customer.phone || ''
       },
       shippingAddress: {
-        addressLine: shippingAddress.addressLine || '',
+        addressLine: shippingAddress.addressLine || shippingAddress.address || '',
         city: shippingAddress.city || '',
         state: shippingAddress.state || '',
         pincode: shippingAddress.pincode || '',

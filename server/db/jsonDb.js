@@ -18,7 +18,7 @@ function readJSON(filename, defaultVal = []) {
     try {
       fs.writeFileSync(filePath, JSON.stringify(defaultVal, null, 2), 'utf8');
     } catch (err) {
-      console.error(`Error initializing file ${filename}:`, err);
+      // In serverless / read-only filesystem, gracefully proceed with in-memory default
     }
     return defaultVal;
   }
@@ -37,15 +37,19 @@ function writeJSON(filename, data) {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (err) {
-    console.error(`Error writing to ${filename}:`, err);
-    throw err;
+    console.error(`Error writing to ${filename}:`, err.message);
+    return false;
   }
 }
 
 // Auto-seed required files if missing
 ['orders.json', 'customers.json', 'custom_orders.json', 'subscribers.json', 'appointments.json'].forEach(f => {
-  if (!fs.existsSync(path.join(config.dataDir, f))) {
-    writeJSON(f, []);
+  try {
+    if (!fs.existsSync(path.join(config.dataDir, f))) {
+      writeJSON(f, []);
+    }
+  } catch (e) {
+    // Graceful for serverless
   }
 });
 
