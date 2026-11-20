@@ -200,6 +200,9 @@
       renderAccountPage(appView);
     } else if (route === 'admin') {
       renderAdminDashboard(appView);
+    } else if (route === 'edit' || route === 'editor') {
+      renderHomePage(appView);
+      setTimeout(() => window.HJ.toggleEditorMode(true), 120);
     } else if (route === 'about') {
       renderAboutPage(appView);
     } else if (route === 'craftsmanship' || route === 'custom-order') {
@@ -1525,7 +1528,7 @@
           <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Where Elegance Becomes Eternal</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 780px; margin: 0 auto;">
-            Founded by Yuvraj Soni in Jaipur, Rajasthan, House of Jewelux was born to unite royal Indian temple nakshi craft with modern European haute joaillerie poise. We reject disposable jewellery. Every silhouette is sculpted from solid 925 sterling silver, plated in liquid platinum-rhodium and 18K micron gold, and officially certified.
+            Founded by Yuvraj Soni in Jaipur, Rajasthan, House of Jewelux is a celebration of India's timeless jewellery heritage, reimagined through the lens of modern luxury. Rooted in traditional Indian artistry and inspired by contemporary minimalism, we bring together the enduring beauty of gold, silver and diamonds through thoughtfully crafted fine jewellery. Each creation reflects a harmonious balance of heritage, refined simplicity and modern elegance, designed to transcend trends and become timeless treasures.
           </p>
         </div>
       </section>
@@ -2969,12 +2972,100 @@
           alert('Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
         }
       }
+    },
+
+    toggleEditorMode: function (forceState) {
+      const isCurrentlyActive = document.body.classList.contains('hj-editor-active');
+      const shouldActivate = forceState !== undefined ? forceState : !isCurrentlyActive;
+
+      if (shouldActivate) {
+        document.body.classList.add('hj-editor-active');
+        sessionStorage.setItem('hj_editor_active', 'true');
+
+        const editables = document.querySelectorAll(
+          'h1, h2, h3, h4, .section-title, .section-pretitle, .hero-title, .hero-subtitle, .product-card-title, .price, .trust-item-title, .trust-item-desc, .editorial-content p, .step-title, .step-desc, .category-circle-label, .material-pillar-title, .material-pillar-desc'
+        );
+        editables.forEach(el => {
+          el.setAttribute('contenteditable', 'true');
+          el.setAttribute('spellcheck', 'false');
+        });
+
+        if (!document.getElementById('hj-editor-floating-bar')) {
+          const bar = document.createElement('div');
+          bar.id = 'hj-editor-floating-bar';
+          bar.className = 'hj-editor-floating-bar';
+          bar.innerHTML = `
+            <span class="editor-badge">✦ ATELIER LIVE EDITOR</span>
+            <span>Click any text, title or price to edit directly</span>
+            <button onclick="window.HJ.saveEditorEdits()" class="hj-editor-btn-save">💾 Save Edits</button>
+            <button onclick="window.HJ.resetEditorEdits()" class="hj-editor-btn-reset">↺ Reset</button>
+            <a href="#admin" class="hj-editor-btn-admin">👑 Admin Portal</a>
+            <button onclick="window.HJ.toggleEditorMode(false)" class="hj-editor-btn-close" title="Exit Editor">✕</button>
+          `;
+          document.body.appendChild(bar);
+        }
+      } else {
+        document.body.classList.remove('hj-editor-active');
+        sessionStorage.removeItem('hj_editor_active');
+        document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+          el.removeAttribute('contenteditable');
+        });
+        const bar = document.getElementById('hj-editor-floating-bar');
+        if (bar) bar.remove();
+        if (window.location.hash === '#edit' || window.location.hash === '#editor') {
+          window.location.hash = '#home';
+        }
+      }
+    },
+
+    saveEditorEdits: function () {
+      const edits = {};
+      document.querySelectorAll('[contenteditable="true"]').forEach((el, index) => {
+        const id = el.id || el.className + '_' + index;
+        edits[id] = el.innerHTML;
+      });
+      localStorage.setItem('hj_saved_editor_edits', JSON.stringify(edits));
+      alert('✓ Live website edits saved successfully to this browser session!');
+    },
+
+    resetEditorEdits: function () {
+      if (confirm('Are you sure you want to restore original default texts?')) {
+        localStorage.removeItem('hj_saved_editor_edits');
+        window.location.reload();
+      }
     }
   };
+
+  // Keyboard shortcut Ctrl+E / Cmd+E to toggle editor mode
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {
+      e.preventDefault();
+      window.HJ.toggleEditorMode();
+    }
+  });
+
+  // Auto-restore saved edits if any
+  function restoreSavedEdits() {
+    const saved = localStorage.getItem('hj_saved_editor_edits');
+    if (!saved) return;
+    try {
+      const edits = JSON.parse(saved);
+      document.querySelectorAll('h1, h2, h3, h4, .section-title, .section-pretitle, .hero-title, .hero-subtitle, .product-card-title, .price').forEach((el, index) => {
+        const id = el.id || el.className + '_' + index;
+        if (edits[id]) {
+          el.innerHTML = edits[id];
+        }
+      });
+    } catch(e) {}
+  }
 
   window.addEventListener('hashchange', handleRoute);
   window.addEventListener('DOMContentLoaded', () => {
     updateBadges();
     loadProducts();
+    restoreSavedEdits();
+    if (sessionStorage.getItem('hj_editor_active') === 'true') {
+      setTimeout(() => window.HJ.toggleEditorMode(true), 250);
+    }
   });
 })();
