@@ -242,7 +242,7 @@
     const isWished = state.wishlist.includes(p.id);
     const mainImg = p.images && p.images[0] ? p.images[0] : (p.image || 'images/authentic_earrings_macro.jpg');
     const hoverImg = p.images && p.images[1] ? p.images[1] : (p.hoverImage || mainImg);
-    const badgeText = p.badge || (p.isNew ? 'New Arrival' : 'BIS 925 Hallmark');
+    const badgeText = p.badge || (p.isNew ? 'New Arrival' : 'Explore Design');
 
     return `
       <div class="product-card" data-product-id="${p.id}">
@@ -267,7 +267,7 @@
           </button>
         </div>
         <div class="product-card-body" style="padding: 1.25rem 1.15rem 1.35rem;">
-          <div class="card-cat-line" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'} • ${p.purity || 'BIS 925'}</div>
+          <div class="card-cat-line" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'} • ${p.purity || 'Material details on request'}</div>
           <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
             <a href="#products/${p.handle || p.id}">${p.name}</a>
           </h3>
@@ -788,8 +788,8 @@
                   <span>Personal guidance on fit, materials and jewellery care</span>
                 </div>
               </div>
-              <a href="https://wa.me/916377061020?text=Hello%20House%20of%20Jewelux,%20I%20would%20like%20to%20schedule%20a%20private%20atelier%20consultation." target="_blank" class="btn-outline" style="border-color: var(--color-antique-gold); color: var(--color-warm-ivory);">
-                Instant WhatsApp Concierge (+91 63770 61020)
+              <a href="https://wa.me/919079998793?text=Hello%20House%20of%20Jewelux,%20I%20would%20like%20to%20schedule%20a%20private%20atelier%20consultation." target="_blank" class="btn-outline" style="border-color: var(--color-antique-gold); color: var(--color-warm-ivory);">
+                Instant WhatsApp Concierge (+91 90799 98793)
               </a>
             </div>
 
@@ -867,12 +867,12 @@
                 GENERATIONAL INDIAN<br>ARTISTRY × MODERN<br>MINIMALISM
               </h2>
               <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem;">
-                House of Jewelux was established in Jaipur to bridge the majesty of royal Indian court jewellery with the clean lines of contemporary design. We reject disposable fashion jewellery. Every piece is masterfully crafted in hallmarked gold and solid 925 sterling silver—finished with precision and stamped with the Bureau of Indian Standards (BIS) hallmark for guaranteed purity.
+                House of Jewelux was established in Jaipur to bridge the majesty of royal Indian court jewellery with the clean lines of contemporary design. We reject disposable fashion jewellery. Our collections bring together gold, silver and diamond jewellery, shaped by Indian heritage craftsmanship and contemporary minimal design. Exact metal, finish and stone details are listed on individual product pages.
               </p>
               <div style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <div>
                   <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">100%</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">BIS 925 Stamped</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Product-specific details</div>
                 </div>
                 <div>
                   <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">0%</div>
@@ -914,12 +914,12 @@
       } else if (['silver', 'silver-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('silver')) || p.primaryMaterial === 'silver' || (p.metal && p.metal.toLowerCase().includes('silver')));
         title = "Silver Jewellery Collection";
-        subtitle = "Solid 925 Sterling Silver in Liquid Platinum-Rhodium • BIS 925 Hallmarked (50 Pieces)";
+        subtitle = "Explore silver jewellery with product-specific material and finish details.";
         heroImg = "images/authentic_solitaire_ring.jpg";
       } else if (['diamond', 'diamond-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('diamond')) || p.primaryMaterial === 'diamond' || (p.stone && (p.stone.toLowerCase().includes('diamond') || p.stone.toLowerCase().includes('moissanite'))));
         title = "Diamond Jewellery Collection";
-        subtitle = "Certified VVS1 Solitaires & Pavé Brilliants • Hearts & Arrows Precision (45 Pieces)";
+        subtitle = "Explore diamond jewellery with stone and setting details listed by design.";
         heroImg = "images/authentic_diamond_choker.jpg";
       } else if (['gemstone', 'gemstone-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('gemstone')) || p.primaryMaterial === 'gemstone' || (p.stone && (p.stone.toLowerCase().includes('emerald') || p.stone.toLowerCase().includes('sapphire') || p.stone.toLowerCase().includes('pearl') || p.stone.toLowerCase().includes('polki'))));
@@ -1175,7 +1175,7 @@
                   <polygon points="12 3 21 19 3 19 12 3"></polygon>
                   <text x="12" y="16.5" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">925</text>
                 </svg>
-                BIS 925 Hallmarked
+                Material details
               </span>
             </div>
 
@@ -1227,7 +1227,7 @@
               <div class="pdp-accordion-pane">
                 ${p.description}
                 <br><br>
-                Engineered with generational precision in our Jaipur atelier. Stamped with the official Bureau of Indian Standards (BIS) 925 Hallmark.
+                Engineered with generational precision in our Jaipur atelier. Please refer to the product specifications for exact material and hallmark details.
               </div>
             </div>
 
@@ -1242,7 +1242,7 @@
                     ${(p.specifications || []).map(s => `
                       <tr><td>${s.label}</td><td>${s.value}</td></tr>
                     `).join('')}
-                    <tr><td>Gross Weight</td><td>${p.weight || '5.2g'}</td></tr>
+                    <tr><td>Gross Weight</td><td>${p.weight || 'As specified'}</td></tr>
                     <tr><td>SKU Reference</td><td>${p.id}</td></tr>
                   </tbody>
                 </table>
@@ -1266,7 +1266,7 @@
                 <span>▾</span>
               </div>
               <div class="pdp-accordion-pane">
-                Complimentary 14-day hassle-free return and exchange window. Free door-to-door insured courier pickup across all verified Indian PIN codes.
+                Please review the current return and exchange terms before placing an order. Contact customer support for eligibility and process details.
               </div>
             </div>
           </div>
@@ -1451,7 +1451,7 @@
                   </div>
                 ` : ''}
                 <div class="cart-summary-line">
-                  <span>Armored Insured Courier</span>
+                  <span>Shipping</span>
                   <span>${shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
                 </div>
                 <div class="cart-summary-total">
@@ -1741,7 +1741,7 @@
             <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
               <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">19,000+</div>
               <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Indian PIN Codes</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Insured armored courier transit</div>
+              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Delivery tracking shared after dispatch</div>
             </div>
           </div>
         </div>
@@ -1814,7 +1814,7 @@
           <div class="pepite-story-card">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">3. Custom & Bespoke Commissions</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Bespoke custom commissions and personalized laser engravings are final sale due to their one-of-a-kind fabrication, but remain fully covered under our Lifetime Structural Craftsmanship Warranty.
+              Custom commissions are not currently offered.
             </p>
           </div>
         `
@@ -2163,7 +2163,7 @@
                     <div>
                       <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Client Care Email</div>
                       <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">houseofjewelux@gmail.com</div>
-                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Inquiries, bespoke commissions & authentication.</div>
+                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Product information, order support and general enquiries.</div>
                     </div>
                   </div>
                 </div>
@@ -2202,8 +2202,8 @@
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Subject of Inquiry *</label>
                     <select name="subject" class="form-select" required>
                       <option value="acquisition">Private Piece Acquisition</option>
-                      <option value="bespoke">Bespoke Goldsmithing Commission</option>
-                      <option value="appointment">Jaipur Salon Appointment</option>
+                      <option value="bespoke">Product Information</option>
+                      <option value="appointment">Online Consultation</option>
                       <option value="consign">Armored Consignment Telemetry</option>
                       <option value="press">Press & Editorial Editorial</option>
                     </select>
@@ -2267,7 +2267,7 @@
           <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Frequently Asked Questions</h2>
           <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
           <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-            Everything you need to know about acquiring from House of Jewelux — hallmarking, shipping, care, and bespoke commissions.
+            Find information about product details, ordering, shipping, returns and jewellery care.
           </p>
         </div>
       </section>
@@ -2276,11 +2276,11 @@
         <div class="container" style="max-width: 720px; margin: 0 auto;">
           <div class="pdp-accordion-item active about-story-reveal">
             <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
-              <span>Is every piece BIS 925 hallmarked?</span>
+              <span>How can I confirm the material and stone details?</span>
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              Yes. Every House of Jewelux creation is stamped with the official Bureau of Indian Standards (BIS) 925 Hallmark certifying 92.5% pure silver content.
+              Please check the specifications on the individual product page. If a material, finish or stone detail is unclear, contact our team before placing your order.
             </div>
           </div>
           <div class="pdp-accordion-item about-story-reveal">
@@ -2307,16 +2307,16 @@
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              Each piece passes through nine stages of bench craftsmanship in our Jaipur atelier. Standard pieces typically ship within 5-7 business days; bespoke commissions require 4-6 weeks.
+              Each piece passes through nine stages of bench craftsmanship in our Jaipur atelier. Standard pieces typically ship within 5-7 business days; delivery estimates are shared with the order details.
             </div>
           </div>
           <div class="pdp-accordion-item about-story-reveal">
             <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
-              <span>Do you offer bespoke commissions?</span>
+              <span>Can I get help choosing a piece?</span>
               <span>▾</span>
             </div>
             <div class="pdp-accordion-pane">
-              Yes. Our Bespoke Goldsmith Studio accepts private commissions for wedding suites, heirloom redesigns, and custom designs. Book a private consultation to begin.
+              Yes. Contact our team for help understanding product details and choosing from the available collections.
             </div>
           </div>
           <div class="pdp-accordion-item about-story-reveal">
