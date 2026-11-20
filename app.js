@@ -267,7 +267,7 @@
           </button>
         </div>
         <div class="product-card-body" style="padding: 1.25rem 1.15rem 1.35rem;">
-          <div class="card-cat-line" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'} • ${p.purity || 'Material details on request'}</div>
+          <div class="card-cat-line" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'} • Material details on request</div>
           <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
             <a href="#products/${p.handle || p.id}">${p.name}</a>
           </h3>
@@ -2407,7 +2407,7 @@
           price: prod.price,
           image: prod.image,
           handle: prod.handle,
-          metal: prod.metal || 'See product specifications',
+          metal: 'Material details confirmed before payment',
           quantity: qty
         });
       }
