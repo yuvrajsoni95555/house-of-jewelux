@@ -1,47 +1,55 @@
-# HOUSE OF JEWELUX — SYSTEM ARCHITECTURE SPECIFICATION
+# HOUSE OF JEWELUX — CURRENT ARCHITECTURE
 
-## 1. High-Level Architecture Overview
+## Overview
 
-House of Jewelux is an ultra-luxury fine jewellery e-commerce platform and digital atelier operating across Gold, Silver, Diamond, and Precious Gemstone collections.
+House of Jewelux is a jewellery storefront for gold, silver and diamond collections. The brand direction combines Indian heritage influences with contemporary minimalism.
+
+## Application layers
 
 ```
-                           +-------------------------------------+
-                           |            Clients / CDN            |
-                           |   (Desktop, Mobile, Reverse Proxy)  |
-                           +------------------+------------------+
-                                              | HTTPS / WSS
-                                              v
-                           +-------------------------------------+
-                           |          Security Layer             |
-                           |   (Helmet-Style Headers, CORS, HSTS)|
-                           +------------------+------------------+
-                                              |
-                   +--------------------------+--------------------------+
-                   |                                                     |
-                   v                                                     v
-+------------------------------------+                +------------------------------------+
-|        Client-Side SPA             |                |        Modular Express Server      |
-|  - Custom Route Engine             |                |  - /api/v1 Router (Routes)         |
-|  - Reactive State Manager          |                |  - Centralized Controllers         |
-|  - Cinematic Motion & GSAP Engine  |                |  - Error & Security Middleware     |
-|  - Cart & Checkout Orchestrator    |                |  - Resilient JSON DB Access        |
-+------------------------------------+                +------------------+-----------------+
-                                                                         |
-                                                                         v
-                                                      +------------------------------------+
-                                                      |          Data Persistence          |
-                                                      |  - products.json (50 Items)        |
-                                                      |  - categories.json (26 Types)      |
-                                                      |  - orders.json / appointments.json |
-                                                      +------------------------------------+
+Browser
+  ├─ index.html
+  ├─ app.js (single-page route and storefront UI)
+  ├─ style.css
+  ├─ hero-cinematic.js / motion-engine.js
+  └─ visual-editor.js (admin-session gated)
+          |
+          | same-origin /api requests
+          v
+Express application (server/app.js)
+  ├─ security middleware
+  ├─ API router (server/routes/api.js)
+  ├─ controllers
+  └─ JSON data access layer (server/db/jsonDb.js)
+          |
+          v
+data/*.json
 ```
 
----
+## Security
 
-## 2. Core Architectural Principles
+- Admin login verifies the configured `ADMIN_SECRET_PIN` and issues a signed, expiring bearer token.
+- Admin API routes require the bearer token.
+- The visual editor requires the same admin session; the old client-side PIN bypass has been removed.
+- Customer passwords are stored with salted scrypt hashes. Existing legacy SHA-256 hashes are upgraded after a successful login.
+- Security middleware sets common browser security headers and redirects forwarded production HTTP requests to HTTPS.
+- Admin login rate limiting is in-process. For a multi-instance production deployment, move rate limiting to a shared service.
 
-1. **Separation of Concerns:** Business logic is isolated in controllers (`server/controllers/`), routing is centralized (`server/routes/api.js`), and database operations are encapsulated in `server/db/jsonDb.js`.
-2. **Defensive Data Handling & Validation:** Server-side price recalculation guarantees that client-side DOM manipulation cannot tamper with cart totals or coupon values.
-3. **Resilient JSON Persistence:** Atomic read/write operations with schema initialization and graceful fallbacks ensure the data layer cannot crash the application.
-4. **Progressive Enhancement & Fail-Safe UI:** Client animations glide from 0 to 1 without permanently zeroing out initial DOM opacity, guaranteeing 100% visual stability across all network conditions and devices.
-5. **Security by Default:** Comprehensive HTTP security headers (nosniff, SAMEORIGIN, strict referrer policy, HSTS) and masked customer data handling.
+## Checkout and customer requests
+
+- Checkout accepts advance payment only; Cash on Delivery is rejected by the server.
+- The application does not currently integrate a payment gateway. New orders remain payment-pending until an administrator verifies payment.
+- Delivery charges and delivery estimates are not calculated as a fixed promise; the team must confirm them before payment.
+- Order tracking looks up an order by its order ID. It does not provide live courier telemetry.
+- Consultation forms create pending requests. They do not reserve a calendar slot or send an automated confirmation email.
+- Newsletter subscription succeeds only after the API saves the address.
+
+## Data storage and deployment limitations
+
+The current data layer reads and writes JSON files under `data/`. This is useful for local development and repository review, but it is not durable or shared storage on serverless platforms such as Vercel. Concurrent writes and instance changes can cause lost or unavailable order data.
+
+**Do not accept live customer orders on a serverless deployment until orders, customers, appointments and subscribers have been migrated to a persistent database.**
+
+## Quality checks
+
+The repository contains Node tests for admin-session security and a GitHub Actions workflow for JavaScript syntax checks and tests. The workflow must pass on the latest pull-request head before merge. Real-device and deployed end-to-end testing remain separate tasks.
