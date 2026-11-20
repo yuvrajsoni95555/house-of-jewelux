@@ -74,7 +74,7 @@
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261121_prod_v4">
+  <link rel="stylesheet" href="/style.css?v=20261121_prod_v5">
   <style id="bulletproof-luxury-footer-styles">
     /* High-Priority Ultra-Luxurious Footer Styles - Mapped to Brand Swatches */
     #app-view {
@@ -611,16 +611,25 @@
   <main id="app-view">
     <!-- Initial Front Hero Section (Instant First Paint - Eliminates Footer Flash) -->
     <section class="hero-slider" id="hero-slider">
-      <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center;">
-        <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <div class="hero-brand-center-lockup">
-            <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
-          </div>
-          <div style="margin-top: 1.5rem;">
-            <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
-              <span>Explore The Collections</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-            </a>
+      <div id="cinematic-hero-viewport" class="cinematic-hero-viewport">
+        <!-- Canvas Background Simulation -->
+        <canvas id="hero-particle-canvas" class="hero-particle-canvas"></canvas>
+
+        <!-- Ambient Luxury Dark Gradient -->
+        <div class="hero-cinematic-backdrop"></div>
+
+        <!-- ==================== SCENE 01: THE ATMOSPHERIC PRELUDE ==================== -->
+        <div class="cinematic-scene active" data-scene="1">
+          <div class="scene-content-center parallax-plane" data-depth="0.03" style="text-align: center; max-width: 800px; padding: 1.5rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="hero-brand-center-lockup">
+              <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
+            </div>
+            <div style="margin-top: 1.5rem;">
+              <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+                <span>Explore The Collections</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -898,8 +907,8 @@
   <script src="/vendor/gsap.min.js"></script>
   <script src="/vendor/ScrollTrigger.min.js"></script>
   <script src="/motion-engine.js?v=20261120_prod_v2"></script>
-  <script src="/hero-cinematic.js?v=20261120_prod_v9"></script>
-  <script src="/app.js?v=20261121_prod_v4"></script>
+  <script src="/hero-cinematic.js?v=20261121_prod_v5"></script>
+  <script src="/app.js?v=20261121_prod_v5"></script>
   <script src="/visual-editor.js?v=20261120_prod_v2" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->

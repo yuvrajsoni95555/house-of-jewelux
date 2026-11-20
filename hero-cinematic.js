@@ -180,13 +180,14 @@
 
     if (!heroContainer) return;
 
-    // Update Scene Visibility
+    // Update Scene Visibility cleanly without restarting active transition
     const allScenes = heroContainer.querySelectorAll('.cinematic-scene');
     allScenes.forEach(s => {
-      s.classList.remove('active');
       const num = parseInt(s.getAttribute('data-scene'), 10);
       if (num === currentScene) {
-        s.classList.add('active');
+        if (!s.classList.contains('active')) s.classList.add('active');
+      } else {
+        s.classList.remove('active');
       }
     });
 
@@ -235,7 +236,9 @@
     // Check prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    existingHero.innerHTML = `
+    // Only inject HTML if not already mounted, ensuring logo never shifts or re-mounts
+    if (!document.getElementById('cinematic-hero-viewport')) {
+      existingHero.innerHTML = `
       <div id="cinematic-hero-viewport" class="cinematic-hero-viewport">
         <!-- Canvas Background Simulation -->
         <canvas id="hero-particle-canvas" class="hero-particle-canvas"></canvas>
@@ -347,6 +350,7 @@
         </div>
       </div>
     `;
+    }
 
     heroContainer = document.getElementById('cinematic-hero-viewport');
     setupHeroObserver();

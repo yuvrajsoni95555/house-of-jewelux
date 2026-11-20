@@ -134,6 +134,16 @@
       }
     }
 
+    // Smoothly populate home new arrivals without triggering a full-page hero re-render
+    if (state.currentRoute === 'home' || state.currentRoute === '') {
+      const newArrivalsGrid = document.querySelector('#home-new-arrivals-grid');
+      if (newArrivalsGrid) {
+        const newArrivals = state.products.filter(p => p.isNew || p.id.includes('BRO') || p.id.includes('TEM') || p.badge === 'New').slice(0, 4);
+        newArrivalsGrid.innerHTML = newArrivals.map(renderProductCard).join('');
+        return;
+      }
+    }
+
     handleRoute();
   }
 
@@ -294,23 +304,39 @@
     const newArrivals = state.products.filter(p => p.isNew || p.id.includes('BRO') || p.id.includes('TEM') || p.badge === 'New').slice(0, 4);
     const earringsFeatured = state.products.filter(p => p.category === 'earrings').slice(0, 4);
 
-    container.innerHTML = `
-      <!-- A. PREMIUM HERO SECTION (CINEMATIC ODYSSEY) -->
+    // If home page is already rendered in DOM, update only the dynamic products grid to eliminate layout shifts
+    const existingHero = container.querySelector('#hero-slider');
+    const existingNewArrivals = container.querySelector('#home-new-arrivals-grid');
+    if (existingHero && existingNewArrivals && state.products.length > 0) {
+      existingNewArrivals.innerHTML = newArrivals.map(renderProductCard).join('');
+      return;
+    }
+
+    const heroMarkup = existingHero ? existingHero.outerHTML : `
       <section class="hero-slider" id="hero-slider">
-        <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center;">
-          <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <div class="hero-brand-center-lockup">
-              <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
-                <span>Explore The Collections</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-              </a>
+        <div id="cinematic-hero-viewport" class="cinematic-hero-viewport">
+          <canvas id="hero-particle-canvas" class="hero-particle-canvas"></canvas>
+          <div class="hero-cinematic-backdrop"></div>
+          <div class="cinematic-scene active" data-scene="1">
+            <div class="scene-content-center parallax-plane" data-depth="0.03" style="text-align: center; max-width: 800px; padding: 1.5rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div class="hero-brand-center-lockup">
+                <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
+              </div>
+              <div style="margin-top: 1.5rem;">
+                <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+                  <span>Explore The Collections</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
+    `;
+
+    container.innerHTML = `
+      <!-- A. PREMIUM HERO SECTION (CINEMATIC ODYSSEY) -->
+      ${heroMarkup}
 
       <!-- B. 4-PILLAR HERITAGE VALUE RIBBON -->
       <section class="trust-ribbon">
@@ -370,89 +396,89 @@
       </section>
 
       
-      <!-- THREE PILLARS OF PRECIOUS ADORNMENT (PHOTO 3 LUXURY EDITORIAL CARDS) -->
+      <!-- ICONIC SIGNATURE ATELIER SUITES (AUTHENTIC HIGH JEWELLERY SHOWCASE) -->
       <section class="material-pillars-section">
         <div class="container">
           <div class="section-header" style="text-align: center; margin-bottom: 2.75rem;">
             <div class="section-pretitle" style="letter-spacing: 0.28em; font-size: 0.74rem; text-transform: uppercase; color: #6B4A2E; margin-bottom: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.85rem;">
               <span style="height: 1px; width: 45px; background: rgba(168, 132, 98, 0.45); display: inline-block;"></span>
-              <span>HOUSE OF JEWELUX</span>
+              <span>JAIPUR HIGH JEWELLERY ATELIER</span>
               <span style="height: 1px; width: 45px; background: rgba(168, 132, 98, 0.45); display: inline-block;"></span>
             </div>
-            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.4rem, 3.8vw, 2.35rem); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.25; padding: 0 0.5rem;">THE THREE PILLARS OF PRECIOUS ADORNMENT</h2>
+            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.4rem, 3.8vw, 2.35rem); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 0.85rem; color: #2A1710; font-weight: 500; line-height: 1.25; padding: 0 0.5rem;">SIGNATURE MASTERPIECE SUITES</h2>
             <p style="max-width: 760px; margin: 0 auto; font-family: var(--font-serif); font-style: italic; font-size: clamp(0.95rem, 1.3vw, 1.1rem); color: #3A2418; line-height: 1.6; letter-spacing: 0.01em;">
-              House of Jewelux operates across gold, silver, diamond and precious gemstone jewellery — uniting Jaipur ancestral benchcraft with contemporary global luxury aesthetics.
+              Individually sculpted by master bench goldsmiths in Jaipur — uniting ancestral temple nakshi artistry, royal gemstones, and peerless contemporary elegance.
             </p>
           </div>
 
           <div class="material-pillars-grid">
-            <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
-            <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
+            <!-- CREATION 1: TEMPLE NAKSHI HAAR -->
+            <a href="#collections/necklaces" class="material-pillar-card" aria-label="The Royal Nakshi Temple Haar">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_heritage_craft_clean.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." loading="lazy" />
-                <span class="material-pillar-badge">✦ Pillar 01</span>
+                <img class="material-pillar-img" src="images/user_royal_nakshi_necklace.jpg" alt="The Royal Nakshi Temple Haar" loading="lazy" style="object-position: center 35%;" />
+                <span class="material-pillar-badge">✦ Imperial Heritage</span>
               </div>
               <div class="material-pillar-body">
                 <div class="material-pillar-title">
-                  <span>Heritage Craftsmanship</span>
+                  <span>Royal Nakshi Haar</span>
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "Centuries-old artistry, forever cherished."
+                  "Devotional Benchcraft in 22K Gold & Zambian Emeralds"
                 </div>
                 <div class="material-pillar-desc">
-                  Devotional bench goldsmithing embodying Jaipur royal artistry, hand-chiseled nakshi engraving, and ancestral hammer-forging.
+                  Centuries-old devotional temple nakshi depicting imperial motifs, hand-chiseled by master karigars and set with natural vivid emeralds.
                 </div>
                 <div class="material-pillar-footer">
-                  <span>Explore Atelier</span>
+                  <span>Explore Necklaces Suite</span>
                   <span>↗</span>
                 </div>
               </div>
             </a>
 
-            <!-- PILLAR 2: TIMELESS ELEGANCE -->
-            <a href="#collections/all" class="material-pillar-card" aria-label="Timeless Elegance — Classic beauty, always in style.">
+            <!-- CREATION 2: MAHARANI RUBY JHUMKAS -->
+            <a href="#collections/earrings" class="material-pillar-card" aria-label="Maharani Royal Ruby Jhumkas">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_timeless_elegance_clean.jpg" alt="Timeless Elegance — Classic beauty, always in style." loading="lazy" />
-                <span class="material-pillar-badge">✦ Pillar 02</span>
+                <img class="material-pillar-img" src="images/user_royal_ruby_jhumkas.jpg" alt="Maharani Royal Ruby Jhumkas" loading="lazy" style="object-position: center 30%;" />
+                <span class="material-pillar-badge">✦ Royal Atelier</span>
               </div>
               <div class="material-pillar-body">
                 <div class="material-pillar-title">
-                  <span>Timeless Elegance</span>
+                  <span>Maharani Ruby Chandbalis</span>
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "Classic beauty, always in style."
+                  "Natural Pigeon-Blood Rubies & South Sea Pearls"
                 </div>
                 <div class="material-pillar-desc">
-                  Regal bridal diadems, architectural solitaires, and heirloom silhouettes sculpted to transcend fleeting seasonal trends.
+                  Intricately pierced royal chandeliers cascading with hand-selected cabochon rubies, seed pearls, and luminous pavé diamonds.
                 </div>
                 <div class="material-pillar-footer">
-                  <span>Discover Masterpieces</span>
+                  <span>Discover Earrings Suite</span>
                   <span>↗</span>
                 </div>
               </div>
             </a>
 
-            <!-- PILLAR 3: GLOBAL LUXURY -->
-            <a href="#collections/diamond" class="material-pillar-card" aria-label="Global Luxury — A world of sophistication, within your reach.">
+            <!-- CREATION 3: ROYAL SOVEREIGN FALCON BROOCH -->
+            <a href="#collections/brooches" class="material-pillar-card" aria-label="The Royal Sovereign Falcon Brooch">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_global_luxury_clean.jpg" alt="Global Luxury — A world of sophistication, within your reach." loading="lazy" />
-                <span class="material-pillar-badge">✦ Pillar 03</span>
+                <img class="material-pillar-img" src="images/user_falcon_brooch_white.jpg" alt="The Royal Sovereign Falcon Pavé Brooch" loading="lazy" style="object-position: center 30%;" />
+                <span class="material-pillar-badge">✦ Sovereign Icon</span>
               </div>
               <div class="material-pillar-body">
                 <div class="material-pillar-title">
-                  <span>Global Luxury</span>
+                  <span>The Sovereign Falcon</span>
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "A world of sophistication, within your reach."
+                  "Hand-Sculpted Pavé Solitaires & 18K Solid Vermeil"
                 </div>
                 <div class="material-pillar-desc">
-                  Contemporary luxury aesthetics harmonized with Bureau of Indian Standards (BIS) hallmark certification and insured armored transit.
+                  The iconic emblem of House of Jewelux — an aristocratic sovereign falcon crest set with 128 brilliant-cut solitaires and emerald eyes.
                 </div>
                 <div class="material-pillar-footer">
-                  <span>View Vault Collections</span>
+                  <span>View Royal Brooches</span>
                   <span>↗</span>
                 </div>
               </div>
@@ -525,7 +551,7 @@
             </p>
           </div>
 
-          <div class="products-grid motion-stagger">
+          <div id="home-new-arrivals-grid" class="products-grid motion-stagger">
             ${newArrivals.map(renderProductCard).join('')}
           </div>
 
