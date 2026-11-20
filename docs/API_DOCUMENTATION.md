@@ -1,145 +1,88 @@
-# HOUSE OF JEWELUX — REST API DOCUMENTATION
+# HOUSE OF JEWELUX — API REFERENCE
 
-**Base URL:** `http://localhost:3000/api` (Production: `https://houseofjewelux.com/api`)  
-**Response Format:** `application/json`
+**Local base URL:** `http://localhost:3000/api`  
+**Production base URL:** `https://houseofjewelux.com/api`  
+**Content type:** `application/json`
 
----
+## Catalogue
 
-## 1. Catalog & Products
+### `GET /products`
+Returns the product catalogue. Supports the implemented category, material, collection, search, price-range and sort filters.
 
-### `GET /api/products`
-Retrieves products with optional multi-facet filtering.
+### `GET /products/:identifier`
+Returns one product by SKU or handle, with related catalogue entries.
 
-**Query Parameters:**
-- `category` (string, optional): Filter by category slug (e.g. `rings`, `earrings`, `necklaces`).
-- `material` (string, optional): Filter by precious material (`gold`, `silver`, `diamond`, `gemstone`).
-- `collection` (string, optional): Filter by design archetype (`temple-jewellery`, `nature-inspired`, etc.).
-- `search` (string, optional): Keyword search matching name, description, stone.
-- `min_price` / `max_price` (number, optional): Price range in INR (₹).
-- `sort` (string, optional): `price_asc`, `price_desc`, `rating`, `newest`.
+### `GET /categories`
+Returns configured collection categories.
 
-**Response (200 OK):**
+## Cart and orders
+
+### `POST /cart/validate`
+Recalculates cart prices and coupon discounts using server-side catalogue data. Delivery charges are currently returned as unquoted and must be confirmed before payment.
+
+### `POST /orders`
+Creates an order request after server-side validation.
+
+Example payload shape:
+
 ```json
 {
-  "success": true,
-  "count": 50,
-  "total": 50,
-  "products": [ ... ]
+  "customer": {
+    "name": "Customer",
+    "email": "customer@example.com",
+    "phone": "9876543210"
+  },
+  "shippingAddress": {
+    "addressLine": "Street and house number",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "pincode": "302001"
+  },
+  "items": [
+    { "id": "HJ-RNG-001", "quantity": 1 }
+  ],
+  "paymentMethod": "advance_payment"
 }
 ```
 
----
+Only `advance_payment` is accepted. COD is rejected. The response contains an order ID and a payment-pending order record. No payment gateway is integrated, so the application must not mark an order paid based only on this request.
 
-### `GET /api/products/:identifier`
-Retrieves a single product by SKU ID or URL handle, including 4 curated related pieces.
+### `POST /orders/track`
+Looks up an order using its order ID. This is an order-status lookup, not live courier tracking.
 
-**Response (200 OK):**
-```json
-{
-  "success": true,
-  "product": { "id": "HJ-RNG-001", "name": "The Celestial Radiance 925 Solitaire Ring", ... },
-  "related": [ ... ]
-}
-```
+## Customer accounts
 
----
+- `POST /auth/register` — creates a customer account.
+- `POST /auth/login` — verifies email and password and returns the customer's own account/order summary.
+- `POST /auth/recover-password` — currently returns an honest support message; automated email reset is not configured.
 
-### `GET /api/categories`
-Retrieves all 26 curated fine jewellery categories with banners and metadata.
+## Consultation and newsletter
 
-**Response (200 OK):**
-```json
-{
-  "success": true,
-  "count": 26,
-  "categories": [ ... ]
-}
-```
+- `POST /appointments` — stores a consultation request with status pending. It does not book a calendar slot.
+- `GET /appointments` — admin-only appointment/consultation request listing.
+- `POST /newsletter` — saves a newsletter email address and returns success only after persistence succeeds.
 
----
+## Admin APIs
 
-## 2. Cart & Orders
+### `POST /admin/login`
+Payload: `{ "pin": "your-configured-admin-pin" }`
 
-### `POST /api/cart/validate`
-Validates client cart contents against server prices and applies promotional privilege coupons.
+Returns a signed bearer token when credentials are valid. The PIN is configured through `ADMIN_SECRET_PIN`; there is no public default PIN.
 
-**Payload:**
-```json
-{
-  "items": [{ "id": "HJ-RNG-001", "quantity": 1 }],
-  "couponCode": "FIRSTLUX"
-}
-```
+All routes below require `Authorization: Bearer <token>`:
 
-**Response (200 OK):**
-```json
-{
-  "success": true,
-  "subtotal": 14500,
-  "discount": 1450,
-  "appliedCoupon": "FIRSTLUX",
-  "shipping": 0,
-  "grandTotal": 13050,
-  "items": [ ... ]
-}
-```
+- `GET /admin/overview`
+- `PATCH /admin/orders/:orderId`
+- `PATCH /admin/products/:productId`
+- `POST /admin/editor-save`
+- `GET /appointments`
 
----
+### `POST /custom-order`
+Custom/bespoke jewellery commissions are not offered. This endpoint is disabled and returns a gone response.
 
-### `POST /api/orders`
-Finalizes checkout with server-side recalculated totals and generates an armored consignment tracking number.
+## Production caveats
 
-**Response (201 Created):**
-```json
-{
-  "success": true,
-  "orderId": "HJ-ORD-2026-4821",
-  "trackingNumber": "HJ-TRK-749102IN",
-  "order": { ... }
-}
-```
-
----
-
-### `POST /api/orders/track`
-Retrieves real-time armored logistics telemetry by Order ID or tracking code.
-
-**Payload:** `{ "orderId": "HJ-ORD-2026-4821" }`
-
----
-
-## 3. Atelier Salon Appointments
-
-### `POST /api/appointments`
-Schedules a private suite appointment at the Jaipur Atelier or New Delhi Salon.
-
-**Payload:**
-```json
-{
-  "name": "Lady Eleanor",
-  "phone": "+91 98765 43210",
-  "email": "eleanor@example.com",
-  "salon": "Jaipur High Jewellery Atelier (Civil Lines)",
-  "date": "2026-12-05",
-  "timeSlot": "Morning Private Suite (11:00 AM - 1:00 PM)",
-  "interests": "Temple Nakshi Suites & Solitaire Rings"
-}
-```
-
-**Response (201 Created):**
-```json
-{
-  "success": true,
-  "appointmentId": "HJ-APT-892104",
-  "message": "Private salon appointment confirmed."
-}
-```
-
----
-
-## 4. Administrative APIs
-
-- `POST /api/admin/login` — Verifies master atelier security PIN (`pin: "2026"`).
-- `GET /api/admin/overview` — Returns live revenue metrics, total orders, and catalog counts.
-- `PATCH /api/admin/orders/:orderId` — Updates order and payment fulfillment statuses.
-- `POST /api/admin/editor-save` — Batch persists on-page visual editor adjustments.
+- JSON-file storage is not durable/shared under serverless hosting.
+- Payment gateway and verified webhook/signature handling are not integrated.
+- Transactional email/password reset is not configured.
+- Do not treat delivery or courier information as confirmed until the team has supplied it.
