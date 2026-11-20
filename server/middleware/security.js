@@ -2,11 +2,12 @@
  * HOUSE OF JEWELUX — Security Middleware
  */
 const crypto = require('crypto');
-const sessions = new Map();
+const config = require('../config');
+const tokenSecret = config.sessionSecret || crypto.randomBytes(32).toString('hex');
 const loginAttempts = new Map();
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_MAX_ATTEMPTS = 8;
-const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
+const SESSION_TTL_SECONDS = 8 * 60 * 60;
 
 function securityHeaders(req, res, next) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -34,18 +35,29 @@ function adminLoginRateLimit(req, res, next) {
 }
 
 function issueAdminSession() {
-  const token = crypto.randomBytes(32).toString('hex');
-  sessions.set(token, Date.now() + SESSION_TTL_MS);
-  return token;
+  const payload = Buffer.from(JSON.stringify({ role: 'admin', exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS })).toString('base64url');
+  const signature = crypto.createHmac('sha256', tokenSecret).update(payload).digest('base64url');
+  return payload + '.' + signature;
 }
 
 function requireAdmin(req, res, next) {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : '';
-  const expiresAt = sessions.get(token);
-  if (!token || !expiresAt || expiresAt < Date.now()) {
-    if (token) sessions.delete(token);
-    return res.status(401).json({ success: false, error: 'Admin authentication required. Please sign in again.' });
+  const parts = token.split('.');
+  if (parts.length !== 2) return res.status(401).json({ success: false, error: 'Admin authentication required. Please sign in again.' });
+  const expected = crypto.createHmac('sha256', tokenSecret).update(parts[0]).digest();
+  let supplied;
+  try { supplied = Buffer.from(parts[1], 'base64url'); } catch (_) { supplied = Buffer.alloc(0); }
+  if (supplied.length !== expected.length || !crypto.timingSafeEqual(supplied, expected)) {
+    return res.status(401).json({ success: false, error: 'Invalid admin session.' });
+  }
+  try {
+    const payload = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf8'));
+    if (payload.role !== 'admin' || !Number.isFinite(payload.exp) || payload.exp < Math.floor(Date.now() / 1000)) {
+      return res.status(401).json({ success: false, error: 'Admin session expired. Please sign in again.' });
+    }
+  } catch (_) {
+    return res.status(401).json({ success: false, error: 'Invalid admin session.' });
   }
   next();
 }
