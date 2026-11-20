@@ -2639,6 +2639,10 @@
       }
     },
 
+    addToBag: function (productId, qty = 1, e) {
+      return window.HJ.addToCart(productId, qty, e);
+    },
+
     updateCartQty: function (productId, delta) {
       const item = state.cart.find(i => i.id === productId);
       if (!item) return;
@@ -2690,6 +2694,10 @@
         menuDrawer.classList.add('active');
         backdrop.classList.add('active');
       }
+    },
+
+    closeMobileMenu: function () {
+      window.HJ.closeCart();
     },
 
     openPincodeModal: function () {
@@ -2862,11 +2870,11 @@
     adminLogin: function (e) {
       e.preventDefault();
       const pin = document.getElementById('admin-pin-input').value;
-      if (pin === '2026' || pin === '1122') {
+      if (pin === '2026' || pin === '1122' || pin === '1926') {
         sessionStorage.setItem('hj_admin_authed', 'true');
         renderAdminDashboard(document.getElementById('app-view'));
       } else {
-        alert('Invalid PIN. Use 2026.');
+        alert('Invalid PIN. Use 2026 or 1926.');
       }
     },
 
