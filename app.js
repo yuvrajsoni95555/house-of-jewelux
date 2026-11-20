@@ -1093,9 +1093,7 @@
             <!-- Price Row at Top -->
             <div class="pdp-top-price-row">
               <div>
-                <span class="pdp-compare-price">${formatPrice(p.compareAtPrice)}</span>
                 <span class="pdp-current-price">${formatPrice(p.price)}</span>
-                <span class="pdp-discount-badge">${p.discountPercent}% OFF</span>
               </div>
               <button class="card-wishlist-btn ${isWishlisted ? 'active' : ''}" 
                       style="position: static;" 
