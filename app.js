@@ -754,7 +754,7 @@
               <span class="testimonial-role">New Delhi</span>
             </div>
             <div class="testimonial-card">
-              <p class="testimonial-text">"Bespoke commission with Master Goldsmith Yuvraj Soni was seamless. My vision came to life exactly as I imagined it."</p>
+              <p class="testimonial-text">"The design felt timeless, thoughtful and beautifully crafted. An elegant addition to my collection."</p>
               <span class="testimonial-author">Jérémie C.</span>
               <span class="testimonial-role">Mumbai, Maharashtra</span>
             </div>
@@ -772,7 +772,7 @@
                 Book a Private Salon Consultation
               </h2>
               <p style="color: #DCD4C7; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
-                Step inside our private salon in Jaipur or connect via encrypted video concierge. Our senior goldsmiths will guide you through custom diamond sizing, bridal curations, and bespoke jewellery commissions.
+                Connect with the House of Jewelux team for product information, collection guidance and assistance with your jewellery selection.
               </p>
               <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--color-champagne-gold);">
