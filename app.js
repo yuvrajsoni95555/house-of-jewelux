@@ -557,7 +557,7 @@
 
             <a href="#collections/earrings" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/authentic_earrings_macro.jpg" alt="The Earrings Suite" />
+                <img class="cat-showcase-img" src="images/user_floral_diamond_earrings.jpg" alt="The Earrings Suite" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">The Earrings Suite</div>
@@ -910,7 +910,7 @@
         filtered = filtered.filter(p => (p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold || (p.metal && p.metal.toLowerCase().includes('gold')));
         title = "Gold Jewellery Collection";
         subtitle = "18K Champagne Gold & Royal Vermeil Finishes • Ancestral Grandeur (17 Pieces)";
-        heroImg = "images/authentic_earrings_macro.jpg";
+        heroImg = "images/user_floral_diamond_earrings.jpg";
       } else if (['silver', 'silver-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('silver')) || p.primaryMaterial === 'silver' || (p.metal && p.metal.toLowerCase().includes('silver')));
         title = "Silver Jewellery Collection";
