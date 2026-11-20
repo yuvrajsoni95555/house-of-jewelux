@@ -1681,38 +1681,26 @@
       },
       exchange: {
         title: "Exchange Requests",
-        subtitle: "Contact our team to confirm exchange eligibility",
+        subtitle: "Eligibility and process confirmed before purchase",
         badge: "Customer Support",
         content: `
-          <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Complimentary First Ring Resize</h3>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              If your solitaire ring or eternity band is slightly too snug or loose, please contact customer support to confirm whether resizing is available for your piece and the applicable process.
-            </p>
-          </div>
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. Style Exchanges</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Exchange Eligibility</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Within 14 days of receipt, you may exchange any standard collection creation for another item of equal value, or pay the difference for a higher-tier creation. Connect with our dedicated WhatsApp Concierge at <strong>+91 90799 98793</strong> to coordinate an instant exchange.
+              Exchange availability, eligible product categories, time limits, condition requirements and any applicable charges must be confirmed in writing with customer support before purchase. Please obtain approval before returning or sending an item.
             </p>
           </div>
         `
       },
       cancellation: {
-        title: "Order Cancellation Policy",
-        subtitle: "Clear, Fair Guidelines for Immediate Cancellations",
-        badge: "Patron Flexibility",
+        title: "Order Cancellation",
+        subtitle: "Contact customer support as soon as possible",
+        badge: "Customer Support",
         content: `
-          <div class="pepite-story-card" style="margin-bottom: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Prior to Courier Dispatch</h3>
-            <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Standard collection orders may be cancelled at any time before dispatch with a 100% immediate full refund. Simply email <a href="mailto:houseofjewelux@gmail.com" style="color: var(--color-antique-gold); font-weight: 600;">houseofjewelux@gmail.com</a> or WhatsApp our concierge at <strong>+91 90799 98793</strong> with your Order ID.
-            </p>
-          </div>
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">2. After Courier Dispatch</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Cancellation Requests</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              If your order has already left the atelier with an active armored tracking number, the consignment cannot be intercepted in transit. Please accept delivery and initiate an immediate return under our 14-Day Return Covenant.
+              Cancellation eligibility depends on the order's payment and fulfilment status. Contact customer support with your Order ID as soon as possible. Any approved refund amount and processing timeline will be confirmed in writing.
             </p>
           </div>
         `
