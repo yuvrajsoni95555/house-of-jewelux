@@ -356,8 +356,8 @@
                 </svg>
               </div>
               <div>
-                <div class="trust-text-title">Secure & Insured Delivery</div>
-                <div class="trust-text-sub">Safe and secure jewellery delivery across India</div>
+                <div class="trust-text-title">Delivery Updates</div>
+                <div class="trust-text-sub">Order tracking information is shared after dispatch.</div>
               </div>
             </div>
           </div>
@@ -641,7 +641,7 @@
               <div style="position: absolute; bottom: 2rem; left: 2rem; right: 2rem; color: #FFFFFF;">
                 <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-champagne-gold);">Haute Joaillerie Series</span>
                 <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.4rem 0 0.8rem;">The Sovereign Falcon Edit</h3>
-                <p style="font-size: 0.85rem; color: #E8E2D8; margin-bottom: 1.25rem;">Royal heraldic crests hand-set with Zambian emerald eyes and 5A diamond pavé wings for celebratory sherwanis.</p>
+                <p style="font-size: 0.85rem; color: #E8E2D8; margin-bottom: 1.25rem;">Statement brooch designs inspired by Indian heritage motifs and detailed gemstone settings.</p>
                 <a href="#collections/brooches" class="btn-gold" style="padding: 0.65rem 1.5rem; font-size: 0.75rem;">Explore Falcon Crests</a>
               </div>
             </div>
@@ -692,11 +692,11 @@
             <div class="step-card">
               <span class="step-number">02</span>
               <h3 class="step-title">Exploration & Gemology</h3>
-              <p class="step-desc">Ethical sourcing of certified conflict-free VVS1 diamond simulants, Russian hydro-emeralds, and Zambian rough.</p>
+              <p class="step-desc">Review of stone types, settings and available product documentation for each design.</p>
             </div>
             <div class="step-card">
               <span class="step-number">03</span>
-              <h3 class="step-title">Concept & Gouache Rendering</h3>
+              <h3 class="step-title">Design Development</h3>
               <p class="step-desc">Hand-drawn gouache jewel illustrations capturing light reflections, prong heights, and 3D ergonomics.</p>
             </div>
             <div class="step-card">
@@ -717,7 +717,7 @@
             <div class="step-card">
               <span class="step-number">07</span>
               <h3 class="step-title">Surface Finishing</h3>
-              <p class="step-desc">Advanced multi-layer electroplating with liquid platinum-rhodium ensuring lifetime anti-tarnish luminosity.</p>
+              <p class="step-desc">Surface finishing is selected to suit the metal and intended appearance of each design.</p>
             </div>
             <div class="step-card">
               <span class="step-number">08</span>
@@ -726,7 +726,7 @@
             </div>
             <div class="step-card">
               <span class="step-number">09</span>
-              <h3 class="step-title">Armored Coffer Acquisition</h3>
+              <h3 class="step-title">Dispatch & Presentation</h3>
               <p class="step-desc">Prepared for dispatch with care. Delivery details are shared once the order is ready.</p>
             </div>
           </div>
@@ -1379,7 +1379,7 @@
           </div>
           <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone-light); border-radius: var(--radius-sm); padding: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 1.5rem;">Acquisition History</h3>
-            <p style="color: var(--color-taupe);">Orders and certified BIS hallmark records will appear here.</p>
+            <p style="color: var(--color-taupe);">Orders and available product documentation will appear here.</p>
           </div>
         </div>
       `;
@@ -1578,7 +1578,7 @@
               <div class="pepite-number-badge">02</div>
               <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Stamped Material Purity</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
-                Solid 92.5% elemental sterling silver alloyed strictly with deoxidized copper. Stamped with the official Bureau of Indian Standards (BIS) hallmark.
+                Metal composition, finish and any applicable hallmark information are confirmed against the details for each individual piece.
               </p>
             </div>
 
@@ -2193,7 +2193,7 @@
     `;
   }
 
-  // ==================== VIEW: CUSTOM ORDER / BESPOKE PAGE (Animated Enquiry Form) ====================
+  // ==================== CUSTOM ORDER PAGE REMOVED ====================
   function renderCartPage(container) {
     if (state.cart.length === 0) {
       container.innerHTML = `
@@ -2351,7 +2351,7 @@
             <div class="craft-step-card about-story-reveal">
               <div class="pepite-number-badge">04</div>
               <h4 style="font-family: var(--font-serif); font-size: 1.25rem; margin: 0.4rem 0 0.65rem; color: var(--color-deep-heritage-brown);">Material Selection</h4>
-              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Certified 92.5% pure sterling silver, conflict-free VVS1 laboratory stones, Zambian emeralds, and hypoallergenic deoxidized copper alloy selection.</p>
+              <p style="font-size: 0.86rem; color: var(--color-stone-muted); line-height: 1.7;">Material and stone details are reviewed against the specifications available for each jewellery design.</p>
             </div>
 
             <div class="craft-step-card about-story-reveal">
