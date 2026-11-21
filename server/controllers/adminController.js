@@ -3,23 +3,40 @@
  * Handles administrative verification, telemetry, visual editor state persistence, and bespoke commissions.
  */
 
-const { readJSON, writeJSON } = require('../db/jsonDb');
+const crypto = require('crypto');
+const db = require('../db');
 const config = require('../config');
 
 const adminLogin = (req, res) => {
-  const { pin } = req.body;
-  if (pin === '2026' || pin === '1122' || pin === config.adminPin) {
+  const { pin } = req.body || {};
+  if (!pin) {
+    return res.status(401).json({ success: false, error: 'Atelier Master PIN required' });
+  }
+
+  const validPins = [config.adminPin, '2026', '1122'].filter(Boolean);
+  const isValid = validPins.some(p => {
+    try {
+      const bufA = Buffer.from(String(pin), 'utf8');
+      const bufB = Buffer.from(String(p), 'utf8');
+      if (bufA.length !== bufB.length) return false;
+      return crypto.timingSafeEqual(bufA, bufB);
+    } catch {
+      return false;
+    }
+  });
+
+  if (isValid) {
     res.json({ success: true, message: 'Admin authorized' });
   } else {
     res.status(401).json({ success: false, error: 'Invalid Atelier Master PIN' });
   }
 };
 
-const getOverview = (req, res, next) => {
+const getOverview = async (req, res, next) => {
   try {
-    const orders = readJSON('orders.json');
-    const products = readJSON('products.json');
-    const customers = readJSON('customers.json');
+    const orders = await db.orders.getAll(100);
+    const products = db.readJSON('products.json');
+    const customers = await db.customers.getAll();
 
     const totalRevenue = orders.reduce((sum, o) => sum + ((o.pricing && o.pricing.grandTotal) || 0), 0);
     const pendingOrders = orders.filter(o => o.orderStatus === 'Pending Verification').length;
@@ -40,22 +57,20 @@ const getOverview = (req, res, next) => {
   }
 };
 
-const updateOrder = (req, res, next) => {
+const updateOrder = async (req, res, next) => {
   try {
     const { orderStatus, paymentStatus, trackingNumber } = req.body;
-    const orders = readJSON('orders.json');
-    const index = orders.findIndex(o => o.orderId.toLowerCase() === req.params.orderId.toLowerCase());
+    const updated = await db.orders.update(req.params.orderId, {
+      orderStatus,
+      paymentStatus,
+      trackingNumber
+    });
 
-    if (index === -1) {
+    if (!updated) {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
 
-    if (orderStatus) orders[index].orderStatus = orderStatus;
-    if (paymentStatus) orders[index].paymentStatus = paymentStatus;
-    if (trackingNumber) orders[index].trackingNumber = trackingNumber;
-
-    writeJSON('orders.json', orders);
-    res.json({ success: true, order: orders[index] });
+    res.json({ success: true, order: updated });
   } catch (err) {
     next(err);
   }
@@ -64,7 +79,7 @@ const updateOrder = (req, res, next) => {
 const updateProduct = (req, res, next) => {
   try {
     const { price, stockStatus, badge } = req.body;
-    const products = readJSON('products.json');
+    const products = db.readJSON('products.json');
     const index = products.findIndex(p => p.id.toLowerCase() === req.params.productId.toLowerCase());
 
     if (index === -1) {
@@ -75,7 +90,7 @@ const updateProduct = (req, res, next) => {
     if (stockStatus) products[index].stockStatus = stockStatus;
     if (badge !== undefined) products[index].badge = badge;
 
-    writeJSON('products.json', products);
+    db.writeJSON('products.json', products);
     res.json({ success: true, product: products[index] });
   } catch (err) {
     next(err);
@@ -88,7 +103,7 @@ const editorSave = (req, res, next) => {
     let updatedCount = 0;
 
     if (updatedProducts && Array.isArray(updatedProducts)) {
-      const products = readJSON('products.json');
+      const products = db.readJSON('products.json');
       updatedProducts.forEach(u => {
         const idx = products.findIndex(p => p.id && p.id.toLowerCase() === (u.id || '').toLowerCase());
         if (idx !== -1) {
@@ -101,19 +116,19 @@ const editorSave = (req, res, next) => {
           updatedCount++;
         }
       });
-      writeJSON('products.json', products);
+      db.writeJSON('products.json', products);
     }
 
     if (updatedConfig && typeof updatedConfig === 'object') {
-      const cfg = readJSON('storeConfig.json', {});
+      const cfg = db.readJSON('storeConfig.json', {});
       Object.assign(cfg, updatedConfig);
-      writeJSON('storeConfig.json', cfg);
+      db.writeJSON('storeConfig.json', cfg);
     }
 
     if (overrides && typeof overrides === 'object') {
-      const existing = readJSON('page_overrides.json', {});
+      const existing = db.readJSON('page_overrides.json', {});
       Object.assign(existing, overrides);
-      writeJSON('page_overrides.json', existing);
+      db.writeJSON('page_overrides.json', existing);
     }
 
     res.json({ success: true, updatedProductsCount: updatedCount, message: 'All on-page changes successfully saved to disk.' });
@@ -122,14 +137,13 @@ const editorSave = (req, res, next) => {
   }
 };
 
-const customOrder = (req, res, next) => {
+const customOrder = async (req, res, next) => {
   try {
     const { fullName, phone, email, jewelleryType, metalPreference, budgetBand, description } = req.body;
     if (!fullName || !phone || !email) {
       return res.status(400).json({ success: false, error: 'Name, phone, and email are required' });
     }
 
-    const customOrders = readJSON('custom_orders.json');
     const commission = {
       id: `HJ-BESPOKE-${Date.now()}`,
       createdAt: new Date().toISOString(),
@@ -143,8 +157,7 @@ const customOrder = (req, res, next) => {
       status: 'In Review with Master Goldsmith Yuvraj Soni'
     };
 
-    customOrders.unshift(commission);
-    writeJSON('custom_orders.json', customOrders);
+    await db.customOrders.create(commission);
 
     res.json({
       success: true,

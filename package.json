@@ -1,21 +1,33 @@
 {
   "name": "houseofjewelux",
   "version": "1.0.0",
-  "description": "",
+  "description": "House of Jewelux — Jaipur High Jewellery Maison",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migrate": "node scripts/run_migrations.js",
+    "migrate:data": "node scripts/migrate_json_to_db.js",
+    "migrate:rollback": "node scripts/rollback_migration.js",
+    "backup": "node scripts/backup_db.js",
+    "test": "node scripts/test_production_suite.js"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "luxury",
+    "jewellery",
+    "jaipur",
+    "haute-joaillerie",
+    "razorpay"
+  ],
+  "author": "House of Jewelux",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.3.0"
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "pg": "^8.23.1"
   }
 }

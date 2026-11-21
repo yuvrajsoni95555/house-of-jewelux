@@ -2,20 +2,16 @@
  * HOUSE OF JEWELUX — Newsletter & Circle Subscription Controller
  */
 
-const { readJSON, writeJSON } = require('../db/jsonDb');
+const db = require('../db');
 
-const subscribe = (req, res, next) => {
+const subscribe = async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email || !email.includes('@')) {
       return res.status(400).json({ success: false, error: 'Valid email required' });
     }
 
-    const subs = readJSON('subscribers.json', []);
-    if (!subs.includes(email.toLowerCase())) {
-      subs.push(email.toLowerCase());
-      writeJSON('subscribers.json', subs);
-    }
+    await db.subscribers.add(email, 'website_footer');
 
     res.json({
       success: true,

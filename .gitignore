@@ -5,7 +5,10 @@ archive_ai_renders/
 Thumbs.db
 
 .vercel
+.env
+.env.local
+.env.production
+data/backups/
 backup_original/
 pepite_*
 reference_screenshots/
-scripts/

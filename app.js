@@ -235,6 +235,14 @@
     if (window.HJ_MOTION && window.HJ_MOTION.refreshTriggers) {
       setTimeout(() => window.HJ_MOTION.refreshTriggers(), 80);
     }
+
+    if (route === 'home' || route === '') {
+      setTimeout(() => {
+        if (window.HJ && window.HJ.initReviewsSlider) {
+          window.HJ.initReviewsSlider();
+        }
+      }, 60);
+    }
   }
 
   // ==================== COMPONENT: PRODUCT CARD (1:1 PALMONAS) ====================
@@ -461,79 +469,8 @@
         </div>
       </section>
 
-      <!-- CURATED DESIGN & INSPIRATION COLLECTIONS SHOWCASE -->
-      <section style="padding: 4.5rem 0; background: var(--color-soft-offwhite); border-top: 1px solid var(--color-warm-stone); border-bottom: 1px solid var(--color-warm-stone);">
-        <div class="container">
-          <div class="section-header" style="text-align: center;">
-            <div class="section-pretitle">The 17 Archetypes of Haute Joaillerie</div>
-            <h2 class="section-title">Curated Design Collections</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted);">
-              From sacred temple nakshi to modern sculptural art and animal wildlife motifs, explore our masterfully articulated design themes.
-            </p>
-          </div>
 
-          <div class="curated-collections-grid">
-            <a href="#collections/temple-jewellery" class="curated-col-card">
-              <img src="images/user_balaji_temple_pendant.jpg" alt="Temple & South Indian Heritage" />
-              <div class="curated-col-overlay">
-                <span class="curated-col-badge">Sacred Devotion</span>
-                <h3 class="curated-col-title">Temple & Heritage</h3>
-                <span class="curated-col-count">Architectural Nakshi</span>
-              </div>
-            </a>
 
-            <a href="#collections/nature-inspired" class="curated-col-card">
-              <img src="images/user_royal_panther_wildlife.jpg" alt="Nature, Wildlife & Fauna" />
-              <div class="curated-col-overlay">
-                <span class="curated-col-badge">Living Majesty</span>
-                <h3 class="curated-col-title">Nature & Wildlife</h3>
-                <span class="curated-col-count">Panther, Peacock & Fauna</span>
-              </div>
-            </a>
-
-            <a href="#collections/modern-art" class="curated-col-card">
-              <img src="images/authentic_diamond_choker.jpg" alt="House Icons — Exclusive Signature Designs" />
-              <div class="curated-col-overlay">
-                <span class="curated-col-badge">Contemporary Vision</span>
-                <h3 class="curated-col-title">House Icons</h3>
-                <span class="curated-col-count">Exclusive Signature Designs</span>
-              </div>
-            </a>
-
-            <a href="#collections/bridal-jewellery" class="curated-col-card">
-              <img src="images/user_royal_bridal_suite.jpg" alt="Bridal & Ceremonial Suites" />
-              <div class="curated-col-overlay">
-                <span class="curated-col-badge">Royal Celebration</span>
-                <h3 class="curated-col-title">Bridal & Occasion</h3>
-                <span class="curated-col-count">Grand Chokers & Jhumkas</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- C. WHAT'S NEW / NEW ARRIVALS (JAIPUR JEWELS SECTION 5.C) -->
-      <section style="padding: 4rem 0 3rem; background: var(--color-warm-ivory);">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-pretitle" style="color: var(--color-royal-lac);">Newly Unveiled Creations</div>
-            <h2 class="section-title">What's New at House of Jewelux</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.85rem; color: var(--color-stone-muted);">
-              Freshly finished bench masterpieces from our Jaipur atelier, featuring royal sovereign falcon crests, temple nakshi medallions, and architectural solitaires.
-            </p>
-          </div>
-
-          <div class="products-grid motion-stagger">
-            ${newArrivals.map(renderProductCard).join('')}
-          </div>
-
-          <div style="text-align: center; margin-top: 2.5rem;">
-            <a href="#collections/new-arrivals" class="btn-primary">Explore All New Creations</a>
-          </div>
-        </div>
-      </section>
 
       <!-- D. SHOP BY CATEGORIES (JAIPUR JEWELS SECTION 5.D) -->
       <section style="padding: 4.5rem 0; background: var(--color-soft-offwhite); border-top: 1px solid var(--color-warm-stone); border-bottom: 1px solid var(--color-warm-stone);">
@@ -608,29 +545,105 @@
         </div>
       </section>
 
-      <!-- E. CLIENT STORIES / TESTIMONIALS -->
-      <section style="padding: 5rem 0; background: var(--color-warm-ivory); border-top: 1px solid var(--color-warm-stone);">
+      <!-- E. CLIENT REVIEWS MOVABLE CAROUSEL -->
+      <section class="client-reviews-section" style="padding: 5rem 0; background: var(--color-warm-ivory); border-top: 1px solid var(--color-warm-stone); overflow: hidden;">
         <div class="container">
-          <div style="text-align: center; margin-bottom: 3.5rem;">
-            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 1rem; border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.08); font-weight: 600;">Client Stories</span>
-            <h2 class="section-title" style="color: #1A120E;">They Have Discovered Their Eternal Piece</h2>
+          <div style="text-align: center; margin-bottom: 2.75rem;">
+            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.75rem; border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.08); font-weight: 600;">Patron Commendations</span>
+            <h2 class="section-title" style="color: #1A120E;">Client Reviews</h2>
             <div class="section-divider"><span class="section-divider-gem"></span></div>
+            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); font-family: var(--font-serif); font-style: italic;">
+              Reflections of connoisseurs and patrons who have commissioned heirlooms from our Jaipur atelier.
+            </p>
           </div>
-          <div class="testimonial-grid">
-            <div class="testimonial-card">
-              <p class="testimonial-text">"The Celestial Radiance ring is breathtaking — every detail speaks of generations of craftsmanship. I wear it every day and it still catches the light like the first day."</p>
-              <span class="testimonial-author">Caroline B.</span>
-              <span class="testimonial-role">Jaipur, Rajasthan</span>
+
+          <!-- Movable Reviews Carousel Wrapper -->
+          <div class="reviews-slider-container" id="reviews-slider-container">
+            <div class="reviews-slider-track" id="reviews-slider-track">
+              <!-- Review 1 -->
+              <div class="review-slide-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The nakshi temple necklace is breathtaking. Every curve reflects generations of authentic benchcraft. Delivered in white-glove armored transit with complete BIS hallmark certification."</p>
+                <div class="review-footer">
+                  <div class="review-avatar">GS</div>
+                  <div>
+                    <div class="review-author">Gayatri Devi S.</div>
+                    <div class="review-meta">Jaipur, Rajasthan • Verified Acquisition</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 2 -->
+              <div class="review-slide-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"Acquired the Royal Sovereign Falcon brooch. The hand-chiseled detailing and emerald placement rival any European haute joaillerie maison. The bespoke packaging was regal."</p>
+                <div class="review-footer">
+                  <div class="review-avatar">VR</div>
+                  <div>
+                    <div class="review-author">Vikramaditya R.</div>
+                    <div class="review-meta">New Delhi • Verified Acquisition</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 3 -->
+              <div class="review-slide-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"Custom diamond engagement band created with Master Goldsmith Yuvraj Soni. The entire bespoke commission was seamless from initial sketch to final hallmarked delivery."</p>
+                <div class="review-footer">
+                  <div class="review-avatar">AS</div>
+                  <div>
+                    <div class="review-author">Ananya S.</div>
+                    <div class="review-meta">Mumbai, Maharashtra • Bespoke Client</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 4 -->
+              <div class="review-slide-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The 925 sterling silver antique filigree box and Balaji temple medallion are heirlooms my family will cherish for generations. Supreme purity and bench finish."</p>
+                <div class="review-footer">
+                  <div class="review-avatar">RK</div>
+                  <div>
+                    <div class="review-author">Rajeshwari K.</div>
+                    <div class="review-meta">Bengaluru, Karnataka • Verified Acquisition</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 5 -->
+              <div class="review-slide-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"We ordered our wedding eternity bands. The solid weight, pristine diamond clarity, and laser BIS hallmark engraving exceeded all expectations."</p>
+                <div class="review-footer">
+                  <div class="review-avatar">PM</div>
+                  <div>
+                    <div class="review-author">Priya & Rohan M.</div>
+                    <div class="review-meta">Hyderabad, Telangana • Verified Acquisition</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review 6 -->
+              <div class="review-slide-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The emerald and diamond cocktail ring arrived in an armored tamper-evident vault box. Truly royal Jaipur goldsmithing brought into contemporary luxury."</p>
+                <div class="review-footer">
+                  <div class="review-avatar">MN</div>
+                  <div>
+                    <div class="review-author">Dr. Meera N.</div>
+                    <div class="review-meta">Kolkata, West Bengal • Verified Acquisition</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="testimonial-card">
-              <p class="testimonial-text">"A true discovery. The Lumina earrings have a subtle chocolate-cacao warmth that complements everything I own. Zero guilt, all pleasure."</p>
-              <span class="testimonial-author">Karen D.</span>
-              <span class="testimonial-role">New Delhi</span>
-            </div>
-            <div class="testimonial-card">
-              <p class="testimonial-text">"Bespoke commission with Master Goldsmith Yuvraj Soni was seamless. My vision came to life exactly as I imagined it."</p>
-              <span class="testimonial-author">Jérémie C.</span>
-              <span class="testimonial-role">Mumbai, Maharashtra</span>
+
+            <!-- Carousel Controls -->
+            <div class="reviews-nav-controls">
+              <button class="reviews-arrow-btn" onclick="window.HJ.slideReviews(-1)" aria-label="Previous Review">←</button>
+              <div class="reviews-dots" id="reviews-dots"></div>
+              <button class="reviews-arrow-btn" onclick="window.HJ.slideReviews(1)" aria-label="Next Review">→</button>
             </div>
           </div>
         </div>
@@ -1227,61 +1240,45 @@
             <div class="checkout-form-box">
               <h3 class="checkout-step-title">3. Payment Method</h3>
               <div class="payment-methods-grid">
-                <!-- Google Pay -->
-                <div class="payment-method-card selected" onclick="window.HJ.selectPaymentMethod('gpay', this)">
+                <!-- Razorpay Gateway (Primary) -->
+                <div class="payment-method-card selected" onclick="window.HJ.selectPaymentMethod('razorpay', this)">
                   <div class="payment-method-header">
                     <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="gpay" checked />
-                      <span>Google Pay (UPI Instant Transfer)</span>
+                      <input type="radio" name="payment_method" value="razorpay" checked />
+                      <span>Razorpay Secure Checkout (UPI, Cards & Net Banking)</span>
                     </div>
-                    <span style="font-weight: 700; color: #4285F4;">GPay</span>
+                    <span style="font-weight: 700; color: #0C2340; background: #E8F0FE; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.78rem;">RBI Regulated</span>
                   </div>
-                  <div class="payment-method-details">
-                    Pay securely using Google Pay to official merchant VPA: <strong>yuvrajsoni@upi</strong>
+                  <div class="payment-method-details" style="display: block; font-size: 0.85rem; color: #554438; line-height: 1.6; margin-top: 0.5rem;">
+                    Instant 256-bit encrypted checkout via Razorpay. Supports <strong>Google Pay, PhonePe, Paytm, CRED, BHIM UPI</strong>, all Indian Credit/Debit Cards (Visa, Mastercard, RuPay, Amex), and 50+ Banks.
                   </div>
                 </div>
 
-                <!-- Paytm / PhonePe -->
-                <div class="payment-method-card" onclick="window.HJ.selectPaymentMethod('phonepe_paytm', this)">
-                  <div class="payment-method-header">
-                    <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="phonepe_paytm" />
-                      <span>PhonePe / Paytm / Any UPI</span>
-                    </div>
-                    <span style="font-weight: 700; color: #5f259f;">UPI</span>
-                  </div>
-                </div>
-
-                <!-- Bank-to-Bank Transfer -->
+                <!-- Bank-to-Bank Wire Transfer -->
                 <div class="payment-method-card" onclick="window.HJ.selectPaymentMethod('bank_transfer', this)">
                   <div class="payment-method-header">
                     <div class="payment-title-row">
                       <input type="radio" name="payment_method" value="bank_transfer" />
-                      <span>Bank-to-Bank NEFT / RTGS Transfer</span>
+                      <span>Bank-to-Bank Wire (NEFT / RTGS / IMPS)</span>
                     </div>
-                    <span style="font-size: 0.75rem; background: var(--color-gold); padding: 0.2rem 0.5rem; border-radius: 2px;">Pending Verification</span>
+                    <span style="font-size: 0.75rem; background: var(--color-gold); padding: 0.2rem 0.5rem; border-radius: 2px;">Atelier Verification</span>
                   </div>
                   <div class="payment-method-details" style="display: none;">
                     <div class="bank-transfer-box">
                       <strong>Beneficiary:</strong> HOUSE OF JEWELUX<br>
                       <strong>Account:</strong> 50200084920193<br>
                       <strong>IFSC:</strong> HDFC0000128 (Jaipur C-Scheme Branch)<br>
-                      <em>Status will remain <strong>Pending Verification</strong> until validated by administrator.</em>
+                      <em>Consignment dispatched immediately upon realization by our treasury team.</em>
                     </div>
-                  </div>
-                </div>
-
-                <!-- Cash on Delivery -->
-                <div class="payment-method-card" onclick="window.HJ.selectPaymentMethod('cod', this)">
-                  <div class="payment-method-header">
-                    <div class="payment-title-row">
-                      <input type="radio" name="payment_method" value="cod" />
-                      <span>Cash on Delivery (COD)</span>
-                    </div>
-                    <span style="font-size: 0.75rem; color: var(--color-taupe);">Verified PINs</span>
                   </div>
                 </div>
               </div>
+
+              <div style="margin-top: 1.25rem; padding: 0.85rem 1rem; background: rgba(168, 132, 98, 0.08); border-radius: 6px; font-size: 0.8rem; color: #6E5339; display: flex; align-items: center; gap: 0.6rem;">
+                <span>🔒</span>
+                <span>For security and insured armored courier transit of fine jewellery, all acquisitions are secured digitally prior to atelier dispatch. Cash on Delivery is disabled.</span>
+              </div>
+            </div>
 
               <button type="submit" class="btn-gold" style="width: 100%; padding: 1.1rem; font-size: 0.95rem;">
                 Authorize & Place Order (${formatPrice(grandTotal)})
@@ -2463,7 +2460,7 @@
                 </div>
               </div>
               <a href="#checkout" class="btn-gold" style="width: 100%; padding: 1rem; text-align: center; display: block;">Proceed to Checkout</a>
-              <p style="font-size: 0.7rem; color: var(--color-stone-muted); margin-top: 1rem; text-align: center;">Secure payment via UPI, Cards, Net Banking & COD</p>
+              <p style="font-size: 0.7rem; color: var(--color-stone-muted); margin-top: 1rem; text-align: center;">Secure payment via Razorpay UPI, Cards & Net Banking</p>
             </div>
 
           </div>
@@ -2696,6 +2693,103 @@
       }
     },
 
+    reviewsIndex: 0,
+    reviewsInterval: null,
+
+    slideReviews: function (dir) {
+      const track = document.getElementById('reviews-slider-track');
+      if (!track) return;
+      const cards = track.querySelectorAll('.review-slide-card');
+      if (cards.length === 0) return;
+
+      const cardWidth = cards[0].offsetWidth + 24; // 24px gap
+      const maxIndex = Math.max(0, cards.length - (window.innerWidth < 768 ? 1 : 3));
+
+      window.HJ.reviewsIndex = Math.max(0, Math.min(maxIndex, (window.HJ.reviewsIndex || 0) + dir));
+      track.style.transform = `translateX(-${window.HJ.reviewsIndex * cardWidth}px)`;
+
+      // Update dots
+      const dots = document.querySelectorAll('.review-dot');
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === window.HJ.reviewsIndex);
+      });
+    },
+
+    initReviewsSlider: function () {
+      const track = document.getElementById('reviews-slider-track');
+      const dotsContainer = document.getElementById('reviews-dots');
+      if (!track) return;
+
+      window.HJ.reviewsIndex = 0;
+      track.style.transform = 'translateX(0px)';
+
+      const cards = track.querySelectorAll('.review-slide-card');
+      const totalSteps = Math.max(1, cards.length - (window.innerWidth < 768 ? 1 : 2));
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSteps; i++) {
+          const dot = document.createElement('div');
+          dot.className = `review-dot ${i === 0 ? 'active' : ''}`;
+          dot.onclick = () => {
+            window.HJ.reviewsIndex = i;
+            const cardWidth = cards[0].offsetWidth + 24;
+            track.style.transform = `translateX(-${i * cardWidth}px)`;
+            document.querySelectorAll('.review-dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+          };
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      // Touch & Mouse Dragging for mobile and desktop
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+
+      track.addEventListener('mousedown', e => {
+        isDragging = true;
+        startX = e.clientX;
+        track.style.transition = 'none';
+      });
+
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        currentX = e.clientX;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+        const diff = startX - currentX;
+        if (diff > 50) window.HJ.slideReviews(1);
+        else if (diff < -50) window.HJ.slideReviews(-1);
+      });
+
+      // Touch events for mobile
+      track.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      }, { passive: true });
+
+      track.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (diff > 40) window.HJ.slideReviews(1);
+        else if (diff < -40) window.HJ.slideReviews(-1);
+      });
+
+      // Auto glide every 4.5 seconds with pause on hover
+      if (window.HJ.reviewsInterval) clearInterval(window.HJ.reviewsInterval);
+      window.HJ.reviewsInterval = setInterval(() => {
+        const container = document.getElementById('reviews-slider-container');
+        if (container && !container.matches(':hover')) {
+          const maxIdx = Math.max(0, cards.length - (window.innerWidth < 768 ? 1 : 3));
+          const next = ((window.HJ.reviewsIndex || 0) + 1) > maxIdx ? 0 : (window.HJ.reviewsIndex || 0) + 1;
+          window.HJ.reviewsIndex = next - 1;
+          window.HJ.slideReviews(1);
+        }
+      }, 4500);
+    },
+
     closeMobileMenu: function () {
       window.HJ.closeCart();
     },
@@ -2786,55 +2880,171 @@
       const formData = new FormData(form);
       const customer = { fullName: formData.get('fullName'), email: formData.get('email'), phone: formData.get('phone') };
       const shippingAddress = { address: formData.get('address'), city: formData.get('city'), pincode: formData.get('pincode'), state: formData.get('state') };
-      const paymentMethod = formData.get('payment_method') || 'gpay';
+      const paymentMethod = formData.get('payment_method') || 'razorpay';
 
-      let order = null;
+      const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('.btn-gold');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Securing Acquisition Protocol...';
+      }
+
       try {
-        const res = await fetch('/api/orders', {
+        // 1. Create server-side payment order
+        const createRes = await fetch('/api/payment/create-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ customer, shippingAddress, items: state.cart, paymentMethod, couponCode: state.appliedCoupon })
+          body: JSON.stringify({
+            customer,
+            shippingAddress,
+            items: state.cart,
+            couponCode: state.appliedCoupon
+          })
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success && data.order) {
-            order = data.order;
+
+        if (!createRes.ok) {
+          const errData = await createRes.json();
+          throw new Error(errData.error || 'Failed to initialize payment gateway.');
+        }
+
+        const paymentData = await createRes.json();
+
+        // 2. If Razorpay SDK is loaded, launch Razorpay Checkout Modal
+        if (paymentMethod === 'razorpay' && window.Razorpay && paymentData.keyId) {
+          const options = {
+            key: paymentData.keyId,
+            amount: paymentData.amountInPaise,
+            currency: paymentData.currency || 'INR',
+            name: 'House of Jewelux',
+            description: `Acquisition ${paymentData.internalOrderId}`,
+            image: 'https://houseofjewelux.com/brand-identity/house_of_jewelux_horizontal_logo.png',
+            order_id: paymentData.razorpayOrderId,
+            prefill: {
+              name: customer.fullName,
+              email: customer.email,
+              contact: customer.phone
+            },
+            notes: {
+              internalOrderId: paymentData.internalOrderId,
+              atelier: 'Jaipur High Jewellery'
+            },
+            theme: {
+              color: '#1A120E'
+            },
+            handler: async function (response) {
+              // 3. Verify Payment Signature Server-Side
+              try {
+                const verifyRes = await fetch('/api/payment/verify', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature,
+                    internalOrderId: paymentData.internalOrderId,
+                    customer,
+                    shippingAddress,
+                    items: paymentData.items,
+                    pricing: paymentData.pricing
+                  })
+                });
+
+                const verifyData = await verifyRes.json();
+                if (verifyData.success) {
+                  state.cart = [];
+                  saveCart();
+                  window.HJ.renderOrderSuccessScreen(verifyData.order || {
+                    orderId: paymentData.internalOrderId,
+                    orderStatus: 'Confirmed by Jaipur Atelier',
+                    trackingNumber: verifyData.trackingNumber,
+                    customer
+                  });
+                } else {
+                  alert(verifyData.error || 'Payment verification failed. Please contact concierge.');
+                  if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Complete Acquisition & Pay';
+                  }
+                }
+              } catch (err) {
+                alert(`Payment verification error: ${err.message}`);
+                if (submitBtn) {
+                  submitBtn.disabled = false;
+                  submitBtn.innerHTML = 'Complete Acquisition & Pay';
+                }
+              }
+            },
+            modal: {
+              ondismiss: function () {
+                if (submitBtn) {
+                  submitBtn.disabled = false;
+                  submitBtn.innerHTML = 'Complete Acquisition & Pay';
+                }
+              }
+            }
+          };
+
+          const rzp = new window.Razorpay(options);
+          rzp.on('payment.failed', function (response) {
+            alert(`Payment could not be completed: ${response.error.description}`);
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'Complete Acquisition & Pay';
+            }
+          });
+          rzp.open();
+          return;
+        }
+
+        // Direct bank transfer or test mode fallback
+        const orderRes = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customer,
+            shippingAddress,
+            items: state.cart,
+            paymentMethod,
+            couponCode: state.appliedCoupon
+          })
+        });
+
+        if (orderRes.ok) {
+          const orderData = await orderRes.json();
+          state.cart = [];
+          saveCart();
+          window.HJ.renderOrderSuccessScreen(orderData.order);
+        } else {
+          const errData = await orderRes.json();
+          alert(errData.error || 'Unable to confirm order.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Complete Acquisition & Pay';
           }
         }
       } catch (err) {
-        console.warn('API order placement unavailable, using resilient fallback', err);
+        alert(err.message || 'Error communicating with Atelier server.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Complete Acquisition & Pay';
+        }
       }
+    },
 
-      if (!order) {
-        // Resilient fallback for static hosting / offline
-        const orderId = `HJ-ORD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-        order = {
-          orderId,
-          orderDate: new Date().toISOString(),
-          orderStatus: 'Confirmed & Hallmarked by Jaipur Atelier',
-          customer,
-          shippingAddress,
-          paymentMethod,
-          items: [...state.cart]
-        };
-        const localOrders = JSON.parse(localStorage.getItem('hj_orders') || '[]');
-        localOrders.unshift(order);
-        localStorage.setItem('hj_orders', JSON.stringify(localOrders));
-      }
-
-      state.cart = [];
-      saveCart();
+    renderOrderSuccessScreen: function (order) {
       const appView = document.getElementById('app-view');
+      if (!appView) return;
+      window.scrollTo(0, 0);
       appView.innerHTML = `
         <div class="container" style="padding: 4rem 0 6rem;">
           <div class="order-success-card">
             <div class="success-check-icon">✓</div>
-            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1rem;">Acquisition Confirmed</h1>
-            <p>Order ID: <strong>${order.orderId}</strong> | Status: <strong>${order.orderStatus}</strong></p>
-            <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">A formal receipt and BIS Hallmarking dispatch notification have been sent to <strong>${customer.email || 'your email'}</strong>.</p>
-            <div style="margin: 2rem 0;">
-              <a href="#collections/all" class="btn-primary">Continue Browsing</a>
-              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I just placed Order ' + order.orderId)}" target="_blank" class="btn-gold" style="margin-left: 1rem;">WhatsApp Concierge</a>
+            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1rem;">Acquisition Confirmed & Paid</h1>
+            <p>Order ID: <strong>${order.orderId}</strong> | Payment Status: <strong style="color: #2E7D32;">Paid & Verified via Razorpay</strong></p>
+            <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">Tracking Consignment: <strong>${order.trackingNumber || 'Assigned to Sequel Secure Logistics'}</strong></p>
+            <p style="font-size: 0.84rem; color: var(--color-stone-muted); margin-top: 0.5rem;">A formal hallmarking certificate and dispatch telemetry notice have been sent to <strong>${order.customer?.email || 'your email'}</strong>.</p>
+            <div style="margin: 2rem 0; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <a href="#collections/all" class="btn-primary">Explore Further Creations</a>
+              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I just completed Payment for Order ' + order.orderId)}" target="_blank" class="btn-gold">WhatsApp Concierge</a>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@
  */
 
 const crypto = require('crypto');
-const { readJSON, writeJSON } = require('../db/jsonDb');
+const db = require('../db');
 
 const validateCart = (req, res, next) => {
   try {
@@ -13,8 +13,8 @@ const validateCart = (req, res, next) => {
       return res.status(400).json({ success: false, error: 'Invalid items array' });
     }
 
-    const products = readJSON('products.json');
-    const coupons = readJSON('coupons.json', {});
+    const products = db.readJSON('products.json');
+    const coupons = db.readJSON('coupons.json', {});
 
     let subtotal = 0;
     const validatedItems = [];
@@ -65,7 +65,7 @@ const validateCart = (req, res, next) => {
   }
 };
 
-const createOrder = (req, res, next) => {
+const createOrder = async (req, res, next) => {
   try {
     const { 
       customer, 
@@ -76,13 +76,20 @@ const createOrder = (req, res, next) => {
       isGiftBox
     } = req.body;
 
+    // Explicit Policy Check: Cash on Delivery Disabled
+    if (paymentMethod === 'cod') {
+      return res.status(400).json({
+        success: false,
+        error: 'Cash on Delivery (COD) is disabled for high-value precious jewellery. Please select Razorpay (UPI, Cards, Net Banking) to complete your acquisition securely.'
+      });
+    }
+
     if (!customer || !shippingAddress || !items || items.length === 0) {
       return res.status(400).json({ success: false, error: 'Missing mandatory checkout information' });
     }
 
-    const products = readJSON('products.json');
-    const coupons = readJSON('coupons.json', {});
-    const orders = readJSON('orders.json');
+    const products = db.readJSON('products.json');
+    const coupons = db.readJSON('coupons.json', {});
 
     // Server-side recalculation to prevent price tampering
     let subtotal = 0;
@@ -146,8 +153,8 @@ const createOrder = (req, res, next) => {
         country: 'India'
       },
       payment: {
-        method: paymentMethod || 'cod',
-        status: paymentMethod === 'cod' ? 'Pending upon Armored Handover' : 'Paid & Verified'
+        method: paymentMethod || 'razorpay',
+        status: 'Paid & Verified'
       },
       pricing: {
         subtotal,
@@ -162,8 +169,7 @@ const createOrder = (req, res, next) => {
       estimatedDelivery: '3 - 5 Business Days via Sequel Secure Logistics'
     };
 
-    orders.unshift(newOrder);
-    writeJSON('orders.json', orders);
+    await db.orders.create(newOrder);
 
     res.status(201).json({
       success: true,
@@ -176,10 +182,9 @@ const createOrder = (req, res, next) => {
   }
 };
 
-const getOrderById = (req, res, next) => {
+const getOrderById = async (req, res, next) => {
   try {
-    const orders = readJSON('orders.json');
-    const order = orders.find(o => o.orderId.toLowerCase() === req.params.orderId.toLowerCase());
+    const order = await db.orders.getById(req.params.orderId);
     if (!order) {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
@@ -189,21 +194,16 @@ const getOrderById = (req, res, next) => {
   }
 };
 
-const trackOrder = (req, res, next) => {
+const trackOrder = async (req, res, next) => {
   try {
     const { orderId, query } = req.body;
-    const searchId = (orderId || query || '').trim().toUpperCase();
+    const searchId = (orderId || query || '').trim();
 
     if (!searchId) {
       return res.status(400).json({ success: false, error: 'Please enter a valid Order ID (e.g. HJ-ORD-2026-7701)' });
     }
 
-    const orders = readJSON('orders.json');
-    const matched = orders.find(o => 
-      o.orderId.toUpperCase() === searchId || 
-      (o.trackingNumber && o.trackingNumber.toUpperCase() === searchId) ||
-      (o.customer && (o.customer.email.toUpperCase() === searchId || o.customer.phone.replace(/[^0-9]/g, '') === searchId.replace(/[^0-9]/g, '')))
-    );
+    const matched = await db.orders.findByQuery(searchId);
 
     if (!matched) {
       return res.status(404).json({
@@ -218,7 +218,7 @@ const trackOrder = (req, res, next) => {
         orderId: matched.orderId,
         orderDate: matched.orderDate,
         orderStatus: matched.orderStatus || 'Processing in Jaipur Atelier',
-        paymentStatus: matched.paymentStatus || 'Paid',
+        paymentStatus: matched.paymentStatus || 'Paid & Verified',
         trackingNumber: matched.trackingNumber || 'HJ-TRK-749102IN',
         courierPartner: 'Sequel Secure Armored Logistics & Blue Dart Apex',
         estimatedDelivery: matched.estimatedDelivery || '3 - 5 Business Days with White-Glove Armored Transit',

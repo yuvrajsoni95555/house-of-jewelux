@@ -212,6 +212,10 @@
       label.textContent = names[currentScene] || '';
     }
 
+    if (currentScene === 3) {
+      initInteractiveJewelCards();
+    }
+
     if (triggerAudio) {
       const freqs = { 1: 396, 2: 432, 3: 528 };
       playHarmonicChime(freqs[currentScene] || 432);
@@ -371,7 +375,24 @@
         targetMouseX = 0;
         targetMouseY = 0;
       });
+
+      // Attach Touch Parallax for Mobile & Tablets (Finger Drag & Tilt)
+      heroContainer.addEventListener('touchmove', e => {
+        if (e.touches && e.touches.length === 1) {
+          const rect = heroContainer.getBoundingClientRect();
+          targetMouseX = ((e.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
+          targetMouseY = ((e.touches[0].clientY - rect.top) / rect.height) * 2 - 1;
+        }
+      }, { passive: true });
+
+      heroContainer.addEventListener('touchend', () => {
+        targetMouseX = 0;
+        targetMouseY = 0;
+      });
     }
+
+    // Initialize 3D Touch & Mouse Interactive Inspection on Masterpiece Cards
+    initInteractiveJewelCards();
 
     // Start Particle Animation & First Scene
     if (!prefersReducedMotion) {
@@ -388,6 +409,81 @@
       // Reduced motion fallback directly to Scene 01
       goToScene(1, false);
     }
+  }
+
+  /**
+   * 3D Touch and Mouse Interactive Inspection for Jewellery Cards
+   * Provides fluid perspective tilting and specular light reflection on finger drag / mouse hover
+   */
+  function initInteractiveJewelCards() {
+    const cards = document.querySelectorAll('.macro-jewel-card, .material-pillar-card');
+    cards.forEach(card => {
+      if (!card.querySelector('.specular-sheen-layer')) {
+        const sheen = document.createElement('div');
+        sheen.className = 'specular-sheen-layer';
+        sheen.style.cssText = 'position: absolute; inset: 0; pointer-events: none; border-radius: inherit; z-index: 3; transition: opacity 0.25s ease; opacity: 0;';
+        card.appendChild(sheen);
+        card.style.position = 'relative';
+        card.style.transformStyle = 'preserve-3d';
+        card.style.willChange = 'transform, box-shadow';
+      }
+
+      const sheen = card.querySelector('.specular-sheen-layer');
+
+      function handleInteraction(clientX, clientY) {
+        const rect = card.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Calculate 3D tilt angles
+        const rotateX = Math.max(-14, Math.min(14, ((centerY - y) / centerY) * 12));
+        const rotateY = Math.max(-14, Math.min(14, ((x - centerX) / centerX) * 12));
+
+        card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.04, 1.04, 1.04) translateZ(12px)`;
+        card.style.transition = 'transform 0.08s ease-out';
+        card.style.boxShadow = `${-rotateY * 1.5}px ${rotateX * 1.5 + 16}px 36px rgba(168, 132, 98, 0.35)`;
+
+        if (sheen) {
+          const pctX = (x / rect.width) * 100;
+          const pctY = (y / rect.height) * 100;
+          sheen.style.opacity = '1';
+          sheen.style.background = `radial-gradient(circle at ${pctX.toFixed(1)}% ${pctY.toFixed(1)}%, rgba(255, 240, 215, 0.45) 0%, rgba(212, 175, 55, 0.15) 35%, transparent 70%)`;
+        }
+      }
+
+      function resetInteraction() {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease';
+        if (sheen) {
+          sheen.style.opacity = '0';
+        }
+      }
+
+      // Desktop Mouse Interaction
+      card.addEventListener('mousemove', e => {
+        handleInteraction(e.clientX, e.clientY);
+      });
+      card.addEventListener('mouseleave', resetInteraction);
+
+      // Mobile Touch Interaction (Finger Drag & Tilt)
+      card.addEventListener('touchstart', e => {
+        if (e.touches && e.touches.length === 1) {
+          handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      card.addEventListener('touchmove', e => {
+        if (e.touches && e.touches.length === 1) {
+          handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      card.addEventListener('touchend', resetInteraction);
+      card.addEventListener('touchcancel', resetInteraction);
+    });
   }
 
   function resizeCanvas() {

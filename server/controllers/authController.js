@@ -1,64 +1,98 @@
 /**
  * HOUSE OF JEWELUX — Customer Authentication Controller
- * Handles patron registration, credential verification, and password recovery.
+ * Hardened with cryptographic PBKDF2 salting, timing-safe credential verification,
+ * and seamless fallback across PostgreSQL and local JSON storage.
  */
 
 const crypto = require('crypto');
-const { readJSON, writeJSON } = require('../db/jsonDb');
+const db = require('../db');
 
-const register = (req, res, next) => {
+function hashPassword(password, salt) {
+  return crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
+}
+
+function verifyPassword(password, storedHash, salt) {
+  if (salt) {
+    const computed = hashPassword(password, salt);
+    const bufA = Buffer.from(computed, 'utf8');
+    const bufB = Buffer.from(storedHash, 'utf8');
+    if (bufA.length !== bufB.length) return false;
+    return crypto.timingSafeEqual(bufA, bufB);
+  }
+  // Backward compatibility with legacy SHA-256 records
+  const legacyHash = crypto.createHash('sha256').update(password).digest('hex');
+  const bufA = Buffer.from(legacyHash, 'utf8');
+  const bufB = Buffer.from(storedHash, 'utf8');
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
+const register = async (req, res, next) => {
   try {
     const { name, email, phone, password } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ success: false, error: 'Name, email, and password required' });
     }
 
-    const customers = readJSON('customers.json');
-    if (customers.find(c => c.email.toLowerCase() === email.toLowerCase())) {
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, error: 'Password must be at least 6 characters long' });
+    }
+
+    const cleanEmail = email.trim().toLowerCase();
+    const existing = await db.customers.getByEmail(cleanEmail);
+    if (existing) {
       return res.status(400).json({ success: false, error: 'An account with this email already exists' });
     }
 
-    const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
+    const salt = crypto.randomBytes(16).toString('hex');
+    const passwordHash = hashPassword(password, salt);
+
     const newCustomer = {
       id: `CUST-${Date.now()}`,
-      name,
-      email: email.toLowerCase(),
+      name: name.trim(),
+      email: cleanEmail,
       phone: phone || '',
       passwordHash,
+      salt,
       createdAt: new Date().toISOString(),
-      orders: [],
       wishlist: []
     };
 
-    customers.push(newCustomer);
-    writeJSON('customers.json', customers);
+    await db.customers.create(newCustomer);
 
-    res.json({
+    res.status(201).json({
       success: true,
-      customer: { id: newCustomer.id, name: newCustomer.name, email: newCustomer.email, phone: newCustomer.phone }
+      customer: {
+        id: newCustomer.id,
+        name: newCustomer.name,
+        email: newCustomer.email,
+        phone: newCustomer.phone
+      }
     });
   } catch (err) {
     next(err);
   }
 };
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ success: false, error: 'Email and password required' });
     }
 
-    const customers = readJSON('customers.json');
-    const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
-    const customer = customers.find(c => c.email.toLowerCase() === email.toLowerCase() && c.passwordHash === passwordHash);
+    const cleanEmail = email.trim().toLowerCase();
+    const customer = await db.customers.getByEmail(cleanEmail);
 
-    if (!customer) {
+    if (!customer || !verifyPassword(password, customer.passwordHash, customer.salt)) {
       return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
 
-    const orders = readJSON('orders.json');
-    const customerOrders = orders.filter(o => o.customer && o.customer.email && o.customer.email.toLowerCase() === customer.email.toLowerCase());
+    // Retrieve historical orders for customer
+    const allOrders = await db.orders.getAll(100);
+    const customerOrders = allOrders.filter(
+      o => o.customer && o.customer.email && o.customer.email.toLowerCase() === cleanEmail
+    );
 
     res.json({
       success: true,
@@ -76,21 +110,21 @@ const login = (req, res, next) => {
   }
 };
 
-const recoverPassword = (req, res, next) => {
+const recoverPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email || !email.includes('@')) {
       return res.status(400).json({ success: false, error: 'Please enter a valid registered patron email address.' });
     }
 
-    const customers = readJSON('customers.json');
-    const found = customers.find(c => c.email.toLowerCase() === email.toLowerCase());
+    const cleanEmail = email.trim().toLowerCase();
+    const found = await db.customers.getByEmail(cleanEmail);
 
     res.json({
       success: true,
       message: found 
-        ? `A secure password reset link has been dispatched to ${email}. Please check your inbox.`
-        : `If an account is associated with ${email}, password reset instructions have been dispatched.`
+        ? `A secure password reset link has been dispatched to ${cleanEmail}. Please check your inbox.`
+        : `If an account is associated with ${cleanEmail}, password reset instructions have been dispatched.`
     });
   } catch (err) {
     next(err);
