@@ -524,7 +524,7 @@
 
             <a href="#collections/brooches" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_falcon_brooch_white.jpg" alt="Royal Brooches & Pins" />
+                <img class="cat-showcase-img" src="images/user_royal_brooch_crocodile.jpg" alt="Royal Brooches & Pins" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Royal Brooches & Pins</div>
