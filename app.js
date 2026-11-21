@@ -763,16 +763,13 @@
                 </div>
                 <div>
                   <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Skin Safe</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Hypoallergenic*</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Hypoallergenic</div>
                 </div>
                 <div>
                   <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Multi-Micron</div>
                   <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Protective Polish</div>
                 </div>
               </div>
-              <p style="font-size: 0.7rem; color: var(--color-stone-muted); margin-top: 0.75rem; font-style: italic;">
-                * Hypoallergenic base crafted with skin-safe precious metals; individual skin sensitivity and comfort may vary from person to person.
-              </p>
             </div>
             <div>
               <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - House of Jewelux" style="width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone); box-shadow: 0 15px 40px rgba(35, 28, 22, 0.12);" />
