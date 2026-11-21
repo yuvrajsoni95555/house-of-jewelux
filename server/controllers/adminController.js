@@ -63,9 +63,19 @@ const updateOrder = (req, res, next) => {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
 
-    if (orderStatus) orders[index].orderStatus = orderStatus;
-    if (paymentStatus) orders[index].paymentStatus = paymentStatus;
-    if (trackingNumber) orders[index].trackingNumber = trackingNumber;
+    const allowedStatuses = new Set(['Awaiting Payment', 'Pending Verification', 'Processing', 'Confirmed', 'Dispatched', 'Delivered', 'Cancelled']);
+    if (orderStatus) {
+      if (!allowedStatuses.has(orderStatus)) return res.status(400).json({ success: false, error: 'Invalid order status' });
+      orders[index].orderStatus = orderStatus;
+    }
+    if (paymentStatus) {
+      const allowedPaymentStatuses = new Set(['Pending Payment', 'Pending Verification', 'Paid', 'Failed', 'Refunded']);
+      if (!allowedPaymentStatuses.has(paymentStatus)) return res.status(400).json({ success: false, error: 'Invalid payment status' });
+      orders[index].payment = orders[index].payment || {};
+      orders[index].payment.status = paymentStatus;
+      orders[index].paymentStatus = paymentStatus;
+    }
+    if (trackingNumber !== undefined) orders[index].trackingNumber = String(trackingNumber).slice(0, 100);
 
     writeJSON('orders.json', orders);
     res.json({ success: true, order: orders[index] });
