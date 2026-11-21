@@ -656,10 +656,10 @@
             <div>
               <span class="hero-badge-pill" style="border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.1); font-weight: 600;">Atelier Experience</span>
               <h2 style="font-family: var(--font-serif); font-size: 2.5rem; margin: 0.85rem 0 1rem; color: #1A120E; line-height: 1.25; font-weight: 500;">
-                Book a Private Salon Consultation
+                Book a Private Atelier Consultation
               </h2>
               <p style="color: #3D2D24; font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.75rem; max-width: 540px;">
-                Step inside our private salon in Jaipur or connect via encrypted video concierge. Our senior goldsmiths will guide you through custom diamond sizing, bridal curations, and bespoke jewellery commissions.
+                Connect with our master artisans in Jaipur or via encrypted video concierge. Our senior goldsmiths will guide you through custom diamond sizing, bridal curations, and bespoke jewellery commissions.
               </p>
               <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2.25rem;">
                 <div style="display: flex; align-items: center; gap: 0.85rem; font-size: 0.92rem; color: #2A1D15; font-weight: 500;">
@@ -717,8 +717,8 @@
                   <label class="form-label">Consultation Experience</label>
                   <select class="form-input">
                     <option>Private Jaipur Atelier Experience</option>
-                    <option>New Delhi VIP Salon Suite</option>
                     <option>Virtual High-Jewellery Video Concierge</option>
+                    <option>Bespoke Bridal Suite Consultation</option>
                   </select>
                 </div>
                 <button type="submit" class="btn-primary" style="width: 100%; padding: 0.9rem;">Confirm Appointment</button>
@@ -762,14 +762,17 @@
                   <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">BIS 925 Stamped</div>
                 </div>
                 <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">0%</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Nickel / Irritants</div>
+                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Skin Safe</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Hypoallergenic*</div>
                 </div>
                 <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Lifetime</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Polish Covenant</div>
+                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Multi-Micron</div>
+                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Protective Polish</div>
                 </div>
               </div>
+              <p style="font-size: 0.7rem; color: var(--color-stone-muted); margin-top: 0.75rem; font-style: italic;">
+                * Hypoallergenic base crafted with skin-safe precious metals; individual skin sensitivity and comfort may vary from person to person.
+              </p>
             </div>
             <div>
               <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - House of Jewelux" style="width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone); box-shadow: 0 15px 40px rgba(35, 28, 22, 0.12);" />
@@ -1142,7 +1145,7 @@
                 <span>▾</span>
               </div>
               <div class="pdp-accordion-pane">
-                <strong>Manufactured By:</strong> House of Jewelux Creative Atelier & Salon, Jaipur, Rajasthan, India.<br>
+                <strong>Manufactured By:</strong> House of Jewelux Creative Atelier, Jaipur, Rajasthan, India.<br>
                 <strong>Customer Grievance & Concierge:</strong> +91 63770 61020 | houseofjewelux@gmail.com
               </div>
             </div>
@@ -1491,7 +1494,7 @@
               
               <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                 <a href="#collections/all" class="btn-primary">Explore All 50 Pieces ↗</a>
-                <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-outline">Book Private Salon</a>
+                <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-outline">Book Private Atelier</a>
               </div>
             </div>
           </div>
@@ -1563,9 +1566,9 @@
 
             <div class="pepite-story-card about-story-reveal">
               <div class="pepite-number-badge">03</div>
-              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Lifetime Maintenance Covenant</h3>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Atelier Maintenance Covenant</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75;">
-                Triple-layer liquid platinum-rhodium and 18K micron gold shielding. Every acquisition includes complimentary lifetime ultrasonic cleansing and refinishing.
+                Triple-layer liquid platinum-rhodium and 18K micron gold shielding. Every acquisition includes atelier ultrasonic cleansing and professional refinishing support.
               </p>
             </div>
           </div>
@@ -1861,14 +1864,14 @@
         `
       },
       warranty: {
-        title: "Lifetime Craftsmanship Covenant",
-        subtitle: "Unconditional Protection Against Manufacturing Flaws",
-        badge: "Lifetime Atelier Covenant",
+        title: "Atelier Craftsmanship Covenant",
+        subtitle: "Protection Against Manufacturing Imperfections",
+        badge: "Atelier Craft Covenant",
         content: `
           <div class="pepite-story-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Lifetime Metal & Setting Integrity</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Metal & Setting Integrity</h3>
             <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
-              Every creation forged by our Jaipur artisans carries an unconditional lifetime craftsmanship warranty against metal porosity, clasp structural failure, and prong security. If a stone loosens under normal daily wear, send your piece to our atelier for complimentary resetting, ultrasonic cleansing, and rhodium rejuvenation.
+              Every creation forged by our Jaipur artisans carries our craftsmanship warranty against metal porosity, structural clasp defects, and prong security. Our atelier provides dedicated gemstone inspection, setting checks, and professional care support.
             </p>
           </div>
         `
@@ -1903,7 +1906,7 @@
             <a href="#size-guide" class="filter-pill ${key === 'size' ? 'active' : ''}">Size Guide</a>
             <a href="#privacy-policy" class="filter-pill ${key === 'privacy' ? 'active' : ''}">Privacy Covenant</a>
             <a href="#terms-conditions" class="filter-pill ${key === 'terms' ? 'active' : ''}">Terms & Conditions</a>
-            <a href="#warranty" class="filter-pill ${key === 'warranty' ? 'active' : ''}">Lifetime Warranty</a>
+            <a href="#warranty" class="filter-pill ${key === 'warranty' ? 'active' : ''}">Atelier Warranty</a>
           </div>
 
           <div style="max-width: 860px; margin: 0 auto;">
@@ -1913,11 +1916,11 @@
             <div class="pepite-story-card" style="margin-top: 3rem; background: rgba(184,151,88,0.06); border: 1px solid var(--color-muted-gold-light); text-align: center; padding: 2.5rem 1.5rem;">
               <h4 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.5rem;">Have Questions Regarding Our Policies?</h4>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-bottom: 1.5rem; max-width: 540px; margin-left: auto; margin-right: auto;">
-                Our private salon concierge is available directly on WhatsApp and telephone to assist with custom requests, sizing queries, and consignment tracking.
+                Our private atelier concierge is available directly on WhatsApp and telephone to assist with custom requests, sizing queries, and consignment tracking.
               </p>
               <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="https://wa.me/916377061020" target="_blank" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Chat on WhatsApp</a>
-                <a href="#contact" class="btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Contact Salon Suite</a>
+                <a href="#contact" class="btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">Contact Atelier</a>
               </div>
             </div>
           </div>
@@ -1988,7 +1991,7 @@
           <h1 class="section-title about-story-reveal" style="font-family: var(--font-serif); font-size: 3.2rem; line-height: 1.15; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown);">Contact the House of Jewelux</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 1.5rem;"><span class="section-divider-gem"></span></div>
           <p class="about-story-reveal" style="font-size: 1.1rem; color: var(--color-stone-muted); line-height: 1.85; max-width: 760px; margin: 0 auto;">
-            Reach our private salon concierge in Jaipur, schedule an appointment, or inquire regarding any creation in our vault. We respond personally within 24 business hours.
+            Reach our private atelier concierge in Jaipur, schedule an appointment, or inquire regarding any creation in our vault. We respond personally within 24 business hours.
           </p>
         </div>
       </section>
@@ -1998,10 +2001,10 @@
         <div class="container">
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 3.5rem; align-items: start;">
             
-            <!-- Left: Contact Details & Salon Hours -->
+            <!-- Left: Contact Details & Atelier Hours -->
             <div class="about-story-reveal" style="display: flex; flex-direction: column; gap: 1.5rem;">
               <div class="pepite-story-card">
-                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Atelier & Salon</span>
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Creative Atelier</span>
                 <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0.4rem 0 1.5rem;">Jaipur Creative Atelier</h3>
                 
                 <div style="display: flex; flex-direction: column; gap: 1.35rem;">
@@ -2012,7 +2015,7 @@
                     <div>
                       <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-stone-muted); font-weight: 600;">Location</div>
                       <div style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--color-deep-heritage-brown); margin-top: 0.2rem;">Jaipur, Rajasthan, India</div>
-                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Private salon consultations strictly by prior reservation.</div>
+                      <div style="font-size: 0.82rem; color: var(--color-stone-muted); margin-top: 0.15rem;">Private atelier consultations strictly by prior reservation.</div>
                     </div>
                   </div>
 
@@ -2074,7 +2077,7 @@
                     <select name="subject" class="form-select" required>
                       <option value="acquisition">Private Piece Acquisition</option>
                       <option value="bespoke">Bespoke Goldsmithing Commission</option>
-                      <option value="appointment">Jaipur Salon Appointment</option>
+                      <option value="appointment">Jaipur Atelier Appointment</option>
                       <option value="consign">Armored Consignment Telemetry</option>
                       <option value="press">Press & Editorial Editorial</option>
                     </select>
@@ -2235,7 +2238,7 @@
                     <div class="pepite-number-badge" style="font-size: 1.3rem !important; margin: 0;">01</div>
                     <div>
                       <div style="font-family: var(--font-serif); font-weight: 700; color: var(--color-espresso); font-size: 1rem;">Private Consultation & Vision</div>
-                      <p style="font-size: 0.82rem; color: var(--color-stone-muted); line-height: 1.6; margin-top: 0.2rem;">One-on-one video session or Jaipur salon meeting to define your stone selections, metal alloys, and symbolic motifs.</p>
+                      <p style="font-size: 0.82rem; color: var(--color-stone-muted); line-height: 1.6; margin-top: 0.2rem;">One-on-one video session or Jaipur atelier meeting to define your stone selections, metal alloys, and symbolic motifs.</p>
                     </div>
                   </div>
 
@@ -2526,7 +2529,7 @@
                 <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.35rem 0;">Living Goldsmith Heritage at Bench</h3>
                 <p style="font-size: 0.88rem; color: #E8E2D8; max-width: 600px;">Generational silversmiths applying hand gravers, liquid flux, and open flame to solid 925 sterling silver.</p>
               </div>
-              <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-gold" style="padding: 0.75rem 1.75rem; font-size: 0.78rem;">Experience in Salon ↗</a>
+              <a href="javascript:void(0)" onclick="window.HJ.openAppointmentModal()" class="btn-gold" style="padding: 0.75rem 1.75rem; font-size: 0.78rem;">Experience in Atelier ↗</a>
             </div>
           </div>
         </div>
@@ -2702,10 +2705,20 @@
       const cards = track.querySelectorAll('.review-slide-card');
       if (cards.length === 0) return;
 
-      const cardWidth = cards[0].offsetWidth + 24; // 24px gap
-      const maxIndex = Math.max(0, cards.length - (window.innerWidth < 768 ? 1 : 3));
+      const card = cards[0];
+      const cardWidth = card.offsetWidth + 24; // 24px gap
+      const visibleCount = window.innerWidth < 640 ? 1 : (window.innerWidth < 992 ? 2 : 3);
+      const maxIndex = Math.max(0, cards.length - visibleCount);
 
-      window.HJ.reviewsIndex = Math.max(0, Math.min(maxIndex, (window.HJ.reviewsIndex || 0) + dir));
+      let targetIndex = (window.HJ.reviewsIndex || 0) + dir;
+      if (targetIndex > maxIndex) {
+        targetIndex = 0; // Seamless loop back to start
+      } else if (targetIndex < 0) {
+        targetIndex = maxIndex;
+      }
+
+      window.HJ.reviewsIndex = targetIndex;
+      track.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
       track.style.transform = `translateX(-${window.HJ.reviewsIndex * cardWidth}px)`;
 
       // Update dots
@@ -2724,15 +2737,21 @@
       track.style.transform = 'translateX(0px)';
 
       const cards = track.querySelectorAll('.review-slide-card');
-      const totalSteps = Math.max(1, cards.length - (window.innerWidth < 768 ? 1 : 2));
+      if (cards.length === 0) return;
+
+      const visibleCount = window.innerWidth < 640 ? 1 : (window.innerWidth < 992 ? 2 : 3);
+      const totalSteps = Math.max(1, cards.length - visibleCount + 1);
+
       if (dotsContainer) {
         dotsContainer.innerHTML = '';
         for (let i = 0; i < totalSteps; i++) {
           const dot = document.createElement('div');
           dot.className = `review-dot ${i === 0 ? 'active' : ''}`;
+          dot.setAttribute('aria-label', `Go to review slide ${i + 1}`);
           dot.onclick = () => {
             window.HJ.reviewsIndex = i;
             const cardWidth = cards[0].offsetWidth + 24;
+            track.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
             track.style.transform = `translateX(-${i * cardWidth}px)`;
             document.querySelectorAll('.review-dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
           };
@@ -2745,49 +2764,60 @@
       let currentX = 0;
       let isDragging = false;
 
-      track.addEventListener('mousedown', e => {
+      track.onmousedown = e => {
         isDragging = true;
         startX = e.clientX;
         track.style.transition = 'none';
-      });
+      };
 
-      window.addEventListener('mousemove', e => {
+      window.onmousemove = e => {
         if (!isDragging) return;
         currentX = e.clientX;
-      });
+      };
 
-      window.addEventListener('mouseup', () => {
+      window.onmouseup = () => {
         if (!isDragging) return;
         isDragging = false;
         track.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
         const diff = startX - currentX;
-        if (diff > 50) window.HJ.slideReviews(1);
-        else if (diff < -50) window.HJ.slideReviews(-1);
-      });
-
-      // Touch events for mobile
-      track.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-      }, { passive: true });
-
-      track.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
         if (diff > 40) window.HJ.slideReviews(1);
         else if (diff < -40) window.HJ.slideReviews(-1);
-      });
+      };
+
+      // Touch events for mobile
+      track.ontouchstart = e => {
+        startX = e.touches[0].clientX;
+      };
+
+      track.ontouchend = e => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (diff > 35) window.HJ.slideReviews(1);
+        else if (diff < -35) window.HJ.slideReviews(-1);
+      };
 
       // Auto glide every 4.5 seconds with pause on hover
       if (window.HJ.reviewsInterval) clearInterval(window.HJ.reviewsInterval);
       window.HJ.reviewsInterval = setInterval(() => {
         const container = document.getElementById('reviews-slider-container');
         if (container && !container.matches(':hover')) {
-          const maxIdx = Math.max(0, cards.length - (window.innerWidth < 768 ? 1 : 3));
-          const next = ((window.HJ.reviewsIndex || 0) + 1) > maxIdx ? 0 : (window.HJ.reviewsIndex || 0) + 1;
-          window.HJ.reviewsIndex = next - 1;
           window.HJ.slideReviews(1);
         }
       }, 4500);
+
+      // Re-sync on window resize
+      if (!window.HJ._reviewsResizeBound) {
+        window.HJ._reviewsResizeBound = true;
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            if (document.getElementById('reviews-slider-track')) {
+              window.HJ.initReviewsSlider();
+            }
+          }, 150);
+        });
+      }
     },
 
     closeMobileMenu: function () {
@@ -3132,10 +3162,10 @@
         if (data.success) {
           input.value = '';
           if (feedback) {
-            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Salon Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+            feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Atelier Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
             feedback.style.display = 'block';
           } else {
-            alert(data.message || 'Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
+            alert(data.message || 'Welcome to the House of Jewelux Atelier Circle! Privilege code FIRSTLUX active.');
           }
         }
       } catch (err) {
@@ -3147,10 +3177,10 @@
         }
         input.value = '';
         if (feedback) {
-          feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Salon Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
+          feedback.innerHTML = '<span style="color: #2E7D32; font-weight: 600; font-size: 0.85rem;">✦ Welcome to the House of Jewelux Atelier Circle! Use privilege code <strong>FIRSTLUX</strong> for 10% off your first acquisition.</span>';
           feedback.style.display = 'block';
         } else {
-          alert('Welcome to the House of Jewelux Salon Circle! Privilege code FIRSTLUX active.');
+          alert('Welcome to the House of Jewelux Atelier Circle! Privilege code FIRSTLUX active.');
         }
       }
     },
@@ -3358,7 +3388,7 @@
       existing.unshift({ appointmentId: apptId, ...payload, createdAt: new Date().toISOString() });
       localStorage.setItem('hj_appointments', JSON.stringify(existing));
 
-      alert(`✦ PRIVATE SALON APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nPatron: ${payload.fullName}\nDate: ${payload.appointmentDate}\nTime: ${payload.preferredTime}\n\nOur Salon Concierge has reserved your suite and will contact you via phone/WhatsApp at ${payload.phone}.`);
+      alert(`✦ PRIVATE ATELIER APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nPatron: ${payload.fullName}\nDate: ${payload.appointmentDate}\nTime: ${payload.preferredTime}\n\nOur Atelier Concierge has reserved your consultation and will contact you via phone/WhatsApp at ${payload.phone}.`);
       window.HJ.closeAppointmentModal();
       if (form) form.reset();
     },
@@ -3450,7 +3480,7 @@
               <div><strong>Security Escort:</strong> BIS Certified Armored Transit with GPS Telemetry</div>
             </div>
             <div style="margin-top: 1.25rem; text-align: center;">
-              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux, tracking update for ' + order.orderId)}" target="_blank" class="btn-gold" style="padding: 0.6rem 1.4rem; font-size: 0.78rem;">Inquire with Salon Concierge ↗</a>
+              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux, tracking update for ' + order.orderId)}" target="_blank" class="btn-gold" style="padding: 0.6rem 1.4rem; font-size: 0.78rem;">Inquire with Atelier Concierge ↗</a>
             </div>
           </div>
         `;

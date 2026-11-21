@@ -98,6 +98,7 @@
         speedY: -Math.random() * 0.6 - 0.2, // gentle upward float
         pulseSpeed: Math.random() * 0.03 + 0.015,
         pulseOffset: Math.random() * Math.PI * 2,
+        isDiamond: i % 4 === 0,
         color: Math.random() > 0.4 ? 'rgba(168, 132, 98, ' : 'rgba(213, 196, 174, '
       });
     }
@@ -118,7 +119,7 @@
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
 
-    // Render Particles
+    // Render Particles & Diamond Scintillation Glints
     const time = Date.now() * 0.001;
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
@@ -134,10 +135,26 @@
       const pulse = Math.sin(time * 2 + p.pulseOffset) * 0.25;
       const alpha = Math.max(0.05, Math.min(0.85, p.baseAlpha + pulse));
 
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = p.color + alpha + ')';
-      ctx.fill();
+      if (p.isDiamond) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(time * 0.4 + p.pulseOffset);
+        ctx.beginPath();
+        const r = p.radius * 1.8;
+        ctx.moveTo(0, -r);
+        ctx.lineTo(r * 0.28, 0);
+        ctx.lineTo(0, r);
+        ctx.lineTo(-r * 0.28, 0);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(255, 248, 225, ${alpha * 0.95})`;
+        ctx.fill();
+        ctx.restore();
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + alpha + ')';
+        ctx.fill();
+      }
     }
   }
 

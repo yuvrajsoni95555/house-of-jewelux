@@ -5783,3 +5783,257 @@ img, video, canvas, svg {
     display: none !important;
   }
 }
+
+
+/* ===================================================================
+   HOUSE OF JEWELUX — MASTER LUXURY 3D & MOTION GRAPHICS ENHANCEMENT
+   European High Jewellery Editorial × Indian Royal Goldsmithing Heritage
+   =================================================================== */
+
+/* --- 1. Luxury Motion Keyframes --- */
+@keyframes goldShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.85; filter: drop-shadow(0 0 2px rgba(168, 132, 98, 0.4)); }
+  50% { transform: scale(1.22) rotate(45deg); opacity: 1; filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.7)); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes emblemBreathe {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(168, 132, 98, 0.15)); }
+  50% { transform: scale(1.018); filter: drop-shadow(0 8px 24px rgba(212, 175, 55, 0.3)); }
+}
+
+@keyframes specularGlint {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  100% { transform: translateX(250%) skewX(-25deg); }
+}
+
+/* --- 2. Master Product Card 3D Depth & Elevation --- */
+.product-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease !important;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale3d(1.015, 1.015, 1.015) !important;
+  box-shadow: 0 20px 42px rgba(26, 18, 14, 0.12), 0 4px 12px rgba(168, 132, 98, 0.1) !important;
+  border-color: rgba(168, 132, 98, 0.5) !important;
+}
+
+/* Dynamic Specular Sheen Layer for Product & Pillar Cards */
+.product-card .specular-sheen-layer,
+.material-pillar-card .specular-sheen-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Smooth Product Image Zoom & Contrast */
+.product-card .card-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.product-card .product-card-img {
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s ease !important;
+}
+
+.product-card:hover .product-card-img {
+  transform: scale(1.065) !important;
+  filter: contrast(1.03) brightness(1.02);
+}
+
+/* Action Badge (↗) Luxury Shimmer */
+.pepite-action-badge {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.product-card:hover .pepite-action-badge {
+  transform: scale(1.12) rotate(45deg);
+  background: var(--color-espresso) !important;
+  color: var(--color-warm-ivory) !important;
+  box-shadow: 0 4px 14px rgba(26, 18, 14, 0.25);
+}
+
+/* Card Add To Bag Button Metallic Sweep */
+.card-add-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.card-add-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+}
+
+.card-add-btn:hover::after {
+  left: 140%;
+}
+
+/* --- 3. PDP Interactive Gallery & Micro-Zoom --- */
+.pdp-gallery-item {
+  position: relative;
+  overflow: hidden !important;
+  cursor: zoom-in;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease !important;
+}
+
+.pdp-gallery-item img {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform-origin: center center;
+}
+
+.pdp-gallery-item:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 36px rgba(26, 18, 14, 0.12) !important;
+  border-color: rgba(168, 132, 98, 0.45) !important;
+}
+
+.pdp-gallery-item:hover img {
+  transform: scale(1.08) !important;
+}
+
+.pdp-gallery-item.zooming img {
+  transform: scale(1.4) !important;
+}
+
+/* --- 4. Three Pillars 3D Depth & Foil Accents --- */
+.material-pillar-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.35s ease !important;
+}
+
+.material-pillar-card:hover {
+  transform: translateY(-9px) scale3d(1.018, 1.018, 1.018) !important;
+  box-shadow: 0 22px 46px rgba(26, 18, 14, 0.14) !important;
+  border-color: rgba(168, 132, 98, 0.5) !important;
+}
+
+.material-pillar-img {
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.material-pillar-card:hover .material-pillar-img {
+  transform: scale(1.07) !important;
+}
+
+.material-pillar-badge {
+  background: linear-gradient(135deg, rgba(255, 253, 246, 0.96), rgba(228, 215, 197, 0.92)) !important;
+  border: 1px solid rgba(168, 132, 98, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(26, 18, 14, 0.08);
+}
+
+/* --- 5. Shop by Categories Cinematic Zoom & Illumination --- */
+.cat-showcase-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-pepite-card);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease !important;
+}
+
+.cat-showcase-card:hover {
+  transform: translateY(-7px) !important;
+  box-shadow: 0 20px 42px rgba(26, 18, 14, 0.12) !important;
+}
+
+.cat-showcase-img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.cat-showcase-card:hover .cat-showcase-img {
+  transform: scale(1.08) !important;
+}
+
+/* --- 6. Client Reviews Carousel Visual Elevation --- */
+.review-slide-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease !important;
+}
+
+.review-slide-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 16px 36px rgba(26, 18, 14, 0.08) !important;
+  border-color: rgba(168, 132, 98, 0.38) !important;
+}
+
+.review-stars {
+  letter-spacing: 0.15em;
+  color: var(--color-muted-gold);
+  filter: drop-shadow(0 1px 3px rgba(168, 132, 98, 0.3));
+}
+
+/* --- 7. Hero Section Visual Elevation --- */
+.hero-brand-official-logo {
+  animation: emblemBreathe 6s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+.chapter-indicator-dot {
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease !important;
+}
+
+.chapter-indicator-dot.active {
+  width: 28px !important;
+  border-radius: 9999px !important;
+  background: var(--color-muted-gold) !important;
+}
+
+/* Floating Starlight Background Canvas */
+.hj-ambient-starlight-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.65;
+}
+
+/* Section Sparkle Animation */
+.section-divider-gem, .announcement-sparkle {
+  animation: starPulse 3.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* --- 8. Reduced Motion Accessibility Protection --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-brand-official-logo {
+    animation: none !important;
+  }
+  .section-divider-gem, .announcement-sparkle {
+    animation: none !important;
+  }
+  .product-card, .material-pillar-card, .macro-jewel-card, .cat-showcase-card {
+    transform: none !important;
+    transition: none !important;
+  }
+}

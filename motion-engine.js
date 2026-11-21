@@ -52,6 +52,8 @@
       this.initMicroInteractions();
       this.initBackToTop();
       this.initFormMotion();
+      this.initCard3DInteractions();
+      this.initPDPMacroInspector();
       this.refreshTriggers();
 
       this.initialized = true;
@@ -378,6 +380,105 @@
           });
         }
       });
+    },
+
+    /**
+     * 3D Depth Card Tilt & Specular Light Reflection
+     * Subtly responds to cursor coordinate over product and pillar cards
+     */
+    initCard3DInteractions: function () {
+      if (prefersReducedMotion) return;
+
+      let activeCard = null;
+      let cardRect = null;
+      let isTracking = false;
+
+      document.addEventListener('pointerenter', (e) => {
+        const card = e.target.closest && e.target.closest('.product-card, .material-pillar-card');
+        if (card) {
+          activeCard = card;
+          cardRect = card.getBoundingClientRect();
+          isTracking = true;
+        }
+      }, true);
+
+      document.addEventListener('pointermove', (e) => {
+        if (!isTracking || !activeCard) return;
+
+        // Ensure sheen layer exists
+        let sheen = activeCard.querySelector('.specular-sheen-layer');
+        if (!sheen) {
+          sheen = document.createElement('div');
+          sheen.className = 'specular-sheen-layer';
+          activeCard.appendChild(sheen);
+        }
+
+        if (!cardRect) cardRect = activeCard.getBoundingClientRect();
+        const x = e.clientX - cardRect.left;
+        const y = e.clientY - cardRect.top;
+        const centerX = cardRect.width / 2;
+        const centerY = cardRect.height / 2;
+
+        // Subtle, elegant 3D tilt (max 4 degrees)
+        const rotateX = Math.max(-4, Math.min(4, ((y - centerY) / centerY) * -3.5));
+        const rotateY = Math.max(-4, Math.min(4, ((x - centerX) / centerX) * 3.5));
+
+        activeCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-8px) scale3d(1.015, 1.015, 1.015)`;
+
+        // Specular highlight gradient follows mouse
+        const xPct = Math.max(0, Math.min(100, (x / cardRect.width) * 100));
+        const yPct = Math.max(0, Math.min(100, (y / cardRect.height) * 100));
+        sheen.style.opacity = '0.45';
+        sheen.style.background = `radial-gradient(circle 160px at ${xPct.toFixed(1)}% ${yPct.toFixed(1)}%, rgba(255, 255, 255, 0.38), rgba(212, 175, 55, 0.12) 40%, transparent 80%)`;
+      }, { passive: true });
+
+      document.addEventListener('pointerleave', (e) => {
+        const card = e.target.closest && e.target.closest('.product-card, .material-pillar-card');
+        if (card) {
+          card.style.transform = '';
+          const sheen = card.querySelector('.specular-sheen-layer');
+          if (sheen) sheen.style.opacity = '0';
+          if (activeCard === card) {
+            activeCard = null;
+            cardRect = null;
+            isTracking = false;
+          }
+        }
+      }, true);
+    },
+
+    /**
+     * PDP High-Precision Macro Loupe Zoom
+     * Inspects intricate diamond settings and hallmarking on cursor hover
+     */
+    initPDPMacroInspector: function () {
+      if (prefersReducedMotion) return;
+
+      document.addEventListener('pointermove', (e) => {
+        const item = e.target.closest && e.target.closest('.pdp-gallery-item');
+        if (!item) return;
+        const img = item.querySelector('img');
+        if (!img) return;
+
+        const rect = item.getBoundingClientRect();
+        const xPct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+        const yPct = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+
+        img.style.transformOrigin = `${xPct.toFixed(1)}% ${yPct.toFixed(1)}%`;
+        if (!item.classList.contains('zooming')) {
+          item.classList.add('zooming');
+        }
+      }, { passive: true });
+
+      document.addEventListener('pointerleave', (e) => {
+        const item = e.target.closest && e.target.closest('.pdp-gallery-item');
+        if (!item) return;
+        const img = item.querySelector('img');
+        if (img) {
+          img.style.transformOrigin = 'center center';
+        }
+        item.classList.remove('zooming');
+      }, true);
     },
 
     /**
