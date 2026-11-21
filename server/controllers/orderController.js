@@ -80,7 +80,7 @@ const createOrder = (req, res, next) => {
       return res.status(400).json({ success: false, error: 'Missing mandatory checkout information' });
     }
 
-    const acceptedPaymentMethods = new Set(['online', 'upi', 'card', 'netbanking', 'razorpay']);
+    const acceptedPaymentMethods = new Set(['online', 'upi', 'card', 'netbanking', 'razorpay', 'gpay']);
     if (typeof paymentMethod !== 'string' || !acceptedPaymentMethods.has(paymentMethod.toLowerCase())) {
       return res.status(400).json({ success: false, error: 'Cash on Delivery is unavailable. Please choose an online advance-payment method.' });
     }
