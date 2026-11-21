@@ -534,7 +534,7 @@
 
             <a href="#collections/temple-jewellery" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_balaji_temple_pendant.jpg" alt="Sacred Temple Nakshi" />
+                <img class="cat-showcase-img" src="images/user_temple_nakshi_mandir.jpg" alt="Sacred Temple Nakshi" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Temple Nakshi Heritage</div>
