@@ -76,8 +76,13 @@ const createOrder = (req, res, next) => {
       isGiftBox
     } = req.body;
 
-    if (!customer || !shippingAddress || !items || items.length === 0) {
+    if (!customer || !shippingAddress || !items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ success: false, error: 'Missing mandatory checkout information' });
+    }
+
+    const acceptedPaymentMethods = new Set(['online', 'upi', 'card', 'netbanking', 'razorpay']);
+    if (typeof paymentMethod !== 'string' || !acceptedPaymentMethods.has(paymentMethod.toLowerCase())) {
+      return res.status(400).json({ success: false, error: 'Cash on Delivery is unavailable. Please choose an online advance-payment method.' });
     }
 
     const products = readJSON('products.json');
@@ -132,7 +137,7 @@ const createOrder = (req, res, next) => {
     const newOrder = {
       orderId,
       orderDate: new Date().toISOString(),
-      orderStatus: 'Confirmed by Jaipur Atelier',
+      orderStatus: 'Awaiting Payment',
       customer: {
         name: customer.name || customer.fullName || 'Valued Connoisseur',
         email: customer.email || '',
@@ -146,8 +151,8 @@ const createOrder = (req, res, next) => {
         country: 'India'
       },
       payment: {
-        method: paymentMethod || 'cod',
-        status: paymentMethod === 'cod' ? 'Pending upon Armored Handover' : 'Paid & Verified'
+        method: paymentMethod.toLowerCase(),
+        status: 'Pending Payment'
       },
       pricing: {
         subtotal,
@@ -179,11 +184,22 @@ const createOrder = (req, res, next) => {
 const getOrderById = (req, res, next) => {
   try {
     const orders = readJSON('orders.json');
-    const order = orders.find(o => o.orderId.toLowerCase() === req.params.orderId.toLowerCase());
+    const order = orders.find(o => o.orderId.toLowerCase() === String(req.params.orderId || '').toLowerCase());
     if (!order) {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
-    res.json({ success: true, order });
+    res.json({
+      success: true,
+      order: {
+        orderId: order.orderId,
+        orderDate: order.orderDate,
+        orderStatus: order.orderStatus,
+        paymentStatus: (order.payment && order.payment.status) || order.paymentStatus || 'Pending Payment',
+        trackingNumber: order.trackingNumber || null,
+        estimatedDelivery: order.estimatedDelivery || null,
+        itemCount: Array.isArray(order.items) ? order.items.length : 0
+      }
+    });
   } catch (err) {
     next(err);
   }
@@ -199,10 +215,9 @@ const trackOrder = (req, res, next) => {
     }
 
     const orders = readJSON('orders.json');
-    const matched = orders.find(o => 
-      o.orderId.toUpperCase() === searchId || 
-      (o.trackingNumber && o.trackingNumber.toUpperCase() === searchId) ||
-      (o.customer && (o.customer.email.toUpperCase() === searchId || o.customer.phone.replace(/[^0-9]/g, '') === searchId.replace(/[^0-9]/g, '')))
+    const matched = orders.find(o =>
+      (o.orderId && o.orderId.toUpperCase() === searchId) ||
+      (o.trackingNumber && o.trackingNumber.toUpperCase() === searchId)
     );
 
     if (!matched) {
@@ -218,8 +233,8 @@ const trackOrder = (req, res, next) => {
         orderId: matched.orderId,
         orderDate: matched.orderDate,
         orderStatus: matched.orderStatus || 'Processing in Jaipur Atelier',
-        paymentStatus: matched.paymentStatus || 'Paid',
-        trackingNumber: matched.trackingNumber || 'HJ-TRK-749102IN',
+        paymentStatus: (matched.payment && matched.payment.status) || matched.paymentStatus || 'Pending Payment',
+        trackingNumber: matched.trackingNumber || null,
         courierPartner: 'Sequel Secure Armored Logistics & Blue Dart Apex',
         estimatedDelivery: matched.estimatedDelivery || '3 - 5 Business Days with White-Glove Armored Transit',
         shippingCity: matched.shippingAddress ? `${matched.shippingAddress.city}, ${matched.shippingAddress.state}` : 'Jaipur, Rajasthan',
