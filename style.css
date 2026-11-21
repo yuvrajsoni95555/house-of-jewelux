@@ -3278,11 +3278,12 @@ img {
 .jewellery-trio-stage {
   display: flex !important;
   flex-direction: row !important;
-  align-items: center;
-  justify-content: center;
-  gap: 1.75rem;
-  width: 95%;
-  max-width: 1100px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1.5rem !important;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
   z-index: 4;
 }
 
@@ -3290,7 +3291,7 @@ img {
   .jewellery-trio-stage {
     display: flex !important;
     flex-direction: row !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     align-items: center !important;
     gap: 1.15rem !important;
     width: 100% !important;
@@ -3298,15 +3299,15 @@ img {
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
-    padding: 0.75rem 1.5rem !important;
+    padding: 0.75rem 1rem !important;
     scrollbar-width: none !important;
   }
   .jewellery-trio-stage::-webkit-scrollbar {
     display: none !important;
   }
   .macro-jewel-card {
-    flex: 0 0 230px !important;
-    width: 230px !important;
+    flex: 0 0 220px !important;
+    width: 220px !important;
     scroll-snap-align: center !important;
     padding: 1rem !important;
   }
@@ -3316,42 +3317,45 @@ img {
 }
 
 .macro-jewel-card {
+  flex: 0 0 260px;
+  width: 260px;
   background: rgba(30, 23, 19, 0.75);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(168, 132, 98, 0.35);
   border-radius: var(--radius-sm);
-  padding: 1.25rem;
-  width: 280px;
+  padding: 1.15rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
 }
 
 .macro-jewel-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-6px);
   border-color: var(--color-antique-gold);
   box-shadow: 0 16px 40px rgba(168, 132, 98, 0.25);
 }
 
+/* Equal dimensions for all 3 cards with elegant gold highlight for center card without distorting gap */
 .macro-jewel-card.featured {
-  border-color: var(--color-antique-gold);
-  background: rgba(35, 27, 22, 0.85);
-  transform: scale(1.05);
+  border: 1.5px solid var(--color-antique-gold);
+  background: rgba(35, 27, 22, 0.88);
+  box-shadow: 0 12px 35px rgba(168, 132, 98, 0.28);
 }
 
 .macro-jewel-card.featured:hover {
-  transform: scale(1.08) translateY(-8px);
+  transform: translateY(-6px);
 }
 
 .macro-jewel-img-box {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 180px;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  margin-bottom: 1rem;
-  background: #000000;
+  margin-bottom: 0.85rem;
+  background: #0d0a08;
 }
 
 .macro-jewel-img-box img {
@@ -3361,8 +3365,70 @@ img {
   transition: transform 0.6s ease;
 }
 
+/* Scaled up Panther brooch to match visual weight of necklace and temple */
+.panther-img-crop {
+  transform: scale(1.22);
+  object-position: center 38%;
+}
+
 .macro-jewel-card:hover .macro-jewel-img-box img {
   transform: scale(1.08);
+}
+.macro-jewel-card:hover .panther-img-crop {
+  transform: scale(1.28);
+}
+
+/* Hero Manual Prev / Next Arrow Navigation Controls */
+.hero-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(26, 18, 14, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(168, 132, 98, 0.4);
+  color: #FBF7F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.3s ease;
+  font-size: 1.4rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.hero-nav-arrow:hover {
+  background: rgba(168, 132, 98, 0.3);
+  border-color: var(--color-antique-gold);
+  color: #FFFFFF;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.hero-nav-prev {
+  left: 1.25rem;
+}
+
+.hero-nav-next {
+  right: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .hero-nav-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.15rem;
+    background: rgba(26, 18, 14, 0.7);
+  }
+  .hero-nav-prev {
+    left: 0.5rem;
+  }
+  .hero-nav-next {
+    right: 0.5rem;
+  }
 }
 
 .macro-jewel-tag {

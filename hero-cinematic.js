@@ -36,9 +36,9 @@
 
   // Scene Configuration (3 Cinematic Chapters)
   const SCENE_DURATIONS = {
-    1: 4500, // Atmospheric Opening
-    2: 4500, // Royal Jharokha Portals
-    3: 5000  // High Jewellery Odyssey
+    1: 5000, // Atmospheric Opening
+    2: 5000, // Royal Jharokha Portals
+    3: 6500  // High Jewellery Odyssey (Minimum 6.5s dwell time on products as requested)
   };
 
   /**
@@ -246,6 +246,14 @@
     }
   }
 
+  function nextScene() {
+    goToScene(currentScene === 3 ? 1 : currentScene + 1, true);
+  }
+
+  function prevScene() {
+    goToScene(currentScene === 1 ? 3 : currentScene - 1, true);
+  }
+
   /**
    * Construct and Mount the Hero DOM
    */
@@ -306,7 +314,7 @@
               <!-- 1. Royal Panther Brooch -->
               <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/brooches')">
                 <div class="macro-jewel-img-box">
-                  <img src="images/user_royal_panther_brooch.jpg" alt="The Royal Panther Pavé Brooch" style="object-position: center 35%;" />
+                  <img src="images/user_royal_panther_brooch.jpg" alt="The Royal Panther Pavé Brooch" class="panther-img-crop" />
                   <span class="macro-jewel-tag">Haute Joaillerie</span>
                 </div>
                 <div class="macro-jewel-info">
@@ -348,6 +356,10 @@
             </div>
           </div>
         </div>
+
+        <!-- Manual Navigation Arrow Controls -->
+        <button class="hero-nav-arrow hero-nav-prev" onclick="window.HJ_HERO.prevScene()" aria-label="Previous Chapter" title="Previous Slide">‹</button>
+        <button class="hero-nav-arrow hero-nav-next" onclick="window.HJ_HERO.nextScene()" aria-label="Next Chapter" title="Next Slide">›</button>
 
         <!-- Bottom Left Chapter Timeline (3 Scenes) -->
         <div class="hero-hud-bottom-left">
@@ -409,6 +421,51 @@
         targetMouseY = 0;
       });
     }
+
+    // Touch swipe left/right to change scenes (Mobile & Touch Devices)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    heroContainer.addEventListener('touchstart', e => {
+      if (e.touches && e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchEndX = touchStartX;
+        touchEndY = touchStartY;
+      }
+    }, { passive: true });
+
+    heroContainer.addEventListener('touchmove', e => {
+      if (e.touches && e.touches.length === 1) {
+        touchEndX = e.touches[0].clientX;
+        touchEndY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    heroContainer.addEventListener('touchend', e => {
+      if (e.target.closest('.jewellery-trio-stage') && window.innerWidth <= 768) {
+        return;
+      }
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+      if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+        if (deltaX < 0) {
+          nextScene();
+        } else {
+          prevScene();
+        }
+      }
+    }, { passive: true });
+
+    // Keyboard Arrow navigation for hero
+    document.addEventListener('keydown', e => {
+      if (isHeroVisible && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        if (e.key === 'ArrowRight') nextScene();
+        if (e.key === 'ArrowLeft') prevScene();
+      }
+    });
 
     // Initialize 3D Touch & Mouse Interactive Inspection on Masterpiece Cards
     initInteractiveJewelCards();
@@ -516,6 +573,8 @@
   window.HJ_HERO = {
     init: mountHero,
     goToScene: goToScene,
+    nextScene: nextScene,
+    prevScene: prevScene,
 
     togglePlay: function () {
       isPlaying = !isPlaying;
