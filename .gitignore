@@ -9,3 +9,8 @@ backup_original/
 pepite_*
 reference_screenshots/
 scripts/
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
