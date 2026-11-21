@@ -335,15 +335,15 @@
                 </div>
               </div>
 
-              <!-- 3. Balaji Nakshi Medallion -->
-              <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/temple-jewellery')">
+              <!-- 3. The Celestial Flora Earrings -->
+              <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/earrings')">
                 <div class="macro-jewel-img-box">
-                  <img src="images/user_balaji_temple_pendant.jpg" alt="Sacred Balaji Temple Nakshi" />
-                  <span class="macro-jewel-tag">Sacred Nakshi</span>
+                  <img src="images/user_floral_diamond_earrings.jpg" alt="The Celestial Flora Diamond Earrings" style="object-position: center 40%;" />
+                  <span class="macro-jewel-tag">Bespoke Joaillerie</span>
                 </div>
                 <div class="macro-jewel-info">
-                  <div class="macro-jewel-title">Balaji Sacred Temple</div>
-                  <div class="macro-jewel-sub">Hand-Chiseled 925 Silver & 22K Gold</div>
+                  <div class="macro-jewel-title">The Celestial Flora</div>
+                  <div class="macro-jewel-sub">Canary & Brilliant-Cut Diamonds</div>
                 </div>
               </div>
             </div>
