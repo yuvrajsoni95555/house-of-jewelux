@@ -20,17 +20,14 @@
     return;
   }
 
-  // Master PIN check (Atelier PIN: 2026)
-  if (!isSessionActive) {
-    const enteredPin = prompt('✦ House of Jewelux — Enter Atelier Master PIN to enable On-Page Edit Mode:', '');
-    if (enteredPin !== '2026' && enteredPin !== '1122') {
-      alert('Invalid Atelier PIN. Returning to normal view.');
-      const cleanUrl = window.location.origin + window.location.pathname + window.location.hash.replace('#editor', '');
-      window.history.replaceState({}, document.title, cleanUrl);
-      return;
-    }
-    sessionStorage.setItem('hj_editor_active', 'true');
+  // The editor is available only after server-side admin authentication.
+  const adminToken = sessionStorage.getItem('hj_admin_token');
+  if (!adminToken) {
+    alert('Please sign in through the Atelier Admin Portal before opening the visual editor.');
+    window.location.hash = '#admin';
+    return;
   }
+  if (!isSessionActive) sessionStorage.setItem('hj_editor_active', 'true');
 
   // 2. State & Change Tracking
   const changes = {
@@ -382,7 +379,7 @@
       };
       const res = await fetch('/api/admin/editor-save', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('hj_admin_token') || ''}` },
         body: JSON.stringify(payload)
       });
       if (res.ok) {
