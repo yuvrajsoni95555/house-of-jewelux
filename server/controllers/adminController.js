@@ -63,7 +63,7 @@ const updateOrder = (req, res, next) => {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
 
-    const allowedStatuses = new Set(['Awaiting Payment', 'Pending Verification', 'Processing', 'Confirmed', 'Dispatched', 'Delivered', 'Cancelled']);
+    const allowedStatuses = new Set(['Awaiting Payment', 'Pending Verification', 'Processing', 'Confirmed', 'Dispatched', 'Delivered', 'Cancelled', 'Confirmed & Sent to Goldsmith']);
     if (orderStatus) {
       if (!allowedStatuses.has(orderStatus)) return res.status(400).json({ success: false, error: 'Invalid order status' });
       orders[index].orderStatus = orderStatus;
