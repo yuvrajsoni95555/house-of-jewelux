@@ -5,13 +5,20 @@
 
 const { readJSON, writeJSON } = require('../db/jsonDb');
 const config = require('../config');
+const { createAdminToken } = require('../middleware/adminAuth');
 
 const adminLogin = (req, res) => {
-  const { pin } = req.body;
-  if (pin === '2026' || pin === '1122' || pin === config.adminPin) {
-    res.json({ success: true, message: 'Admin authorized' });
-  } else {
-    res.status(401).json({ success: false, error: 'Invalid Atelier Master PIN' });
+  const { pin } = req.body || {};
+  if (!config.adminPin || config.adminPin.length < 12 || !config.adminSessionSecret || config.adminSessionSecret.length < 32) {
+    return res.status(503).json({ success: false, error: 'Admin authentication is not configured securely. Set ADMIN_SECRET_PIN and ADMIN_SESSION_SECRET.' });
+  }
+  if (typeof pin !== 'string' || pin.length > 256 || pin !== config.adminPin) {
+    return res.status(401).json({ success: false, error: 'Invalid admin credentials' });
+  }
+  try {
+    return res.json({ success: true, token: createAdminToken(), expiresIn: 28800 });
+  } catch (err) {
+    return res.status(503).json({ success: false, error: 'Admin authentication is unavailable' });
   }
 };
 
@@ -38,6 +45,12 @@ const getOverview = (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+const getCustomOrders = (req, res, next) => {
+  try {
+    res.json({ success: true, customOrders: readJSON('custom_orders.json') });
+  } catch (err) { next(err); }
 };
 
 const updateOrder = (req, res, next) => {
@@ -162,5 +175,6 @@ module.exports = {
   updateOrder,
   updateProduct,
   editorSave,
-  customOrder
+  customOrder,
+  getCustomOrders
 };
