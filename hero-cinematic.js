@@ -301,49 +301,51 @@
 
         <!-- ==================== SCENE 03: HIGH JEWELLERY ODYSSEY ==================== -->
         <div class="cinematic-scene" data-scene="3">
-          <div class="jewellery-trio-stage parallax-plane" data-depth="0.05">
-            <!-- 1. Royal Panther Brooch -->
-            <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/brooches')">
-              <div class="macro-jewel-img-box">
-                <img src="images/user_royal_panther_brooch.jpg" alt="The Royal Panther Pavé Brooch" style="object-position: center 35%;" />
-                <span class="macro-jewel-tag">Haute Joaillerie</span>
+          <div class="scene-03-content-wrap">
+            <div class="jewellery-trio-stage parallax-plane" data-depth="0.05">
+              <!-- 1. Royal Panther Brooch -->
+              <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/brooches')">
+                <div class="macro-jewel-img-box">
+                  <img src="images/user_royal_panther_brooch.jpg" alt="The Royal Panther Pavé Brooch" style="object-position: center 35%;" />
+                  <span class="macro-jewel-tag">Haute Joaillerie</span>
+                </div>
+                <div class="macro-jewel-info">
+                  <div class="macro-jewel-title">The Royal Panther</div>
+                  <div class="macro-jewel-sub">Pavé Diamonds & Ruby Eyes</div>
+                </div>
               </div>
-              <div class="macro-jewel-info">
-                <div class="macro-jewel-title">The Royal Panther</div>
-                <div class="macro-jewel-sub">Pavé Diamonds & Ruby Eyes</div>
+
+              <!-- 2. Royal Nakshi Haar -->
+              <div class="macro-jewel-card featured" onclick="window.HJ.navigate('collections/necklaces')">
+                <div class="macro-jewel-img-box">
+                  <img src="images/user_royal_nakshi_necklace.jpg" alt="The Royal Nakshi Temple Haar" style="object-position: center 40%;" />
+                  <span class="macro-jewel-tag">Imperial Heritage</span>
+                </div>
+                <div class="macro-jewel-info">
+                  <div class="macro-jewel-title">The Royal Nakshi Haar</div>
+                  <div class="macro-jewel-sub">22K Antique Gold & Zambian Emeralds</div>
+                </div>
+              </div>
+
+              <!-- 3. Balaji Nakshi Medallion -->
+              <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/temple-jewellery')">
+                <div class="macro-jewel-img-box">
+                  <img src="images/user_balaji_temple_pendant.jpg" alt="Sacred Balaji Temple Nakshi" />
+                  <span class="macro-jewel-tag">Sacred Nakshi</span>
+                </div>
+                <div class="macro-jewel-info">
+                  <div class="macro-jewel-title">Balaji Sacred Temple</div>
+                  <div class="macro-jewel-sub">Hand-Chiseled 925 Silver & 22K Gold</div>
+                </div>
               </div>
             </div>
 
-            <!-- 2. Royal Nakshi Haar -->
-            <div class="macro-jewel-card featured" onclick="window.HJ.navigate('collections/necklaces')">
-              <div class="macro-jewel-img-box">
-                <img src="images/user_royal_nakshi_necklace.jpg" alt="The Royal Nakshi Temple Haar" style="object-position: center 40%;" />
-                <span class="macro-jewel-tag">Imperial Heritage</span>
-              </div>
-              <div class="macro-jewel-info">
-                <div class="macro-jewel-title">The Royal Nakshi Haar</div>
-                <div class="macro-jewel-sub">22K Antique Gold & Zambian Emeralds</div>
-              </div>
+            <div class="scene-03-cta-wrap">
+              <a href="#collections/all" class="btn-gold" style="padding: 0.75rem 2.2rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
+                <span>Explore Complete Collection</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+              </a>
             </div>
-
-            <!-- 3. Balaji Nakshi Medallion -->
-            <div class="macro-jewel-card" onclick="window.HJ.navigate('collections/temple-jewellery')">
-              <div class="macro-jewel-img-box">
-                <img src="images/user_balaji_temple_pendant.jpg" alt="Sacred Balaji Temple Nakshi" />
-                <span class="macro-jewel-tag">Sacred Nakshi</span>
-              </div>
-              <div class="macro-jewel-info">
-                <div class="macro-jewel-title">Balaji Sacred Temple</div>
-                <div class="macro-jewel-sub">Hand-Chiseled 925 Silver & 22K Gold</div>
-              </div>
-            </div>
-          </div>
-
-          <div style="position: absolute; bottom: 4.5rem; width: 100%; text-align: center; z-index: 5;">
-            <a href="#collections/all" class="btn-gold" style="padding: 0.75rem 2.2rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
-              <span>Explore Complete Collection</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-            </a>
           </div>
         </div>
 
