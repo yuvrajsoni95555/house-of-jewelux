@@ -1433,12 +1433,12 @@
                 ${recentOrders.map(o => `
                   <tr>
                     <td>${o.orderId}</td>
-                    <td>${o.customer.fullName}</td>
-                    <td>${o.paymentMethod.toUpperCase()}</td>
+                    <td>${o.customer.name || o.customer.fullName || 'Customer'}</td>
+                    <td>${(o.payment && o.payment.method || o.paymentMethod || '—').toUpperCase()}</td>
                     <td>${formatPrice(o.pricing.grandTotal)}</td>
-                    <td><span style="padding: 0.2rem 0.4rem; border-radius: 2px; font-size: 0.75rem; background: #FFF3E0; color: #E65100;">${o.paymentStatus}</span></td>
+                    <td><span style="padding: 0.2rem 0.4rem; border-radius: 2px; font-size: 0.75rem; background: #FFF3E0; color: #E65100;">${(o.payment && o.payment.status) || o.paymentStatus || 'Pending Payment'}</span></td>
                     <td>
-                      ${o.paymentStatus === 'Pending Verification' ? `
+                      ${((o.payment && o.payment.status) || o.paymentStatus) === 'Pending Verification' ? `
                         <button class="btn-gold" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;" onclick="window.HJ.verifyOrderPayment('${o.orderId}')">Confirm</button>
                       ` : '✓ Confirmed'}
                     </td>
@@ -2797,33 +2797,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ customer, shippingAddress, items: state.cart, paymentMethod, couponCode: state.appliedCoupon })
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success && data.order) {
-            order = data.order;
-          }
-        }
+        const data = await res.json();
+        if (!res.ok || !data.success || !data.order) throw new Error(data.error || 'Unable to create order. Please try again.');
+        order = data.order;
       } catch (err) {
-        console.warn('API order placement unavailable, using resilient fallback', err);
+        alert(err.message || 'Order could not be submitted. Your cart has been kept safe.');
+        return;
       }
-
-      if (!order) {
-        // Resilient fallback for static hosting / offline
-        const orderId = `HJ-ORD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-        order = {
-          orderId,
-          orderDate: new Date().toISOString(),
-          orderStatus: 'Confirmed & Hallmarked by Jaipur Atelier',
-          customer,
-          shippingAddress,
-          paymentMethod,
-          items: [...state.cart]
-        };
-        const localOrders = JSON.parse(localStorage.getItem('hj_orders') || '[]');
-        localOrders.unshift(order);
-        localStorage.setItem('hj_orders', JSON.stringify(localOrders));
-      }
-
       state.cart = [];
       saveCart();
       const appView = document.getElementById('app-view');
