@@ -2811,9 +2811,9 @@
         <div class="container" style="padding: 4rem 0 6rem;">
           <div class="order-success-card">
             <div class="success-check-icon">✓</div>
-            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1rem;">Acquisition Confirmed</h1>
+            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; margin: 0.5rem 0 1rem;">Order Received — Payment Pending</h1>
             <p>Order ID: <strong>${order.orderId}</strong> | Status: <strong>${order.orderStatus}</strong></p>
-            <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">A formal receipt and BIS Hallmarking dispatch notification have been sent to <strong>${customer.email || 'your email'}</strong>.</p>
+            <p style="font-size: 0.88rem; color: var(--color-stone-muted); margin-top: 0.5rem;">Your order is recorded, but it is not confirmed until advance payment is received and verified. Please contact our concierge for payment instructions.</p>
             <div style="margin: 2rem 0;">
               <a href="#collections/all" class="btn-primary">Continue Browsing</a>
               <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I just placed Order ' + order.orderId)}" target="_blank" class="btn-gold" style="margin-left: 1rem;">WhatsApp Concierge</a>
