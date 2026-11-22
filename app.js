@@ -2590,7 +2590,7 @@
       <section style="padding: 1.5rem 0 4rem; background: var(--color-warm-ivory);">
         <div class="container">
           <div class="about-image-reveal" style="position: relative; height: 380px; border-radius: var(--radius-pepite-card-lg); overflow: hidden; box-shadow: var(--shadow-pepite-card); border: 1px solid rgba(47,36,26,0.08);">
-            <img src="images/authentic_polki_craft.jpg" alt="Jaipur Goldsmithing Bench" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="images/craftsmanship_panther_bench_banner.jpg" alt="Living Goldsmith Heritage at Bench — House of Jewelux" style="width: 100%; height: 100%; object-fit: cover; object-position: center center;" />
             <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(31,23,16,0.85) 0%, rgba(31,23,16,0.1) 60%);"></div>
             <div style="position: absolute; bottom: 2.5rem; left: 2.5rem; right: 2.5rem; color: #FFFFFF; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
               <div>
