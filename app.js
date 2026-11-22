@@ -793,40 +793,7 @@
           </form>
         </div>
       </section>
-
-      <!-- J. BRAND EDITORIAL (SECTION 5.I) -->
-      <section style="padding: 5rem 0; background: var(--color-warm-ivory);">
-        <div class="container">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-            <div>
-              <div class="section-pretitle" style="text-align: left;">Maison Philosophy</div>
-              <h2 style="font-family: var(--font-serif); font-size: 2.3rem; margin: 0.5rem 0 1.25rem; color: var(--color-deep-heritage-brown); line-height: 1.2;">
-                GENERATIONAL INDIAN<br>ARTISTRY × MODERN<br>MINIMALISM
-              </h2>
-              <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8; margin-bottom: 1.25rem;">
-                House of Jewelux was established in Jaipur to bridge the majesty of royal Indian court jewellery with the clean lines of contemporary design. We reject disposable fashion jewellery. Every piece is masterfully crafted in hallmarked gold and solid 925 sterling silver—finished with precision and stamped with the Bureau of Indian Standards (BIS) hallmark for guaranteed purity.
-              </p>
-              <div style="display: flex; gap: 2rem; margin-top: 2rem;">
-                <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">100%</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">BIS 925 Stamped</div>
-                </div>
-                <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Skin Safe</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Hypoallergenic</div>
-                </div>
-                <div>
-                  <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-antique-gold);">Multi-Micron</div>
-                  <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted);">Protective Polish</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <img src="images/authentic_polki_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - House of Jewelux" style="width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--color-warm-stone); box-shadow: 0 15px 40px rgba(35, 28, 22, 0.12);" />
-            </div>
-          </div>
-        </div>
-      </section>
+    `;
     `;
 
     // Initialize Cinematic Hero Engine (The Journey of Eternal Elegance)
