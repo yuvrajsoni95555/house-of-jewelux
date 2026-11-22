@@ -794,7 +794,6 @@
         </div>
       </section>
     `;
-    `;
 
     // Initialize Cinematic Hero Engine (The Journey of Eternal Elegance)
     if (window.HJ_HERO && window.HJ_HERO.init) {
