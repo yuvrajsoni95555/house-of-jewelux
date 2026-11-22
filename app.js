@@ -482,6 +482,17 @@
           </div>
 
           <div class="category-grid-showcase">
+            <a href="#collections/all" class="cat-showcase-card" style="grid-column: 1 / -1; height: 320px;">
+              <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                <img class="cat-showcase-img" src="images/user_flagship_hero_model.jpg" alt="Fine Jewellery Collection" style="object-position: center 25%;" />
+              </div>
+              <div class="cat-showcase-overlay" style="padding: 2.25rem 2rem; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;">
+                <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.5rem; background: rgba(0,0,0,0.45); color: #FFF; border-color: rgba(255,255,255,0.35); font-size: 0.72rem;">Haute Joaillerie Master Collection</span>
+                <div class="cat-showcase-title" style="font-size: 2.2rem; margin-bottom: 0.25rem;">Fine Jewellery</div>
+                <div class="cat-showcase-count" style="font-size: 0.92rem; color: rgba(255,255,255,0.92);">Explore All 50 Authentic Masterpieces • Stamped BIS 925 Hallmark →</div>
+              </div>
+            </a>
+
             <a href="#collections/rings" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
                 <img class="cat-showcase-img" src="images/user_emerald_solitaire_ring.jpg" alt="Rings & Solitaires" />
@@ -682,44 +693,36 @@
 
             <div class="appointment-form-card">
               <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.3rem;">Reserve Your Suite</h3>
-              <p style="font-size: 0.8rem; color: var(--color-stone-muted); margin-bottom: 1.5rem;">Select your preferred date and experience.</p>
+              <p style="font-size: 0.8rem; color: var(--color-stone-muted); margin-bottom: 1.5rem;">Connect with our senior gemologist via Jaipur atelier or video concierge.</p>
               
               <form onsubmit="window.HJ.submitAppointment(event)">
                 <div class="form-row-2col" style="margin-bottom: 1rem;">
                   <div>
                     <label class="form-label">Full Name *</label>
-                    <input type="text" class="form-input" required placeholder="Noble name" />
+                    <input type="text" class="form-input" id="apt-inline-name" required placeholder="Noble name" />
                   </div>
                   <div>
                     <label class="form-label">Phone *</label>
-                    <input type="tel" class="form-input" required placeholder="+91..." />
+                    <input type="tel" class="form-input" id="apt-inline-phone" required placeholder="+91..." />
                   </div>
                 </div>
                 <div style="margin-bottom: 1rem;">
                   <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-input" required placeholder="patron@domain.com" />
-                </div>
-                <div class="form-row-2col" style="margin-bottom: 1rem;">
-                  <div>
-                    <label class="form-label">Date *</label>
-                    <input type="date" class="form-input" required />
-                  </div>
-                  <div>
-                    <label class="form-label">Time *</label>
-                    <select class="form-input">
-                      <option>16:00 - 17:30 IST (High Tea)</option>
-                      <option>11:00 - 12:30 IST (Morning)</option>
-                      <option>18:30 - 20:00 IST (Evening)</option>
-                    </select>
-                  </div>
+                  <input type="email" class="form-input" id="apt-inline-email" required placeholder="patron@domain.com" />
                 </div>
                 <div style="margin-bottom: 1.25rem;">
-                  <label class="form-label">Consultation Experience</label>
-                  <select class="form-input">
+                  <label class="form-label">Consultation Experience *</label>
+                  <select class="form-input" id="apt-inline-type">
                     <option>Private Jaipur Atelier Experience</option>
                     <option>Virtual High-Jewellery Video Concierge</option>
                     <option>Bespoke Bridal Suite Consultation</option>
                   </select>
+                </div>
+                <div style="background: rgba(168, 132, 98, 0.08); border: 1px solid rgba(168, 132, 98, 0.25); border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.2rem; color: #25D366;">💬</span>
+                  <p style="font-size: 0.78rem; color: var(--color-stone-muted); margin: 0; line-height: 1.45;">
+                    <strong style="color: var(--color-espresso);">Direct WhatsApp Scheduling:</strong> Our atelier concierge will contact you on WhatsApp to coordinate your preferred date & time.
+                  </p>
                 </div>
                 <button type="submit" class="btn-primary" style="width: 100%; padding: 0.9rem;">Confirm Appointment</button>
               </form>
@@ -1342,31 +1345,115 @@
     if (!state.customer) {
       container.innerHTML = `
         <div class="container" style="padding: 4rem 0 6rem; max-width: 500px;">
-          <div class="checkout-form-box">
-            <h2 style="font-family: var(--font-serif); font-size: 1.8rem; text-align: center; margin-bottom: 0.5rem;">Patron Sign In</h2>
-            <p style="text-align: center; font-size: 0.85rem; color: var(--color-taupe); margin-bottom: 2rem;">Access your acquisition history and personal atelier commissions.</p>
+          <div class="checkout-form-box" style="background: var(--color-warm-ivory); border: 1px solid rgba(184, 151, 88, 0.3); border-radius: 12px; padding: 2.5rem 2rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+              <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Patron Access</span>
+              <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-deep-heritage-brown); margin: 0 0 0.5rem;">Patron Sign In</h2>
+              <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin: 0;">Access your acquisition history, private atelier suite, and certified BIS records.</p>
+            </div>
+
+            <!-- Quick Social / Google Login -->
+            <button type="button" onclick="window.HJ.patronGoogleLogin()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.85rem; border-radius: 9999px; border: 1px solid rgba(168, 132, 98, 0.35); background: #FFFFFF; color: #2B2520; font-size: 0.82rem; font-weight: 600; cursor: pointer; margin-bottom: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.65v3.03h3.88c2.28-2.1 3.66-5.2 3.66-9.12z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.03c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.13C3.26 21.36 7.33 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.13z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.13c.95-2.83 3.6-4.96 6.72-4.96z"/>
+              </svg>
+              <span>Continue with Google / Gmail</span>
+            </button>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+              <span style="flex: 1; height: 1px; background: rgba(168, 132, 98, 0.25);"></span>
+              <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-stone-muted);">or with Mobile / Email</span>
+              <span style="flex: 1; height: 1px; background: rgba(168, 132, 98, 0.25);"></span>
+            </div>
+
             <form onsubmit="window.HJ.handleLogin(event)">
-              <div class="form-field"><label class="form-label">Email Address *</label><input type="email" name="email" class="form-input" required /></div>
-              <div class="form-field"><label class="form-label">Password *</label><input type="password" name="password" class="form-input" required /></div>
-              <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Sign In</button>
+              <div class="form-field" style="margin-bottom: 1rem;">
+                <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address or Mobile *</label>
+                <input type="text" name="email" class="form-input" required placeholder="patron@domain.com or phone" />
+              </div>
+              <div class="form-field" style="margin-bottom: 1.25rem;">
+                <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Password / PIN *</label>
+                <input type="password" name="password" class="form-input" required placeholder="••••••••" />
+              </div>
+              <button type="submit" class="btn-primary" style="width: 100%; padding: 0.85rem;">Sign In to Private Suite</button>
             </form>
           </div>
         </div>
       `;
     } else {
+      const orders = JSON.parse(localStorage.getItem('hj_orders') || '[]');
+      const appointments = JSON.parse(localStorage.getItem('hj_appointments') || '[]');
       container.innerHTML = `
-        <div class="container" style="padding: 4rem 0 6rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div class="container" style="padding: 4rem 0 6rem; max-width: 960px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
             <div>
-              <span class="hero-badge-pill">Private Patron Suite</span>
-              <h1 style="font-family: var(--font-serif); font-size: 2.2rem;">Welcome, ${state.customer.name}</h1>
+              <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Patron Suite</span>
+              <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-deep-heritage-brown); margin: 0;">Welcome, ${state.customer.name}</h1>
+              <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin: 0.25rem 0 0;">Authenticated Patron • Sovereign Atelier Privilege Member</p>
             </div>
-            <button class="btn-outline" style="color: var(--color-espresso); border-color: var(--color-border);" onclick="window.HJ.handleLogout()">Sign Out</button>
+            <div style="display: flex; gap: 0.75rem;">
+              <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I am ' + state.customer.name)}" target="_blank" class="btn-gold" style="padding: 0.65rem 1.25rem; font-size: 0.75rem; text-decoration: none;">💬 Atelier Concierge</a>
+              <button class="btn-outline" style="color: var(--color-espresso); border-color: rgba(168,132,98,0.4); padding: 0.65rem 1.25rem; font-size: 0.75rem;" onclick="window.HJ.handleLogout()">Sign Out</button>
+            </div>
           </div>
-          <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone-light); border-radius: var(--radius-sm); padding: 2rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 1.5rem;">Acquisition History</h3>
-            <p style="color: var(--color-taupe);">Orders and certified BIS hallmark records will appear here.</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+            <div class="pepite-story-card" style="padding: 1.5rem;">
+              <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-muted-gold); font-weight: 700;">Atelier Status</div>
+              <div style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin: 0.25rem 0 0.5rem;">Sovereign Member</div>
+              <p style="font-size: 0.82rem; color: var(--color-stone-muted); margin: 0;">Complimentary insured armored transit on all acquisitions. 10% privilege active (code: FIRSTLUX).</p>
+            </div>
+            <div class="pepite-story-card" style="padding: 1.5rem;">
+              <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-muted-gold); font-weight: 700;">Acquisitions</div>
+              <div style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin: 0.25rem 0 0.5rem;">${orders.length} Orders Recorded</div>
+              <p style="font-size: 0.82rem; color: var(--color-stone-muted); margin: 0;">All pieces accompanied by Bureau of Indian Standards (BIS) 925 laser hallmarking certificate.</p>
+            </div>
           </div>
+
+          <!-- Acquisition History -->
+          <div style="background: var(--color-warm-ivory); border: 1px solid rgba(168, 132, 98, 0.25); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 1rem;">Acquisition & Commission History</h3>
+            ${orders.length > 0 ? `
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                ${orders.map(o => `
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #FFF; border-radius: 8px; border: 1px solid rgba(168,132,98,0.2);">
+                    <div>
+                      <strong style="font-family: var(--font-serif); color: var(--color-espresso);">${o.orderId}</strong>
+                      <div style="font-size: 0.8rem; color: var(--color-stone-muted);">${new Date(o.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} • Status: <span style="color: #2e7d32; font-weight: 600;">${o.status || 'Paid & Confirmed'}</span></div>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-weight: 700; color: var(--color-deep-heritage-brown);">${formatPrice(o.total || o.finalAmount)}</div>
+                      <a href="javascript:void(0)" onclick="window.HJ.openTrackOrderModal('${o.orderId}')" style="font-size: 0.75rem; color: var(--color-antique-gold); text-decoration: underline;">Track Consignment →</a>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : `
+              <p style="color: var(--color-stone-muted); font-size: 0.88rem; margin: 0;">No past orders recorded on this device yet. Explore our 50 master creations to begin your collection.</p>
+              <div style="margin-top: 1rem;"><a href="#collections/all" class="btn-primary" style="padding: 0.65rem 1.25rem; font-size: 0.75rem;">Explore All 50 Creations</a></div>
+            `}
+          </div>
+
+          <!-- Appointments -->
+          ${appointments.length > 0 ? `
+            <div style="background: var(--color-warm-ivory); border: 1px solid rgba(168, 132, 98, 0.25); border-radius: 12px; padding: 2rem;">
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-deep-heritage-brown); margin-bottom: 1rem;">Private Atelier Reservations</h3>
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                ${appointments.map(a => `
+                  <div style="padding: 1rem; background: #FFF; border-radius: 8px; border: 1px solid rgba(168,132,98,0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: var(--color-espresso);">${a.consultationType}</strong>
+                      <span style="font-size: 0.75rem; color: var(--color-muted-gold); font-weight: 700;">${a.appointmentId}</span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--color-stone-muted); margin-top: 0.35rem;">WhatsApp Concierge Coordination • ${a.phone}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
         </div>
       `;
     }
@@ -1526,9 +1613,9 @@
 
             <!-- Diamond -->
             <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
-              <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.6); border: 1px solid var(--color-warm-stone-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-stone-muted); font-size: 1.5rem;">💎</div>
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.12); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700;">C</div>
               <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Diamond Jewellery</h3>
-              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Certified VVS1 laboratory diamonds and moissanites. Hearts & Arrows cut, micropavé settings, eternal brilliance with BIS hallmark certification.</p>
+              <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">Real Natural Diamonds, Lab-Grown Diamonds, and Moissanite Diamonds. Certified VVS1 clarity, Hearts & Arrows cut, micropavé bench settings, and eternal brilliance.</p>
               <a href="#collections/diamond-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Diamond Collection ↗</a>
             </div>
           </div>
@@ -1585,34 +1672,6 @@
                 <div style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--color-deep-heritage-brown);">Yuvraj Soni</div>
                 <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-stone-muted); margin-top: 0.2rem;">Master Goldsmith & Founder • House of Jewelux</div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- E. ATELIER STATISTICS RIBBON -->
-      <section style="padding: 3rem 0 5rem; background: var(--color-warm-ivory);">
-        <div class="container">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
-            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
-              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">50</div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Authentic Creations</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Rings, Earrings, Brooches, Temple</div>
-            </div>
-            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
-              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">100%</div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">BIS 925 Certified</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Laser stamped purity hallmark</div>
-            </div>
-            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
-              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">40+</div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Hours Per Masterpiece</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Artisanal bench handcrafting</div>
-            </div>
-            <div class="trust-item about-story-reveal" style="text-align: center; padding: 2rem 1.5rem !important;">
-              <div style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--color-muted-gold);">19,000+</div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-espresso); font-weight: 700; margin-top: 0.35rem;">Indian PIN Codes</div>
-              <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.2rem;">Insured armored courier transit</div>
             </div>
           </div>
         </div>
@@ -3340,20 +3399,20 @@
     submitAppointment: async function (e) {
       if (e) e.preventDefault();
       const form = e ? e.target : document.getElementById('appointment-form');
-      const nameInput = (form && form.querySelector('#apt-name')) || document.getElementById('apt-name');
-      const phoneInput = (form && form.querySelector('#apt-phone')) || document.getElementById('apt-phone');
-      const emailInput = (form && form.querySelector('#apt-email')) || document.getElementById('apt-email');
+      const nameInput = (form && (form.querySelector('#apt-name') || form.querySelector('#apt-inline-name'))) || document.getElementById('apt-name') || document.getElementById('apt-inline-name');
+      const phoneInput = (form && (form.querySelector('#apt-phone') || form.querySelector('#apt-inline-phone'))) || document.getElementById('apt-phone') || document.getElementById('apt-inline-phone');
+      const emailInput = (form && (form.querySelector('#apt-email') || form.querySelector('#apt-inline-email'))) || document.getElementById('apt-email') || document.getElementById('apt-inline-email');
       const dateInput = (form && form.querySelector('#apt-date')) || document.getElementById('apt-date');
       const timeInput = (form && form.querySelector('#apt-time')) || document.getElementById('apt-time');
-      const typeInput = (form && form.querySelector('#apt-type')) || document.getElementById('apt-type');
+      const typeInput = (form && (form.querySelector('#apt-type') || form.querySelector('#apt-inline-type'))) || document.getElementById('apt-type') || document.getElementById('apt-inline-type');
       const notesInput = (form && form.querySelector('#apt-notes')) || document.getElementById('apt-notes');
 
       const payload = {
         fullName: nameInput ? nameInput.value.trim() : 'Honored Patron',
         phone: phoneInput ? phoneInput.value.trim() : '',
         email: emailInput ? emailInput.value.trim() : '',
-        appointmentDate: dateInput ? dateInput.value : new Date().toISOString().split('T')[0],
-        preferredTime: timeInput ? timeInput.value : '16:00 - 17:30 IST',
+        appointmentDate: (dateInput && dateInput.value) ? dateInput.value : 'Coordinated via WhatsApp',
+        preferredTime: (timeInput && timeInput.value) ? timeInput.value : 'Coordinated via WhatsApp',
         consultationType: typeInput ? typeInput.value : 'Private Jaipur Atelier Experience',
         notes: notesInput ? notesInput.value.trim() : ''
       };
@@ -3385,9 +3444,73 @@
       existing.unshift({ appointmentId: apptId, ...payload, createdAt: new Date().toISOString() });
       localStorage.setItem('hj_appointments', JSON.stringify(existing));
 
-      alert(`✦ PRIVATE ATELIER APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nPatron: ${payload.fullName}\nDate: ${payload.appointmentDate}\nTime: ${payload.preferredTime}\n\nOur Atelier Concierge has reserved your consultation and will contact you via phone/WhatsApp at ${payload.phone}.`);
+      alert(`✦ PRIVATE ATELIER APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nPatron: ${payload.fullName}\nExperience: ${payload.consultationType}\n\nOur Atelier Concierge has received your consultation reservation and will connect directly on WhatsApp at ${payload.phone} to coordinate your exclusive date and time slot.`);
       window.HJ.closeAppointmentModal();
       if (form) form.reset();
+    },
+
+    openPatronLoginPopup: function () {
+      const modal = document.getElementById('patron-login-modal');
+      if (modal) modal.style.display = 'flex';
+    },
+
+    closePatronLoginPopup: function () {
+      const modal = document.getElementById('patron-login-modal');
+      if (modal) modal.style.display = 'none';
+      sessionStorage.setItem('hj_login_dismissed', '1');
+    },
+
+    patronGoogleLogin: function () {
+      const patronName = 'Patron Soni';
+      const patronEmail = 'patron@gmail.com';
+      state.customer = {
+        id: `PATRON-G-${Date.now()}`,
+        name: patronName,
+        email: patronEmail,
+        authProvider: 'Google / Gmail',
+        phone: '+91 98765 43210'
+      };
+      localStorage.setItem('hj_customer', JSON.stringify(state.customer));
+      sessionStorage.setItem('hj_login_dismissed', '1');
+      window.HJ.closePatronLoginPopup();
+      window.HJ.showToast(`Welcome to The Atelier Circle, ${patronName} ✦`);
+      handleRoute();
+    },
+
+    submitPatronPhoneLogin: function (e) {
+      if (e) e.preventDefault();
+      const mobileInput = document.getElementById('patron-mobile-input');
+      const otpContainer = document.getElementById('patron-otp-container');
+      const otpInput = document.getElementById('patron-otp-input');
+      const btnText = document.getElementById('patron-login-btn-text');
+
+      if (!mobileInput || !mobileInput.value || mobileInput.value.trim().length < 10) {
+        alert('Please enter a valid 10-digit mobile number.');
+        return;
+      }
+
+      if (otpContainer && (otpContainer.style.display === 'none' || !otpContainer.style.display)) {
+        otpContainer.style.display = 'block';
+        if (otpInput) otpInput.value = '1234';
+        if (btnText) btnText.textContent = 'Verify & Enter Suite';
+        window.HJ.showToast('Verification code sent to +91 ' + mobileInput.value);
+        return;
+      }
+
+      const phoneNum = mobileInput.value.trim();
+      const patronName = 'Patron ' + phoneNum.slice(-4);
+      state.customer = {
+        id: `PATRON-M-${Date.now()}`,
+        name: patronName,
+        phone: '+91 ' + phoneNum,
+        email: `${phoneNum}@patron.houseofjewelux.com`,
+        authProvider: 'Mobile OTP Verification'
+      };
+      localStorage.setItem('hj_customer', JSON.stringify(state.customer));
+      sessionStorage.setItem('hj_login_dismissed', '1');
+      window.HJ.closePatronLoginPopup();
+      window.HJ.showToast(`Welcome back, ${patronName} ✦`);
+      handleRoute();
     },
 
     openTrackOrderModal: function (orderId) {
@@ -3508,12 +3631,24 @@
     } catch(e) {}
   }
 
+  // 5-Second Dismissible Patron Login Popup Trigger
+  function initPatronLoginTrigger() {
+    if (state.customer) return;
+    if (sessionStorage.getItem('hj_login_dismissed')) return;
+    setTimeout(() => {
+      if (!state.customer && !sessionStorage.getItem('hj_login_dismissed')) {
+        window.HJ.openPatronLoginPopup();
+      }
+    }, 5000);
+  }
+
   window.addEventListener('hashchange', handleRoute);
   window.addEventListener('DOMContentLoaded', () => {
     updateBadges();
     handleRoute();
     loadProducts();
     restoreSavedEdits();
+    initPatronLoginTrigger();
     if (sessionStorage.getItem('hj_editor_active') === 'true') {
       setTimeout(() => window.HJ.toggleEditorMode(true), 250);
     }

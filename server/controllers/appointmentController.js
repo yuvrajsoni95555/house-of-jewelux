@@ -11,14 +11,14 @@ const createAppointment = async (req, res, next) => {
     const name = req.body.name || req.body.fullName;
     const phone = req.body.phone;
     const email = req.body.email || '';
-    const salon = req.body.salon || req.body.consultationType;
-    const date = req.body.date || req.body.appointmentDate;
-    const timeSlot = req.body.timeSlot || req.body.preferredTime;
+    const salon = req.body.salon || req.body.consultationType || 'Jaipur High Jewellery Atelier (Civil Lines)';
+    const date = req.body.date || req.body.appointmentDate || 'Coordinated via WhatsApp';
+    const timeSlot = req.body.timeSlot || req.body.preferredTime || 'Coordinated via WhatsApp';
     const interests = req.body.interests;
     const notes = req.body.notes || '';
 
-    if (!name || !phone || !date) {
-      return res.status(400).json({ success: false, error: 'Name, phone number and preferred date are required.' });
+    if (!name || !phone) {
+      return res.status(400).json({ success: false, error: 'Name and phone number are required.' });
     }
 
     const appointmentId = `HJ-APT-${Date.now().toString().slice(-6)}`;
