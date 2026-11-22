@@ -3265,14 +3265,71 @@ img {
   max-width: 1100px;
   margin: 0 auto;
   gap: 1.25rem;
-  padding-bottom: 5rem;
+  padding-bottom: 0;
+  margin-bottom: 3.5rem;
   z-index: 4;
 }
 
-.scene-03-cta-wrap {
+/* ===================================================================
+   HERO SCENE CTA BUTTONS — UNIFIED VERTICAL BASELINE ALIGNMENT
+   Anchors all 3 buttons ('Explore The Collections', 'Behold the Creations',
+   'Explore Complete Collection') at the exact same vertical & horizontal baseline
+   =================================================================== */
+.hero-scene-cta {
+  position: absolute;
+  bottom: 4.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
   text-align: center;
-  z-index: 5;
-  width: 100%;
+  white-space: nowrap;
+}
+
+.hero-cta-btn {
+  padding: 0.82rem 2.4rem !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.65rem !important;
+  border-radius: 9999px !important;
+  cursor: pointer !important;
+  border: none !important;
+  background: var(--gradient-gold) !important;
+  color: var(--color-espresso) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 2px 10px rgba(197, 160, 89, 0.35) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.hero-cta-btn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 30px rgba(197, 160, 89, 0.5) !important;
+}
+
+@media (max-width: 1024px) {
+  .hero-scene-cta {
+    bottom: 4.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-scene-cta {
+    bottom: 3.8rem;
+  }
+  .hero-cta-btn {
+    padding: 0.72rem 1.8rem !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.12em !important;
+  }
 }
 
 .jewellery-trio-stage {
@@ -4453,11 +4510,36 @@ img {
 
 .header-main-desktop {
   height: 64px;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 1180px) {
+  .header-main-desktop {
+    padding: 0 1rem;
+  }
+}
+
+.header-main-desktop > .brand-logo-link {
+  justify-self: start;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
+}
+
+.header-main-desktop > nav {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+.header-main-desktop > div:last-child {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .header-search-wrap .search-pill-box {
@@ -4496,9 +4578,16 @@ img {
   gap: 0.3rem;
 }
 
-.floating-nav-link:hover, .floating-nav-link.active {
+.floating-nav-link:hover {
   background: rgba(26, 18, 14, 0.06);
   color: var(--color-espresso);
+}
+
+.floating-nav-link.active {
+  background: var(--color-espresso) !important;
+  color: var(--color-warm-ivory) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(26, 18, 14, 0.22);
 }
 
 .floating-cta-btn {

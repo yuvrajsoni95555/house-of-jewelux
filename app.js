@@ -243,6 +243,53 @@
         }
       }, 60);
     }
+
+    // Update Active Navigation Pill & Account State
+    document.querySelectorAll('.floating-nav-link').forEach(link => {
+      const href = link.getAttribute('href') || '';
+      const cleanHref = href.replace(/^#\/?/, '');
+      let isActive = false;
+      if (cleanHref === 'collections/gold' && (route === 'collections/gold' || route === 'gold' || route === 'gold-category')) {
+        isActive = true;
+      } else if (cleanHref === 'collections/silver' && (route === 'collections/silver' || route === 'silver' || route === 'silver-category')) {
+        isActive = true;
+      } else if (cleanHref === 'collections/new-arrivals' && (route === 'collections/new-arrivals' || route === 'whats-new')) {
+        isActive = true;
+      } else if (cleanHref === 'craftsmanship' && (route === 'craftsmanship' || route === 'custom-order')) {
+        isActive = true;
+      } else if (cleanHref === 'about' && route === 'about') {
+        isActive = true;
+      }
+      if (isActive) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Update Mobile Bottom Nav Active State
+    document.querySelectorAll('.mobile-bottom-tab').forEach(tab => {
+      const href = tab.getAttribute('href') || '';
+      const cleanHref = href.replace(/^#\/?/, '');
+      let isActive = false;
+      if ((!cleanHref || cleanHref === 'home') && (route === '' || route === 'home')) {
+        isActive = true;
+      } else if (cleanHref === 'collections/gold' && (route === 'collections/gold' || route === 'gold' || route === 'gold-category')) {
+        isActive = true;
+      } else if (cleanHref === 'collections/silver' && (route === 'collections/silver' || route === 'silver' || route === 'silver-category')) {
+        isActive = true;
+      }
+      if (isActive) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    const accountDot = document.getElementById('account-logged-in-dot');
+    if (accountDot) {
+      accountDot.style.display = state.customer ? 'block' : 'none';
+    }
   }
 
   // ==================== COMPONENT: PRODUCT CARD (1:1 PALMONAS) ====================
@@ -305,17 +352,17 @@
     container.innerHTML = `
       <!-- A. PREMIUM HERO SECTION (CINEMATIC ODYSSEY) -->
       <section class="hero-slider" id="hero-slider">
-        <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center;">
-          <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center; position: relative;">
+          <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 3.5rem;">
             <div class="hero-brand-center-lockup">
               <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
             </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
-                <span>Explore The Collections</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-              </a>
-            </div>
+          </div>
+          <div class="hero-scene-cta">
+            <a href="#collections/all" class="btn-gold hero-cta-btn">
+              <span>Explore The Collections</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
           </div>
         </div>
       </section>
@@ -3510,6 +3557,41 @@
       sessionStorage.setItem('hj_login_dismissed', '1');
       window.HJ.closePatronLoginPopup();
       window.HJ.showToast(`Welcome back, ${patronName} ✦`);
+      handleRoute();
+    },
+
+    showToast: function (message) {
+      let toast = document.getElementById('hj-toast-notification');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'hj-toast-notification';
+        toast.style.cssText = 'position: fixed; bottom: 2rem; right: 2rem; background: #1A120E; color: #FAF7F2; padding: 0.9rem 1.6rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 1px solid rgba(184, 151, 88, 0.4); z-index: 9999; display: flex; align-items: center; gap: 0.6rem; transform: translateY(100px); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<span style="color: var(--color-muted-gold); font-size: 1rem;">✦</span> <span>${message}</span>`;
+      toast.style.transform = 'translateY(0)';
+      toast.style.opacity = '1';
+      clearTimeout(window._hjToastTimer);
+      window._hjToastTimer = setTimeout(() => {
+        toast.style.transform = 'translateY(100px)';
+        toast.style.opacity = '0';
+      }, 3500);
+    },
+
+    isLoggedIn: function () {
+      return !!state.customer;
+    },
+
+    getCustomer: function () {
+      return state.customer;
+    },
+
+    logout: function () {
+      state.customer = null;
+      localStorage.removeItem('hj_customer');
+      const accountDot = document.getElementById('account-logged-in-dot');
+      if (accountDot) accountDot.style.display = 'none';
+      window.HJ.showToast('You have signed out of your account.');
       handleRoute();
     },
 

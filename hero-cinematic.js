@@ -274,16 +274,16 @@
 
         <!-- ==================== SCENE 01: THE ATMOSPHERIC PRELUDE ==================== -->
         <div class="cinematic-scene active" data-scene="1">
-          <div class="scene-content-center parallax-plane" data-depth="0.03" style="text-align: center; max-width: 800px; padding: 1.5rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div class="scene-content-center parallax-plane" data-depth="0.03" style="text-align: center; max-width: 800px; padding: 1.5rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 3.5rem;">
             <div class="hero-brand-center-lockup">
               <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
             </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="#collections/all" class="btn-gold" style="padding: 0.8rem 2.4rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
-                <span>Explore The Collections</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-              </a>
-            </div>
+          </div>
+          <div class="hero-scene-cta">
+            <a href="#collections/all" class="btn-gold hero-cta-btn">
+              <span>Explore The Collections</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
           </div>
         </div>
 
@@ -293,17 +293,18 @@
           <div class="jharokha-portal-left parallax-plane" data-depth="0.08"></div>
           <div class="jharokha-portal-right parallax-plane" data-depth="0.08"></div>
 
-          <div class="scene-content-center parallax-plane" data-depth="0.04" style="z-index: 4;">
+          <div class="scene-content-center parallax-plane" data-depth="0.04" style="z-index: 4; margin-bottom: 3.5rem;">
             <span class="scene-micro-badge">✦ Indian Architectural Sanctum</span>
             <h2 class="scene-editorial-heading">Generational Royal Craftsmanship</h2>
             <p class="scene-editorial-desc">
               Inspired by the carved sandstone pavilions of Rajasthan and centuries of sacred bench goldsmithing in Jaipur.
             </p>
-            <div style="margin-top: 1.5rem;">
-              <button onclick="window.HJ_HERO.goToScene(3)" class="btn-outline" style="border-color: var(--color-antique-gold); color: var(--color-warm-ivory);">
-                Behold the Creations →
-              </button>
-            </div>
+          </div>
+          <div class="hero-scene-cta">
+            <button onclick="window.HJ_HERO.goToScene(3)" class="btn-gold hero-cta-btn">
+              <span>Behold the Creations</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </button>
           </div>
         </div>
 
@@ -347,13 +348,13 @@
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="scene-03-cta-wrap">
-              <a href="#collections/all" class="btn-gold" style="padding: 0.75rem 2.2rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 9999px;">
-                <span>Explore Complete Collection</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-              </a>
-            </div>
+          <div class="hero-scene-cta">
+            <a href="#collections/all" class="btn-gold hero-cta-btn">
+              <span>Explore Complete Collection</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </a>
           </div>
         </div>
 
