@@ -455,9 +455,9 @@
 
           <div class="material-pillars-grid">
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
-            <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Centuries-old artistry, forever cherished.">
+            <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Rooted in tradition, refined through artistry.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_heritage_craft_clean.jpg" alt="Heritage Craftsmanship — Centuries-old artistry, forever cherished." loading="lazy" />
+                <img class="material-pillar-img" src="images/pillar_heritage_craft_temple.jpg" alt="Heritage Craftsmanship — Rooted in tradition, refined through artistry." loading="eager" />
                 <span class="material-pillar-badge">✦ Pillar 01</span>
               </div>
               <div class="material-pillar-body">
@@ -466,10 +466,10 @@
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "Centuries-old artistry, forever cherished."
+                  "Rooted in tradition, refined through artistry."
                 </div>
                 <div class="material-pillar-desc">
-                  Devotional bench goldsmithing embodying Jaipur royal artistry, hand-chiseled nakshi engraving, and ancestral hammer-forging.
+                  Inspired by India's rich jewellery heritage, featuring intricate temple-inspired designs, exquisite detailing and the artistry of traditional craftsmanship.
                 </div>
                 <div class="material-pillar-footer">
                   <span>Explore Atelier</span>
@@ -479,9 +479,9 @@
             </a>
 
             <!-- PILLAR 2: TIMELESS ELEGANCE -->
-            <a href="#collections/all" class="material-pillar-card" aria-label="Timeless Elegance — Classic beauty, always in style.">
+            <a href="#collections/all" class="material-pillar-card" aria-label="Timeless Elegance — Designed to captivate, made to last.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_timeless_elegance_clean.jpg" alt="Timeless Elegance — Classic beauty, always in style." loading="lazy" />
+                <img class="material-pillar-img" src="images/pillar_timeless_elegance_model.jpg" alt="Timeless Elegance — Designed to captivate, made to last." loading="eager" />
                 <span class="material-pillar-badge">✦ Pillar 02</span>
               </div>
               <div class="material-pillar-body">
@@ -490,10 +490,10 @@
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "Classic beauty, always in style."
+                  "Designed to captivate, made to last."
                 </div>
                 <div class="material-pillar-desc">
-                  Regal bridal diadems, architectural solitaires, and heirloom silhouettes sculpted to transcend fleeting seasonal trends.
+                  Discover statement necklaces, exquisite earrings, elegant rings and bracelets, where contemporary design meets timeless sophistication.
                 </div>
                 <div class="material-pillar-footer">
                   <span>Discover Masterpieces</span>
