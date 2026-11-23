@@ -616,48 +616,6 @@
         </div>
       </section>
 
-      <!-- BESTSELLING MASTERPIECES -->
-      <section style="padding: 4.5rem 0 3.5rem; background: var(--color-warm-ivory);">
-        <div class="container">
-          <div class="section-header" style="text-align: center; margin-bottom: 2.5rem;">
-            <div class="section-pretitle" style="letter-spacing: 0.26em; font-size: 0.72rem; text-transform: uppercase; color: #8A6440; margin-bottom: 0.5rem; font-weight: 600;">Patron Favorites</div>
-            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #1A120E; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Bestselling Masterpieces</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); font-family: var(--font-serif); font-style: italic;">
-              Most coveted fine jewellery heirlooms, hand-finished in hallmarked gold and 925 sterling silver.
-            </p>
-          </div>
-
-          <div class="products-grid motion-stagger">
-            ${bestSellers.map(renderProductCard).join('')}
-          </div>
-
-          <div style="text-align: center; margin-top: 3rem;">
-            <a href="#collections/all" class="btn-primary" style="padding: 0.85rem 2.2rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">
-              Explore All 50 Pieces
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- NEW ARRIVALS -->
-      <section style="padding: 4rem 0 3.5rem; background: var(--color-soft-offwhite); border-top: 1px solid var(--color-warm-stone);">
-        <div class="container">
-          <div class="section-header" style="text-align: center; margin-bottom: 2.5rem;">
-            <div class="section-pretitle" style="letter-spacing: 0.26em; font-size: 0.72rem; text-transform: uppercase; color: #8A6440; margin-bottom: 0.5rem; font-weight: 600;">Newly Unveiled</div>
-            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #1A120E; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">New Arrivals at House of Jewelux</h2>
-            <div class="section-divider"><span class="section-divider-gem"></span></div>
-            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); font-family: var(--font-serif); font-style: italic;">
-              Freshly finished bench masterpieces from our Jaipur atelier, featuring royal sovereign falcon crests, temple nakshi medallions, and architectural solitaires.
-            </p>
-          </div>
-
-          <div class="products-grid motion-stagger">
-            ${newArrivals.map(renderProductCard).join('')}
-          </div>
-        </div>
-      </section>
-
       <!-- E. CLIENT REVIEWS MOVABLE CAROUSEL -->
       <section class="client-reviews-section" style="padding: 5rem 0; background: var(--color-warm-ivory); border-top: 1px solid var(--color-warm-stone); overflow: hidden;">
         <div class="container">
