@@ -4637,7 +4637,10 @@ img {
   cursor: pointer;
 }
 
-.product-card:hover .pepite-action-badge,
+.product-card .pepite-action-badge {
+  display: none !important;
+}
+
 .cat-showcase-card:hover .pepite-action-badge {
   transform: rotate(45deg) scale(1.08);
   background: var(--color-espresso);

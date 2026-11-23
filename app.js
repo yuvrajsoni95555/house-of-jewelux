@@ -301,11 +301,6 @@
 
     return `
       <div class="product-card" data-product-id="${p.id}">
-        <!-- Pépite Signature Circular Action Badge (↗) -->
-        <div class="pepite-action-badge" onclick="window.HJ.navigate('products/${p.handle || p.id}')" title="View Masterpiece">
-          ↗
-        </div>
-
         <div class="product-card-media">
           <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}">
             <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="lazy" />
