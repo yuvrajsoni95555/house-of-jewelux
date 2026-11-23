@@ -3129,19 +3129,18 @@ img {
   inset: 0;
   opacity: 0;
   visibility: hidden;
+  display: none !important;
   pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
-  transform: scale(1.02);
   z-index: 1;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .cinematic-scene.active {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
   transform: scale(1) translateZ(0);
   z-index: 3;
 }
@@ -3370,9 +3369,10 @@ img {
 @media (max-width: 768px) {
   .hero-slider,
   .cinematic-hero-viewport {
-    height: auto !important;
-    min-height: calc(100vh - 120px) !important;
-    min-height: calc(100svh - 120px) !important;
+    height: calc(100vh - 165px) !important;
+    height: calc(100svh - 165px) !important;
+    min-height: 480px !important;
+    max-height: 740px !important;
     overflow: hidden !important;
     position: relative !important;
   }
@@ -3384,15 +3384,14 @@ img {
     height: 100% !important;
     opacity: 0 !important;
     visibility: hidden !important;
+    display: none !important;
     pointer-events: none !important;
-    display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
     text-align: center !important;
-    padding: 1rem 1rem 5.5rem 1rem !important;
+    padding: 0.5rem 1rem 4.5rem 1rem !important;
     box-sizing: border-box !important;
-    transition: opacity 0.4s ease, visibility 0.4s ease !important;
   }
   .cinematic-scene.active,
   .hero-slide.active {
@@ -3403,8 +3402,8 @@ img {
     z-index: 3 !important;
   }
   .scene-content-center {
-    margin-bottom: 1.5rem !important;
-    padding: 0.25rem 1rem !important;
+    margin-bottom: 1rem !important;
+    padding: 0 1rem !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -3414,18 +3413,18 @@ img {
     text-align: center !important;
   }
   .hero-brand-official-logo {
-    max-height: clamp(140px, 22vh, 185px) !important;
+    max-height: clamp(130px, 19vh, 165px) !important;
     width: auto !important;
-    max-width: 74vw !important;
+    max-width: 72vw !important;
     margin: 0 auto !important;
   }
   .scene-03-content-wrap {
-    margin-bottom: 2.2rem !important;
+    margin-bottom: 1.5rem !important;
     padding-bottom: 0 !important;
   }
   .hero-scene-cta {
     position: absolute !important;
-    bottom: 6.8rem !important;
+    bottom: 3.8rem !important;
     left: 50% !important;
     right: auto !important;
     top: auto !important;
@@ -4042,14 +4041,14 @@ img {
 @media (max-width: 768px) {
   .hero-hud-bottom-left {
     left: 1.25rem !important;
-    bottom: 4.2rem !important;
+    bottom: 1.25rem !important;
     z-index: 24 !important;
   }
   .hero-scroll-prompt {
     left: auto !important;
     right: 1.25rem !important;
     transform: none !important;
-    bottom: 4.2rem !important;
+    bottom: 1.25rem !important;
     z-index: 24 !important;
     align-items: flex-end !important;
     animation: bounceDownRight 2.2s infinite ease-in-out !important;
@@ -4503,10 +4502,6 @@ img {
   .motion-slide-up {
     transform: translate3d(0, 20px, 0);
   }
-  .cinematic-hero-viewport {
-    height: 88vh !important;
-    min-height: 680px !important;
-  }
 }
 
 /* Mobile adaptations */
@@ -4522,10 +4517,6 @@ img {
     bottom: 72px; /* above mobile bottom nav */
     width: 44px;
     height: 44px;
-  }
-  .cinematic-hero-viewport {
-    height: 90vh !important;
-    min-height: 660px !important;
   }
 }
 
@@ -5675,15 +5666,6 @@ img, video, canvas, svg {
     padding: 0 0.5rem !important;
   }
 
-  /* Cinematic Hero Viewport on Mobile */
-  .cinematic-hero-viewport {
-    height: auto !important;
-    min-height: calc(100vh - 120px) !important;
-    min-height: calc(100svh - 120px) !important;
-    max-height: 800px !important;
-    overflow: hidden !important;
-  }
-
   .hero-flagship-logo-img {
     height: auto !important;
     max-width: 230px !important;
@@ -6054,17 +6036,37 @@ img, video, canvas, svg {
   }
 }
 
-/* --- 3. TABLET OPTIMIZATIONS (768px to 1024px) --- */
-@media (min-width: 768px) and (max-width: 1024px) {
+/* --- 3. TABLET & RESIZED DESKTOP OPTIMIZATIONS (769px to 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
   .site-header {
     width: calc(100% - 2rem) !important;
     margin: 0.5rem auto 0.75rem auto !important;
   }
 
   .cinematic-hero-viewport {
-    height: 88vh !important;
-    min-height: 680px !important;
-    max-height: 880px !important;
+    height: clamp(560px, 74vh, 740px) !important;
+    min-height: 560px !important;
+    max-height: 740px !important;
+  }
+
+  .hero-hud-bottom-left {
+    left: 1.5rem !important;
+    bottom: 4.8rem !important;
+    z-index: 24 !important;
+  }
+
+  .hero-scroll-prompt {
+    right: 1.5rem !important;
+    bottom: 4.8rem !important;
+    z-index: 24 !important;
+  }
+
+  .hero-scene-cta {
+    position: absolute !important;
+    bottom: 7.2rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 25 !important;
   }
 
   .jewellery-trio-stage {

@@ -3710,6 +3710,7 @@
 
   // 5-Second Dismissible Patron Login Popup Trigger
   function initPatronLoginTrigger() {
+    if (new URLSearchParams(window.location.search).get('nomodal') === '1') return;
     if (state.customer) return;
     if (sessionStorage.getItem('hj_login_dismissed')) return;
     setTimeout(() => {
