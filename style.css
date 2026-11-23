@@ -73,11 +73,44 @@
 
   --color-accent-crimson: #8F2A38;      /* Royal ruby accent for special badges */
 
-  /* Organic Card Radius & Shadows */
-  --radius-pepite-card: 24px;
-  --radius-pepite-card-lg: 30px;
+  /* ===================================================================
+     CANONICAL DESIGN TOKENS (FLOTO USABILITY HEURISTICS FIXES 3, 4, 5)
+     =================================================================== */
+
+  /* Consolidated 5-Tier Radius Scale (Fix 5: Inconsistent Corner Radii) */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+  --radius-pepite-card: 16px;
+  --radius-pepite-card-lg: 16px;
   --radius-pepite-pill: 9999px;
   --radius-pepite-btn: 9999px;
+
+  /* Consolidated Semantic Text Palette (Fix 4: Text Colours Token Set) */
+  --color-text-primary: #1A120E;     /* Deep Espresso / Obsidian Noir */
+  --color-text-secondary: #3A2418;   /* Rich Heritage Mahogany */
+  --color-text-muted: #5A524C;       /* Warm Stone Bronze */
+  --color-text-subtle: #7A6858;      /* Soft Slate */
+  --color-text-gold: #A88462;        /* Antique Gold */
+  --color-text-gold-light: #E8D3B8;  /* Luminous Champagne */
+  --color-text-light: #FAF6F0;       /* Ivory White on Dark */
+  --color-text-white: #FFFFFF;       /* Pure White */
+  --color-text-accent: #8F2A38;      /* Royal Ruby */
+
+  /* Canonical 8-Step Modular Type Scale (Fix 3: Consistent Type Scale) */
+  --font-size-xs: 0.75rem;           /* 12px - Badges, micro-captions (min accessible size) */
+  --font-size-sm: 0.875rem;          /* 14px - Subtitles, metadata, secondary body */
+  --font-size-base: 1rem;            /* 16px - Base body copy */
+  --font-size-md: 1.125rem;          /* 18px - Lead paragraphs, prominent labels */
+  --font-size-lg: 1.25rem;           /* 20px - Subheadings, card titles */
+  --font-size-xl: 1.5rem;            /* 24px - Section headers */
+  --font-size-2xl: 2rem;             /* 32px - Page headers */
+  --font-size-3xl: 2.5rem;           /* 40px - Display / Hero titles */
+
   --shadow-pepite-card: 0 10px 30px rgba(26, 18, 14, 0.05);
   --shadow-pepite-hover: 0 16px 42px rgba(26, 18, 14, 0.10);
   --shadow-pepite-header: 0 10px 32px rgba(26, 18, 14, 0.07);
@@ -208,9 +241,9 @@ img {
 .announcement-bar {
   background: var(--color-subtle-charcoal);
   color: var(--color-champagne-light);
-  font-size: 0.72rem;
+  font-size: 0.8125rem; /* 13px - Fix 6: Body text >= 12px for accessibility */
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   height: var(--announcement-height);
   display: flex;
   align-items: center;
@@ -717,12 +750,12 @@ img {
   padding: 0.4rem 1rem;
   background: var(--color-soft-offwhite);
   border: 1px solid var(--color-warm-stone);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   color: var(--color-stone-muted);
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: 0.78125rem; /* 12.5px - Fix 7: Badge text >= 12px for accessibility */
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
@@ -1261,28 +1294,32 @@ img {
 
 .card-add-btn {
   width: 100%;
-  background: var(--color-warm-ivory);
-  color: var(--color-deep-heritage-brown);
-  border: 1px solid var(--color-warm-stone);
+  height: 42px;
+  background: var(--color-deep-heritage-brown); /* High contrast solid dark brown - Fix 2 */
+  color: #FFFFFF;
+  border: 1.5px solid var(--color-deep-heritage-brown);
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 0.8125rem; /* 13px - accessible */
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.75rem;
-  border-radius: var(--radius-full);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 12px rgba(26, 18, 14, 0.16);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
+  cursor: pointer;
 }
 
 .card-add-btn:hover {
-  background: var(--color-deep-heritage-brown);
-  border-color: var(--color-deep-heritage-brown);
-  color: var(--color-champagne-light);
+  background: var(--color-muted-gold-dark);
+  border-color: var(--color-muted-gold-dark);
+  color: #FFFFFF;
   transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(26, 18, 14, 0.22);
 }
 
 /* ===================================================================
@@ -2528,7 +2565,7 @@ img {
    TESTIMONIALS — Customer Stories
    =================================================================== */
 /* ===================================================================
-   CLIENT REVIEWS — Movable Patron Commendations Carousel
+   CLIENT REVIEWS — Movable Client Commendations Carousel
    =================================================================== */
 .reviews-slider-container {
   position: relative;
@@ -2841,28 +2878,32 @@ img {
 .cat-showcase-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(26, 18, 14, 0.05) 0%, rgba(26, 18, 14, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(26, 18, 14, 0) 0%, rgba(26, 18, 14, 0.42) 45%, rgba(26, 18, 14, 0.90) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 2rem;
-  color: var(--color-warm-ivory);
+  padding: 1.75rem;
+  color: #FFFFFF;
 }
 
 .cat-showcase-title {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+  color: #FFFFFF;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.95);
 }
 
 .cat-showcase-count {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.78125rem;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--color-muted-gold-light);
+  letter-spacing: 0.14em;
+  color: #E8D3B8;
+  font-weight: 600;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
 }
 
 /* Appointment Consultation Card & Modal — Pépite Editorial */
@@ -3816,20 +3857,27 @@ img {
 }
 
 .chapter-indicator-dot {
-  width: 24px;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
+  width: 28px;
+  height: 5px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.55); /* Fix 10: High visibility on dark hero */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   padding: 0;
 }
 
+.chapter-indicator-dot:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
 .chapter-indicator-dot.active {
-  width: 44px;
-  background: var(--color-antique-gold);
-  box-shadow: 0 0 10px rgba(168, 132, 98, 0.6);
+  width: 48px;
+  height: 6px;
+  background: #E8D3B8;
+  border-color: #FFFFFF;
+  box-shadow: 0 0 14px rgba(232, 211, 184, 0.85), 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .hero-scroll-prompt {
@@ -3869,11 +3917,14 @@ img {
     letter-spacing: 0.16em !important;
   }
   .chapter-indicator-dot {
-    width: 20px !important;
-    height: 3px !important;
+    width: 24px !important;
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.6) !important;
   }
   .chapter-indicator-dot.active {
-    width: 32px !important;
+    width: 38px !important;
+    height: 5px !important;
+    background: #E8D3B8 !important;
   }
   .hero-scroll-prompt {
     left: auto !important;
@@ -4771,12 +4822,13 @@ img {
    Swiss/Italian Editorial Rhythm, Pebble Cards & Pill Architecture
    =================================================================== */
 
-/* Buttons: Global Luxury Capsule Pills */
+/* Buttons: Global Luxury Capsule Pills (Fix 1: Unified Button System) */
 .btn-primary, .btn-gold, .btn-outline, .card-add-btn, .sticky-btn-buy, .sticky-btn-cart {
-  border-radius: var(--radius-pepite-btn) !important;
+  border-radius: var(--radius-pill) !important;
   font-family: var(--font-sans) !important;
+  font-size: 0.8125rem !important; /* 13px standardized button type */
   font-weight: 700 !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.25s ease, border-color 0.25s ease !important;
 }
@@ -5113,12 +5165,13 @@ img {
 .material-pillar-card {
   position: relative;
   background: var(--color-soft-offwhite);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid rgba(168, 132, 98, 0.22);
   box-shadow: 0 10px 30px rgba(26, 18, 14, 0.05);
   display: flex;
   flex-direction: column;
+  height: 100%; /* Fix 8: Equal height row stretching */
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
   text-decoration: none;
   color: inherit;
@@ -5170,7 +5223,7 @@ img {
   padding: 1.75rem 1.6rem 1.6rem;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 1 auto; /* Fix 8: Vertical space filling */
 }
 
 .material-pillar-title {
@@ -5189,10 +5242,11 @@ img {
   color: #5A524C;
   line-height: 1.65;
   margin: 0 0 1.25rem;
-  flex: 1;
+  flex: 1 1 auto; /* Fix 8: Pushes footer to bottom */
 }
 
 .material-pillar-footer {
+  margin-top: auto !important; /* Fix 8: Strict horizontal baseline alignment */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -5498,10 +5552,10 @@ img, video, canvas, svg {
     justify-content: center !important;
   }
 
-  /* Announcement Bar on Mobile */
+  /* Announcement Bar on Mobile (Fix 6: Minimum 12px for accessibility) */
   .announcement-bar {
-    font-size: 0.65rem !important;
-    height: 32px !important;
+    font-size: 0.75rem !important; /* 12px exact on mobile */
+    height: 34px !important;
     padding: 0 0.5rem !important;
   }
 
@@ -6121,11 +6175,21 @@ img, video, canvas, svg {
   display: block !important;
 }
 
-/* Card Add To Bag Button Metallic Sweep */
+/* Card Add To Bag Button Metallic Sweep (Fix 2: High Contrast Affordance) */
 .card-add-btn {
   position: relative;
   overflow: hidden;
+  background: var(--color-deep-heritage-brown) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid var(--color-deep-heritage-brown) !important;
+  box-shadow: 0 4px 12px rgba(26, 18, 14, 0.16) !important;
   transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.card-add-btn:hover {
+  background: var(--color-muted-gold-dark) !important;
+  border-color: var(--color-muted-gold-dark) !important;
+  color: #FFFFFF !important;
 }
 
 .card-add-btn::after {
@@ -6244,13 +6308,21 @@ img, video, canvas, svg {
 }
 
 .chapter-indicator-dot {
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease !important;
+  width: 28px !important;
+  height: 5px !important;
+  border-radius: 9999px !important;
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease !important;
 }
 
 .chapter-indicator-dot.active {
-  width: 28px !important;
+  width: 48px !important;
+  height: 6px !important;
   border-radius: 9999px !important;
-  background: var(--color-muted-gold) !important;
+  background: #E8D3B8 !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(232, 211, 184, 0.85), 0 2px 6px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Floating Starlight Background Canvas */

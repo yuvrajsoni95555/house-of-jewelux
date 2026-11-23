@@ -78,7 +78,7 @@
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261123_prod_v29">
+  <link rel="stylesheet" href="/style.css?v=20261123_audit_v31">
   <style id="bulletproof-luxury-footer-styles">
     /* High-Priority Ultra-Luxurious Footer Styles - Mapped to Brand Swatches */
     #app-view {
@@ -676,7 +676,7 @@
   <footer class="site-footer" role="contentinfo" style="background: #1A120E; color: #FAF7F2;">
     <div class="container footer-container">
       
-      <!-- SECTION G: NEWSLETTER SUBSCRIPTION REMOVED PER PATRON DIRECTIVE -->
+      <!-- SECTION G: NEWSLETTER SUBSCRIPTION REMOVED PER CLIENT DIRECTIVE -->
       <div id="newsletter-feedback" style="display: none;"></div>
 
       <!-- MULTI-COLUMN STREAMLINED FOOTER -->
@@ -826,9 +826,9 @@
   <script src="/vendor/ScrollTrigger.min.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="/motion-engine.js?v=20261123_prod_v29"></script>
-  <script src="/hero-cinematic.js?v=20261123_prod_v29"></script>
-  <script src="/app.js?v=20261123_prod_v29"></script>
-  <script src="/visual-editor.js?v=20261123_prod_v29" defer></script>
+  <script src="/hero-cinematic.js?v=20261123_audit_v31"></script>
+  <script src="/app.js?v=20261123_audit_v31"></script>
+  <script src="/visual-editor.js?v=20261123_audit_v31" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
   <div id="appointment-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(6px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">
@@ -855,7 +855,7 @@
 
         <div style="margin-bottom: 1rem;">
           <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address *</label>
-          <input type="email" id="apt-email" class="form-input" required placeholder="patron@houseofjewelux.com" />
+          <input type="email" id="apt-email" class="form-input" required placeholder="client@houseofjewelux.com" />
         </div>
 
         <div style="background: rgba(168, 132, 98, 0.08); border: 1px solid rgba(168, 132, 98, 0.25); border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
@@ -893,7 +893,7 @@
       <div style="text-align: center; margin-bottom: 1.75rem;">
         <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-muted-gold); font-weight: 700;">Real-Time Logistics Telemetry</span>
         <h3 style="font-family: var(--font-serif); font-size: 1.75rem; color: var(--color-espresso); margin: 0.35rem 0;">Track Your Consignment</h3>
-        <p style="font-size: 0.85rem; color: var(--color-stone-muted);">Enter your Order ID (e.g. <strong>HJ-ORD-2026-7701</strong>) or registered patron phone number.</p>
+        <p style="font-size: 0.85rem; color: var(--color-stone-muted);">Enter your Order ID (e.g. <strong>HJ-ORD-2026-7701</strong>) or registered client phone number.</p>
       </div>
 
       <form id="track-form" onsubmit="window.HJ.submitTrackOrder(event)">
@@ -907,7 +907,7 @@
     </div>
   </div>
 
-  <!-- ==================== 5-SECOND PATRON LOGIN POPUP MODAL ==================== -->
+  <!-- ==================== 5-SECOND CLIENT LOGIN POPUP MODAL ==================== -->
   <div id="patron-login-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.82); backdrop-filter: blur(8px); z-index: 1060; align-items: center; justify-content: center; padding: 1.25rem;">
     <div class="pepite-modal-card" style="max-width: 480px; width: 100%; position: relative; border-radius: var(--radius-pepite-card-lg); border: 1px solid rgba(184, 151, 88, 0.35); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45); background: var(--color-warm-ivory); padding: 2.25rem 2rem; text-align: center;">
       <button class="pepite-modal-close" onclick="window.HJ.closePatronLoginPopup()" style="position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; background: none; border: none; color: var(--color-espresso); cursor: pointer; line-height: 1;" aria-label="Close Modal">&times;</button>

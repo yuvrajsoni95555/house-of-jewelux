@@ -12,11 +12,11 @@
   "JEWELUX20": {
     "code": "JEWELUX20",
     "discountPercent": 20,
-    "description": "20% Exclusive VIP Patron & Birthday Privilege"
+    "description": "20% Exclusive VIP Client & Birthday Privilege"
   },
   "SILVER500": {
     "code": "SILVER500",
     "flatDiscountINR": 500,
-    "description": "₹500 Patron Referral Privilege"
+    "description": "₹500 Client Referral Privilege"
   }
 }

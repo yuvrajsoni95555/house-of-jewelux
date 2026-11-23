@@ -1,4 +1,9 @@
 [
-  "patron@houseofjewelux.com",
-  "test_patron@example.com"
+  "client@houseofjewelux.com",
+  "test_client@example.com",
+  {
+    "email": "patron_test_1795427616993@houseofjewelux.com",
+    "subscribedAt": "2026-11-23T09:53:37.122Z",
+    "source": "website_footer"
+  }
 ]

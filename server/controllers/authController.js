@@ -114,7 +114,7 @@ const recoverPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email || !email.includes('@')) {
-      return res.status(400).json({ success: false, error: 'Please enter a valid registered patron email address.' });
+      return res.status(400).json({ success: false, error: 'Please enter a valid registered client email address.' });
     }
 
     const cleanEmail = email.trim().toLowerCase();

@@ -331,20 +331,20 @@
           </button>
         </div>
         <div class="product-card-body" style="padding: 1.25rem 1.15rem 1.35rem;">
-          <div class="card-cat-line" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'} • ${p.purity || 'BIS 925'}</div>
+          <div class="card-cat-line" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'}</div>
           <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
             <a href="#products/${p.handle || p.id}">${p.name}</a>
           </h3>
           <div class="card-rating-row" style="margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--color-stone-muted);">
             <span style="color: var(--color-muted-gold);">★</span>
             <span style="font-weight: 600; color: var(--color-espresso);">${p.rating || '4.9'}</span>
-            <span>(${p.reviewCount || '28'} patrons)</span>
+            <span style="color: var(--color-stone-muted); font-size: 0.75rem;">(${p.reviewCount || '28'})</span>
           </div>
           <div class="card-price-row" style="display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.85rem;">
             <span class="card-price-current" style="font-size: 1.1rem; font-weight: 700; color: var(--color-espresso);">${formatPrice(p.price)}</span>
             ${(p.compareAtPrice || p.originalPrice) ? `<span class="card-price-original" style="font-size: 0.82rem; color: var(--color-stone-subtle); text-decoration: line-through;">${formatPrice(p.compareAtPrice || p.originalPrice)}</span>` : ''}
           </div>
-          <button class="card-add-btn" onclick="window.HJ.addToCart('${p.id}', 1, event)" style="border-radius: 9999px; height: 38px; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;">
+          <button class="card-add-btn" onclick="window.HJ.addToCart('${p.id}', 1, event)">
             Add To Bag
           </button>
         </div>
@@ -620,11 +620,11 @@
       <section class="client-reviews-section" style="padding: 5rem 0; background: var(--color-warm-ivory); border-top: 1px solid var(--color-warm-stone); overflow: hidden;">
         <div class="container">
           <div style="text-align: center; margin-bottom: 2.75rem;">
-            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.75rem; border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.08); font-weight: 600;">Patron Commendations</span>
+            <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.75rem; border-color: #8C6D46; color: #5C4028; background: rgba(140, 109, 70, 0.08); font-weight: 600;">Client Commendations</span>
             <h2 class="section-title" style="color: #1A120E;">Client Reviews</h2>
             <div class="section-divider"><span class="section-divider-gem"></span></div>
             <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); font-family: var(--font-serif); font-style: italic;">
-              Reflections of connoisseurs and patrons who have commissioned heirlooms from our Jaipur atelier.
+              Reflections of connoisseurs and collectors who have commissioned heirlooms from our Jaipur atelier.
             </p>
           </div>
 
@@ -768,7 +768,7 @@
                 </div>
                 <div style="margin-bottom: 1rem;">
                   <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-input" id="apt-inline-email" required placeholder="patron@domain.com" />
+                  <input type="email" class="form-input" id="apt-inline-email" required placeholder="client@domain.com" />
                 </div>
                 <div style="margin-bottom: 1.25rem;">
                   <label class="form-label">Consultation Experience *</label>
@@ -862,7 +862,7 @@
       } else if (collectionId === 'best-sellers') {
         filtered = filtered.filter(p => p.badge === 'Bestseller');
         title = "Best Sellers";
-        subtitle = "Most coveted pieces favored by royal patrons";
+        subtitle = "Most coveted pieces favored by royalty and connoisseurs";
         heroImg = "images/authentic_hero_editorial.jpg";
       } else if (collectionId === 'festive-edit') {
         filtered = filtered.filter(p => p.price >= 18000);
@@ -1110,7 +1110,7 @@
                 <path d="M12 2.5C12 2.5 8 7 8 11.5C8 14.5 10 17 12 17C14 17 16 14.5 16 11.5C16 7 12 2.5 12 2.5Z" fill="rgba(184, 151, 88, 0.25)"></path>
                 <path d="M5 17C5 17 6.5 21 12 21C17.5 21 19 17 19 17H5Z"></path>
               </svg>
-              <span>84 patrons acquired this piece in the last 7 days</span>
+              <span>84 clients acquired this piece in the last 7 days</span>
             </div>
 
             <!-- Limited Time Offers Box (Matching Palmonas) -->
@@ -1383,13 +1383,13 @@
         <div class="container" style="padding: 4rem 0 6rem; max-width: 500px;">
           <div class="checkout-form-box" style="background: var(--color-warm-ivory); border: 1px solid rgba(184, 151, 88, 0.3); border-radius: 12px; padding: 2.5rem 2rem;">
             <div style="text-align: center; margin-bottom: 2rem;">
-              <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Patron Access</span>
-              <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-deep-heritage-brown); margin: 0 0 0.5rem;">Patron Sign In</h2>
+              <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Client Access</span>
+              <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-deep-heritage-brown); margin: 0 0 0.5rem;">Client Sign In</h2>
               <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin: 0;">Access your acquisition history, private atelier suite, and certified BIS records.</p>
             </div>
 
             <!-- Quick Social / Google Login -->
-            <button type="button" onclick="window.HJ.patronGoogleLogin()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.85rem; border-radius: 9999px; border: 1px solid rgba(168, 132, 98, 0.35); background: #FFFFFF; color: #2B2520; font-size: 0.82rem; font-weight: 600; cursor: pointer; margin-bottom: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <button type="button" onclick="window.HJ.clientGoogleLogin()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.85rem; border-radius: 9999px; border: 1px solid rgba(168, 132, 98, 0.35); background: #FFFFFF; color: #2B2520; font-size: 0.82rem; font-weight: 600; cursor: pointer; margin-bottom: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
               <svg width="18" height="18" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.65v3.03h3.88c2.28-2.1 3.66-5.2 3.66-9.12z"/>
                 <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.03c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.13C3.26 21.36 7.33 24 12 24z"/>
@@ -1408,7 +1408,7 @@
             <form onsubmit="window.HJ.handleLogin(event)">
               <div class="form-field" style="margin-bottom: 1rem;">
                 <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address or Mobile *</label>
-                <input type="text" name="email" class="form-input" required placeholder="patron@domain.com or phone" />
+                <input type="text" name="email" class="form-input" required placeholder="client@domain.com or phone" />
               </div>
               <div class="form-field" style="margin-bottom: 1.25rem;">
                 <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Password / PIN *</label>
@@ -1426,9 +1426,9 @@
         <div class="container" style="padding: 4rem 0 6rem; max-width: 960px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
             <div>
-              <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Patron Suite</span>
+              <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Client Suite</span>
               <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-deep-heritage-brown); margin: 0;">Welcome, ${state.customer.name}</h1>
-              <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin: 0.25rem 0 0;">Authenticated Patron • Sovereign Atelier Privilege Member</p>
+              <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin: 0.25rem 0 0;">Authenticated Client • Sovereign Atelier Privilege Member</p>
             </div>
             <div style="display: flex; gap: 0.75rem;">
               <a href="https://wa.me/916377061020?text=${encodeURIComponent('Hello House of Jewelux Concierge, I am ' + state.customer.name)}" target="_blank" class="btn-gold" style="padding: 0.65rem 1.25rem; font-size: 0.75rem; text-decoration: none;">💬 Atelier Concierge</a>
@@ -1752,7 +1752,7 @@
         `
       },
       returns: {
-        title: "14-Day Patron Inspection & Returns Covenant",
+        title: "14-Day Client Inspection & Returns Covenant",
         subtitle: "Uncompromising Quality Guarantee • Full Refund or Exchange Privilege",
         badge: "Client Trust Covenant",
         content: `
@@ -1804,7 +1804,7 @@
       cancellation: {
         title: "Order Cancellation Policy",
         subtitle: "Clear, Fair Guidelines for Immediate Cancellations",
-        badge: "Patron Flexibility",
+        badge: "Client Flexibility",
         content: `
           <div class="pepite-story-card" style="margin-bottom: 2rem;">
             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">1. Prior to Courier Dispatch</h3>
@@ -1821,7 +1821,7 @@
         `
       },
       privacy: {
-        title: "Patron Privacy & Data Protection Covenant",
+        title: "Client Privacy & Data Protection Covenant",
         subtitle: "256-Bit SSL Encryption • Strict Confidentiality • Zero Third-Party Selling",
         badge: "Confidentiality Assured",
         content: `
@@ -2141,18 +2141,18 @@
             <!-- Right: Private Enquiry Form -->
             <div class="about-story-reveal">
               <form id="contact-form" class="pepite-story-card" style="display: flex; flex-direction: column; gap: 1.25rem;">
-                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Direct Patron Dispatch</span>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-muted-gold); font-weight: 700;">Direct Client Dispatch</span>
                 <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-deep-heritage-brown); margin: 0;">Send a Private Enquiry</h3>
                 <p style="font-size: 0.82rem; color: var(--color-stone-muted); margin-bottom: 0.5rem;">All fields marked with an asterisk are required.</p>
 
                 <div class="form-row-2col">
                   <div>
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Full Name *</label>
-                    <input name="fullName" type="text" class="form-input" required placeholder="Your noble name" />
+                    <input name="fullName" type="text" class="form-input" required placeholder="Your full name" />
                   </div>
                   <div>
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address *</label>
-                    <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
+                    <input name="email" type="email" class="form-input" required placeholder="client@domain.com" />
                   </div>
                 </div>
 
@@ -2376,7 +2376,7 @@
                   </div>
                   <div>
                     <label class="form-label" style="font-size: 0.75rem; font-weight: 600; color: var(--color-espresso);">Email Address *</label>
-                    <input name="email" type="email" class="form-input" required placeholder="patron@domain.com" />
+                    <input name="email" type="email" class="form-input" required placeholder="client@domain.com" />
                   </div>
                 </div>
 
@@ -3397,11 +3397,11 @@
           }
         }
       } catch (err) {
-        console.warn('API login offline, falling back to local patron session', err);
+        console.warn('API login offline, falling back to local client session', err);
       }
 
-      // Resilient local patron login
-      const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Valued Patron';
+      // Resilient local client login
+      const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Valued Client';
       state.customer = { id: `CUST-${Date.now()}`, name, email, phone: '+91 98765 43210' };
       localStorage.setItem('hj_customer', JSON.stringify(state.customer));
       handleRoute();
@@ -3441,7 +3441,7 @@
       const notesInput = (form && form.querySelector('#apt-notes')) || document.getElementById('apt-notes');
 
       const payload = {
-        fullName: nameInput ? nameInput.value.trim() : 'Honored Patron',
+        fullName: nameInput ? nameInput.value.trim() : 'Honored Client',
         phone: phoneInput ? phoneInput.value.trim() : '',
         email: emailInput ? emailInput.value.trim() : '',
         appointmentDate: (dateInput && dateInput.value) ? dateInput.value : 'Coordinated via WhatsApp',
@@ -3472,45 +3472,45 @@
         console.warn('API appointments offline, saving to local storage', err);
       }
 
-      // Store in localStorage for patron reference
+      // Store in localStorage for client reference
       const existing = JSON.parse(localStorage.getItem('hj_appointments') || '[]');
       existing.unshift({ appointmentId: apptId, ...payload, createdAt: new Date().toISOString() });
       localStorage.setItem('hj_appointments', JSON.stringify(existing));
 
-      alert(`✦ PRIVATE ATELIER APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nPatron: ${payload.fullName}\nExperience: ${payload.consultationType}\n\nOur Atelier Concierge has received your consultation reservation and will connect directly on WhatsApp at ${payload.phone} to coordinate your exclusive date and time slot.`);
+      alert(`✦ PRIVATE ATELIER APPOINTMENT CONFIRMED\n\nReference: ${apptId}\nClient: ${payload.fullName}\nExperience: ${payload.consultationType}\n\nOur Atelier Concierge has received your consultation reservation and will connect directly on WhatsApp at ${payload.phone} to coordinate your exclusive date and time slot.`);
       window.HJ.closeAppointmentModal();
       if (form) form.reset();
     },
 
-    openPatronLoginPopup: function () {
+    openClientLoginPopup: function () {
       const modal = document.getElementById('patron-login-modal');
       if (modal) modal.style.display = 'flex';
     },
 
-    closePatronLoginPopup: function () {
+    closeClientLoginPopup: function () {
       const modal = document.getElementById('patron-login-modal');
       if (modal) modal.style.display = 'none';
       sessionStorage.setItem('hj_login_dismissed', '1');
     },
 
-    patronGoogleLogin: function () {
-      const patronName = 'Patron Soni';
-      const patronEmail = 'patron@gmail.com';
+    clientGoogleLogin: function () {
+      const clientName = 'Client Soni';
+      const clientEmail = 'client@gmail.com';
       state.customer = {
-        id: `PATRON-G-${Date.now()}`,
-        name: patronName,
-        email: patronEmail,
+        id: `CLIENT-G-${Date.now()}`,
+        name: clientName,
+        email: clientEmail,
         authProvider: 'Google / Gmail',
         phone: '+91 98765 43210'
       };
       localStorage.setItem('hj_customer', JSON.stringify(state.customer));
       sessionStorage.setItem('hj_login_dismissed', '1');
-      window.HJ.closePatronLoginPopup();
-      window.HJ.showToast(`Welcome to The Atelier Circle, ${patronName} ✦`);
+      window.HJ.closeClientLoginPopup();
+      window.HJ.showToast(`Welcome to The Atelier Circle, ${clientName} ✦`);
       handleRoute();
     },
 
-    submitPatronPhoneLogin: function (e) {
+    submitClientPhoneLogin: function (e) {
       if (e) e.preventDefault();
       const mobileInput = document.getElementById('patron-mobile-input');
       const otpContainer = document.getElementById('patron-otp-container');
@@ -3531,20 +3531,26 @@
       }
 
       const phoneNum = mobileInput.value.trim();
-      const patronName = 'Patron ' + phoneNum.slice(-4);
+      const clientName = 'Client ' + phoneNum.slice(-4);
       state.customer = {
-        id: `PATRON-M-${Date.now()}`,
-        name: patronName,
+        id: `CLIENT-M-${Date.now()}`,
+        name: clientName,
         phone: '+91 ' + phoneNum,
-        email: `${phoneNum}@patron.houseofjewelux.com`,
+        email: `${phoneNum}@client.houseofjewelux.com`,
         authProvider: 'Mobile OTP Verification'
       };
       localStorage.setItem('hj_customer', JSON.stringify(state.customer));
       sessionStorage.setItem('hj_login_dismissed', '1');
-      window.HJ.closePatronLoginPopup();
-      window.HJ.showToast(`Welcome back, ${patronName} ✦`);
+      window.HJ.closeClientLoginPopup();
+      window.HJ.showToast(`Welcome back, ${clientName} ✦`);
       handleRoute();
     },
+
+    // Backward-compatible aliases
+    openPatronLoginPopup: function () { window.HJ.openClientLoginPopup(); },
+    closePatronLoginPopup: function () { window.HJ.closeClientLoginPopup(); },
+    patronGoogleLogin: function () { window.HJ.clientGoogleLogin(); },
+    submitPatronPhoneLogin: function (e) { window.HJ.submitClientPhoneLogin(e); },
 
     showToast: function (message) {
       let toast = document.getElementById('hj-toast-notification');
@@ -3648,7 +3654,7 @@
           orderStatus: 'In Transit via Sequel Armored Logistics',
           trackingNumber: 'HJ-TRK-892341IN',
           estimatedDelivery: '2 - 3 Business Days',
-          customer: { name: 'Valued Patron', phone: '+91 98765 43210' }
+          customer: { name: 'Valued Client', phone: '+91 98765 43210' }
         };
       }
 
