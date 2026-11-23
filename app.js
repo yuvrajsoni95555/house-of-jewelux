@@ -502,25 +502,25 @@
               </div>
             </a>
 
-            <!-- PILLAR 3: GLOBAL LUXURY -->
-            <a href="#collections/diamond" class="material-pillar-card" aria-label="Global Luxury — A world of sophistication, within your reach.">
+            <!-- PILLAR 3: CONTEMPORARY INDIAN LUXURY -->
+            <a href="#collections/all" class="material-pillar-card" aria-label="Contemporary Indian Luxury — Indian soul, international elegance.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_global_luxury_clean.jpg" alt="Global Luxury — A world of sophistication, within your reach." loading="lazy" />
+                <img class="material-pillar-img" src="images/pillar_contemporary_luxury.jpg" alt="Contemporary Indian Luxury — Indian soul, international elegance." loading="eager" />
                 <span class="material-pillar-badge">✦ Pillar 03</span>
               </div>
               <div class="material-pillar-body">
                 <div class="material-pillar-title">
-                  <span>Global Luxury</span>
+                  <span>Contemporary Indian Luxury</span>
                   <span style="font-size: 1.1rem; color: #A88462;">✦</span>
                 </div>
                 <div style="font-family: var(--font-serif); font-style: italic; color: #8A6440; font-size: 0.95rem; margin-bottom: 0.65rem; font-weight: 500;">
-                  "A world of sophistication, within your reach."
+                  "Indian soul, international elegance."
                 </div>
                 <div class="material-pillar-desc">
-                  Contemporary luxury aesthetics harmonized with Bureau of Indian Standards (BIS) hallmark certification and insured armored transit.
+                  Bringing together the richness of Indian heritage and the sophistication of global design, creating jewellery that transcends borders and celebrates individuality.
                 </div>
                 <div class="material-pillar-footer">
-                  <span>View Vault Collections</span>
+                  <span>Experience Jewelux</span>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                 </div>
               </div>
