@@ -317,8 +317,8 @@
       <div class="product-card" data-product-id="${p.id}">
         <div class="product-card-media" style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #FAF7F2;">
           <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}" style="display: block; position: relative; width: 100%; height: 100%; aspect-ratio: 1/1; overflow: hidden;">
-            <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="eager" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
-            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.name} - Atelier Detail" loading="lazy" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.name} - Atelier Detail" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
           </a>
           <span class="card-badge" style="border-radius: 9999px; font-size: 0.65rem; padding: 0.25rem 0.65rem; background: rgba(255, 253, 246, 0.95); color: var(--color-espresso); font-weight: 700; border: 1px solid rgba(47,36,26,0.08);">${badgeText}</span>
           <button class="card-wishlist-btn ${isWished ? 'active' : ''}" 
@@ -368,7 +368,10 @@
         <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center; position: relative;">
           <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 3.5rem;">
             <div class="hero-brand-center-lockup">
-              <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
+              <picture>
+                <source srcset="/brand-identity/house_of_jewelux_official_logo.webp" type="image/webp">
+                <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" width="380" height="372" fetchpriority="high" decoding="sync" />
+              </picture>
             </div>
           </div>
           <div class="hero-scene-cta">
@@ -457,7 +460,7 @@
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
             <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Rooted in tradition, refined through artistry.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_heritage_craft_temple.jpg" alt="Heritage Craftsmanship — Rooted in tradition, refined through artistry." loading="eager" />
+                <img class="material-pillar-img" src="images/pillar_heritage_craft_temple.jpg" alt="Heritage Craftsmanship — Rooted in tradition, refined through artistry." loading="lazy" decoding="async" />
                 <span class="material-pillar-badge">✦ Pillar 01</span>
               </div>
               <div class="material-pillar-body">
@@ -481,7 +484,7 @@
             <!-- PILLAR 2: TIMELESS ELEGANCE -->
             <a href="#collections/all" class="material-pillar-card" aria-label="Timeless Elegance — Designed to captivate, made to last.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_timeless_elegance_model.jpg" alt="Timeless Elegance — Designed to captivate, made to last." loading="eager" />
+                <img class="material-pillar-img" src="images/pillar_timeless_elegance_model.jpg" alt="Timeless Elegance — Designed to captivate, made to last." loading="lazy" decoding="async" />
                 <span class="material-pillar-badge">✦ Pillar 02</span>
               </div>
               <div class="material-pillar-body">
@@ -505,7 +508,7 @@
             <!-- PILLAR 3: CONTEMPORARY INDIAN LUXURY -->
             <a href="#collections/all" class="material-pillar-card" aria-label="Contemporary Indian Luxury — Indian soul, international elegance.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_contemporary_luxury.jpg" alt="Contemporary Indian Luxury — Indian soul, international elegance." loading="eager" />
+                <img class="material-pillar-img" src="images/pillar_contemporary_luxury.jpg" alt="Contemporary Indian Luxury — Indian soul, international elegance." loading="lazy" decoding="async" />
                 <span class="material-pillar-badge">✦ Pillar 03</span>
               </div>
               <div class="material-pillar-body">
@@ -544,7 +547,7 @@
           <div class="category-grid-showcase">
             <a href="#collections/all" class="cat-showcase-card" style="grid-column: 1 / -1; height: 320px;">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_flagship_hero_model.jpg" alt="Fine Jewellery Collection" style="object-position: center 25%;" />
+                <img class="cat-showcase-img" src="images/user_flagship_hero_model.jpg" alt="Fine Jewellery Collection" loading="lazy" decoding="async" style="object-position: center 25%;" />
               </div>
               <div class="cat-showcase-overlay" style="padding: 2.25rem 2rem; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;">
                 <span class="hero-badge-pill" style="display: inline-block; margin-bottom: 0.5rem; background: rgba(0,0,0,0.45); color: #FFF; border-color: rgba(255,255,255,0.35); font-size: 0.72rem;">Haute Joaillerie Master Collection</span>
@@ -555,7 +558,7 @@
 
             <a href="#collections/rings" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_emerald_solitaire_ring.jpg" alt="Rings & Solitaires" />
+                <img class="cat-showcase-img" src="images/user_emerald_solitaire_ring.jpg" alt="Rings & Solitaires" loading="lazy" decoding="async" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Rings & Solitaires</div>
@@ -565,7 +568,7 @@
 
             <a href="#collections/earrings" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_floral_diamond_earrings.jpg" alt="The Earrings Suite" />
+                <img class="cat-showcase-img" src="images/user_floral_diamond_earrings.jpg" alt="The Earrings Suite" loading="lazy" decoding="async" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">The Earrings Suite</div>
@@ -575,7 +578,7 @@
 
             <a href="#collections/necklaces" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_emerald_diamond_choker.jpg" alt="Necklaces & Chokers" />
+                <img class="cat-showcase-img" src="images/user_emerald_diamond_choker.jpg" alt="Necklaces & Chokers" loading="lazy" decoding="async" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Necklaces & Chokers</div>
@@ -585,7 +588,7 @@
 
             <a href="#collections/bracelets" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets & Bangles" />
+                <img class="cat-showcase-img" src="images/authentic_bracelet_bangles.jpg" alt="Bracelets & Bangles" loading="lazy" decoding="async" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Bracelets & Bangles</div>
@@ -595,7 +598,7 @@
 
             <a href="#collections/brooches" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_royal_brooch_crocodile.jpg" alt="Royal Brooches & Pins" />
+                <img class="cat-showcase-img" src="images/user_royal_brooch_crocodile.jpg" alt="Royal Brooches & Pins" loading="lazy" decoding="async" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Royal Brooches & Pins</div>
@@ -605,7 +608,7 @@
 
             <a href="#collections/temple-jewellery" class="cat-showcase-card">
               <div class="cat-showcase-img-wrap" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                <img class="cat-showcase-img" src="images/user_temple_nakshi_mandir.jpg" alt="Sacred Temple Nakshi" />
+                <img class="cat-showcase-img" src="images/user_temple_nakshi_mandir.jpg" alt="Sacred Temple Nakshi" loading="lazy" decoding="async" />
               </div>
               <div class="cat-showcase-overlay">
                 <div class="cat-showcase-title">Temple Nakshi Heritage</div>

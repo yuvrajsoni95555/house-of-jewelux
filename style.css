@@ -4,7 +4,7 @@
    Strict 1:1 recreation of Palmonas UX with official House of Jewelux branding
    =================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+/* Google Fonts loaded via preconnected <link> in index.html for maximum render performance */
 
 @font-face {
   font-family: 'Lawrence';

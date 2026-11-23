@@ -70,15 +70,16 @@
     window.scrollTo(0, 0);
   </script>
 
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://checkout.razorpay.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 
   <link rel="icon" type="image/png" sizes="32x32" href="/brand-identity/favicon-32x32.png">
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261123_hero_mobile_v32">
+  <link rel="stylesheet" href="/style.css?v=20261123_speed_v33">
   <style id="bulletproof-luxury-footer-styles">
     /* High-Priority Ultra-Luxurious Footer Styles - Mapped to Brand Swatches */
     #app-view {
@@ -552,7 +553,10 @@
       <div class="hero-slide active" style="background: #1A120E; min-height: 85vh; display: flex; align-items: center; justify-content: center; position: relative;">
         <div class="scene-content-center" style="text-align: center; max-width: 800px; padding: 2rem; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 3.5rem;">
           <div class="hero-brand-center-lockup">
-            <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" />
+            <picture>
+              <source srcset="/brand-identity/house_of_jewelux_official_logo.webp" type="image/webp">
+              <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" width="380" height="372" fetchpriority="high" decoding="sync" />
+            </picture>
           </div>
         </div>
         <div class="hero-scene-cta">
@@ -822,13 +826,13 @@
     </a>
   </nav>
 
-  <script src="/vendor/gsap.min.js"></script>
-  <script src="/vendor/ScrollTrigger.min.js"></script>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="/motion-engine.js?v=20261123_prod_v29"></script>
-  <script src="/hero-cinematic.js?v=20261123_hero_mobile_v32"></script>
-  <script src="/app.js?v=20261123_hero_mobile_v32"></script>
-  <script src="/visual-editor.js?v=20261123_hero_mobile_v32" defer></script>
+  <script src="/vendor/gsap.min.js" defer></script>
+  <script src="/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+  <script src="/motion-engine.js?v=20261123_speed_v33" defer></script>
+  <script src="/hero-cinematic.js?v=20261123_speed_v33" defer></script>
+  <script src="/app.js?v=20261123_speed_v33" defer></script>
+  <script src="/visual-editor.js?v=20261123_speed_v33" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
   <div id="appointment-modal" style="display: none; position: fixed; inset: 0; background: rgba(24, 20, 18, 0.75); backdrop-filter: blur(6px); z-index: 1050; align-items: center; justify-content: center; padding: 1rem;">
