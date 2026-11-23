@@ -85,6 +85,7 @@
   }
 
   async function loadProducts() {
+    const cacheBust = 'v=20261123_prod_v23';
     try {
       const res = await fetch('/api/products');
       if (res.ok) {
@@ -99,7 +100,10 @@
 
     if (!state.products || state.products.length === 0) {
       try {
-        const staticRes = await fetch('./data/products.json');
+        let staticRes = await fetch('/data/products.json?' + cacheBust);
+        if (!staticRes.ok) {
+          staticRes = await fetch('./data/products.json?' + cacheBust);
+        }
         if (staticRes.ok) {
           const staticData = await staticRes.json();
           state.products = Array.isArray(staticData) ? staticData : (staticData.products || []);
@@ -124,7 +128,10 @@
 
     if (!state.categories || state.categories.length === 0) {
       try {
-        const staticCat = await fetch('./data/categories.json');
+        let staticCat = await fetch('/data/categories.json?' + cacheBust);
+        if (!staticCat.ok) {
+          staticCat = await fetch('./data/categories.json?' + cacheBust);
+        }
         if (staticCat.ok) {
           const scData = await staticCat.json();
           state.categories = Array.isArray(scData) ? scData : (scData.categories || []);
@@ -295,16 +302,23 @@
   // ==================== COMPONENT: PRODUCT CARD (1:1 PALMONAS) ====================
   function renderProductCard(p) {
     const isWished = state.wishlist.includes(p.id);
-    const mainImg = p.images && p.images[0] ? p.images[0] : (p.image || 'images/authentic_earrings_macro.jpg');
-    const hoverImg = p.images && p.images[1] ? p.images[1] : (p.hoverImage || mainImg);
+    let mainImg = p.images && p.images[0] ? p.images[0] : (p.image || 'images/authentic_solitaire_ring.jpg');
+    let hoverImg = p.images && p.images[1] ? p.images[1] : (p.hoverImage || mainImg);
+
+    if (!mainImg.startsWith('http') && !mainImg.startsWith('/')) {
+      mainImg = '/' + mainImg;
+    }
+    if (!hoverImg.startsWith('http') && !hoverImg.startsWith('/')) {
+      hoverImg = '/' + hoverImg;
+    }
     const badgeText = p.badge || (p.isNew ? 'New Arrival' : 'BIS 925 Hallmark');
 
     return `
       <div class="product-card" data-product-id="${p.id}">
-        <div class="product-card-media">
-          <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}">
-            <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="lazy" />
-            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.name} - Atelier Detail" loading="lazy" />
+        <div class="product-card-media" style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #FAF7F2;">
+          <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}" style="display: block; position: relative; width: 100%; height: 100%; aspect-ratio: 1/1; overflow: hidden;">
+            <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="eager" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.name} - Atelier Detail" loading="lazy" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
           </a>
           <span class="card-badge" style="border-radius: 9999px; font-size: 0.65rem; padding: 0.25rem 0.65rem; background: rgba(255, 253, 246, 0.95); color: var(--color-espresso); font-weight: 700; border: 1px solid rgba(47,36,26,0.08);">${badgeText}</span>
           <button class="card-wishlist-btn ${isWished ? 'active' : ''}" 
@@ -340,9 +354,13 @@
 
   // ==================== VIEW 1: HOMEPAGE ====================
   function renderHomePage(container) {
-    const bestSellers = state.products.filter(p => p.badge === 'Bestseller' || p.isNew).slice(0, 8);
-    const newArrivals = state.products.filter(p => p.isNew || p.id.includes('BRO') || p.id.includes('TEM') || p.badge === 'New').slice(0, 4);
-    const earringsFeatured = state.products.filter(p => p.category === 'earrings').slice(0, 4);
+    const allProd = (state.products && state.products.length > 0) ? state.products : [];
+    const bestSellers = (allProd.filter(p => p.badge === 'Bestseller' || p.isNew).length >= 4)
+      ? allProd.filter(p => p.badge === 'Bestseller' || p.isNew).slice(0, 8)
+      : allProd.slice(0, 8);
+    const newArrivals = (allProd.filter(p => p.isNew || (p.id && (p.id.includes('BRO') || p.id.includes('TEM')))).length >= 4)
+      ? allProd.filter(p => p.isNew || (p.id && (p.id.includes('BRO') || p.id.includes('TEM')))).slice(0, 4)
+      : allProd.slice(8, 12);
 
     container.innerHTML = `
       <!-- A. PREMIUM HERO SECTION (CINEMATIC ODYSSEY) -->
@@ -455,7 +473,7 @@
                 </div>
                 <div class="material-pillar-footer">
                   <span>Explore Atelier</span>
-                  <span>↗</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                 </div>
               </div>
             </a>
@@ -479,7 +497,7 @@
                 </div>
                 <div class="material-pillar-footer">
                   <span>Discover Masterpieces</span>
-                  <span>↗</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                 </div>
               </div>
             </a>
@@ -503,7 +521,7 @@
                 </div>
                 <div class="material-pillar-footer">
                   <span>View Vault Collections</span>
-                  <span>↗</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                 </div>
               </div>
             </a>
@@ -594,6 +612,48 @@
                 <div class="cat-showcase-count">10 Sacred Motifs • 22K Micro Gold</div>
               </div>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- BESTSELLING MASTERPIECES -->
+      <section style="padding: 4.5rem 0 3.5rem; background: var(--color-warm-ivory);">
+        <div class="container">
+          <div class="section-header" style="text-align: center; margin-bottom: 2.5rem;">
+            <div class="section-pretitle" style="letter-spacing: 0.26em; font-size: 0.72rem; text-transform: uppercase; color: #8A6440; margin-bottom: 0.5rem; font-weight: 600;">Patron Favorites</div>
+            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #1A120E; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Bestselling Masterpieces</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); font-family: var(--font-serif); font-style: italic;">
+              Most coveted fine jewellery heirlooms, hand-finished in hallmarked gold and 925 sterling silver.
+            </p>
+          </div>
+
+          <div class="products-grid motion-stagger">
+            ${bestSellers.map(renderProductCard).join('')}
+          </div>
+
+          <div style="text-align: center; margin-top: 3rem;">
+            <a href="#collections/all" class="btn-primary" style="padding: 0.85rem 2.2rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">
+              Explore All 50 Pieces
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW ARRIVALS -->
+      <section style="padding: 4rem 0 3.5rem; background: var(--color-soft-offwhite); border-top: 1px solid var(--color-warm-stone);">
+        <div class="container">
+          <div class="section-header" style="text-align: center; margin-bottom: 2.5rem;">
+            <div class="section-pretitle" style="letter-spacing: 0.26em; font-size: 0.72rem; text-transform: uppercase; color: #8A6440; margin-bottom: 0.5rem; font-weight: 600;">Newly Unveiled</div>
+            <h2 class="section-title" style="font-family: var(--font-serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #1A120E; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">New Arrivals at House of Jewelux</h2>
+            <div class="section-divider"><span class="section-divider-gem"></span></div>
+            <p style="max-width: 650px; margin: 0.75rem auto 0; font-size: 0.88rem; color: var(--color-stone-muted); font-family: var(--font-serif); font-style: italic;">
+              Freshly finished bench masterpieces from our Jaipur atelier, featuring royal sovereign falcon crests, temple nakshi medallions, and architectural solitaires.
+            </p>
+          </div>
+
+          <div class="products-grid motion-stagger">
+            ${newArrivals.map(renderProductCard).join('')}
           </div>
         </div>
       </section>
@@ -991,22 +1051,32 @@
     const related = state.products.filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
     const isWishlisted = state.wishlist.includes(p.id);
 
+    const normalizeImg = (src, fallback) => {
+      let s = src || fallback;
+      if (!s.startsWith('http') && !s.startsWith('/')) s = '/' + s;
+      return s;
+    };
+    const img0 = normalizeImg(p.gallery && p.gallery[0] ? p.gallery[0] : (p.images && p.images[0] ? p.images[0] : p.image), '/images/authentic_solitaire_ring.jpg');
+    const img1 = normalizeImg(p.gallery && p.gallery[1] ? p.gallery[1] : (p.images && p.images[1] ? p.images[1] : (p.hoverImage || p.image)), '/images/authentic_diamond_ring_macro.jpg');
+    const img2 = normalizeImg(p.gallery && p.gallery[2] ? p.gallery[2] : (p.images && p.images[2] ? p.images[2] : p.image), '/images/authentic_chelsea_ring.jpg');
+    const img3 = normalizeImg(p.gallery && p.gallery[3] ? p.gallery[3] : (p.images && p.images[3] ? p.images[3] : (p.hoverImage || p.image)), '/images/authentic_rings_couple_hands.jpg');
+
     container.innerHTML = `
       <div class="container pdp-container">
         <div class="pdp-grid">
           <!-- LEFT: 2x2 IMAGE GALLERY (MATCHING PALMONAS ATHENA SOLITAIRE) -->
           <div class="pdp-gallery-2x2">
             <div class="pdp-gallery-item">
-              <img src="${(p.gallery && p.gallery[0]) || p.image}" alt="${p.name} Studio View" />
+              <img src="${img0}" alt="${p.name} Studio View" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" />
             </div>
             <div class="pdp-gallery-item">
-              <img src="${(p.gallery && p.gallery[1]) || p.hoverImage || p.image}" alt="${p.name} Model Profile" />
+              <img src="${img1}" alt="${p.name} Model Profile" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" />
             </div>
             <div class="pdp-gallery-item">
-              <img src="${(p.gallery && p.gallery[2]) || p.image}" alt="${p.name} Close-up" />
+              <img src="${img2}" alt="${p.name} Close-up" onerror="this.onerror=null; this.src='/images/authentic_chelsea_ring.jpg';" />
             </div>
             <div class="pdp-gallery-item">
-              <img src="${(p.gallery && p.gallery[3]) || p.hoverImage || p.image}" alt="${p.name} Prongs & Setting" />
+              <img src="${img3}" alt="${p.name} Prongs & Setting" onerror="this.onerror=null; this.src='/images/authentic_rings_couple_hands.jpg';" />
             </div>
             <div style="grid-column: 1 / -1; font-size: 0.72rem; color: var(--color-taupe); text-align: center; padding-top: 0.25rem; letter-spacing: 0.04em;">
               ✦ Authentic Studio Reference Photography • Jaipur Atelier Spec ${p.id} • Zero AI Imagery
@@ -1561,11 +1631,8 @@
       <section style="padding: 4rem 0 5rem; background: var(--color-warm-ivory);">
         <div class="container">
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 4rem; align-items: center;">
-            <!-- Left: Editorial Photo in Pebble Frame with Circular Badge -->
+            <!-- Left: Editorial Photo in Pebble Frame -->
             <div class="about-image-reveal" style="position: relative; border-radius: var(--radius-pepite-card-lg); overflow: hidden; box-shadow: var(--shadow-pepite-hover); border: 1px solid rgba(47,36,26,0.08);">
-              <div class="pepite-action-badge" onclick="window.HJ.navigate('craftsmanship')" title="Discover Craftsmanship" style="position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;">
-                ↗
-              </div>
               <img src="images/authentic_atelier_craft.jpg" alt="Master Goldsmith at Bench in Jaipur Atelier - Micro Stone Setting & Pure 925 Silver Forging" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;" />
               <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(31,23,16,0.92) 0%, rgba(31,23,16,0) 100%); padding: 2rem 1.75rem 1.5rem; color: #FFF;">
                 <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-muted-gold); font-weight: 700;">Jaipur Atelier Workbench</span>

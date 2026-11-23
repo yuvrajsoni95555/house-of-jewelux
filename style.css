@@ -4615,36 +4615,23 @@ img {
   box-shadow: 0 8px 24px rgba(26, 18, 14, 0.2);
 }
 
-/* 2. Pépite Signature Circular Action Badge (↗) */
-.pepite-action-badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: var(--color-warm-ivory);
-  border: 1px solid rgba(26, 18, 14, 0.09);
-  box-shadow: 0 4px 14px rgba(26, 18, 14, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-espresso);
-  font-size: 1.15rem;
-  font-weight: 600;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, color 0.25s ease;
-  z-index: 6;
-  cursor: pointer;
-}
-
-.product-card .pepite-action-badge {
+/* 2. Pépite Signature Circular Action Badge (Permanently Eradicated) */
+.pepite-action-badge,
+[class*="action-badge"] {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  clip: rect(0 0 0 0) !important;
 }
 
+.product-card .pepite-action-badge,
+.cat-showcase-card .pepite-action-badge,
 .cat-showcase-card:hover .pepite-action-badge {
-  transform: rotate(45deg) scale(1.08);
-  background: var(--color-espresso);
-  color: var(--color-warm-ivory);
+  display: none !important;
 }
 
 /* 3. Pépite Pebble Card Architecture */
@@ -6106,16 +6093,32 @@ img, video, canvas, svg {
   filter: contrast(1.03) brightness(1.02);
 }
 
-/* Action Badge (↗) Luxury Shimmer */
-.pepite-action-badge {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, box-shadow 0.25s ease !important;
+/* Solidified Product Media & Images */
+.card-img-wrap {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  overflow: hidden !important;
 }
 
-.product-card:hover .pepite-action-badge {
-  transform: scale(1.12) rotate(45deg);
-  background: var(--color-espresso) !important;
-  color: var(--color-warm-ivory) !important;
-  box-shadow: 0 4px 14px rgba(26, 18, 14, 0.25);
+.product-card-media {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  overflow: hidden !important;
+  background: var(--color-soft-offwhite) !important;
+}
+
+.product-card-img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
 }
 
 /* Card Add To Bag Button Metallic Sweep */
