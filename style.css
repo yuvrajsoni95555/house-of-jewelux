@@ -3101,12 +3101,6 @@ img {
   color: var(--color-warm-ivory);
 }
 
-@media (max-width: 768px) {
-  .cinematic-hero-viewport {
-    height: 80vh;
-    min-height: 580px;
-  }
-}
 
 .hero-particle-canvas {
   position: absolute;
@@ -3366,16 +3360,24 @@ img {
   }
 }
 
-@media (max-width: 768px) {
+/* ===================================================================
+   RESPONSIVE CINEMATIC HERO — UNIFIED BREAKPOINT ARCHITECTURE
+   Eliminates vertical voids, ensures consistent CTA button baseline,
+   and seamlessly aligns hero height to top header and bottom nav
+   =================================================================== */
+
+/* 1. Mobile & Resized Window with Mobile Nav (<= 991px) */
+@media (max-width: 991px) {
   .hero-slider,
   .cinematic-hero-viewport {
-    height: calc(100vh - 165px) !important;
-    height: calc(100svh - 165px) !important;
-    min-height: 480px !important;
+    height: calc(100vh - 190px) !important;
+    height: calc(100svh - 190px) !important;
+    min-height: 440px !important;
     max-height: 740px !important;
     overflow: hidden !important;
     position: relative !important;
   }
+
   .cinematic-scene,
   .hero-slide {
     position: absolute !important;
@@ -3390,9 +3392,10 @@ img {
     justify-content: center !important;
     align-items: center !important;
     text-align: center !important;
-    padding: 0.5rem 1rem 4.5rem 1rem !important;
+    padding: 0.5rem 1rem 4rem 1rem !important;
     box-sizing: border-box !important;
   }
+
   .cinematic-scene.active,
   .hero-slide.active {
     display: flex !important;
@@ -3401,8 +3404,10 @@ img {
     pointer-events: auto !important;
     z-index: 3 !important;
   }
+
   .scene-content-center {
-    margin-bottom: 1rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 2rem !important;
     padding: 0 1rem !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3412,19 +3417,10 @@ img {
     max-width: 100% !important;
     text-align: center !important;
   }
-  .hero-brand-official-logo {
-    max-height: clamp(130px, 19vh, 165px) !important;
-    width: auto !important;
-    max-width: 72vw !important;
-    margin: 0 auto !important;
-  }
-  .scene-03-content-wrap {
-    margin-bottom: 1.5rem !important;
-    padding-bottom: 0 !important;
-  }
+
   .hero-scene-cta {
     position: absolute !important;
-    bottom: 3.8rem !important;
+    bottom: 5.2rem !important;
     left: 50% !important;
     right: auto !important;
     top: auto !important;
@@ -3440,6 +3436,38 @@ img {
     white-space: nowrap !important;
     pointer-events: auto !important;
   }
+
+  .hero-hud-bottom-left {
+    left: 1.25rem !important;
+    bottom: 1.8rem !important;
+    z-index: 24 !important;
+  }
+
+  .hero-scroll-prompt {
+    right: 1.25rem !important;
+    left: auto !important;
+    transform: none !important;
+    bottom: 1.8rem !important;
+    z-index: 24 !important;
+    align-items: flex-end !important;
+    animation: bounceDownRight 2.2s infinite ease-in-out !important;
+  }
+}
+
+/* 1A. Specific Mobile Phone Sizing (<= 768px) */
+@media (max-width: 768px) {
+  .hero-brand-official-logo {
+    max-height: clamp(160px, 23vh, 205px) !important;
+    width: auto !important;
+    max-width: 80vw !important;
+    margin: 0 auto !important;
+  }
+
+  .scene-03-content-wrap {
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 0 !important;
+  }
+
   .hero-cta-btn {
     display: inline-flex !important;
     align-items: center !important;
@@ -3455,6 +3483,7 @@ img {
     visibility: visible !important;
     opacity: 1 !important;
   }
+
   .hero-nav-arrow {
     width: 32px !important;
     height: 32px !important;
@@ -3463,11 +3492,23 @@ img {
     border: 1px solid rgba(168, 132, 98, 0.3) !important;
     z-index: 20 !important;
   }
+
   .hero-nav-prev {
     left: 0.35rem !important;
   }
+
   .hero-nav-next {
     right: 0.35rem !important;
+  }
+}
+
+/* 1B. Resized Desktop & Tablet Window Sizing (769px to 991px) */
+@media (min-width: 769px) and (max-width: 991px) {
+  .hero-brand-official-logo {
+    max-height: clamp(210px, 30vh, 265px) !important;
+    width: auto !important;
+    max-width: 72vw !important;
+    margin: 0 auto !important;
   }
 }
 
@@ -6041,32 +6082,6 @@ img, video, canvas, svg {
   .site-header {
     width: calc(100% - 2rem) !important;
     margin: 0.5rem auto 0.75rem auto !important;
-  }
-
-  .cinematic-hero-viewport {
-    height: clamp(560px, 74vh, 740px) !important;
-    min-height: 560px !important;
-    max-height: 740px !important;
-  }
-
-  .hero-hud-bottom-left {
-    left: 1.5rem !important;
-    bottom: 4.8rem !important;
-    z-index: 24 !important;
-  }
-
-  .hero-scroll-prompt {
-    right: 1.5rem !important;
-    bottom: 4.8rem !important;
-    z-index: 24 !important;
-  }
-
-  .hero-scene-cta {
-    position: absolute !important;
-    bottom: 7.2rem !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    z-index: 25 !important;
   }
 
   .jewellery-trio-stage {
