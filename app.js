@@ -235,6 +235,9 @@
     } else if (['shipping', 'shipping-policy', 'returns', 'returns-policy', 'exchange', 'exchange-policy', 'cancellation', 'cancellation-policy', 'privacy', 'privacy-policy', 'terms', 'terms-conditions', 'cookies', 'cookie-policy', 'care-guide', 'jewellery-care', 'size-guide', 'warranty'].includes(route)) {
       const normalizedKey = route.replace('-policy', '').replace('-conditions', '').replace('jewellery-', '');
       renderPolicyPage(appView, normalizedKey);
+    } else if (route.startsWith('p/')) {
+      // Studio landing page: only its custom sections (added by applySiteContent); unknown slugs say so
+      appView.innerHTML = (siteContent.pages || {})[route] ? '' : '<section style="padding:8rem 1.5rem;text-align:center"><h1 class="section-title">Page not found</h1><p><a class="btn-primary" href="#home">Back to the homepage</a></p></section>';
     } else {
       const matchedCat = state.categories.find(c => c.id === route);
       if (matchedCat) {
@@ -3646,12 +3649,19 @@
     tag.textContent = JSON.stringify(ld);
   }
 
-  // ===== Website Content Manager: published overrides in data/content.json (edited in /admin.html) =====
-  // Shape: { pages: { [route | '*']: { items: { [key]: override }, order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {} } } }
-  // '*' holds the parts shared by every page (announcement bar, header, footer, mobile nav).
+  // ===== Website Design Studio: published content in data/content.json (edited in /admin.html) =====
+  // { design: { vars: { '--css-var': value } },
+  //   library: [ reusable custom sections ],
+  //   pages: { [route | 'tpl:collections' | 'tpl:products' | '*']: {
+  //     items: { [elementKey]: override }, sectionStyle: { [sectionKey]: style }, style: { bg },
+  //     order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {}, meta: { name } } } }
+  // Layers, later wins: '*' (shared header/footer) -> template (all category / all product pages) -> the page itself.
   const GLOBAL_ROOTS = ['.announcement-bar', '.site-header', '.site-footer', '.mobile-bottom-nav'];
   const SAFE_HREF = /^(#|\/(?!\/)|https:\/\/|mailto:|tel:)/i;
+  const HEX = /^#[0-9a-f]{6}$/i;
   const ORIG = new WeakMap();
+  let DESIGN_RULES = []; // rebuilt on every apply, written to <style id="hj-content-css">
+  const BODY_BG = document.body ? document.body.style.backgroundColor : '';
   let siteContent = { pages: {} };
   let adminDrivesContent = false; // in the admin preview the editor's draft wins over the published file
 
@@ -3659,12 +3669,15 @@
     try {
       const res = await fetch('/data/content.json', { cache: 'no-cache' });
       if (res.ok && !adminDrivesContent) siteContent = await res.json();
-    } catch (e) { /* no overrides published yet */ }
-    applySiteContent();
+    } catch (e) { /* nothing published yet */ }
+    if (contentRoute().startsWith('p/')) handleRoute(); else applySiteContent();
   }
 
   const contentRoute = () => { const r = getRoute(); return !r || r === 'home' ? 'home' : r; };
+  const templateOf = (r) => r.startsWith('products/') ? 'tpl:products' : r.startsWith('collections/') && r !== 'collections/all' ? 'tpl:collections' : null;
   const escHtml = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const imgUrl = (src) => /^https:\/\//.test(src || '') ? src : '/' + String(src || '').replace(/^\//, '');
+  const num = (v, max) => Math.max(0, Math.min(max, Number(v) || 0));
 
   function findContentEl(key) {
     const tagged = document.querySelector('[data-hj-key="' + CSS.escape(key) + '"]');
@@ -3684,13 +3697,34 @@
       el = back;
     }
     el.innerHTML = o.html;
-    ['style', 'src', 'alt', 'title', 'href', 'target', 'rel'].forEach((a) => { if (o[a] == null) el.removeAttribute(a); else el.setAttribute(a, o[a]); });
+    ['src', 'alt', 'title', 'href', 'target', 'rel'].forEach((a) => { if (o[a] == null) el.removeAttribute(a); else el.setAttribute(a, o[a]); });
     return el;
+  }
+
+  function styleOf(o) {
+    const css = [];
+    if (o.size) css.push('font-size:' + num(o.size, 160) + 'px');
+    if (o.weight) css.push('font-weight:' + num(o.weight, 900));
+    if (o.lineHeight) css.push('line-height:' + num(o.lineHeight, 4));
+    if (o.letterSpacing != null && o.letterSpacing !== '') css.push('letter-spacing:' + Math.max(-5, Math.min(20, Number(o.letterSpacing) || 0)) + 'px');
+    if (o.font && /^(serif|sans|display)$/.test(o.font)) css.push('font-family:' + { serif: 'var(--font-serif, Georgia, serif)', sans: 'var(--font-sans, system-ui, sans-serif)', display: "'Lawrence', Georgia, serif" }[o.font]);
+    if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
+    if (o.color && HEX.test(o.color)) css.push('color:' + o.color);
+    if (o.bg && HEX.test(o.bg)) css.push('background:' + o.bg);
+    if (o.borderColor && HEX.test(o.borderColor)) css.push('border:1px solid ' + o.borderColor);
+    if (o.radius != null && o.radius !== '') css.push('border-radius:' + num(o.radius, 999) + 'px');
+    if (o.padY != null && o.padY !== '') css.push('padding-top:' + num(o.padY, 200) + 'px;padding-bottom:' + num(o.padY, 200) + 'px');
+    if (o.padX != null && o.padX !== '') css.push('padding-left:' + num(o.padX, 200) + 'px;padding-right:' + num(o.padX, 200) + 'px');
+    if (o.objectPosition && /^\d{1,3}% \d{1,3}%$/.test(o.objectPosition)) css.push('object-position:' + o.objectPosition);
+    if (o.aspect && /^\d+ \/ \d+$/.test(o.aspect)) css.push('aspect-ratio:' + o.aspect + ';object-fit:cover;height:auto');
+    if (o.maxWidth) css.push('max-width:' + num(o.maxWidth, 100) + '%');
+    if (o.hidden) css.push('display:none');
+    return css.join(';').split(';').filter(Boolean).map((d) => d + '!important').join(';');
   }
 
   function applyContentItem(el, o) {
     if (!ORIG.has(el)) {
-      ORIG.set(el, { tag: el.tagName, html: el.innerHTML, style: el.getAttribute('style'), src: el.getAttribute('src'), alt: el.getAttribute('alt'),
+      ORIG.set(el, { tag: el.tagName, html: el.innerHTML, src: el.getAttribute('src'), alt: el.getAttribute('alt'),
         title: el.getAttribute('title'), href: el.getAttribute('href'), target: el.getAttribute('target'), rel: el.getAttribute('rel') });
     }
     el = restoreContentEl(el);
@@ -3704,7 +3738,7 @@
     }
     if (typeof o.text === 'string') el.textContent = o.text;
     if (el.tagName === 'IMG') {
-      if (o.src && /^(images\/|\/images\/|brand-identity\/|\/brand-identity\/|https:\/\/)/.test(o.src)) el.setAttribute('src', o.src.replace(/^(?!https:|\/)/, '/'));
+      if (o.src && /^(\/?images\/|\/?brand-identity\/|https:\/\/)/.test(o.src)) el.setAttribute('src', imgUrl(o.src));
       if (typeof o.alt === 'string') el.setAttribute('alt', o.alt);
       if (typeof o.title === 'string') { if (o.title) el.setAttribute('title', o.title); else el.removeAttribute('title'); }
     }
@@ -3712,71 +3746,107 @@
       el.setAttribute('href', o.href);
       if (o.newTab) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); } else { el.removeAttribute('target'); }
     }
-    const css = [];
-    if (o.size) css.push('font-size:' + Number(o.size) + 'px');
-    if (o.weight) css.push('font-weight:' + Number(o.weight));
-    if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
-    if (o.color && /^#[0-9a-f]{6}$/i.test(o.color)) css.push('color:' + o.color);
-    if (o.objectPosition && /^\d{1,3}% \d{1,3}%$/.test(o.objectPosition)) css.push('object-position:' + o.objectPosition);
-    if (o.aspect && /^\d+ \/ \d+$/.test(o.aspect)) css.push('aspect-ratio:' + o.aspect + ';object-fit:cover;height:auto');
-    if (o.maxWidth) css.push('max-width:' + Math.min(100, Number(o.maxWidth)) + '%');
-    if (o.hidden) css.push('display:none');
-    if (css.length) el.setAttribute('style', (ORIG.get(el).style ? ORIG.get(el).style + ';' : '') + css.join(';') + (o.hidden ? '!important' : ''));
     el.dataset.hjKey = o.__key;
+    const css = styleOf(o);
+    if (css) DESIGN_RULES.push(`[data-hj-key="${CSS.escape(o.__key)}"]{${css}}`);
   }
 
+  // Section-level design as CSS rules: never touches the section's HTML or inline style (sliders, forms, animations keep working)
+  function applySectionStyle(sel, st) {
+    const css = [];
+    if (st) {
+      if (st.bg && HEX.test(st.bg)) css.push('background:' + st.bg);
+      if (st.bgImage) css.push(`background-image:url("${imgUrl(st.bgImage).replace(/"/g, '')}");background-size:cover;background-position:center`);
+      if (st.color && HEX.test(st.color)) css.push('color:' + st.color);
+      if (st.pt != null && st.pt !== '') css.push('padding-top:' + num(st.pt, 400) + 'px');
+      if (st.pb != null && st.pb !== '') css.push('padding-bottom:' + num(st.pb, 400) + 'px');
+      if (st.minH) css.push('min-height:' + num(st.minH, 2000) + 'px');
+      if (st.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[st.align] || 'inherit'));
+      if (st.opacity != null && st.opacity !== '') css.push('opacity:' + Math.max(0.1, Math.min(1, Number(st.opacity))));
+    }
+    if (css.length) DESIGN_RULES.push(`${sel}{${css.join(';').split(';').filter(Boolean).map((d) => d + '!important').join(';')}}`);
+  }
+
+  // Sections added from the Studio (each type renders with the site's own classes)
   function customSectionHtml(c) {
+    const al = c.align === 'left' ? 'left' : 'center';
     const btn = c.buttonLabel && SAFE_HREF.test(c.buttonHref || '') ? `<p style="margin-top:1.5rem"><a class="btn-primary" href="${escHtml(c.buttonHref)}">${escHtml(c.buttonLabel)}</a></p>` : '';
-    const img = c.image ? `<img src="/${escHtml(String(c.image).replace(/^\//, ''))}" alt="${escHtml(c.alt || '')}" loading="lazy" style="width:100%;max-width:960px;border-radius:12px;margin:0 auto 1.5rem;display:block">` : '';
-    return `<div class="container" style="max-width:960px;margin:0 auto;text-align:${c.align === 'left' ? 'left' : 'center'}">
-      ${c.type === 'banner' ? img : ''}<h2 class="section-title">${escHtml(c.heading)}</h2>
-      <p style="max-width:720px;margin:1rem ${c.align === 'left' ? '0' : 'auto'} 0;line-height:1.8">${escHtml(c.text)}</p>${btn}</div>`;
+    const img = c.image ? `<img src="${escHtml(imgUrl(c.image))}" alt="${escHtml(c.alt || '')}" loading="lazy" style="width:100%;border-radius:12px;display:block;object-fit:cover">` : '';
+    const head = c.heading ? `<h2 class="section-title">${escHtml(c.heading)}</h2>` : '';
+    const text = c.text ? `<p style="max-width:720px;margin:1rem ${al === 'left' ? '0' : 'auto'} 0;line-height:1.8">${escHtml(c.text)}</p>` : '';
+    switch (c.type) {
+      case 'divider': return '<hr style="border:0;border-top:1px solid var(--color-muted-gold);max-width:960px;margin:0 auto;opacity:.6">';
+      case 'spacer': return '';
+      case 'image': return `<div style="max-width:1200px;margin:0 auto">${img}</div>`;
+      case 'split': return `<div class="container" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;align-items:center;text-align:left">
+        <div>${img}</div><div>${head}${text}${btn}</div></div>`;
+      case 'cta': return `<div class="container" style="max-width:860px;margin:0 auto;text-align:center">${head}${text}${btn}</div>`;
+      case 'banner': return `<div class="container" style="max-width:960px;margin:0 auto;text-align:${al}">${img ? `<div style="margin-bottom:1.5rem">${img}</div>` : ''}${head}${text}${btn}</div>`;
+      default: return `<div class="container" style="max-width:960px;margin:0 auto;text-align:${al}">${head}${text}${btn}</div>`;
+    }
   }
 
   function applySiteContent() {
     const route = contentRoute();
     const pages = (siteContent && siteContent.pages) || {};
+    const tpl = templateOf(route);
+    const layers = ['*', tpl, route].filter(Boolean).map((r) => pages[r] || {});
+    const [, tplPage = {}, page = {}] = tpl ? layers : [layers[0], {}, layers[1]];
+    const pick = (k) => (page[k] && page[k].length ? page[k] : tplPage[k] || []);
     const view = document.getElementById('app-view');
-    // 1) sections of this page: tag in template order, rebuild custom ones, then order / hide
+    DESIGN_RULES = [];
+    // 0) site-wide design tokens
+    const vars = Object.entries(((siteContent.design || {}).vars) || {}).filter(([k, v]) => /^--[a-z0-9-]+$/.test(k) && /^(#[0-9a-f]{6}|\d+(\.\d+)?(px|rem))$/i.test(v));
+    let dtag = document.getElementById('hj-design-css');
+    if (!dtag) { dtag = document.createElement('style'); dtag.id = 'hj-design-css'; document.head.appendChild(dtag); }
+    dtag.textContent = vars.length ? ':root{' + vars.map(([k, v]) => k + ':' + v).join(';') + '}' : '';
+    // 1) sections: tag in template order, rebuild custom ones, then order / hide / style
     if (view) {
       view.querySelectorAll(':scope > [data-hj-custom]').forEach((s) => s.remove());
       [...view.children].forEach((s, i) => { if (!s.dataset.hjSec) s.dataset.hjSec = 'sec-' + i; });
-      const page = pages[route] || {};
-      (page.custom || []).forEach((c) => {
+      const lib = siteContent.library || [];
+      [...(tplPage.custom || []), ...(page.custom || [])].forEach((c) => {
+        const src = c.type === 'library' ? lib.find((l) => l.id === c.ref) : c;
+        if (!src) return;
         const s = document.createElement('section');
         s.dataset.hjSec = 'custom:' + c.id;
         s.dataset.hjCustom = '1';
-        s.setAttribute('style', `padding:4.5rem 1.5rem;background:${/^#[0-9a-f]{6}$/i.test(c.bg || '') ? c.bg : 'transparent'}`);
-        s.innerHTML = customSectionHtml(c);
+        s.setAttribute('style', `padding:${src.type === 'spacer' ? num(src.height || 64, 400) + 'px 0' : src.type === 'divider' ? '2rem 1.5rem' : '4.5rem 1.5rem'};background:${HEX.test(src.bg || '') ? src.bg : 'transparent'}${HEX.test(src.color || '') ? ';color:' + src.color : ''}`);
+        s.innerHTML = customSectionHtml(src);
         view.appendChild(s);
       });
       const all = [...view.children];
-      const order = (page.order || []).filter((k) => all.some((s) => s.dataset.hjSec === k));
+      const order = pick('order').filter((k) => all.some((s) => s.dataset.hjSec === k));
       const rank = (s) => { const i = order.indexOf(s.dataset.hjSec); return i >= 0 ? i : order.length + Number(String(s.dataset.hjSec).replace(/\D/g, '') || 999); };
       all.sort((a, b) => rank(a) - rank(b)).forEach((s) => view.appendChild(s));
-      all.forEach((s) => { s.hidden = (page.hidden || []).includes(s.dataset.hjSec); });
+      const hidden = [...(tplPage.hidden || []), ...(page.hidden || [])];
+      const secStyle = { ...(tplPage.sectionStyle || {}), ...(page.sectionStyle || {}) };
+      all.forEach((s) => { s.hidden = hidden.includes(s.dataset.hjSec); applySectionStyle(`#app-view > [data-hj-sec="${CSS.escape(s.dataset.hjSec)}"]`, secStyle[s.dataset.hjSec]); });
     }
+    const sharedStyle = layers[0].sectionStyle || {};
+    GLOBAL_ROOTS.forEach((sel) => applySectionStyle(sel, sharedStyle[sel]));
+    const bg = (page.style && page.style.bg) || (tplPage.style && tplPage.style.bg);
+    document.body.style.backgroundColor = bg && HEX.test(bg) ? bg : BODY_BG;
     // 2) element overrides: find every element first, then change them (keys are paths in the original template)
     const jobs = [];
-    ['*', route].forEach((r) => Object.entries((pages[r] || {}).items || {}).forEach(([key, o]) => {
+    layers.forEach((p) => Object.entries(p.items || {}).forEach(([key, o]) => {
       const el = findContentEl(key);
-      if (el) jobs.push([el, { ...o, __key: key }]);
+      if (el) { const j = jobs.find(([x]) => x === el); if (j) Object.assign(j[1], o); else jobs.push([el, { ...o, __key: key }]); }
     }));
     document.querySelectorAll('[data-hj-key]').forEach((el) => { if (!jobs.some(([j]) => j === el)) { restoreContentEl(el); el.removeAttribute('data-hj-key'); } });
     jobs.forEach(([el, o]) => applyContentItem(el, o));
     // 3) device-only visibility for sections and elements
     const rules = [];
-    ['*', route].forEach((r) => {
-      const p = pages[r] || {};
+    layers.forEach((p) => {
       (p.hideMobile || []).forEach((k) => rules.push(`@media (max-width:767px){[data-hj-sec="${CSS.escape(k)}"],[data-hj-key="${CSS.escape(k)}"]{display:none!important}}`));
       (p.hideDesktop || []).forEach((k) => rules.push(`@media (min-width:768px){[data-hj-sec="${CSS.escape(k)}"],[data-hj-key="${CSS.escape(k)}"]{display:none!important}}`));
     });
     let tag = document.getElementById('hj-content-css');
     if (!tag) { tag = document.createElement('style'); tag.id = 'hj-content-css'; document.head.appendChild(tag); }
-    tag.textContent = rules.join('\n');
+    tag.textContent = DESIGN_RULES.concat(rules).join('\n');
     // 4) page SEO (product pages set their own from product data)
-    const seo = (pages[route] || {}).seo;
-    if (seo && !route.startsWith('products/')) setPageSeo(seo.title, seo.description);
+    const seo = page.seo;
+    if (seo && (seo.title || seo.description) && !route.startsWith('products/')) setPageSeo(seo.title, seo.description);
   }
 
   // Admin preview only: let /admin.html read and drive the content of this page
@@ -3794,7 +3864,18 @@
     const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer');
     window.__hjAdmin = {
       route: contentRoute,
-      setContent(c) { adminDrivesContent = true; siteContent = c || { pages: {} }; applySiteContent(); },
+      setContent(c) {
+        adminDrivesContent = true;
+        siteContent = c || { pages: {} };
+        if (!document.getElementById('hj-edit-css')) {
+          const st = document.createElement('style');
+          st.id = 'hj-edit-css';
+          st.textContent = '.hj-editing [data-hj-edit]:hover{outline:1px dashed #A88462;outline-offset:2px;cursor:pointer}.hj-editing [data-hj-sec]:hover{outline:1px dashed rgba(168,132,98,.45);outline-offset:-1px}';
+          document.head.appendChild(st);
+        }
+        document.documentElement.classList.add('hj-editing');
+        if (contentRoute().startsWith('p/')) handleRoute(); else applySiteContent(); // landing pages exist only once their draft arrives
+      },
       scan() {
         const view = document.getElementById('app-view');
         const roots = [...[...view.children].map((s) => [s, `[data-hj-sec="${s.dataset.hjSec}"]`, 'page', s.dataset.hjSec]),
@@ -3820,12 +3901,15 @@
             el.dataset.hjEdit = key;
           });
         });
-        return { route: contentRoute(), title: document.title, sections, items,
+        const overflow = [...view.children, ...GLOBAL_ROOTS.map((s) => document.querySelector(s)).filter(Boolean)]
+          .filter((s) => !s.hidden && s.scrollWidth > s.clientWidth + 2 && getComputedStyle(s).overflowX === 'visible').map((s) => s.dataset.hjSec || GLOBAL_ROOTS.find((g) => s.matches(g)));
+        return { route: contentRoute(), title: document.title, sections, items, overflow, width: window.innerWidth,
           h1: [...view.querySelectorAll('h1')].filter((h) => !h.closest('[hidden]')).length };
       },
       highlight(key) {
         document.querySelectorAll('.hj-admin-hl').forEach((e) => { e.classList.remove('hj-admin-hl'); e.style.outline = ''; });
-        const el = document.querySelector('[data-hj-edit="' + CSS.escape(key) + '"]') || document.querySelector('[data-hj-sec="' + CSS.escape(key) + '"]');
+        const el = document.querySelector('[data-hj-edit="' + CSS.escape(key) + '"]') || document.querySelector('[data-hj-sec="' + CSS.escape(key) + '"]') ||
+          (GLOBAL_ROOTS.includes(key) ? document.querySelector(key) : null);
         if (!el) return;
         el.classList.add('hj-admin-hl');
         el.style.outline = '2px solid #A88462';
@@ -3837,10 +3921,12 @@
     document.addEventListener('click', (e) => {
       if (!window.__hjContentMode) return;
       const el = e.target.closest('[data-hj-edit]');
-      if (!el && !e.target.closest('a')) return;
+      const sec = e.target.closest('#app-view > [data-hj-sec]');
+      const shared = GLOBAL_ROOTS.find((g) => e.target.closest(g));
+      if (!el && !sec && !shared && !e.target.closest('a')) return;
       e.preventDefault();
       e.stopPropagation();
-      if (el) window.parent.postMessage({ type: 'hj-content-select', key: el.dataset.hjEdit }, location.origin);
+      window.parent.postMessage({ type: 'hj-content-select', key: el ? el.dataset.hjEdit : null, section: sec ? sec.dataset.hjSec : shared || null }, location.origin);
     }, true);
   }
 

@@ -79,9 +79,9 @@
     if (editorDirty && !confirm('You have unsaved changes to this product. Leave without saving?')) return Promise.resolve();
     editorDirty = false;
     if (fitObserver) { fitObserver.disconnect(); fitObserver = null; }
-    view.classList.toggle('wide', name === 'editor' || name === 'page');
-    if (name !== 'page') cm.route = null;
-    const navName = name === 'editor' ? 'products' : name === 'page' ? 'pages' : name;
+    view.classList.toggle('wide', ['editor', 'page', 'design'].includes(name));
+    if (name !== 'page') { cm.key = null; cm.route = null; }
+    const navName = name === 'editor' ? 'products' : ['page', 'group', 'design', 'library'].includes(name) ? 'studio' : name;
     document.querySelectorAll('.side nav button').forEach((b) => {
       if (b.dataset.view === navName) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
     });
@@ -663,35 +663,65 @@
   }
 
   // =====================================================================
-  // WEBSITE CONTENT MANAGER
-  // Published content: data/content.json (read by app.js on every page).
-  // Drafts never touch the repo (it is public): they live in this browser until "Publish".
+  // WEBSITE DESIGN STUDIO  (Page -> Section -> Element)
+  // Published: data/content.json, read by app.js on every page.
+  // Drafts stay in this browser (the repository is public) until "Publish".
+  // Page keys: a route ("about"), a template ("tpl:collections", "tpl:products") or "*" (header/footer on every page).
   // =====================================================================
   const DRAFT_KEY = 'hj_content_draft';
-  const STATIC_PAGES = [
-    ['home', 'Homepage', 'Home'], ['collections/all', 'Shop: all jewellery', 'Shop'], ['whats-new', 'New arrivals', 'Collection'],
-    ['about', 'About us', 'Page'], ['craftsmanship', 'Craftsmanship', 'Page'], ['contact', 'Contact us', 'Page'], ['faq', 'FAQ', 'Page'],
-    ['shipping', 'Shipping policy', 'Policy'], ['returns', 'Returns policy', 'Policy'], ['exchange', 'Exchange policy', 'Policy'],
-    ['cancellation', 'Cancellation policy', 'Policy'], ['privacy', 'Privacy policy', 'Policy'], ['terms', 'Terms and conditions', 'Policy'],
-    ['cookies', 'Cookie policy', 'Policy'], ['care-guide', 'Jewellery care guide', 'Policy'], ['size-guide', 'Size guide', 'Policy'], ['warranty', 'Warranty', 'Policy'],
-    ['cart', 'Shopping bag', 'Shop'], ['wishlist', 'Wishlist', 'Shop'], ['account', 'My account', 'Shop'], ['checkout', 'Checkout', 'Shop']
-  ];
-  const GLOBAL_NAMES = { '.announcement-bar': 'Announcement bar', '.site-header': 'Header', '.site-footer': 'Footer', '.mobile-bottom-nav': 'Mobile bottom nav' };
   const SAFE_HREF = /^(#|\/(?!\/)|https:\/\/|mailto:|tel:)/i;
   const SWATCHES = ['#1A120B', '#3A2418', '#6B4A2E', '#A88462', '#D5C4AE', '#4A4A46', '#FFFFFF'];
-  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const GLOBAL_NAMES = { '.announcement-bar': 'Announcement bar', '.site-header': 'Header', '.site-footer': 'Footer', '.mobile-bottom-nav': 'Mobile bottom nav' };
+  const POLICIES = [['shipping', 'Shipping policy'], ['returns', 'Return & refund policy'], ['exchange', 'Exchange policy'], ['cancellation', 'Cancellation policy'],
+    ['privacy', 'Privacy policy'], ['terms', 'Terms & conditions'], ['cookies', 'Cookie policy'], ['care-guide', 'Jewellery care guide'], ['size-guide', 'Size guide'], ['warranty', 'Warranty']];
+  const STATIC_PAGES = [['home', 'Home page'], ['collections/all', 'Shopping page'], ['whats-new', 'New arrivals'], ['about', 'About us'], ['craftsmanship', 'Craftsmanship'],
+    ['contact', 'Contact us'], ['faq', 'FAQ'], ...POLICIES, ['cart', 'Cart'], ['checkout', 'Checkout'], ['wishlist', 'Wishlist'], ['account', 'My account']];
+  const ICON = {
+    home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>', bag: '<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+    grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+    layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>', gem: '<path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18"/>', book: '<path d="M4 4h7v16H4zM13 4h7v16h-7z"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>', news: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>', card: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/>',
+    help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/>', doc: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/>',
+    star: '<path d="M12 3l2.7 5.6 6.3.9-4.5 4.4 1 6.1L12 17l-5.5 3 1-6.1L3 9.5l6.3-.9z"/>', header: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',
+    footer: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15h18"/>', bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+    palette: '<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="7.5" r="1.2"/><circle cx="16" cy="10" r="1.2"/>', box: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>'
+  };
+  const svg = (k) => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">${ICON[k]}</svg>`;
+  const SECTION_TYPES = [['text', 'Rich text', 'Heading, paragraph and button'], ['banner', 'Promotional banner', 'Image, heading, text and button'],
+    ['split', 'Image with text', 'Image beside a heading and text'], ['image', 'Full-width image', 'One large image'], ['cta', 'Call to action', 'Heading, text and a button on a colour'],
+    ['divider', 'Divider', 'A thin gold line'], ['spacer', 'Spacer', 'Empty space']];
+  // Site design tokens that Global Design Settings may change (all exist in style.css :root)
+  const DESIGN = [
+    ['Brand colours', [['Darkest (text, footer)', ['--color-charcoal', '--color-subtle-charcoal', '--color-cacao-deep', '--color-text-primary'], '#1A120E'],
+      ['Deep brown', ['--color-deep-heritage-brown', '--color-espresso', '--color-bronze-mahogany', '--color-text-secondary'], '#3A2418'],
+      ['Cognac', ['--color-muted-gold-dark', '--color-cognac-amber'], '#6B4A2E'], ['Gold', ['--color-muted-gold', '--color-gold', '--color-antique-gold', '--color-text-gold'], '#A88462'],
+      ['Beige canvas', ['--color-champagne-beige', '--color-warm-stone', '--color-warm-ivory'], '#D5C4AE'], ['Stone grey', ['--color-stone-muted', '--color-taupe'], '#4A4A46']]],
+    ['Card surfaces', [['Card background', ['--color-soft-offwhite', '--color-card-canvas'], '#E4D7C5'], ['Inset / showcase', ['--color-card-inset'], '#F5EFE6']]],
+    ['Text sizes', [['Small text', ['--font-size-sm'], '0.875rem'], ['Body text', ['--font-size-base'], '1rem'], ['Section headers', ['--font-size-xl'], '1.5rem'],
+      ['Page headers', ['--font-size-2xl'], '2rem'], ['Hero titles', ['--font-size-3xl'], '2.5rem']]],
+    ['Corners', [['Cards', ['--radius-pepite-card', '--radius-pepite-card-lg', '--radius-lg'], '16px'], ['Small elements', ['--radius-md'], '8px']]]
+  ];
+  const clone = (o) => JSON.parse(JSON.stringify(o == null ? null : o));
 
   const loadContent = async () => {
     try { const f = await getFile('data/content.json'); state.content = JSON.parse(f.text); state.contentSha = f.sha; }
     catch (e) { if (e.status !== 404) throw e; state.content = { pages: {} }; state.contentSha = null; }
     if (!state.content.pages) state.content.pages = {};
   };
-  const readDraft = () => { try { return JSON.parse(localStorage.getItem(DRAFT_KEY)) || { pages: {} }; } catch (e) { return { pages: {} }; } };
+  const readDraft = () => { try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY)); return d && d.pages ? d : { pages: {} }; } catch (e) { return { pages: {} }; } };
   const writeDraft = (d) => localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
-  // What the preview shows: published content with this browser's drafts on top
-  const effective = () => { const c = clone(state.content); const d = readDraft(); Object.assign(c.pages, d.pages); return c; };
-  const pageOf = (c, r) => c.pages[r] || (c.pages[r] = { items: {}, order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {} });
-  const routeExists = (r) => r === '' || r === 'home' || STATIC_PAGES.some(([x]) => x === r) || /^collections\/[a-z0-9-]+$/.test(r) ||
+  // What the canvas shows: published content with this browser's drafts on top
+  const effective = () => {
+    const c = clone(state.content); const d = readDraft();
+    Object.assign(c.pages, d.pages);
+    if (d.design) c.design = d.design;
+    if (d.library) c.library = d.library;
+    return c;
+  };
+  const blankPage = () => ({ items: {}, sectionStyle: {}, style: {}, order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {}, names: {}, locked: [] });
+  const isTemplate = (k) => String(k).startsWith('tpl:');
+  const routeExists = (r) => r === '' || r === 'home' || STATIC_PAGES.some(([x]) => x === r) || /^collections\/[a-z0-9-]+$/.test(r) || /^p\/[a-z0-9-]+$/.test(r) ||
     (r.startsWith('products/') && state.products.some((p) => 'products/' + (p.handle || p.id) === r || 'products/' + p.id === r)) || ['appointment', 'track-order', 'gold', 'silver', 'diamond', 'gemstone'].includes(r);
   const linkProblem = (href) => {
     if (!href) return 'No destination';
@@ -699,109 +729,123 @@
     if (href.startsWith('#') && href.length > 1 && !routeExists(href.slice(1).replace(/^\//, ''))) return 'Internal page not found';
     return '';
   };
+  let categoriesCache = null;
+  async function categories() {
+    if (!categoriesCache) {
+      try { const r = await fetch('/data/categories.json', { cache: 'no-cache' }); const j = await r.json(); categoriesCache = Array.isArray(j) ? j : j.categories || []; } catch (e) { categoriesCache = []; }
+    }
+    return categoriesCache;
+  }
+  const landingPages = () => { const e = effective(); return Object.keys(e.pages).filter((k) => k.startsWith('p/')).map((k) => ({ key: k, route: k, name: (e.pages[k].meta || {}).name || k })); };
 
-  async function allPages() {
-    let cats = [];
-    try { const r = await fetch('/data/categories.json', { cache: 'no-cache' }); const j = await r.json(); cats = Array.isArray(j) ? j : j.categories || []; } catch (e) { /* categories optional */ }
+  async function groups() {
+    const cats = await categories();
+    const pages = (list) => list.map(([route, name]) => ({ key: route, route, name }));
     return [
-      ...STATIC_PAGES.map(([route, name, type]) => ({ route, name, type })),
-      ...cats.map((c) => ({ route: 'collections/' + c.id, name: c.name || c.title || c.id, type: 'Category' })),
-      ...state.products.map((p) => ({ route: 'products/' + (p.handle || p.id), name: p.name, type: 'Product', productId: p.id }))
+      { id: 'home', icon: 'home', name: 'Home Page', desc: 'Hero, trust ribbon, three pillars, categories, reviews, consultation', pages: pages([['home', 'Home page']]) },
+      { id: 'shop', icon: 'bag', name: 'Shopping Page', desc: 'Shop banner, filters, product grid, sorting', pages: pages([['collections/all', 'Shopping page']]) },
+      { id: 'category', icon: 'grid', name: 'Category Pages', desc: `One template for all ${cats.length} categories, or each category on its own`,
+        pages: [{ key: 'tpl:collections', route: 'collections/' + ((cats[0] || {}).id || 'rings'), name: 'Category page template (all categories)', template: true },
+          ...cats.map((c) => ({ key: 'collections/' + c.id, route: 'collections/' + c.id, name: c.name || c.id }))] },
+      { id: 'collection', icon: 'layers', name: 'Collection Pages', desc: 'New arrivals', pages: pages([['whats-new', 'New arrivals']]) },
+      { id: 'product', icon: 'gem', name: 'Product Pages', desc: 'Layout of every product page. Product text, prices and photos stay in Products.',
+        pages: [{ key: 'tpl:products', route: 'products/' + ((state.products[0] || {}).handle || (state.products[0] || {}).id), name: 'Product page template (all products)', template: true }], products: true },
+      { id: 'about', icon: 'book', name: 'About Us', desc: 'Brand story, craftsmanship, images', pages: pages([['about', 'About us'], ['craftsmanship', 'Craftsmanship']]) },
+      { id: 'contact', icon: 'mail', name: 'Contact Us', desc: 'Contact details, form, buttons', pages: pages([['contact', 'Contact us']]) },
+      { id: 'blog', icon: 'news', name: 'Blog Pages', desc: 'The website has no blog yet', pages: [], none: 'There is no blog on the website, so there are no blog pages to edit. A blog needs its own pages in the site code first.' },
+      { id: 'customer', icon: 'user', name: 'Customer Pages', desc: 'Account and wishlist', pages: pages([['account', 'My account'], ['wishlist', 'Wishlist']]) },
+      { id: 'cart', icon: 'card', name: 'Cart & Checkout', desc: 'Bag and checkout. Payment logic is not editable.', pages: pages([['cart', 'Cart'], ['checkout', 'Checkout']]) },
+      { id: 'faq', icon: 'help', name: 'FAQ Page', desc: 'Questions and answers', pages: pages([['faq', 'FAQ']]) },
+      { id: 'policy', icon: 'doc', name: 'Policy Pages', desc: 'Shipping, returns, privacy, terms and more', pages: pages(POLICIES) },
+      { id: 'landing', icon: 'star', name: 'Custom Landing Pages', desc: 'Your own pages for campaigns and festivals', pages: landingPages(), landing: true }
     ];
   }
 
-  // ----- page directory -----
-  VIEWS.pages = async () => {
+  // ----- Studio home: page groups, global components, design, library -----
+  VIEWS.studio = async () => {
     await loadContent();
-    const pages = await allPages();
-    const draft = readDraft();
-    const types = [...new Set(pages.map((p) => p.type))];
-    let pageNo = 1;
+    const G = await groups();
+    const d = readDraft();
+    const draftCount = Object.keys(d.pages).length + (d.design ? 1 : 0) + (d.library ? 1 : 0);
+    const card = (attrs, icon, n, name, desc, extra = '') => `<button class="st-card" ${attrs}><span class="st-ico">${svg(icon)}</span>
+      <span class="st-txt"><b>${n ? n + '. ' : ''}${esc(name)}</b><span>${esc(desc)}</span></span>${extra}<span class="st-chev" aria-hidden="true">›</span></button>`;
     view.innerHTML = `
-      <div class="page-head"><div><h1>Website Content</h1><p>${pages.length} pages found from the website's routes, categories and products.</p></div>
-        <button class="btn" data-go="media">Media library</button></div>
-      <div class="toolbar">
-        <input id="pq" type="search" placeholder="Search page name or URL" aria-label="Search pages">
-        <select id="pt" aria-label="Page type"><option value="">All types</option>${types.map((t) => `<option>${t}</option>`).join('')}</select>
-        <select id="ps" aria-label="Sort"><option value="type">Sort: type</option><option value="name">Sort: name</option><option value="modified">Sort: last modified</option></select>
-      </div>
-      <div class="table-wrap"><table>
-        <thead><tr><th>Page</th><th class="hide-sm">URL</th><th class="hide-sm">Type</th><th>Status</th><th class="hide-sm">Last modified</th><th class="hide-sm">SEO</th><th style="text-align:right">Actions</th></tr></thead>
-        <tbody id="prow"></tbody></table></div>
-      <div class="row-flex" style="justify-content:space-between;margin-top:var(--s3)"><span id="pinfo" class="small muted"></span>
-        <div class="row-flex"><button class="btn btn-sm" id="pprev">← Previous</button><button class="btn btn-sm" id="pnext">Next →</button></div></div>`;
-    const PER = 20;
-    const render = () => {
-      const q = $('#pq').value.trim().toLowerCase();
-      const t = $('#pt').value;
-      const sort = $('#ps').value;
-      let rows = pages.filter((p) => (!t || p.type === t) && (!q || p.name.toLowerCase().includes(q) || p.route.includes(q)));
-      const mod = (p) => (state.content.pages[p.route] || {}).updatedAt || '';
-      if (sort === 'name') rows.sort((a, b) => a.name.localeCompare(b.name));
-      if (sort === 'modified') rows.sort((a, b) => mod(b).localeCompare(mod(a)));
-      const pagesCount = Math.max(1, Math.ceil(rows.length / PER));
-      pageNo = Math.min(pageNo, pagesCount);
-      $('#pinfo').textContent = `${rows.length} pages · page ${pageNo} of ${pagesCount}`;
-      $('#pprev').disabled = pageNo <= 1; $('#pnext').disabled = pageNo >= pagesCount;
-      $('#prow').innerHTML = rows.slice((pageNo - 1) * PER, pageNo * PER).map((p) => {
-        const pub = state.content.pages[p.route];
-        const status = draft.pages[p.route] ? '<span class="pill dirty">Draft changes</span>' : pub ? '<span class="pill published">Customised</span>' : '<span class="pill">Template</span>';
-        const seo = pub && pub.seo && pub.seo.title ? '<span class="pill low">Custom title</span>' : '<span class="pill medium">Default</span>';
-        const editAttr = p.productId ? `data-edit="${esc(p.productId)}"` : `data-page="${esc(p.route)}"`;
-        return `<tr><td><b>${esc(p.name)}</b></td><td class="hide-sm"><code class="small">#${esc(p.route)}</code></td><td class="hide-sm">${p.type}</td><td>${status}</td>
-          <td class="hide-sm small">${pub && pub.updatedAt ? esc(new Date(pub.updatedAt).toLocaleString('en-IN')) : '—'}</td><td class="hide-sm">${p.productId ? '<span class="small muted">In product editor</span>' : seo}</td>
-          <td style="text-align:right;white-space:nowrap"><button class="btn btn-sm btn-primary" ${editAttr}>Edit</button>
-            <a class="btn btn-sm" href="${SITE}/#${esc(p.route)}" target="_blank" rel="noopener" aria-label="Open live ${esc(p.name)}">Live ↗</a></td></tr>`;
-      }).join('') || '<tr><td colspan="7" class="muted">No pages match.</td></tr>';
-    };
-    ['#pq', '#pt', '#ps'].forEach((s) => $(s).addEventListener('input', () => { pageNo = 1; render(); }));
-    $('#pprev').addEventListener('click', () => { pageNo--; render(); });
-    $('#pnext').addEventListener('click', () => { pageNo++; render(); });
-    render();
+      <div class="page-head"><div><h1>Website Design Studio</h1><p>Open a page, pick a section, then click any text or image to change it. Nothing goes live until you publish.</p></div>
+        ${draftCount ? `<span class="pill dirty">${draftCount} unpublished draft${draftCount > 1 ? 's' : ''} in this browser</span>` : ''}</div>
+      <h3 class="st-h">Website pages</h3>
+      <div class="st-list">${G.map((g, i) => card(`data-group="${g.id}"`, g.icon, String(i + 1).padStart(2, '0'), g.name, g.desc,
+        g.pages.some((p) => d.pages[p.key]) ? '<span class="pill dirty">Draft</span>' : '')).join('')}</div>
+      <h3 class="st-h">Global components <span class="small muted">(appear on every page)</span></h3>
+      <div class="st-list">${Object.entries(GLOBAL_NAMES).map(([sel, n]) => card(`data-global="${sel}"`, sel === '.site-footer' ? 'footer' : sel === '.announcement-bar' ? 'bell' : 'header', '', n, 'Shared by all pages')).join('')}
+        ${card('data-go="design"', 'palette', '', 'Global design settings', 'Brand colours, text sizes and corners for the whole site', d.design ? '<span class="pill dirty">Draft</span>' : '')}
+        ${card('data-go="library"', 'box', '', 'Reusable section library', 'Save a section once, use it on many pages', d.library ? '<span class="pill dirty">Draft</span>' : '')}
+        ${card('data-go="media"', 'grid', '', 'Media library', 'All website images and where they are used')}</div>`;
   };
 
-  // ----- page editor workspace -----
-  const cm = { route: null, scan: null, sel: null, tab: 'sections', filter: '' };
-  const pvWin = () => $('#pv') && $('#pv').contentWindow;
-  const cmDirty = () => { const d = readDraft(); return [cm.route, '*'].some((r) => d.pages[r] && JSON.stringify(d.pages[r]) !== JSON.stringify(state.content.pages[r] || null)); };
-
-  VIEWS.page = async (route) => {
+  VIEWS.group = async (id) => {
     await loadContent();
-    const meta = (await allPages()).find((p) => p.route === route) || { route, name: '#' + route, type: 'Page' };
-    Object.assign(cm, { route, scan: null, sel: null, tab: 'sections', filter: '' });
-    view.classList.add('wide');
-    const tab = (k, label) => `<button type="button" role="tab" aria-selected="${k === 'sections'}" data-cmtab="${k}">${label}</button>`;
+    const g = (await groups()).find((x) => x.id === id);
+    if (!g) throw new Error('Unknown page group.');
+    const d = readDraft();
     view.innerHTML = `
-      <div class="ws">
+      <p><a href="#" data-go="studio">← Design Studio</a></p>
+      <div class="page-head"><div><h1>${esc(g.name)}</h1><p>${esc(g.desc)}</p></div></div>
+      ${g.none ? `<p class="note">${esc(g.none)}</p>` : ''}
+      ${g.landing ? `<div class="panel"><h3>New landing page</h3><div class="row-flex"><input id="lp-name" placeholder="Page name, e.g. Diwali Festive Edit" style="flex:1 1 240px;width:auto">
+        <button class="btn btn-primary" data-cm="new-landing">Create page</button></div><p class="help">It gets its own address (#p/your-page-name) and starts empty; add sections to it. It stays private until you publish.</p></div>` : ''}
+      ${g.pages.length ? `<div class="table-wrap"><table><thead><tr><th>Page</th><th class="hide-sm">Address</th><th>Status</th><th style="text-align:right">Actions</th></tr></thead><tbody>
+        ${g.pages.map((p) => { const pub = state.content.pages[p.key]; return `<tr><td><b>${esc(p.name)}</b>${p.template ? '<br><span class="small muted">Layout and styling only; changes apply to every page of this type</span>' : ''}</td>
+          <td class="hide-sm"><code class="small">${p.template ? 'all #' + esc(p.route.split('/')[0]) + '/…' : '#' + esc(p.route)}</code></td>
+          <td>${d.pages[p.key] ? '<span class="pill dirty">Draft changes</span>' : pub ? '<span class="pill published">Customised</span>' : p.key.startsWith('p/') ? '<span class="pill draft">Not published</span>' : '<span class="pill">Original</span>'}</td>
+          <td style="text-align:right;white-space:nowrap"><button class="btn btn-sm btn-primary" data-studio="${esc(p.key)}" data-route="${esc(p.route)}">Open editor</button>
+          ${p.template ? '' : `<a class="btn btn-sm" href="${SITE}/#${esc(p.route)}" target="_blank" rel="noopener">Live ↗</a>`}</td></tr>`; }).join('')}
+        </tbody></table></div>` : ''}
+      ${g.products ? '<p class="note small" style="margin-top:var(--s4)">To change one product\'s name, price, photos or SEO, use <a href="#" data-go="products">Products</a>: product data is kept separate from the page layout.</p>' : ''}`;
+  };
+
+  // ----- three-panel editor -----
+  const cm = { key: null, route: null, scan: null, sel: null, secSel: null, open: {}, undo: [], redo: [] };
+  const pvWin = () => $('#pv') && $('#pv').contentWindow;
+  const hl = (key) => { const w = pvWin(); if (w && w.__hjAdmin) w.__hjAdmin.highlight(key); };
+  const keysInPlay = () => [cm.key, '*'];
+  const cmDirty = () => { const d = readDraft(); return keysInPlay().some((r) => d.pages[r] && JSON.stringify(d.pages[r]) !== JSON.stringify(state.content.pages[r] || null)); };
+  const pageKeyFor = (scope) => scope === 'global' ? '*' : cm.key;
+  const pageData = (k) => (cm.eff.pages[k] || {});
+  const cmOverride = (it) => ((pageData(pageKeyFor(it.scope)).items || {})[it.key]) || {};
+  const cmItem = (key) => cm.scan && cm.scan.items.find((i) => i.key === key);
+  const isLocked = (k, scope) => (pageData(scope === 'global' ? '*' : cm.key).locked || []).includes(k);
+  const layerName = (k, scope, def) => (pageData(scope === 'global' ? '*' : cm.key).names || {})[k] || def;
+
+  VIEWS.page = async (arg) => {
+    const { key, route, focus } = typeof arg === 'string' ? { key: arg, route: arg } : arg;
+    await loadContent();
+    Object.assign(cm, { key, route, scan: null, sel: null, secSel: focus || null, open: focus ? { [focus]: true } : {}, undo: [], redo: [] });
+    const name = key.startsWith('tpl:') ? (key === 'tpl:products' ? 'Product page template' : 'Category page template') :
+      key.startsWith('p/') ? ((effective().pages[key] || {}).meta || {}).name || key : (STATIC_PAGES.find(([r]) => r === key) || [])[1] ||
+      ((await categories()).find((c) => 'collections/' + c.id === key) || {}).name || key;
+    view.classList.add('wide');
+    const dev = (w, l) => `<button type="button" data-device="${w}" aria-pressed="${device === w}">${l}</button>`;
+    view.innerHTML = `
+      <div class="ws studio">
         <div class="ws-head">
-          <div class="ws-title"><a class="btn btn-sm" href="#" data-go="pages" aria-label="Back to all pages">←</a>
-            <h1>${esc(meta.name)}</h1><span class="pill">${esc(meta.type)}</span><span id="ws-dirty" class="pill dirty hidden">Unpublished changes</span></div>
+          <div class="ws-title"><a class="btn btn-sm" href="#" data-go="studio" aria-label="Back to Design Studio">←</a>
+            <h1>${esc(name)}</h1>${isTemplate(key) ? '<span class="pill">Template</span>' : ''}<span id="ws-dirty" class="pill dirty hidden">Unpublished changes</span></div>
           <div class="ws-actions">
-            <div class="seg ws-switch" role="group" aria-label="Show"><button type="button" data-pane="editor" aria-pressed="true">Editor</button><button type="button" data-pane="preview" aria-pressed="false">Preview</button></div>
-            <button class="btn" data-cm="discard">Discard</button>
-            <button class="btn" data-cm="save-draft">Save draft</button>
-            <button class="btn btn-primary" data-cm="publish">Publish</button>
+            <button class="btn btn-sm" data-cm="undo" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button><button class="btn btn-sm" data-cm="redo" title="Redo (Ctrl+Y)" aria-label="Redo">↷</button>
+            <button class="btn" data-cm="discard">Discard</button><button class="btn" data-cm="save-draft">Save draft</button><button class="btn btn-primary" data-cm="publish">Publish</button>
           </div>
-          <div class="ws-url"><span>Page</span><code>${SITE}/#${esc(route)}</code>
-            <button class="btn btn-sm" type="button" data-cm="copy">Copy URL</button><a class="btn btn-sm" href="${SITE}/#${esc(route)}" target="_blank" rel="noopener">Open live page ↗</a></div>
+          <div class="ws-url"><div class="seg st-switch" role="group" aria-label="Show panel"><button type="button" data-spane="layers" aria-pressed="false">Layers</button><button type="button" data-spane="canvas" aria-pressed="true">Canvas</button><button type="button" data-spane="props" aria-pressed="false">Properties</button></div>
+            <div class="seg" role="group" aria-label="Preview size">${dev(1440, 'Desktop')}${dev(1280, 'Laptop')}${dev(768, 'Tablet')}${dev(390, 'Mobile')}</div>
+            <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="10" value="${device}" style="width:90px;min-height:34px"></label>
+            ${isTemplate(key) ? `<span class="small muted">Previewing #${esc(route)}</span>` : `<code>${SITE}/#${esc(route)}</code><a class="btn btn-sm" href="${SITE}/#${esc(route)}" target="_blank" rel="noopener">Live ↗</a>`}</div>
         </div>
-        <div class="ws-body" data-pane="editor">
-          <div class="ws-editor">
-            <div class="tabs" role="tablist" aria-label="Page editor">${tab('sections', 'Sections')}${tab('text', 'Text')}${tab('images', 'Images')}${tab('links', 'Links')}${tab('seo', 'SEO')}${tab('history', 'History')}</div>
-            <div id="cm-form"></div>
-            <div id="cm-panel"><div class="skel" style="height:240px"></div></div>
-          </div>
-          <div class="ws-preview" aria-label="Live preview">
-            <div class="pv-bar">
-              <div class="seg" role="group" aria-label="Preview size">
-                <button type="button" data-device="1280" aria-pressed="${device === 1280}">Desktop</button><button type="button" data-device="768" aria-pressed="${device === 768}">Tablet</button><button type="button" data-device="390" aria-pressed="${device === 390}">Mobile</button>
-              </div>
-              <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="10" value="${device}" style="width:90px;min-height:34px"></label>
-              <span class="small muted">Click any text or image in the preview to edit it</span>
-            </div>
+        <div class="st-body" data-spane="canvas">
+          <aside class="st-layers" id="st-layers" aria-label="Layers"><div class="skel" style="height:300px"></div></aside>
+          <div class="ws-preview st-canvas" aria-label="Canvas">
             <div class="pv-stage" id="pv-stage"><div class="pv-loading skel" id="pv-loading"></div>
-              <iframe id="pv" class="pv-frame" title="Live preview of ${esc(meta.name)}" src="/?hjpreview=1&amp;nomodal=1#${esc(route)}"></iframe></div>
+              <iframe id="pv" class="pv-frame" title="Live canvas of ${esc(name)}" src="/?hjpreview=1&amp;nomodal=1#${esc(route)}"></iframe></div>
           </div>
+          <aside class="st-props" id="st-props" aria-label="Properties"></aside>
         </div>
       </div>`;
     fitPreview();
@@ -812,230 +856,396 @@
   };
 
   function cmRefreshDirty() {
+    if (!$('#ws-dirty')) return;
     const dirty = cmDirty();
     $('#ws-dirty').classList.toggle('hidden', !dirty);
     view.querySelector('[data-cm="discard"]').disabled = !dirty;
     view.querySelector('[data-cm="publish"]').disabled = !dirty;
+    view.querySelector('[data-cm="undo"]').disabled = !cm.undo.length;
+    view.querySelector('[data-cm="redo"]').disabled = !cm.redo.length;
   }
 
-  // Push the draft into the preview, re-read the page, redraw the active tab
-  // keepForm: the change came from the open element form, so leave it alone (keeps focus and caret)
+  // Push the draft into the canvas, re-read the page, redraw layers + properties
   function cmSync(keepForm) {
     const w = pvWin();
+    cm.eff = effective();
     if (!w || !w.__hjAdmin) return;
     w.__hjContentMode = true;
-    cm.eff = effective();
     w.__hjAdmin.setContent(cm.eff);
     cm.scan = w.__hjAdmin.scan();
-    cmRender(keepForm);
+    renderLayers();
+    if (!keepForm) renderProps();
     cmRefreshDirty();
   }
 
-  // Change the draft for the page an element belongs to (shared parts live under '*')
-  function cmEdit(scope, fn, keepForm) {
+  // Every change goes through here: undo snapshot, draft write, canvas sync
+  function cmEdit(pageKey, fn, keepForm) {
     const d = readDraft();
-    const r = scope === 'global' ? '*' : cm.route;
-    if (!d.pages[r]) d.pages[r] = Object.assign(pageOf({ pages: {} }, r), clone(state.content.pages[r] || {}));
-    fn(d.pages[r]);
+    cm.undo.push(JSON.stringify(d)); if (cm.undo.length > 60) cm.undo.shift();
+    cm.redo = [];
+    if (!d.pages[pageKey]) d.pages[pageKey] = Object.assign(blankPage(), clone(state.content.pages[pageKey] || {}));
+    fn(d.pages[pageKey]);
     writeDraft(d);
     cmSync(keepForm);
   }
-
-  const cmItem = (key) => cm.scan && cm.scan.items.find((i) => i.key === key);
-  const cmOverride = (it) => { const p = (cm.eff || effective()).pages[it.scope === 'global' ? '*' : cm.route]; return (p && p.items && p.items[it.key]) || {}; };
-  const hl = (key) => { const w = pvWin(); if (w && w.__hjAdmin) w.__hjAdmin.highlight(key); };
-  const secName = (it) => it.scope === 'global' ? GLOBAL_NAMES[it.section] : 'Section ' + (Number(String(it.section).replace(/\D/g, '')) + 1);
-
-  function cmRender(keepForm) {
-    if (!cm.scan) return;
-    const panel = $('#cm-panel');
-    const P = cm.eff.pages[cm.route] || {};
-    const S = cm.scan;
-    const textItems = S.items.filter((i) => i.kind !== 'image' && (!cm.filter || i.section === cm.filter));
-    const listItem = (i) => `<li><button type="button" class="cm-row ${cm.sel === i.key ? 'on' : ''}" data-cmsel="${esc(i.key)}">
-        <span class="pill">${i.tag}</span><span class="cm-text">${esc((cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)')}</span>
-        <span class="small muted">${esc(secName(i))}</span>${cmOverride(i).hidden ? '<span class="pill medium">Hidden</span>' : ''}${Object.keys(cmOverride(i)).length ? '<span class="pill dirty">Edited</span>' : ''}</button></li>`;
-    const secOpts = `<option value="">All sections</option>${S.sections.filter((s) => !s.custom).map((s, n) => `<option value="${esc(s.key)}" ${cm.filter === s.key ? 'selected' : ''}>${n + 1}. ${esc(s.label.trim().slice(0, 40))}</option>`).join('')}
-      ${Object.entries(GLOBAL_NAMES).map(([k, v]) => `<option value="${k}" ${cm.filter === k ? 'selected' : ''}>Shared: ${v}</option>`).join('')}`;
-    if (cm.tab === 'sections') {
-      const vis = (k) => (P.hidden || []).includes(k) ? 'hidden' : (P.hideMobile || []).includes(k) ? 'mobile' : (P.hideDesktop || []).includes(k) ? 'desktop' : 'all';
-      panel.innerHTML = `
-        <p class="help" style="margin:0 0 var(--s3)">Drag sections to reorder them. Hidden sections stay in the page code but customers don't see them.</p>
-        <ol class="cm-secs" id="cm-secs">${S.sections.map((s, n) => `
-          <li draggable="true" data-sec="${esc(s.key)}" class="${vis(s.key) === 'hidden' ? 'off' : ''}">
-            <span class="grip" aria-hidden="true">⋮⋮</span>
-            <span class="cm-text"><b>${n + 1}. ${esc(s.label.trim().slice(0, 60) || 'Section')}</b>${s.custom ? ' <span class="pill">Custom</span>' : ''}</span>
-            <select data-secvis="${esc(s.key)}" aria-label="Visibility of ${esc(s.label)}">
-              ${[['all', 'Visible'], ['mobile', 'Hide on mobile'], ['desktop', 'Hide on desktop'], ['hidden', 'Hidden']].map(([v, l]) => `<option value="${v}" ${vis(s.key) === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
-            <button class="btn btn-sm" data-secmove="${esc(s.key)}:-1" aria-label="Move up" ${n === 0 ? 'disabled' : ''}>↑</button>
-            <button class="btn btn-sm" data-secmove="${esc(s.key)}:1" aria-label="Move down" ${n === S.sections.length - 1 ? 'disabled' : ''}>↓</button>
-            ${s.custom ? `<button class="btn btn-sm" data-custedit="${esc(s.key)}">Edit</button><button class="btn btn-sm btn-danger" data-custdel="${esc(s.key)}">Delete</button>` : `<button class="btn btn-sm" data-secedit="${esc(s.key)}">Edit text</button>`}
-          </li>`).join('')}</ol>
-        <div class="panel" style="margin-top:var(--s4)"><h3>Add a section</h3>
-          <div class="row-flex"><select id="cm-newtype" style="width:auto"><option value="text">Text block (heading, paragraph, button)</option><option value="banner">Image banner (image, heading, text, button)</option></select>
-          <button class="btn btn-primary" data-cm="add-section">Add section</button></div>
-          <p class="help">New sections are added at the end of the page; drag them where you want. Built-in sections (with sliders, forms and product grids) can be hidden or moved but not duplicated or deleted, so nothing on the site breaks.</p></div>
-        <div class="panel"><h3>Shared on every page</h3>
-          <div class="row-flex">${Object.entries(GLOBAL_NAMES).map(([k, v]) => `<button class="btn btn-sm" data-secedit="${k}">${v}</button>`).join('')}</div></div>`;
-    } else if (cm.tab === 'text' || cm.tab === 'links') {
-      const items = cm.tab === 'links' ? textItems.filter((i) => i.kind === 'link') : textItems;
-      panel.innerHTML = `<div class="toolbar"><select id="cm-filter" aria-label="Section">${secOpts}</select><input id="cm-q" type="search" placeholder="Search text" aria-label="Search text"></div>
-        ${cm.tab === 'links' ? `<p class="help" style="margin:0 0 var(--s3)">${items.filter((i) => linkProblem(cmOverride(i).href || i.href)).length} link problem(s) on this page.</p>` : ''}
-        <ul class="cm-list" id="cm-list">${items.map((i) => cm.tab === 'links'
-          ? listItem(i).replace('</button></li>', `${linkProblem(cmOverride(i).href || i.href) ? `<span class="pill high">${esc(linkProblem(cmOverride(i).href || i.href))}</span>` : '<span class="pill low">OK</span>'}</button></li>`)
-          : listItem(i)).join('') || '<li class="muted">Nothing editable here.</li>'}</ul>`;
-      $('#cm-q').addEventListener('input', (e) => { const q = e.target.value.toLowerCase(); $('#cm-list').querySelectorAll('li').forEach((li) => { li.hidden = q && !li.textContent.toLowerCase().includes(q); }); });
-    } else if (cm.tab === 'images') {
-      const imgs = S.items.filter((i) => i.kind === 'image');
-      panel.innerHTML = `<p class="help" style="margin:0 0 var(--s3)">${imgs.length} images on this page (product photos are edited in Products).</p>
-        <div class="cm-imgs">${imgs.map((i) => { const o = cmOverride(i); const alt = o.alt != null ? o.alt : i.alt; return `
-          <button type="button" class="cm-img ${cm.sel === i.key ? 'on' : ''}" data-cmsel="${esc(i.key)}">
-            <img src="${esc(imgSrc(o.src || i.src))}" alt="" loading="lazy"><span class="small">${esc(secName(i))}</span>
-            ${alt ? '' : '<span class="pill high">No ALT</span>'}</button>`; }).join('') || '<p class="muted">No editable images on this page.</p>'}</div>`;
-    } else if (cm.tab === 'seo') {
-      const seo = P.seo || {};
-      const imgs = S.items.filter((i) => i.kind === 'image' && i.scope === 'page');
-      const noAlt = imgs.filter((i) => !((cmOverride(i).alt != null ? cmOverride(i).alt : i.alt) || '').trim()).length;
-      const titles = Object.entries(cm.eff.pages).filter(([r, p]) => r !== cm.route && p.seo && p.seo.title).map(([, p]) => p.seo.title);
-      const warn = [];
-      if (cm.route.startsWith('products/')) warn.push('Product pages take their title and description from the product editor.');
-      if (S.h1 === 0) warn.push('This page has no H1 heading.');
-      if (S.h1 > 1) warn.push(`This page has ${S.h1} H1 headings; use one.`);
-      if (noAlt) warn.push(`${noAlt} image(s) on this page have no ALT text.`);
-      if (seo.title && titles.includes(seo.title)) warn.push('Another page already uses this SEO title.');
-      if (!seo.title) warn.push('No custom SEO title: the homepage title is used.');
-      const outline = S.items.filter((i) => /^h[1-6]$/.test(cmOverride(i).tag || i.tag) && i.scope === 'page');
-      panel.innerHTML = `<div class="grid2">
-        <div class="full"><label for="seo-t">SEO title <span class="count" id="seo-tc"></span></label><input id="seo-t" value="${esc(seo.title || '')}" placeholder="${esc(S.title)}"></div>
-        <div class="full"><label for="seo-d">Meta description <span class="count" id="seo-dc"></span></label><textarea id="seo-d" rows="3">${esc(seo.description || '')}</textarea></div>
-        <div class="full"><label>Google preview</label><div class="snippet"><div class="u">houseofjewelux.com › ${esc(cm.route)}</div><div class="t" id="seo-st"></div><div class="d" id="seo-sd"></div></div></div>
-        <div class="full"><label>Checks</label>${warn.length ? `<ul class="log">${warn.map((w) => `<li class="small">⚠ ${esc(w)}</li>`).join('')}</ul>` : '<p class="small" style="margin:0">✓ No problems found.</p>'}</div>
-        <div class="full"><label>Heading outline</label><ul class="log">${outline.map((i) => { const t = cmOverride(i).tag || i.tag; return `<li class="small" style="padding-left:${(Number(t[1]) - 1) * 14}px"><span class="pill">${t.toUpperCase()}</span> ${esc((cmOverride(i).text || i.text).slice(0, 80))}</li>`; }).join('') || '<li class="small muted">No headings.</li>'}</ul></div>
-        <p class="full help">Canonical URL, robots and Open Graph are set once for the whole site in Homepage SEO: every page is part of one single-page site (#page URLs), so per-page versions would not be read by Google. The URL of built-in pages comes from the site code and cannot be renamed here.</p>
-      </div>`;
-      const upd = () => {
-        const t = $('#seo-t').value.trim(); const d = $('#seo-d').value.trim();
-        $('#seo-tc').textContent = t.length + ' / 60'; $('#seo-tc').classList.toggle('over', t.length > 60);
-        $('#seo-dc').textContent = d.length + ' / 160'; $('#seo-dc').classList.toggle('over', d.length > 160);
-        $('#seo-st').textContent = t || S.title; $('#seo-sd').textContent = d || '(the site default description)';
-      };
-      upd();
-      let timer;
-      ['#seo-t', '#seo-d'].forEach((s) => $(s).addEventListener('input', () => { upd(); clearTimeout(timer); timer = setTimeout(() => cmEdit('page', (p) => { p.seo = { title: $('#seo-t').value.trim(), description: $('#seo-d').value.trim() }; if (!p.seo.title && !p.seo.description) p.seo = {}; }), 400); }));
-    } else if (cm.tab === 'history') {
-      panel.innerHTML = '<div class="skel" style="height:160px"></div>';
-      cmHistory();
-    }
-    if (!keepForm) cmRenderForm();
+  function undoRedo(from, to) {
+    if (!from.length) return;
+    to.push(JSON.stringify(readDraft()));
+    localStorage.setItem(DRAFT_KEY, from.pop());
+    cmSync();
   }
 
-  // ----- the form for the selected element -----
-  function cmRenderForm() {
-    const box = $('#cm-form');
-    const it = cm.sel && cmItem(cm.sel);
-    if (!it || !['text', 'links', 'images'].includes(cm.tab)) { box.innerHTML = ''; return; }
+  const customOf = (secKey) => (pageData(cm.key).custom || []).find((c) => c.id === String(secKey).replace('custom:', ''));
+  const typeName = (c) => { if (!c) return 'Section'; const t = c.type === 'library' ? 'Library section' : (SECTION_TYPES.find(([x]) => x === c.type) || [, 'Section'])[1]; return t; };
+  const secLabel = (s, n) => {
+    const label = (s.label || '').trim().slice(0, 40);
+    return layerName(s.key, 'page', s.custom ? typeName(customOf(s.key)) + (label ? ': ' + label : '') : label || 'Section ' + (n + 1));
+  };
+  const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
+  const KIND_ICON = { text: 'T', link: '↗', image: '▣' };
+
+  function renderLayers() {
+    const S = cm.scan; if (!S) return;
+    const P = pageData(cm.key);
+    const hidden = new Set([...(P.hidden || [])]);
+    const row = (i) => {
+      const o = cmOverride(i); const locked = isLocked(i.key, i.scope);
+      return `<li class="ly-el ${cm.sel === i.key ? 'on' : ''}"><button type="button" class="ly-name" data-cmsel="${esc(i.key)}" ${locked ? 'aria-disabled="true"' : ''}>
+        <span class="ly-k">${i.tag === 'img' ? KIND_ICON.image : /^h[1-6]$/.test(o.tag || i.tag) ? (o.tag || i.tag).toUpperCase() : KIND_ICON[i.kind]}</span><span class="ly-t">${esc(itemLabel(i).slice(0, 60))}</span></button>
+        <button type="button" class="ly-ic" data-eltog="${esc(i.key)}" aria-label="${o.hidden ? 'Show' : 'Hide'} element" title="${o.hidden ? 'Show' : 'Hide'}">${o.hidden ? '◌' : '●'}</button>
+        <button type="button" class="ly-ic" data-ellock="${esc(i.key)}" data-scope="${i.scope}" aria-label="${locked ? 'Unlock' : 'Lock'} element" title="${locked ? 'Unlock' : 'Lock'}">${locked ? '🔒' : '🔓'}</button></li>`;
+    };
+    const section = (key, label, scope, n, s) => {
+      const items = S.items.filter((i) => i.section === key);
+      const open = cm.open[key];
+      return `<li class="ly-sec ${cm.secSel === key && !cm.sel ? 'on' : ''} ${hidden.has(key) ? 'off' : ''}" ${scope === 'page' ? `draggable="true" data-sec="${esc(key)}"` : ''}>
+        <div class="ly-row">${scope === 'page' ? '<span class="grip" aria-hidden="true">⋮⋮</span>' : ''}
+          <button type="button" class="ly-car" data-lyopen="${esc(key)}" aria-expanded="${!!open}" aria-label="Expand">${open ? '▾' : '▸'}</button>
+          <button type="button" class="ly-name" data-secsel="${esc(key)}" title="Double-click to rename"><span class="ly-t"><b>${esc(label)}</b></span>${S.overflow && S.overflow.includes(key) ? '<span class="pill high" title="Content is wider than the screen at this size">Overflow</span>' : ''}</button>
+          ${scope === 'page' ? `<button type="button" class="ly-ic" data-sectog="${esc(key)}" aria-label="${hidden.has(key) ? 'Show' : 'Hide'} section">${hidden.has(key) ? '◌' : '●'}</button>` : ''}</div>
+        ${open ? `<ul class="ly-els">${items.map(row).join('') || '<li class="small muted" style="padding:6px 10px">No editable text or images.</li>'}</ul>` : ''}</li>`;
+    };
+    $('#st-layers').innerHTML = `
+      <button type="button" class="ly-page ${!cm.sel && !cm.secSel ? 'on' : ''}" data-cm="page-props">⚙ Page settings</button>
+      <h4 class="ly-h">Sections</h4>
+      <ol class="ly-list" id="cm-secs">${S.sections.map((s, n) => section(s.key, secLabel(s, n), 'page', n, s)).join('') || '<li class="small muted">This page has no sections yet.</li>'}</ol>
+      <button class="btn btn-sm" data-cm="add-section-menu" style="width:100%;margin-top:var(--s2)">+ Add section</button>
+      <h4 class="ly-h">Shared on every page</h4>
+      <ul class="ly-list">${Object.entries(GLOBAL_NAMES).map(([k, v]) => section(k, layerName(k, 'global', v), 'global')).join('')}</ul>`;
+  }
+
+  // ----- properties panel (page / section / element) -----
+  const swatchRow = (attr, current) => `<div class="row-flex">${SWATCHES.map((c) => `<button type="button" class="sw ${current === c ? 'on' : ''}" style="background:${c}" ${attr}="${c}" aria-label="Colour ${c}"></button>`).join('')}
+    <button type="button" class="sw ${!current ? 'on' : ''}" ${attr}="" aria-label="Default colour" title="Default">∅</button></div>`;
+  const numField = (id, label, attr, value, ph = 'Default', min = 0, max = 400, step = 1) =>
+    `<div><label for="${id}">${label}</label><input id="${id}" ${attr} type="number" min="${min}" max="${max}" step="${step}" value="${value == null ? '' : esc(value)}" placeholder="${ph}"></div>`;
+  const group = (title, body, open = true) => `<details class="pg" ${open ? 'open' : ''}><summary>${title}</summary><div class="grid2">${body}</div></details>`;
+
+  function renderProps() {
+    const box = $('#st-props'); if (!box || !cm.scan) return;
+    if (cm.sel && cmItem(cm.sel)) return elementProps(box, cmItem(cm.sel));
+    if (cm.secSel) return sectionProps(box, cm.secSel);
+    pageProps(box);
+  }
+
+  function pageProps(box) {
+    const P = pageData(cm.key); const S = cm.scan; const seo = P.seo || {};
+    const imgs = S.items.filter((i) => i.kind === 'image' && i.scope === 'page');
+    const noAlt = imgs.filter((i) => !((cmOverride(i).alt != null ? cmOverride(i).alt : i.alt) || '').trim()).length;
+    const titles = Object.entries(cm.eff.pages).filter(([r, p]) => r !== cm.key && p.seo && p.seo.title).map(([, p]) => p.seo.title);
+    const warn = [];
+    if (isTemplate(cm.key)) warn.push('Templates hold layout and styling. Page titles come from each category or product.');
+    else {
+      if (S.h1 === 0) warn.push('This page has no H1 heading.');
+      if (S.h1 > 1) warn.push(`This page has ${S.h1} H1 headings; use one.`);
+      if (!seo.title) warn.push('No custom SEO title: the site title is used.');
+      if (seo.title && titles.includes(seo.title)) warn.push('Another page already uses this SEO title.');
+    }
+    if (noAlt) warn.push(`${noAlt} image(s) have no ALT text.`);
+    if (S.overflow && S.overflow.length) warn.push(`${S.overflow.length} section(s) overflow the screen at ${S.width}px wide.`);
+    const outline = S.items.filter((i) => /^h[1-6]$/.test(cmOverride(i).tag || i.tag) && i.scope === 'page');
+    box.innerHTML = `<h3 class="pp-h">Page settings</h3>
+      ${cm.key.startsWith('p/') ? group('Page', `<div class="full"><label for="pg-name">Page name</label><input id="pg-name" data-pg="name" value="${esc((P.meta || {}).name || '')}"></div>
+        <p class="full help">Address: #${esc(cm.key)}</p>`) : ''}
+      ${group('Background', `<div class="full"><label>Page background colour</label>${swatchRow('data-pgbg', (P.style || {}).bg)}</div>`)}
+      ${isTemplate(cm.key) ? '' : group('SEO', `
+        <div class="full"><label for="seo-t">SEO title <span class="count" id="seo-tc"></span></label><input id="seo-t" data-seo="title" value="${esc(seo.title || '')}" placeholder="${esc(S.title)}"></div>
+        <div class="full"><label for="seo-d">Meta description <span class="count" id="seo-dc"></span></label><textarea id="seo-d" data-seo="description" rows="3">${esc(seo.description || '')}</textarea></div>
+        <div class="full"><div class="snippet"><div class="u">houseofjewelux.com › ${esc(cm.route)}</div><div class="t" id="seo-st"></div><div class="d" id="seo-sd"></div></div></div>
+        <div class="full"><label>Heading outline</label><ul class="log">${outline.map((i) => { const t = cmOverride(i).tag || i.tag; return `<li class="small" style="padding-left:${(Number(t[1]) - 1) * 12}px"><span class="pill">${t.toUpperCase()}</span> ${esc((cmOverride(i).text || i.text).slice(0, 60))}</li>`; }).join('') || '<li class="small muted">No headings.</li>'}</ul></div>
+        <p class="full help">Canonical, robots and Open Graph are set once for the whole site in Homepage SEO (the site is one page with #addresses, so per-page tags are not read by Google).</p>`)}
+      ${group('Checks', `<div class="full">${warn.length ? `<ul class="log">${warn.map((w) => `<li class="small">⚠ ${esc(w)}</li>`).join('')}</ul>` : '<p class="small" style="margin:0">✓ No problems found.</p>'}</div>`)}
+      ${group('Version history', '<div class="full" id="hist"><div class="skel" style="height:80px"></div></div>', false)}`;
+    const upd = () => { const t = $('#seo-t'); if (!t) return; const d = $('#seo-d');
+      $('#seo-tc').textContent = t.value.trim().length + ' / 60'; $('#seo-tc').classList.toggle('over', t.value.trim().length > 60);
+      $('#seo-dc').textContent = d.value.trim().length + ' / 160'; $('#seo-dc').classList.toggle('over', d.value.trim().length > 160);
+      $('#seo-st').textContent = t.value.trim() || S.title; $('#seo-sd').textContent = d.value.trim() || '(the site default description)'; };
+    upd();
+    box.querySelectorAll('[data-seo]').forEach((el) => el.addEventListener('input', upd));
+    box.querySelector('details:last-of-type').addEventListener('toggle', (e) => { if (e.target.open) cmHistory(); }, { once: true });
+  }
+
+  function sectionProps(box, key) {
+    const global = Object.keys(GLOBAL_NAMES).includes(key);
+    const pk = global ? '*' : cm.key;
+    const P = pageData(pk); const st = (P.sectionStyle || {})[key] || {};
+    const s = cm.scan.sections.find((x) => x.key === key);
+    const c = !global && customOf(key);
+    const vis = (P.hidden || []).includes(key) ? 'hidden' : (P.hideMobile || []).includes(key) ? 'mobile' : (P.hideDesktop || []).includes(key) ? 'desktop' : 'all';
+    const lib = c && c.type === 'library' ? (cm.eff.library || []).find((l) => l.id === c.ref) : null;
+    const src = lib || c;
+    box.innerHTML = `<h3 class="pp-h">${esc(global ? GLOBAL_NAMES[key] : secLabel(s || { key, label: '' }, 0))}</h3>
+      ${global ? `<p class="note small">Shared component: changes appear on all pages of the website.</p>` : ''}
+      ${src ? group('Content', customFields(src, !!lib)) : ''}
+      ${group('Design', `
+        <div class="full"><label>Background colour</label>${swatchRow('data-ssbg', st.bg)}</div>
+        <div class="full"><label>Text colour</label>${swatchRow('data-sscolor', st.color)}</div>
+        ${numField('ss-pt', 'Padding top (px)', 'data-ss="pt"', st.pt)}${numField('ss-pb', 'Padding bottom (px)', 'data-ss="pb"', st.pb)}
+        ${numField('ss-mh', 'Minimum height (px)', 'data-ss="minH"', st.minH, 'Auto', 0, 2000)}
+        <div><label for="ss-al">Content alignment</label><select id="ss-al" data-ss="align">${[['', 'Default'], ['left', 'Left'], ['center', 'Centre'], ['right', 'Right']].map(([v, l]) => `<option value="${v}" ${(st.align || '') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+        ${numField('ss-op', 'Opacity (0.1–1)', 'data-ss="opacity"', st.opacity, '1', 0.1, 1, 0.05)}
+        <div class="full"><label>Background image</label><div class="row-flex">${st.bgImage ? `<img src="${esc(imgSrc(st.bgImage))}" alt="" style="width:64px;height:44px;object-fit:cover;border-radius:6px">` : ''}
+          <button class="btn btn-sm" data-cm="ss-bgimg">Choose</button>${st.bgImage ? '<button class="btn btn-sm" data-cm="ss-bgimg-clear">Remove</button>' : ''}</div></div>`)}
+      ${global ? '' : group('Visibility', `<div class="full"><select data-secvis="${esc(key)}">${[['all', 'Visible everywhere'], ['mobile', 'Hide on mobile'], ['desktop', 'Hide on desktop'], ['hidden', 'Hidden']].map(([v, l]) => `<option value="${v}" ${vis === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`)}
+      <div class="row-flex" style="margin-top:var(--s3)">
+        <button class="btn btn-sm" data-cm="rename-sec">Rename layer</button>
+        ${c && !lib ? '<button class="btn btn-sm" data-cm="save-to-library">Save to library</button><button class="btn btn-sm" data-cm="dup-sec">Duplicate</button>' : ''}
+        ${c ? '<button class="btn btn-sm btn-danger" data-cm="del-sec">Delete section</button>' : ''}
+        <button class="btn btn-sm" data-cm="reset-sec">Reset design</button></div>
+      ${!c && !global ? '<p class="help">Built-in section: you can restyle, hide or move it. It cannot be deleted or duplicated because it contains site features (sliders, forms, product grids).</p>' : ''}
+      ${global || c ? '' : `<p class="help">Click text or images inside it on the canvas to edit them.</p>`}`;
+  }
+
+  function customFields(c, isLib) {
+    if (isLib) return `<p class="full note small">Linked to the library section "${esc(c.heading || c.type)}". Edit it in the Section library to change it everywhere.</p>`;
+    if (c.type === 'divider') return '<p class="full help">A thin gold divider line.</p>';
+    if (c.type === 'spacer') return numField('c-h', 'Height (px)', 'data-c="height"', c.height || 64, '64', 8, 400);
+    const hasImg = ['banner', 'split', 'image'].includes(c.type);
+    return `
+      ${c.type !== 'image' ? `<div class="full"><label for="c-heading">Heading</label><input id="c-heading" data-c="heading" value="${esc(c.heading || '')}"></div>
+      <div class="full"><label for="c-text">Text</label><textarea id="c-text" data-c="text" rows="4">${esc(c.text || '')}</textarea></div>` : ''}
+      ${hasImg ? `<div class="full row-flex"><img src="${esc(imgSrc(c.image || ''))}" alt="" style="width:96px;height:72px;object-fit:cover;border-radius:var(--r-sm);background:var(--line)">
+        <button class="btn btn-sm" data-cm="custom-pick">Choose image</button><button class="btn btn-sm" data-cm="custom-upload">Upload</button></div>
+        <div class="full"><label for="c-alt" class="req">Image ALT text</label><input id="c-alt" data-c="alt" value="${esc(c.alt || '')}"></div>` : ''}
+      ${['text', 'banner', 'split', 'cta'].includes(c.type) ? `<div><label for="c-bl">Button label</label><input id="c-bl" data-c="buttonLabel" value="${esc(c.buttonLabel || '')}"></div>
+      <div><label for="c-bh">Button link</label><input id="c-bh" data-c="buttonHref" list="dl-routes" value="${esc(c.buttonHref || '')}" placeholder="#collections/all"></div>
+      <div><label for="c-align">Alignment</label><select id="c-align" data-c="align"><option value="center" ${c.align !== 'left' ? 'selected' : ''}>Centre</option><option value="left" ${c.align === 'left' ? 'selected' : ''}>Left</option></select></div>` : ''}
+      <datalist id="dl-routes">${STATIC_PAGES.map(([r, n]) => `<option value="#${r}">${n}</option>`).join('')}</datalist>`;
+  }
+
+  function elementProps(box, it) {
     const o = cmOverride(it);
+    const tpl = isTemplate(cm.key) && it.scope === 'page';
     const val = (k, def) => esc(o[k] != null ? o[k] : def == null ? '' : def);
-    const vis = o.hidden ? 'hidden' : 'all';
-    const common = `
-      <div><label for="e-vis">Visibility</label><select id="e-vis" data-e="visibility"><option value="all" ${vis === 'all' ? 'selected' : ''}>Visible</option><option value="hidden" ${vis === 'hidden' ? 'selected' : ''}>Hidden</option></select></div>`;
-    let fields = '';
+    const sel = (id, attr, opts, cur) => `<select id="${id}" ${attr}>${opts.map(([v, l]) => `<option value="${v}" ${String(cur == null ? '' : cur) === v ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
+    const isBtn = it.kind === 'link' || it.tag === 'button';
+    let html = `<h3 class="pp-h">${it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(it.tag)}</span></h3>
+      <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
+      ${tpl ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}`;
     if (it.kind === 'image') {
       const [fx, fy] = (o.objectPosition || '50% 50%').split(' ').map((v) => parseInt(v, 10));
-      fields = `
-        <div class="full row-flex" style="align-items:flex-start;flex-wrap:nowrap"><img src="${esc(imgSrc(o.src || it.src))}" alt="" style="width:120px;height:120px;object-fit:cover;border-radius:var(--r-sm);background:var(--line);object-position:${fx}% ${fy}%">
-          <div style="flex:1;min-width:0"><p class="help" style="word-break:break-all;margin:0 0 var(--s2)">${esc(o.src || it.src)}</p>
-          <div class="row-flex"><button class="btn btn-sm" data-cm="pick-image">Choose from library</button><button class="btn btn-sm" data-cm="upload-image">Upload new</button></div></div></div>
+      html += (tpl ? '' : group('Image', `
+        <div class="full row-flex" style="flex-wrap:nowrap;align-items:flex-start"><img src="${esc(imgSrc(o.src || it.src))}" alt="" style="width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);background:var(--line);object-position:${fx}% ${fy}%">
+          <div style="min-width:0"><p class="help" style="word-break:break-all;margin:0 0 var(--s2)">${esc(o.src || it.src)}</p><div class="row-flex"><button class="btn btn-sm" data-cm="pick-image">Replace</button><button class="btn btn-sm" data-cm="upload-image">Upload</button></div></div></div>
         <div class="full"><label class="req" for="e-alt">ALT text</label><input id="e-alt" data-e="alt" value="${val('alt', it.alt)}" placeholder="Describe what the image shows"></div>
-        <div><label for="e-title">Image title (tooltip)</label><input id="e-title" data-e="title" value="${val('title', '')}"></div>
-        <div><label for="e-aspect">Aspect ratio</label><select id="e-aspect" data-e="aspect">${[['', 'Original'], ['1 / 1', 'Square 1:1'], ['4 / 5', 'Portrait 4:5'], ['3 / 4', 'Portrait 3:4'], ['16 / 9', 'Wide 16:9']].map(([v, l]) => `<option value="${v}" ${(o.aspect || '') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-        <div><label for="e-fx">Focal point left–right: <span id="fxv">${fx}%</span></label><input id="e-fx" data-e="fx" type="range" min="0" max="100" value="${fx}"></div>
-        <div><label for="e-fy">Focal point top–bottom: <span id="fyv">${fy}%</span></label><input id="e-fy" data-e="fy" type="range" min="0" max="100" value="${fy}"></div>
-        <div><label for="e-mw">Size (max width %)</label><input id="e-mw" data-e="maxWidth" type="number" min="10" max="100" value="${val('maxWidth', '')}" placeholder="100"></div>
-        ${common}`;
+        <div class="full"><label for="e-title">Title (tooltip)</label><input id="e-title" data-e="title" value="${val('title', '')}"></div>`)) +
+      group('Crop and size', `
+        <div><label for="e-aspect">Aspect ratio</label>${sel('e-aspect', 'data-e="aspect"', [['', 'Original'], ['1 / 1', '1:1'], ['4 / 5', '4:5'], ['3 / 4', '3:4'], ['16 / 9', '16:9']], o.aspect || '')}</div>
+        ${numField('e-mw', 'Width (% of space)', 'data-e="maxWidth"', o.maxWidth, '100', 10, 100)}
+        <div><label for="e-fx">Focus left–right <span id="fxv">${fx}%</span></label><input id="e-fx" data-e="fx" type="range" min="0" max="100" value="${fx}"></div>
+        <div><label for="e-fy">Focus top–bottom <span id="fyv">${fy}%</span></label><input id="e-fy" data-e="fy" type="range" min="0" max="100" value="${fy}"></div>
+        ${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 200)}`);
     } else {
-      const heading = /^h[1-6]$/.test(it.tag);
-      fields = `
-        <div class="full"><label for="e-text">${it.kind === 'link' ? 'Label' : 'Text'}</label><textarea id="e-text" data-e="text" rows="${it.text.length > 120 ? 5 : 2}">${val('text', it.text)}</textarea>
-          ${it.hasMarkup ? '<p class="help">This text has formatting inside (line breaks, icons). Editing it replaces it with plain text.</p>' : ''}</div>
-        ${it.kind === 'link' ? `<div class="full"><label for="e-href">Destination</label><input id="e-href" data-e="href" list="dl-routes" value="${val('href', it.href)}" placeholder="#about or https://…">
-          <datalist id="dl-routes">${STATIC_PAGES.map(([r, n]) => `<option value="#${r}">${n}</option>`).join('')}</datalist><p class="help" id="href-check"></p></div>
-          <div><label class="check"><input type="checkbox" data-e="newTab" ${o.newTab ? 'checked' : ''}> Open in a new tab</label></div>` : ''}
-        ${heading ? `<div><label for="e-tag">Heading level</label><select id="e-tag" data-e="tag">${[1, 2, 3, 4, 5, 6].map((n) => `<option value="h${n}" ${(o.tag || it.tag) === 'h' + n ? 'selected' : ''}>H${n}</option>`).join('')}</select></div>` : ''}
-        <div><label for="e-size">Font size (px)</label><input id="e-size" data-e="size" type="number" min="10" max="96" value="${val('size', '')}" placeholder="Default"></div>
-        <div><label for="e-weight">Font weight</label><select id="e-weight" data-e="weight">${[['', 'Default'], ['300', 'Light'], ['400', 'Regular'], ['500', 'Medium'], ['600', 'Semibold'], ['700', 'Bold']].map(([v, l]) => `<option value="${v}" ${String(o.weight || '') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-        <div><label for="e-align">Alignment</label><select id="e-align" data-e="align">${[['', 'Default'], ['left', 'Left'], ['center', 'Centre'], ['right', 'Right']].map(([v, l]) => `<option value="${v}" ${(o.align || '') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-        <div><label>Text colour</label><div class="row-flex">${SWATCHES.map((c) => `<button type="button" class="sw ${o.color === c ? 'on' : ''}" style="background:${c}" data-swatch="${c}" aria-label="Colour ${c}"></button>`).join('')}
-          <input type="color" data-e="color" value="${o.color || '#3A2418'}" aria-label="Custom colour" style="width:44px;padding:2px"><button type="button" class="btn btn-sm" data-swatch="">Default</button></div></div>
-        ${common}`;
+      html += (tpl ? '' : group('Content', `
+        <div class="full"><label for="e-text">${isBtn ? 'Label' : 'Text'}</label><textarea id="e-text" data-e="text" rows="${it.text.length > 120 ? 5 : 2}">${val('text', it.text)}</textarea>
+          ${it.hasMarkup ? '<p class="help">Has formatting inside (line breaks, icons); editing makes it plain text.</p>' : ''}</div>
+        ${it.kind === 'link' ? `<div class="full"><label for="e-href">Destination</label><input id="e-href" data-e="href" list="dl-routes" value="${val('href', it.href)}" placeholder="#about or https://…"><p class="help" id="href-check"></p>
+          <datalist id="dl-routes">${STATIC_PAGES.map(([r, n]) => `<option value="#${r}">${n}</option>`).join('')}</datalist></div>
+          <div class="full"><label class="check"><input type="checkbox" data-e="newTab" ${o.newTab ? 'checked' : ''}> Open in a new tab</label></div>` : ''}
+        ${/^h[1-6]$/.test(it.tag) ? `<div><label for="e-tag">Heading level (SEO)</label>${sel('e-tag', 'data-e="tag"', [1, 2, 3, 4, 5, 6].map((n) => ['h' + n, 'H' + n]), o.tag || it.tag)}</div>` : ''}`)) +
+      group('Typography', `
+        <div><label for="e-font">Font</label>${sel('e-font', 'data-e="font"', [['', 'Default'], ['display', 'Brand display'], ['serif', 'Serif'], ['sans', 'Sans-serif']], o.font || '')}</div>
+        ${numField('e-size', 'Size (px)', 'data-e="size"', o.size, 'Default', 8, 160)}
+        <div><label for="e-weight">Weight</label>${sel('e-weight', 'data-e="weight"', [['', 'Default'], ['300', 'Light'], ['400', 'Regular'], ['500', 'Medium'], ['600', 'Semibold'], ['700', 'Bold']], o.weight || '')}</div>
+        ${numField('e-lh', 'Line height', 'data-e="lineHeight"', o.lineHeight, 'Default', 0.8, 4, 0.05)}
+        ${numField('e-ls', 'Letter spacing (px)', 'data-e="letterSpacing"', o.letterSpacing, 'Default', -5, 20, 0.5)}
+        <div><label>Align</label><div class="seg" role="group" aria-label="Text alignment">${[['', 'Auto'], ['left', 'Left'], ['center', 'Centre'], ['right', 'Right']].map(([v, l]) => `<button type="button" data-ealign="${v}" aria-pressed="${(o.align || '') === v}">${l}</button>`).join('')}</div></div>
+        <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>`) +
+      (isBtn ? group('Button design', `
+        <div class="full"><label>Background</label>${swatchRow('data-ebg', o.bg)}</div>
+        <div class="full"><label>Border colour</label>${swatchRow('data-ebd', o.borderColor)}</div>
+        ${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 200)}
+        ${numField('e-px', 'Padding left/right (px)', 'data-e="padX"', o.padX, 'Default', 0, 120)}${numField('e-py', 'Padding top/bottom (px)', 'data-e="padY"', o.padY, 'Default', 0, 120)}`, false) : '');
     }
-    box.innerHTML = `<div class="panel cm-edit"><h3>${it.kind === 'image' ? 'Image' : it.kind === 'link' ? 'Link / button' : 'Text'} · <span class="pill">${it.tag}</span> <span class="small muted">${esc(secName(it))}${it.scope === 'global' ? ' (on every page)' : ''}</span></h3>
-      <div class="grid2">${fields}</div>
-      <div class="row-flex" style="justify-content:flex-end;margin-top:var(--s4)"><button class="btn btn-sm" data-cm="reset-el">Restore original</button><button class="btn btn-sm" data-cm="close-el">Done</button></div></div>`;
+    html += group('Visibility', `<div class="full">${sel('e-vis', 'data-e="visibility"', [['all', 'Visible'], ['hidden', 'Hidden']], o.hidden ? 'hidden' : 'all')}</div>`, false) +
+      `<div class="row-flex" style="margin-top:var(--s3)"><button class="btn btn-sm" data-cm="rename-el">Rename layer</button><button class="btn btn-sm" data-cm="copy-style">Copy style</button>
+        <button class="btn btn-sm" data-cm="paste-style" ${cm.clip ? '' : 'disabled'}>Paste style</button><button class="btn btn-sm" data-cm="reset-el">Restore original</button></div>`;
+    box.innerHTML = html;
     const chk = $('#href-check');
     if (chk) { const p = linkProblem($('#e-href').value.trim()); chk.textContent = p ? '⚠ ' + p : '✓ Link looks valid'; chk.style.color = p ? 'var(--bad)' : 'var(--ok)'; }
   }
 
-  // Read the element form into its override
-  function cmReadForm() {
-    const it = cmItem(cm.sel);
-    if (!it) return;
-    const f = (k) => $('[data-e="' + k + '"]');
-    cmEdit(it.scope, (p) => {
+  // Read the element properties into its override
+  function readElementForm() {
+    const it = cmItem(cm.sel); if (!it) return;
+    const f = (k) => $('#st-props [data-e="' + k + '"]');
+    cmEdit(pageKeyFor(it.scope), (p) => {
       const o = Object.assign({}, p.items[it.key] || {});
       const set = (k, v, def) => { if (v === '' || v == null || v === def) delete o[k]; else o[k] = v; };
+      const n = (k) => (f(k) && f(k).value !== '' ? Number(f(k).value) : '');
       if (f('text')) set('text', f('text').value, it.text);
       if (f('href')) set('href', f('href').value.trim(), it.href);
       if (f('newTab')) set('newTab', f('newTab').checked || null);
       if (f('tag')) set('tag', f('tag').value, it.tag);
-      if (f('size')) set('size', f('size').value ? Number(f('size').value) : '');
+      if (f('font')) set('font', f('font').value);
+      ['size', 'lineHeight', 'letterSpacing', 'radius', 'padX', 'padY', 'maxWidth'].forEach((k) => { if (f(k)) set(k, n(k)); });
       if (f('weight')) set('weight', f('weight').value);
-      if (f('align')) set('align', f('align').value);
       if (f('alt')) set('alt', f('alt').value, it.alt);
       if (f('title')) set('title', f('title').value);
       if (f('aspect')) set('aspect', f('aspect').value);
-      if (f('maxWidth')) set('maxWidth', f('maxWidth').value ? Number(f('maxWidth').value) : '');
       if (f('fx')) set('objectPosition', `${f('fx').value}% ${f('fy').value}%`, '50% 50%');
       set('hidden', f('visibility').value === 'hidden' || null);
       if (Object.keys(o).length) p.items[it.key] = o; else delete p.items[it.key];
     }, true);
   }
+  function patchItem(it, patch) {
+    cmEdit(pageKeyFor(it.scope), (p) => {
+      const o = { ...(p.items[it.key] || {}), ...patch };
+      Object.keys(o).forEach((k) => { if (o[k] === '' || o[k] == null) delete o[k]; });
+      if (Object.keys(o).length) p.items[it.key] = o; else delete p.items[it.key];
+    });
+  }
+  function patchSection(key, patch) {
+    const global = Object.keys(GLOBAL_NAMES).includes(key);
+    cmEdit(global ? '*' : cm.key, (p) => {
+      p.sectionStyle = p.sectionStyle || {};
+      const st = { ...(p.sectionStyle[key] || {}), ...patch };
+      Object.keys(st).forEach((k) => { if (st[k] === '' || st[k] == null) delete st[k]; });
+      if (Object.keys(st).length) p.sectionStyle[key] = st; else delete p.sectionStyle[key];
+    });
+  }
+  function customUpdate(id, patch, keepForm) {
+    cmEdit(cm.key, (p) => { const c = (p.custom || []).find((x) => x.id === id); if (c) Object.assign(c, patch); }, keepForm);
+  }
 
   async function cmHistory() {
     let commits = [];
     try { commits = await gh(`/repos/${REPO}/commits?path=data/content.json&sha=${BRANCH}&per_page=30`); } catch (e) { /* none yet */ }
-    $('#cm-panel').innerHTML = `<p class="help" style="margin:0 0 var(--s3)">Every publish is kept as a version. Restoring loads that version into your draft; publish to make it live.</p>
-      <ul class="log">${commits.map((c, i) => `<li><div class="row-flex" style="justify-content:space-between"><div><b>Version ${commits.length - i}</b> · ${esc(c.commit.message.split('\n')[0])}<br>
-        <span class="small muted">${esc(c.commit.author.name)} · ${esc(new Date(c.commit.author.date).toLocaleString('en-IN'))}</span></div>
-        <div class="row-flex"><button class="btn btn-sm" data-vcompare="${c.sha}">Compare</button><button class="btn btn-sm" data-vrestore="${c.sha}">Restore</button></div></div>
-        <div id="v-${c.sha}"></div></li>`).join('') || '<li class="muted">No published versions yet.</li>'}</ul>`;
+    const box = $('#hist'); if (!box) return;
+    box.innerHTML = `<p class="help" style="margin:0 0 var(--s2)">Every publish is a version. Restore loads it into your draft; publish to make it live.</p>
+      <ul class="log">${commits.map((c, i) => `<li><b>Version ${commits.length - i}</b> · <span class="small">${esc(c.commit.message.split('\n')[0])}</span><br>
+        <span class="small muted">${esc(c.commit.author.name)} · ${esc(new Date(c.commit.author.date).toLocaleString('en-IN'))}</span>
+        <div class="row-flex" style="margin-top:4px"><button class="btn btn-sm" data-vcompare="${c.sha}">Compare</button><button class="btn btn-sm" data-vrestore="${c.sha}">Restore</button></div>
+        <div id="v-${c.sha}"></div></li>`).join('') || '<li class="muted small">No published versions yet.</li>'}</ul>`;
   }
   const fileAt = async (sha) => { const j = await gh(`/repos/${REPO}/contents/data/content.json?ref=${sha}`); return JSON.parse(L.fromB64(j.content)); };
   function diffPage(a, b) {
     a = a || {}; b = b || {};
     const out = [];
     const ai = a.items || {}; const bi = b.items || {};
-    new Set([...Object.keys(ai), ...Object.keys(bi)]).forEach((k) => { if (JSON.stringify(ai[k]) !== JSON.stringify(bi[k])) out.push((bi[k] ? (ai[k] ? 'Changed ' : 'Added ') : 'Removed ') + 'edit on ' + k.split(' > ').pop()); });
-    // empty list / empty SEO == not set
+    new Set([...Object.keys(ai), ...Object.keys(bi)]).forEach((k) => { if (JSON.stringify(ai[k]) !== JSON.stringify(bi[k])) out.push((bi[k] ? (ai[k] ? 'Changed ' : 'Added ') : 'Removed ') + 'element ' + k.split(' > ').pop()); });
     const norm = (v) => (!v || (Array.isArray(v) ? !v.length : !Object.values(v).some(Boolean)) ? null : v);
-    const names = { order: 'section order', hidden: 'hidden sections', hideMobile: 'mobile-only hiding', hideDesktop: 'desktop-only hiding', custom: 'custom sections', seo: 'SEO title / description' };
+    const names = { order: 'section order', hidden: 'hidden sections', hideMobile: 'mobile-only hiding', hideDesktop: 'desktop-only hiding', custom: 'added sections', seo: 'SEO', sectionStyle: 'section design', style: 'page background', meta: 'page name' };
     Object.keys(names).forEach((k) => { if (JSON.stringify(norm(a[k])) !== JSON.stringify(norm(b[k]))) out.push('Changed ' + names[k]); });
     return out;
   }
+
+  // ----- publish (page, template, shared parts, design, library) -----
+  async function publishKeys(keys, extra, btn, label) {
+    const d = readDraft();
+    keys = keys.filter((k) => d.pages[k]);
+    if (!keys.length && !extra.length) { toast('Nothing to publish.'); return false; }
+    const all = (await allRoutes()).length;
+    const cats = (await categories()).length;
+    const reach = [];
+    keys.forEach((k) => reach.push(k === '*' ? `the header/footer on all ${all} pages` : k === 'tpl:collections' ? `all ${cats} category pages` : k === 'tpl:products' ? `all ${state.products.length} product pages` : `#${k}`));
+    if (extra.includes('design')) reach.push(`the colours and sizes of all ${all} pages`);
+    if (extra.includes('library')) { const used = Object.entries(effective().pages).filter(([, p]) => (p.custom || []).some((c) => c.type === 'library')).map(([k]) => '#' + k); reach.push(`library sections used on ${used.length ? used.join(', ') : 'no pages yet'}`); }
+    if (!confirm(`Publish to the live website?\n\nThis changes: ${reach.join('; ')}.`)) return false;
+    let ok = false;
+    await busy(btn, async () => {
+      await loadContent(); // latest file, so other pages' published changes are kept
+      const next = clone(state.content);
+      keys.forEach((k) => {
+        const p = d.pages[k];
+        const empty = !Object.keys(p.items || {}).length && !Object.keys(p.sectionStyle || {}).length && !(p.style && p.style.bg) && !(p.order || []).length &&
+          !(p.hidden || []).length && !(p.hideMobile || []).length && !(p.hideDesktop || []).length && !(p.custom || []).length && !(p.seo && (p.seo.title || p.seo.description)) && !k.startsWith('p/');
+        if (empty) delete next.pages[k]; else next.pages[k] = { ...p, updatedAt: new Date().toISOString() };
+      });
+      if (extra.includes('design')) next.design = d.design;
+      if (extra.includes('library')) next.library = d.library;
+      state.contentSha = await putFile('data/content.json', L.toB64(JSON.stringify(next, null, 2) + '\n'), state.contentSha, `admin: publish ${label}`);
+      state.content = next;
+      keys.forEach((k) => delete d.pages[k]);
+      if (extra.includes('design')) delete d.design;
+      if (extra.includes('library')) delete d.library;
+      writeDraft(d);
+      toast('Published. The website updates in about a minute.');
+      ok = true;
+    });
+    return ok;
+  }
+  async function allRoutes() { return [...STATIC_PAGES, ...(await categories()), ...state.products, ...landingPages()]; }
+
+  async function cmPublish(btn) {
+    const bad = cm.scan.items.filter((i) => i.kind === 'link' && 'href' in cmOverride(i) && linkProblem(cmOverride(i).href));
+    if (bad.length) { toast(`Fix ${bad.length} invalid link(s) before publishing (select the link to see the problem).`, true); return; }
+    if (await publishKeys(keysInPlay(), readDraft().library ? ['library'] : [], btn, `page #${cm.key}`)) cmSync();
+  }
+
+  // ----- Global design settings -----
+  VIEWS.design = async () => {
+    await loadContent();
+    const cur = (effective().design || {}).vars || {};
+    view.classList.add('wide');
+    view.innerHTML = `<div class="ws"><div class="ws-head"><div class="ws-title"><a class="btn btn-sm" href="#" data-go="studio" aria-label="Back">←</a><h1>Global design settings</h1>
+        <span id="ws-dirty" class="pill dirty ${readDraft().design ? '' : 'hidden'}">Unpublished changes</span></div>
+        <div class="ws-actions"><button class="btn" data-cm="design-reset">Reset all</button><button class="btn btn-primary" data-cm="design-publish">Publish</button></div></div>
+      <div class="ws-body" data-pane="editor"><div class="ws-editor">
+        <p class="note small">These are the website's own design tokens. Every page uses them, so a change here restyles the whole site.</p>
+        ${DESIGN.map(([title, rows]) => `<div class="panel"><h3>${title}</h3><div class="grid2">${rows.map(([label, vars, def]) => {
+          const v = cur[vars[0]] || def; const color = def.startsWith('#');
+          return `<div><label>${label}</label><div class="row-flex">${color ? `<input type="color" data-dvars="${vars.join(',')}" value="${esc(v)}" style="width:52px;padding:2px">` :
+            `<input data-dvars="${vars.join(',')}" value="${esc(v)}" style="width:120px">`}<span class="small muted">${color ? esc(v) : 'Default ' + esc(def)}</span></div></div>`; }).join('')}</div></div>`).join('')}
+      </div><div class="ws-preview"><div class="pv-bar"><span class="small muted">Live preview: Home page</span></div>
+        <div class="pv-stage" id="pv-stage"><div class="pv-loading skel" id="pv-loading"></div><iframe id="pv" class="pv-frame" title="Design preview" src="/?hjpreview=1&amp;nomodal=1#home"></iframe></div></div></div></div>`;
+    fitPreview();
+    if (fitObserver) fitObserver.disconnect();
+    fitObserver = new ResizeObserver(fitPreview);
+    fitObserver.observe($('#pv-stage'));
+  };
+
+  // ----- Reusable section library -----
+  VIEWS.library = async () => {
+    await loadContent();
+    const lib = effective().library || [];
+    const usedOn = (id) => Object.entries(effective().pages).filter(([, p]) => (p.custom || []).some((c) => c.type === 'library' && c.ref === id)).map(([k]) => k);
+    view.innerHTML = `<p><a href="#" data-go="studio">← Design Studio</a></p>
+      <div class="page-head"><div><h1>Reusable section library</h1><p>Save a section from any page ("Save to library"), then add it to other pages from "+ Add section". Editing it here changes it on every page that uses it.</p></div>
+        ${readDraft().library ? '<button class="btn btn-primary" data-cm="lib-publish">Publish library</button>' : ''}</div>
+      ${lib.length ? lib.map((l) => `<div class="panel" data-lib-id="${esc(l.id)}"><h3>${esc(l.name || l.heading || 'Section')} <span class="pill">${esc((SECTION_TYPES.find(([t]) => t === l.type) || [, l.type])[1])}</span></h3>
+        <div class="grid2">${customFields(l, false).replace(/data-c="/g, 'data-lc="').replace(/data-cm="custom-(pick|upload)"/g, 'data-cm="lib-$1"')}</div>
+        <p class="help">Used on: ${usedOn(l.id).map((k) => '#' + esc(k)).join(', ') || 'no pages yet'}</p>
+        <button class="btn btn-sm btn-danger" data-libdel="${esc(l.id)}">Delete from library</button></div>`).join('') : '<p class="note">The library is empty. Open a page, add a section, then choose "Save to library".</p>'}`;
+  };
+  function libEdit(fn) { const d = readDraft(); d.library = clone(d.library || effective().library || []); fn(d.library); writeDraft(d); }
 
   // ----- media library -----
   async function loadMedia() {
     const files = (await gh(`/repos/${REPO}/contents/images?ref=${BRANCH}`)).filter((f) => f.type === 'file' && /\.(jpe?g|png|webp|avif|svg)$/i.test(f.name));
     const code = (await Promise.all(['/app.js', '/index.html', '/style.css'].map((u) => fetch(u, { cache: 'no-cache' }).then((r) => r.text()).catch(() => '')))).join('\n');
-    const content = state.content || { pages: {} };
+    const content = effective();
     state.media = files.map((f) => {
       const path = 'images/' + f.name;
       const uses = [];
       state.products.forEach((p) => { if ([p.image, p.hoverImage, ...(p.gallery || [])].includes(path)) uses.push('Product: ' + p.name); });
+      const same = (s) => s && String(s).replace(/^\//, '') === path;
       Object.entries(content.pages).forEach(([r, p]) => {
-        Object.values(p.items || {}).forEach((o) => { if (o.src && o.src.replace(/^\//, '') === path) uses.push('Page: #' + r); });
-        (p.custom || []).forEach((c) => { if (c.image && c.image.replace(/^\//, '') === path) uses.push('Page: #' + r + ' (custom section)'); });
+        Object.values(p.items || {}).forEach((o) => { if (same(o.src)) uses.push('Page: #' + r); });
+        Object.values(p.sectionStyle || {}).forEach((st) => { if (same(st.bgImage)) uses.push('Page: #' + r + ' (background)'); });
+        (p.custom || []).forEach((c) => { if (same(c.image)) uses.push('Page: #' + r + ' (section)'); });
       });
+      (content.library || []).forEach((l) => { if (same(l.image)) uses.push('Library: ' + (l.heading || l.type)); });
       if (code.includes(f.name)) uses.push('Website design (code)');
       return { path, name: f.name, size: f.size, sha: f.sha, uses: [...new Set(uses)] };
     });
@@ -1045,6 +1255,7 @@
     if (!state.content) await loadContent();
     if (!state.media) await loadMedia();
     view.innerHTML = `
+      <p><a href="#" data-go="studio">← Design Studio</a></p>
       <div class="page-head"><div><h1>Media library</h1><p>${state.media.length} images in the website's images folder.</p></div>
         <button class="btn btn-primary" data-cm="media-upload">Upload image</button></div>
       <div class="toolbar"><input id="mq" type="search" placeholder="Search file name" aria-label="Search images">
@@ -1076,115 +1287,88 @@
     });
   }
 
-  // Image picker: library grid inside the element form
+  // Image picker shown at the top of the properties panel (or the page, outside the studio)
   async function pickImage(onPick) {
     if (!state.media) await loadMedia();
-    const box = $('#cm-form');
-    box.insertAdjacentHTML('afterbegin', `<div class="panel" id="picker"><h3>Choose an image</h3><input id="pick-q" type="search" placeholder="Search" style="margin-bottom:var(--s3)">
+    const host = $('#st-props') || view;
+    host.insertAdjacentHTML('afterbegin', `<div class="panel" id="picker"><h3>Choose an image</h3><input id="pick-q" type="search" placeholder="Search" style="margin-bottom:var(--s3)">
       <div class="cm-imgs" id="pick-grid">${state.media.map((m) => `<button type="button" class="cm-img" data-pick="${esc(m.path)}"><img src="${esc(imgSrc(m.path))}" alt="" loading="lazy"><span class="small" style="word-break:break-all">${esc(m.name)}</span></button>`).join('')}</div>
       <button class="btn btn-sm" data-cm="close-picker" style="margin-top:var(--s3)">Cancel</button></div>`);
+    host.scrollTop = 0;
     $('#pick-q').addEventListener('input', (e) => $('#pick-grid').querySelectorAll('[data-pick]').forEach((b) => { b.hidden = !b.dataset.pick.toLowerCase().includes(e.target.value.toLowerCase()); }));
     cm.onPick = onPick;
   }
-
-  // Custom sections: small form in #cm-form
-  function customForm(key) {
-    const id = key.replace('custom:', '');
-    const c = (((cm.eff || effective()).pages[cm.route] || {}).custom || []).find((x) => x.id === id);
-    if (!c) return;
-    $('#cm-form').innerHTML = `<div class="panel cm-edit" data-custom-id="${esc(id)}"><h3>${c.type === 'banner' ? 'Image banner' : 'Text block'}</h3><div class="grid2">
-      <div class="full"><label for="c-heading">Heading</label><input id="c-heading" data-c="heading" value="${esc(c.heading)}"></div>
-      <div class="full"><label for="c-text">Text</label><textarea id="c-text" data-c="text" rows="4">${esc(c.text)}</textarea></div>
-      ${c.type === 'banner' ? `<div class="full row-flex"><img src="${esc(imgSrc(c.image || ''))}" alt="" style="width:96px;height:72px;object-fit:cover;border-radius:var(--r-sm);background:var(--line)">
-        <button class="btn btn-sm" data-cm="custom-pick">Choose image</button><button class="btn btn-sm" data-cm="custom-upload">Upload</button></div>
-        <div class="full"><label for="c-alt" class="req">Image ALT text</label><input id="c-alt" data-c="alt" value="${esc(c.alt || '')}"></div>` : ''}
-      <div><label for="c-bl">Button label</label><input id="c-bl" data-c="buttonLabel" value="${esc(c.buttonLabel || '')}"></div>
-      <div><label for="c-bh">Button link</label><input id="c-bh" data-c="buttonHref" list="dl-routes2" value="${esc(c.buttonHref || '')}" placeholder="#collections/all">
-        <datalist id="dl-routes2">${STATIC_PAGES.map(([r, n]) => `<option value="#${r}">${n}</option>`).join('')}</datalist></div>
-      <div><label for="c-align">Alignment</label><select id="c-align" data-c="align"><option value="center" ${c.align !== 'left' ? 'selected' : ''}>Centre</option><option value="left" ${c.align === 'left' ? 'selected' : ''}>Left</option></select></div>
-      <div><label>Background</label><div class="row-flex">${['', ...SWATCHES].map((s) => `<button type="button" class="sw ${(c.bg || '') === s ? 'on' : ''}" style="background:${s || 'transparent'}" data-cbg="${s}" aria-label="${s || 'No background'}">${s ? '' : '∅'}</button>`).join('')}</div></div>
-    </div><div class="row-flex" style="justify-content:flex-end;margin-top:var(--s4)"><button class="btn btn-sm" data-cm="close-el">Done</button></div></div>`;
-  }
-  function customUpdate(id, patch, keepForm) {
-    cmEdit('page', (p) => { const c = (p.custom || []).find((x) => x.id === id); if (c) Object.assign(c, patch); }, keepForm);
+  function cmUpload(done) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/jpeg,image/png,image/webp,image/avif';
+    input.addEventListener('change', () => { const f = input.files[0]; if (f) busy(null, async () => done(await uploadImageFile(f, cm.key ? cm.key.replace(/[/:]/g, '-') : 'site'))); });
+    input.click();
   }
 
-  async function cmPublish(btn) {
-    const d = readDraft();
-    const routes = [cm.route, '*'].filter((r) => d.pages[r]);
-    const changes = routes.reduce((n, r) => n + diffPage(state.content.pages[r], d.pages[r]).length, 0);
-    if (!routes.length) return;
-    const bad = cm.scan.items.filter((i) => i.kind === 'link' && Object.keys(cmOverride(i)).includes('href') && linkProblem(cmOverride(i).href));
-    if (bad.length) { toast(`Fix ${bad.length} invalid link(s) in the Links tab before publishing.`, true); return; }
-    if (!confirm(`Publish ${changes} change(s) to the live website?${routes.includes('*') ? '\n\nThis includes the header/footer/announcement bar, which appear on every page.' : ''}`)) return;
-    await busy(btn, async () => {
-      await loadContent(); // latest published file, so other pages' changes are kept
-      const next = clone(state.content);
-      routes.forEach((r) => {
-        const p = d.pages[r];
-        const empty = !Object.keys(p.items || {}).length && !(p.order || []).length && !(p.hidden || []).length && !(p.hideMobile || []).length &&
-          !(p.hideDesktop || []).length && !(p.custom || []).length && !(p.seo && (p.seo.title || p.seo.description));
-        if (empty) delete next.pages[r]; else next.pages[r] = { ...p, updatedAt: new Date().toISOString() };
-      });
-      state.contentSha = await putFile('data/content.json', L.toB64(JSON.stringify(next, null, 2) + '\n'), state.contentSha, `admin: publish content for #${cm.route}`);
-      state.content = next;
-      routes.forEach((r) => delete d.pages[r]);
-      writeDraft(d);
-      toast('Published. The website updates in about a minute.');
-      cmSync();
-    });
+  function selectElement(key) {
+    const it = cmItem(key); if (!it) return;
+    if (isLocked(key, it.scope)) { toast('This layer is locked. Unlock it in Layers to edit it.'); return; }
+    cm.sel = key; cm.secSel = it.section; cm.open[it.section] = true;
+    hl(key); renderLayers(); renderProps(); showPane('props');
   }
+  function selectSection(key) { cm.sel = null; cm.secSel = key; hl(key); renderLayers(); renderProps(); showPane('props'); }
+  function showPane(p) {
+    const body = $('.st-body'); if (!body || window.innerWidth > 1280) return;
+    body.dataset.spane = p;
+    view.querySelectorAll('[data-spane]').forEach((b) => { if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(b.dataset.spane === p)); });
+    fitPreview();
+  }
+  const inStudio = () => !!$('.st-body');
 
-  // ----- content manager events -----
+  // ----- events -----
   window.addEventListener('message', (e) => {
-    if (e.origin !== location.origin || !e.data || !cm.route || !$('#pv') || view.querySelector('.ws [data-cm]') === null) return;
-    if (e.data.type === 'hj-preview-ready') { $('#pv-loading').classList.add('hidden'); cmSync(); }
-    if (e.data.type === 'hj-content-select') {
-      const it = cmItem(e.data.key);
-      if (!it) return;
-      cm.sel = it.key;
-      cm.tab = it.kind === 'image' ? 'images' : it.kind === 'link' && cm.tab === 'links' ? 'links' : 'text';
-      cm.filter = '';
-      view.querySelectorAll('[data-cmtab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.cmtab === cm.tab)));
-      cmRender();
-      $('.ws-editor').scrollTop = 0;
+    if (e.origin !== location.origin || !e.data || !$('#pv') || $('#f-specs')) return;
+    if (e.data.type === 'hj-preview-ready') {
+      $('#pv-loading').classList.add('hidden');
+      if (inStudio()) cmSync();
+      else if (pvWin() && pvWin().__hjAdmin) pvWin().__hjAdmin.setContent(effective()); // design / library previews
+    }
+    if (e.data.type === 'hj-content-select' && inStudio()) {
+      if (e.data.key && cmItem(e.data.key)) selectElement(e.data.key);
+      else if (e.data.section) selectSection(e.data.section);
     }
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-page],[data-cm],[data-cmtab],[data-cmsel],[data-secmove],[data-secedit],[data-custedit],[data-custdel],[data-swatch],[data-cbg],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel]');
+    const t = e.target.closest('[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
-    if (d.page) { e.preventDefault(); show('page', d.page); return; }
-    if (d.cmtab) {
-      cm.tab = d.cmtab; cm.sel = null;
-      view.querySelectorAll('[data-cmtab]').forEach((b) => b.setAttribute('aria-selected', String(b === t)));
-      cmRender(); return;
-    }
-    if (d.cmsel) { cm.sel = d.cmsel; hl(d.cmsel); cmRender(); $('.ws-editor').scrollTop = 0; return; }
-    if (d.secedit) { cm.tab = 'text'; cm.filter = d.secedit; cm.sel = null; view.querySelectorAll('[data-cmtab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.cmtab === 'text'))); cmRender(); hl(d.secedit); return; }
-    if (d.secmove) {
-      const [key, dir] = [d.secmove.slice(0, d.secmove.lastIndexOf(':')), Number(d.secmove.slice(d.secmove.lastIndexOf(':') + 1))];
-      const keys = cm.scan.sections.map((s) => s.key);
-      const i = keys.indexOf(key);
-      [keys[i], keys[i + dir]] = [keys[i + dir], keys[i]];
-      cmEdit('page', (p) => { p.order = keys; });
+    if (d.group) { show('group', d.group); return; }
+    if (d.global) { show('page', { key: 'home', route: 'home', focus: d.global }); return; }
+    if (d.studio) { show('page', { key: d.studio, route: d.route }); return; }
+    if (d.cmsel) { selectElement(d.cmsel); return; }
+    if (d.secsel) { if (e.detail === 2) { renameLayer(d.secsel, Object.keys(GLOBAL_NAMES).includes(d.secsel) ? 'global' : 'page'); return; } selectSection(d.secsel); return; }
+    if (d.lyopen) { cm.open[d.lyopen] = !cm.open[d.lyopen]; renderLayers(); return; }
+    if (d.sectog) { const k = d.sectog; cmEdit(cm.key, (p) => { p.hidden = (p.hidden || []).includes(k) ? p.hidden.filter((x) => x !== k) : [...(p.hidden || []), k]; }); return; }
+    if (d.eltog) { const it = cmItem(d.eltog); patchItem(it, { hidden: cmOverride(it).hidden ? null : true }); return; }
+    if (d.ellock) { const k = d.ellock; cmEdit(d.scope === 'global' ? '*' : cm.key, (p) => { p.locked = (p.locked || []).includes(k) ? p.locked.filter((x) => x !== k) : [...(p.locked || []), k]; }); if (cm.sel === k) { cm.sel = null; renderProps(); } return; }
+    if (d.spane && t.tagName === 'BUTTON') { showPane(d.spane); return; }
+    if ('swatch' in d) { patchItem(cmItem(cm.sel), { color: d.swatch }); return; }
+    if ('ebg' in d) { patchItem(cmItem(cm.sel), { bg: d.ebg }); return; }
+    if ('ebd' in d) { patchItem(cmItem(cm.sel), { borderColor: d.ebd }); return; }
+    if ('ealign' in d) { patchItem(cmItem(cm.sel), { align: d.ealign }); return; }
+    if ('ssbg' in d) { patchSection(cm.secSel, { bg: d.ssbg }); return; }
+    if ('sscolor' in d) { patchSection(cm.secSel, { color: d.sscolor }); return; }
+    if ('pgbg' in d) { cmEdit(cm.key, (p) => { p.style = { ...(p.style || {}), bg: d.pgbg }; if (!d.pgbg) delete p.style.bg; }); return; }
+    if (d.addtype || d.addlib) {
+      const id = Date.now().toString(36);
+      const c = d.addlib ? { id, type: 'library', ref: d.addlib } : { id, type: d.addtype, heading: ['divider', 'spacer', 'image'].includes(d.addtype) ? '' : 'New section heading',
+        text: ['divider', 'spacer', 'image'].includes(d.addtype) ? '' : 'Write your text here.', align: 'center', bg: d.addtype === 'cta' ? '#3A2418' : '', color: d.addtype === 'cta' ? '#FFFFFF' : '', buttonLabel: '', buttonHref: '' };
+      cmEdit(cm.key, (p) => { p.custom = [...(p.custom || []), c]; });
+      selectSection('custom:' + id);
       return;
     }
-    if (d.custedit) { customForm(d.custedit); hl(d.custedit); return; }
-    if (d.custdel) {
-      if (!confirm('Delete this custom section?')) return;
-      const id = d.custdel.replace('custom:', '');
-      cmEdit('page', (p) => { p.custom = (p.custom || []).filter((c) => c.id !== id); p.order = (p.order || []).filter((k) => k !== d.custdel); });
-      return;
-    }
-    if ('swatch' in d) { cmEditColor(d.swatch); return; }
-    if ('cbg' in d) { customUpdate(t.closest('[data-custom-id]').dataset.customId, { bg: d.cbg }); customForm('custom:' + t.closest('[data-custom-id]').dataset.customId); return; }
-    if (d.pick) { const fn = cm.onPick; cm.onPick = null; $('#picker') && $('#picker').remove(); if (fn) fn(d.pick); return; }
+    if (d.pick) { const fn = cm.onPick; cm.onPick = null; if ($('#picker')) $('#picker').remove(); if (fn) fn(d.pick); return; }
     if (d.vcompare) {
       busy(t, async () => {
         const v = await fileAt(d.vcompare);
-        const lines = [cm.route, '*'].flatMap((r) => diffPage(v.pages[r], state.content.pages[r]).map((x) => (r === '*' ? 'Shared parts: ' : '') + x));
+        const lines = keysInPlay().flatMap((r) => diffPage(v.pages[r], state.content.pages[r]).map((x) => (r === '*' ? 'Shared parts: ' : '') + x));
         $('#v-' + d.vcompare).innerHTML = `<p class="small" style="margin:var(--s2) 0 0">${lines.length ? 'Differences from the live version:<br>• ' + lines.map(esc).join('<br>• ') : 'Same as the live version for this page.'}</p>`;
       });
       return;
@@ -1194,100 +1378,174 @@
       busy(t, async () => {
         const v = await fileAt(d.vrestore);
         const dr = readDraft();
-        [cm.route, '*'].forEach((r) => { dr.pages[r] = Object.assign(pageOf({ pages: {} }, r), clone(v.pages[r] || {})); });
+        cm.undo.push(JSON.stringify(dr));
+        keysInPlay().forEach((r) => { dr.pages[r] = Object.assign(blankPage(), clone(v.pages[r] || {})); });
         writeDraft(dr);
         cmSync();
-        toast('Version loaded into the draft. Check the preview, then Publish.');
+        toast('Version loaded into the draft. Check the canvas, then Publish.');
       });
       return;
     }
     if (d.mcopy) { navigator.clipboard.writeText(d.mcopy).then(() => toast('Path copied.')); return; }
     if (d.mdel) { deleteMedia(d.mdel, t); return; }
+    if (d.libdel) {
+      const used = Object.entries(effective().pages).filter(([, p]) => (p.custom || []).some((c) => c.type === 'library' && c.ref === d.libdel));
+      if (used.length) { toast(`Remove it from ${used.map(([k]) => '#' + k).join(', ')} first.`, true); return; }
+      if (!confirm('Delete this library section?')) return;
+      libEdit((l) => { const i = l.findIndex((x) => x.id === d.libdel); if (i >= 0) l.splice(i, 1); });
+      show('library');
+      return;
+    }
+    const it = cm.sel && cmItem(cm.sel);
     switch (d.cm) {
+      case 'undo': undoRedo(cm.undo, cm.redo); break;
+      case 'redo': undoRedo(cm.redo, cm.undo); break;
       case 'discard':
         if (!confirm('Discard all unpublished changes to this page (and shared header/footer edits)?')) return;
-        { const dr = readDraft(); delete dr.pages[cm.route]; delete dr.pages['*']; writeDraft(dr); cm.sel = null; cmSync(); toast('Draft discarded.'); }
+        { const dr = readDraft(); cm.undo.push(JSON.stringify(dr)); keysInPlay().forEach((k) => delete dr.pages[k]); writeDraft(dr); cm.sel = null; cmSync(); toast('Draft discarded. Undo brings it back.'); }
         break;
-      case 'save-draft': writeDraft(readDraft()); toast('Draft saved in this browser. It is not on the website until you publish.'); break;
+      case 'save-draft': toast('Draft saved in this browser (it also saves automatically). It is not on the website until you publish.'); break;
       case 'publish': cmPublish(t); break;
-      case 'copy': navigator.clipboard.writeText(`${SITE}/#${cm.route}`).then(() => toast('Page URL copied.')); break;
-      case 'close-el': cm.sel = null; cmRender(); break;
-      case 'reset-el': { const it = cmItem(cm.sel); cmEdit(it.scope, (p) => { delete p.items[it.key]; }); break; }
-      case 'add-section': {
-        const type = $('#cm-newtype').value;
-        const id = Date.now().toString(36);
-        cmEdit('page', (p) => { p.custom = [...(p.custom || []), { id, type, heading: 'New section heading', text: 'Write your text here.', align: 'center', bg: '', buttonLabel: '', buttonHref: '' }]; });
-        customForm('custom:' + id);
-        hl('custom:' + id);
-        break;
-      }
-      case 'pick-image': pickImage((path) => { const it = cmItem(cm.sel); cmEdit(it.scope, (p) => { p.items[it.key] = { ...(p.items[it.key] || {}), src: path }; }); }); break;
-      case 'upload-image': cmUpload((path) => { const it = cmItem(cm.sel); cmEdit(it.scope, (p) => { p.items[it.key] = { ...(p.items[it.key] || {}), src: path }; }); }); break;
-      case 'custom-pick': { const id = t.closest('[data-custom-id]').dataset.customId; pickImage((path) => { customUpdate(id, { image: path }); customForm('custom:' + id); }); break; }
-      case 'custom-upload': { const id = t.closest('[data-custom-id]').dataset.customId; cmUpload((path) => { customUpdate(id, { image: path }); customForm('custom:' + id); }); break; }
+      case 'page-props': cm.sel = null; cm.secSel = null; renderLayers(); renderProps(); showPane('props'); break;
+      case 'reset-el': patchItem(it, Object.fromEntries(Object.keys(cmOverride(it)).map((k) => [k, null]))); break;
+      case 'copy-style': { const o = cmOverride(it); cm.clip = Object.fromEntries(['font', 'size', 'weight', 'lineHeight', 'letterSpacing', 'align', 'color', 'bg', 'borderColor', 'radius', 'padX', 'padY'].filter((k) => k in o).map((k) => [k, o[k]])); toast('Style copied.'); renderProps(); break; }
+      case 'paste-style': if (cm.clip) patchItem(it, cm.clip); break;
+      case 'rename-el': renameLayer(it.key, it.scope); break;
+      case 'rename-sec': renameLayer(cm.secSel, Object.keys(GLOBAL_NAMES).includes(cm.secSel) ? 'global' : 'page'); break;
+      case 'reset-sec': patchSection(cm.secSel, { bg: null, color: null, pt: null, pb: null, minH: null, align: null, opacity: null, bgImage: null }); break;
+      case 'ss-bgimg': pickImage((path) => patchSection(cm.secSel, { bgImage: path })); break;
+      case 'ss-bgimg-clear': patchSection(cm.secSel, { bgImage: null }); break;
+      case 'pick-image': pickImage((path) => patchItem(cmItem(cm.sel), { src: path })); break;
+      case 'upload-image': cmUpload((path) => patchItem(cmItem(cm.sel), { src: path })); break;
+      case 'custom-pick': { const id = cm.secSel.replace('custom:', ''); pickImage((path) => customUpdate(id, { image: path })); break; }
+      case 'custom-upload': { const id = cm.secSel.replace('custom:', ''); cmUpload((path) => customUpdate(id, { image: path })); break; }
       case 'close-picker': cm.onPick = null; $('#picker').remove(); break;
       case 'media-upload': cmUpload(() => show('media')); break;
+      case 'add-section-menu':
+        $('#st-props').innerHTML = `<h3 class="pp-h">Add a section</h3><div class="add-grid">${SECTION_TYPES.map(([tp, n, desc]) => `<button class="st-card" data-addtype="${tp}"><span class="st-txt"><b>${n}</b><span>${desc}</span></span></button>`).join('')}</div>
+          <h4 class="ly-h">From your library</h4><div class="add-grid">${(cm.eff.library || []).map((l) => `<button class="st-card" data-addlib="${esc(l.id)}"><span class="st-txt"><b>${esc(l.name || l.heading || l.type)}</b><span>Reusable · ${esc(l.type)}</span></span></button>`).join('') || '<p class="small muted">Empty. Use "Save to library" on any added section.</p>'}</div>
+          <p class="help">New sections go to the end of the page; drag them in Layers to move them.</p>`;
+        showPane('props');
+        break;
+      case 'del-sec':
+        if (!confirm('Delete this section from the page?')) return;
+        { const k = cm.secSel; const id = k.replace('custom:', ''); cmEdit(cm.key, (p) => { p.custom = (p.custom || []).filter((c) => c.id !== id); p.order = (p.order || []).filter((x) => x !== k); }); cm.secSel = null; renderProps(); }
+        break;
+      case 'dup-sec': { const c = customOf(cm.secSel); const id = Date.now().toString(36); cmEdit(cm.key, (p) => { p.custom = [...(p.custom || []), { ...clone(c), id }]; }); selectSection('custom:' + id); break; }
+      case 'save-to-library': {
+        const c = customOf(cm.secSel); const name = prompt('Name for this library section:', c.heading || 'Promotional banner'); if (!name) return;
+        const id = 'lib-' + Date.now().toString(36);
+        libEdit((l) => l.push({ ...clone(c), id, name }));
+        const old = cm.secSel.replace('custom:', '');
+        cmEdit(cm.key, (p) => { const i = (p.custom || []).findIndex((x) => x.id === old); if (i >= 0) p.custom[i] = { id: old, type: 'library', ref: id }; });
+        toast('Saved to the library. Publishing this page also publishes the library.');
+        break;
+      }
+      case 'new-landing': {
+        const name = $('#lp-name').value.trim(); const slug = L.slugify(name);
+        if (!slug) { toast('Enter a page name.', true); return; }
+        const key = 'p/' + slug;
+        if (effective().pages[key]) { toast('A landing page with this address already exists.', true); return; }
+        const dr = readDraft(); dr.pages[key] = { ...blankPage(), meta: { name }, custom: [{ id: Date.now().toString(36), type: 'banner', heading: name, text: 'Introduce your campaign here.', align: 'center', bg: '', buttonLabel: 'Shop now', buttonHref: '#collections/all' }] };
+        writeDraft(dr);
+        show('page', { key, route: key });
+        break;
+      }
+      case 'design-reset': if (confirm('Reset every design setting to the original website design (as a draft)?')) { const dr = readDraft(); dr.design = { vars: {} }; writeDraft(dr); show('design'); } break;
+      case 'design-publish': publishKeys([], ['design'], t, 'global design settings').then((ok) => ok && show('design')); break;
+      case 'lib-publish': publishKeys([], ['library'], t, 'section library').then((ok) => ok && show('library')); break;
+      case 'lib-pick': case 'lib-upload': {
+        const id = t.closest('[data-lib-id]').dataset.libId;
+        const done = (path) => { libEdit((l) => { const x = l.find((y) => y.id === id); if (x) x.image = path; }); show('library'); };
+        if (d.cm === 'lib-pick') pickImage(done); else cmUpload(done);
+        break;
+      }
       default: break;
     }
   });
 
-  function cmUpload(done) {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/jpeg,image/png,image/webp,image/avif';
-    input.addEventListener('change', () => { const f = input.files[0]; if (f) busy(null, async () => done(await uploadImageFile(f, cm.route ? cm.route.replace(/\//g, '-') : 'site'))); });
-    input.click();
-  }
-  function cmEditColor(c) {
-    const it = cmItem(cm.sel);
-    cmEdit(it.scope, (p) => { const o = { ...(p.items[it.key] || {}) }; if (c) o.color = c; else delete o.color; if (Object.keys(o).length) p.items[it.key] = o; else delete p.items[it.key]; });
+  function renameLayer(key, scope) {
+    const cur = layerName(key, scope, '');
+    const name = prompt('Layer name (only shown here in the Studio):', cur);
+    if (name == null) return;
+    cmEdit(scope === 'global' ? '*' : cm.key, (p) => { p.names = { ...(p.names || {}) }; if (name.trim()) p.names[key] = name.trim(); else delete p.names[key]; });
   }
 
-  // Typing in the element / custom forms updates the draft and the preview (debounced)
+  // Typing in properties updates the draft and the canvas (debounced; the form itself is not redrawn)
   let cmTimer;
   document.addEventListener('input', (e) => {
     const t = e.target;
-    if (t.matches('[data-e]')) {
+    if (t.matches('#st-props [data-e]')) {
       if (t.id === 'e-fx') $('#fxv').textContent = t.value + '%';
       if (t.id === 'e-fy') $('#fyv').textContent = t.value + '%';
       if (t.id === 'e-href') { const p = linkProblem(t.value.trim()); $('#href-check').textContent = p ? '⚠ ' + p : '✓ Link looks valid'; $('#href-check').style.color = p ? 'var(--bad)' : 'var(--ok)'; }
-      clearTimeout(cmTimer);
-      cmTimer = setTimeout(cmReadForm, 250);
+      clearTimeout(cmTimer); cmTimer = setTimeout(readElementForm, 250);
     }
-    if (t.matches('[data-c]')) {
-      const id = t.closest('[data-custom-id]').dataset.customId;
-      clearTimeout(cmTimer);
-      cmTimer = setTimeout(() => customUpdate(id, { [t.dataset.c]: t.value }, true), 250);
+    if (t.matches('#st-props [data-ss]')) { const k = t.dataset.ss; clearTimeout(cmTimer); cmTimer = setTimeout(() => { patchSectionKeep(cm.secSel, { [k]: t.value === '' ? null : Number(t.value) }); }, 300); }
+    if (t.matches('#st-props [data-c]')) { const id = cm.secSel.replace('custom:', ''); clearTimeout(cmTimer); cmTimer = setTimeout(() => customUpdate(id, { [t.dataset.c]: t.dataset.c === 'height' ? Number(t.value) : t.value }, true), 250); }
+    if (t.matches('#st-props [data-seo]')) { clearTimeout(cmTimer); cmTimer = setTimeout(() => cmEdit(cm.key, (p) => { p.seo = { title: $('#seo-t').value.trim(), description: $('#seo-d').value.trim() }; }, true), 400); }
+    if (t.matches('#st-props [data-pg]')) { clearTimeout(cmTimer); cmTimer = setTimeout(() => cmEdit(cm.key, (p) => { p.meta = { ...(p.meta || {}), name: t.value.trim() }; }, true), 400); }
+    if (t.matches('[data-lc]')) { const id = t.closest('[data-lib-id]').dataset.libId; clearTimeout(cmTimer); cmTimer = setTimeout(() => libEdit((l) => { const x = l.find((y) => y.id === id); if (x) x[t.dataset.lc] = t.value; }), 300); }
+    if (t.matches('[data-dvars]')) {
+      const vars = t.dataset.dvars.split(','); const v = t.value.trim();
+      if (!/^(#[0-9a-f]{6}|\d+(\.\d+)?(px|rem))$/i.test(v)) return;
+      const dr = readDraft(); dr.design = clone(dr.design || effective().design || { vars: {} }); dr.design.vars = dr.design.vars || {};
+      vars.forEach((k) => { dr.design.vars[k] = v; }); writeDraft(dr);
+      if (t.nextElementSibling && t.type === 'color') t.nextElementSibling.textContent = v;
+      $('#ws-dirty').classList.remove('hidden');
+      clearTimeout(cmTimer); cmTimer = setTimeout(() => { const w = pvWin(); if (w && w.__hjAdmin) w.__hjAdmin.setContent(effective()); }, 150);
     }
   });
+  function patchSectionKeep(key, patch) {
+    const global = Object.keys(GLOBAL_NAMES).includes(key);
+    cmEdit(global ? '*' : cm.key, (p) => {
+      p.sectionStyle = p.sectionStyle || {};
+      const st = { ...(p.sectionStyle[key] || {}), ...patch };
+      Object.keys(st).forEach((k) => { if (st[k] === '' || st[k] == null) delete st[k]; });
+      if (Object.keys(st).length) p.sectionStyle[key] = st; else delete p.sectionStyle[key];
+    }, true);
+  }
   document.addEventListener('change', (e) => {
     const t = e.target;
     if (t.matches('[data-secvis]')) {
       const k = t.dataset.secvis;
-      cmEdit('page', (p) => {
+      cmEdit(cm.key, (p) => {
         ['hidden', 'hideMobile', 'hideDesktop'].forEach((x) => { p[x] = (p[x] || []).filter((y) => y !== k); });
         const map = { hidden: 'hidden', mobile: 'hideMobile', desktop: 'hideDesktop' };
         if (map[t.value]) p[map[t.value]].push(k);
       });
     }
-    if (t.matches('select[data-e], input[type=checkbox][data-e], input[type=color][data-e]')) cmReadForm();
-    if (t.id === 'cm-filter') { cm.filter = t.value; cmRender(); }
-    if (t.id === 'pv-w') { device = Math.min(2560, Math.max(320, Number(t.value) || 1280)); view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.device) === device))); fitPreview(); }
+    if (t.matches('#st-props select[data-e], #st-props input[type=checkbox][data-e]')) readElementForm();
+    if (t.matches('#st-props select[data-ss]')) patchSection(cm.secSel, { [t.dataset.ss]: t.value });
+    if (t.matches('#st-props select[data-c]')) customUpdate(cm.secSel.replace('custom:', ''), { [t.dataset.c]: t.value });
+    if (t.matches('select[data-lc]')) { const id = t.closest('[data-lib-id]').dataset.libId; libEdit((l) => { const x = l.find((y) => y.id === id); if (x) x[t.dataset.lc] = t.value; }); }
+    if (t.id === 'pv-w') { device = Math.min(2560, Math.max(320, Number(t.value) || 1280)); view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.device) === device))); fitPreview(); setTimeout(() => inStudio() && cmSync(), 400); }
+  });
+  // Re-scan after a device change (overflow warnings depend on width)
+  document.addEventListener('click', (e) => { if (e.target.closest('[data-device]') && inStudio()) setTimeout(() => { $('#pv-w').value = device; cmSync(); }, 400); });
+
+  // Undo / redo shortcuts (outside text fields, so typing keeps its own undo)
+  document.addEventListener('keydown', (e) => {
+    if (!inStudio() || !(e.ctrlKey || e.metaKey) || e.target.matches('input, textarea')) return;
+    const k = e.key.toLowerCase();
+    if (k === 'z' && !e.shiftKey) { e.preventDefault(); undoRedo(cm.undo, cm.redo); }
+    if (k === 'y' || (k === 'z' && e.shiftKey)) { e.preventDefault(); undoRedo(cm.redo, cm.undo); }
   });
 
-  // Drag and drop section reordering
+  // Drag and drop section reordering in Layers
   let dragKey = null;
-  document.addEventListener('dragstart', (e) => { const li = e.target.closest && e.target.closest('#cm-secs li'); if (li) { dragKey = li.dataset.sec; e.dataTransfer.effectAllowed = 'move'; li.classList.add('dragging'); } });
+  document.addEventListener('dragstart', (e) => { const li = e.target.closest && e.target.closest('#cm-secs li[data-sec]'); if (li) { dragKey = li.dataset.sec; e.dataTransfer.effectAllowed = 'move'; li.classList.add('dragging'); } });
   document.addEventListener('dragend', (e) => { const li = e.target.closest && e.target.closest('#cm-secs li'); if (li) li.classList.remove('dragging'); });
-  document.addEventListener('dragover', (e) => { if (dragKey && e.target.closest && e.target.closest('#cm-secs li')) e.preventDefault(); });
+  document.addEventListener('dragover', (e) => { if (dragKey && e.target.closest && e.target.closest('#cm-secs li[data-sec]')) e.preventDefault(); });
   document.addEventListener('drop', (e) => {
-    const li = dragKey && e.target.closest && e.target.closest('#cm-secs li');
+    const li = dragKey && e.target.closest && e.target.closest('#cm-secs li[data-sec]');
     if (!li) return;
     e.preventDefault();
     const keys = cm.scan.sections.map((s) => s.key).filter((k) => k !== dragKey);
-    keys.splice(keys.indexOf(li.dataset.sec) + (e.offsetY > li.offsetHeight / 2 ? 1 : 0), 0, dragKey);
+    const r = li.getBoundingClientRect();
+    keys.splice(keys.indexOf(li.dataset.sec) + (e.clientY > r.top + r.height / 2 ? 1 : 0), 0, dragKey);
     dragKey = null;
-    cmEdit('page', (p) => { p.order = keys; });
+    cmEdit(cm.key, (p) => { p.order = keys; });
   });
 
 
