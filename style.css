@@ -4096,7 +4096,35 @@ img {
   }
 }
 
+/* Side-by-side HUD: same height as the chapter block (label + dots) so both lines share a top edge; only the arrow bounces */
+@media (max-width: 1024px) {
+  .hero-scroll-prompt {
+    animation: none !important;
+    gap: 0 !important;
+  }
+  .hero-scroll-prompt svg {
+    animation: bounceDownRight 2.2s infinite ease-in-out;
+  }
+}
+
+/* Logo centred on the bar itself, not between unequal side groups */
+.mobile-top-bar {
+  position: relative;
+}
+.mobile-logo-wrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* Icons already have 40px tap targets; extra gap pushed them into the centred logo on phones */
+.mobile-top-bar .mobile-top-icons {
+  gap: 0 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-scroll-prompt svg {
+    animation: none !important;
+  }
   .cinematic-scene {
     transition: none !important;
     animation: none !important;
