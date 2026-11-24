@@ -122,13 +122,16 @@
     await signIn(token);
   }
 
+  // Save first, open the panel only after: the save is the only real proof the token can write
   async function setupLogin(token, username, pass) {
-    await signIn(token); // proves the token can save before we store it
+    state.token = token;
+    await gh(`/repos/${REPO}`);
     let sha = null;
     try { sha = (await gh(`/repos/${REPO}/contents/admin-key.json?ref=${BRANCH}`)).sha; } catch (e) { if (e.status !== 404) throw e; }
     const blob = await L.encryptToken(token, username, pass);
     await putFile('admin-key.json', L.toB64(JSON.stringify(blob, null, 2) + '\n'), sha, 'admin: set admin login');
     history.replaceState(null, '', location.pathname);
+    await signIn(token);
     toast('Login saved. From now on sign in with your username and password (live on the website in about a minute).');
   }
 
