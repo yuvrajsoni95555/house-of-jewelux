@@ -39,4 +39,11 @@ assert.strictEqual(out.split(/<\/head>/i)[1], html.split(/<\/head>/i)[1], 'body 
 assert.strictEqual(L.writeHeadMeta(out, { robots: 'noindex' }).includes('<meta name="robots" content="noindex">'), true);
 assert.ok(L.auditHead({ ...m2, robots: 'noindex' }).some((i) => /noindex/.test(i.message)));
 
-console.log('admin-lib: all checks passed');
+// password-encrypted token: right password opens it, wrong one fails, token never appears in the blob
+(async () => {
+  const blob = await L.encryptToken('github_pat_example', 'correct horse', 1000);
+  assert.ok(!JSON.stringify(blob).includes('github_pat'));
+  assert.strictEqual(await L.decryptToken(blob, 'correct horse'), 'github_pat_example');
+  await assert.rejects(L.decryptToken(blob, 'wrong password'));
+  console.log('admin-lib: all checks passed');
+})().catch((e) => { console.error(e); process.exit(1); });

@@ -118,7 +118,28 @@
     return issues;
   };
 
-  const lib = { esc, slugify, toB64, fromB64, imageSlots, validateProduct, auditProducts, readHeadMeta, writeHeadMeta, auditHead };
+  // ---- password login on a static site ----
+  // The GitHub token is stored only as AES-GCM ciphertext (admin-key.json, publicly readable);
+  // the key comes from the admin password via PBKDF2, so the password itself is never stored.
+  const bytesToB64 = (u8) => btoa(String.fromCharCode.apply(null, u8));
+  const b64ToBytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+  const deriveKey = async (password, salt, iter) => {
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  };
+  const encryptToken = async (token, password, iter = 600000) => {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await deriveKey(password, salt, iter), new TextEncoder().encode(token));
+    return { v: 1, iter, salt: bytesToB64(salt), iv: bytesToB64(iv), ct: bytesToB64(new Uint8Array(ct)) };
+  };
+  // Throws on a wrong password (AES-GCM authentication fails)
+  const decryptToken = async (blob, password) => {
+    const key = await deriveKey(password, b64ToBytes(blob.salt), blob.iter);
+    return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64ToBytes(blob.iv) }, key, b64ToBytes(blob.ct)));
+  };
+
+  const lib = { esc, slugify, toB64, fromB64, imageSlots, validateProduct, auditProducts, readHeadMeta, writeHeadMeta, auditHead, encryptToken, decryptToken };
   if (typeof module !== 'undefined' && module.exports) module.exports = lib;
   else root.AdminLib = lib;
 })(this);

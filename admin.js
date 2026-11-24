@@ -18,7 +18,7 @@
       cache: 'no-store',
       headers: { Authorization: 'Bearer ' + state.token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opts.body ? { 'Content-Type': 'application/json' } : {}) }
     });
-    if (res.status === 401) { signOut('Your token has expired or was revoked. Sign in again.'); throw new Error('Unauthorized'); }
+    if (res.status === 401) { signOut(location.hash === '#setup' ? 'GitHub did not accept this token.' : 'Admin access has expired. It needs to be set up again.'); throw new Error('Unauthorized'); }
     const body = res.status === 204 ? null : await res.json().catch(() => null);
     if (!res.ok) {
       const err = new Error((body && body.message) || res.statusText);
@@ -87,10 +87,9 @@
     const repo = await gh(`/repos/${REPO}`);
     if (!repo.permissions || !repo.permissions.push) throw new Error('This token can read the repository but cannot save changes. Give it "Contents: Read and write".');
     sessionStorage.setItem('hj_gh_token', token);
-    let who = 'Signed in';
-    try { who = 'Signed in as ' + (await gh('/user')).login; } catch (e) { /* fine-grained tokens may not read /user */ }
-    $('#who').textContent = who;
+    $('#who').textContent = 'Signed in as Admin';
     $('#login').classList.add('hidden');
+    $('#setup').classList.add('hidden');
     $('#app').classList.remove('hidden');
     await loadProducts();
     show('dashboard');
@@ -98,11 +97,32 @@
   function signOut(msg) {
     sessionStorage.removeItem('hj_gh_token');
     state.token = '';
+    const setup = location.hash === '#setup';
     $('#app').classList.add('hidden');
-    $('#login').classList.remove('hidden');
-    const e = $('#login-error');
+    $('#login').classList.toggle('hidden', setup);
+    $('#setup').classList.toggle('hidden', !setup);
+    const e = $(setup ? '#setup-error' : '#login-error');
     e.textContent = msg || '';
     e.classList.toggle('hidden', !msg);
+  }
+
+  // Password -> GitHub token, via the encrypted admin-key.json
+  async function passwordLogin(password) {
+    const res = await fetch('/admin-key.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('The admin password has not been set up yet.');
+    let token;
+    try { token = await L.decryptToken(await res.json(), password); } catch (e) { throw new Error('Incorrect password.'); }
+    await signIn(token);
+  }
+
+  async function setupPassword(token, pass) {
+    await signIn(token); // proves the token can save before we store it
+    let sha = null;
+    try { sha = (await gh(`/repos/${REPO}/contents/admin-key.json?ref=${BRANCH}`)).sha; } catch (e) { if (e.status !== 404) throw e; }
+    const blob = await L.encryptToken(token, pass);
+    await putFile('admin-key.json', L.toB64(JSON.stringify(blob, null, 2) + '\n'), sha, 'admin: set admin password');
+    history.replaceState(null, '', location.pathname);
+    toast('Password saved. From now on sign in with your password (works on the website in about a minute).');
   }
 
   // ---------- Views ----------
@@ -133,7 +153,7 @@
         <h3>Recent changes</h3>
         <ul class="log">${commits.map((c) => `<li><b>${esc(c.commit.message.split('\n')[0])}</b><br><span class="small muted">${esc(c.commit.author.name)} · ${esc(new Date(c.commit.author.date).toLocaleString('en-IN'))}</span></li>`).join('') || '<li class="muted">No activity available.</li>'}</ul>
       </div>
-      <p class="note small">Orders, revenue, customers and traffic are not shown: the website is hosted on GitHub Pages, which has no backend to record them. They need a server and database (for example Vercel + Supabase).</p>`;
+      <p class="note small">Orders, revenue, customers and traffic are not shown: the website does not have a server yet to record them.</p>`;
   };
 
   VIEWS.products = async () => {
@@ -361,7 +381,7 @@
   }
 
   async function deleteProduct(btn) {
-    if (!confirm(`Delete "${draft.name}" from the website? It can only be restored from GitHub history.`)) return;
+    if (!confirm(`Delete "${draft.name}" from the website? Only a developer can restore it later.`)) return;
     await busy(btn, async () => {
       await loadProducts();
       const list = state.products.filter((x) => x.id !== editingId);
@@ -463,9 +483,19 @@
     e.preventDefault();
     const btn = $('#login-form button[type="submit"]');
     btn.disabled = true;
-    signIn($('#token').value.trim())
-      .catch((err) => { if (err.message !== 'Unauthorized') signOut(err.status === 404 ? 'This token cannot see the house-of-jewelux repository.' : err.message); else signOut('That token was not accepted by GitHub.'); })
-      .finally(() => { btn.disabled = false; $('#token').value = ''; });
+    passwordLogin($('#password').value)
+      .catch((err) => { if (err.message !== 'Unauthorized') signOut(err.status ? 'Sign-in failed. Please try again later.' : err.message); })
+      .finally(() => { btn.disabled = false; $('#password').value = ''; });
+  });
+  $('#setup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pass = $('#setup-pass').value;
+    if (pass !== $('#setup-pass2').value) { signOut('The two passwords do not match.'); return; }
+    const btn = $('#setup-form button[type="submit"]');
+    btn.disabled = true;
+    setupPassword($('#setup-token').value.trim(), pass)
+      .catch((err) => { if (err.message !== 'Unauthorized') signOut(err.status === 404 ? 'This token cannot see the house-of-jewelux repository.' : err.message); })
+      .finally(() => { btn.disabled = false; ['#setup-token', '#setup-pass', '#setup-pass2'].forEach((s) => { $(s).value = ''; }); });
   });
   $('#logout').addEventListener('click', () => signOut());
   $('#menu').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#menu').setAttribute('aria-expanded', String(o)); });
