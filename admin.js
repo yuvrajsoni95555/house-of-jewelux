@@ -88,6 +88,7 @@
     if (!repo.permissions || !repo.permissions.push) throw new Error('This token can read the repository but cannot save changes. Give it "Contents: Read and write".');
     sessionStorage.setItem('hj_gh_token', token);
     $('#who').textContent = 'Signed in as Admin';
+    document.body.classList.remove('auth');
     $('#login').classList.add('hidden');
     $('#setup').classList.add('hidden');
     $('#app').classList.remove('hidden');
@@ -98,32 +99,38 @@
     sessionStorage.removeItem('hj_gh_token');
     state.token = '';
     const setup = location.hash === '#setup';
+    document.body.classList.add('auth');
     $('#app').classList.add('hidden');
     $('#login').classList.toggle('hidden', setup);
     $('#setup').classList.toggle('hidden', !setup);
+    ['#login-error', '#setup-error'].forEach((s) => $(s).classList.add('hidden'));
     const e = $(setup ? '#setup-error' : '#login-error');
     e.textContent = msg || '';
     e.classList.toggle('hidden', !msg);
   }
 
-  // Password -> GitHub token, via the encrypted admin-key.json
-  async function passwordLogin(password) {
+  // Username + password -> GitHub token, via the encrypted admin-key.json
+  async function passwordLogin(username, password) {
     const res = await fetch('/admin-key.json', { cache: 'no-cache' });
-    if (!res.ok) throw new Error('The admin password has not been set up yet.');
+    if (!res.ok) throw new Error('Admin login has not been set up yet. Use "Forgot Password?" to set it up.');
     let token;
-    try { token = await L.decryptToken(await res.json(), password); } catch (e) { throw new Error('Incorrect password.'); }
+    try { token = await L.decryptToken(await res.json(), username, password); } catch (e) { throw new Error('Invalid username or password.'); }
     await signIn(token);
   }
 
-  async function setupPassword(token, pass) {
+  async function setupLogin(token, username, pass) {
     await signIn(token); // proves the token can save before we store it
     let sha = null;
     try { sha = (await gh(`/repos/${REPO}/contents/admin-key.json?ref=${BRANCH}`)).sha; } catch (e) { if (e.status !== 404) throw e; }
-    const blob = await L.encryptToken(token, pass);
-    await putFile('admin-key.json', L.toB64(JSON.stringify(blob, null, 2) + '\n'), sha, 'admin: set admin password');
+    const blob = await L.encryptToken(token, username, pass);
+    await putFile('admin-key.json', L.toB64(JSON.stringify(blob, null, 2) + '\n'), sha, 'admin: set admin login');
     history.replaceState(null, '', location.pathname);
-    toast('Password saved. From now on sign in with your password (works on the website in about a minute).');
+    toast('Login saved. From now on sign in with your username and password (live on the website in about a minute).');
   }
+
+  const EYE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  const EYE_OFF = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6A17 17 0 0 0 2 12s3.6 7 10 7a10 10 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+  document.querySelectorAll('[data-toggle-pw]').forEach((b) => { b.innerHTML = EYE; });
 
   // ---------- Views ----------
   const VIEWS = {};
@@ -483,7 +490,7 @@
     e.preventDefault();
     const btn = $('#login-form button[type="submit"]');
     btn.disabled = true;
-    passwordLogin($('#password').value)
+    passwordLogin($('#username').value, $('#password').value)
       .catch((err) => { if (err.message !== 'Unauthorized') signOut(err.status ? 'Sign-in failed. Please try again later.' : err.message); })
       .finally(() => { btn.disabled = false; $('#password').value = ''; });
   });
@@ -493,11 +500,21 @@
     if (pass !== $('#setup-pass2').value) { signOut('The two passwords do not match.'); return; }
     const btn = $('#setup-form button[type="submit"]');
     btn.disabled = true;
-    setupPassword($('#setup-token').value.trim(), pass)
+    setupLogin($('#setup-token').value.trim(), $('#setup-user').value, pass)
       .catch((err) => { if (err.message !== 'Unauthorized') signOut(err.status === 404 ? 'This token cannot see the house-of-jewelux repository.' : err.message); })
       .finally(() => { btn.disabled = false; ['#setup-token', '#setup-pass', '#setup-pass2'].forEach((s) => { $(s).value = ''; }); });
   });
-  $('#logout').addEventListener('click', () => signOut());
+  $('#logout').addEventListener('click', () => { history.replaceState(null, '', location.pathname); signOut(); });
+  // "Forgot Password?" / "Back to login" switch screens through the URL hash
+  window.addEventListener('hashchange', () => { if (!state.token) signOut(); });
+  document.querySelectorAll('[data-toggle-pw]').forEach((b) => b.addEventListener('click', () => {
+    const input = $('#' + b.dataset.togglePw);
+    const showing = input.type === 'password';
+    input.type = showing ? 'text' : 'password';
+    b.innerHTML = showing ? EYE_OFF : EYE;
+    b.setAttribute('aria-pressed', String(showing));
+    b.setAttribute('aria-label', (showing ? 'Hide ' : 'Show ') + (b.dataset.togglePw === 'setup-token' ? 'token' : 'password'));
+  }));
   $('#menu').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#menu').setAttribute('aria-expanded', String(o)); });
 
   document.addEventListener('click', (e) => {

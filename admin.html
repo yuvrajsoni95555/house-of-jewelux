@@ -37,11 +37,30 @@
     .small { font-size: .8rem; }
 
     /* login */
-    .login { max-width: 460px; margin: 8vh auto; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 2rem; }
-    .login img { display: block; height: 56px; margin: 0 auto 1rem; }
-    .login h1 { text-align: center; }
-    .login-brand { text-align: center; font-family: 'Lawrence', Georgia, serif; font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; color: var(--burgundy); margin: 0 0 .3rem; }
-    .login ol { padding-left: 1.2rem; color: var(--muted); font-size: .85rem; }
+    body.auth { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1rem;
+      background: radial-gradient(120% 80% at 50% 0%, #7A2536 0%, #4A1420 55%, #2A0A12 100%); }
+    .login { width: 100%; max-width: 420px; background: #FFFCF7; border: 1px solid rgba(232, 211, 184, .55); border-top: 3px solid var(--gold);
+      border-radius: 16px; padding: 2.25rem 2rem 1.75rem; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); animation: rise .5s ease-out both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .login img { display: block; height: 64px; margin: 0 auto .9rem; }
+    .login-brand { text-align: center; font-family: 'Lawrence', Georgia, serif; font-size: 1.2rem; letter-spacing: .16em; text-transform: uppercase; color: var(--burgundy); margin: 0; }
+    .login-rule { width: 56px; height: 1px; background: var(--gold); margin: .7rem auto 1rem; border: 0; }
+    .login h1 { text-align: center; font-size: 1.25rem; color: var(--ink); margin-bottom: 1.4rem; }
+    .login .sub { text-align: center; color: var(--muted); font-size: .85rem; margin: -.8rem 0 1.2rem; }
+    .login label { margin-top: .9rem; } .login label:first-of-type { margin-top: 0; }
+    .login input:focus { border-color: var(--gold); outline: 2px solid rgba(184, 147, 90, .35); }
+    .pw { position: relative; }
+    .pw input { padding-right: 2.9rem; }
+    .pw button { position: absolute; right: .3rem; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; border: 0; border-radius: 6px;
+      background: none; color: var(--muted); cursor: pointer; display: grid; place-items: center; }
+    .pw button:hover { color: var(--burgundy); }
+    .btn-login { width: 100%; justify-content: center; margin-top: 1.3rem; min-height: 48px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+      transition: background .2s, box-shadow .2s; }
+    .btn-login:hover { box-shadow: 0 6px 18px rgba(107, 31, 46, .3); }
+    .login .errors { margin: 1rem 0 0; }
+    .forgot { display: block; width: fit-content; margin: 1.1rem auto 0; font-size: .85rem; color: var(--burgundy); text-decoration: none; border-bottom: 1px solid rgba(184, 147, 90, .6); }
+    .forgot:hover { color: var(--gold); }
+    @media (prefers-reduced-motion: reduce) { .login { animation: none; } }
 
     /* shell */
     .shell { display: grid; grid-template-columns: 230px 1fr; min-height: 100vh; }
@@ -118,30 +137,48 @@
   <section id="login" class="login hidden" aria-labelledby="login-title">
     <img src="/brand-identity/jewelux-only-logo-emblem.png" alt="">
     <p class="login-brand">House of Jewelux</p>
+    <hr class="login-rule">
     <h1 id="login-title">Admin Sign In</h1>
     <form id="login-form">
+      <label for="username">Username</label>
+      <input id="username" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Enter your username" required>
       <label for="password">Password</label>
-      <input id="password" type="password" autocomplete="current-password" required>
+      <div class="pw">
+        <input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+        <button type="button" data-toggle-pw="password" aria-label="Show password" aria-pressed="false"></button>
+      </div>
       <p id="login-error" class="errors hidden" role="alert"></p>
-      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:.8rem;justify-content:center">Sign In</button>
+      <button class="btn btn-primary btn-login" type="submit">Login</button>
     </form>
+    <a class="forgot" href="#setup">Forgot Password?</a>
   </section>
 
-  <!-- ONE-TIME SETUP (admin.html#setup): not linked anywhere -->
+  <!-- PASSWORD RESET / FIRST SETUP (admin.html#setup): only someone who controls the GitHub account can create the token it needs -->
   <section id="setup" class="login hidden" aria-labelledby="setup-title">
     <img src="/brand-identity/jewelux-only-logo-emblem.png" alt="">
     <p class="login-brand">House of Jewelux</p>
-    <h1 id="setup-title">Set admin password</h1>
+    <hr class="login-rule">
+    <h1 id="setup-title">Reset admin login</h1>
+    <p class="sub">Only the website owner can do this. It needs a GitHub access token.</p>
     <form id="setup-form">
-      <label for="setup-token">GitHub token (Contents: read and write on this repository)</label>
-      <input id="setup-token" type="password" autocomplete="off" required>
-      <label for="setup-pass" style="margin-top:.8rem">New password (at least 8 characters)</label>
-      <input id="setup-pass" type="password" autocomplete="new-password" minlength="8" required>
-      <label for="setup-pass2" style="margin-top:.8rem">Repeat password</label>
-      <input id="setup-pass2" type="password" autocomplete="new-password" minlength="8" required>
+      <label for="setup-token">GitHub access token</label>
+      <div class="pw">
+        <input id="setup-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" required>
+        <button type="button" data-toggle-pw="setup-token" aria-label="Show token" aria-pressed="false"></button>
+      </div>
+      <label for="setup-user">New username</label>
+      <input id="setup-user" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Choose a username" minlength="3" required>
+      <label for="setup-pass">New password</label>
+      <div class="pw">
+        <input id="setup-pass" type="password" autocomplete="new-password" placeholder="At least 12 characters" minlength="12" required>
+        <button type="button" data-toggle-pw="setup-pass" aria-label="Show password" aria-pressed="false"></button>
+      </div>
+      <label for="setup-pass2">Repeat password</label>
+      <input id="setup-pass2" type="password" autocomplete="new-password" placeholder="Enter it again" minlength="12" required>
       <p id="setup-error" class="errors hidden" role="alert"></p>
-      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:.8rem;justify-content:center">Save password</button>
+      <button class="btn btn-primary btn-login" type="submit">Save login</button>
     </form>
+    <a class="forgot" href="#">Back to login</a>
   </section>
 
   <!-- APP -->
@@ -169,7 +206,7 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="/admin-lib.js?v=2"></script>
-  <script src="/admin.js?v=2"></script>
+  <script src="/admin-lib.js?v=3"></script>
+  <script src="/admin.js?v=3"></script>
 </body>
 </html>

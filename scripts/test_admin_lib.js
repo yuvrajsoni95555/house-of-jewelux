@@ -41,9 +41,10 @@ assert.ok(L.auditHead({ ...m2, robots: 'noindex' }).some((i) => /noindex/.test(i
 
 // password-encrypted token: right password opens it, wrong one fails, token never appears in the blob
 (async () => {
-  const blob = await L.encryptToken('github_pat_example', 'correct horse', 1000);
+  const blob = await L.encryptToken('github_pat_example', 'Admin', 'correct horse', 1000);
   assert.ok(!JSON.stringify(blob).includes('github_pat'));
-  assert.strictEqual(await L.decryptToken(blob, 'correct horse'), 'github_pat_example');
-  await assert.rejects(L.decryptToken(blob, 'wrong password'));
+  assert.strictEqual(await L.decryptToken(blob, ' admin ', 'correct horse'), 'github_pat_example'); // username: case/space-insensitive
+  await assert.rejects(L.decryptToken(blob, 'admin', 'wrong password'));
+  await assert.rejects(L.decryptToken(blob, 'someone', 'correct horse'));
   console.log('admin-lib: all checks passed');
 })().catch((e) => { console.error(e); process.exit(1); });
