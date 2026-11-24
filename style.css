@@ -3457,7 +3457,7 @@ img {
 /* 1A. Specific Mobile Phone Sizing (<= 768px) */
 @media (max-width: 768px) {
   .hero-brand-official-logo {
-    max-height: clamp(160px, 23vh, 205px) !important;
+    max-height: clamp(200px, 33vh, 280px) !important;
     width: auto !important;
     max-width: 80vw !important;
     margin: 0 auto !important;
@@ -3505,9 +3505,9 @@ img {
 /* 1B. Resized Desktop & Tablet Window Sizing (769px to 991px) */
 @media (min-width: 769px) and (max-width: 991px) {
   .hero-brand-official-logo {
-    max-height: clamp(210px, 30vh, 265px) !important;
+    max-height: clamp(260px, 42vh, 360px) !important;
     width: auto !important;
-    max-width: 72vw !important;
+    max-width: 60vw !important;
     margin: 0 auto !important;
   }
 }
