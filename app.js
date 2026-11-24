@@ -303,6 +303,7 @@
     if (accountDot) {
       accountDot.style.display = state.customer ? 'block' : 'none';
     }
+    applySiteContent();
   }
 
   // ==================== COMPONENT: PRODUCT CARD (1:1 PALMONAS) ====================
@@ -3645,6 +3646,204 @@
     tag.textContent = JSON.stringify(ld);
   }
 
+  // ===== Website Content Manager: published overrides in data/content.json (edited in /admin.html) =====
+  // Shape: { pages: { [route | '*']: { items: { [key]: override }, order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {} } } }
+  // '*' holds the parts shared by every page (announcement bar, header, footer, mobile nav).
+  const GLOBAL_ROOTS = ['.announcement-bar', '.site-header', '.site-footer', '.mobile-bottom-nav'];
+  const SAFE_HREF = /^(#|\/(?!\/)|https:\/\/|mailto:|tel:)/i;
+  const ORIG = new WeakMap();
+  let siteContent = { pages: {} };
+  let adminDrivesContent = false; // in the admin preview the editor's draft wins over the published file
+
+  async function loadSiteContent() {
+    try {
+      const res = await fetch('/data/content.json', { cache: 'no-cache' });
+      if (res.ok && !adminDrivesContent) siteContent = await res.json();
+    } catch (e) { /* no overrides published yet */ }
+    applySiteContent();
+  }
+
+  const contentRoute = () => { const r = getRoute(); return !r || r === 'home' ? 'home' : r; };
+  const escHtml = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function findContentEl(key) {
+    const tagged = document.querySelector('[data-hj-key="' + CSS.escape(key) + '"]');
+    if (tagged) return tagged;
+    try { return document.querySelector(key); } catch (e) { return null; }
+  }
+
+  // Put an element back exactly as the page template rendered it
+  function restoreContentEl(el) {
+    const o = ORIG.get(el);
+    if (!o) return el;
+    if (el.tagName !== o.tag) {
+      const back = document.createElement(o.tag);
+      [...el.attributes].forEach((a) => back.setAttribute(a.name, a.value));
+      el.replaceWith(back);
+      ORIG.set(back, o);
+      el = back;
+    }
+    el.innerHTML = o.html;
+    ['style', 'src', 'alt', 'title', 'href', 'target', 'rel'].forEach((a) => { if (o[a] == null) el.removeAttribute(a); else el.setAttribute(a, o[a]); });
+    return el;
+  }
+
+  function applyContentItem(el, o) {
+    if (!ORIG.has(el)) {
+      ORIG.set(el, { tag: el.tagName, html: el.innerHTML, style: el.getAttribute('style'), src: el.getAttribute('src'), alt: el.getAttribute('alt'),
+        title: el.getAttribute('title'), href: el.getAttribute('href'), target: el.getAttribute('target'), rel: el.getAttribute('rel') });
+    }
+    el = restoreContentEl(el);
+    if (o.tag && /^h[1-6]$/.test(o.tag) && /^H[1-6]$/.test(el.tagName) && el.tagName.toLowerCase() !== o.tag) {
+      const n = document.createElement(o.tag);
+      [...el.attributes].forEach((a) => n.setAttribute(a.name, a.value));
+      n.innerHTML = el.innerHTML;
+      ORIG.set(n, ORIG.get(el));
+      el.replaceWith(n);
+      el = n;
+    }
+    if (typeof o.text === 'string') el.textContent = o.text;
+    if (el.tagName === 'IMG') {
+      if (o.src && /^(images\/|\/images\/|brand-identity\/|\/brand-identity\/|https:\/\/)/.test(o.src)) el.setAttribute('src', o.src.replace(/^(?!https:|\/)/, '/'));
+      if (typeof o.alt === 'string') el.setAttribute('alt', o.alt);
+      if (typeof o.title === 'string') { if (o.title) el.setAttribute('title', o.title); else el.removeAttribute('title'); }
+    }
+    if (el.tagName === 'A' && typeof o.href === 'string' && SAFE_HREF.test(o.href)) {
+      el.setAttribute('href', o.href);
+      if (o.newTab) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); } else { el.removeAttribute('target'); }
+    }
+    const css = [];
+    if (o.size) css.push('font-size:' + Number(o.size) + 'px');
+    if (o.weight) css.push('font-weight:' + Number(o.weight));
+    if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
+    if (o.color && /^#[0-9a-f]{6}$/i.test(o.color)) css.push('color:' + o.color);
+    if (o.objectPosition && /^\d{1,3}% \d{1,3}%$/.test(o.objectPosition)) css.push('object-position:' + o.objectPosition);
+    if (o.aspect && /^\d+ \/ \d+$/.test(o.aspect)) css.push('aspect-ratio:' + o.aspect + ';object-fit:cover;height:auto');
+    if (o.maxWidth) css.push('max-width:' + Math.min(100, Number(o.maxWidth)) + '%');
+    if (o.hidden) css.push('display:none');
+    if (css.length) el.setAttribute('style', (ORIG.get(el).style ? ORIG.get(el).style + ';' : '') + css.join(';') + (o.hidden ? '!important' : ''));
+    el.dataset.hjKey = o.__key;
+  }
+
+  function customSectionHtml(c) {
+    const btn = c.buttonLabel && SAFE_HREF.test(c.buttonHref || '') ? `<p style="margin-top:1.5rem"><a class="btn-primary" href="${escHtml(c.buttonHref)}">${escHtml(c.buttonLabel)}</a></p>` : '';
+    const img = c.image ? `<img src="/${escHtml(String(c.image).replace(/^\//, ''))}" alt="${escHtml(c.alt || '')}" loading="lazy" style="width:100%;max-width:960px;border-radius:12px;margin:0 auto 1.5rem;display:block">` : '';
+    return `<div class="container" style="max-width:960px;margin:0 auto;text-align:${c.align === 'left' ? 'left' : 'center'}">
+      ${c.type === 'banner' ? img : ''}<h2 class="section-title">${escHtml(c.heading)}</h2>
+      <p style="max-width:720px;margin:1rem ${c.align === 'left' ? '0' : 'auto'} 0;line-height:1.8">${escHtml(c.text)}</p>${btn}</div>`;
+  }
+
+  function applySiteContent() {
+    const route = contentRoute();
+    const pages = (siteContent && siteContent.pages) || {};
+    const view = document.getElementById('app-view');
+    // 1) sections of this page: tag in template order, rebuild custom ones, then order / hide
+    if (view) {
+      view.querySelectorAll(':scope > [data-hj-custom]').forEach((s) => s.remove());
+      [...view.children].forEach((s, i) => { if (!s.dataset.hjSec) s.dataset.hjSec = 'sec-' + i; });
+      const page = pages[route] || {};
+      (page.custom || []).forEach((c) => {
+        const s = document.createElement('section');
+        s.dataset.hjSec = 'custom:' + c.id;
+        s.dataset.hjCustom = '1';
+        s.setAttribute('style', `padding:4.5rem 1.5rem;background:${/^#[0-9a-f]{6}$/i.test(c.bg || '') ? c.bg : 'transparent'}`);
+        s.innerHTML = customSectionHtml(c);
+        view.appendChild(s);
+      });
+      const all = [...view.children];
+      const order = (page.order || []).filter((k) => all.some((s) => s.dataset.hjSec === k));
+      const rank = (s) => { const i = order.indexOf(s.dataset.hjSec); return i >= 0 ? i : order.length + Number(String(s.dataset.hjSec).replace(/\D/g, '') || 999); };
+      all.sort((a, b) => rank(a) - rank(b)).forEach((s) => view.appendChild(s));
+      all.forEach((s) => { s.hidden = (page.hidden || []).includes(s.dataset.hjSec); });
+    }
+    // 2) element overrides: find every element first, then change them (keys are paths in the original template)
+    const jobs = [];
+    ['*', route].forEach((r) => Object.entries((pages[r] || {}).items || {}).forEach(([key, o]) => {
+      const el = findContentEl(key);
+      if (el) jobs.push([el, { ...o, __key: key }]);
+    }));
+    document.querySelectorAll('[data-hj-key]').forEach((el) => { if (!jobs.some(([j]) => j === el)) { restoreContentEl(el); el.removeAttribute('data-hj-key'); } });
+    jobs.forEach(([el, o]) => applyContentItem(el, o));
+    // 3) device-only visibility for sections and elements
+    const rules = [];
+    ['*', route].forEach((r) => {
+      const p = pages[r] || {};
+      (p.hideMobile || []).forEach((k) => rules.push(`@media (max-width:767px){[data-hj-sec="${CSS.escape(k)}"],[data-hj-key="${CSS.escape(k)}"]{display:none!important}}`));
+      (p.hideDesktop || []).forEach((k) => rules.push(`@media (min-width:768px){[data-hj-sec="${CSS.escape(k)}"],[data-hj-key="${CSS.escape(k)}"]{display:none!important}}`));
+    });
+    let tag = document.getElementById('hj-content-css');
+    if (!tag) { tag = document.createElement('style'); tag.id = 'hj-content-css'; document.head.appendChild(tag); }
+    tag.textContent = rules.join('\n');
+    // 4) page SEO (product pages set their own from product data)
+    const seo = (pages[route] || {}).seo;
+    if (seo && !route.startsWith('products/')) setPageSeo(seo.title, seo.description);
+  }
+
+  // Admin preview only: let /admin.html read and drive the content of this page
+  if (IS_ADMIN_PREVIEW) {
+    const TEXT_TAGS = 'h1,h2,h3,h4,h5,h6,p,a,button,li,blockquote,figcaption,label,span,small,strong,em,div,td,th,dt,dd';
+    const pathFrom = (el, root, rootSel) => {
+      const parts = [];
+      for (let n = el; n && n !== root; n = n.parentElement) {
+        const same = [...n.parentElement.children].filter((x) => x.tagName === n.tagName);
+        parts.unshift(n.tagName.toLowerCase() + ':nth-of-type(' + (same.indexOf(n) + 1) + ')');
+      }
+      return rootSel + (parts.length ? ' > ' + parts.join(' > ') : '');
+    };
+    const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+    const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer');
+    window.__hjAdmin = {
+      route: contentRoute,
+      setContent(c) { adminDrivesContent = true; siteContent = c || { pages: {} }; applySiteContent(); },
+      scan() {
+        const view = document.getElementById('app-view');
+        const roots = [...[...view.children].map((s) => [s, `[data-hj-sec="${s.dataset.hjSec}"]`, 'page', s.dataset.hjSec]),
+          ...GLOBAL_ROOTS.map((sel) => [document.querySelector(sel), sel, 'global', sel]).filter(([r]) => r)];
+        const sections = [...view.children].map((s) => ({ key: s.dataset.hjSec, custom: !!s.dataset.hjCustom,
+          label: ((s.querySelector('h1,h2,h3') || {}).textContent || '').trim() || s.getAttribute('aria-label') ||
+            String(s.id || s.className || 'Section').split(' ')[0].replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase()) }));
+        const items = [];
+        roots.forEach(([root, rootSel, scope, section]) => {
+          if (root.dataset.hjCustom) return;
+          root.querySelectorAll(TEXT_TAGS + ',img').forEach((el) => {
+            if (skip(el)) return;
+            const isImg = el.tagName === 'IMG';
+            if (!isImg && !ownText(el) && !(el.tagName === 'A' && el.textContent.trim())) return;
+            if (!isImg && el.parentElement.closest(TEXT_TAGS) && el.parentElement.closest(TEXT_TAGS) !== root && ownText(el.parentElement.closest(TEXT_TAGS))) return;
+            const key = el.dataset.hjKey || pathFrom(el, root, rootSel);
+            const o = ORIG.get(el);
+            items.push({ key, scope, section, tag: (o ? o.tag : el.tagName).toLowerCase(), kind: isImg ? 'image' : el.tagName === 'A' ? 'link' : 'text',
+              text: isImg ? '' : (o ? new DOMParser().parseFromString(o.html, 'text/html').body.textContent : el.textContent).trim().replace(/\s+/g, ' '),
+              hasMarkup: !isImg && el.children.length > 0,
+              src: isImg ? (o ? o.src : el.getAttribute('src')) : '', alt: isImg ? (o ? o.alt : el.getAttribute('alt')) || '' : '',
+              href: el.tagName === 'A' ? (o ? o.href : el.getAttribute('href')) || '' : '' });
+            el.dataset.hjEdit = key;
+          });
+        });
+        return { route: contentRoute(), title: document.title, sections, items,
+          h1: [...view.querySelectorAll('h1')].filter((h) => !h.closest('[hidden]')).length };
+      },
+      highlight(key) {
+        document.querySelectorAll('.hj-admin-hl').forEach((e) => { e.classList.remove('hj-admin-hl'); e.style.outline = ''; });
+        const el = document.querySelector('[data-hj-edit="' + CSS.escape(key) + '"]') || document.querySelector('[data-hj-sec="' + CSS.escape(key) + '"]');
+        if (!el) return;
+        el.classList.add('hj-admin-hl');
+        el.style.outline = '2px solid #A88462';
+        el.style.outlineOffset = '3px';
+        el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    };
+    // Click an element in the preview to edit it; links do not navigate while editing
+    document.addEventListener('click', (e) => {
+      if (!window.__hjContentMode) return;
+      const el = e.target.closest('[data-hj-edit]');
+      if (!el && !e.target.closest('a')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (el) window.parent.postMessage({ type: 'hj-content-select', key: el.dataset.hjEdit }, location.origin);
+    }, true);
+  }
+
   // Admin live preview: /admin.html embeds /?hjpreview=1#products/<id> and posts unsaved product edits here
   if (IS_ADMIN_PREVIEW) {
     window.addEventListener('message', (e) => {
@@ -3664,6 +3863,7 @@
     updateBadges();
     handleRoute();
     loadProducts();
+    loadSiteContent();
     restoreSavedEdits();
     initPatronLoginTrigger();
     if (sessionStorage.getItem('hj_editor_active') === 'true') {
