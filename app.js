@@ -91,7 +91,7 @@
       if (res.ok) {
         const data = await res.json();
         if (data && data.success && data.products) {
-          state.products = data.products;
+          state.products = data.products.filter(p => p.status !== 'draft');
         }
       }
     } catch (err) {
@@ -100,13 +100,13 @@
 
     if (!state.products || state.products.length === 0) {
       try {
-        let staticRes = await fetch('/data/products.json?' + cacheBust);
+        let staticRes = await fetch('/data/products.json?' + cacheBust, { cache: 'no-cache' }); // no-cache: admin saves show up without waiting out the CDN cache
         if (!staticRes.ok) {
           staticRes = await fetch('./data/products.json?' + cacheBust);
         }
         if (staticRes.ok) {
           const staticData = await staticRes.json();
-          state.products = Array.isArray(staticData) ? staticData : (staticData.products || []);
+          state.products = (Array.isArray(staticData) ? staticData : (staticData.products || [])).filter(p => p.status !== 'draft');
         }
       } catch (e) {
         console.warn('Static products fetch failed', e);
@@ -214,7 +214,7 @@
     } else if (route === 'account') {
       renderAccountPage(appView);
     } else if (route === 'admin') {
-      renderAdminDashboard(appView);
+      location.href = '/admin.html';
     } else if (route === 'edit' || route === 'editor') {
       renderHomePage(appView);
       setTimeout(() => window.HJ.toggleEditorMode(true), 120);
@@ -317,8 +317,8 @@
       <div class="product-card" data-product-id="${p.id}">
         <div class="product-card-media" style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #FAF7F2;">
           <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}" style="display: block; position: relative; width: 100%; height: 100%; aspect-ratio: 1/1; overflow: hidden;">
-            <img class="product-card-img main-img" src="${mainImg}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
-            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.name} - Atelier Detail" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <img class="product-card-img main-img" src="${mainImg}" alt="${p.imageAlt || p.name}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.hoverImageAlt || p.name + ' - Atelier Detail'}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
           </a>
           <span class="card-badge" style="border-radius: 9999px; font-size: 0.65rem; padding: 0.25rem 0.65rem; background: rgba(255, 253, 246, 0.95); color: var(--color-espresso); font-weight: 700; border: 1px solid rgba(47,36,26,0.08);">${badgeText}</span>
           <button class="card-wishlist-btn ${isWished ? 'active' : ''}" 
@@ -1028,16 +1028,16 @@
           <!-- LEFT: 2x2 IMAGE GALLERY (MATCHING PALMONAS ATHENA SOLITAIRE) -->
           <div class="pdp-gallery-2x2">
             <div class="pdp-gallery-item">
-              <img src="${img0}" alt="${p.name} Studio View" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" />
+              <img src="${img0}" alt="${(p.galleryAlt && p.galleryAlt[0]) || p.name + ' Studio View'}" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" />
             </div>
             <div class="pdp-gallery-item">
-              <img src="${img1}" alt="${p.name} Model Profile" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" />
+              <img src="${img1}" alt="${(p.galleryAlt && p.galleryAlt[1]) || p.name + ' Model Profile'}" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" />
             </div>
             <div class="pdp-gallery-item">
-              <img src="${img2}" alt="${p.name} Close-up" onerror="this.onerror=null; this.src='/images/authentic_chelsea_ring.jpg';" />
+              <img src="${img2}" alt="${(p.galleryAlt && p.galleryAlt[2]) || p.name + ' Close-up'}" onerror="this.onerror=null; this.src='/images/authentic_chelsea_ring.jpg';" />
             </div>
             <div class="pdp-gallery-item">
-              <img src="${img3}" alt="${p.name} Prongs & Setting" onerror="this.onerror=null; this.src='/images/authentic_rings_couple_hands.jpg';" />
+              <img src="${img3}" alt="${(p.galleryAlt && p.galleryAlt[3]) || p.name + ' Prongs & Setting'}" onerror="this.onerror=null; this.src='/images/authentic_rings_couple_hands.jpg';" />
             </div>
             <div style="grid-column: 1 / -1; font-size: 0.72rem; color: var(--color-taupe); text-align: center; padding-top: 0.25rem; letter-spacing: 0.04em;">
               ✦ Authentic Studio Reference Photography • Jaipur Atelier Spec ${p.id} • Zero AI Imagery
@@ -1496,81 +1496,6 @@
         </div>
       `;
     }
-  }
-
-  // ==================== VIEW 6: ADMIN ====================
-  async function renderAdminDashboard(container) {
-    const isAuthed = sessionStorage.getItem('hj_admin_authed');
-    if (!isAuthed) {
-      container.innerHTML = `
-        <div class="container" style="padding: 5rem 0; max-width: 440px;">
-          <div class="checkout-form-box">
-            <h2 style="font-family: var(--font-serif); font-size: 1.6rem; text-align: center; margin-bottom: 0.5rem;">Atelier Admin Portal</h2>
-            <form onsubmit="window.HJ.adminLogin(event)">
-              <div class="form-field">
-                <label class="form-label">Master Atelier PIN</label>
-                <input type="password" id="admin-pin-input" class="form-input" required placeholder="Enter Master PIN (2026)" />
-              </div>
-              <button type="submit" class="btn-primary" style="width: 100%;">Authorize Dashboard</button>
-            </form>
-          </div>
-        </div>
-      `;
-      return;
-    }
-
-    let metrics = { totalRevenue: 13152, totalOrders: 1, pendingVerification: 1, totalProducts: 50 };
-    let recentOrders = [];
-    try {
-      const res = await fetch('/api/admin/overview');
-      const data = await res.json();
-      if (data.success) {
-        metrics = data.metrics;
-        recentOrders = data.recentOrders;
-      }
-    } catch (e) {}
-
-    container.innerHTML = `
-      <div style="background: var(--color-ivory); min-height: 80vh; padding-bottom: 5rem;">
-        <div class="admin-header-bar">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-family: var(--font-serif); font-size: 1.1rem;">HOUSE OF JEWELUX</span>
-            <span style="font-size: 0.75rem; background: var(--color-gold); color: #000; padding: 0.2rem 0.5rem; border-radius: 2px;">Admin Suite</span>
-          </div>
-          <button onclick="sessionStorage.removeItem('hj_admin_authed'); window.HJ.navigate('home');" style="color: #FFF; font-size: 0.8rem; text-decoration: underline;">Exit</button>
-        </div>
-        <div class="container" style="padding-top: 2.5rem;">
-          <div class="admin-kpi-grid">
-            <div class="kpi-card"><div class="kpi-label">Gross Volume</div><div class="kpi-value">${formatPrice(metrics.totalRevenue)}</div></div>
-            <div class="kpi-card"><div class="kpi-label">Total Orders</div><div class="kpi-value">${metrics.totalOrders}</div></div>
-            <div class="kpi-card"><div class="kpi-label">Pending Verification</div><div class="kpi-value" style="color: #D32F2F;">${metrics.pendingVerification}</div></div>
-            <div class="kpi-card"><div class="kpi-label">Vault Pieces</div><div class="kpi-value">${metrics.totalProducts}</div></div>
-          </div>
-          <div style="background: var(--color-soft-offwhite); border: 1px solid var(--color-warm-stone-light); border-radius: var(--radius-sm); padding: 1.5rem;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 1rem;">Orders & Bank Verification</h3>
-            <table class="admin-table">
-              <thead><tr><th>Order ID</th><th>Customer</th><th>Payment</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
-              <tbody>
-                ${recentOrders.map(o => `
-                  <tr>
-                    <td>${o.orderId}</td>
-                    <td>${o.customer.fullName}</td>
-                    <td>${o.paymentMethod.toUpperCase()}</td>
-                    <td>${formatPrice(o.pricing.grandTotal)}</td>
-                    <td><span style="padding: 0.2rem 0.4rem; border-radius: 2px; font-size: 0.75rem; background: #FFF3E0; color: #E65100;">${o.paymentStatus}</span></td>
-                    <td>
-                      ${o.paymentStatus === 'Pending Verification' ? `
-                        <button class="btn-gold" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;" onclick="window.HJ.verifyOrderPayment('${o.orderId}')">Confirm</button>
-                      ` : '✓ Confirmed'}
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    `;
   }
 
   // ==================== VIEW 7: CONTENT PAGES ====================
@@ -3199,32 +3124,6 @@
     toggleMetalFilter: function (metal, isChecked) { state.activeFilters.metal = isChecked ? metal : ''; handleRoute(); },
     clearFilters: function () { state.activeFilters = { category: 'all', metal: '', minPrice: 0, maxPrice: 200000, sort: 'popular' }; handleRoute(); },
 
-    adminLogin: function (e) {
-      e.preventDefault();
-      const pin = document.getElementById('admin-pin-input').value;
-      if (pin === '2026' || pin === '1122' || pin === '1926') {
-        sessionStorage.setItem('hj_admin_authed', 'true');
-        renderAdminDashboard(document.getElementById('app-view'));
-      } else {
-        alert('Invalid PIN. Use 2026 or 1926.');
-      }
-    },
-
-    verifyOrderPayment: async function (orderId) {
-      try {
-        const res = await fetch(`/api/admin/orders/${orderId}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ paymentStatus: 'Paid', orderStatus: 'Confirmed & Sent to Goldsmith' })
-        });
-        const data = await res.json();
-        if (data.success) {
-          alert(`Order ${orderId} verified and updated to Paid.`);
-          renderAdminDashboard(document.getElementById('app-view'));
-        }
-      } catch (e) {}
-    },
-
     subscribeNewsletter: async function (e) {
       if (e) e.preventDefault();
       const form = e.target;
@@ -3302,7 +3201,7 @@
             <span>Click any text, title or price to edit directly</span>
             <button onclick="window.HJ.saveEditorEdits()" class="hj-editor-btn-save">💾 Save Edits</button>
             <button onclick="window.HJ.resetEditorEdits()" class="hj-editor-btn-reset">↺ Reset</button>
-            <a href="#admin" class="hj-editor-btn-admin">👑 Admin Portal</a>
+            <a href="/admin.html" class="hj-editor-btn-admin">👑 Admin Portal</a>
             <button onclick="window.HJ.toggleEditorMode(false)" class="hj-editor-btn-close" title="Exit Editor">✕</button>
           `;
           document.body.appendChild(bar);

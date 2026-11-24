@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Only this site and GitHub's API: keeps the admin token away from any injected script -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src https://api.github.com; font-src 'self'; form-action 'none'; base-uri 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Admin — House of Jewelux</title>
+  <link rel="icon" type="image/png" href="/brand-identity/favicon-32x32.png">
+  <style>
+    @font-face { font-family: 'Lawrence'; src: url('/fonts/Lawrence-Regular.otf'); font-display: swap; }
+    :root {
+      --burgundy: #6B1F2E; --burgundy-dark: #4A1420; --gold: #B8935A; --gold-soft: #E8D3B8;
+      --ivory: #FBF8F3; --surface: #FFFFFF; --line: #E9E1D6; --ink: #241A17; --muted: #7A6A62;
+      --ok: #2F6B45; --warn: #9A6A12; --bad: #A12A2A; --radius: 10px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: var(--ink); background: var(--ivory); }
+    h1, h2, h3 { font-family: 'Lawrence', Georgia, serif; font-weight: 400; margin: 0 0 .75rem; }
+    h1 { font-size: 1.6rem; } h2 { font-size: 1.3rem; } h3 { font-size: 1.05rem; }
+    a { color: var(--burgundy); }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    input, select, textarea { width: 100%; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    input:focus, select:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+    textarea { min-height: 90px; resize: vertical; }
+    label { display: block; font-size: .78rem; font-weight: 600; color: var(--muted); margin-bottom: .25rem; letter-spacing: .02em; }
+    .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1rem; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; min-height: 40px; white-space: nowrap; }
+    .btn:hover { border-color: var(--gold); }
+    .btn-primary { background: var(--burgundy); border-color: var(--burgundy); color: #fff; }
+    .btn-primary:hover { background: var(--burgundy-dark); }
+    .btn-danger { color: var(--bad); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    .hidden { display: none !important; }
+    .muted { color: var(--muted); }
+    .small { font-size: .8rem; }
+
+    /* login */
+    .login { max-width: 460px; margin: 8vh auto; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 2rem; }
+    .login img { display: block; height: 56px; margin: 0 auto 1rem; }
+    .login h1 { text-align: center; }
+    .login ol { padding-left: 1.2rem; color: var(--muted); font-size: .85rem; }
+
+    /* shell */
+    .shell { display: grid; grid-template-columns: 230px 1fr; min-height: 100vh; }
+    .side { background: var(--burgundy-dark); color: var(--gold-soft); padding: 1.25rem .9rem; position: sticky; top: 0; height: 100vh; }
+    .side .brand { display: flex; align-items: center; gap: .6rem; margin-bottom: 1.5rem; font-family: 'Lawrence', Georgia, serif; font-size: 1.05rem; color: #fff; }
+    .side .brand img { height: 34px; }
+    .side nav button { display: block; width: 100%; text-align: left; padding: .6rem .75rem; border: 0; border-radius: 8px; background: none; color: var(--gold-soft); cursor: pointer; margin-bottom: 2px; }
+    .side nav button[aria-current="page"], .side nav button:hover { background: rgba(232, 211, 184, .14); color: #fff; }
+    .side .foot { position: absolute; bottom: 1rem; left: .9rem; right: .9rem; font-size: .78rem; }
+    .side .foot button { color: var(--gold-soft); background: none; border: 1px solid rgba(232,211,184,.3); border-radius: 8px; padding: .4rem .7rem; cursor: pointer; width: 100%; margin-top: .5rem; }
+    .topbar { display: none; }
+    main { padding: 1.5rem 2rem 4rem; max-width: 1200px; width: 100%; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: .8rem; margin-bottom: 1.5rem; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; }
+    .card .num { font-size: 1.7rem; font-family: 'Lawrence', Georgia, serif; color: var(--burgundy); }
+    .panel { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; }
+
+    .toolbar { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-bottom: 1rem; }
+    .toolbar input, .toolbar select { width: auto; flex: 1 1 180px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    th { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    tr.row { cursor: pointer; } tr.row:hover td { background: #FCF9F4; }
+    .thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; background: var(--line); }
+    .pill { display: inline-block; padding: .1rem .55rem; border-radius: 99px; font-size: .75rem; border: 1px solid var(--line); }
+    .pill.published, .pill.low { color: var(--ok); border-color: #BFD8C7; }
+    .pill.draft, .pill.medium { color: var(--warn); border-color: #E8D3A6; }
+    .pill.out, .pill.high { color: var(--bad); border-color: #E6BDBD; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem 1rem; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem 1rem; }
+    .full { grid-column: 1 / -1; }
+    .count { float: right; font-weight: 400; }
+    .count.over { color: var(--bad); }
+    .check { display: flex; align-items: center; gap: .5rem; font-weight: 400; color: var(--ink); font-size: .9rem; }
+    .check input { width: auto; }
+
+    .slot { display: grid; grid-template-columns: 88px 1fr auto; gap: .8rem; align-items: start; padding: .8rem; border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: .6rem; }
+    .slot img { width: 88px; height: 88px; object-fit: cover; border-radius: 8px; background: var(--line); }
+    .slot .acts { display: flex; flex-direction: column; gap: .3rem; }
+    .slot .acts .btn { padding: .3rem .6rem; min-height: 34px; justify-content: center; }
+    .slot.missing { border-color: #E6BDBD; background: #FFF8F8; }
+
+    .snippet { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; background: #fff; font-family: Arial, sans-serif; }
+    .snippet .u { color: #202124; font-size: .8rem; } .snippet .t { color: #1a0dab; font-size: 1.15rem; margin: .2rem 0; }
+    .snippet .d { color: #4d5156; font-size: .85rem; }
+
+    .savebar { position: sticky; bottom: 0; background: rgba(251,248,243,.96); border-top: 1px solid var(--line); padding: .8rem 0; display: flex; gap: .6rem; justify-content: flex-end; flex-wrap: wrap; margin-top: 1rem; }
+    .errors { color: var(--bad); background: #FFF4F4; border: 1px solid #E6BDBD; border-radius: 8px; padding: .7rem 1rem; margin-bottom: 1rem; }
+    .toast { position: fixed; right: 1rem; bottom: 1rem; max-width: 380px; background: var(--ink); color: #fff; padding: .8rem 1rem; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.2); z-index: 50; }
+    .toast.bad { background: var(--bad); }
+    .note { border-left: 3px solid var(--gold); padding: .6rem .9rem; background: #FFFBF4; border-radius: 0 8px 8px 0; color: var(--muted); }
+    ul.log { list-style: none; padding: 0; margin: 0; } ul.log li { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+
+    @media (max-width: 860px) {
+      .shell { grid-template-columns: 1fr; }
+      .side { position: fixed; inset: 0 auto 0 0; width: 250px; z-index: 40; transform: translateX(-100%); transition: transform .2s; }
+      .side.open { transform: none; box-shadow: 0 0 0 100vmax rgba(0,0,0,.35); }
+      .topbar { display: flex; align-items: center; gap: .7rem; padding: .7rem 1rem; background: var(--burgundy-dark); color: #fff; position: sticky; top: 0; z-index: 30; }
+      .topbar button { background: none; border: 1px solid rgba(255,255,255,.3); color: #fff; border-radius: 8px; padding: .35rem .7rem; min-height: 40px; }
+      main { padding: 1rem 1rem 4rem; }
+      .grid2, .grid3 { grid-template-columns: 1fr; }
+      .hide-sm { display: none; }
+      .slot { grid-template-columns: 64px 1fr; } .slot img { width: 64px; height: 64px; }
+      .slot .acts { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) { .side { transition: none; } }
+  </style>
+</head>
+<body>
+  <!-- LOGIN -->
+  <section id="login" class="login hidden" aria-labelledby="login-title">
+    <img src="/brand-identity/jewelux-only-logo-emblem.png" alt="House of Jewelux">
+    <h1 id="login-title">Admin sign in</h1>
+    <p class="muted small">Changes you save here are committed to your GitHub repository and go live on houseofjewelux.com about a minute later.</p>
+    <form id="login-form">
+      <label for="token">GitHub access token</label>
+      <input id="token" type="password" autocomplete="off" required placeholder="github_pat_…">
+      <p id="login-error" class="errors hidden" role="alert"></p>
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:.8rem;justify-content:center">Sign in</button>
+    </form>
+    <details style="margin-top:1rem">
+      <summary class="small">How to create a token</summary>
+      <ol>
+        <li>GitHub → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token.</li>
+        <li>Repository access: <b>Only select repositories</b> → <code>house-of-jewelux</code>.</li>
+        <li>Permissions → Repository → <b>Contents: Read and write</b>. Nothing else.</li>
+        <li>Expiration: 30–90 days. Paste it above.</li>
+      </ol>
+      <p class="small muted">The token stays in this browser tab only and is cleared when you close it or sign out.</p>
+    </details>
+  </section>
+
+  <!-- APP -->
+  <div id="app" class="shell hidden">
+    <aside class="side" id="side">
+      <div class="brand"><img src="/brand-identity/jewelux-only-logo-emblem.png" alt="">House of Jewelux</div>
+      <nav aria-label="Admin sections">
+        <button data-view="dashboard">Dashboard</button>
+        <button data-view="products">Products</button>
+        <button data-view="seo">Homepage SEO</button>
+        <button data-view="audit">SEO audit</button>
+        <button data-view="robots">robots.txt</button>
+      </nav>
+      <div class="foot">
+        <div id="who" class="small"></div>
+        <a href="/" target="_blank" rel="noopener" style="color:var(--gold-soft)">View website ↗</a>
+        <button id="logout" type="button">Sign out</button>
+      </div>
+    </aside>
+    <div>
+      <div class="topbar"><button id="menu" type="button" aria-controls="side" aria-expanded="false">☰ Menu</button><span id="top-title">Admin</span></div>
+      <main id="view" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="/admin-lib.js?v=1"></script>
+  <script src="/admin.js?v=1"></script>
+</body>
+</html>
