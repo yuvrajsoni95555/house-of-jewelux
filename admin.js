@@ -43,6 +43,10 @@
       if (e.status === 409 || (e.status === 422 && /sha/i.test(e.message))) {
         throw new Error('This file was changed somewhere else after you opened it. Reload the page and make your change again. Nothing was saved.');
       }
+      // Fine-grained tokens report the user's repo rights on read, so a read-only token only fails here, at the first write
+      if (e.status === 403) {
+        throw new Error('This GitHub token can read but is not allowed to save. On GitHub, edit the token: Repository permissions → Contents → "Read and write". Nothing was saved.');
+      }
       throw e;
     }
   }
