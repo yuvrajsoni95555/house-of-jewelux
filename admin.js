@@ -8,6 +8,7 @@
   const esc = L.esc;
   const $ = (s, r = document) => r.querySelector(s);
   const STOCK = ['In Stock', 'Out of Stock', 'Made to Order', 'Pre-order'];
+  const SITE = 'https://houseofjewelux.com';
 
   const state = { token: sessionStorage.getItem('hj_gh_token') || '', products: null, productsSha: null, html: null, htmlSha: null, robots: null, robotsSha: null, previews: {} };
 
@@ -75,13 +76,17 @@
     try { await fn(); } catch (e) { if (e.message !== 'Unauthorized') toast(e.message, true); } finally { if (btn) btn.disabled = false; }
   }
   function show(name, arg) {
+    if (editorDirty && !confirm('You have unsaved changes to this product. Leave without saving?')) return Promise.resolve();
+    editorDirty = false;
+    if (fitObserver) { fitObserver.disconnect(); fitObserver = null; }
+    view.classList.toggle('wide', name === 'editor');
     const navName = name === 'editor' ? 'products' : name;
     document.querySelectorAll('.side nav button').forEach((b) => {
       if (b.dataset.view === navName) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
     });
     $('#side').classList.remove('open');
     $('#menu').setAttribute('aria-expanded', 'false');
-    view.innerHTML = '<p class="muted">Loading…</p>';
+    view.innerHTML = '<div class="skel" style="height:40px;width:40%;margin-bottom:24px"></div><div class="skel" style="height:120px;margin-bottom:16px"></div><div class="skel" style="height:280px"></div>';
     return busy(null, () => VIEWS[name](arg)).then(() => view.focus({ preventScroll: true }));
   }
 
@@ -146,28 +151,61 @@
     if (!state.html) await loadHtml();
     const P = state.products;
     const drafts = P.filter((p) => p.status === 'draft').length;
-    const out = P.filter((p) => p.stockStatus === 'Out of Stock').length;
+    const outList = P.filter((p) => p.stockStatus === 'Out of Stock');
     const productIssues = L.auditProducts(P);
     const headIssues = L.auditHead(L.readHeadMeta(state.html));
+    const slots = P.reduce((n, p) => n + L.imageSlots(p).length, 0);
     const missingAlt = productIssues.filter((i) => /ALT/.test(i.message)).length;
+    const altPct = slots ? Math.round(((slots - missingAlt) / slots) * 100) : 100;
+    const descPct = P.length ? Math.round((P.filter((p) => String(p.description || '').trim().length >= 70).length / P.length) * 100) : 100;
+    const headPct = Math.max(0, 100 - headIssues.length * 20);
+    const score = Math.round((altPct + descPct + headPct) / 3);
+    const byCat = {};
+    P.forEach((p) => { byCat[p.category || 'other'] = (byCat[p.category || 'other'] || 0) + 1; });
+    const maxCat = Math.max(1, ...Object.values(byCat));
     let commits = [];
-    try { commits = await gh(`/repos/${REPO}/commits?sha=${BRANCH}&per_page=8`); } catch (e) { /* activity is optional */ }
-    const card = (num, label, go) => `<button class="card" data-go="${go}" style="text-align:left;cursor:pointer"><div class="num">${num}</div><div class="muted">${label}</div></button>`;
+    try { commits = await gh(`/repos/${REPO}/commits?sha=${BRANCH}&per_page=6`); } catch (e) { /* activity is optional */ }
+    const card = (num, label, go) => `<button class="card" data-go="${go}"><div class="num">${num}</div><div class="lbl">${label}</div></button>`;
     view.innerHTML = `
-      <h1>Dashboard</h1>
+      <div class="page-head"><div><h1>Dashboard</h1><p>Your catalogue and website health at a glance.</p></div>
+        <button class="btn btn-primary" data-action="new-product">+ Add product</button></div>
       <div class="cards">
         ${card(P.length, 'Total products', 'products')}
         ${card(P.length - drafts, 'Published', 'products')}
         ${card(drafts, 'Drafts (hidden)', 'products')}
-        ${card(out, 'Out of stock', 'products')}
-        ${card(missingAlt, 'Images missing ALT', 'audit')}
+        ${card(outList.length, 'Out of stock', 'products')}
         ${card(productIssues.length + headIssues.length, 'SEO issues', 'audit')}
       </div>
-      <div class="panel">
-        <h3>Recent changes</h3>
-        <ul class="log">${commits.map((c) => `<li><b>${esc(c.commit.message.split('\n')[0])}</b><br><span class="small muted">${esc(c.commit.author.name)} · ${esc(new Date(c.commit.author.date).toLocaleString('en-IN'))}</span></li>`).join('') || '<li class="muted">No activity available.</li>'}</ul>
+      <div class="dash">
+        <div>
+          <div class="panel"><h3>Products by category</h3>
+            <div class="bars">${Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([c, n]) =>
+              `<div class="bar"><span>${esc(c)}</span><div class="track"><div class="fill" style="width:${(n / maxCat) * 100}%"></div></div><b>${n}</b></div>`).join('')}</div>
+          </div>
+          <div class="panel"><h3>Recent changes</h3>
+            <ul class="log">${commits.map((c) => `<li><b>${esc(c.commit.message.split('\n')[0])}</b><br><span class="small muted">${esc(new Date(c.commit.author.date).toLocaleString('en-IN'))}</span></li>`).join('') || '<li class="muted">No activity available.</li>'}</ul>
+          </div>
+        </div>
+        <div>
+          <div class="panel"><h3>SEO health</h3>
+            <div class="health"><div class="ring" style="--v:${score}"><span>${score}</span></div>
+              <div class="small"><div>Image ALT text: <b>${altPct}%</b></div><div>Good descriptions: <b>${descPct}%</b></div><div>Homepage tags: <b>${headPct}%</b></div></div></div>
+            <button class="btn btn-sm" data-go="audit">Open SEO audit</button>
+          </div>
+          <div class="panel"><h3>Inventory alerts</h3>
+            ${outList.length ? `<ul class="log">${outList.slice(0, 6).map((p) => `<li><a href="#" data-edit="${esc(p.id)}">${esc(p.name)}</a></li>`).join('')}</ul>` : '<p class="muted" style="margin:0">All products are in stock.</p>'}
+          </div>
+          <div class="panel"><h3>Quick actions</h3>
+            <div class="quick">
+              <button class="btn" data-action="new-product">Add product</button>
+              <button class="btn" data-go="seo">Homepage SEO</button>
+              <button class="btn" data-go="audit">SEO audit</button>
+              <a class="btn" href="/" target="_blank" rel="noopener">View website ↗</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="note small">Orders, revenue, customers and traffic are not shown: the website does not have a server yet to record them.</p>`;
+      <p class="note small">Orders, revenue, customers and traffic are not shown: the website is a static site with no server to record them yet.</p>`;
   };
 
   VIEWS.products = async () => {
@@ -176,18 +214,18 @@
     issues.forEach((i) => { if (/ALT/.test(i.message)) altCount[i.productId] = (altCount[i.productId] || 0) + 1; });
     const cats = [...new Set(state.products.map((p) => p.category).filter(Boolean))].sort();
     view.innerHTML = `
-      <h1>Products</h1>
+      <div class="page-head"><div><h1>Products</h1><p>${state.products.length} products · click one to edit it with a live preview.</p></div>
+        <button class="btn btn-primary" data-action="new-product">+ Add product</button></div>
       <div class="toolbar">
-        <input id="q" type="search" placeholder="Search name, SKU, ID…" aria-label="Search products">
+        <input id="q" type="search" placeholder="Search name, SKU or ID" aria-label="Search products">
         <select id="f-cat" aria-label="Category"><option value="">All categories</option>${cats.map((c) => `<option>${esc(c)}</option>`).join('')}</select>
         <select id="f-state" aria-label="Filter">
           <option value="">All products</option><option value="published">Published</option><option value="draft">Drafts</option>
           <option value="out">Out of stock</option><option value="alt">Missing ALT text</option>
         </select>
-        <button class="btn btn-primary" data-action="new-product">+ Add product</button>
       </div>
       <div class="table-wrap"><table>
-        <thead><tr><th></th><th>Name</th><th class="hide-sm">SKU</th><th class="hide-sm">Category</th><th>Price</th><th>Status</th><th class="hide-sm">ALT</th></tr></thead>
+        <thead><tr><th style="width:72px"></th><th>Name</th><th class="hide-sm">SKU</th><th class="hide-sm">Category</th><th>Price</th><th>Status</th><th class="hide-sm">ALT</th></tr></thead>
         <tbody id="rows"></tbody>
       </table></div>`;
     const render = () => {
@@ -204,10 +242,9 @@
           <td><img class="thumb" src="${esc(imgSrc(p.image))}" alt="" loading="lazy"></td>
           <td><b>${esc(p.name)}</b></td>
           <td class="hide-sm">${esc(p.sku || p.id)}</td>
-          <td class="hide-sm">${esc(p.category)}</td>
+          <td class="hide-sm" style="text-transform:capitalize">${esc(p.category)}</td>
           <td>${money(p.price)}</td>
-          <td><span class="pill ${p.status === 'draft' ? 'draft' : 'published'}">${p.status === 'draft' ? 'Draft' : 'Published'}</span>
-              ${p.stockStatus === 'Out of Stock' ? '<span class="pill out">Out of stock</span>' : ''}</td>
+          <td><span class="pill ${p.status === 'draft' ? 'draft' : 'published'}">${p.status === 'draft' ? 'Draft' : 'Published'}</span>${p.stockStatus === 'Out of Stock' ? '<span class="pill out">Out of stock</span>' : ''}</td>
           <td class="hide-sm">${altCount[p.id] ? `<span class="pill high">${altCount[p.id]} missing</span>` : '<span class="pill low">OK</span>'}</td>
         </tr>`).join('') || '<tr><td colspan="7" class="muted">No products match.</td></tr>';
     };
@@ -215,12 +252,19 @@
     render();
   };
 
-  // ----- product editor -----
+  // ----- product workspace: editor (left) + the real product page in an iframe (right) -----
   let draft = null;
   let editingId = null;
+  let baseline = '';
+  let editorDirty = false;
+  let device = 1280;
+  let previewTimer;
+  let fitObserver;
+  const productUrl = (p) => `${SITE}/#products/${encodeURIComponent(p.handle || p.id)}`;
 
   VIEWS.editor = async (id) => {
     editingId = id || null;
+    baseline = '';
     const orig = id ? state.products.find((p) => p.id === id) : null;
     if (id && !orig) throw new Error('Product not found. It may have been deleted.');
     draft = orig ? JSON.parse(JSON.stringify(orig)) : {
@@ -230,62 +274,173 @@
     if (!Array.isArray(draft.gallery)) draft.gallery = [];
     if (!Array.isArray(draft.galleryAlt)) draft.galleryAlt = [];
     const list = (k) => [...new Set(state.products.map((p) => p[k]).filter(Boolean))].map((v) => `<option value="${esc(v)}">`).join('');
-    const txt = (k, label, extra = '') => `<div ${extra}><label for="f-${k}">${label}</label><input id="f-${k}" data-f="${k}" value="${esc(draft[k] == null ? '' : draft[k])}"></div>`;
+    const txt = (k, label, opts = {}) => `<div class="${opts.full ? 'full' : ''}"><label for="f-${k}" class="${opts.req ? 'req' : ''}">${label}</label>
+      <input id="f-${k}" data-f="${k}" value="${esc(draft[k] == null ? '' : draft[k])}" placeholder="${esc(opts.ph || '')}" ${opts.req ? 'required' : ''} ${opts.ro ? 'readonly' : ''}>${opts.help ? `<p class="help">${opts.help}</p>` : ''}</div>`;
     const stockOpts = [...new Set([...STOCK, draft.stockStatus].filter(Boolean))];
+    const tab = (k, label, on) => `<button type="button" role="tab" id="tab-${k}" aria-controls="panel-${k}" aria-selected="${on}" data-tab="${k}">${label}</button>`;
+    view.classList.add('wide');
     view.innerHTML = `
-      <p><a href="#" data-go="products">← All products</a></p>
-      <h1>${orig ? 'Edit product' : 'New product'}</h1>
-      <div id="errs" class="errors hidden" role="alert"></div>
-      <div class="panel"><h3>Basics</h3><div class="grid2">
-        ${txt('name', 'Product name', 'class="full"')}
-        <div class="full"><label for="f-handle">URL slug</label>
-          <div style="display:flex;gap:.5rem"><input id="f-handle" data-f="handle" value="${esc(draft.handle)}"><button class="btn" type="button" data-action="slug">From name</button></div>
-          ${orig ? '<p class="small muted">Changing the slug of a published product breaks links to it that are already shared.</p>' : ''}</div>
-        <div><label for="f-id">Product ID</label><input id="f-id" data-f="id" value="${esc(draft.id)}" ${orig ? 'readonly' : ''}></div>
-        ${txt('sku', 'SKU')}
-        <div><label for="f-category">Category</label><input id="f-category" data-f="category" list="dl-cat" value="${esc(draft.category)}"><datalist id="dl-cat">${list('category')}</datalist></div>
-        <div><label for="f-collection">Collection</label><input id="f-collection" data-f="collection" list="dl-col" value="${esc(draft.collection)}"><datalist id="dl-col">${list('collection')}</datalist></div>
-        ${txt('badge', 'Badge (e.g. Bestseller)')}
-        ${txt('tag', 'Tag line')}
-      </div></div>
-
-      <div class="panel"><h3>Price, stock and visibility</h3><div class="grid3">
-        <div><label for="f-price">Price (₹)</label><input id="f-price" data-f="price" type="number" min="0" step="1" value="${esc(draft.price)}"></div>
-        <div><label for="f-compareAtPrice">Compare-at price (₹)</label><input id="f-compareAtPrice" data-f="compareAtPrice" type="number" min="0" step="1" value="${esc(draft.compareAtPrice == null ? '' : draft.compareAtPrice)}"></div>
-        <div><label for="f-stockStatus">Stock</label><select id="f-stockStatus" data-f="stockStatus">${stockOpts.map((s) => `<option ${s === draft.stockStatus ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div>
-        <div><label for="f-status">Visibility</label><select id="f-status" data-f="status">
-          <option value="published" ${draft.status !== 'draft' ? 'selected' : ''}>Published (shown on website)</option>
-          <option value="draft" ${draft.status === 'draft' ? 'selected' : ''}>Draft (hidden)</option></select></div>
-        <div class="full" style="display:flex;gap:1.5rem;flex-wrap:wrap">
-          ${['isNew:New arrival', 'isSilver:Silver', 'isGold:Gold'].map((s) => { const [k, l] = s.split(':'); return `<label class="check"><input type="checkbox" data-f="${k}" ${draft[k] ? 'checked' : ''}> ${l}</label>`; }).join('')}
+      <div class="ws">
+        <div class="ws-head">
+          <div class="ws-title">
+            <a class="btn btn-sm" href="#" data-go="products" aria-label="Back to products">←</a>
+            <h1 id="ws-name">${esc(draft.name || 'New product')}</h1>
+            <span id="ws-status"></span>
+            <span id="ws-dirty" class="pill dirty hidden">Unsaved changes</span>
+          </div>
+          <div class="ws-actions">
+            <div class="seg ws-switch" role="group" aria-label="Show"><button type="button" data-pane="editor" aria-pressed="true">Editor</button><button type="button" data-pane="preview" aria-pressed="false">Preview</button></div>
+            <button class="btn" data-action="discard" disabled>Discard</button>
+            <button class="btn" data-action="save-draft">Save draft</button>
+            <button class="btn btn-primary" data-action="publish">Publish</button>
+          </div>
+          <div class="ws-url"><span>Product page</span><code id="ws-url"></code>
+            <button class="btn btn-sm" type="button" data-action="copy-url">Copy URL</button>
+            <a class="btn btn-sm" id="ws-open" target="_blank" rel="noopener">Open product page ↗</a></div>
         </div>
-      </div></div>
+        <div class="ws-body" data-pane="editor">
+          <div class="ws-editor">
+            <div id="errs" class="errors hidden" role="alert"></div>
+            <div class="tabs" role="tablist" aria-label="Product sections">
+              ${tab('basics', 'Basics', true)}${tab('pricing', 'Price &amp; stock', false)}${tab('images', 'Images', false)}${tab('details', 'Details', false)}${tab('seo', 'SEO', false)}
+            </div>
 
-      <div class="panel"><h3>Images and ALT text</h3>
-        <p class="small muted">ALT text describes the image for Google and screen readers. Write what is actually in the photo, for example "Silver solitaire ring with round moissanite, side view".</p>
-        <div id="slots"></div>
-        <button class="btn" type="button" data-action="add-gallery">+ Add gallery image</button>
-        <input id="file" type="file" accept="image/*" class="hidden">
-      </div>
+            <section role="tabpanel" id="panel-basics" aria-labelledby="tab-basics"><div class="grid2">
+              ${txt('name', 'Product name', { full: true, req: true, ph: 'e.g. Celestial Radiance Solitaire Ring' })}
+              <div><label for="f-category" class="req">Category</label><input id="f-category" data-f="category" list="dl-cat" value="${esc(draft.category)}" required><datalist id="dl-cat">${list('category')}</datalist></div>
+              <div><label for="f-collection">Collection</label><input id="f-collection" data-f="collection" list="dl-col" value="${esc(draft.collection)}"><datalist id="dl-col">${list('collection')}</datalist></div>
+              ${txt('sku', 'SKU / product code', { ph: 'HJ-RNG-001' })}
+              ${txt('id', 'Product ID', { ro: !!orig, help: orig ? 'Fixed once a product exists.' : 'Letters, numbers and dashes.' })}
+              ${txt('badge', 'Badge', { ph: 'e.g. Bestseller', help: 'Shown on the product card.' })}
+              ${txt('tag', 'Tag line', { ph: 'e.g. Silver Flagship' })}
+            </div></section>
 
-      <div class="panel"><h3>Details</h3><div class="grid2">
-        ${txt('metal', 'Metal')}${txt('purity', 'Purity')}${txt('stone', 'Gemstone')}${txt('cut', 'Cut')}
-        ${txt('clarity', 'Clarity')}${txt('weight', 'Weight')}${txt('dimensions', 'Dimensions')}${txt('certificate', 'Certificate')}
-        <div class="full"><label for="f-description">Description <span class="count" id="c-desc"></span></label><textarea id="f-description" data-f="description">${esc(draft.description)}</textarea></div>
-        <div class="full"><label for="f-specs">Specifications (one per line: Label: value)</label>
-          <textarea id="f-specs">${esc((draft.specifications || []).map((s) => s.label + ': ' + s.value).join('\n'))}</textarea></div>
-      </div></div>
+            <section role="tabpanel" id="panel-pricing" aria-labelledby="tab-pricing" class="hidden"><div class="grid2">
+              <div><label for="f-price" class="req">Price (₹)</label><input id="f-price" data-f="price" type="number" min="0" step="1" value="${esc(draft.price)}" required></div>
+              <div><label for="f-compareAtPrice">Compare-at price (₹)</label><input id="f-compareAtPrice" data-f="compareAtPrice" type="number" min="0" step="1" value="${esc(draft.compareAtPrice == null ? '' : draft.compareAtPrice)}"><p class="help">Shown struck through; the discount % is worked out for you.</p></div>
+              <div><label for="f-stockStatus">Availability</label><select id="f-stockStatus" data-f="stockStatus">${stockOpts.map((s) => `<option ${s === draft.stockStatus ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div>
+              ${txt('weight', 'Weight', { ph: 'e.g. 3.5g' })}
+              <div class="full row-flex" style="gap:var(--s5)">
+                ${['isNew:New arrival', 'isSilver:Silver', 'isGold:Gold'].map((s) => { const [k, l] = s.split(':'); return `<label class="check"><input type="checkbox" data-f="${k}" ${draft[k] ? 'checked' : ''}> ${l}</label>`; }).join('')}
+              </div>
+            </div></section>
 
-      <div class="savebar">
-        ${orig ? '<button class="btn btn-danger" data-action="delete-product" style="margin-right:auto">Delete product</button>' : ''}
-        <a class="btn" href="#" data-go="products">Cancel</a>
-        <button class="btn btn-primary" data-action="save-product">Save and publish to site</button>
+            <section role="tabpanel" id="panel-images" aria-labelledby="tab-images" class="hidden">
+              <p class="help" style="margin:0 0 var(--s3)">ALT text tells Google and screen readers what the photo shows. Describe the photo, e.g. "Silver solitaire ring with round moissanite, side view".</p>
+              <div id="slots"></div>
+              <button type="button" class="drop" id="drop" data-action="add-gallery">Drop an image here or <u>choose a file</u> to add it to the gallery<br><span class="small">Resized to 1600px WebP before upload</span></button>
+              <input id="file" type="file" accept="image/*" class="hidden">
+            </section>
+
+            <section role="tabpanel" id="panel-details" aria-labelledby="tab-details" class="hidden"><div class="grid2">
+              <div class="full"><label for="f-description">Description <span class="count" id="c-desc"></span></label><textarea id="f-description" data-f="description" rows="6">${esc(draft.description)}</textarea></div>
+              ${txt('metal', 'Metal')}${txt('purity', 'Purity')}${txt('stone', 'Gemstone')}${txt('cut', 'Cut')}
+              ${txt('clarity', 'Clarity')}${txt('dimensions', 'Dimensions')}${txt('certificate', 'Certificate', { full: true })}
+              <div class="full"><label for="f-specs">Specifications</label><textarea id="f-specs" rows="6">${esc((draft.specifications || []).map((s) => s.label + ': ' + s.value).join('\n'))}</textarea><p class="help">One per line, as "Label: value". Shown in the product page's specification list.</p></div>
+              ${orig ? '<div class="full" style="border-top:1px solid var(--line);padding-top:var(--s4)"><button class="btn btn-danger btn-sm" type="button" data-action="delete-product">Delete product</button></div>' : ''}
+            </div></section>
+
+            <section role="tabpanel" id="panel-seo" aria-labelledby="tab-seo" class="hidden"><div class="grid2">
+              <div class="full"><label class="req" for="f-handle">URL slug</label>
+                <div class="row-flex" style="flex-wrap:nowrap"><input id="f-handle" data-f="handle" value="${esc(draft.handle)}" required><button class="btn" type="button" data-action="slug">From name</button></div>
+                <p class="help">${orig ? 'Changing the slug of a published product breaks links that were already shared.' : 'Lowercase letters, numbers and dashes.'}</p></div>
+              <div class="full"><label for="f-seoTitle">SEO title <span class="count" data-count="seoTitle" data-max="60"></span></label><input id="f-seoTitle" data-f="seoTitle" value="${esc(draft.seoTitle || '')}"><p class="help">Empty = "<span id="seo-title-default"></span>"</p></div>
+              <div class="full"><label for="f-seoDescription">Meta description <span class="count" data-count="seoDescription" data-max="160"></span></label><textarea id="f-seoDescription" data-f="seoDescription" rows="3">${esc(draft.seoDescription || '')}</textarea><p class="help">Empty = the product description.</p></div>
+              <div class="full"><label>Google preview</label><div class="snippet"><div class="u" id="sn-u"></div><div class="t" id="sn-t"></div><div class="d" id="sn-d"></div></div></div>
+              <div class="full"><label>Headings on the product page</label><p class="help" style="margin:0">H1 is the product name. Section headings come from the site template.</p></div>
+              <div class="full"><label>Product schema (JSON-LD, read from the preview)</label><pre class="code" id="schema">Loading…</pre>
+                <p class="help">Canonical URL, robots and Open Graph are set once for the whole site under Homepage SEO: every product lives on the same page (#products/…), so per-product tags would not be read by Google.</p></div>
+            </div></section>
+          </div>
+
+          <div class="ws-preview" aria-label="Live preview">
+            <div class="pv-bar">
+              <div class="seg" role="group" aria-label="Preview size">
+                <button type="button" data-device="1280" aria-pressed="${device === 1280}">Desktop</button><button type="button" data-device="768" aria-pressed="${device === 768}">Tablet</button><button type="button" data-device="390" aria-pressed="${device === 390}">Mobile</button>
+              </div>
+              <span class="small muted">Live preview of the real product page · not public until you save</span>
+            </div>
+            <div class="pv-stage" id="pv-stage">
+              <div class="pv-loading skel" id="pv-loading"></div>
+              <iframe id="pv" class="pv-frame" title="Live preview of the product page" src="/?hjpreview=1&amp;nomodal=1#products/${encodeURIComponent(draft.id)}"></iframe>
+            </div>
+          </div>
+        </div>
       </div>`;
     renderSlots();
-    const d = $('#f-description');
-    const cnt = () => { $('#c-desc').textContent = d.value.trim().length + ' chars'; };
-    d.addEventListener('input', cnt); cnt();
+    fitPreview();
+    if (fitObserver) fitObserver.disconnect();
+    fitObserver = new ResizeObserver(fitPreview);
+    fitObserver.observe($('#pv-stage'));
+    baseline = JSON.stringify(readForm());
+    onEdit(true);
   };
+
+  // Scale the fixed-width preview device down to fit the panel
+  function fitPreview() {
+    const stage = $('#pv-stage');
+    const frame = $('#pv');
+    if (!stage || !frame || !stage.clientWidth) return;
+    const pad = 16;
+    const availW = stage.clientWidth - pad * 2;
+    const k = Math.min(1, availW / device);
+    frame.style.width = device + 'px';
+    frame.style.height = Math.max(200, (stage.clientHeight - pad * 2) / k) + 'px';
+    frame.style.transform = `scale(${k})`;
+    frame.style.left = pad + (availW - device * k) / 2 + 'px';
+  }
+
+  // Unsaved product (with not-yet-deployed uploads swapped for their local copies) -> preview iframe
+  function sendPreview() {
+    const frame = $('#pv');
+    if (!frame || !frame.contentWindow) return;
+    const p = readForm();
+    const local = (s) => state.previews[s] || s;
+    p.image = local(p.image); p.hoverImage = local(p.hoverImage); p.gallery = (p.gallery || []).map(local);
+    frame.contentWindow.postMessage({ type: 'hj-preview-product', product: p }, location.origin);
+  }
+
+  // Called after every edit: dirty flag, header, SEO preview, live preview
+  function onEdit(initial) {
+    if (!$('#ws-name')) return;
+    const p = readForm();
+    editorDirty = !initial && JSON.stringify(p) !== baseline;
+    $('#ws-dirty').classList.toggle('hidden', !editorDirty);
+    view.querySelector('[data-action="discard"]').disabled = !editorDirty;
+    $('#ws-name').textContent = p.name || 'New product';
+    const saved = editingId ? state.products.find((x) => x.id === editingId) : null;
+    const st = saved ? (saved.status === 'draft' ? 'draft' : 'published') : 'new';
+    $('#ws-status').className = 'pill ' + (st === 'published' ? 'published' : 'draft');
+    $('#ws-status').textContent = st === 'published' ? 'Published' : st === 'draft' ? 'Draft' : 'Not saved yet';
+    $('#ws-url').textContent = saved ? productUrl(saved) : 'Available after the first save';
+    const open = $('#ws-open');
+    if (st === 'published') { open.href = productUrl(saved); open.removeAttribute('aria-disabled'); open.classList.remove('hidden'); }
+    else open.classList.add('hidden');
+    view.querySelector('[data-action="copy-url"]').disabled = !saved;
+    const d = $('#f-description');
+    $('#c-desc').textContent = d.value.trim().length + ' chars';
+    view.querySelectorAll('[data-count]').forEach((c) => {
+      const n = $('#f-' + c.dataset.count).value.trim().length;
+      c.textContent = n + ' / ' + c.dataset.max;
+      c.classList.toggle('over', n > Number(c.dataset.max));
+    });
+    const defTitle = `${p.name || 'Product'} | House of Jewelux`;
+    $('#seo-title-default').textContent = defTitle;
+    $('#sn-u').textContent = `houseofjewelux.com › products › ${p.handle || p.id}`;
+    $('#sn-t').textContent = p.seoTitle || defTitle;
+    $('#sn-d').textContent = (p.seoDescription || p.description || '(no description)').slice(0, 170);
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(sendPreview, initial ? 0 : 150);
+  }
+
+  window.addEventListener('message', (e) => {
+    if (e.origin !== location.origin || !e.data || !$('#pv')) return;
+    if (e.data.type === 'hj-preview-ready') { $('#pv-loading').classList.add('hidden'); sendPreview(); }
+    if (e.data.type === 'hj-preview-rendered') {
+      const ld = $('#pv').contentDocument && $('#pv').contentDocument.getElementById('hj-product-ld');
+      $('#schema').textContent = ld ? JSON.stringify(JSON.parse(ld.textContent), null, 2) : 'No schema on this page.';
+    }
+  });
 
   function renderSlots() {
     const slot = (key, label, src, alt, i) => `
@@ -294,19 +449,20 @@
         <div>
           <label for="alt-${key}">${label} — ALT text ${src && !alt.trim() ? '<span style="color:var(--bad)">(missing)</span>' : ''}</label>
           <input id="alt-${key}" data-alt="${key}" value="${esc(alt)}" placeholder="${src ? 'Describe this image' : 'Upload an image first'}" ${src ? '' : 'disabled'}>
-          <p class="small muted" style="margin:.3rem 0 0;word-break:break-all">${esc(src || 'No image')}</p>
+          <p class="help" style="word-break:break-all">${esc(src || 'No image')}</p>
         </div>
         <div class="acts">
-          <button class="btn" type="button" data-upload="${key}">${src ? 'Replace' : 'Upload'}</button>
-          ${i != null ? `<button class="btn" type="button" data-move="${i}:-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">↑</button>
-            <button class="btn" type="button" data-move="${i}:1" ${i === draft.gallery.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button>
-            <button class="btn btn-danger" type="button" data-remove="${i}">Remove</button>` : ''}
+          <button class="btn btn-sm" type="button" data-upload="${key}">${src ? 'Replace' : 'Upload'}</button>
+          ${i != null ? `<button class="btn btn-sm" type="button" data-move="${i}:-1" ${i === 0 ? 'disabled' : ''} aria-label="Move gallery image ${i + 1} up">↑ Up</button>
+            <button class="btn btn-sm" type="button" data-move="${i}:1" ${i === draft.gallery.length - 1 ? 'disabled' : ''} aria-label="Move gallery image ${i + 1} down">↓ Down</button>
+            <button class="btn btn-sm btn-danger" type="button" data-remove="${i}">Remove</button>` : ''}
         </div>
       </div>`;
     $('#slots').innerHTML =
       slot('image', 'Main image', draft.image, draft.imageAlt || '') +
       slot('hoverImage', 'Hover image', draft.hoverImage, draft.hoverImageAlt || '') +
       draft.gallery.map((src, i) => slot('gallery.' + i, 'Gallery ' + (i + 1), src, draft.galleryAlt[i] || '', i)).join('');
+    if (baseline) onEdit();
   }
 
   function setAlt(key, val) {
@@ -366,20 +522,22 @@
       return i > 0 ? { label: l.slice(0, i).trim(), value: l.slice(i + 1).trim() } : { label: l, value: '' };
     });
     p.galleryAlt = p.gallery.map((_, i) => p.galleryAlt[i] || '');
-    ['imageAlt', 'hoverImageAlt', 'compareAtPrice', 'badge', 'tag'].forEach((k) => { if (p[k] === '' || p[k] == null) delete p[k]; });
+    ['imageAlt', 'hoverImageAlt', 'compareAtPrice', 'badge', 'tag', 'seoTitle', 'seoDescription'].forEach((k) => { if (p[k] === '' || p[k] == null) delete p[k]; });
     if (!p.galleryAlt.some(Boolean)) delete p.galleryAlt;
     return p;
   }
 
-  async function saveProduct(btn) {
+  // status: 'draft' keeps it off the website, 'published' shows it
+  async function saveProduct(btn, status) {
     const p = readForm();
+    p.status = status;
     const idx = editingId ? state.products.findIndex((x) => x.id === editingId) : -1;
     const others = state.products.filter((_, i) => i !== idx);
     const errs = L.validateProduct(p, others);
     const box = $('#errs');
     box.innerHTML = errs.map(esc).join('<br>');
     box.classList.toggle('hidden', !errs.length);
-    if (errs.length) { box.scrollIntoView({ block: 'center' }); return; }
+    if (errs.length) { box.scrollIntoView({ block: 'nearest' }); return; }
     const orig = idx >= 0 ? state.products[idx] : null;
     if (orig && orig.handle !== p.handle && !confirm(`Change the URL slug from "${orig.handle}" to "${p.handle}"? Links already shared to the old URL will stop opening this product.`)) return;
     await busy(btn, async () => {
@@ -388,8 +546,9 @@
       const at = editingId ? list.findIndex((x) => x.id === editingId) : -1;
       if (editingId && at < 0) throw new Error('This product was deleted elsewhere. Nothing was saved.');
       if (at >= 0) list[at] = p; else list.push(p);
-      await saveProducts(list, `admin: ${at >= 0 ? 'update' : 'add'} product ${p.id} (${p.name})`);
-      toast(`Saved. The website updates in about a minute.`);
+      await saveProducts(list, `admin: ${status === 'draft' ? 'save draft' : 'publish'} product ${p.id} (${p.name})`);
+      toast(status === 'draft' ? 'Saved as draft. It stays hidden from the website.' : 'Published. Live on the website in about a minute.');
+      editorDirty = false;
       show('editor', p.id);
     });
   }
@@ -400,6 +559,7 @@
       await loadProducts();
       const list = state.products.filter((x) => x.id !== editingId);
       await saveProducts(list, `admin: delete product ${editingId}`);
+      editorDirty = false;
       toast('Product deleted.');
       show('products');
     });
@@ -525,11 +685,23 @@
   $('#menu').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#menu').setAttribute('aria-expanded', String(o)); });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-view],[data-go],[data-edit],[data-action],[data-upload],[data-move],[data-remove]');
+    const t = e.target.closest('[data-view],[data-go],[data-edit],[data-action],[data-upload],[data-move],[data-remove],[data-tab],[data-pane],[data-device]');
     if (!t) return;
     const d = t.dataset;
     if (d.view || d.go) { e.preventDefault(); show(d.view || d.go); }
-    else if (d.edit) show('editor', d.edit);
+    else if (d.edit) { e.preventDefault(); show('editor', d.edit); }
+    else if (d.tab) {
+      view.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b === t)));
+      view.querySelectorAll('[role="tabpanel"]').forEach((panel) => panel.classList.toggle('hidden', panel.id !== 'panel-' + d.tab));
+    } else if (d.pane) {
+      $('.ws-body').dataset.pane = d.pane;
+      view.querySelectorAll('[data-pane]').forEach((b) => { if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(b === t)); });
+      fitPreview();
+    } else if (d.device) {
+      device = Number(d.device);
+      view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(b === t)));
+      fitPreview();
+    }
     else if (d.upload) { uploadKey = d.upload; $('#file').click(); }
     else if (d.move) {
       const [i, dir] = d.move.split(':').map(Number);
@@ -542,8 +714,11 @@
       renderSlots();
     } else if (d.action === 'new-product') show('editor');
     else if (d.action === 'add-gallery') { uploadKey = 'new'; $('#file').click(); }
-    else if (d.action === 'slug') $('#f-handle').value = L.slugify($('#f-name').value);
-    else if (d.action === 'save-product') saveProduct(t);
+    else if (d.action === 'slug') { $('#f-handle').value = L.slugify($('#f-name').value); onEdit(); }
+    else if (d.action === 'save-draft') saveProduct(t, 'draft');
+    else if (d.action === 'publish') saveProduct(t, 'published');
+    else if (d.action === 'discard') { if (confirm('Discard all unsaved changes to this product?')) { editorDirty = false; show(editingId ? 'editor' : 'products', editingId); } }
+    else if (d.action === 'copy-url') navigator.clipboard.writeText($('#ws-url').textContent).then(() => toast('Product URL copied.'), () => toast('Could not copy. Select the URL and copy it by hand.', true));
     else if (d.action === 'delete-product') deleteProduct(t);
     else if (d.action === 'save-seo') saveSeo(t);
     else if (d.action === 'save-robots') saveRobots(t);
@@ -552,14 +727,31 @@
     if (e.key === 'Enter' && e.target.matches('tr[data-edit]')) show('editor', e.target.dataset.edit);
     if (e.key === 'Escape') $('#side').classList.remove('open');
   });
-  document.addEventListener('input', (e) => { if (e.target.dataset.alt) setAlt(e.target.dataset.alt, e.target.value); });
+  document.addEventListener('input', (e) => {
+    if (e.target.dataset.alt) setAlt(e.target.dataset.alt, e.target.value);
+    if (e.target.closest('.ws-editor')) onEdit();
+  });
+  // Drag and drop an image onto the gallery drop zone
+  document.addEventListener('dragover', (e) => { const z = e.target.closest && e.target.closest('#drop'); if (z) { e.preventDefault(); z.classList.add('over'); } });
+  document.addEventListener('dragleave', (e) => { const z = e.target.closest && e.target.closest('#drop'); if (z) z.classList.remove('over'); });
+  document.addEventListener('drop', (e) => {
+    const z = e.target.closest && e.target.closest('#drop');
+    if (!z) return;
+    e.preventDefault();
+    z.classList.remove('over');
+    const f = [...e.dataTransfer.files].find((x) => x.type.startsWith('image/'));
+    if (!f) { toast('Drop an image file (JPG, PNG or WebP).', true); return; }
+    uploadKey = 'new';
+    busy(null, () => upload(f));
+  });
   document.addEventListener('change', (e) => {
+    if (e.target.closest && e.target.closest('.ws-editor') && e.target.id !== 'file') onEdit();
     if (e.target.id !== 'file' || !e.target.files[0]) return;
     const f = e.target.files[0];
     e.target.value = '';
     busy(null, () => upload(f));
   });
-  window.addEventListener('beforeunload', (e) => { if (state.token && view.querySelector('[data-action="save-product"]')) e.preventDefault(); });
+  window.addEventListener('beforeunload', (e) => { if (editorDirty) e.preventDefault(); });
 
   // ---------- start ----------
   if (state.token) signIn(state.token).catch((err) => { if (err.message !== 'Unauthorized') signOut(err.message); });

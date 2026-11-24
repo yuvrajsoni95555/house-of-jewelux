@@ -84,6 +84,10 @@
     if (mobilePincode) mobilePincode.textContent = `Deliver to: ${state.deliveryPincode} (${state.deliveryCity})`;
   }
 
+  const SITE_URL = 'https://houseofjewelux.com';
+  const DEFAULT_SEO = { title: document.title, desc: (document.querySelector('meta[name="description"]') || {}).content || '' };
+  const IS_ADMIN_PREVIEW = window.parent !== window && new URLSearchParams(location.search).has('hjpreview');
+
   async function loadProducts() {
     const cacheBust = 'v=20261123_prod_v23';
     try {
@@ -142,6 +146,7 @@
     }
 
     handleRoute();
+    if (IS_ADMIN_PREVIEW) window.parent.postMessage({ type: 'hj-preview-ready' }, location.origin);
   }
 
   // ==================== ROUTING SYSTEM ====================
@@ -161,6 +166,7 @@
   }
 
   function handleRoute() {
+    setPageSeo();
     const route = getRoute();
     state.currentRoute = route;
 
@@ -1009,12 +1015,21 @@
   // ==================== VIEW 3: PRODUCT DETAIL PAGE (1:1 WITH PALMONAS ATHENA SOLITAIRE PDP) ====================
   function renderPDP(container, identifier) {
     const p = state.products.find(item => item.id === identifier || item.handle === identifier) || state.products[0];
+    if (!p) return; // products not loaded yet: loadProducts() re-runs the route when they arrive
     const related = state.products.filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
     const isWishlisted = state.wishlist.includes(p.id);
+    const abs = (src) => /^(https?:|blob:|data:)/.test(src) ? src : SITE_URL + '/' + String(src).replace(/^\//, '');
+    const AVAILABILITY = { 'Out of Stock': 'OutOfStock', 'Pre-order': 'PreOrder', 'Made to Order': 'MadeToOrder' };
+    setPageSeo(p.seoTitle || `${p.name} | House of Jewelux`, p.seoDescription || p.description, {
+      '@context': 'https://schema.org', '@type': 'Product', name: p.name, sku: p.sku || p.id, description: p.seoDescription || p.description,
+      image: [p.image, ...(p.gallery || [])].filter(Boolean).map(abs), brand: { '@type': 'Brand', name: 'House of Jewelux' },
+      offers: { '@type': 'Offer', price: p.price, priceCurrency: 'INR', url: `${SITE_URL}/#products/${p.handle || p.id}`,
+        availability: 'https://schema.org/' + (AVAILABILITY[p.stockStatus] || 'InStock') }
+    });
 
     const normalizeImg = (src, fallback) => {
       let s = src || fallback;
-      if (!s.startsWith('http') && !s.startsWith('/')) s = '/' + s;
+      if (!/^(https?:|\/|blob:|data:)/.test(s)) s = '/' + s;
       return s;
     };
     const img0 = normalizeImg(p.gallery && p.gallery[0] ? p.gallery[0] : (p.images && p.images[0] ? p.images[0] : p.image), '/images/authentic_solitaire_ring.jpg');
@@ -3617,6 +3632,31 @@
         window.HJ.openPatronLoginPopup();
       }
     }, 5000);
+  }
+
+  // Page <title>, meta description and Product JSON-LD; called with no args to restore the homepage defaults
+  function setPageSeo(title, desc, ld) {
+    const meta = document.querySelector('meta[name="description"]');
+    document.title = title || DEFAULT_SEO.title;
+    if (meta) meta.content = desc || DEFAULT_SEO.desc;
+    let tag = document.getElementById('hj-product-ld');
+    if (!ld) { if (tag) tag.remove(); return; }
+    if (!tag) { tag = document.createElement('script'); tag.type = 'application/ld+json'; tag.id = 'hj-product-ld'; document.head.appendChild(tag); }
+    tag.textContent = JSON.stringify(ld);
+  }
+
+  // Admin live preview: /admin.html embeds /?hjpreview=1#products/<id> and posts unsaved product edits here
+  if (IS_ADMIN_PREVIEW) {
+    window.addEventListener('message', (e) => {
+      if (e.origin !== location.origin || !e.data || e.data.type !== 'hj-preview-product') return;
+      const p = e.data.product;
+      const i = state.products.findIndex((x) => x.id === p.id);
+      if (i >= 0) state.products[i] = p; else state.products.push(p);
+      const view = document.getElementById('app-view');
+      const y = window.scrollY;
+      if (view) { renderPDP(view, p.id); window.scrollTo(0, y); }
+      window.parent.postMessage({ type: 'hj-preview-rendered' }, location.origin);
+    });
   }
 
   window.addEventListener('hashchange', handleRoute);
