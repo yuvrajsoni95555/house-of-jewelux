@@ -4,6 +4,10 @@
       "items": {
         "[data-hj-sec=\"sec-0\"] > div:nth-of-type(1) > span:nth-of-type(1)": {
           "text": "✦ The Jaipur Atelier • BIS Stamped & 925 Hallmark"
+        },
+        "[data-hj-sec=\"sec-1\"] > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)": {
+          "src": "images/authentic_diamond_choker.jpg",
+          "objectPosition": "43% 48%"
         }
       },
       "sectionStyle": {},
@@ -16,7 +20,7 @@
       "seo": {},
       "names": {},
       "locked": [],
-      "updatedAt": "2026-11-25T01:42:33.195Z"
+      "updatedAt": "2026-11-25T01:45:34.384Z"
     }
   }
 }
