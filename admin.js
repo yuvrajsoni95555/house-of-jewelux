@@ -1384,9 +1384,9 @@
       ${tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
     if (it.kind === 'frame' && !D) {
       html += group('Photo frame', `
-        <p class="full help" style="margin:0">Drag the frame's handles on the canvas to any width and height, or type them above (each screen size separately). The whole photo is shown inside the frame unless you choose Fill.</p>
+        <p class="full help" style="margin:0">Drag the frame's handles on the canvas to any width and height, or type them above (each screen size separately). The photo always fills the frame.</p>
         <div><label for="e-aspect">Proportions</label>${sel('e-aspect', 'data-e="aspect"', [['', 'Free (drag to any size)'], ['1 / 1', 'Lock 1:1 square'], ['4 / 5', 'Lock 4:5 portrait'], ['3 / 4', 'Lock 3:4'], ['2 / 3', 'Lock 2:3'], ['3 / 2', 'Lock 3:2'], ['16 / 9', 'Lock 16:9']], o.aspect || '')}</div>
-        <div><label for="e-fit">Photo in frame</label>${sel('e-fit', 'data-e="fit"', [['', 'Show the whole photo'], ['cover', 'Fill the frame (edges crop)']], o.fit || '')}</div>
+        <div><label for="e-fit">Photo in frame</label>${sel('e-fit', 'data-e="fit"', [['', 'Fill the frame (edges crop)'], ['contain', 'Show the whole photo']], o.fit || '')}</div>
         ${isTemplate(cm.key) ? '<p class="full note small" style="margin:0">Applies to every product page. The photos themselves belong to each product: drop a photo on this frame to add it to the product shown, or change photos in <a href="#" data-go="products">Products</a>.</p>' : ''}`) +
         boxGroup('Border, corners & shadow', true) + effectsGroup;
     } else if (D && !['text', 'button', 'badge'].includes(D.type)) {

@@ -6740,30 +6740,3 @@ img, video, canvas, svg {
 /* The photo frame (stage) holds the shape; the photo button fills it. Studio can resize / reshape the frame freely. */
 .pdp-stage { aspect-ratio: 1 / 1; max-width: 100%; }
 .pdp-stage .pdp-main { height: 100%; aspect-ratio: auto; }
-
-/* ===================================================================
-   PRODUCT GALLERY ARROWS: outside the photo, plain icons (no circles), photo shown whole
-   =================================================================== */
-.pdp-stage-wrap { position: relative; }
-.pdp-stage-wrap .pdp-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; display: grid; place-items: center;
-  width: 28px; height: 56px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none;
-  color: var(--color-espresso, #3A2418); font: 300 2.4rem/1 var(--font-serif, Georgia, serif); opacity: 0.7; cursor: pointer;
-  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease; }
-.pdp-stage-wrap .pdp-prev { left: auto; right: calc(100% + 2px); }
-.pdp-stage-wrap .pdp-next { right: auto; left: calc(100% + 2px); }
-.pdp-stage-wrap .pdp-nav:hover, .pdp-stage-wrap .pdp-nav:focus-visible { background: transparent; border: 0; opacity: 1; color: var(--color-muted-gold, #A88462); }
-.pdp-stage-wrap .pdp-prev:hover { transform: translate(-3px, -50%); }
-.pdp-stage-wrap .pdp-next:hover { transform: translate(3px, -50%); }
-.pdp-stage-wrap .pdp-nav:focus-visible { outline: 1px solid var(--color-muted-gold, #A88462); outline-offset: 2px; }
-/* the whole photo is visible; the frame's background fills any space around a non-square photo */
-.pdp-main-img { object-fit: contain; }
-/* phones: the side margins are too narrow for outside arrows, so they sit in their own slim columns beside the photo */
-@media (max-width: 599px) {
-  .pdp-stage-wrap { display: grid; grid-template-columns: 22px minmax(0, 1fr) 22px; gap: 2px; align-items: center; }
-  .pdp-stage-wrap .pdp-nav { position: static; transform: none; width: 22px; font-size: 2rem; }
-  .pdp-stage-wrap .pdp-prev:hover, .pdp-stage-wrap .pdp-next:hover { transform: none; }
-}
-@media (prefers-reduced-motion: reduce) { .pdp-stage-wrap .pdp-nav { transition: none; } }
-/* lightbox arrows match: plain icons */
-.hj-lb-nav { width: 56px; height: 88px; border: 0; background: transparent; font: 300 3rem/1 var(--font-serif, Georgia, serif); opacity: 0.8; }
-.hj-lb-nav:hover, .hj-lb-nav:focus-visible { border: 0; background: transparent; opacity: 1; color: #E8D3B8; }

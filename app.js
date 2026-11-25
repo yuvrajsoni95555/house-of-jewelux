@@ -1187,17 +1187,15 @@
     const many = shots.length > 1;
     const galleryHtml = shots.length ? `
           <div class="pdp-gallery" data-count="${shots.length}" data-hj-id="pdp-gallery">
-            <div class="pdp-stage-wrap">
-            ${many ? '<button type="button" class="pdp-nav pdp-prev" aria-label="Previous photo">‹</button>' : ''}
             <figure class="pdp-stage" data-hj-id="pdp-photo" data-hj-frame>
               <button type="button" class="pdp-main" aria-label="View ${escHtml(p.name)} full screen">
                 <img class="pdp-main-img" src="${escHtml(shots[0].src)}" alt="${escHtml(shots[0].alt)}" decoding="async" fetchpriority="high" />
               </button>
-              ${many ? `<span class="pdp-count" aria-hidden="true">1 / ${shots.length}</span>` : ''}
+              ${many ? `<button type="button" class="pdp-nav pdp-prev" aria-label="Previous photo">‹</button>
+              <button type="button" class="pdp-nav pdp-next" aria-label="Next photo">›</button>
+              <span class="pdp-count" aria-hidden="true">1 / ${shots.length}</span>` : ''}
               <figcaption class="pdp-cap" ${shots[0].cap ? '' : 'hidden'}>${escHtml(shots[0].cap)}</figcaption>
             </figure>
-            ${many ? '<button type="button" class="pdp-nav pdp-next" aria-label="Next photo">›</button>' : ''}
-            </div>
             ${many ? `<div class="pdp-thumbs" role="tablist" aria-label="${escHtml(p.name)} photos">
               ${shots.map((x, i) => `<button type="button" role="tab" class="pdp-thumb${i === 0 ? ' is-active' : ''}" aria-selected="${i === 0}" aria-label="Photo ${i + 1} of ${shots.length}" data-i="${i}"><img src="${escHtml(x.src)}" alt="" loading="lazy" decoding="async" /></button>`).join('')}
             </div>` : ''}
