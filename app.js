@@ -235,6 +235,8 @@
     } else if (route === 'edit' || route === 'editor') {
       renderHomePage(appView);
       setTimeout(() => window.HJ.toggleEditorMode(true), 120);
+    } else if (/^blog(\/|$)/.test(route)) {
+      renderBlog(appView, route.replace(/\/(index\.html)?$/, ''));
     } else if (route === 'about') {
       renderAboutPage(appView);
     } else if (route === 'craftsmanship' || route === 'custom-order') {
@@ -3714,6 +3716,135 @@
     }, 5000);
   }
 
+  // ===== Blog: posts are built from content/blog/*.md by scripts/build_blog.js into data/blog.json =====
+  // Pages live at real addresses (/blog/ and /blog/<slug>/), which are copies of index.html with their own SEO tags.
+  const BLOG_SITE = 'https://houseofjewelux.com';
+  let blogPosts = null;
+  async function loadBlog() {
+    if (blogPosts) return blogPosts;
+    try { const r = await fetch('/data/blog.json', { cache: 'no-cache' }); blogPosts = r.ok ? ((await r.json()).posts || []) : []; } catch (e) { blogPosts = []; }
+    return blogPosts;
+  }
+  const blogDate = (d) => new Date(d + 'T00:00:00Z').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  const blogHref = (slug) => '/blog/' + (slug ? slug + '/' : '');
+  const blogMeta = (p) => `<div class="blog-meta">${p.authorAvatar ? `<img src="${escHtml(p.authorAvatar)}" alt="" width="28" height="28" loading="lazy">` : ''}<span>${escHtml(p.author)}</span><span aria-hidden="true">·</span><time datetime="${p.date}">${blogDate(p.date)}</time><span aria-hidden="true">·</span><span>${p.readingTime} min read</span></div>`;
+  const blogCard = (p, big) => `<article class="blog-card${big ? ' is-featured' : ''}"><a class="blog-card-link" href="${blogHref(p.slug)}">
+      <div class="blog-card-img"><img src="${escHtml(p.coverImage)}" alt="${escHtml(p.coverAlt || p.title)}" loading="lazy" decoding="async"></div>
+      <div class="blog-card-body">${big ? '<span class="blog-eyebrow">Featured</span>' : ''}<span class="blog-badge">${escHtml(p.category)}</span>
+        <${big ? 'h2' : 'h3'} class="blog-card-title">${escHtml(p.title)}</${big ? 'h2' : 'h3'}><p class="blog-card-ex">${escHtml(p.excerpt)}</p>${blogMeta(p)}</div></a></article>`;
+
+  async function renderBlog(container, route) {
+    const slug = route === 'blog' ? '' : route.slice(5);
+    container.innerHTML = '<section class="container blog-loading" aria-busy="true"><div class="skel"></div></section>';
+    const posts = await loadBlog();
+    if (getRoute().replace(/\/(index\.html)?$/, '') !== route) return; // the visitor moved on while posts were loading
+    if (slug) renderBlogPost(container, posts, slug); else renderBlogList(container, posts);
+    applySiteContent();
+  }
+
+  function renderBlogList(container, posts) {
+    setPageSeo('Blog | House of Jewelux', 'Jewellery care, style guides and stories of Indian craft from the House of Jewelux atelier in Jaipur.');
+    const cats = [...new Set(posts.map((p) => p.category))];
+    container.innerHTML = `
+      <header class="container blog-hero"><p class="blog-eyebrow">The Journal</p><h1 class="blog-h1">Blog</h1>
+        <p class="blog-sub">Insights, tips and stories from our Jaipur atelier</p></header>
+      <section class="container blog-tools" aria-label="Find articles">
+        <label class="blog-search"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+          <input type="search" id="blog-q" placeholder="Search articles" aria-label="Search articles by title, summary or tag" autocomplete="off"></label>
+        <div class="blog-chips" role="group" aria-label="Filter by category">${['All', ...cats].map((c, i) => `<button type="button" class="blog-chip" data-blogcat="${escHtml(i ? c : '')}" aria-pressed="${!i}">${escHtml(c)}</button>`).join('')}</div>
+      </section>
+      <section class="container blog-featured" id="blog-feat" aria-label="Featured article"></section>
+      <section class="container blog-list" aria-label="Articles">
+        <div class="blog-grid" id="blog-grid"></div>
+        <div class="blog-more"><button type="button" class="blog-more-btn" id="blog-more">Load more articles</button></div>
+        <div class="blog-empty" id="blog-empty" hidden><p>No articles found</p><button type="button" class="blog-more-btn" id="blog-clear">Clear filters</button></div>
+      </section>`;
+    const PAGE = 9; let shown = PAGE; let cat = ''; let q = '';
+    const draw = () => {
+      const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+      const hits = posts.filter((p) => (!cat || p.category === cat) && words.every((w) => [p.title, p.excerpt, p.category, ...(p.tags || [])].join(' ').toLowerCase().includes(w)));
+      const filtering = !!(cat || words.length);
+      const feat = filtering ? null : posts.find((p) => p.featured) || posts[0];
+      container.querySelector('#blog-feat').innerHTML = feat ? blogCard(feat, true) : '';
+      const list = hits.filter((p) => p !== feat);
+      container.querySelector('#blog-grid').innerHTML = list.slice(0, shown).map((p) => blogCard(p)).join('');
+      container.querySelector('#blog-more').parentElement.hidden = list.length <= shown;
+      container.querySelector('#blog-empty').hidden = hits.length > 0;
+    };
+    container.querySelector('#blog-q').addEventListener('input', (e) => { q = e.target.value; shown = PAGE; draw(); });
+    container.querySelector('.blog-chips').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-blogcat]'); if (!b) return;
+      cat = b.dataset.blogcat; shown = PAGE;
+      container.querySelectorAll('[data-blogcat]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      draw();
+    });
+    container.querySelector('#blog-more').addEventListener('click', () => { shown += PAGE; draw(); });
+    container.querySelector('#blog-clear').addEventListener('click', () => {
+      q = ''; cat = ''; shown = PAGE; container.querySelector('#blog-q').value = '';
+      container.querySelectorAll('[data-blogcat]').forEach((x) => x.setAttribute('aria-pressed', String(!x.dataset.blogcat)));
+      draw();
+    });
+    draw();
+  }
+
+  function renderBlogPost(container, posts, slug) {
+    const p = posts.find((x) => x.slug === slug);
+    if (!p) {
+      setPageSeo('Article not found | House of Jewelux');
+      container.innerHTML = `<section class="container blog-404"><p class="blog-eyebrow">Blog</p><h1 class="blog-h1">Article not found</h1>
+        <p class="blog-sub">This article may have moved or been removed.</p><a class="blog-more-btn" href="${blogHref()}">See all articles</a></section>`;
+      return;
+    }
+    const url = BLOG_SITE + blogHref(p.slug);
+    setPageSeo(`${p.title} | House of Jewelux Blog`, p.excerpt); // the BlogPosting JSON-LD is in the article's own page (scripts/build_blog.js)
+    const related = [...posts.filter((x) => x !== p && x.category === p.category), ...posts.filter((x) => x !== p && x.category !== p.category)].slice(0, 3);
+    const share = encodeURIComponent(url); const text = encodeURIComponent(p.title);
+    const toc = (p.toc || []).map((t) => `<li class="lv${t.level}"><a href="#${t.id}" data-toc="${t.id}">${escHtml(t.text)}</a></li>`).join('');
+    container.innerHTML = `
+      <div class="blog-progress" aria-hidden="true"><span id="blog-progress"></span></div>
+      <header class="container blog-post-head">
+        <a class="blog-back" href="${blogHref()}">← All articles</a>
+        <span class="blog-badge">${escHtml(p.category)}</span>
+        <h1 class="blog-post-title">${escHtml(p.title)}</h1>
+        ${blogMeta(p)}
+      </header>
+      <figure class="container blog-cover"><img src="${escHtml(p.coverImage)}" alt="${escHtml(p.coverAlt || p.title)}" fetchpriority="high" decoding="async"></figure>
+      <section class="container blog-layout${toc ? '' : ' no-toc'}">
+        ${toc ? `<aside class="blog-toc-wrap"><details class="blog-toc" ${window.innerWidth >= 992 ? 'open' : ''}><summary>On this page</summary><nav aria-label="Table of contents"><ol>${toc}</ol></nav></details></aside>` : ''}
+        <article class="blog-article">
+          <div class="blog-prose" id="blog-prose">${p.html}</div>
+          ${(p.tags || []).length ? `<ul class="blog-tags" aria-label="Tags">${p.tags.map((t) => `<li>#${escHtml(t)}</li>`).join('')}</ul>` : ''}
+          <div class="blog-share" role="group" aria-label="Share this article"><span>Share</span>
+            <button type="button" class="blog-share-btn" id="blog-copy">Copy link</button>
+            <a class="blog-share-btn" href="https://wa.me/?text=${text}%20${share}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="blog-share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=${share}" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="blog-share-btn" href="https://twitter.com/intent/tweet?url=${share}&amp;text=${text}" target="_blank" rel="noopener">X</a>
+            <a class="blog-share-btn" href="https://www.facebook.com/sharer/sharer.php?u=${share}" target="_blank" rel="noopener">Facebook</a></div>
+          <div class="blog-author">${p.authorAvatar ? `<img src="${escHtml(p.authorAvatar)}" alt="" width="64" height="64" loading="lazy">` : ''}<div><p class="blog-author-name">${escHtml(p.author)}</p>${p.authorBio ? `<p>${escHtml(p.authorBio)}</p>` : ''}</div></div>
+        </article>
+      </section>
+      ${related.length ? `<section class="container blog-related" aria-label="Related articles"><h2 class="blog-h2">Related articles</h2><div class="blog-grid">${related.map((x) => blogCard(x)).join('')}</div></section>` : ''}
+      <section class="container blog-cta"><div class="blog-cta-box"><h2 class="blog-h2">Need help choosing or caring for a piece?</h2>
+        <p>Our concierge answers questions about sizing, care and custom designs.</p><a class="blog-cta-btn" href="/#contact">Contact our concierge</a></div></section>`;
+    // table of contents scrolls inside the page (a #hash link would be read as a page route)
+    container.querySelectorAll('[data-toc]').forEach((a) => a.addEventListener('click', (e) => {
+      e.preventDefault(); const h = document.getElementById(a.dataset.toc); if (!h) return;
+      window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - 110, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      if (window.innerWidth < 992) a.closest('details').open = false;
+    }));
+    container.querySelector('#blog-copy').addEventListener('click', (e) => {
+      const b = e.currentTarget; const done = (ok) => { b.textContent = ok ? 'Link copied' : 'Copy failed'; setTimeout(() => { b.textContent = 'Copy link'; }, 2000); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => done(true), () => done(false)); else done(false);
+    });
+  }
+  // Reading progress bar on article pages
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('blog-progress'); const body = document.getElementById('blog-prose');
+    if (!bar || !body) return;
+    const r = body.getBoundingClientRect(); const total = r.height - window.innerHeight * 0.6;
+    bar.style.transform = `scaleX(${Math.max(0, Math.min(1, total > 0 ? -r.top / total : 1))})`;
+  }, { passive: true });
+
   // Page <title>, meta description and Product JSON-LD; called with no args to restore the homepage defaults
   function setPageSeo(title, desc, ld) {
     const meta = document.querySelector('meta[name="description"]');
@@ -3761,7 +3892,7 @@
   }
 
   const contentRoute = () => { const r = getRoute(); return !r || r === 'home' ? 'home' : r; };
-  const templateOf = (r) => r.startsWith('products/') ? 'tpl:products' : r.startsWith('collections/') && r !== 'collections/all' ? 'tpl:collections' : null;
+  const templateOf = (r) => r.startsWith('products/') ? 'tpl:products' : r.startsWith('collections/') && r !== 'collections/all' ? 'tpl:collections' : r.startsWith('blog/') ? 'tpl:blog' : null;
   const escHtml = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const imgUrl = (src) => /^https:\/\//.test(src || '') ? src : '/' + String(src || '').replace(/^\//, '');
   const num = (v, max) => Math.max(0, Math.min(max, Number(v) || 0));

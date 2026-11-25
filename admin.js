@@ -799,6 +799,7 @@
   async function groups() {
     const cats = await categories();
     const pages = (list) => list.map(([route, name]) => ({ key: route, route, name }));
+    const firstPost = await fetch('/data/blog.json', { cache: 'no-cache' }).then((r) => r.json()).then((j) => (j.posts[0] || {}).slug).catch(() => null);
     return [
       { id: 'home', icon: 'home', name: 'Home Page', desc: 'Hero, trust ribbon, three pillars, categories, reviews, consultation', pages: pages([['home', 'Home page']]) },
       { id: 'shop', icon: 'bag', name: 'Shopping Page', desc: 'Shop banner, filters, product grid, sorting', pages: pages([['collections/all', 'Shopping page']]) },
@@ -810,7 +811,9 @@
         pages: [{ key: 'tpl:products', route: 'products/' + ((state.products[0] || {}).handle || (state.products[0] || {}).id), name: 'Product page template (all products)', template: true }], products: true },
       { id: 'about', icon: 'book', name: 'About Us', desc: 'Brand story, craftsmanship, images', pages: pages([['about', 'About us'], ['craftsmanship', 'Craftsmanship']]) },
       { id: 'contact', icon: 'mail', name: 'Contact Us', desc: 'Contact details, form, buttons', pages: pages([['contact', 'Contact us']]) },
-      { id: 'blog', icon: 'news', name: 'Blog Pages', desc: 'The website has no blog yet', pages: [], none: 'There is no blog on the website, so there are no blog pages to edit. A blog needs its own pages in the site code first.' },
+      { id: 'blog', icon: 'news', name: 'Blog Pages', desc: 'Blog list and article design', pages: [...pages([['blog', 'Blog (all articles)']]),
+        ...(firstPost ? [{ key: 'tpl:blog', route: 'blog/' + firstPost, name: 'Article template (all blog posts)', template: true }] : [])],
+        none: 'Articles are Markdown files in content/blog/ (see the README there). Here you design the blog pages; the article text comes from those files.' },
       { id: 'customer', icon: 'user', name: 'Customer Pages', desc: 'Account and wishlist', pages: pages([['account', 'My account'], ['wishlist', 'Wishlist']]) },
       { id: 'cart', icon: 'card', name: 'Cart & Checkout', desc: 'Bag and checkout. Payment logic is not editable.', pages: pages([['cart', 'Cart'], ['checkout', 'Checkout']]) },
       { id: 'faq', icon: 'help', name: 'FAQ Page', desc: 'Questions and answers', pages: pages([['faq', 'FAQ']]) },
@@ -900,7 +903,7 @@
             <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="1" value="${device}" style="width:82px;min-height:34px"></label>
             <label class="row-flex small" style="margin:0;font-weight:400" title="Visible screen height. Open houseofjewelux.com/?hjsize on any phone or laptop to see its exact size">Height <input id="pv-h" type="number" min="300" max="2000" step="1" value="${deviceH()}" style="width:82px;min-height:34px"></label>
             <div class="seg" role="group" aria-label="Show version"><button type="button" data-viewmode="draft" aria-pressed="true" title="Your edits, including unpublished ones">Draft</button><button type="button" data-viewmode="live" aria-pressed="false" title="Exactly what the public website shows now">Live</button></div>
-            ${isTemplate(key) ? `<label class="row-flex small" style="margin:0;font-weight:400">Preview with <select id="tpl-prev" style="width:auto;min-height:34px;max-width:220px">${
+            ${isTemplate(key) && key !== 'tpl:blog' ? `<label class="row-flex small" style="margin:0;font-weight:400">Preview with <select id="tpl-prev" style="width:auto;min-height:34px;max-width:220px">${
               (key === 'tpl:products' ? state.products.map((x) => ['products/' + (x.handle || x.id), x.name]) : (await categories()).map((c) => ['collections/' + c.id, c.name || c.id]))
                 .map(([r, n]) => `<option value="${esc(r)}" ${r === route ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></label>` : ''}
             <div class="seg" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out">−</button><button type="button" data-zoom="0" id="zoom-l" title="Fit">100%</button><button type="button" data-zoom="1" aria-label="Zoom in">+</button></div>
