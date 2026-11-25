@@ -6535,8 +6535,10 @@ img, video, canvas, svg {
 .pdp-stage { position: relative; margin: 0; border-radius: 16px; overflow: hidden; background: var(--color-card-inset, #F5EFE6);
   border: 1px solid var(--color-warm-stone-light, #DFD0BE); box-shadow: 0 10px 30px rgba(26, 18, 14, 0.06); }
 /* Height follows the screen so laptops (e.g. 1536x730) see photo, thumbnails and buttons together; the photo is contained, never cropped */
-.pdp-main { display: block; width: 100%; padding: 0; border: 0; background: var(--color-card-inset, #F5EFE6); cursor: zoom-in; overflow: hidden; aspect-ratio: 4 / 5; max-height: max(340px, min(calc(100vh - 320px), 720px)); }
-.pdp-main-img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform 0.35s ease, opacity 0.3s ease; }
+.pdp-main { display: block; width: 100%; padding: 0; border: 0; background: var(--color-card-inset, #F5EFE6); cursor: zoom-in; overflow: hidden; aspect-ratio: 1 / 1; }
+/* Square photo sized by screen height on desktop, so photo, thumbnails and Add to Cart share the first screen */
+@media (min-width: 992px) { .pdp-gallery { width: 100%; max-width: max(380px, min(100%, calc(100vh - 290px))); } }
+.pdp-main-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease, opacity 0.3s ease; }
 .pdp-main-img.is-loading { opacity: 0.35; }
 .pdp-main-img.is-zoomed { transform: scale(2); }
 .pdp-main-img.is-broken { opacity: 0; }
@@ -6547,7 +6549,7 @@ img, video, canvas, svg {
 .pdp-prev { left: 12px; } .pdp-next { right: 12px; }
 .pdp-count { position: absolute; right: 12px; bottom: 12px; padding: 3px 10px; border-radius: 9999px; background: rgba(26, 18, 14, 0.55); color: #fff; font-size: 0.75rem; letter-spacing: 0.06em; z-index: 2; }
 .pdp-cap { padding: 0.6rem 1rem; font-size: 0.8rem; color: var(--color-stone-muted, #4A4A46); border-top: 1px solid var(--color-warm-stone-light, #DFD0BE); background: var(--color-card-inset, #F5EFE6); }
-.pdp-empty { aspect-ratio: 4 / 5; display: grid; place-items: center; color: var(--color-stone-muted, #4A4A46); font-size: 0.9rem; letter-spacing: 0.04em; }
+.pdp-empty { aspect-ratio: 1 / 1; display: grid; place-items: center; color: var(--color-stone-muted, #4A4A46); font-size: 0.9rem; letter-spacing: 0.04em; }
 .pdp-thumbs { display: flex; gap: 0.6rem; overflow-x: auto; scroll-snap-type: x proximity; padding: 3px 2px 6px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
 .pdp-thumb { flex: 0 0 auto; width: 78px; height: 78px; padding: 0; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--color-warm-stone-light, #DFD0BE);
   background: var(--color-card-inset, #F5EFE6); cursor: pointer; scroll-snap-align: start; opacity: 0.78; transition: border-color 0.2s, opacity 0.2s, box-shadow 0.2s; }
