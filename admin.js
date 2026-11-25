@@ -1326,7 +1326,7 @@
   function elementProps(box, it) {
     const o = cmOverride(it);
     const D = designOf(it);
-    const tpl = isTemplate(cm.key) && it.scope === 'page';
+    const tpl = (isTemplate(cm.key) && it.scope === 'page') || !!it.repeat;
     const val = (k, def) => esc(o[k] != null ? o[k] : def == null ? '' : def);
     const sel = (id, attr, opts, cur) => `<select id="${id}" ${attr}>${opts.map(([v, l]) => `<option value="${v}" ${String(cur == null ? '' : cur) === v ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
     const isBtn = it.kind === 'link' || it.tag === 'button';
@@ -1402,7 +1402,7 @@
     const crumbs = `<nav class="el-path" aria-label="Select a parent">${it.scope === 'global' ? '' : `<button type="button" data-secsel="${esc(it.section)}">Section</button><span>›</span>`}${chain.map((c) => `<button type="button" data-pickel="${esc(c.key)}" title="Select this parent">${esc(c.label.slice(0, 26))}</button><span>›</span>`).join('')}<b>${esc((it.label || it.tag || '').slice(0, 26))}</b></nav>`;
     let html = crumbs + `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'frame' ? 'Photo frame' : it.kind === 'box' ? esc(it.label || 'Box') : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
       <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
-      ${tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
+      ${it.repeat ? '<p class="note small">Product card design: changes here apply to <b>every product card on the whole website</b> (shop, categories, wishlist, search). Names, prices and photos come from each product.</p>' : tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
     const isArrow = /pdp-(prev|next)/.test(it.key);
     if (isArrow) html += group('Arrow position', `<div class="full row-flex"><button type="button" class="btn btn-sm" data-arrowpos="out">Outside the photo</button><button type="button" class="btn btn-sm" data-arrowpos="in">Inside the photo</button></div>
         <p class="full help" style="margin:0">Moves both arrows on <b>${bpName[curBp()]}</b>. Or drag an arrow anywhere. To remove the circle: Background ⊘ and Border ⊘ below.</p>`);

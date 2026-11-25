@@ -3798,6 +3798,8 @@
   const HOVERS = { lift: 'transform:translateY(-6px)', grow: 'transform:scale(1.05)', glow: 'box-shadow:0 0 26px rgba(168,132,98,.6)', dim: 'opacity:.78' };
   const GRADS = { gold: '#A88462,#E8D3B8', champagne: '#F5EFE6,#D9C3A5', wine: '#5A1A2A,#8F2A38', espresso: '#1A120E,#3A2418', ivory: '#FBF7F1,#EFE3D3', rose: '#F3E1DC,#C98F86' };
   const gradCss = (g, a) => GRADS[g] ? `background:linear-gradient(${Math.max(0, Math.min(360, Number(a) || 135))}deg,${GRADS[g]})` : '';
+  const REPEAT = /^\.product-card(?![\w-])/; // product cards are drawn from data: style them all together
+  const hjSel = (key) => (REPEAT.test(key) ? key : `[data-hj-key="${CSS.escape(key)}"]`);
   const SHADOWS = { none: 'none', soft: '0 6px 18px rgba(26,18,14,.12)', strong: '0 14px 36px rgba(26,18,14,.28)', glow: '0 0 22px rgba(168,132,98,.55)' };
   // Breakpoints for free positioning: each one is stored and applied on its own
   const BREAKPOINTS = { d: '(min-width:1025px)', t: '(min-width:768px) and (max-width:1024px)', m: '(max-width:767px)' };
@@ -3816,7 +3818,7 @@
       if (p.h) d.push(`height:${clamp(p.h, 8, 4000)}px`);
       if (p.z) d.push(`position:relative;z-index:${clamp(p.z, -50, 50)}`);
       if (p.w && el.matches('.pdp-stage')) out.push(`@media ${BREAKPOINTS[bp]}{.pdp-container{--pdp-img:min(${clamp(p.w, 200, 1400)}px,62vw)!important}.pdp-container .pdp-gallery{max-width:none!important}}`);
-      if (d.length) out.push(`@media ${BREAKPOINTS[bp]}{[data-hj-key="${CSS.escape(key)}"]{${d.join(';').split(';').map((x) => x + '!important').join(';')}}}`);
+      if (d.length) out.push(`@media ${BREAKPOINTS[bp]}{${hjSel(key)}{${d.join(';').split(';').map((x) => x + '!important').join(';')}}}`);
     });
     return out;
   }
@@ -3910,6 +3912,7 @@
   }
 
   function applyContentItem(el, o) {
+    if (REPEAT.test(o.__key)) o = { ...o, text: undefined, src: undefined, href: undefined, alt: undefined, title: undefined, tag: undefined };
     if (!ORIG.has(el)) {
       ORIG.set(el, { tag: el.tagName, html: el.innerHTML, src: el.getAttribute('src'), alt: el.getAttribute('alt'),
         title: el.getAttribute('title'), href: el.getAttribute('href'), target: el.getAttribute('target'), rel: el.getAttribute('rel') });
@@ -3935,22 +3938,22 @@
     }
     el.dataset.hjKey = o.__key;
     const css = styleOf(o);
-    if (css) DESIGN_RULES.push(`[data-hj-key="${CSS.escape(o.__key)}"]{${css}}`);
+    if (css) DESIGN_RULES.push(`${hjSel(o.__key)}{${css}}`);
     const hover = [];
     if (o.hoverBg && HEX.test(o.hoverBg)) hover.push('background:' + o.hoverBg + '!important');
     if (o.hoverColor && HEX.test(o.hoverColor)) hover.push('color:' + o.hoverColor + '!important');
     const k = CSS.escape(o.__key);
     if (HOVERS[o.hover]) {
       hover.push(HOVERS[o.hover] + '!important');
-      DESIGN_RULES.push(`[data-hj-key="${k}"]{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,opacity .35s,background .25s,color .25s!important}`);
+      DESIGN_RULES.push(`${hjSel(o.__key)}{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,opacity .35s,background .25s,color .25s!important}`);
     }
-    if (hover.length) DESIGN_RULES.push(`[data-hj-key="${k}"]:hover{${hover.join(';')}}`);
+    if (hover.length) DESIGN_RULES.push(`${hjSel(o.__key)}:hover{${hover.join(';')}}`);
     if (ANIMS[o.anim]) {
       el.dataset.hjAnim = o.anim;
-      DESIGN_RULES.push(`[data-hj-key="${k}"]{animation:${ANIMS[o.anim]} ${Math.max(0.1, Math.min(5, Number(o.animDur) || 0.8))}s ${EASES[o.animEase] || EASES.smooth} ${Math.max(0, Math.min(5, Number(o.animDelay) || 0))}s backwards!important}`);
+      DESIGN_RULES.push(`${hjSel(o.__key)}{animation:${ANIMS[o.anim]} ${Math.max(0.1, Math.min(5, Number(o.animDur) || 0.8))}s ${EASES[o.animEase] || EASES.smooth} ${Math.max(0, Math.min(5, Number(o.animDelay) || 0))}s backwards!important}`);
       watchAnim(el, o.animOn === 'load');
     }
-    if (o.fit === 'contain' || o.fit === 'cover') DESIGN_RULES.push(`[data-hj-key="${k}"] img{object-fit:${o.fit}!important}`);
+    if (o.fit === 'contain' || o.fit === 'cover') DESIGN_RULES.push(`${hjSel(o.__key)} img{object-fit:${o.fit}!important}`);
     DESIGN_RULES.push(...positionRules(o.__key, el, o.pos));
   }
 
@@ -4094,6 +4097,14 @@
     function describeEl(el) {
       const R = rootOf(el); if (!R || el === R[0]) return null;
       const [root, rootSel, scope, section] = R;
+      const card = el.closest('.product-card');
+      if (card) {
+        const ck = el === card ? '.product-card' : pathFrom(el, card, '.product-card');
+        el.dataset.hjEdit = ck;
+        const tag = el.tagName.toLowerCase();
+        return { key: ck, scope: 'global', section, tag, kind: tag === 'img' ? 'image' : 'box', generic: true, repeat: true,
+          label: 'All product cards · ' + elName(el), text: '', hasMarkup: false, src: tag === 'img' ? el.getAttribute('src') || '' : '', alt: '', href: '' };
+      }
       const key = el.dataset.hjEdit || el.dataset.hjKey || pathFrom(el, root, rootSel);
       const o = ORIG.get(el); const tag = (o ? o.tag : el.tagName).toLowerCase();
       const isImg = tag === 'img';
@@ -4560,7 +4571,7 @@
       if (!box || box.classList.contains('locked')) return;
       const el = elOf(box.dataset.key);
       if (el && (el.tagName === 'IMG' || (el.classList.contains('hj-el-frame') && el.querySelector('img')))) { startCrop(box.dataset.key); return; }
-      if (!el || el.tagName === 'IMG' || el.children.length || !el.textContent.trim()) return;
+      if (!el || el.tagName === 'IMG' || el.children.length || !el.textContent.trim() || el.closest('.product-card')) return;
       const before = el.textContent;
       ED.editing = el;
       layer.style.display = 'none';
