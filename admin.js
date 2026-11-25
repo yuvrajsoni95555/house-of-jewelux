@@ -259,6 +259,10 @@
   let baseline = '';
   let editorDirty = false;
   let device = 1280;
+  let zoom = 1; // canvas zoom on top of "fit to panel"
+  const PREFS_KEY = 'hj_editor_prefs';
+  const edPrefs = Object.assign({ grid: false, guides: true, snap: true, size: 8, cols: 12, gutter: 24, margin: 40, threshold: 6 },
+    (() => { try { return JSON.parse(localStorage.getItem(PREFS_KEY)) || {}; } catch (e) { return {}; } })());
   let previewTimer;
   let fitObserver;
   const productUrl = (p) => `${SITE}/#products/${encodeURIComponent(p.handle || p.id)}`;
@@ -384,11 +388,14 @@
     if (!stage || !frame || !stage.clientWidth) return;
     const pad = 16;
     const availW = stage.clientWidth - pad * 2;
-    const k = Math.min(1, availW / device);
+    const fit = Math.min(1, availW / device);
+    const k = fit * zoom;
     frame.style.width = device + 'px';
-    frame.style.height = Math.max(200, (stage.clientHeight - pad * 2) / k) + 'px';
+    frame.style.height = Math.max(200, (stage.clientHeight - pad * 2) / fit) + 'px';
     frame.style.transform = `scale(${k})`;
-    frame.style.left = pad + (availW - device * k) / 2 + 'px';
+    frame.style.left = pad + Math.max(0, (availW - device * k) / 2) + 'px';
+    stage.style.overflow = zoom > 1 ? 'auto' : 'hidden';
+    const zl = $('#zoom-l'); if (zl) zl.textContent = Math.round(k * 100) + '%';
   }
 
   // Unsaved product (with not-yet-deployed uploads swapped for their local copies) -> preview iframe
@@ -837,6 +844,12 @@
           <div class="ws-url"><div class="seg st-switch" role="group" aria-label="Show panel"><button type="button" data-spane="layers" aria-pressed="false">Layers</button><button type="button" data-spane="canvas" aria-pressed="true">Canvas</button><button type="button" data-spane="props" aria-pressed="false">Properties</button></div>
             <div class="seg" role="group" aria-label="Preview size">${dev(1440, 'Desktop')}${dev(1280, 'Laptop')}${dev(768, 'Tablet')}${dev(390, 'Mobile')}</div>
             <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="10" value="${device}" style="width:90px;min-height:34px"></label>
+            <div class="seg" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out">−</button><button type="button" data-zoom="0" id="zoom-l" title="Fit">100%</button><button type="button" data-zoom="1" aria-label="Zoom in">+</button></div>
+            <div class="seg" role="group" aria-label="Canvas helpers">${['grid:Grid', 'guides:Guides', 'snap:Snap'].map((x) => { const [k2, l] = x.split(':'); return `<button type="button" data-pref="${k2}" aria-pressed="${!!edPrefs[k2]}">${l}</button>`; }).join('')}</div>
+            <details class="gridset"><summary class="btn btn-sm" aria-label="Grid settings">⚙</summary><div class="gridpop">
+              ${[['size', 'Grid size (px)', 2, 64], ['cols', 'Columns', 1, 24], ['gutter', 'Gutter (px)', 0, 80], ['margin', 'Margins (px)', 0, 200], ['threshold', 'Snap distance (px)', 1, 20]]
+                .map(([k2, l, mn, mx]) => `<label>${l}<input type="number" data-prefnum="${k2}" min="${mn}" max="${mx}" value="${edPrefs[k2]}"></label>`).join('')}
+              <p class="help">G toggles the grid. Arrow keys nudge the selection (Shift = 10px). Shift while dragging keeps the move straight.</p></div></details>
             ${isTemplate(key) ? `<span class="small muted">Previewing #${esc(route)}</span>` : `<code>${SITE}/#${esc(route)}</code><a class="btn btn-sm" href="${SITE}/#${esc(route)}" target="_blank" rel="noopener">Live ↗</a>`}</div>
         </div>
         <div class="st-body" data-spane="canvas">
@@ -876,7 +889,17 @@
     renderLayers();
     if (!keepForm) renderProps();
     cmRefreshDirty();
+    syncSelection();
   }
+  const selKeys = () => (cm.multi && cm.multi.length > 1 ? cm.multi : cm.sel ? [cm.sel] : []);
+  const lockedKeys = () => [...(pageData(cm.key).locked || []), ...(pageData('*').locked || [])];
+  function syncSelection() {
+    const w = pvWin(); if (!w || !w.__hjAdmin || !w.__hjAdmin.select) return;
+    w.__hjAdmin.prefs(edPrefs);
+    w.__hjAdmin.select(selKeys(), lockedKeys());
+  }
+  const bpName = { d: 'Desktop & laptop (1025px and wider)', t: 'Tablet (768–1024px)', m: 'Mobile (under 768px)' };
+  const curBp = () => (device >= 1025 ? 'd' : device >= 768 ? 't' : 'm');
 
   // Every change goes through here: undo snapshot, draft write, canvas sync
   function cmEdit(pageKey, fn, keepForm) {
@@ -943,6 +966,7 @@
 
   function renderProps() {
     const box = $('#st-props'); if (!box || !cm.scan) return;
+    if (cm.multi && cm.multi.length > 1) return alignProps(box);
     if (cm.sel && cmItem(cm.sel)) return elementProps(box, cmItem(cm.sel));
     if (cm.secSel) return sectionProps(box, cm.secSel);
     pageProps(box);
@@ -1039,9 +1063,19 @@
     const val = (k, def) => esc(o[k] != null ? o[k] : def == null ? '' : def);
     const sel = (id, attr, opts, cur) => `<select id="${id}" ${attr}>${opts.map(([v, l]) => `<option value="${v}" ${String(cur == null ? '' : cur) === v ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
     const isBtn = it.kind === 'link' || it.tag === 'button';
+    const P = (o.pos || {})[curBp()] || {};
+    const posGroup = group('Position & size', `
+      <p class="full help" style="margin:0">Editing <b>${bpName[curBp()]}</b>. Each screen size keeps its own position; switch the preview size to edit another.</p>
+      ${numField('p-x', 'X offset (px)', 'data-p="x"', P.x, '0', -3000, 3000)}${numField('p-y', 'Y offset (px)', 'data-p="y"', P.y, '0', -3000, 3000)}
+      ${numField('p-w', 'Width (px)', 'data-p="w"', P.w, 'Auto', 8, 4000)}${numField('p-h', 'Height (px)', 'data-p="h"', P.h, 'Auto', 8, 4000)}
+      ${numField('p-r', 'Rotation (°)', 'data-p="r"', P.r, '0', -360, 360)}
+      <div><label>Layer order</label><div class="row-flex"><button type="button" class="btn btn-sm" data-zorder="1" title="Bring forward">⬆ Forward</button><button type="button" class="btn btn-sm" data-zorder="-1" title="Send backward">⬇ Back</button></div><p class="help">z = ${P.z || 0}</p></div>
+      <div class="full row-flex"><button type="button" class="btn btn-sm" data-al="secc">Centre in section</button><button type="button" class="btn btn-sm" data-al="pagec">Centre on page</button>
+        <button type="button" class="btn btn-sm" data-cm="reset-pos">Reset (this size)</button></div>
+      <p class="full help" style="margin:0">Drag the element on the canvas, or use the handles to resize and rotate. Moves are an offset from its place in the layout, so the rest of the page keeps flowing.</p>`);
     let html = `<h3 class="pp-h">${it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(it.tag)}</span></h3>
       <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
-      ${tpl ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}`;
+      ${tpl ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup;
     if (it.kind === 'image') {
       const [fx, fy] = (o.objectPosition || '50% 50%').split(' ').map((v) => parseInt(v, 10));
       html += (tpl ? '' : group('Image', `
@@ -1075,7 +1109,12 @@
         <div class="full"><label>Background</label>${swatchRow('data-ebg', o.bg)}</div>
         <div class="full"><label>Border colour</label>${swatchRow('data-ebd', o.borderColor)}</div>
         ${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 200)}
-        ${numField('e-px', 'Padding left/right (px)', 'data-e="padX"', o.padX, 'Default', 0, 120)}${numField('e-py', 'Padding top/bottom (px)', 'data-e="padY"', o.padY, 'Default', 0, 120)}`, false) : '');
+        ${numField('e-px', 'Padding left/right (px)', 'data-e="padX"', o.padX, 'Default', 0, 120)}${numField('e-py', 'Padding top/bottom (px)', 'data-e="padY"', o.padY, 'Default', 0, 120)}
+        ${numField('e-bw', 'Border width (px)', 'data-e="borderWidth"', o.borderWidth, '1', 0, 20)}
+        <div><label for="e-sh">Shadow</label>${sel('e-sh', 'data-e="shadow"', [['', 'Default'], ['none', 'None'], ['soft', 'Soft'], ['strong', 'Strong'], ['glow', 'Gold glow']], o.shadow || '')}</div>
+        ${numField('e-op', 'Opacity (0.05–1)', 'data-e="opacity"', o.opacity, '1', 0.05, 1, 0.05)}
+        <div class="full"><label>Hover background</label>${swatchRow('data-ehbg', o.hoverBg)}</div>
+        <div class="full"><label>Hover text colour</label>${swatchRow('data-ehc', o.hoverColor)}</div>`, false) : '');
     }
     html += group('Visibility', `<div class="full">${sel('e-vis', 'data-e="visibility"', [['all', 'Visible'], ['hidden', 'Hidden']], o.hidden ? 'hidden' : 'all')}</div>`, false) +
       `<div class="row-flex" style="margin-top:var(--s3)"><button class="btn btn-sm" data-cm="rename-el">Rename layer</button><button class="btn btn-sm" data-cm="copy-style">Copy style</button>
@@ -1083,6 +1122,80 @@
     box.innerHTML = html;
     const chk = $('#href-check');
     if (chk) { const p = linkProblem($('#e-href').value.trim()); chk.textContent = p ? '⚠ ' + p : '✓ Link looks valid'; chk.style.color = p ? 'var(--bad)' : 'var(--ok)'; }
+  }
+
+  // Several elements selected (Shift+click): align, distribute, match size
+  function alignProps(box) {
+    const btn = (a, l, t) => `<button type="button" class="btn btn-sm" data-al="${a}" title="${t || l}">${l}</button>`;
+    box.innerHTML = `<h3 class="pp-h">${cm.multi.length} elements selected</h3>
+      <p class="help" style="margin-top:-6px">Shift+click on the canvas or in Layers to add or remove elements. Editing <b>${bpName[curBp()]}</b>.</p>
+      ${group('Align', `<div class="full row-flex">${btn('left', '⇤ Left')}${btn('hcenter', '↔ Centre')}${btn('right', 'Right ⇥')}</div>
+        <div class="full row-flex">${btn('top', '⤒ Top')}${btn('vcenter', '↕ Middle')}${btn('bottom', 'Bottom ⤓')}</div>`)}
+      ${group('Distribute', `<div class="full row-flex">${btn('disth', 'Equal spacing ↔', 'Distribute horizontally')}${btn('distv', 'Equal spacing ↕', 'Distribute vertically')}</div>`)}
+      ${group('Match', `<div class="full row-flex">${btn('matchw', 'Same width')}${btn('matchh', 'Same height')}${btn('matchs', 'Same size')}</div>
+        <p class="full help" style="margin:0">Matches the first element you selected.</p>`)}
+      ${group('Centre', `<div class="full row-flex">${btn('secc', 'Centre in section')}${btn('pagec', 'Centre on page')}</div>`)}
+      <button type="button" class="btn btn-sm" data-cm="clear-multi" style="margin-top:var(--s3)">Clear selection</button>`;
+  }
+
+  // Save an element's position for one breakpoint (from a canvas drag, nudge or the number fields)
+  function savePos(key, bp, pos, keepForm) {
+    const it = cmItem(key); if (!it || !/^[dtm]$/.test(bp)) return;
+    cmEdit(pageKeyFor(it.scope), (p) => {
+      const o = { ...(p.items[key] || {}) };
+      const all = { ...(o.pos || {}) };
+      const cur = { ...(all[bp] || {}), ...pos };
+      Object.keys(cur).forEach((k) => { if (cur[k] == null || cur[k] === '' || Number.isNaN(cur[k]) || (cur[k] === 0 && k !== 'z')) delete cur[k]; if (k === 'z' && cur[k] === 0) delete cur[k]; });
+      if (Object.keys(cur).length) all[bp] = cur; else delete all[bp];
+      if (Object.keys(all).length) o.pos = all; else delete o.pos;
+      if (Object.keys(o).length) p.items[key] = o; else delete p.items[key];
+    }, keepForm);
+  }
+
+  // Align / distribute / centre, measured on the live canvas, saved as offsets for the current breakpoint
+  function doAlign(kind) {
+    const w = pvWin(); if (!w || !w.__hjAdmin.rects) return;
+    const keys = cm.multi && cm.multi.length > 1 ? cm.multi : cm.sel ? [cm.sel] : [];
+    const R = w.__hjAdmin.rects(keys);
+    if (!R.length) return;
+    const bp = w.__hjAdmin.bp();
+    const minL = Math.min(...R.map((r) => r.left)); const maxR = Math.max(...R.map((r) => r.left + r.width));
+    const minT = Math.min(...R.map((r) => r.top)); const maxB = Math.max(...R.map((r) => r.top + r.height));
+    const first = R.find((r) => r.key === keys[0]) || R[0];
+    const out = {};
+    const moveTo = (r, left, top) => { out[r.key] = { ...(out[r.key] || {}), x: Math.round(r.tx + (left == null ? 0 : left - r.left)), y: Math.round(r.ty + (top == null ? 0 : top - r.top)) }; };
+    if (kind === 'left') R.forEach((r) => moveTo(r, minL));
+    if (kind === 'right') R.forEach((r) => moveTo(r, maxR - r.width));
+    if (kind === 'hcenter') R.forEach((r) => moveTo(r, (minL + maxR) / 2 - r.width / 2));
+    if (kind === 'top') R.forEach((r) => moveTo(r, null, minT));
+    if (kind === 'bottom') R.forEach((r) => moveTo(r, null, maxB - r.height));
+    if (kind === 'vcenter') R.forEach((r) => moveTo(r, null, (minT + maxB) / 2 - r.height / 2));
+    if (kind === 'secc') R.forEach((r) => moveTo(r, r.sec.left + (r.sec.width - r.width) / 2));
+    if (kind === 'pagec') R.forEach((r) => moveTo(r, (r.page - r.width) / 2));
+    if (kind === 'disth' || kind === 'distv') {
+      if (R.length < 3) { toast('Select three or more elements to distribute them.'); return; }
+      const hz = kind === 'disth';
+      const S = [...R].sort((a, b) => (hz ? a.left - b.left : a.top - b.top));
+      const span = hz ? S[S.length - 1].left + S[S.length - 1].width - S[0].left : S[S.length - 1].top + S[S.length - 1].height - S[0].top;
+      const gap = (span - S.reduce((n, r) => n + (hz ? r.width : r.height), 0)) / (S.length - 1);
+      let at = hz ? S[0].left : S[0].top;
+      S.forEach((r) => { if (hz) moveTo(r, at); else moveTo(r, null, at); at += (hz ? r.width : r.height) + gap; });
+    }
+    if (/^match/.test(kind)) R.forEach((r) => { if (r.key === first.key) return; out[r.key] = { ...(kind !== 'matchh' ? { w: Math.round(first.w) } : {}), ...(kind !== 'matchw' ? { h: Math.round(first.h) } : {}) }; });
+    const d = readDraft();
+    cm.undo.push(JSON.stringify(d)); cm.redo = [];
+    Object.entries(out).forEach(([k, pos]) => {
+      const it = cmItem(k); const pk = pageKeyFor(it.scope);
+      if (!d.pages[pk]) d.pages[pk] = Object.assign(blankPage(), clone(state.content.pages[pk] || {}));
+      const o = { ...(d.pages[pk].items[k] || {}) }; o.pos = { ...(o.pos || {}) };
+      const cur = { ...(o.pos[bp] || {}), ...pos };
+      Object.keys(cur).forEach((x) => { if (!cur[x]) delete cur[x]; }); // 0 offset = default place
+      if (Object.keys(cur).length) o.pos[bp] = cur; else delete o.pos[bp];
+      if (!Object.keys(o.pos).length) delete o.pos;
+      if (Object.keys(o).length) d.pages[pk].items[k] = o; else delete d.pages[pk].items[k];
+    });
+    writeDraft(d);
+    cmSync();
   }
 
   // Read the element properties into its override
@@ -1098,7 +1211,8 @@
       if (f('newTab')) set('newTab', f('newTab').checked || null);
       if (f('tag')) set('tag', f('tag').value, it.tag);
       if (f('font')) set('font', f('font').value);
-      ['size', 'lineHeight', 'letterSpacing', 'radius', 'padX', 'padY', 'maxWidth'].forEach((k) => { if (f(k)) set(k, n(k)); });
+      ['size', 'lineHeight', 'letterSpacing', 'radius', 'padX', 'padY', 'maxWidth', 'borderWidth', 'opacity'].forEach((k) => { if (f(k)) set(k, n(k)); });
+      if (f('shadow')) set('shadow', f('shadow').value);
       if (f('weight')) set('weight', f('weight').value);
       if (f('alt')) set('alt', f('alt').value, it.alt);
       if (f('title')) set('title', f('title').value);
@@ -1306,13 +1420,22 @@
     input.click();
   }
 
-  function selectElement(key) {
+  // add = Shift+click: build a multi-selection for align / distribute
+  function selectElement(key, add) {
     const it = cmItem(key); if (!it) return;
-    if (isLocked(key, it.scope)) { toast('This layer is locked. Unlock it in Layers to edit it.'); return; }
-    cm.sel = key; cm.secSel = it.section; cm.open[it.section] = true;
-    hl(key); renderLayers(); renderProps(); showPane('props');
+    if (isLocked(key, it.scope) && !add) { toast('This layer is locked. Unlock it in Layers to edit it.'); return; }
+    if (add && cm.sel) {
+      const set = new Set(cm.multi && cm.multi.length ? cm.multi : [cm.sel]);
+      if (set.has(key)) set.delete(key); else set.add(key);
+      cm.multi = [...set];
+      cm.sel = cm.multi[cm.multi.length - 1] || null;
+    } else cm.multi = [];
+    if (cm.sel !== key && !add) cm.sel = key;
+    if (!cm.sel) cm.sel = key;
+    cm.secSel = it.section; cm.open[it.section] = true;
+    hl(key); renderLayers(); renderProps(); syncSelection(); showPane('props');
   }
-  function selectSection(key) { cm.sel = null; cm.secSel = key; hl(key); renderLayers(); renderProps(); showPane('props'); }
+  function selectSection(key) { cm.sel = null; cm.multi = []; cm.secSel = key; hl(key); renderLayers(); renderProps(); syncSelection(); showPane('props'); }
   function showPane(p) {
     const body = $('.st-body'); if (!body || window.innerWidth > 1280) return;
     body.dataset.spane = p;
@@ -1330,19 +1453,26 @@
       else if (pvWin() && pvWin().__hjAdmin) pvWin().__hjAdmin.setContent(effective()); // design / library previews
     }
     if (e.data.type === 'hj-content-select' && inStudio()) {
-      if (e.data.key && cmItem(e.data.key)) selectElement(e.data.key);
+      if (e.data.key && cmItem(e.data.key)) selectElement(e.data.key, e.data.add);
       else if (e.data.section) selectSection(e.data.section);
     }
+    if (e.data.type === 'hj-pos' && inStudio()) savePos(e.data.key, e.data.bp, e.data.pos);
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
+    const t = e.target.closest('[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
+    if (d.zoom != null) { zoom = d.zoom === '0' ? 1 : Math.min(4, Math.max(0.25, zoom * (d.zoom === '1' ? 1.25 : 0.8))); fitPreview(); return; }
+    if (d.pref) { edPrefs[d.pref] = !edPrefs[d.pref]; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); t.setAttribute('aria-pressed', String(edPrefs[d.pref])); syncSelection(); return; }
+    if (d.al) { doAlign(d.al); return; }
+    if (d.zorder) { const o = cmOverride(cmItem(cm.sel)); const z = (((o.pos || {})[curBp()] || {}).z || 0) + Number(d.zorder); savePos(cm.sel, curBp(), { z }); return; }
+    if ('ehbg' in d) { patchItem(cmItem(cm.sel), { hoverBg: d.ehbg }); return; }
+    if ('ehc' in d) { patchItem(cmItem(cm.sel), { hoverColor: d.ehc }); return; }
     if (d.group) { show('group', d.group); return; }
     if (d.global) { show('page', { key: 'home', route: 'home', focus: d.global }); return; }
     if (d.studio) { show('page', { key: d.studio, route: d.route }); return; }
-    if (d.cmsel) { selectElement(d.cmsel); return; }
+    if (d.cmsel) { selectElement(d.cmsel, e.shiftKey); return; }
     if (d.secsel) { if (e.detail === 2) { renameLayer(d.secsel, Object.keys(GLOBAL_NAMES).includes(d.secsel) ? 'global' : 'page'); return; } selectSection(d.secsel); return; }
     if (d.lyopen) { cm.open[d.lyopen] = !cm.open[d.lyopen]; renderLayers(); return; }
     if (d.sectog) { const k = d.sectog; cmEdit(cm.key, (p) => { p.hidden = (p.hidden || []).includes(k) ? p.hidden.filter((x) => x !== k) : [...(p.hidden || []), k]; }); return; }
@@ -1406,7 +1536,9 @@
         break;
       case 'save-draft': toast('Draft saved in this browser (it also saves automatically). It is not on the website until you publish.'); break;
       case 'publish': cmPublish(t); break;
-      case 'page-props': cm.sel = null; cm.secSel = null; renderLayers(); renderProps(); showPane('props'); break;
+      case 'page-props': cm.sel = null; cm.multi = []; cm.secSel = null; renderLayers(); renderProps(); syncSelection(); showPane('props'); break;
+      case 'clear-multi': cm.multi = []; renderProps(); syncSelection(); break;
+      case 'reset-pos': { const o = cmOverride(it); const all = { ...(o.pos || {}) }; delete all[curBp()]; patchItem(it, { pos: Object.keys(all).length ? all : null }); break; }
       case 'reset-el': patchItem(it, Object.fromEntries(Object.keys(cmOverride(it)).map((k) => [k, null]))); break;
       case 'copy-style': { const o = cmOverride(it); cm.clip = Object.fromEntries(['font', 'size', 'weight', 'lineHeight', 'letterSpacing', 'align', 'color', 'bg', 'borderColor', 'radius', 'padX', 'padY'].filter((k) => k in o).map((k) => [k, o[k]])); toast('Style copied.'); renderProps(); break; }
       case 'paste-style': if (cm.clip) patchItem(it, cm.clip); break;
@@ -1481,6 +1613,8 @@
       if (t.id === 'e-href') { const p = linkProblem(t.value.trim()); $('#href-check').textContent = p ? '⚠ ' + p : '✓ Link looks valid'; $('#href-check').style.color = p ? 'var(--bad)' : 'var(--ok)'; }
       clearTimeout(cmTimer); cmTimer = setTimeout(readElementForm, 250);
     }
+    if (t.matches('#st-props [data-p]')) { const k = t.dataset.p; clearTimeout(cmTimer); cmTimer = setTimeout(() => savePos(cm.sel, curBp(), { [k]: t.value === '' ? null : Number(t.value) }, true), 250); }
+    if (t.matches('[data-prefnum]')) { const v = Number(t.value); if (v >= Number(t.min) && v <= Number(t.max)) { edPrefs[t.dataset.prefnum] = v; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); syncSelection(); } }
     if (t.matches('#st-props [data-ss]')) { const k = t.dataset.ss; clearTimeout(cmTimer); cmTimer = setTimeout(() => { patchSectionKeep(cm.secSel, { [k]: t.value === '' ? null : Number(t.value) }); }, 300); }
     if (t.matches('#st-props [data-c]')) { const id = cm.secSel.replace('custom:', ''); clearTimeout(cmTimer); cmTimer = setTimeout(() => customUpdate(id, { [t.dataset.c]: t.dataset.c === 'height' ? Number(t.value) : t.value }, true), 250); }
     if (t.matches('#st-props [data-seo]')) { clearTimeout(cmTimer); cmTimer = setTimeout(() => cmEdit(cm.key, (p) => { p.seo = { title: $('#seo-t').value.trim(), description: $('#seo-d').value.trim() }; }, true), 400); }
@@ -1526,6 +1660,10 @@
 
   // Undo / redo shortcuts (outside text fields, so typing keeps its own undo)
   document.addEventListener('keydown', (e) => {
+    if (inStudio() && !e.target.matches('input, textarea, select') && !e.ctrlKey && !e.metaKey) {
+      if (e.key === 'g' || e.key === 'G') { edPrefs.grid = !edPrefs.grid; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); const b = view.querySelector('[data-pref="grid"]'); if (b) b.setAttribute('aria-pressed', String(edPrefs.grid)); syncSelection(); }
+      if (e.key === 'Escape' && (cm.sel || (cm.multi || []).length)) { cm.sel = null; cm.multi = []; renderLayers(); renderProps(); syncSelection(); }
+    }
     if (!inStudio() || !(e.ctrlKey || e.metaKey) || e.target.matches('input, textarea')) return;
     const k = e.key.toLowerCase();
     if (k === 'z' && !e.shiftKey) { e.preventDefault(); undoRedo(cm.undo, cm.redo); }

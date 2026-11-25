@@ -264,6 +264,11 @@
     details.pg .grid2 { margin-top: var(--s3); grid-template-columns: 1fr 1fr; gap: var(--s3); }
     .st-props .seg button { padding: 0 var(--s2); }
     .st-switch { display: none; }
+    .gridset { position: relative; } .gridset summary { list-style: none; min-height: 34px; } .gridset summary::-webkit-details-marker { display: none; }
+    .gridpop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: 250px; display: grid; gap: var(--s2); padding: var(--s3); background: var(--surface);
+      border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-lg); }
+    .gridpop label { display: grid; grid-template-columns: 1fr 80px; align-items: center; gap: var(--s2); font-weight: 400; color: var(--text); margin: 0; }
+    .gridpop input { min-height: 32px; }
     @media (max-width: 1280px) {
       .st-switch { display: inline-flex; }
       .st-body { grid-template-columns: minmax(0, 1fr); }
@@ -384,6 +389,6 @@
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
   <script src="/admin-lib.js?v=4"></script>
-  <script src="/admin.js?v=13"></script>
+  <script src="/admin.js?v=15"></script>
 </body>
 </html>

@@ -3701,6 +3701,27 @@
     return el;
   }
 
+  const SHADOWS = { none: 'none', soft: '0 6px 18px rgba(26,18,14,.12)', strong: '0 14px 36px rgba(26,18,14,.28)', glow: '0 0 22px rgba(168,132,98,.55)' };
+  // Breakpoints for free positioning: each one is stored and applied on its own
+  const BREAKPOINTS = { d: '(min-width:1025px)', t: '(min-width:768px) and (max-width:1024px)', m: '(max-width:767px)' };
+  const INLINE_TAGS = /^(A|SPAN|STRONG|EM|SMALL|LABEL|BUTTON|IMG)$/;
+  // Position/size/rotation per breakpoint: an offset from the element's place in the layout (translate), so the page flow never breaks
+  function positionRules(key, el, pos) {
+    const out = [];
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, Math.round(Number(v) || 0)));
+    Object.entries(pos || {}).forEach(([bp, p]) => {
+      if (!BREAKPOINTS[bp] || !p) return;
+      const d = [];
+      if (p.x || p.y) d.push(`translate:${clamp(p.x, -3000, 3000)}px ${clamp(p.y, -3000, 3000)}px`);
+      if (p.r) d.push(`rotate:${clamp(p.r, -360, 360)}deg`);
+      if (p.w || p.h) { if (INLINE_TAGS.test(el.tagName)) d.push('display:inline-block'); d.push('box-sizing:border-box'); }
+      if (p.w) d.push(`width:${clamp(p.w, 8, 4000)}px`);
+      if (p.h) d.push(`height:${clamp(p.h, 8, 4000)}px`);
+      if (p.z) d.push(`position:relative;z-index:${clamp(p.z, -50, 50)}`);
+      if (d.length) out.push(`@media ${BREAKPOINTS[bp]}{[data-hj-key="${CSS.escape(key)}"]{${d.join(';').split(';').map((x) => x + '!important').join(';')}}}`);
+    });
+    return out;
+  }
   function styleOf(o) {
     const css = [];
     if (o.size) css.push('font-size:' + num(o.size, 160) + 'px');
@@ -3711,7 +3732,9 @@
     if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
     if (o.color && HEX.test(o.color)) css.push('color:' + o.color);
     if (o.bg && HEX.test(o.bg)) css.push('background:' + o.bg);
-    if (o.borderColor && HEX.test(o.borderColor)) css.push('border:1px solid ' + o.borderColor);
+    if (o.borderColor && HEX.test(o.borderColor)) css.push('border:' + (o.borderWidth != null && o.borderWidth !== '' ? num(o.borderWidth, 20) : 1) + 'px solid ' + o.borderColor);
+    if (o.shadow && SHADOWS[o.shadow]) css.push('box-shadow:' + SHADOWS[o.shadow]);
+    if (o.opacity != null && o.opacity !== '') css.push('opacity:' + Math.max(0.05, Math.min(1, Number(o.opacity) || 1)));
     if (o.radius != null && o.radius !== '') css.push('border-radius:' + num(o.radius, 999) + 'px');
     if (o.padY != null && o.padY !== '') css.push('padding-top:' + num(o.padY, 200) + 'px;padding-bottom:' + num(o.padY, 200) + 'px');
     if (o.padX != null && o.padX !== '') css.push('padding-left:' + num(o.padX, 200) + 'px;padding-right:' + num(o.padX, 200) + 'px');
@@ -3749,6 +3772,11 @@
     el.dataset.hjKey = o.__key;
     const css = styleOf(o);
     if (css) DESIGN_RULES.push(`[data-hj-key="${CSS.escape(o.__key)}"]{${css}}`);
+    const hover = [];
+    if (o.hoverBg && HEX.test(o.hoverBg)) hover.push('background:' + o.hoverBg + '!important');
+    if (o.hoverColor && HEX.test(o.hoverColor)) hover.push('color:' + o.hoverColor + '!important');
+    if (hover.length) DESIGN_RULES.push(`[data-hj-key="${CSS.escape(o.__key)}"]:hover{${hover.join(';')}}`);
+    DESIGN_RULES.push(...positionRules(o.__key, el, o.pos));
   }
 
   // Section-level design as CSS rules: never touches the section's HTML or inline style (sliders, forms, animations keep working)
@@ -3911,6 +3939,7 @@
         const el = document.querySelector('[data-hj-edit="' + CSS.escape(key) + '"]') || document.querySelector('[data-hj-sec="' + CSS.escape(key) + '"]') ||
           (GLOBAL_ROOTS.includes(key) ? document.querySelector(key) : null);
         if (!el) return;
+        if (el.matches('[data-hj-edit]')) { const r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > window.innerHeight) el.scrollIntoView({ block: 'center' }); return; }
         el.classList.add('hj-admin-hl');
         el.style.outline = '2px solid #A88462';
         el.style.outlineOffset = '3px';
@@ -3926,8 +3955,220 @@
       if (!el && !sec && !shared && !e.target.closest('a')) return;
       e.preventDefault();
       e.stopPropagation();
-      window.parent.postMessage({ type: 'hj-content-select', key: el ? el.dataset.hjEdit : null, section: sec ? sec.dataset.hjSec : shared || null }, location.origin);
+      window.parent.postMessage({ type: 'hj-content-select', key: el ? el.dataset.hjEdit : null, section: sec ? sec.dataset.hjSec : shared || null, add: e.shiftKey }, location.origin);
     }, true);
+  }
+
+  // ===== Canvas editor (admin preview only): select, drag, resize, rotate, smart guides, snapping, grid =====
+  // The page is never re-laid out here: moves are previewed as a temporary CSS rule, and on release the
+  // new offset/size goes to the admin, which saves it per breakpoint and re-applies the content.
+  if (IS_ADMIN_PREVIEW) {
+    const ED = { keys: [], locked: [], drag: null, prefs: { grid: false, guides: true, snap: true, size: 8, cols: 12, gutter: 24, margin: 40, threshold: 6 } };
+    const bpNow = () => (window.innerWidth >= 1025 ? 'd' : window.innerWidth >= 768 ? 't' : 'm');
+    const elOf = (k) => document.querySelector('[data-hj-key="' + CSS.escape(k) + '"]') || document.querySelector('[data-hj-edit="' + CSS.escape(k) + '"]');
+    const visible = (el) => el && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
+    const sectionOf = (el) => el.closest('#app-view > [data-hj-sec]') || GLOBAL_ROOTS.map((g) => el.closest(g)).find(Boolean) || document.body;
+    const translateOf = (el) => { const t = getComputedStyle(el).translate; if (!t || t === 'none') return [0, 0]; const [x, y] = t.split(' ').map(parseFloat); return [x || 0, y || 0]; };
+    const rotateOf = (el) => parseFloat(getComputedStyle(el).rotate) || 0;
+    const ACCENT = '#E0457B';
+
+    const css = document.createElement('style');
+    css.textContent = `#hj-ed{position:fixed;inset:0;pointer-events:none;z-index:2147483000;font:11px/1.4 system-ui,sans-serif}
+      #hj-ed .box{position:absolute;border:1.5px solid #A88462;box-sizing:border-box;pointer-events:auto;cursor:move;touch-action:none}
+      #hj-ed .box.multi{border-style:dashed;cursor:default}#hj-ed .box.locked{border-color:#999;cursor:not-allowed}
+      #hj-ed .h{position:absolute;width:10px;height:10px;background:#fff;border:1.5px solid #A88462;border-radius:2px;box-sizing:border-box}
+      #hj-ed .nw{left:-6px;top:-6px;cursor:nwse-resize}#hj-ed .n{left:50%;top:-6px;margin-left:-5px;cursor:ns-resize}#hj-ed .ne{right:-6px;top:-6px;cursor:nesw-resize}
+      #hj-ed .e{right:-6px;top:50%;margin-top:-5px;cursor:ew-resize}#hj-ed .se{right:-6px;bottom:-6px;cursor:nwse-resize}#hj-ed .s{left:50%;bottom:-6px;margin-left:-5px;cursor:ns-resize}
+      #hj-ed .sw{left:-6px;bottom:-6px;cursor:nesw-resize}#hj-ed .w{left:-6px;top:50%;margin-top:-5px;cursor:ew-resize}
+      #hj-ed .rot{left:50%;top:-30px;margin-left:-7px;width:14px;height:14px;border-radius:50%;cursor:grab}
+      #hj-ed .rot::after{content:'';position:absolute;left:5px;top:13px;width:1px;height:14px;background:#A88462}
+      #hj-ed .g{position:absolute;background:${ACCENT}}#hj-ed .gv{width:1px}#hj-ed .gh{height:1px}
+      #hj-ed .lbl{position:absolute;background:${ACCENT};color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap;transform:translate(-50%,-50%)}
+      #hj-ed .tag{position:absolute;background:#3A2418;color:#fff;padding:2px 6px;border-radius:3px;white-space:nowrap}
+      #hj-ed .gridl{position:absolute;inset:0}#hj-ed .col{position:absolute;top:0;bottom:0;background:rgba(224,69,123,.05);border-left:1px solid rgba(224,69,123,.22);border-right:1px solid rgba(224,69,123,.22)}`;
+    document.head.appendChild(css);
+    const dragCss = document.createElement('style');
+    document.head.appendChild(dragCss);
+    const layer = document.createElement('div');
+    layer.id = 'hj-ed';
+    document.body.appendChild(layer);
+
+    const div = (cls, st, txt) => { const d = document.createElement('div'); d.className = cls; Object.assign(d.style, st); if (txt != null) d.textContent = txt; layer.appendChild(d); return d; };
+
+    function drawGrid() {
+      if (!ED.prefs.grid) return;
+      const p = ED.prefs;
+      const g = div('gridl', {});
+      g.style.backgroundImage = `linear-gradient(rgba(168,132,98,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(168,132,98,.16) 1px,transparent 1px)`;
+      g.style.backgroundSize = `${p.size * 4}px ${p.size * 4}px`;
+      const usable = window.innerWidth - p.margin * 2;
+      const colW = (usable - (p.cols - 1) * p.gutter) / p.cols;
+      for (let i = 0; i < p.cols && colW > 0; i++) div('col', { left: p.margin + i * (colW + p.gutter) + 'px', width: colW + 'px' });
+    }
+
+    function draw(guides) {
+      layer.textContent = '';
+      drawGrid();
+      const single = ED.keys.length === 1;
+      ED.keys.forEach((k) => {
+        const el = elOf(k);
+        if (!visible(el)) return;
+        const r = el.getBoundingClientRect();
+        const locked = ED.locked.includes(k);
+        const box = div('box' + (single ? '' : ' multi') + (locked ? ' locked' : ''), { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+        box.dataset.key = k;
+        if (single && !locked) {
+          ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'rot'].forEach((h) => { const d = document.createElement('div'); d.className = 'h ' + h; d.dataset.h = h; box.appendChild(d); });
+          const [tx, ty] = translateOf(el);
+          div('tag', { left: r.left + 'px', top: Math.max(0, r.bottom + 6) + 'px' }, `${Math.round(r.width)} × ${Math.round(r.height)}  ·  X ${Math.round(tx)}  Y ${Math.round(ty)}`);
+        }
+      });
+      (guides || []).forEach((g) => {
+        if (g.v != null) div('g gv', { left: g.v + 'px', top: g.from + 'px', height: Math.max(1, g.to - g.from) + 'px' });
+        if (g.h != null) div('g gh', { top: g.h + 'px', left: g.from + 'px', width: Math.max(1, g.to - g.from) + 'px' });
+        if (g.label) div('lbl', { left: g.lx + 'px', top: g.ly + 'px' }, g.label);
+      });
+    }
+
+    // Lines an element may snap to: its section, the page centre, other editable elements in the section, grid columns
+    function snapTargets(el) {
+      const sec = sectionOf(el).getBoundingClientRect();
+      const xs = [sec.left, sec.left + sec.width / 2, sec.right, window.innerWidth / 2];
+      const ys = [sec.top, sec.top + sec.height / 2, sec.bottom];
+      const others = [...sectionOf(el).querySelectorAll('[data-hj-edit]')].filter((o) => o !== el && !el.contains(o) && !o.contains(el) && visible(o))
+        .map((o) => o.getBoundingClientRect()).filter((r) => r.width && r.height);
+      others.forEach((r) => { xs.push(r.left, r.left + r.width / 2, r.right); ys.push(r.top, r.top + r.height / 2, r.bottom); });
+      if (ED.prefs.grid) {
+        const p = ED.prefs; const colW = (window.innerWidth - p.margin * 2 - (p.cols - 1) * p.gutter) / p.cols;
+        for (let i = 0; i < p.cols && colW > 0; i++) { const l = p.margin + i * (colW + p.gutter); xs.push(l, l + colW); }
+      }
+      return { xs, ys, sec, others };
+    }
+
+    function snap(vals, targets) {
+      let best = null;
+      vals.forEach((v, i) => targets.forEach((t) => { const d = t - v; if (Math.abs(d) <= ED.prefs.threshold && (!best || Math.abs(d) < Math.abs(best.d))) best = { d, t, i }; }));
+      return best;
+    }
+
+    function setDragRule(k, decl) {
+      const sel = `html [data-hj-key="${CSS.escape(k)}"],html [data-hj-edit="${CSS.escape(k)}"]`;
+      dragCss.textContent = `${sel}{${decl.map((d) => d + '!important').join(';')}}`;
+    }
+
+    layer.addEventListener('pointerdown', (e) => {
+      const box = e.target.closest('.box');
+      if (!box || box.classList.contains('multi') || box.classList.contains('locked')) return;
+      e.preventDefault();
+      const k = box.dataset.key; const el = elOf(k);
+      const r = el.getBoundingClientRect(); const [tx, ty] = translateOf(el);
+      ED.drag = { k, el, mode: e.target.dataset.h === 'rot' ? 'rotate' : e.target.dataset.h ? 'resize' : 'move', dir: e.target.dataset.h || '',
+        mx: e.clientX, my: e.clientY, r, tx, ty, w: el.offsetWidth, h: el.offsetHeight, rot: rotateOf(el), t: snapTargets(el), out: null };
+      try { box.setPointerCapture(e.pointerId); } catch (err) { /* some pointers (pens, synthetic) cannot be captured; the drag still works */ }
+    });
+
+    // Move/up are heard on the window: the selection box is redrawn while dragging, so it cannot own the gesture
+    window.addEventListener('pointermove', (e) => {
+      const D = ED.drag; if (!D) return;
+      let dx = e.clientX - D.mx; let dy = e.clientY - D.my;
+      const guides = [];
+      const { sec, xs, ys, others } = D.t;
+      if (D.mode === 'move') {
+        if (e.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0; } // Shift keeps the move straight
+        const L = D.r.left + dx; const T = D.r.top + dy;
+        if (ED.prefs.snap) {
+          const sx = snap([L, L + D.r.width / 2, L + D.r.width], xs);
+          if (sx) { dx += sx.d; if (ED.prefs.guides) guides.push({ v: sx.t, from: Math.min(sec.top, T), to: Math.max(sec.bottom, T + D.r.height) }); }
+          const sy = snap([T, T + D.r.height / 2, T + D.r.height], ys);
+          if (sy) { dy += sy.d; if (ED.prefs.guides) guides.push({ h: sy.t, from: Math.min(sec.left, L), to: Math.max(sec.right, L + D.r.width) }); }
+          // Equal spacing between the nearest neighbours on the same row
+          const nl = L + (sx ? sx.d : 0); const nt = T + (sy ? sy.d : 0);
+          const row = others.filter((o) => o.bottom > nt && o.top < nt + D.r.height);
+          const left = row.filter((o) => o.right <= nl).sort((a, b) => b.right - a.right)[0];
+          const right = row.filter((o) => o.left >= nl + D.r.width).sort((a, b) => a.left - b.left)[0];
+          if (left && right && !sx) {
+            const gl = nl - left.right; const gr = right.left - (nl + D.r.width);
+            if (Math.abs(gl - gr) <= ED.prefs.threshold * 2) {
+              dx += (gr - gl) / 2; const g = Math.round((gl + gr) / 2); const cy = nt + D.r.height / 2;
+              guides.push({ h: cy, from: left.right, to: left.right + g, label: g + ' px', lx: left.right + g / 2, ly: cy - 9 });
+              guides.push({ h: cy, from: right.left - g, to: right.left, label: g + ' px', lx: right.left - g / 2, ly: cy - 9 });
+            }
+          }
+        }
+        const fl = D.r.left + dx; const ft = D.r.top + dy;
+        if (ED.prefs.guides) {
+          // Distance to the section edges
+          guides.push({ h: ft + D.r.height / 2, from: sec.left, to: fl, label: Math.round(fl - sec.left) + ' px', lx: (sec.left + fl) / 2, ly: ft + D.r.height / 2 - 9 });
+          guides.push({ v: fl + D.r.width / 2, from: sec.top, to: ft, label: Math.round(ft - sec.top) + ' px', lx: fl + D.r.width / 2 + 22, ly: (sec.top + ft) / 2 });
+        }
+        D.out = { x: Math.round(D.tx + dx), y: Math.round(D.ty + dy) };
+        setDragRule(D.k, [`translate:${D.out.x}px ${D.out.y}px`]);
+      } else if (D.mode === 'resize') {
+        let w = D.w; let h = D.h; let x = D.tx; let y = D.ty;
+        if (D.dir.includes('e')) w = D.w + dx;
+        if (D.dir.includes('w')) { w = D.w - dx; x = D.tx + dx; }
+        if (D.dir.includes('s')) h = D.h + dy;
+        if (D.dir.includes('n')) { h = D.h - dy; y = D.ty + dy; }
+        if (e.shiftKey && D.dir.length === 2) { const ratio = D.w / D.h; h = w / ratio; } // Shift keeps proportions
+        if (ED.prefs.snap && ED.prefs.grid) { w = Math.round(w / ED.prefs.size) * ED.prefs.size; h = Math.round(h / ED.prefs.size) * ED.prefs.size; }
+        w = Math.max(16, Math.round(w)); h = Math.max(12, Math.round(h));
+        D.out = { w, h, x: Math.round(x), y: Math.round(y) };
+        setDragRule(D.k, [`width:${w}px`, `height:${h}px`, `box-sizing:border-box`, `translate:${D.out.x}px ${D.out.y}px`].concat(INLINE_TAGS.test(D.el.tagName) ? ['display:inline-block'] : []));
+      } else {
+        const cx = D.r.left + D.r.width / 2; const cy = D.r.top + D.r.height / 2;
+        let deg = Math.round(Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 90);
+        if (ED.prefs.snap) { const near = Math.round(deg / 45) * 45; if (Math.abs(near - deg) <= 4) deg = near; }
+        if (deg > 180) deg -= 360;
+        D.out = { r: deg };
+        setDragRule(D.k, [`rotate:${deg}deg`]);
+        guides.push({ label: deg + '°', lx: cx, ly: D.r.top - 44 });
+      }
+      draw(guides);
+    });
+
+    window.addEventListener('pointerup', () => {
+      const D = ED.drag; ED.drag = null;
+      if (!D) return;
+      if (D.out) window.parent.postMessage({ type: 'hj-pos', key: D.k, bp: bpNow(), pos: D.out }, location.origin);
+      else draw();
+    });
+
+    // Arrow keys nudge the selection (Shift = 10px)
+    document.addEventListener('keydown', (e) => {
+      if (!window.__hjContentMode || ED.keys.length !== 1 || !/^Arrow/.test(e.key) || ED.locked.includes(ED.keys[0])) return;
+      e.preventDefault();
+      const el = elOf(ED.keys[0]); if (!el) return;
+      const [tx, ty] = translateOf(el); const step = e.shiftKey ? 10 : 1;
+      const x = tx + (e.key === 'ArrowLeft' ? -step : e.key === 'ArrowRight' ? step : 0);
+      const y = ty + (e.key === 'ArrowUp' ? -step : e.key === 'ArrowDown' ? step : 0);
+      setDragRule(ED.keys[0], [`translate:${x}px ${y}px`]);
+      draw();
+      clearTimeout(ED.nudge);
+      ED.nudge = setTimeout(() => window.parent.postMessage({ type: 'hj-pos', key: ED.keys[0], bp: bpNow(), pos: { x, y } }, location.origin), 250);
+    });
+
+    let raf;
+    const redraw = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (!ED.drag) draw(); }); };
+    window.addEventListener('scroll', redraw, { passive: true });
+    window.addEventListener('resize', redraw);
+    setInterval(() => { if ((ED.keys.length || ED.prefs.grid) && !ED.drag) draw(); }, 400); // follow animations and late images
+
+    Object.assign(window.__hjAdmin, {
+      bp: bpNow,
+      select(keys, locked) { ED.keys = (keys || []).filter(Boolean); ED.locked = locked || []; dragCss.textContent = ''; draw(); },
+      prefs(p) { Object.assign(ED.prefs, p || {}); draw(); },
+      // Geometry for align / distribute / centre, measured on the live page
+      rects(keys) {
+        return keys.map((k) => {
+          const el = elOf(k); if (!visible(el)) return null;
+          const r = el.getBoundingClientRect(); const s = sectionOf(el).getBoundingClientRect(); const [tx, ty] = translateOf(el);
+          return { key: k, left: r.left, top: r.top, width: r.width, height: r.height, w: el.offsetWidth, h: el.offsetHeight, tx, ty,
+            sec: { left: s.left, top: s.top, width: s.width, height: s.height }, page: window.innerWidth };
+        }).filter(Boolean);
+      }
+    });
+    const setContent = window.__hjAdmin.setContent;
+    window.__hjAdmin.setContent = (c) => { setContent(c); dragCss.textContent = ''; redraw(); };
   }
 
   // Admin live preview: /admin.html embeds /?hjpreview=1#products/<id> and posts unsaved product edits here
