@@ -1537,7 +1537,8 @@ img {
    PRODUCT DETAIL PAGE (1:1 MATCHING ATHENA SOLITAIRE PDP)
    =================================================================== */
 .pdp-container {
-  padding: 2.5rem 0 4rem;
+  padding-top: 2.5rem; /* only vertical: side padding comes from .container (a 0 here made the page touch the screen edges below 1352px) */
+  padding-bottom: 4rem;
 }
 
 .pdp-grid {
@@ -5044,7 +5045,8 @@ img {
 
 /* PDP (Product Detail Page) Luxury Pebble Architecture */
 .pdp-container {
-  padding: 3rem 0 5rem !important;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
 }
 
 .pdp-gallery-item {
@@ -6532,8 +6534,9 @@ img, video, canvas, svg {
 .pdp-gallery { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
 .pdp-stage { position: relative; margin: 0; border-radius: 16px; overflow: hidden; background: var(--color-card-inset, #F5EFE6);
   border: 1px solid var(--color-warm-stone-light, #DFD0BE); box-shadow: 0 10px 30px rgba(26, 18, 14, 0.06); }
-.pdp-main { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; overflow: hidden; aspect-ratio: 4 / 5; max-height: max(360px, min(calc(100vh - 340px), 720px)); }
-.pdp-main-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease, opacity 0.3s ease; }
+/* Height follows the screen so laptops (e.g. 1536x730) see photo, thumbnails and buttons together; the photo is contained, never cropped */
+.pdp-main { display: block; width: 100%; padding: 0; border: 0; background: var(--color-card-inset, #F5EFE6); cursor: zoom-in; overflow: hidden; aspect-ratio: 4 / 5; max-height: max(340px, min(calc(100vh - 320px), 720px)); }
+.pdp-main-img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform 0.35s ease, opacity 0.3s ease; }
 .pdp-main-img.is-loading { opacity: 0.35; }
 .pdp-main-img.is-zoomed { transform: scale(2); }
 .pdp-main-img.is-broken { opacity: 0; }
@@ -6577,8 +6580,8 @@ img, video, canvas, svg {
 /* ===================================================================
    PRODUCT PAGE (redesign): editorial two-column layout
    =================================================================== */
-.pdp-container { padding-top: 1.25rem; padding-bottom: 4rem; }
-.pdp-crumbs { display: flex; flex-wrap: wrap; gap: 0.45rem; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--color-stone-muted, #4A4A46); margin: 0 0 1.25rem; }
+.pdp-container { padding-top: 0.5rem; padding-bottom: 4rem; }
+.pdp-crumbs { display: flex; flex-wrap: wrap; gap: 0.45rem; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--color-stone-muted, #4A4A46); margin: 0 0 0.9rem; }
 .pdp-crumbs a { color: inherit; text-decoration: none; text-transform: capitalize; } .pdp-crumbs a:hover { color: var(--color-espresso, #3A2418); text-decoration: underline; }
 .pdp-crumbs [aria-current] { color: var(--color-espresso, #3A2418); }
 .pdp-container .pdp-grid { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
@@ -6594,13 +6597,13 @@ img, video, canvas, svg {
 .pdp-craft span { display: block; font-size: 0.8rem; line-height: 1.45; color: var(--color-stone-muted, #4A4A46); margin-top: 2px; }
 
 /* information panel */
-.pdp-info { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
+.pdp-info { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
 .pdp-info .pdp-eyebrow { margin: 0; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-muted-gold-dark, #6B4A2E); }
-.pdp-info .pdp-title-h1 { margin: 0; font-family: var(--font-serif, Georgia, serif); font-weight: 500; font-size: clamp(1.7rem, 2.6vw, 2.35rem); line-height: 1.15; color: var(--color-charcoal, #1A120E); letter-spacing: 0.01em; text-transform: none; }
+.pdp-info .pdp-title-h1 { margin: 0; font-family: var(--font-serif, Georgia, serif); font-weight: 500; font-size: clamp(1.45rem, 0.85rem + 1vw, 2.1rem); line-height: 1.18; color: var(--color-charcoal, #1A120E); letter-spacing: 0.01em; text-transform: none; }
 .pdp-rating { display: flex; align-items: center; gap: 0.45rem; font-size: 0.85rem; color: var(--color-stone-muted, #4A4A46); }
 .pdp-stars { color: var(--color-muted-gold, #A88462); letter-spacing: 0.08em; } .pdp-rating b { color: var(--color-espresso, #3A2418); }
 .pdp-price-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.25rem; }
-.pdp-info .pdp-current-price { font-family: var(--font-serif, Georgia, serif); font-size: clamp(1.6rem, 2.2vw, 2rem); font-weight: 500; color: var(--color-charcoal, #1A120E); }
+.pdp-info .pdp-current-price { font-family: var(--font-serif, Georgia, serif); font-size: clamp(1.35rem, 0.9rem + 0.75vw, 1.85rem); font-weight: 500; color: var(--color-charcoal, #1A120E); }
 .pdp-info .pdp-compare-price { font-size: 1rem; color: var(--color-stone-subtle, #6D6D69); text-decoration: line-through; }
 .pdp-info .pdp-discount-badge { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 9999px; background: var(--color-espresso, #3A2418); color: #F5EFE6; }
 .pdp-info .pdp-tax-line { margin-top: -0.55rem; font-size: 0.76rem; color: var(--color-stone-muted, #4A4A46); }

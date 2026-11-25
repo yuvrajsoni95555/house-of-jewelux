@@ -362,9 +362,10 @@
           <div class="ws-preview" aria-label="Live preview">
             <div class="pv-bar">
               <div class="seg" role="group" aria-label="Preview size">
-                <button type="button" data-device="1280" aria-pressed="${device === 1280}">Desktop</button><button type="button" data-device="768" aria-pressed="${device === 768}">Tablet</button><button type="button" data-device="390" aria-pressed="${device === 390}">Mobile</button>
+                <button type="button" data-device="1536" aria-pressed="${device === 1536}">Desktop</button><button type="button" data-device="1280" aria-pressed="${device === 1280}">Laptop</button><button type="button" data-device="768" aria-pressed="${device === 768}">Tablet</button><button type="button" data-device="390" aria-pressed="${device === 390}">Mobile</button>
               </div>
-              <span class="small muted">Live preview of the real product page · not public until you save</span>
+              <span class="small muted" id="pv-info"></span>
+              <span class="small muted">Not public until you save</span>
             </div>
             <div class="pv-stage" id="pv-stage">
               <div class="pv-loading skel" id="pv-loading"></div>
@@ -397,6 +398,8 @@
     frame.style.left = pad + Math.max(0, (availW - device * k) / 2) + 'px';
     stage.style.overflow = zoom > 1 ? 'auto' : 'hidden';
     const zl = $('#zoom-l'); if (zl) zl.textContent = Math.round(k * 100) + '%';
+    // The page is rendered at the real viewport width; the scale is only how big it is drawn here
+    const info = $('#pv-info'); if (info) info.textContent = `Viewport ${device}px · shown at ${Math.round(k * 100)}%`;
   }
 
   // Unsaved product (with not-yet-deployed uploads swapped for their local copies) -> preview iframe
