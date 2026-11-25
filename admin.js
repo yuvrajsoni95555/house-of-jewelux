@@ -1082,7 +1082,143 @@
     ['Lines & dividers', [['line:solid', 'Line'], ['line:dashed', 'Dashed'], ['line:dotted', 'Dotted'], ['line:double', 'Double'], ['line:end', 'Arrow'], ['line:both', 'Double arrow']]],
     ['Icons', ['star', 'heart', 'gem', 'ring', 'crown', 'sparkle', 'gift', 'check', 'arrow', 'truck', 'shield', 'phone', 'mail', 'pin'].map((i) => ['icon:' + i, i[0].toUpperCase() + i.slice(1)])]
   ];
+  // Ready-made looks. Each is a set of the same design settings the Properties panel edits.
+  const PAD = { radius: 999, padX: 28, padY: 13, case: 'uppercase', letterSpacing: 2, size: 13, weight: '600' };
+  const BTN_STYLES = [['espresso', 'Espresso solid', { ...PAD, bg: '#3A2418', color: '#F5EFE6' }], ['gold', 'Gold gradient', { ...PAD, grad: 'gold', color: '#1A120E' }],
+    ['wine', 'Burgundy wine', { ...PAD, bg: '#5A1A2A', color: '#F5EFE6' }], ['outline', 'Outline', { ...PAD, bg: 'none', color: '#3A2418', borderColor: '#3A2418', borderWidth: 1 }],
+    ['outline-gold', 'Gold outline', { ...PAD, bg: 'none', color: '#6B4A2E', borderColor: '#A88462', borderWidth: 1 }], ['ivory', 'Ivory pill', { ...PAD, bg: '#FBF7F1', color: '#3A2418', borderColor: '#D9C3A5', borderWidth: 1 }],
+    ['square', 'Square luxe', { ...PAD, radius: 0, bg: '#1A120E', color: '#E8D3B8' }], ['glow', 'Gold glow', { ...PAD, grad: 'gold', color: '#1A120E', shadow: 'glow' }],
+    ['link', 'Underline link', { bg: 'none', borderColor: 'none', color: '#3A2418', deco: 'underline', padX: 0, padY: 4, shadow: 'none', size: 15 }]];
+  const BADGE_STYLES = [['new', 'New arrival', { bg: '#5A1A2A', color: '#F5EFE6' }], ['best', 'Bestseller', { bg: '#3A2418', color: '#F5EFE6' }], ['sale', 'Sale', { grad: 'gold', color: '#1A120E' }],
+    ['limited', 'Limited edition', { bg: 'none', color: '#5A1A2A', borderColor: '#5A1A2A', borderWidth: 1 }], ['gift', 'Gift idea', { bg: '#F3E1DC', color: '#5A1A2A' }],
+    ['handmade', 'Handcrafted', { bg: '#FBF7F1', color: '#6B4A2E', borderColor: '#D9C3A5', borderWidth: 1 }]];
+  const TEXT_STYLES = [['lux', 'Luxury heading', 'h2', 'THE BRIDAL EDIT', { font: 'cinzel', size: 40, case: 'uppercase', letterSpacing: 4, color: '#3A2418' }],
+    ['editorial', 'Editorial serif', 'h2', 'Where elegance becomes eternal', { font: 'cormorant', size: 44, italic: true, color: '#3A2418' }],
+    ['display', 'Brand display', 'h2', 'House of Jewelux', { font: 'display', size: 48, color: '#3A2418' }],
+    ['eyebrow', 'Section eyebrow', 'p', 'NEW COLLECTION', { font: 'manrope', size: 12, case: 'uppercase', letterSpacing: 3, weight: '600', color: '#A88462' }],
+    ['sub', 'Subheading', 'h3', 'A new chapter of fine jewellery', { font: 'playfair', size: 24, color: '#3A2418' }],
+    ['body', 'Body text', 'p', 'Add a little bit of body text', { font: 'manrope', size: 16, lineHeight: 1.7, color: '#4A4A46' }],
+    ['quote', 'Quote', 'p', '“Indian soul, international elegance.”', { font: 'cormorant', size: 28, italic: true, color: '#5A1A2A' }],
+    ['price', 'Price', 'p', '₹14,613', { font: 'playfair', size: 28, weight: '600', color: '#1A120E' }],
+    ['caption', 'Caption', 'p', 'Add a caption', { font: 'manrope', size: 12, letterSpacing: 1, color: '#6D6D69' }]];
+  const THEMES = [['ivory', 'Ivory classic', { bg: '#FBF7F1', color: '#3A2418', borderColor: '#D9C3A5' }], ['espresso', 'Espresso night', { bg: '#1A120E', color: '#F5EFE6', borderColor: '#A88462' }],
+    ['wine', 'Wine royale', { grad: 'wine', color: '#F5EFE6' }], ['gold', 'Champagne gold', { grad: 'gold', color: '#1A120E' }], ['rose', 'Rose blush', { grad: 'rose', color: '#3A2418' }],
+    ['champagne', 'Champagne silk', { grad: 'champagne', color: '#3A2418' }], ['emerald', 'Emerald velvet', { bg: '#1F4D3A', color: '#F5EFE6', borderColor: '#A88462' }],
+    ['noir', 'Noir & gold', { bg: '#0F0D0B', color: '#E8D3B8', borderColor: '#A88462' }]];
+  const THEME_BG = { gold: 'linear-gradient(135deg,#A88462,#E8D3B8)', champagne: 'linear-gradient(135deg,#F5EFE6,#D9C3A5)', wine: 'linear-gradient(135deg,#5A1A2A,#8F2A38)', espresso: 'linear-gradient(135deg,#1A120E,#3A2418)', ivory: 'linear-gradient(135deg,#FBF7F1,#EFE3D3)', rose: 'linear-gradient(135deg,#F3E1DC,#C98F86)' };
+  const lookBg = (o) => (o.grad ? THEME_BG[o.grad] : o.bg && o.bg !== 'none' ? o.bg : 'transparent');
+  // Search words in English and Hindi / Hinglish
+  const ICON_TAGS = { ring: 'ring angoothi anguthi', necklace: 'necklace haar chain mala', earring: 'earring jhumka jhumke bali', bracelet: 'bracelet kangan kada bangle chudi', pendant: 'pendant locket',
+    pearl: 'pearl moti', gem: 'gem diamond heera stone ratna', crown: 'crown taj royal', heart: 'heart dil love pyar', star: 'star taara tara sitara rating', sparkle: 'sparkle chamak shine', sparkles: 'sparkles chamak shine magic',
+    gift: 'gift tohfa present uphaar', truck: 'truck delivery shipping gaadi', shield: 'shield secure suraksha warranty', phone: 'phone call mobile', mail: 'mail email', pin: 'pin location map address pata',
+    check: 'check tick done sahi', arrow: 'arrow right teer', 'arrow-left': 'arrow left teer', 'arrow-up': 'arrow up teer', 'arrow-down': 'arrow down teer', 'chevron-left': 'chevron left previous slider',
+    'chevron-right': 'chevron right next slider', 'chevron-down': 'chevron down dropdown', plus: 'plus add jod', minus: 'minus remove', close: 'close cross x band', search: 'search khoj', bag: 'bag shopping cart thaila',
+    user: 'user account profile', home: 'home ghar', calendar: 'calendar date tareekh appointment', clock: 'clock time samay', lock: 'lock secure tala', tag: 'tag price label', percent: 'percent sale offer discount chhoot',
+    returns: 'returns exchange refresh wapsi', package: 'package box parcel dabba', quote: 'quote review testimonial', play: 'play video', camera: 'camera photo instagram', globe: 'globe world international',
+    info: 'info information', help: 'help question faq', menu: 'menu hamburger', eye: 'eye view dekho', chat: 'chat message whatsapp baat', card: 'card payment credit', ruler: 'ruler size guide naap',
+    hand: 'hand handmade handcrafted haath', infinity: 'infinity forever eternal hamesha', certificate: 'certificate hallmark document', award: 'award medal prize', lotus: 'lotus kamal flower',
+    butterfly: 'butterfly titli', leaf: 'leaf patta nature', flower: 'flower phool floral', sun: 'sun suraj', moon: 'moon chaand' };
+  const SYN = { angoothi: 'ring', anguthi: 'ring', haar: 'necklace', mala: 'necklace', jhumka: 'earring', jhumke: 'earring', bali: 'earring', kangan: 'bracelet', kada: 'bracelet', chudi: 'bracelet',
+    batan: 'button', gol: 'circle', golakar: 'circle', taara: 'star', tara: 'star', sitara: 'star', dil: 'heart', teer: 'arrow', tasveer: 'photo', foto: 'photo', chitra: 'photo', image: 'photo', picture: 'photo',
+    rang: 'theme', colour: 'theme', color: 'theme', likhai: 'text', shabd: 'text', heading: 'text', dabba: 'rectangle', chaukor: 'square', phool: 'flower', patta: 'leaf', mor: 'peacock', titli: 'butterfly',
+    taj: 'crown', heera: 'gem', moti: 'pearl', sona: 'gold', chandi: 'silver', tohfa: 'gift', gaadi: 'truck', ghar: 'home', samay: 'clock', tareekh: 'calendar', tala: 'lock', chhoot: 'sale', offer: 'sale',
+    discount: 'sale', rekha: 'line', line: 'line', divider: 'line', icon: 'icon', shape: 'shape', aakar: 'shape', frame: 'frame', button: 'button', badge: 'badge', section: 'section', theme: 'theme' };
+  const prettify = (k) => k.replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase());
+  const iconSet = () => { const w = pvWin(); return (w && w.__hjAdmin && w.__hjAdmin.icons && w.__hjAdmin.icons()) || {}; };
+  function catalog() {
+    const L = [];
+    const add = (cat, code, name, tags = '') => L.push({ cat, code, name, tags });
+    TEXT_STYLES.forEach((t) => add('Text styles', 'tstyle:' + t[0], t[1], 'text font typography heading likhai'));
+    ELEMENT_MENU[0][1].filter(([c]) => c.startsWith('text:')).forEach(([c, n]) => add('Text styles', c, n, 'text plain'));
+    BTN_STYLES.forEach((b) => add('Buttons', 'button:' + b[0], b[1], 'button cta shop link click'));
+    BADGE_STYLES.forEach((b) => add('Badges', 'badge:' + b[0], b[1], 'badge label sticker pill tag'));
+    ELEMENT_MENU[1][1].forEach(([c, n]) => add('Frames', c, n + ' frame', 'frame photo mask picture'));
+    ELEMENT_MENU[2][1].forEach(([c, n]) => add('Shapes', c, n, 'shape aakar'));
+    ELEMENT_MENU[3][1].forEach(([c, n]) => add('Lines & dividers', c, n, 'line divider separator arrow rekha'));
+    Object.keys(iconSet()).forEach((k) => add('Icons', 'icon:' + k, prettify(k), 'icon symbol graphic ' + (ICON_TAGS[k] || '')));
+    (state.media || []).forEach((m) => add('Photos', 'photo:' + m.path, prettify(m.name.replace(/\.\w+$/, '').replace(/^user_/, '')), 'photo jewellery picture'));
+    THEMES.forEach((t) => add('Themes', 'theme:' + t[0], t[1], 'theme colour palette background style rang'));
+    SECTION_TYPES.forEach(([t, n, desc]) => add('Sections', 'section:' + t, n, 'section block layout template ' + desc));
+    return L;
+  }
+  const matches = (q) => {
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    // a search word matches the start of a word (so "ring" does not find "earring", "haar" does not find "uphaar")
+    return (e) => { const hay = (e.name + ' ' + e.tags + ' ' + e.cat).toLowerCase().split(/[^a-z0-9ऀ-ॿ]+/); const has = (w) => hay.some((h) => h.startsWith(w)); return words.every((w) => has(w) || (SYN[w] && has(SYN[w]))); };
+  };
+  const RECENT_KEY = 'hj_el_recent';
+  const recent = () => { try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (e) { return []; } };
+  function renderElPanel() {
+    const sec = targetSection();
+    $('#st-props').innerHTML = `<h3 class="pp-h">Elements</h3>
+      <div class="el-search"><input id="el-q" type="search" placeholder="Search icons, buttons, frames, photos, themes… (English or Hindi)" value="${esc(cm.elq || '')}" autocomplete="off" aria-label="Search elements"></div>
+      <p class="help" style="margin:var(--s1) 0 var(--s2)">Click or drag onto the canvas. Goes into <b>${esc(secLabel(cm.scan.sections.find((x) => x.key === sec) || { key: sec, label: GLOBAL_NAMES[sec] || '' }, 0))}</b>; themes apply to the selected element or section.</p>
+      <div id="el-res"></div>`;
+    renderElResults();
+    $('#el-q').focus();
+    showPane('props');
+    if (!state.media) loadMedia().then(() => { if ($('#el-res')) renderElResults(); }).catch(() => { /* photos need the GitHub connection; the rest still works */ });
+  }
+  function renderElResults() {
+    const box = $('#el-res'); if (!box) return;
+    const q = ($('#el-q') || {}).value || ''; cm.elq = q;
+    const all = catalog();
+    const tile = (e) => `<button type="button" class="el-tile" data-addel="${esc(e.code)}" title="${esc(e.name)}" ${e.code.startsWith('photo:') ? `draggable="true" data-mimg="${esc(e.code.slice(6))}"` : ''}>${elPreview(e.code)}<span>${esc(e.name)}</span></button>`;
+    const cats = [...new Set(all.map((e) => e.cat))];
+    if (q.trim()) {
+      const hits = all.filter(matches(q));
+      box.innerHTML = hits.length ? cats.map((c) => { const h = hits.filter((e) => e.cat === c); return h.length ? `<h4 class="ly-h">${c} <span class="small muted">${h.length}</span></h4><div class="el-grid">${h.map(tile).join('')}</div>` : ''; }).join('')
+        : `<p class="note small">Nothing found for "${esc(q)}". Try another word, e.g. ring, angoothi, button, star, gold, frame.</p>`;
+      return;
+    }
+    const rec = recent().map((c) => all.find((e) => e.code === c)).filter(Boolean);
+    cm.elcat = cm.elcat || {};
+    box.innerHTML = (rec.length ? `<h4 class="ly-h">Recently used</h4><div class="el-grid">${rec.map(tile).join('')}</div>` : '') +
+      cats.map((c) => { const list = all.filter((e) => e.cat === c); const open = cm.elcat[c]; return `<div class="el-cat"><h4 class="ly-h">${c} <span class="small muted">${list.length}</span></h4>${list.length > 8 ? `<button type="button" class="btn btn-sm" data-elcat="${esc(c)}">${open ? 'Show less' : 'See all'}</button>` : ''}</div>
+        <div class="el-grid">${(open ? list : list.slice(0, 8)).map(tile).join('')}</div>`; }).join('');
+  }
+  // Add anything from the Elements panel
+  function addFromCatalog(code) {
+    localStorage.setItem(RECENT_KEY, JSON.stringify([code, ...recent().filter((c) => c !== code)].slice(0, 10)));
+    const i = code.indexOf(':'); const type = code.slice(0, i); const v = code.slice(i + 1);
+    const it0 = cmItem(cm.sel); const sec = cm.secSel || (it0 && it0.section);
+    if (type === 'photo') return placeImage(v, sec, null, null);
+    if (type === 'section') return addSection(v);
+    if (type === 'theme') return applyTheme(v);
+    const find = (list) => list.find((x) => x[0] === v);
+    if (type === 'button') { const b = find(BTN_STYLES); return addDesignEl({ type: 'button', text: 'Shop the collection', href: '#collections/all', w: 240 }, sec, b ? b[2] : null); }
+    if (type === 'badge') { const b = find(BADGE_STYLES) || BADGE_STYLES[0]; return addDesignEl({ type: 'badge', text: b[1], w: 150 }, sec, b[2]); }
+    if (type === 'tstyle') { const t = find(TEXT_STYLES); return addDesignEl({ type: 'text', tag: t[2], text: t[3], w: 560 }, sec, t[4]); }
+    addDesignEl(elementDef(code), sec);
+  }
+  function addSection(type, libId) {
+    const id = Date.now().toString(36);
+    const blank = ['divider', 'spacer', 'image'].includes(type);
+    const c = libId ? { id, type: 'library', ref: libId } : { id, type, heading: blank ? '' : 'New section heading',
+      text: blank ? '' : 'Write your text here.', align: 'center', bg: type === 'cta' ? '#3A2418' : '', color: type === 'cta' ? '#FFFFFF' : '', buttonLabel: '', buttonHref: '' };
+    cmEdit(cm.key, (p) => { p.custom = [...(p.custom || []), c]; });
+    selectSection('custom:' + id);
+  }
+  function applyTheme(id) {
+    const t = THEMES.find((x) => x[0] === id); if (!t) return;
+    const o = { bg: null, grad: null, color: null, borderColor: null, ...t[2] };
+    const it = cmItem(cm.sel);
+    if (it) { patchItem(it, o); toast(`${t[1]} applied to the selected element.`); return; }
+    if (cm.secSel) { patchSection(cm.secSel, { bg: o.bg, grad: o.grad, color: o.color }); toast(`${t[1]} applied to the section.`); return; }
+    toast('Select a section or an element first, then choose a theme.', true);
+  }
   function elPreview(code) {
+    const i = code.indexOf(':'); const type = code.slice(0, i); const v = code.slice(i + 1);
+    if (type === 'icon') { const path = iconSet()[v]; if (path) return `<svg class="el-pv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`; }
+    if (type === 'photo') return `<img class="el-pv-img" src="${esc(imgSrc(v))}" alt="" loading="lazy">`;
+    if (type === 'theme') { const t = THEMES.find((x) => x[0] === v)[2]; return `<i class="el-pv" style="width:40px;height:28px;border-radius:6px;background:${lookBg(t)};outline:1px solid ${t.borderColor || '#D9C3A5'};color:${t.color};font:600 10px/28px Georgia,serif;text-align:center;font-style:normal">Aa</i>`; }
+    if (type === 'button' || type === 'badge') { const o = ((type === 'button' ? BTN_STYLES : BADGE_STYLES).find((x) => x[0] === v) || [, , {}])[2];
+      return `<i class="el-pv" style="padding:4px 9px;border-radius:${o.radius === 0 ? 0 : 99}px;background:${lookBg(o)};color:${o.color || '#fff'};border:${o.borderColor && o.borderColor !== 'none' ? '1px solid ' + o.borderColor : 0};font:600 8px/1.2 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;font-style:normal;${o.deco ? 'text-decoration:underline;' : ''}">${type === 'button' ? 'Shop' : 'New'}</i>`; }
+    if (type === 'tstyle') { const o = TEXT_STYLES.find((x) => x[0] === v)[4]; return `<i class="el-pv-t" style="color:${o.color};font-size:${Math.min(20, Math.max(10, o.size / 2))}px;${o.italic ? 'font-style:italic;' : ''}${o.case ? 'text-transform:' + o.case + ';letter-spacing:.06em;' : ''}">Aa</i>`; }
+    if (type === 'section') return '<i class="el-pv" style="width:44px;height:28px;border:1px solid #D9C3A5;border-radius:4px;background:linear-gradient(#EFE3D3 0 30%,#FBF7F1 30%)"></i>';
+    return elPreviewBasic(code);
+  }
+  function elPreviewBasic(code) {
     const [type, v] = code.split(':');
     const clip = { triangle: 'polygon(50% 0,100% 100%,0 100%)', diamond: 'polygon(50% 0,100% 50%,50% 100%,0 50%)', hexagon: 'polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)', pentagon: 'polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)', star: 'polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' }[v];
     const rad = { rounded: '8px', circle: '50%', oval: '50%', arch: '99px 99px 0 0' }[v] || '0';
@@ -1388,7 +1524,7 @@
           <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>
           <p class="full help" style="margin:0">Length = width. Direction = rotation (top handle; Shift snaps to 45°).</p>`);
       if (D.type === 'icon') return group('Icon', `
-          <div><label for="d-ic">Icon</label>${dsel('d-ic', 'icon', ELEMENT_MENU[4][1].map(([c, n]) => [c.split(':')[1], n]))}</div>
+          <div><label for="d-ic">Icon</label>${dsel('d-ic', 'icon', Object.keys(iconSet()).map((k) => [k, prettify(k)]))}</div>
           ${numField('d-st', 'Line weight', 'data-de="stroke"', D.stroke, '1.5', 0.5, 4, 0.25)}
           <div class="full"><label for="d-alt">Label for screen readers</label><input id="d-alt" data-de="alt" value="${de('alt')}"></div>
           <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>`);
@@ -1854,7 +1990,7 @@
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-pickel],[data-arrowpos],[data-lytab],[data-mimg],[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
+    const t = e.target.closest('[data-elcat],[data-pickel],[data-arrowpos],[data-lytab],[data-mimg],[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
     if (d.viewmode) { setViewMode(d.viewmode); return; }
@@ -1870,8 +2006,8 @@
       selectElement(item.key, false, true); return;
     }
     if (d.arrowpos) { arrowPos(d.arrowpos); return; }
+    if (d.addel) { addFromCatalog(d.addel); return; }
     if (d.mimg) { useImage(d.mimg); return; }
-    if (d.addel) { const it0 = cmItem(cm.sel); addDesignEl(elementDef(d.addel), cm.secSel || (it0 && it0.section)); return; }
     if ('ehbg' in d) { patchItem(cmItem(cm.sel), { hoverBg: d.ehbg }); return; }
     if ('ehc' in d) { patchItem(cmItem(cm.sel), { hoverColor: d.ehc }); return; }
     if (d.group) { show('group', d.group); return; }
@@ -1891,14 +2027,8 @@
     if ('ssbg' in d) { patchSection(cm.secSel, { bg: d.ssbg }); return; }
     if ('sscolor' in d) { patchSection(cm.secSel, { color: d.sscolor }); return; }
     if ('pgbg' in d) { cmEdit(cm.key, (p) => { p.style = { ...(p.style || {}), bg: d.pgbg }; if (!d.pgbg) delete p.style.bg; }); return; }
-    if (d.addtype || d.addlib) {
-      const id = Date.now().toString(36);
-      const c = d.addlib ? { id, type: 'library', ref: d.addlib } : { id, type: d.addtype, heading: ['divider', 'spacer', 'image'].includes(d.addtype) ? '' : 'New section heading',
-        text: ['divider', 'spacer', 'image'].includes(d.addtype) ? '' : 'Write your text here.', align: 'center', bg: d.addtype === 'cta' ? '#3A2418' : '', color: d.addtype === 'cta' ? '#FFFFFF' : '', buttonLabel: '', buttonHref: '' };
-      cmEdit(cm.key, (p) => { p.custom = [...(p.custom || []), c]; });
-      selectSection('custom:' + id);
-      return;
-    }
+    if (d.addtype || d.addlib) { addSection(d.addtype, d.addlib); return; }
+    if (d.elcat) { cm.elcat[d.elcat] = !cm.elcat[d.elcat]; renderElResults(); return; }
     if (d.pick) { const fn = cm.onPick; cm.onPick = null; if ($('#picker')) $('#picker').remove(); if (fn) fn(d.pick); return; }
     if (d.vcompare) {
       busy(t, async () => {
@@ -1949,11 +2079,7 @@
         break;
       }
       case 'clear-multi': cm.multi = []; renderProps(); syncSelection(); break;
-      case 'add-el-menu':
-        $('#st-props').innerHTML = `<h3 class="pp-h">Add an element</h3><p class="help" style="margin-top:-6px">It goes into <b>${esc(secLabel(cm.scan.sections.find((x) => x.key === targetSection()) || { key: targetSection(), label: GLOBAL_NAMES[targetSection()] || '' }, 0))}</b>. Select another section first to put it there.</p>
-          ${ELEMENT_MENU.map(([title, list]) => `<h4 class="ly-h">${title}</h4><div class="el-grid">${list.map(([c, n]) => `<button type="button" class="el-tile" data-addel="${c}">${elPreview(c)}<span>${esc(n)}</span></button>`).join('')}</div>`).join('')}`;
-        showPane('props');
-        break;
+      case 'add-el-menu': renderElPanel(); break;
       case 'shortcuts': showShortcuts(); break;
       case 'media-up': cmUpload((path) => { state.media = null; useImage(path); renderLayers(); }); break;
       case 'preview': window.open(`/?hjdraft=1&nomodal=1#${cm.route}`, '_blank', 'noopener'); break;
@@ -2046,6 +2172,7 @@
       if (t.id === 'e-href') { const p = linkProblem(t.value.trim()); $('#href-check').textContent = p ? '⚠ ' + p : '✓ Link looks valid'; $('#href-check').style.color = p ? 'var(--bad)' : 'var(--ok)'; }
       clearTimeout(cmTimer); cmTimer = setTimeout(readElementForm, 250);
     }
+    if (t.id === 'el-q') { renderElResults(); return; }
     if (t.matches('#st-props input[type=range]') && $(`[data-rv="${t.id}"]`)) $(`[data-rv="${t.id}"]`).textContent = t.value + (t.dataset.unit || '');
     if (t.matches('#st-props [data-de]') && t.tagName === 'INPUT') {
       const k = t.dataset.de; const it = cmItem(cm.sel);

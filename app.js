@@ -3875,7 +3875,38 @@
     check: '<path d="M4 12l5 5L20 6"/>', arrow: '<path d="M4 12h16M14 6l6 6-6 6"/>', truck: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>',
     shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>', phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>', pin: '<path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
-    gift: '<rect x="3" y="8" width="18" height="13"/><path d="M3 12h18M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zM12 8s2-5 4.5-3.5S15 8 12 8z"/>'
+    gift: '<rect x="3" y="8" width="18" height="13"/><path d="M3 12h18M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zM12 8s2-5 4.5-3.5S15 8 12 8z"/>',
+    necklace: '<path d="M4 4c0 6 4 10 8 10s8-4 8-10"/><path d="M12 14v2"/><path d="M12 16l-2.5 3 2.5 2.5 2.5-2.5z"/>',
+    earring: '<circle cx="12" cy="4" r="1.5"/><path d="M12 5.5v3"/><path d="M12 8.5l-4 6 4 6.5 4-6.5z"/>',
+    bracelet: '<ellipse cx="12" cy="12" rx="9" ry="5"/><ellipse cx="12" cy="12" rx="6" ry="3"/>',
+    pendant: '<path d="M8 3l4 5 4-5"/><path d="M12 8l-4 5 4 8 4-8z"/>',
+    pearl: '<circle cx="12" cy="12" r="6"/><path d="M9.5 9.5a3 3 0 012.5-1"/>',
+    infinity: '<path d="M6 9a3 3 0 100 6c3 0 9-6 12-6a3 3 0 110 6c-3 0-9-6-12-6"/>',
+    sparkles: '<path d="M9 3l1.5 4.5L15 9l-4.5 1.5L9 15l-1.5-4.5L3 9l4.5-1.5zM18 13l.8 2.2L21 16l-2.2.8L18 19l-.8-2.2L15 16l2.2-.8z"/>',
+    certificate: '<rect x="3" y="4" width="18" height="13" rx="1"/><path d="M7 8h10M7 11h6"/><circle cx="16" cy="17" r="2.5"/><path d="M15 19l-1 3 2-1 2 1-1-3"/>',
+    award: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/>',
+    lotus: '<path d="M12 20c-4 0-8-3-9-7 3 0 6 1 9 4 3-3 6-4 9-4-1 4-5 7-9 7z"/><path d="M12 17c-2-3-2-7 0-11 2 4 2 8 0 11z"/>',
+    butterfly: '<path d="M12 8v12"/><path d="M12 11C10 6 4 4 3 7s3 6 9 4zM12 11c2-5 8-7 9-4s-3 6-9 4zM12 13c-3 0-7 2-6 5s5 1 6-3zM12 13c3 0 7 2 6 5s-5 1-6-3z"/>',
+    leaf: '<path d="M5 19C5 10 10 5 20 4c-1 10-6 15-15 15z"/><path d="M5 19l8-8"/>',
+    flower: '<circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="6.5" r="3"/><circle cx="12" cy="17.5" r="3"/><circle cx="6.5" cy="12" r="3"/><circle cx="17.5" cy="12" r="3"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>',
+    moon: '<path d="M20 14A8 8 0 1110 4a6.5 6.5 0 0010 10z"/>',
+    'arrow-left': '<path d="M20 12H4M10 6l-6 6 6 6"/>', 'arrow-up': '<path d="M12 20V4M6 10l6-6 6 6"/>', 'arrow-down': '<path d="M12 4v16M6 14l6 6 6-6"/>',
+    'chevron-left': '<path d="M15 5l-7 7 7 7"/>', 'chevron-right': '<path d="M9 5l7 7-7 7"/>', 'chevron-down': '<path d="M5 9l7 7 7-7"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>', minus: '<path d="M5 12h14"/>', close: '<path d="M6 6l12 12M18 6L6 18"/>',
+    search: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>', bag: '<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 016 0v2"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>', home: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>', tag: '<path d="M3 12V3h9l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+    percent: '<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>',
+    returns: '<path d="M4 12a8 8 0 0114-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 01-14 5.3L4 15"/><path d="M4 20v-5h5"/>',
+    package: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>', quote: '<path d="M7 7h4v5c0 3-2 5-4 5M14 7h4v5c0 3-2 5-4 5"/>',
+    play: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5z"/>', camera: '<path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="14" r="3.5"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>', info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+    help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 113.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/>', menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', chat: '<path d="M4 5h16v11H9l-5 4z"/>',
+    card: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/>', ruler: '<rect x="2" y="8" width="20" height="8" rx="1"/><path d="M6 8v3M10 8v4M14 8v3M18 8v4"/>',
+    hand: '<path d="M8 13V5.5a1.5 1.5 0 013 0V12M11 11V4.5a1.5 1.5 0 013 0V12M14 11.5V6a1.5 1.5 0 013 0v8c0 4-3 7-7 7-3 0-4.5-1.5-6-4l-2-3.5a1.5 1.5 0 012.6-1.5L8 14"/>'
   };
   function designElHtml(e) {
     const n = (v, lo, hi, d) => { const x = Number(v); return v !== '' && v != null && Number.isFinite(x) ? Math.max(lo, Math.min(hi, x)) : d; };
@@ -4622,6 +4653,7 @@
 
     Object.assign(window.__hjAdmin, {
       bp: bpNow,
+      icons: () => EL_ICONS,
       // Replay an element's entrance animation so it can be checked before saving
       replay(key) { const el = elOf(key); if (!el) return; el.classList.remove('hj-in'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; requestAnimationFrame(() => el.classList.add('hj-in')); },
       select(keys, locked) { if (ED.crop) endCrop(true); ED.keys = (keys || []).filter(Boolean); ED.locked = locked || []; dragCss.textContent = ''; draw(); },
