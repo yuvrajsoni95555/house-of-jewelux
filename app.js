@@ -3793,9 +3793,13 @@
   const FONTS = { serif: 'var(--font-serif, Georgia, serif)', sans: 'var(--font-sans, system-ui, sans-serif)', display: "'Lawrence', Georgia, serif",
     cinzel: "'Cinzel', Georgia, serif", cormorant: "'Cormorant Garamond', Georgia, serif", playfair: "'Playfair Display', Georgia, serif", manrope: "'Manrope', system-ui, sans-serif", montserrat: "'Montserrat', system-ui, sans-serif" };
   const TEXT_SHADOWS = { none: 'none', soft: '0 2px 8px rgba(0,0,0,.25)', strong: '0 3px 14px rgba(0,0,0,.55)', glow: '0 0 14px rgba(232,211,184,.8)' };
-  const ANIMS = { fade: 'hj-a-fade', up: 'hj-a-up', down: 'hj-a-down', left: 'hj-a-left', right: 'hj-a-right', zoom: 'hj-a-zoom', rotate: 'hj-a-rotate' };
+  const ANIMS = { fade: 'hj-a-fade', up: 'hj-a-up', down: 'hj-a-down', left: 'hj-a-left', right: 'hj-a-right', zoom: 'hj-a-zoom', rotate: 'hj-a-rotate',
+    pop: 'hj-a-pop', flip: 'hj-a-flip', blur: 'hj-a-blur', bounce: 'hj-a-bounce', drop: 'hj-a-drop', wipe: 'hj-a-wipe' };
+  const LOOPS = { float: 'hj-l-float 4s ease-in-out infinite', pulse: 'hj-l-pulse 2.4s ease-in-out infinite', spin: 'hj-l-spin 12s linear infinite',
+    sway: 'hj-l-sway 3.5s ease-in-out infinite', shimmer: 'hj-l-shimmer 3s ease-in-out infinite', glow: 'hj-l-glow 2.8s ease-in-out infinite', breathe: 'hj-l-breathe 5s ease-in-out infinite' };
   const EASES = { smooth: 'cubic-bezier(.16,1,.3,1)', ease: 'ease-out', inout: 'ease-in-out', linear: 'linear' };
-  const HOVERS = { lift: 'transform:translateY(-6px)', grow: 'transform:scale(1.05)', glow: 'box-shadow:0 0 26px rgba(168,132,98,.6)', dim: 'opacity:.78' };
+  const HOVERS = { lift: 'transform:translateY(-6px)', grow: 'transform:scale(1.05)', glow: 'box-shadow:0 0 26px rgba(168,132,98,.6)', dim: 'opacity:.78',
+    tilt: 'transform:rotate(-2deg) scale(1.03)', float: 'transform:translateY(-8px);box-shadow:0 18px 36px rgba(26,18,14,.18)', bright: 'filter:brightness(1.08) saturate(1.08)' };
   const GRADS = { gold: '#A88462,#E8D3B8', champagne: '#F5EFE6,#D9C3A5', wine: '#5A1A2A,#8F2A38', espresso: '#1A120E,#3A2418', ivory: '#FBF7F1,#EFE3D3', rose: '#F3E1DC,#C98F86' };
   const gradCss = (g, a) => GRADS[g] ? `background:linear-gradient(${Math.max(0, Math.min(360, Number(a) || 135))}deg,${GRADS[g]})` : '';
   const REPEAT = /^\.product-card(?![\w-])/; // product cards are drawn from data: style them all together
@@ -3908,6 +3912,34 @@
     card: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/>', ruler: '<rect x="2" y="8" width="20" height="8" rx="1"/><path d="M6 8v3M10 8v4M14 8v3M18 8v4"/>',
     hand: '<path d="M8 13V5.5a1.5 1.5 0 013 0V12M11 11V4.5a1.5 1.5 0 013 0V12M14 11.5V6a1.5 1.5 0 013 0v8c0 4-3 7-7 7-3 0-4.5-1.5-6-4l-2-3.5a1.5 1.5 0 012.6-1.5L8 14"/>'
   };
+  const ring = (n, f) => Array.from({ length: n }, (_, i) => f(i * 360 / n)).join('');
+  const GRAPHICS = {
+    flourish: ['0 0 200 40', '<path d="M8 20h58M134 20h58"/><path d="M66 20c10-13 22-13 34 0 12 13 24 13 34 0"/><circle cx="100" cy="20" r="3"/>'],
+    'divider-diamond': ['0 0 200 20', '<path d="M0 10h86M114 10h86"/><path d="M100 2l8 8-8 8-8-8z"/><path d="M86 10l-6-4M86 10l-6 4M114 10l6-4M114 10l6 4"/>'],
+    'divider-dots': ['0 0 200 20', '<path d="M0 10h78M122 10h78"/><circle cx="90" cy="10" r="2"/><circle cx="100" cy="10" r="3.5"/><circle cx="110" cy="10" r="2"/>'],
+    wave: ['0 0 200 30', '<path d="M0 15c25-20 50 20 75 0s50 20 75 0 37 15 50 0"/>'],
+    arch: ['0 0 100 140', '<path d="M5 140V55a45 45 0 0190 0v85"/><path d="M15 140V58a35 35 0 0170 0v82"/><path d="M50 10v8"/>'],
+    corner: ['0 0 60 60', '<path d="M2 58V20Q2 2 20 2h38"/><path d="M10 58V24q0-14 14-14h34"/><circle cx="20" cy="20" r="3"/>'],
+    'frame-ornate': ['0 0 200 140', '<rect x="6" y="6" width="188" height="128" rx="4"/><rect x="14" y="14" width="172" height="112"/><path d="M6 30h8M6 110h8M186 30h8M186 110h8M30 6v8M170 6v8M30 126v8M170 126v8"/>'],
+    mandala: ['0 0 100 100', '<circle cx="50" cy="50" r="7"/><circle cx="50" cy="50" r="19"/><circle cx="50" cy="50" r="47"/>' + ring(12, (a) => `<ellipse cx="50" cy="22" rx="5" ry="10" transform="rotate(${a} 50 50)"/>`) + ring(24, (a) => `<circle cx="50" cy="8" r="1.6" transform="rotate(${a} 50 50)"/>`)],
+    paisley: ['0 0 80 100', '<path d="M40 95C10 95 5 60 25 45 45 30 60 40 55 20 52 8 40 5 40 5s30 5 32 35c2 30-10 55-32 55z"/><path d="M40 80c-12 0-16-14-8-22 8-8 18-4 18 6"/><circle cx="44" cy="64" r="3"/>'],
+    jaali: ['0 0 100 100', '<rect x="2" y="2" width="96" height="96"/><path d="M2 50L50 2l48 48-48 48z"/><path d="M26 50L50 26l24 24-24 24z"/><circle cx="50" cy="50" r="6"/>'],
+    laurel: ['0 0 120 100', '<path d="M60 92C25 85 10 55 18 20M60 92c35-7 50-37 42-72"/>' + [0, 1, 2, 3, 4].map((i) => `<ellipse cx="${20 + i * 3}" cy="${78 - i * 14}" rx="4" ry="9" transform="rotate(${-40 + i * 8} ${20 + i * 3} ${78 - i * 14})"/><ellipse cx="${100 - i * 3}" cy="${78 - i * 14}" rx="4" ry="9" transform="rotate(${40 - i * 8} ${100 - i * 3} ${78 - i * 14})"/>`).join('')],
+    'peacock-feather': ['0 0 60 140', '<path d="M30 140V62"/><ellipse cx="30" cy="35" rx="22" ry="32"/><ellipse cx="30" cy="38" rx="12" ry="18"/><circle cx="30" cy="40" r="6"/><path d="M30 72l-18-9M30 84l-20-8M30 96l-18-7M30 72l18-9M30 84l20-8M30 96l18-7"/>'],
+    'lotus-line': ['0 0 120 70', '<path d="M60 66C46 54 44 30 60 6c16 24 14 48 0 60z"/><path d="M58 66C38 64 24 50 20 28c18 4 32 18 38 38zM62 66c20-2 34-16 38-38-18 4-32 18-38 38z"/><path d="M8 66h104"/>'],
+    'sparkle-cluster': ['0 0 100 100', '<path d="M40 10l5 20 20 5-20 5-5 20-5-20-20-5 20-5z"/><path d="M75 55l3 10 10 3-10 3-3 10-3-10-10-3 10-3z"/><path d="M28 70l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>']
+  };
+  // Icons from the icon library are stored as their own SVG shapes; only plain geometry is allowed through
+  const SAFE_SVG = /^(<(path|circle|rect|line|polyline|polygon|ellipse)( (d|cx|cy|r|rx|ry|x|y|x1|y1|x2|y2|width|height|points|fill)="[-0-9a-zA-Z.,# ]*")*\/>)+$/;
+  // Video / map links: YouTube, Vimeo and Google Maps embeds only
+  function embedUrl(u) {
+    u = String(u || '').trim(); let m;
+    if ((m = u.match(/^https:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/))) return 'https://www.youtube-nocookie.com/embed/' + m[1] + '?rel=0';
+    if ((m = u.match(/^https:\/\/(?:www\.)?vimeo\.com\/(?:video\/)?(\d+)/))) return 'https://player.vimeo.com/video/' + m[1];
+    if (/^https:\/\/www\.google\.com\/maps\/embed\?pb=[\w!.%:-]+$/.test(u)) return u;
+    return '';
+  }
+  const MEDIA_SRC = (src, ext) => new RegExp('^/?media/[\\w.\\- ]+\\.(' + ext + ')$', 'i').test(src || '');
   function designElHtml(e) {
     const n = (v, lo, hi, d) => { const x = Number(v); return v !== '' && v != null && Number.isFinite(x) ? Math.max(lo, Math.min(hi, x)) : d; };
     const id = String(e.id).replace(/[^a-z0-9-]/gi, '');
@@ -3915,7 +3947,7 @@
     const ratio = e.type === 'frame' && /^\d{1,2} \/ \d{1,2}$/.test(e.aspect || '') ? e.aspect : '';
     const bw = n(e.w, 4, 4000, 200);
     // The left edge never pushes the box past the section's right edge, so a desktop placement still fits on a phone
-    const auto = ['text', 'button', 'badge'].includes(e.type); // these grow with their text
+    const auto = ['text', 'button', 'badge', 'audio'].includes(e.type); // these grow with their content
     let st = `left:max(0px,min(${n(e.x, -50, 150, 10)}%,calc(100% - ${bw}px)));top:${n(e.y, -3000, 8000, 40)}px;width:${bw}px` + (auto ? '' : ratio ? `;aspect-ratio:${ratio}` : `;height:${n(e.h, 1, 4000, 200)}px`);
     const attrs = (cls, extra = '') => `class="hj-el hj-el-${cls}" data-hj-design="1" data-hj-id="el-${id}" ${extra}`;
     if (e.type === 'text') {
@@ -3938,9 +3970,38 @@
       const t = n(e.thickness, 1, 40, 2); const ls = /^(solid|dashed|dotted|double)$/.test(e.lineStyle) ? e.lineStyle : 'solid';
       return `<div ${attrs('line', 'aria-hidden="true"')} style="${st}">${e.arrow === 'both' ? '<span class="hj-el-arrow start"></span>' : ''}<span class="hj-el-stroke" style="border-top:${t}px ${ls} currentColor"></span>${e.arrow === 'end' || e.arrow === 'both' ? '<span class="hj-el-arrow"></span>' : ''}</div>`;
     }
-    if (e.type === 'icon') return `<div ${attrs('icon', `role="img" aria-label="${escHtml(e.alt || e.icon || 'icon')}"`)} style="${st}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${n(e.stroke, 0.5, 4, 1.5)}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${EL_ICONS[e.icon] || EL_ICONS.star}</svg></div>`;
+    if (e.type === 'icon') return `<div ${attrs('icon', `role="img" aria-label="${escHtml(e.alt || e.icon || 'icon')}"`)} style="${st}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${n(e.stroke, 0.5, 4, 1.5)}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${EL_ICONS[e.icon] || (SAFE_SVG.test(e.svg || '') ? e.svg : EL_ICONS.star)}</svg></div>`;
+    if (e.type === 'graphic') { const g = GRAPHICS[e.g] || GRAPHICS.flourish; return `<div ${attrs('graphic', 'aria-hidden="true"')} style="${st}"><svg viewBox="${g[0]}" preserveAspectRatio="${e.stretch ? 'none' : 'xMidYMid meet'}" fill="none" stroke="currentColor" stroke-width="${n(e.stroke, 0.5, 6, 1.5)}" stroke-linecap="round" stroke-linejoin="round">${g[1]}</svg></div>`; }
+    if (e.type === 'video') {
+      const src = MEDIA_SRC(e.src, 'mp4|webm') ? imgUrl(e.src) : ''; const emb = src ? '' : embedUrl(e.url);
+      const inner = src ? `<video src="${escHtml(src)}" ${e.autoplay ? 'autoplay muted loop' : 'controls'} playsinline preload="metadata" ${e.alt ? `aria-label="${escHtml(e.alt)}"` : ''}></video>`
+        : emb ? `<iframe src="${escHtml(emb)}" title="${escHtml(e.alt || 'Video')}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`
+          : '<span class="hj-el-ph">Video or map: paste a YouTube, Vimeo or Google Maps link</span>';
+      return `<div ${attrs('video')} style="${st}">${inner}</div>`;
+    }
+    if (e.type === 'audio') {
+      const ok = MEDIA_SRC(e.src, 'mp3|m4a|ogg|wav');
+      return `<div ${attrs('audio')} style="${st}"><button type="button" class="hj-audio-btn" aria-label="Play music" ${ok ? '' : 'disabled'}><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span>${escHtml(e.label || 'Play music')}</span>${ok ? `<audio src="${escHtml(imgUrl(e.src))}" preload="none" ${e.loop === false ? '' : 'loop'}></audio>` : ''}</div>`;
+    }
+    if (e.type === 'countdown') {
+      const until = Date.parse(e.until || '') || 0; const cell = (c, l) => `<span><b class="${c}">00</b><small>${l}</small></span>`;
+      return `<div ${attrs('countdown')} style="${st}" data-until="${until}" role="timer"><p class="cd-l">${escHtml(e.label || 'Offer ends in')}</p><div class="cd-g">${cell('cd-d', 'Days')}${cell('cd-h', 'Hours')}${cell('cd-m', 'Minutes')}${cell('cd-s', 'Seconds')}</div></div>`;
+    }
     return '';
   }
+
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('.hj-audio-btn'); if (!b || window.__hjContentMode) return;
+    const a = b.parentElement.querySelector('audio'); if (!a) return;
+    document.querySelectorAll('.hj-el-audio audio').forEach((x) => { if (x !== a) { x.pause(); x.parentElement.classList.remove('is-playing'); } });
+    if (a.paused) { a.play().catch(() => {}); b.parentElement.classList.add('is-playing'); b.setAttribute('aria-label', 'Pause music'); }
+    else { a.pause(); b.parentElement.classList.remove('is-playing'); b.setAttribute('aria-label', 'Play music'); }
+  });
+  setInterval(() => document.querySelectorAll('.hj-el-countdown[data-until]').forEach((el) => {
+    let t = Math.max(0, Math.floor((Number(el.dataset.until) - Date.now()) / 1000));
+    const put = (c, v) => { const x = el.querySelector(c); if (x) x.textContent = String(v).padStart(2, '0'); };
+    put('.cd-d', Math.floor(t / 86400)); t %= 86400; put('.cd-h', Math.floor(t / 3600)); t %= 3600; put('.cd-m', Math.floor(t / 60)); put('.cd-s', t % 60);
+  }), 1000);
 
   function applyContentItem(el, o) {
     if (REPEAT.test(o.__key)) o = { ...o, text: undefined, src: undefined, href: undefined, alt: undefined, title: undefined, tag: undefined };
@@ -3979,11 +4040,13 @@
       DESIGN_RULES.push(`${hjSel(o.__key)}{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,opacity .35s,background .25s,color .25s!important}`);
     }
     if (hover.length) DESIGN_RULES.push(`${hjSel(o.__key)}:hover{${hover.join(';')}}`);
-    if (ANIMS[o.anim]) {
-      el.dataset.hjAnim = o.anim;
-      DESIGN_RULES.push(`${hjSel(o.__key)}{animation:${ANIMS[o.anim]} ${Math.max(0.1, Math.min(5, Number(o.animDur) || 0.8))}s ${EASES[o.animEase] || EASES.smooth} ${Math.max(0, Math.min(5, Number(o.animDelay) || 0))}s backwards!important}`);
-      watchAnim(el, o.animOn === 'load');
-    }
+    // entrance animation, then (optionally) a gentle loop that starts when the entrance has finished
+    const dur = Math.max(0.1, Math.min(5, Number(o.animDur) || 0.8)); const delay = Math.max(0, Math.min(5, Number(o.animDelay) || 0));
+    const anims = [];
+    if (ANIMS[o.anim]) anims.push(`${ANIMS[o.anim]} ${dur}s ${EASES[o.animEase] || EASES.smooth} ${delay}s backwards`);
+    if (LOOPS[o.loop]) anims.push(`${LOOPS[o.loop]} ${ANIMS[o.anim] ? dur + delay : 0}s`.replace(/ infinite (\S+)$/, ' $1 infinite'));
+    if (anims.length) DESIGN_RULES.push(`${hjSel(o.__key)}{animation:${anims.join(',')}!important}`);
+    if (ANIMS[o.anim]) { el.dataset.hjAnim = o.anim; watchAnim(el, o.animOn === 'load'); }
     if (o.fit === 'contain' || o.fit === 'cover') DESIGN_RULES.push(`${hjSel(o.__key)} img{object-fit:${o.fit}!important}`);
     DESIGN_RULES.push(...positionRules(o.__key, el, o.pos));
   }
@@ -4654,6 +4717,7 @@
     Object.assign(window.__hjAdmin, {
       bp: bpNow,
       icons: () => EL_ICONS,
+      graphics: () => GRAPHICS,
       // Replay an element's entrance animation so it can be checked before saving
       replay(key) { const el = elOf(key); if (!el) return; el.classList.remove('hj-in'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; requestAnimationFrame(() => el.classList.add('hj-in')); },
       select(keys, locked) { if (ED.crop) endCrop(true); ED.keys = (keys || []).filter(Boolean); ED.locked = locked || []; dragCss.textContent = ''; draw(); },

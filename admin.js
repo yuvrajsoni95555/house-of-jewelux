@@ -544,6 +544,24 @@
     return path;
   }
 
+  // Video and music files go to media/ unchanged (no conversion); small files only, they are served from the repo
+  const MEDIA_TYPES = { video: /^video\/(mp4|webm)$/, audio: /^audio\/(mpeg|mp3|mp4|x-m4a|ogg|wav|x-wav)$/ };
+  async function uploadMediaFile(file, kind) {
+    if (!MEDIA_TYPES[kind].test(file.type)) throw new Error(kind === 'video' ? 'Use an MP4 or WebM video.' : 'Use an MP3, M4A, OGG or WAV file.');
+    if (file.size > 15 * 1024 * 1024) throw new Error('File is larger than 15 MB. Please use a shorter or smaller file (for long videos use a YouTube link).');
+    const b64 = await new Promise((res) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.readAsDataURL(file); });
+    const ext = (file.name.match(/\.(mp4|webm|mp3|m4a|ogg|wav)$/i) || [, kind === 'video' ? 'mp4' : 'mp3'])[1].toLowerCase();
+    const path = `media/${L.slugify(file.name.replace(/\.[^.]+$/, '')) || kind}-${Date.now().toString(36)}.${ext}`;
+    await putFile(path, b64, null, `admin: upload ${kind} ${path}`);
+    toast(`Uploaded ${Math.round(file.size / 1024)} KB. It plays on the website after the next publish (about a minute).`);
+    return path;
+  }
+  function cmUploadMedia(kind, done) {
+    const input = document.createElement('input'); input.type = 'file';
+    input.accept = kind === 'video' ? 'video/mp4,video/webm' : 'audio/mpeg,audio/mp4,audio/x-m4a,audio/ogg,audio/wav';
+    input.addEventListener('change', () => { const f = input.files[0]; if (f) busy(null, async () => done(await uploadMediaFile(f, kind))); });
+    input.click();
+  }
   let uploadKey = null;
   async function upload(file) {
     const path = await uploadImageFile(file, draft.name || 'product');
@@ -968,7 +986,7 @@
   }
 
   // Design elements (page.els): frames, shapes, lines, icons and text boxes placed inside a section
-  const EL_TYPE = { frame: 'Frame', shape: 'Shape', line: 'Line', icon: 'Icon', text: 'Text box', button: 'Button', badge: 'Badge' };
+  const EL_TYPE = { frame: 'Frame', shape: 'Shape', line: 'Line', icon: 'Icon', text: 'Text box', button: 'Button', badge: 'Badge', graphic: 'Graphic', video: 'Video / map', audio: 'Music player', countdown: 'Countdown' };
   const designOf = (it) => it && it.design ? (pageData(pageKeyFor(it.scope)).els || []).find((x) => x.id === it.design) : null;
   const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
   const elKeyOf = (id) => `[data-hj-id="el-${id}"]`;
@@ -1124,6 +1142,15 @@
     taj: 'crown', heera: 'gem', moti: 'pearl', sona: 'gold', chandi: 'silver', tohfa: 'gift', gaadi: 'truck', ghar: 'home', samay: 'clock', tareekh: 'calendar', tala: 'lock', chhoot: 'sale', offer: 'sale',
     discount: 'sale', rekha: 'line', line: 'line', divider: 'line', icon: 'icon', shape: 'shape', aakar: 'shape', frame: 'frame', button: 'button', badge: 'badge', section: 'section', theme: 'theme' };
   const prettify = (k) => k.replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase());
+  const graphicSet = () => { const w = pvWin(); return (w && w.__hjAdmin && w.__hjAdmin.graphics && w.__hjAdmin.graphics()) || {}; };
+  const ANIM_PRESETS = [['anim:fade', 'Fade in', 'entrance appear'], ['anim:up', 'Rise up', 'entrance slide'], ['anim:left', 'Slide from left', 'entrance'], ['anim:right', 'Slide from right', 'entrance'],
+    ['anim:zoom', 'Scale in', 'entrance zoom'], ['anim:pop', 'Pop', 'entrance bounce'], ['anim:bounce', 'Bounce in', 'entrance'], ['anim:flip', 'Flip', 'entrance 3d'], ['anim:blur', 'Blur in', 'entrance soft'],
+    ['anim:drop', 'Drop in', 'entrance fall'], ['anim:wipe', 'Wipe reveal', 'entrance reveal'], ['anim:rotate', 'Rotate in', 'entrance'],
+    ['loop:float', 'Float (loop)', 'loop continuous hover levitate'], ['loop:pulse', 'Pulse (loop)', 'loop heartbeat'], ['loop:spin', 'Slow spin (loop)', 'loop rotate'], ['loop:sway', 'Sway (loop)', 'loop swing'],
+    ['loop:shimmer', 'Shimmer (loop)', 'loop shine chamak sparkle'], ['loop:glow', 'Gold glow (loop)', 'loop shine'], ['loop:breathe', 'Breathe (loop)', 'loop fade'],
+    ['hover:lift', 'Hover lift', 'hover mouse'], ['hover:grow', 'Hover grow', 'hover zoom'], ['hover:tilt', 'Hover tilt', 'hover'], ['hover:float', 'Hover float + shadow', 'hover'], ['hover:glow', 'Hover glow', 'hover'], ['hover:bright', 'Hover brighten', 'hover']];
+  const WIDGETS = [['video:embed', 'Video (YouTube, Vimeo or upload)', 'video film youtube vimeo reel play'], ['video:map', 'Map (Google Maps)', 'map location address pata google store'],
+    ['audio:player', 'Music player', 'music audio song sangeet gaana sound'], ['countdown:sale', 'Sale countdown', 'countdown timer sale offer clock deadline']];
   const iconSet = () => { const w = pvWin(); return (w && w.__hjAdmin && w.__hjAdmin.icons && w.__hjAdmin.icons()) || {}; };
   function catalog() {
     const L = [];
@@ -1136,6 +1163,10 @@
     ELEMENT_MENU[2][1].forEach(([c, n]) => add('Shapes', c, n, 'shape aakar'));
     ELEMENT_MENU[3][1].forEach(([c, n]) => add('Lines & dividers', c, n, 'line divider separator arrow rekha'));
     Object.keys(iconSet()).forEach((k) => add('Icons', 'icon:' + k, prettify(k), 'icon symbol graphic ' + (ICON_TAGS[k] || '')));
+    Object.entries(state.lucide || {}).forEach(([k, v]) => add('Icons', 'lucide:' + k, prettify(k), 'icon symbol ' + v[1]));
+    Object.keys(graphicSet()).forEach((k) => add('Graphics', 'graphic:' + k, prettify(k), 'graphic ornament decoration border divider flourish sajawat'));
+    WIDGETS.forEach(([c, n, t]) => add('Video, music & widgets', c, n, t));
+    ANIM_PRESETS.forEach(([c, n, t]) => add('Animations', c, n, 'animation animate motion effect ' + t));
     (state.media || []).forEach((m) => add('Photos', 'photo:' + m.path, prettify(m.name.replace(/\.\w+$/, '').replace(/^user_/, '')), 'photo jewellery picture'));
     THEMES.forEach((t) => add('Themes', 'theme:' + t[0], t[1], 'theme colour palette background style rang'));
     SECTION_TYPES.forEach(([t, n, desc]) => add('Sections', 'section:' + t, n, 'section block layout template ' + desc));
@@ -1158,6 +1189,8 @@
     $('#el-q').focus();
     showPane('props');
     if (!state.media) loadMedia().then(() => { if ($('#el-res')) renderElResults(); }).catch(() => { /* photos need the GitHub connection; the rest still works */ });
+    // the 2,000+ open-source Lucide icons (ISC licence) are loaded only here, never on the public site
+    if (!state.lucide) fetch('/vendor/lucide/icons.json').then((r) => r.json()).then((j) => { state.lucide = j; if ($('#el-res')) renderElResults(); }).catch(() => { state.lucide = {}; });
   }
   function renderElResults() {
     const box = $('#el-res'); if (!box) return;
@@ -1185,6 +1218,12 @@
     if (type === 'photo') return placeImage(v, sec, null, null);
     if (type === 'section') return addSection(v);
     if (type === 'theme') return applyTheme(v);
+    if (['anim', 'loop', 'hover'].includes(type)) {
+      const it = cmItem(cm.sel); if (!it) { toast('Select an element first, then choose an animation.', true); return; }
+      patchItem(it, { [type]: v }); const w = pvWin(); if (type !== 'hover' && w && w.__hjAdmin.replay) setTimeout(() => w.__hjAdmin.replay(it.key), 300);
+      toast(type === 'hover' ? 'Hover effect added: point at the element to see it.' : 'Animation added. Change speed and delay under Animation & hover.'); return;
+    }
+    if (type === 'lucide') { const ic = (state.lucide || {})[v]; if (!ic) return; return addDesignEl({ type: 'icon', icon: 'lc-' + v, svg: ic[0], alt: prettify(v), w: 56, h: 56 }, sec); }
     const find = (list) => list.find((x) => x[0] === v);
     if (type === 'button') { const b = find(BTN_STYLES); return addDesignEl({ type: 'button', text: 'Shop the collection', href: '#collections/all', w: 240 }, sec, b ? b[2] : null); }
     if (type === 'badge') { const b = find(BADGE_STYLES) || BADGE_STYLES[0]; return addDesignEl({ type: 'badge', text: b[1], w: 150 }, sec, b[2]); }
@@ -1209,6 +1248,9 @@
   }
   function elPreview(code) {
     const i = code.indexOf(':'); const type = code.slice(0, i); const v = code.slice(i + 1);
+    if (type === 'lucide') { const ic = (state.lucide || {})[v]; if (ic) return `<svg class="el-pv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic[0]}</svg>`; }
+    if (type === 'graphic') { const g = graphicSet()[v]; if (g) return `<svg class="el-pv-svg" style="width:52px" viewBox="${g[0]}" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">${g[1]}</svg>`; }
+    if (['video', 'audio', 'countdown', 'anim', 'loop', 'hover'].includes(type)) return `<i class="el-pv-t" style="color:#6B4A2E">${{ video: v === 'map' ? '⌖' : '▶', audio: '♫', countdown: '⏱', anim: '✦', loop: '↻', hover: '☝' }[type]}</i>`;
     if (type === 'icon') { const path = iconSet()[v]; if (path) return `<svg class="el-pv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`; }
     if (type === 'photo') return `<img class="el-pv-img" src="${esc(imgSrc(v))}" alt="" loading="lazy">`;
     if (type === 'theme') { const t = THEMES.find((x) => x[0] === v)[2]; return `<i class="el-pv" style="width:40px;height:28px;border-radius:6px;background:${lookBg(t)};outline:1px solid ${t.borderColor || '#D9C3A5'};color:${t.color};font:600 10px/28px Georgia,serif;text-align:center;font-style:normal">Aa</i>`; }
@@ -1234,6 +1276,10 @@
   function elementDef(code) {
     const [type, v] = code.split(':');
     if (type === 'button') return { type, text: 'Shop the collection', href: '#collections/all', w: 240 };
+    if (type === 'graphic') { const vb = String((graphicSet()[v] || ['0 0 200 40'])[0]).split(' ').map(Number); const w = vb[2] >= vb[3] ? 240 : 140; return { type, g: v, w, h: Math.round(w * vb[3] / vb[2]) }; }
+    if (type === 'video') return { type, url: '', alt: v === 'map' ? 'Map' : 'Video', w: 480, h: v === 'map' ? 320 : 270 };
+    if (type === 'audio') return { type, label: 'Play our music', w: 230 };
+    if (type === 'countdown') { const d = new Date(Date.now() + 7 * 864e5); const pad = (x) => String(x).padStart(2, '0'); return { type, label: 'Offer ends in', until: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T23:59`, w: 340, h: 100 }; }
     if (type === 'badge') return { type, text: 'New arrival', w: 130 };
     if (type === 'text') return { type, tag: v, text: v === 'p' ? 'Add a little bit of body text' : v === 'h2' ? 'Add a heading' : 'Add a subheading', w: v === 'p' ? 360 : 440 };
     if (type === 'frame') {
@@ -1253,7 +1299,7 @@
   };
   const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'design' ? EL_TYPE[i.type] + ((designOf(i) || {}).shape ? ' · ' + designOf(i).shape : (designOf(i) || {}).icon ? ' · ' + designOf(i).icon : '') :
     i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : i.kind === 'frame' ? 'Photo frame' : i.kind === 'box' ? i.label || 'Box' : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
-  const KIND_ICON = { box: '▭', frame: '▢', text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
+  const KIND_ICON = { graphic: '❦', video: '▶', audio: '♫', countdown: '⏱', box: '▭', frame: '▢', text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
 
   function renderMediaPanel() {
     const box = $('#st-layers');
@@ -1492,12 +1538,13 @@
         ${numField('e-op', 'Opacity (0.05–1)', 'data-e="opacity"', o.opacity, '1', 0.05, 1, 0.05)}
         ${it.type === 'text' ? numField('e-px', 'Padding left/right (px)', 'data-e="padX"', o.padX, '0', 0, 120) + numField('e-py', 'Padding top/bottom (px)', 'data-e="padY"', o.padY, '0', 0, 120) : ''}`, open);
     const effectsGroup = group('Animation & hover', `
-        <div><label for="e-anim">Entrance</label>${sel('e-anim', 'data-e="anim"', [['', 'None'], ['fade', 'Fade in'], ['up', 'Slide up'], ['down', 'Slide down'], ['left', 'Slide from left'], ['right', 'Slide from right'], ['zoom', 'Scale in'], ['rotate', 'Rotate in']], o.anim || '')}</div>
+        <div><label for="e-anim">Entrance</label>${sel('e-anim', 'data-e="anim"', [['', 'None'], ['fade', 'Fade in'], ['up', 'Slide up'], ['down', 'Slide down'], ['left', 'Slide from left'], ['right', 'Slide from right'], ['zoom', 'Scale in'], ['rotate', 'Rotate in'], ['pop', 'Pop'], ['bounce', 'Bounce in'], ['flip', 'Flip'], ['blur', 'Blur in'], ['drop', 'Drop in'], ['wipe', 'Wipe reveal']], o.anim || '')}</div>
         <div><label for="e-aon">Starts</label>${sel('e-aon', 'data-e="animOn"', [['', 'When scrolled into view'], ['load', 'When the page opens']], o.animOn || '')}</div>
         ${numField('e-adur', 'Duration (s)', 'data-e="animDur"', o.animDur, '0.8', 0.1, 5, 0.1)}${numField('e-adel', 'Delay (s)', 'data-e="animDelay"', o.animDelay, '0', 0, 5, 0.1)}
         <div><label for="e-aease">Easing</label>${sel('e-aease', 'data-e="animEase"', [['', 'Smooth (luxury)'], ['ease', 'Ease out'], ['inout', 'Ease in-out'], ['linear', 'Linear']], o.animEase || '')}</div>
-        <div><label for="e-hov">On hover</label>${sel('e-hov', 'data-e="hover"', [['', 'Nothing'], ['lift', 'Lift'], ['grow', 'Grow'], ['glow', 'Gold glow'], ['dim', 'Dim']], o.hover || '')}</div>
-        <div class="full row-flex"><button type="button" class="btn btn-sm" data-cm="anim-preview" ${o.anim ? '' : 'disabled'}>▶ Preview animation</button></div>
+        <div><label for="e-loop">Keeps moving</label>${sel('e-loop', 'data-e="loop"', [['', 'No'], ['float', 'Float'], ['pulse', 'Pulse'], ['spin', 'Slow spin'], ['sway', 'Sway'], ['shimmer', 'Shimmer'], ['glow', 'Gold glow'], ['breathe', 'Breathe']], o.loop || '')}</div>
+        <div><label for="e-hov">On hover</label>${sel('e-hov', 'data-e="hover"', [['', 'Nothing'], ['lift', 'Lift'], ['grow', 'Grow'], ['tilt', 'Tilt'], ['float', 'Float + shadow'], ['glow', 'Gold glow'], ['bright', 'Brighten'], ['dim', 'Dim']], o.hover || '')}</div>
+        <div class="full row-flex"><button type="button" class="btn btn-sm" data-cm="anim-preview" ${o.anim || o.loop ? '' : 'disabled'}>▶ Preview animation</button></div>
         <p class="full help" style="margin:0">Visitors who turn off motion in their device settings see no animation.</p>`, false);
     const designGroup = () => {
       if (!D) return '';
@@ -1524,10 +1571,31 @@
           <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>
           <p class="full help" style="margin:0">Length = width. Direction = rotation (top handle; Shift snaps to 45°).</p>`);
       if (D.type === 'icon') return group('Icon', `
-          <div><label for="d-ic">Icon</label>${dsel('d-ic', 'icon', Object.keys(iconSet()).map((k) => [k, prettify(k)]))}</div>
+          <div><label for="d-ic">Icon</label>${dsel('d-ic', 'icon', [...(String(D.icon || '').startsWith('lc-') ? [[D.icon, prettify(D.icon.slice(3)) + ' (library)']] : []), ...Object.keys(iconSet()).map((k) => [k, prettify(k)])])}</div>
+          <p class="full help" style="margin:0">More icons: + Element → search (2,000+ icons).</p>
           ${numField('d-st', 'Line weight', 'data-de="stroke"', D.stroke, '1.5', 0.5, 4, 0.25)}
           <div class="full"><label for="d-alt">Label for screen readers</label><input id="d-alt" data-de="alt" value="${de('alt')}"></div>
           <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>`);
+      if (D.type === 'graphic') return group('Graphic', `
+          <div><label for="d-g">Design</label>${dsel('d-g', 'g', Object.keys(graphicSet()).map((k) => [k, prettify(k)]))}</div>
+          ${numField('d-st', 'Line weight', 'data-de="stroke"', D.stroke, '1.5', 0.5, 6, 0.25)}
+          <div class="full"><label class="check"><input type="checkbox" data-de="stretch" ${D.stretch ? 'checked' : ''}> Stretch to the box (otherwise keeps its shape)</label></div>
+          <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>`);
+      if (D.type === 'video') return group('Video / map', `
+          <div class="full"><label for="d-url">YouTube, Vimeo or Google Maps link</label><input id="d-url" data-de="url" value="${de('url')}" placeholder="https://www.youtube.com/watch?v=…"></div>
+          <p class="full help" style="margin:0">For a map: Google Maps → Share → Embed a map → copy only the https://www.google.com/maps/embed?pb=… link.</p>
+          <div class="full row-flex"><button class="btn btn-sm" data-cm="media-video">${D.src ? 'Replace uploaded video' : 'Or upload a video (MP4, up to 15 MB)'}</button>${D.src ? '<button class="btn btn-sm" data-cm="media-video-clear">Remove upload</button>' : ''}</div>
+          ${D.src ? `<div class="full"><label class="check"><input type="checkbox" data-de="autoplay" ${D.autoplay ? 'checked' : ''}> Play silently on loop (no controls)</label></div>` : ''}
+          <div class="full"><label for="d-alt">Title for screen readers</label><input id="d-alt" data-de="alt" value="${de('alt')}"></div>`);
+      if (D.type === 'audio') return group('Music player', `
+          <div class="full"><label for="d-lab">Label</label><input id="d-lab" data-de="label" value="${de('label')}"></div>
+          <div class="full row-flex"><button class="btn btn-sm btn-primary" data-cm="media-audio">${D.src ? 'Replace music' : 'Upload music (MP3, M4A, OGG, WAV, up to 15 MB)'}</button></div>
+          <p class="full help" style="margin:0">${D.src ? esc(D.src) + ' · ' : ''}Plays only when a visitor taps it (browsers block music that starts by itself). Use music you have the rights to.</p>
+          <div class="full"><label class="check"><input type="checkbox" data-de="loop" ${D.loop === false ? '' : 'checked'}> Repeat</label></div>`);
+      if (D.type === 'countdown') return group('Countdown', `
+          <div class="full"><label for="d-until">Ends at</label><input id="d-until" type="datetime-local" data-de="until" value="${de('until')}"></div>
+          <div class="full"><label for="d-lab">Label</label><input id="d-lab" data-de="label" value="${de('label')}"></div>
+          <p class="full help" style="margin:0">Counts down to this date and time in each visitor's own time zone; shows 00 after it ends.</p>`);
       if (D.type === 'text') return group('Text box', `<div><label for="d-tag">Heading level (SEO)</label>${dsel('d-tag', 'tag', [['h1', 'H1'], ['h2', 'H2'], ['h3', 'H3'], ['h4', 'H4'], ['h5', 'H5'], ['h6', 'H6'], ['p', 'Paragraph']])}</div>
           <p class="full help" style="margin:0">The level is for search engines and screen readers; the look comes from Typography.</p>`, false);
       return '';
@@ -1552,7 +1620,7 @@
         ${isTemplate(cm.key) ? '<p class="full note small" style="margin:0">Applies to every product page. The photos themselves belong to each product: drop a photo on this frame to add it to the product shown, or change photos in <a href="#" data-go="products">Products</a>.</p>' : ''}`) +
         boxGroup('Border, corners & shadow', true) + effectsGroup;
     } else if (D && !['text', 'button', 'badge'].includes(D.type)) {
-      html += (D.type === 'frame' && D.src ? adjustGroup() : '') + (D.type === 'line' || D.type === 'icon' ? '' : boxGroup(D.type === 'shape' ? 'Fill & border' : 'Border & effects', D.type === 'shape')) + effectsGroup;
+      html += (D.type === 'frame' && D.src ? adjustGroup() : '') + (['line', 'icon', 'graphic'].includes(D.type) ? '' : boxGroup(D.type === 'shape' ? 'Fill & border' : 'Border & effects', D.type === 'shape')) + effectsGroup;
     } else if (it.kind === 'image') {
       const [fx, fy] = (o.objectPosition || '50% 50%').split(' ').map((v) => parseInt(v, 10));
       html += (tpl ? '' : group('Image', `
@@ -1712,7 +1780,7 @@
       ['brightness', 'contrast', 'saturate'].forEach((k) => { if (f(k)) set(k, n(k), 100); });
       ['animDur', 'animDelay'].forEach((k) => { if (f(k)) set(k, n(k)); });
       ['flipH', 'flipV', 'italic'].forEach((k) => { if (f(k)) set(k, f(k).checked || null); });
-      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover', 'grad', 'fit'].forEach((k) => { if (f(k)) set(k, f(k).value); });
+      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover', 'grad', 'fit', 'loop'].forEach((k) => { if (f(k)) set(k, f(k).value); });
       // choosing locked proportions drops the fixed height on this screen size, so the ratio takes effect
       if (it.kind === 'frame' && o.aspect && o.pos && o.pos[curBp()] && o.pos[curBp()].h) { o.pos = { ...o.pos, [curBp()]: { ...o.pos[curBp()] } }; delete o.pos[curBp()].h; }
       if (f('gradAngle')) set('gradAngle', n('gradAngle'));
@@ -2096,6 +2164,9 @@
       case 'anim-preview': { const w = pvWin(); if (w && w.__hjAdmin.replay) w.__hjAdmin.replay(cm.sel); break; }
       case 'frame-pick': pickImage((path) => patchEl(it, { src: path, alt: designOf(it).alt || '' })); break;
       case 'frame-upload': cmUpload((path) => patchEl(it, { src: path })); break;
+      case 'media-video': cmUploadMedia('video', (path) => patchEl(it, { src: path })); break;
+      case 'media-video-clear': patchEl(it, { src: null, autoplay: null }); break;
+      case 'media-audio': cmUploadMedia('audio', (path) => patchEl(it, { src: path })); break;
       case 'frame-clear': patchEl(it, { src: null, alt: null, zoom: null, fx: null, fy: null }); break;
       case 'reset-pos': { const o = cmOverride(it); const all = { ...(o.pos || {}) }; delete all[curBp()]; patchItem(it, { pos: Object.keys(all).length ? all : null }); break; }
       case 'reset-el': patchItem(it, Object.fromEntries(Object.keys(cmOverride(it)).map((k) => [k, null]))); break;
@@ -2176,7 +2247,9 @@
     if (t.matches('#st-props input[type=range]') && $(`[data-rv="${t.id}"]`)) $(`[data-rv="${t.id}"]`).textContent = t.value + (t.dataset.unit || '');
     if (t.matches('#st-props [data-de]') && t.tagName === 'INPUT') {
       const k = t.dataset.de; const it = cmItem(cm.sel);
-      clearTimeout(cmTimer); cmTimer = setTimeout(() => patchEl(it, { [k]: t.type === 'text' ? t.value : t.value === '' ? null : Number(t.value) }, true), 200);
+      if (t.type === 'checkbox') return;
+      const val = ['number', 'range'].includes(t.type) ? (t.value === '' ? null : Number(t.value)) : t.value;
+      clearTimeout(cmTimer); cmTimer = setTimeout(() => patchEl(it, { [k]: val }, true), t.type === 'datetime-local' ? 0 : 250);
     }
     if (t.matches('#st-props [data-p]')) { const k = t.dataset.p; clearTimeout(cmTimer); cmTimer = setTimeout(() => savePos(cm.sel, curBp(), { [k]: t.value === '' ? null : Number(t.value) }, true), 250); }
     if (t.matches('[data-prefnum]')) { const v = Number(t.value); if (v >= Number(t.min) && v <= Number(t.max)) { edPrefs[t.dataset.prefnum] = v; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); syncSelection(); } }
@@ -2216,6 +2289,7 @@
     }
     if (t.matches('#st-props select[data-e], #st-props input[type=checkbox][data-e]')) readElementForm();
     if (t.matches('#st-props select[data-de]')) patchEl(cmItem(cm.sel), { [t.dataset.de]: t.value });
+    if (t.matches('#st-props input[type=checkbox][data-de]')) patchEl(cmItem(cm.sel), { [t.dataset.de]: t.dataset.de === 'loop' ? t.checked : t.checked || null });
     if (t.matches('#st-props [data-cpick]')) patchItem(cmItem(cm.sel), { [t.dataset.cpick]: t.value });
     if (t.matches('#st-props select[data-ss]')) patchSection(cm.secSel, { [t.dataset.ss]: t.value });
     if (t.matches('#st-props select[data-c]')) customUpdate(cm.secSel.replace('custom:', ''), { [t.dataset.c]: t.value });
