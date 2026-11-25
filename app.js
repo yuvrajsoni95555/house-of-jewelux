@@ -87,6 +87,17 @@
   const SITE_URL = 'https://houseofjewelux.com';
   const DEFAULT_SEO = { title: document.title, desc: (document.querySelector('meta[name="description"]') || {}).content || '' };
   const IS_ADMIN_PREVIEW = window.parent !== window && new URLSearchParams(location.search).has('hjpreview');
+  // Phones and tablets draw their scrollbar over the page; a desktop browser takes ~15px for it, which would make the
+  // Studio canvas narrower than the real device. So the canvas hides it below laptop width.
+  if (IS_ADMIN_PREVIEW) document.head.insertAdjacentHTML('beforeend', '<style>@media (max-width:1024px){html{scrollbar-width:none}html::-webkit-scrollbar{display:none}}</style>');
+  // houseofjewelux.com/?hjsize shows this screen's size, to copy into the Studio's canvas size (e.g. your own phone)
+  if (new URLSearchParams(location.search).has('hjsize')) {
+    const tag = document.createElement('div');
+    tag.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;background:#1A120E;color:#F5EFE6;font:600 20px/1.4 system-ui,sans-serif;padding:18px 24px;border-radius:16px;text-align:center;pointer-events:none';
+    const put = () => { tag.innerHTML = `Your screen<br><span style="font-size:34px">${document.documentElement.clientWidth} × ${window.innerHeight}</span><br><span style="font-size:13px;opacity:.75">Enter these in Design Studio → Width / Height</span>`; };
+    put(); window.addEventListener('resize', put);
+    document.addEventListener('DOMContentLoaded', () => document.body.appendChild(tag));
+  }
 
   async function loadProducts() {
     const cacheBust = 'v=20261123_prod_v23';

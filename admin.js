@@ -263,7 +263,12 @@
   let device = MY_W >= 1025 ? MY_W : 1280;
   // Viewport height the page is rendered at. Sizes on the website use the screen height (100vh: hero, product photo),
   // so the canvas must have a real screen height, not the height of the admin panel. Wide screens use this window's height.
-  const deviceH = () => (device >= 1025 ? Math.round(window.innerHeight) : device >= 768 ? 1024 : 844);
+  let devH = null; // a height picked from the device list or typed in; null = automatic for the width
+  const deviceH = () => devH || (device >= 1025 ? Math.round(window.innerHeight) : device >= 768 ? 1024 : 844);
+  // Real devices, in the CSS pixels their browsers use (width × visible height)
+  const DEVICES = [['Phones', [['iPhone SE', 375, 667], ['iPhone 12–16', 390, 844], ['iPhone 15/16 Plus · Pro Max', 430, 932], ['Google Pixel', 412, 915], ['Samsung Galaxy S', 360, 780], ['Samsung Galaxy S Ultra', 384, 824]]],
+    ['Tablets', [['iPad mini', 768, 1024], ['iPad Air / iPad 10th', 820, 1180], ['iPad Pro 11"', 834, 1194], ['iPad Pro 12.9" (portrait)', 1024, 1366], ['Android tablet', 800, 1280]]],
+    ['Laptops & desktops', [['Laptop 1280 × 720', 1280, 720], ['Laptop 1366 × 768', 1366, 657], ['Laptop 1536 × 864', 1536, 730], ['Desktop 1920 × 1080', 1920, 960], ['Large desktop 2560 × 1440', 2560, 1300]]]];
   let zoom = 1; // canvas zoom on top of "fit to panel"
   const PREFS_KEY = 'hj_editor_prefs';
   const edPrefs = Object.assign({ grid: false, guides: true, snap: true, size: 8, cols: 12, gutter: 24, margin: 40, threshold: 6 },
@@ -873,7 +878,9 @@
           <div class="ws-url"><div class="seg st-switch" role="group" aria-label="Show panel"><button type="button" data-spane="layers" aria-pressed="false">Layers</button><button type="button" data-spane="canvas" aria-pressed="true">Canvas</button><button type="button" data-spane="props" aria-pressed="false">Properties</button></div>
             <div class="seg" role="group" aria-label="Preview size">${MY_W >= 1025 && ![1440, 1280].includes(MY_W) ? dev(MY_W, 'This screen') : ''}${dev(1440, 'Desktop')}${dev(1280, 'Laptop')}${dev(768, 'Tablet')}${dev(390, 'Mobile')}</div>
             <span class="small muted" id="pv-vh" title="Canvas size in screen pixels: the page is laid out exactly as on a screen this size"></span>
-            <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="10" value="${device}" style="width:90px;min-height:34px"></label>
+            <select id="pv-dev" aria-label="Device" style="width:auto;min-height:34px;max-width:210px"><option value="">Device…</option>${DEVICES.map(([g, list]) => `<optgroup label="${g}">${list.map(([n, dw, dh]) => `<option value="${dw}x${dh}">${n} (${dw} × ${dh})</option>`).join('')}</optgroup>`).join('')}</select>
+            <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="1" value="${device}" style="width:82px;min-height:34px"></label>
+            <label class="row-flex small" style="margin:0;font-weight:400" title="Visible screen height. Open houseofjewelux.com/?hjsize on any phone or laptop to see its exact size">Height <input id="pv-h" type="number" min="300" max="2000" step="1" value="${deviceH()}" style="width:82px;min-height:34px"></label>
             <div class="seg" role="group" aria-label="Show version"><button type="button" data-viewmode="draft" aria-pressed="true" title="Your edits, including unpublished ones">Draft</button><button type="button" data-viewmode="live" aria-pressed="false" title="Exactly what the public website shows now">Live</button></div>
             ${isTemplate(key) ? `<label class="row-flex small" style="margin:0;font-weight:400">Preview with <select id="tpl-prev" style="width:auto;min-height:34px;max-width:220px">${
               (key === 'tpl:products' ? state.products.map((x) => ['products/' + (x.handle || x.id), x.name]) : (await categories()).map((c) => ['collections/' + c.id, c.name || c.id]))
@@ -2053,6 +2060,13 @@
     if (t.matches('#st-props select[data-c]')) customUpdate(cm.secSel.replace('custom:', ''), { [t.dataset.c]: t.value });
     if (t.matches('select[data-lc]')) { const id = t.closest('[data-lib-id]').dataset.libId; libEdit((l) => { const x = l.find((y) => y.id === id); if (x) x[t.dataset.lc] = t.value; }); }
     if (t.id === 'tpl-prev') { cm.route = t.value; cm.sel = null; cm.multi = []; const w = pvWin(); if (w) w.location.hash = t.value; setTimeout(cmSync, 900); return; }
+    if (t.id === 'pv-dev' && t.value) {
+      const [dw, dh] = t.value.split('x').map(Number); device = dw; devH = dh;
+      $('#pv-w').value = dw; $('#pv-h').value = dh;
+      view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      fitPreview(); setTimeout(() => inStudio() && cmSync(), 400); return;
+    }
+    if (t.id === 'pv-h') { devH = Math.min(2000, Math.max(300, Number(t.value) || deviceH())); t.value = devH; $('#pv-dev').value = ''; fitPreview(); setTimeout(() => inStudio() && cmSync(), 400); return; }
     if (t.id === 'pv-w') { device = Math.min(2560, Math.max(320, Number(t.value) || 1280)); view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.device) === device))); fitPreview(); setTimeout(() => inStudio() && cmSync(), 400); }
   });
   // Re-scan after a device change (overflow warnings depend on width)
@@ -2138,7 +2152,8 @@
       view.querySelectorAll('[data-pane]').forEach((b) => { if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(b === t)); });
       fitPreview();
     } else if (d.device) {
-      device = Number(d.device);
+      device = Number(d.device); devH = null;
+      if ($('#pv-h')) $('#pv-h').value = deviceH(); if ($('#pv-dev')) $('#pv-dev').value = '';
       view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(b === t)));
       fitPreview();
     }
