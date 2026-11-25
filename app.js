@@ -1262,17 +1262,27 @@
 
             <div class="pdp-offer" data-hj-id="pdp-offer"><span><b>FIRSTLUX</b> · 10% off your first order</span><button type="button" onclick="window.HJ.applyCoupon('FIRSTLUX')">Apply</button></div>
 
+          </div>
+        </div>
+
+        <!-- Details across the full width, so neither column is left empty below the photos -->
+        <section class="pdp-more" data-hj-id="pdp-more" aria-label="Product details">
+          <div class="pdp-more-main" data-hj-id="pdp-more-main">
+            <h2 class="pdp-more-h">Material &amp; Specifications</h2>
+            <dl class="pdp-specs" data-hj-id="pdp-specs">${specRows.map(([k, v]) => `<div><dt>${escHtml(k)}</dt><dd>${escHtml(v)}</dd></div>`).join('')}</dl>
+          </div>
+          <div class="pdp-more-side">
+            <h2 class="pdp-more-h">Good to know</h2>
             <div class="pdp-accs" data-hj-id="pdp-accs">
-              ${acc('description', 'Description', `<p>${escHtml(p.description || '')}</p>`, true)}
-              ${acc('specs', 'Material & Specifications', `<table class="specs-table"><tbody>${specRows.map(([k, v]) => `<tr><td>${escHtml(k)}</td><td>${escHtml(v)}</td></tr>`).join('')}</tbody></table>`)}
-              ${acc('craft', 'Craftsmanship', '<p>Designed and finished by hand at the House of Jewelux Creative Atelier in Jaipur, Rajasthan.</p>')}
               ${acc('size', 'Size & Fit', `<p>${p.dimensions ? escHtml(p.dimensions) + '. ' : ''}See our <a href="#size-guide">size guide</a> or <a href="#contact">ask our concierge</a> for help choosing.</p>`)}
               ${acc('care', 'Jewellery Care', '<p>Store each piece separately in its pouch, keep it away from perfume, water and chemicals, and wipe gently with a soft dry cloth. More in our <a href="#care-guide">care guide</a>.</p>')}
               ${acc('shipping', 'Shipping & Delivery', '<p>Insured, tracked delivery across India. Delivery times depend on your pincode; check above.</p>')}
               ${acc('returns', 'Returns & Exchange', '<p>Complimentary 14-day return and exchange window with free insured pickup across verified Indian pincodes. See the <a href="#returns">returns policy</a>.</p>')}
             </div>
+            <h2 class="pdp-more-h pdp-more-h2">Craftsmanship</h2>
+            <p class="pdp-more-p" data-hj-id="pdp-craft-text">Designed and finished by hand at the House of Jewelux Creative Atelier in Jaipur, Rajasthan.</p>
           </div>
-        </div>
+        </section>
 
         <!-- Compact purchase bar: shown only once the main buttons have scrolled out of view -->
         <div class="pdp-sticky" data-hj-id="pdp-sticky" aria-hidden="true">
@@ -3715,6 +3725,7 @@
   //     order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {}, meta: { name } } } }
   // Layers, later wins: '*' (shared header/footer) -> template (all category / all product pages) -> the page itself.
   const GLOBAL_ROOTS = ['.announcement-bar', '.site-header', '.site-footer', '.mobile-bottom-nav'];
+  const IS_DRAFT_PREVIEW = new URLSearchParams(location.search).has('hjdraft');
   const SAFE_HREF = /^(#|\/(?!\/)|https:\/\/|mailto:|tel:)/i;
   const HEX = /^#[0-9a-f]{6}$/i;
   const ORIG = new WeakMap();
@@ -3729,6 +3740,15 @@
       const res = await fetch('/data/content.json', { cache: 'no-cache' });
       if (res.ok && !adminDrivesContent) siteContent = await res.json();
     } catch (e) { /* nothing published yet */ }
+    if (IS_DRAFT_PREVIEW && !adminDrivesContent) {
+      try {
+        const d = JSON.parse(localStorage.getItem('hj_content_draft') || '{}');
+        siteContent = { ...siteContent, pages: { ...(siteContent.pages || {}), ...(d.pages || {}) } };
+        if (d.design) siteContent.design = d.design;
+        if (d.library) siteContent.library = d.library;
+        document.body.insertAdjacentHTML('beforeend', '<div style="position:fixed;left:12px;bottom:12px;z-index:99999;background:#1A120E;color:#F5EFE6;font:600 12px/1 system-ui,sans-serif;letter-spacing:.06em;padding:8px 12px;border-radius:999px">DRAFT PREVIEW · not published</div>');
+      } catch (e) { /* no draft in this browser */ }
+    }
     if (contentRoute().startsWith('p/')) handleRoute(); else applySiteContent();
   }
 
@@ -3768,6 +3788,8 @@
   const ANIMS = { fade: 'hj-a-fade', up: 'hj-a-up', down: 'hj-a-down', left: 'hj-a-left', right: 'hj-a-right', zoom: 'hj-a-zoom', rotate: 'hj-a-rotate' };
   const EASES = { smooth: 'cubic-bezier(.16,1,.3,1)', ease: 'ease-out', inout: 'ease-in-out', linear: 'linear' };
   const HOVERS = { lift: 'transform:translateY(-6px)', grow: 'transform:scale(1.05)', glow: 'box-shadow:0 0 26px rgba(168,132,98,.6)', dim: 'opacity:.78' };
+  const GRADS = { gold: '#A88462,#E8D3B8', champagne: '#F5EFE6,#D9C3A5', wine: '#5A1A2A,#8F2A38', espresso: '#1A120E,#3A2418', ivory: '#FBF7F1,#EFE3D3', rose: '#F3E1DC,#C98F86' };
+  const gradCss = (g, a) => GRADS[g] ? `background:linear-gradient(${Math.max(0, Math.min(360, Number(a) || 135))}deg,${GRADS[g]})` : '';
   const SHADOWS = { none: 'none', soft: '0 6px 18px rgba(26,18,14,.12)', strong: '0 14px 36px rgba(26,18,14,.28)', glow: '0 0 22px rgba(168,132,98,.55)' };
   // Breakpoints for free positioning: each one is stored and applied on its own
   const BREAKPOINTS = { d: '(min-width:1025px)', t: '(min-width:768px) and (max-width:1024px)', m: '(max-width:767px)' };
@@ -3803,6 +3825,7 @@
     if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
     if (o.color && HEX.test(o.color)) css.push('color:' + o.color);
     if (o.bg && HEX.test(o.bg)) css.push('background:' + o.bg);
+    if (GRADS[o.grad]) css.push(gradCss(o.grad, o.gradAngle));
     if (o.borderColor && HEX.test(o.borderColor)) css.push('border:' + (o.borderWidth != null && o.borderWidth !== '' ? num(o.borderWidth, 20) : 1) + 'px solid ' + o.borderColor);
     if (o.shadow && SHADOWS[o.shadow]) css.push('box-shadow:' + SHADOWS[o.shadow]);
     if (o.opacity != null && o.opacity !== '') css.push('opacity:' + Math.max(0.05, Math.min(1, Number(o.opacity) || 1)));
@@ -3848,12 +3871,15 @@
     const ratio = e.type === 'frame' && /^\d{1,2} \/ \d{1,2}$/.test(e.aspect || '') ? e.aspect : '';
     const bw = n(e.w, 4, 4000, 200);
     // The left edge never pushes the box past the section's right edge, so a desktop placement still fits on a phone
-    let st = `left:max(0px,min(${n(e.x, -50, 150, 10)}%,calc(100% - ${bw}px)));top:${n(e.y, -3000, 8000, 40)}px;width:${bw}px` + (e.type === 'text' ? '' : ratio ? `;aspect-ratio:${ratio}` : `;height:${n(e.h, 1, 4000, 200)}px`);
+    const auto = ['text', 'button', 'badge'].includes(e.type); // these grow with their text
+    let st = `left:max(0px,min(${n(e.x, -50, 150, 10)}%,calc(100% - ${bw}px)));top:${n(e.y, -3000, 8000, 40)}px;width:${bw}px` + (auto ? '' : ratio ? `;aspect-ratio:${ratio}` : `;height:${n(e.h, 1, 4000, 200)}px`);
     const attrs = (cls, extra = '') => `class="hj-el hj-el-${cls}" data-hj-design="1" data-hj-id="el-${id}" ${extra}`;
     if (e.type === 'text') {
       const tag = /^(h[1-6]|p)$/.test(e.tag) ? e.tag : 'p';
       return `<${tag} ${attrs('text')} style="${st}">${escHtml(e.text || 'Your text')}</${tag}>`;
     }
+    if (e.type === 'button') return `<a ${attrs('button btn-primary')} href="${SAFE_HREF.test(e.href || '') ? escHtml(e.href) : '#collections/all'}" style="${st}">${escHtml(e.text || 'Shop now')}</a>`;
+    if (e.type === 'badge') return `<span ${attrs('badge')} style="${st}">${escHtml(e.text || 'New')}</span>`;
     if (e.type === 'frame' || e.type === 'shape') {
       st += e.shape && EL_CLIP[e.shape] ? `;clip-path:${EL_CLIP[e.shape]}` : `;border-radius:${EL_RADIUS[e.shape] || '0'}`;
     }
@@ -3921,6 +3947,7 @@
     const css = [];
     if (st) {
       if (st.bg && HEX.test(st.bg)) css.push('background:' + st.bg);
+      if (GRADS[st.grad]) css.push(gradCss(st.grad, st.gradAngle));
       if (st.bgImage) css.push(`background-image:url("${imgUrl(st.bgImage).replace(/"/g, '')}");background-size:cover;background-position:center`);
       if (st.color && HEX.test(st.color)) css.push('color:' + st.color);
       if (st.pt != null && st.pt !== '') css.push('padding-top:' + num(st.pt, 400) + 'px');
@@ -4065,8 +4092,10 @@
           const key = el.dataset.hjKey || `[data-hj-id="${el.dataset.hjId}"]`;
           const type = el.className.match(/hj-el-(\w+)/)[1];
           const o = ORIG.get(el);
-          items.push({ key, scope, section, design: el.dataset.hjId.slice(3), type, tag: el.tagName.toLowerCase(), kind: type === 'text' ? 'text' : 'design',
-            text: type === 'text' ? (o ? new DOMParser().parseFromString(o.html, 'text/html').body.textContent : el.textContent).trim() : '', hasMarkup: false, src: '', alt: '', href: '' });
+          const kind = { text: 'text', badge: 'text', button: 'link' }[type] || 'design';
+          items.push({ key, scope, section, design: el.dataset.hjId.slice(3), type, tag: el.tagName.toLowerCase(), kind,
+            text: kind !== 'design' ? (o ? new DOMParser().parseFromString(o.html, 'text/html').body.textContent : el.textContent).trim() : '', hasMarkup: false, src: '', alt: '',
+            href: type === 'button' ? (o ? o.href : el.getAttribute('href')) || '' : '' });
           el.dataset.hjEdit = key;
         }));
         roots.forEach(([root, rootSel, scope, section]) => {
@@ -4120,7 +4149,7 @@
   // The page is never re-laid out here: moves are previewed as a temporary CSS rule, and on release the
   // new offset/size goes to the admin, which saves it per breakpoint and re-applies the content.
   if (IS_ADMIN_PREVIEW) {
-    const ED = { keys: [], locked: [], drag: null, prefs: { grid: false, guides: true, snap: true, size: 8, cols: 12, gutter: 24, margin: 40, threshold: 6 } };
+    const ED = { keys: [], locked: [], drag: null, crop: null, dropAt: null, prefs: { grid: false, guides: true, snap: true, rulers: false, size: 8, cols: 12, gutter: 24, margin: 40, threshold: 6 } };
     const bpNow = () => (window.innerWidth >= 1025 ? 'd' : window.innerWidth >= 768 ? 't' : 'm');
     const elOf = (k) => document.querySelector('[data-hj-key="' + CSS.escape(k) + '"]') || document.querySelector('[data-hj-edit="' + CSS.escape(k) + '"]');
     const visible = (el) => el && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
@@ -4142,6 +4171,16 @@
       #hj-ed .g{position:absolute;background:${ACCENT}}#hj-ed .gv{width:1px}#hj-ed .gh{height:1px}
       #hj-ed .lbl{position:absolute;background:${ACCENT};color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap;transform:translate(-50%,-50%)}
       #hj-ed .tag{position:absolute;background:#3A2418;color:#fff;padding:2px 6px;border-radius:3px;white-space:nowrap}
+      #hj-ed .tb{position:absolute;display:flex;gap:2px;padding:4px;background:#1A120E;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.3);pointer-events:auto;transform:translateX(-50%)}
+      #hj-ed .tb button{all:unset;box-sizing:border-box;min-width:30px;height:30px;padding:0 8px;display:grid;place-items:center;border-radius:999px;color:#F5EFE6;cursor:pointer;font:600 12px/1 system-ui,sans-serif}
+      #hj-ed .tb button:hover{background:rgba(255,255,255,.16)}#hj-ed .tb .sep{width:1px;margin:6px 2px;background:rgba(255,255,255,.2)}
+      #hj-ed .box.crop{border:2px dashed #E8D3B8;cursor:grab;box-shadow:0 0 0 9999px rgba(26,18,14,.35)}
+      #hj-ed .drop{position:absolute;border:2px dashed ${ACCENT};background:rgba(224,69,123,.08);box-sizing:border-box}
+      #hj-ed .rul{position:absolute;background:#FBF7F1;color:#6B4A2E;font:9px/1 system-ui,sans-serif;overflow:hidden;box-shadow:0 0 0 1px rgba(168,132,98,.4)}
+      #hj-ed .rh{left:0;right:0;top:0;height:16px;background-image:linear-gradient(90deg,rgba(107,74,46,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(107,74,46,.3) 1px,transparent 1px);background-size:100px 16px,10px 5px;background-repeat:repeat-x}
+      #hj-ed .rv{left:0;top:16px;bottom:0;width:16px;background-image:linear-gradient(rgba(107,74,46,.55) 1px,transparent 1px),linear-gradient(rgba(107,74,46,.3) 1px,transparent 1px);background-size:16px 100px,5px 10px;background-repeat:repeat-y}
+      #hj-ed .rul span{position:absolute;white-space:nowrap}#hj-ed .rv span{writing-mode:vertical-rl;transform:rotate(180deg)}
+      #hj-ed .rsel{position:absolute;background:rgba(224,69,123,.25)}
       #hj-ed .gridl{position:absolute;inset:0}#hj-ed .col{position:absolute;top:0;bottom:0;background:rgba(224,69,123,.05);border-left:1px solid rgba(224,69,123,.22);border-right:1px solid rgba(224,69,123,.22)}`;
     document.head.appendChild(css);
     const dragCss = document.createElement('style');
@@ -4163,9 +4202,42 @@
       for (let i = 0; i < p.cols && colW > 0; i++) div('col', { left: p.margin + i * (colW + p.gutter) + 'px', width: colW + 'px' });
     }
 
+    // Top and left rulers in page pixels; the selection's extent is marked on both
+    function drawRulers() {
+      if (!ED.prefs.rulers) return;
+      const h = div('rul rh', {}); const v = div('rul rv', {});
+      v.style.backgroundPosition = `0 ${-(window.scrollY % 100) - 0}px, 0 ${-(window.scrollY % 10)}px`;
+      for (let x = 100; x < window.innerWidth; x += 100) { const sp = document.createElement('span'); sp.style.left = x + 3 + 'px'; sp.style.top = '2px'; sp.textContent = x; h.appendChild(sp); }
+      for (let y = 100 - (window.scrollY % 100); y < window.innerHeight; y += 100) { const sp = document.createElement('span'); sp.style.top = y + 3 - 16 + 'px'; sp.style.left = '2px'; sp.textContent = Math.round(y + window.scrollY); v.appendChild(sp); }
+      ED.keys.forEach((k) => {
+        const el = elOf(k); if (!visible(el)) return; const r = el.getBoundingClientRect();
+        div('rsel', { left: r.left + 'px', top: '0', width: r.width + 'px', height: '16px' });
+        div('rsel', { left: '0', top: Math.max(16, r.top) + 'px', width: '16px', height: Math.max(0, r.bottom - Math.max(16, r.top)) + 'px' });
+      });
+    }
+    // Small toolbar above the selection, like a design app; it posts commands to the admin
+    function drawToolbar(r, k, locked, multi) {
+      const isFrame = (el) => el && (el.classList.contains('hj-el-frame') ? !!el.querySelector('img') : el.tagName === 'IMG');
+      const btns = multi ? [['group', 'Group', 'Group / ungroup (Ctrl+G)'], ['align', 'Align', 'Align and distribute'], ['del', '🗑', 'Delete (Delete)']]
+        : locked ? [['lock', '🔓 Unlock', 'Unlock']]
+          : [['dup', '⧉', 'Duplicate (Ctrl+D)'], ...(isFrame(elOf(k)) ? [['crop', '✂ Crop', 'Crop: drag the photo, scroll to zoom (or double-click it)']] : []),
+            ['front', '⤒', 'Bring to front (Shift+])'], ['back', '⤓', 'Send to back (Shift+[)'], ['lock', '🔒', 'Lock'], ['del', '🗑', 'Delete (Delete)']];
+      const tb = div('tb', { left: Math.max(90, Math.min(window.innerWidth - 90, r.left + r.width / 2)) + 'px', top: (r.top > 70 ? r.top - 46 : r.bottom + 30) + 'px' });
+      btns.forEach(([cmd, label, title]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.cmd = cmd; b.title = title; b.textContent = label; tb.appendChild(b); });
+    }
+
     function draw(guides) {
       layer.textContent = '';
       drawGrid();
+      drawRulers();
+      if (ED.dropAt) div('drop', ED.dropAt);
+      if (ED.crop) {
+        const r = ED.crop.el.getBoundingClientRect();
+        const box = div('box crop', { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+        box.dataset.key = ED.crop.key;
+        div('tag', { left: r.left + 'px', top: Math.max(0, r.bottom + 6) + 'px' }, `Crop · drag the photo${ED.crop.frame ? ' · scroll to zoom ' + ED.crop.zoom.toFixed(2) + '×' : ''} · Enter to finish, Esc to cancel`);
+        return;
+      }
       const single = ED.keys.length === 1;
       ED.keys.forEach((k) => {
         const el = elOf(k);
@@ -4179,7 +4251,12 @@
           const [tx, ty] = translateOf(el);
           div('tag', { left: r.left + 'px', top: Math.max(0, r.bottom + 6) + 'px' }, `${Math.round(r.width)} × ${Math.round(r.height)}  ·  X ${Math.round(tx)}  Y ${Math.round(ty)}`);
         }
+        if (single && !ED.drag) drawToolbar(r, k, locked, false);
       });
+      if (ED.keys.length > 1 && !ED.drag) {
+        const rs = ED.keys.map(elOf).filter(visible).map((e) => e.getBoundingClientRect());
+        if (rs.length) { const L = Math.min(...rs.map((x) => x.left)); const R = Math.max(...rs.map((x) => x.right)); const T = Math.min(...rs.map((x) => x.top)); const B = Math.max(...rs.map((x) => x.bottom)); drawToolbar({ left: L, top: T, width: R - L, bottom: B }, null, false, true); }
+      }
       (guides || []).forEach((g) => {
         if (g.v != null) div('g gv', { left: g.v + 'px', top: g.from + 'px', height: Math.max(1, g.to - g.from) + 'px' });
         if (g.h != null) div('g gh', { top: g.h + 'px', left: g.from + 'px', width: Math.max(1, g.to - g.from) + 'px' });
@@ -4213,9 +4290,91 @@
       dragCss.textContent = `${sel}{${decl.map((d) => d + '!important').join(';')}}`;
     }
 
+    // Toolbar buttons act on pointerdown: the overlay is redrawn often, so a click could be lost between down and up
+    layer.addEventListener('pointerdown', (e) => {
+      const b = e.target.closest('[data-cmd]'); if (!b) return;
+      e.preventDefault(); e.stopPropagation();
+      if (b.dataset.cmd === 'crop') { startCrop(ED.keys[0]); return; }
+      window.parent.postMessage({ type: 'hj-cmd', cmd: b.dataset.cmd, keys: ED.keys.slice() }, location.origin);
+    }, true);
+
+    // Crop mode: the photo moves inside its frame (focus point) and zooms (frames); the frame keeps its size
+    const pct = (v) => { const n = parseFloat(v); return Number.isFinite(n) ? n : 50; };
+    function startCrop(k) {
+      const el = elOf(k); if (!el) return;
+      const img = el.tagName === 'IMG' ? el : el.querySelector('img'); if (!img) return;
+      const [fx, fy] = (img.style.objectPosition || getComputedStyle(img).objectPosition).split(' ').map(pct);
+      const zm = /scale\(([\d.]+)\)/.exec(img.style.transform || '');
+      ED.crop = { key: k, el, img, frame: el !== img, fx, fy, zoom: zm ? Number(zm[1]) : 1, start: null };
+      ED.crop.orig = { fx, fy, zoom: ED.crop.zoom };
+      draw();
+    }
+    function cropApply() {
+      const C = ED.crop; const pos = `${Math.round(C.fx)}% ${Math.round(C.fy)}%`;
+      C.img.style.setProperty('object-position', pos, 'important');
+      if (C.frame) { C.img.style.transformOrigin = pos; C.img.style.transform = `scale(${C.zoom})`; }
+    }
+    function endCrop(save) {
+      const C = ED.crop; if (!C) return; ED.crop = null;
+      // A website photo goes back to its CSS rules (the saved focus arrives with the next render); a frame is rebuilt on render
+      if (!C.frame) C.img.style.removeProperty('object-position');
+      if (!save) { if (C.frame) { Object.assign(C, C.orig); cropApply(); } draw(); return; }
+      window.parent.postMessage({ type: 'hj-crop', key: C.key, fx: Math.round(C.fx), fy: Math.round(C.fy), zoom: Math.round(C.zoom * 100) / 100 }, location.origin);
+    }
+    layer.addEventListener('pointerdown', (e) => {
+      if (!ED.crop || !e.target.closest('.box.crop')) return;
+      e.preventDefault(); e.stopPropagation();
+      const r = ED.crop.el.getBoundingClientRect();
+      ED.crop.start = { x: e.clientX, y: e.clientY, fx: ED.crop.fx, fy: ED.crop.fy, w: r.width, h: r.height };
+    }, true);
+    window.addEventListener('pointermove', (e) => {
+      const C = ED.crop; if (!C || !C.start) return;
+      const S = C.start; const k = 100 / C.zoom; // dragging the photo right shows more of its left side
+      C.fx = Math.max(0, Math.min(100, S.fx - (e.clientX - S.x) / S.w * k));
+      C.fy = Math.max(0, Math.min(100, S.fy - (e.clientY - S.y) / S.h * k));
+      cropApply();
+    });
+    window.addEventListener('pointerup', () => { if (ED.crop) ED.crop.start = null; });
+    layer.addEventListener('wheel', (e) => {
+      if (!ED.crop || !ED.crop.frame || !e.target.closest('.box.crop')) return;
+      e.preventDefault();
+      ED.crop.zoom = Math.max(1, Math.min(4, ED.crop.zoom * (e.deltaY < 0 ? 1.06 : 1 / 1.06)));
+      cropApply(); draw();
+    }, { passive: false });
+    document.addEventListener('keydown', (e) => { if (ED.crop && (e.key === 'Enter' || e.key === 'Escape')) { e.preventDefault(); e.stopImmediatePropagation(); endCrop(e.key === 'Enter'); } }, true);
+
+    // Images dragged in from the admin's Media panel: onto a frame or image = replace, anywhere else = a new framed image there
+    const dropTarget = (x, y) => {
+      layer.style.display = 'none'; const hit = document.elementFromPoint(x, y); layer.style.display = '';
+      if (!hit) return null;
+      const frame = hit.closest('.hj-el-frame'); if (frame) return { kind: 'frame', el: frame, key: frame.dataset.hjEdit };
+      const img = hit.tagName === 'IMG' && hit.dataset.hjEdit ? hit : null; if (img) return { kind: 'img', el: img, key: img.dataset.hjEdit };
+      const sec = hit.closest('#app-view > [data-hj-sec]') || GLOBAL_ROOTS.map((g) => hit.closest(g)).find(Boolean);
+      return sec ? { kind: 'section', el: sec, section: sec.dataset.hjSec || GLOBAL_ROOTS.find((g) => sec.matches(g)) } : null;
+    };
+    const isImgDrag = (e) => e.dataTransfer && [...e.dataTransfer.types].includes('text/hj-img');
+    document.addEventListener('dragover', (e) => {
+      if (!window.__hjContentMode || !isImgDrag(e)) return;
+      e.preventDefault(); e.dataTransfer.dropEffect = 'copy';
+      const t = dropTarget(e.clientX, e.clientY);
+      const r = t && t.el.getBoundingClientRect();
+      ED.dropAt = r ? { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' } : null;
+      draw();
+    });
+    document.addEventListener('dragleave', (e) => { if (!e.relatedTarget) { ED.dropAt = null; draw(); } });
+    document.addEventListener('drop', (e) => {
+      if (!window.__hjContentMode || !isImgDrag(e)) return;
+      e.preventDefault(); ED.dropAt = null; draw();
+      const src = e.dataTransfer.getData('text/hj-img'); const t = dropTarget(e.clientX, e.clientY);
+      if (!t || !src) return;
+      const r = t.el.getBoundingClientRect();
+      window.parent.postMessage({ type: 'hj-drop', src, kind: t.kind, key: t.key || null, section: t.section || null,
+        x: Math.round((e.clientX - r.left) / Math.max(1, r.width) * 1000) / 10, y: Math.round(e.clientY - r.top) }, location.origin);
+    });
+
     layer.addEventListener('pointerdown', (e) => {
       const box = e.target.closest('.box');
-      if (!box || box.classList.contains('locked')) return;
+      if (!box || box.classList.contains('locked') || box.classList.contains('crop')) return;
       if (box.classList.contains('multi')) {
         // Several elements (a group or a Shift selection) move together; unlocked ones only
         e.preventDefault();
@@ -4311,6 +4470,7 @@
       const box = e.target.closest('.box');
       if (!box || box.classList.contains('locked')) return;
       const el = elOf(box.dataset.key);
+      if (el && (el.tagName === 'IMG' || (el.classList.contains('hj-el-frame') && el.querySelector('img')))) { startCrop(box.dataset.key); return; }
       if (!el || el.tagName === 'IMG' || el.children.length || !el.textContent.trim()) return;
       const before = el.textContent;
       ED.editing = el;
@@ -4364,7 +4524,8 @@
       bp: bpNow,
       // Replay an element's entrance animation so it can be checked before saving
       replay(key) { const el = elOf(key); if (!el) return; el.classList.remove('hj-in'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; requestAnimationFrame(() => el.classList.add('hj-in')); },
-      select(keys, locked) { ED.keys = (keys || []).filter(Boolean); ED.locked = locked || []; dragCss.textContent = ''; draw(); },
+      select(keys, locked) { if (ED.crop) endCrop(true); ED.keys = (keys || []).filter(Boolean); ED.locked = locked || []; dragCss.textContent = ''; draw(); },
+      crop(key) { startCrop(key); },
       prefs(p) { Object.assign(ED.prefs, p || {}); draw(); },
       // Geometry for align / distribute / centre, measured on the live page
       rects(keys) {

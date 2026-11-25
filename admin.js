@@ -258,7 +258,12 @@
   let editingId = null;
   let baseline = '';
   let editorDirty = false;
-  let device = 1280;
+  // Default canvas = this browser window's width, so the canvas matches what the admin sees on the live site in this browser
+  const MY_W = Math.round(window.innerWidth);
+  let device = MY_W >= 1025 ? MY_W : 1280;
+  // Viewport height the page is rendered at. Sizes on the website use the screen height (100vh: hero, product photo),
+  // so the canvas must have a real screen height, not the height of the admin panel. Wide screens use this window's height.
+  const deviceH = () => (device >= 1025 ? Math.round(window.innerHeight) : device >= 768 ? 1024 : 844);
   let zoom = 1; // canvas zoom on top of "fit to panel"
   const PREFS_KEY = 'hj_editor_prefs';
   const edPrefs = Object.assign({ grid: false, guides: true, snap: true, size: 8, cols: 12, gutter: 24, margin: 40, threshold: 6 },
@@ -390,16 +395,18 @@
     if (!stage || !frame || !stage.clientWidth) return;
     const pad = 16;
     const availW = stage.clientWidth - pad * 2;
-    const fit = Math.min(1, availW / device);
+    const vh = deviceH();
+    const fit = Math.min(1, availW / device, Math.max(0.2, (stage.clientHeight - pad * 2) / vh));
     const k = fit * zoom;
     frame.style.width = device + 'px';
-    frame.style.height = Math.max(200, (stage.clientHeight - pad * 2) / fit) + 'px';
+    frame.style.height = vh + 'px';
     frame.style.transform = `scale(${k})`;
     frame.style.left = pad + Math.max(0, (availW - device * k) / 2) + 'px';
     stage.style.overflow = zoom > 1 ? 'auto' : 'hidden';
     const zl = $('#zoom-l'); if (zl) zl.textContent = Math.round(k * 100) + '%';
     // The page is rendered at the real viewport width; the scale is only how big it is drawn here
-    const info = $('#pv-info'); if (info) info.textContent = `Viewport ${device}px · shown at ${Math.round(k * 100)}%`;
+    const info = $('#pv-info'); if (info) info.textContent = `Viewport ${device} × ${vh}px · shown at ${Math.round(k * 100)}%`;
+    const vi = $('#pv-vh'); if (vi) vi.textContent = `${device} × ${vh}`;
   }
 
   // Unsaved product (with not-yet-deployed uploads swapped for their local copies) -> preview iframe
@@ -861,17 +868,18 @@
           <div class="ws-actions">
             <button class="btn btn-sm" data-cm="add-el-menu" title="Add text, frames, shapes, lines and icons">+ Element</button><button class="btn btn-sm" data-cm="shortcuts" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts">⌨</button>
             <button class="btn btn-sm" data-cm="undo" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button><button class="btn btn-sm" data-cm="redo" title="Redo (Ctrl+Y)" aria-label="Redo">↷</button>
-            <button class="btn" data-cm="discard">Discard</button><button class="btn" data-cm="save-draft">Save draft</button><button class="btn btn-primary" data-cm="publish">Publish</button>
+            <button class="btn" data-cm="preview" title="Open this page with your unpublished changes in a new tab">Preview</button><button class="btn" data-cm="discard">Discard</button><button class="btn" data-cm="save-draft">Save draft</button><button class="btn btn-primary" data-cm="publish">Publish</button>
           </div>
           <div class="ws-url"><div class="seg st-switch" role="group" aria-label="Show panel"><button type="button" data-spane="layers" aria-pressed="false">Layers</button><button type="button" data-spane="canvas" aria-pressed="true">Canvas</button><button type="button" data-spane="props" aria-pressed="false">Properties</button></div>
-            <div class="seg" role="group" aria-label="Preview size">${dev(1440, 'Desktop')}${dev(1280, 'Laptop')}${dev(768, 'Tablet')}${dev(390, 'Mobile')}</div>
+            <div class="seg" role="group" aria-label="Preview size">${MY_W >= 1025 && ![1440, 1280].includes(MY_W) ? dev(MY_W, 'This screen') : ''}${dev(1440, 'Desktop')}${dev(1280, 'Laptop')}${dev(768, 'Tablet')}${dev(390, 'Mobile')}</div>
+            <span class="small muted" id="pv-vh" title="Canvas size in screen pixels: the page is laid out exactly as on a screen this size"></span>
             <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="10" value="${device}" style="width:90px;min-height:34px"></label>
             <div class="seg" role="group" aria-label="Show version"><button type="button" data-viewmode="draft" aria-pressed="true" title="Your edits, including unpublished ones">Draft</button><button type="button" data-viewmode="live" aria-pressed="false" title="Exactly what the public website shows now">Live</button></div>
             ${isTemplate(key) ? `<label class="row-flex small" style="margin:0;font-weight:400">Preview with <select id="tpl-prev" style="width:auto;min-height:34px;max-width:220px">${
               (key === 'tpl:products' ? state.products.map((x) => ['products/' + (x.handle || x.id), x.name]) : (await categories()).map((c) => ['collections/' + c.id, c.name || c.id]))
                 .map(([r, n]) => `<option value="${esc(r)}" ${r === route ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></label>` : ''}
             <div class="seg" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out">−</button><button type="button" data-zoom="0" id="zoom-l" title="Fit">100%</button><button type="button" data-zoom="1" aria-label="Zoom in">+</button></div>
-            <div class="seg" role="group" aria-label="Canvas helpers">${['grid:Grid', 'guides:Guides', 'snap:Snap'].map((x) => { const [k2, l] = x.split(':'); return `<button type="button" data-pref="${k2}" aria-pressed="${!!edPrefs[k2]}">${l}</button>`; }).join('')}</div>
+            <div class="seg" role="group" aria-label="Canvas helpers">${['grid:Grid', 'rulers:Rulers', 'guides:Guides', 'snap:Snap'].map((x) => { const [k2, l] = x.split(':'); return `<button type="button" data-pref="${k2}" aria-pressed="${!!edPrefs[k2]}">${l}</button>`; }).join('')}</div>
             <details class="gridset"><summary class="btn btn-sm" aria-label="Grid settings">⚙</summary><div class="gridpop">
               ${[['size', 'Grid size (px)', 2, 64], ['cols', 'Columns', 1, 24], ['gutter', 'Gutter (px)', 0, 80], ['margin', 'Margins (px)', 0, 200], ['threshold', 'Snap distance (px)', 1, 20]]
                 .map(([k2, l, mn, mx]) => `<label>${l}<input type="number" data-prefnum="${k2}" min="${mn}" max="${mx}" value="${edPrefs[k2]}"></label>`).join('')}
@@ -953,7 +961,7 @@
   }
 
   // Design elements (page.els): frames, shapes, lines, icons and text boxes placed inside a section
-  const EL_TYPE = { frame: 'Frame', shape: 'Shape', line: 'Line', icon: 'Icon', text: 'Text box' };
+  const EL_TYPE = { frame: 'Frame', shape: 'Shape', line: 'Line', icon: 'Icon', text: 'Text box', button: 'Button', badge: 'Badge' };
   const designOf = (it) => it && it.design ? (pageData(pageKeyFor(it.scope)).els || []).find((x) => x.id === it.design) : null;
   const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
   const elKeyOf = (id) => `[data-hj-id="el-${id}"]`;
@@ -981,7 +989,7 @@
     const el = { ...def, id, sec, x, y, w: ew };
     cmEdit(global ? '*' : cm.key, (p) => {
       p.els = [...(p.els || []), el];
-      if (item) p.items[elKeyOf(id)] = clone(item);
+      if (item && Object.keys(item).length) p.items[elKeyOf(id)] = clone(item);
     });
     selectElement(elKeyOf(id), false, true);
     return id;
@@ -1059,7 +1067,7 @@
     showPane('props');
   }
   const ELEMENT_MENU = [
-    ['Text', [['text:h2', 'Heading'], ['text:h3', 'Subheading'], ['text:p', 'Paragraph']]],
+    ['Text & buttons', [['text:h2', 'Heading'], ['text:h3', 'Subheading'], ['text:p', 'Paragraph'], ['button:primary', 'Button'], ['badge:new', 'Badge']]],
     ['Frames (hold an image)', [['frame:rect', 'Rectangle'], ['frame:square', 'Square'], ['frame:rounded', 'Rounded'], ['frame:circle', 'Circle'], ['frame:oval', 'Oval'],
       ['frame:portrait', 'Portrait 4:5'], ['frame:landscape', 'Landscape 16:9'], ['frame:arch', 'Arch'], ['frame:hexagon', 'Hexagon'], ['frame:diamond', 'Diamond']]],
     ['Shapes', [['shape:rect', 'Rectangle'], ['shape:rounded', 'Rounded'], ['shape:circle', 'Circle'], ['shape:oval', 'Oval'], ['shape:triangle', 'Triangle'], ['shape:diamond', 'Diamond'],
@@ -1073,6 +1081,8 @@
     const rad = { rounded: '8px', circle: '50%', oval: '50%', arch: '99px 99px 0 0' }[v] || '0';
     const wh = v === 'oval' ? 'width:40px;height:26px' : v === 'portrait' ? 'width:26px;height:32px' : v === 'landscape' ? 'width:40px;height:23px' : v === 'arch' ? 'width:26px;height:34px' : 'width:32px;height:32px';
     if (type === 'text') return `<i class="el-pv-t" style="font-size:${v === 'h2' ? 20 : v === 'h3' ? 15 : 11}px">${v === 'p' ? 'Aa body' : 'Aa'}</i>`;
+    if (type === 'button') return '<i class="el-pv" style="width:46px;height:16px;border-radius:99px;background:#3A2418"></i>';
+    if (type === 'badge') return '<i class="el-pv" style="width:34px;height:12px;border-radius:99px;background:#5A1A2A"></i>';
     if (type === 'frame') return `<i class="el-pv" style="${wh};border-radius:${rad};${clip ? 'clip-path:' + clip : ''};background:repeating-linear-gradient(45deg,#e9dccb 0 5px,#f6efe6 5px 10px);outline:1px dashed #a88462"></i>`;
     if (type === 'shape') return `<i class="el-pv" style="${wh};border-radius:${rad};${clip ? 'clip-path:' + clip : ''};background:#A88462"></i>`;
     if (type === 'line') return `<i class="el-pv" style="width:40px;height:0;border-top:${v === 'double' ? '4px double' : '2px ' + (['dashed', 'dotted'].includes(v) ? v : 'solid')} #A88462"></i>`;
@@ -1080,6 +1090,8 @@
   }
   function elementDef(code) {
     const [type, v] = code.split(':');
+    if (type === 'button') return { type, text: 'Shop the collection', href: '#collections/all', w: 240 };
+    if (type === 'badge') return { type, text: 'New arrival', w: 130 };
     if (type === 'text') return { type, tag: v, text: v === 'p' ? 'Add a little bit of body text' : v === 'h2' ? 'Add a heading' : 'Add a subheading', w: v === 'p' ? 360 : 440 };
     if (type === 'frame') {
       const ratio = { square: '1 / 1', circle: '1 / 1', portrait: '4 / 5', landscape: '16 / 9', hexagon: '1 / 1', diamond: '1 / 1' }[v] || '';
@@ -1098,16 +1110,51 @@
   };
   const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'design' ? EL_TYPE[i.type] + ((designOf(i) || {}).shape ? ' · ' + designOf(i).shape : (designOf(i) || {}).icon ? ' · ' + designOf(i).icon : '') :
     i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
-  const KIND_ICON = { text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★' };
+  const KIND_ICON = { text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
+
+  function renderMediaPanel() {
+    const box = $('#st-layers');
+    const tabs = `<div class="seg ly-tabs" role="tablist"><button type="button" data-lytab="layers" aria-pressed="false">Layers</button><button type="button" data-lytab="media" aria-pressed="true">Media</button></div>`;
+    if (!state.media) {
+      box.innerHTML = tabs + '<div class="skel" style="height:240px;margin-top:var(--s3)"></div>';
+      loadMedia().then(() => cm.lyTab === 'media' && renderMediaPanel()).catch((e) => { box.innerHTML = tabs + `<p class="note small">${esc(e.message)}</p>`; });
+      return;
+    }
+    const it = cmItem(cm.sel); const target = it && (designOf(it) || {}).type === 'frame' ? 'the selected frame' : it && it.kind === 'image' ? 'the selected image' : 'a new frame';
+    box.innerHTML = tabs + `<button class="btn btn-sm btn-primary" data-cm="media-up" style="width:100%;margin:var(--s3) 0 var(--s2)">Upload image</button>
+      <p class="help" style="margin:0 0 var(--s2)">Drag a photo onto a frame or image to replace it, or anywhere on a section to place it. Click a photo to use it for ${target}.</p>
+      <div class="md-grid">${state.media.map((m) => `<img src="${esc(imgSrc(m.path))}" alt="${esc(m.name)}" title="${esc(m.name)}" loading="lazy" draggable="true" data-mimg="${esc(m.path)}">`).join('')}</div>`;
+  }
+  function useImage(path) {
+    const it = cmItem(cm.sel);
+    if (it && (designOf(it) || {}).type === 'frame') return patchEl(it, { src: path });
+    if (it && it.kind === 'image') {
+      if (isTemplate(cm.key) && it.scope === 'page') { toast('Product and category photos come from Products / categories, not from the template.', true); return; }
+      return patchItem(it, { src: path });
+    }
+    placeImage(path, null, null, null);
+  }
+  // A new frame holding the photo, at the photo's own proportions
+  function placeImage(path, sec, x, y) {
+    const img = new Image();
+    img.onload = () => {
+      const w = 300; const h = Math.round(w * img.naturalHeight / Math.max(1, img.naturalWidth));
+      addDesignEl({ type: 'frame', shape: 'rect', src: path, alt: '', w, h, ...(x != null ? { x: Math.max(0, x - 10), y: Math.max(0, y - Math.round(h / 2)) } : {}) }, sec);
+      toast('Photo placed. Add ALT text in Properties.');
+    };
+    img.onerror = () => toast('Could not load that image.', true);
+    img.src = imgSrc(path);
+  }
 
   function renderLayers() {
     const S = cm.scan; if (!S) return;
+    if (cm.lyTab === 'media') return renderMediaPanel();
     const P = pageData(cm.key);
     const hidden = new Set([...(P.hidden || [])]);
     const row = (i) => {
       const o = cmOverride(i); const locked = isLocked(i.key, i.scope);
       return `<li class="ly-el ${cm.sel === i.key ? 'on' : ''}"><button type="button" class="ly-name" data-cmsel="${esc(i.key)}" ${locked ? 'aria-disabled="true"' : ''}>
-        <span class="ly-k">${i.kind === 'design' ? KIND_ICON[i.type] : i.tag === 'img' ? KIND_ICON.image : /^h[1-6]$/.test(o.tag || i.tag) ? (o.tag || i.tag).toUpperCase() : KIND_ICON[i.kind]}</span><span class="ly-t">${(P.groups || []).some((g) => g.includes(i.key)) ? '<span title="Grouped">⧉ </span>' : ''}${esc(itemLabel(i).slice(0, 60))}</span></button>
+        <span class="ly-k">${i.design && KIND_ICON[i.type] && i.type !== 'text' ? KIND_ICON[i.type] : i.kind === 'design' ? KIND_ICON[i.type] : i.tag === 'img' ? KIND_ICON.image : /^h[1-6]$/.test(o.tag || i.tag) ? (o.tag || i.tag).toUpperCase() : KIND_ICON[i.kind]}</span><span class="ly-t">${(P.groups || []).some((g) => g.includes(i.key)) ? '<span title="Grouped">⧉ </span>' : ''}${esc(itemLabel(i).slice(0, 60))}</span></button>
         <button type="button" class="ly-ic" data-eltog="${esc(i.key)}" aria-label="${o.hidden ? 'Show' : 'Hide'} element" title="${o.hidden ? 'Show' : 'Hide'}">${o.hidden ? '◌' : '●'}</button>
         <button type="button" class="ly-ic" data-ellock="${esc(i.key)}" data-scope="${i.scope}" aria-label="${locked ? 'Unlock' : 'Lock'} element" title="${locked ? 'Unlock' : 'Lock'}">${locked ? '🔒' : '🔓'}</button></li>`;
     };
@@ -1121,7 +1168,7 @@
           ${scope === 'page' ? `<button type="button" class="ly-ic" data-sectog="${esc(key)}" aria-label="${hidden.has(key) ? 'Show' : 'Hide'} section">${hidden.has(key) ? '◌' : '●'}</button>` : ''}</div>
         ${open ? `<ul class="ly-els">${items.map(row).join('') || '<li class="small muted" style="padding:6px 10px">No editable text or images.</li>'}</ul>` : ''}</li>`;
     };
-    $('#st-layers').innerHTML = `
+    $('#st-layers').innerHTML = `<div class="seg ly-tabs" role="tablist"><button type="button" data-lytab="layers" aria-pressed="true">Layers</button><button type="button" data-lytab="media" aria-pressed="false">Media</button></div>
       <button type="button" class="ly-page ${!cm.sel && !cm.secSel ? 'on' : ''}" data-cm="page-props">⚙ Page settings</button>
       <h4 class="ly-h">Sections</h4>
       <ol class="ly-list" id="cm-secs">${S.sections.map((s, n) => section(s.key, secLabel(s, n), 'page', n, s)).join('') || '<li class="small muted">This page has no sections yet.</li>'}</ol>
@@ -1201,6 +1248,8 @@
       ${src ? group('Content', customFields(src, !!lib)) : ''}
       ${group('Design', `
         <div class="full"><label>Background colour</label>${swatchRow('data-ssbg', st.bg)}</div>
+        <div><label for="ss-grad">Gradient</label><select id="ss-grad" data-ss="grad">${[['', 'None'], ['gold', 'Champagne gold'], ['champagne', 'Champagne'], ['wine', 'Burgundy wine'], ['espresso', 'Espresso'], ['ivory', 'Ivory'], ['rose', 'Rose']].map(([v, l]) => `<option value="${v}" ${(st.grad || '') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+        ${numField('ss-ga', 'Gradient angle (°)', 'data-ss="gradAngle"', st.gradAngle, '135', 0, 360)}
         <div class="full"><label>Text colour</label>${swatchRow('data-sscolor', st.color)}</div>
         ${numField('ss-pt', 'Padding top (px)', 'data-ss="pt"', st.pt)}${numField('ss-pb', 'Padding bottom (px)', 'data-ss="pb"', st.pb)}
         ${numField('ss-mh', 'Minimum height (px)', 'data-ss="minH"', st.minH, 'Auto', 0, 2000)}
@@ -1250,7 +1299,8 @@
       ${numField('p-r', 'Rotation (°)', 'data-p="r"', P.r, '0', -360, 360)}
       <div class="full"><label>Layer order <span class="small muted">(z = ${P.z || 0})</span></label><div class="row-flex"><button type="button" class="btn btn-sm" data-zorder="top" title="Bring to front (Shift+])">⤒ Front</button><button type="button" class="btn btn-sm" data-zorder="1" title="Bring forward (])">⬆ Forward</button><button type="button" class="btn btn-sm" data-zorder="-1" title="Send backward ([)">⬇ Backward</button><button type="button" class="btn btn-sm" data-zorder="bottom" title="Send to back (Shift+[)">⤓ Back</button></div></div>
       <div class="full row-flex"><button type="button" class="btn btn-sm" data-al="secc">Centre in section</button><button type="button" class="btn btn-sm" data-al="pagec">Centre on page</button>
-        <button type="button" class="btn btn-sm" data-cm="reset-pos">Reset (this size)</button></div>
+        <button type="button" class="btn btn-sm" data-cm="reset-pos">Reset (this size)</button>
+        ${curBp() !== 'd' ? `<button type="button" class="btn btn-sm" data-cm="pos-inherit" title="Use the position and size from the larger screen">Copy from ${curBp() === 't' ? 'desktop' : 'tablet'}</button>` : ''}</div>
       <p class="full help" style="margin:0">Drag the element on the canvas, or use the handles to resize and rotate. Moves are an offset from its place in the layout, so the rest of the page keeps flowing.</p>`);
     const range = (id, label, attr, v, min, max, step, unit) => `<div><label for="${id}">${label} <span class="small muted" data-rv="${id}">${v}${unit}</span></label><input id="${id}" ${attr} type="range" min="${min}" max="${max}" step="${step}" value="${v}" data-unit="${unit}"></div>`;
     const adjustGroup = () => group('Adjust image', `
@@ -1260,6 +1310,7 @@
         <div><label>Flip</label><label class="check"><input type="checkbox" data-e="flipH" ${o.flipH ? 'checked' : ''}> Horizontal</label><label class="check"><input type="checkbox" data-e="flipV" ${o.flipV ? 'checked' : ''}> Vertical</label></div>`, false);
     const boxGroup = (title, open) => group(title, `
         <div class="full"><label>${it.type === 'shape' ? 'Fill' : 'Background'}</label>${swatchRow('data-ebg', o.bg)}</div>
+        <div><label for="e-grad">Gradient</label>${sel('e-grad', 'data-e="grad"', [['', 'None'], ['gold', 'Champagne gold'], ['champagne', 'Champagne'], ['wine', 'Burgundy wine'], ['espresso', 'Espresso'], ['ivory', 'Ivory'], ['rose', 'Rose']], o.grad || '')}</div>${numField('e-ga', 'Gradient angle (°)', 'data-e="gradAngle"', o.gradAngle, '135', 0, 360)}
         <div class="full"><label>Border colour</label>${swatchRow('data-ebd', o.borderColor)}</div>
         ${numField('e-bw', 'Border width (px)', 'data-e="borderWidth"', o.borderWidth, '1', 0, 20)}${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 999)}
         <div><label for="e-sh">Shadow</label>${sel('e-sh', 'data-e="shadow"', [['', 'Default'], ['none', 'None'], ['soft', 'Soft'], ['strong', 'Strong'], ['glow', 'Gold glow']], o.shadow || '')}</div>
@@ -1311,7 +1362,7 @@
     let html = `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
       <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
       ${tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
-    if (D && D.type !== 'text') {
+    if (D && !['text', 'button', 'badge'].includes(D.type)) {
       html += (D.type === 'frame' && D.src ? adjustGroup() : '') + (D.type === 'line' || D.type === 'icon' ? '' : boxGroup(D.type === 'shape' ? 'Fill & border' : 'Border & effects', D.type === 'shape')) + effectsGroup;
     } else if (it.kind === 'image') {
       const [fx, fy] = (o.objectPosition || '50% 50%').split(' ').map((v) => parseInt(v, 10));
@@ -1346,9 +1397,10 @@
           ${sel('e-deco', 'data-e="deco" aria-label="Line"', [['', 'No line'], ['underline', 'Underline'], ['line-through', 'Strikethrough']], o.deco || '')}
           ${sel('e-case', 'data-e="case" aria-label="Letter case"', [['', 'Case as typed'], ['uppercase', 'UPPERCASE'], ['lowercase', 'lowercase'], ['capitalize', 'Title Case']], o.case || '')}
           ${sel('e-tsh', 'data-e="textShadow" aria-label="Text shadow"', [['', 'No text shadow'], ['soft', 'Soft shadow'], ['strong', 'Strong shadow'], ['glow', 'Glow']], o.textShadow || '')}</div>`) +
-      (D ? boxGroup('Box: background & border', false) : '') + effectsGroup +
+      (D && !isBtn ? boxGroup('Box: background & border', false) : '') + effectsGroup +
       (isBtn ? group('Button design', `
         <div class="full"><label>Background</label>${swatchRow('data-ebg', o.bg)}</div>
+        <div><label for="e-grad">Gradient</label>${sel('e-grad', 'data-e="grad"', [['', 'None'], ['gold', 'Champagne gold'], ['champagne', 'Champagne'], ['wine', 'Burgundy wine'], ['espresso', 'Espresso'], ['ivory', 'Ivory'], ['rose', 'Rose']], o.grad || '')}</div>${numField('e-ga', 'Gradient angle (°)', 'data-e="gradAngle"', o.gradAngle, '135', 0, 360)}
         <div class="full"><label>Border colour</label>${swatchRow('data-ebd', o.borderColor)}</div>
         ${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 200)}
         ${numField('e-px', 'Padding left/right (px)', 'data-e="padX"', o.padX, 'Default', 0, 120)}${numField('e-py', 'Padding top/bottom (px)', 'data-e="padY"', o.padY, 'Default', 0, 120)}
@@ -1471,7 +1523,8 @@
       ['brightness', 'contrast', 'saturate'].forEach((k) => { if (f(k)) set(k, n(k), 100); });
       ['animDur', 'animDelay'].forEach((k) => { if (f(k)) set(k, n(k)); });
       ['flipH', 'flipV', 'italic'].forEach((k) => { if (f(k)) set(k, f(k).checked || null); });
-      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover'].forEach((k) => { if (f(k)) set(k, f(k).value); });
+      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover', 'grad'].forEach((k) => { if (f(k)) set(k, f(k).value); });
+      if (f('gradAngle')) set('gradAngle', n('gradAngle'));
       if (f('visibility')) set('hidden', f('visibility').value === 'hidden' || null);
       if (Object.keys(o).length) p.items[it.key] = o; else delete p.items[it.key];
     }, true);
@@ -1721,10 +1774,30 @@
     if (e.data.type === 'hj-pos-many' && inStudio() && Array.isArray(e.data.list)) savePosMany(Object.fromEntries(e.data.list.map((x) => [x.key, x.pos])), e.data.bp);
     if (e.data.type === 'hj-text' && inStudio() && cmItem(e.data.key) && typeof e.data.text === 'string') patchItem(cmItem(e.data.key), { text: e.data.text.slice(0, 2000) });
     if (e.data.type === 'hj-key' && inStudio()) cmKey(String(e.data.key), !!e.data.mod, !!e.data.shift);
+    if (e.data.type === 'hj-cmd' && inStudio()) {
+      const c = e.data.cmd; const it = cmItem(cm.sel);
+      if (c === 'dup') { if (copySelected()) pasteEl(true); }
+      if (c === 'del') deleteSelected();
+      if (c === 'front' || c === 'back') zOrder(c === 'front' ? 'top' : 'bottom');
+      if (c === 'group') groupToggle();
+      if (c === 'align') { renderProps(); showPane('props'); }
+      if (c === 'lock' && it) { const k = it.key; cmEdit(pageKeyFor(it.scope), (p) => { p.locked = (p.locked || []).includes(k) ? p.locked.filter((x) => x !== k) : [...(p.locked || []), k]; }); }
+    }
+    if (e.data.type === 'hj-crop' && inStudio()) {
+      const it = cmItem(e.data.key); if (!it) return;
+      const fx = Math.max(0, Math.min(100, Number(e.data.fx) || 0)); const fy = Math.max(0, Math.min(100, Number(e.data.fy) || 0));
+      if (designOf(it)) patchEl(it, { fx, fy, zoom: Math.max(1, Math.min(4, Number(e.data.zoom) || 1)) });
+      else patchItem(it, { objectPosition: `${Math.round(fx)}% ${Math.round(fy)}%` });
+    }
+    if (e.data.type === 'hj-drop' && inStudio() && typeof e.data.src === 'string' && /^(images|brand-identity)\/[\w.\- ]+$/.test(e.data.src)) {
+      const src = e.data.src;
+      if (e.data.kind === 'frame' || e.data.kind === 'img') { const it = cmItem(e.data.key); if (it) { cm.sel = it.key; useImage(src); } }
+      else if (e.data.kind === 'section' && e.data.section) placeImage(src, e.data.section, Number(e.data.x), Number(e.data.y));
+    }
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
+    const t = e.target.closest('[data-lytab],[data-mimg],[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
     if (d.viewmode) { setViewMode(d.viewmode); return; }
@@ -1732,6 +1805,8 @@
     if (d.pref) { edPrefs[d.pref] = !edPrefs[d.pref]; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); t.setAttribute('aria-pressed', String(edPrefs[d.pref])); syncSelection(); return; }
     if (d.al) { doAlign(d.al); return; }
     if (d.zorder) { zOrder(d.zorder); return; }
+    if (d.lytab) { cm.lyTab = d.lytab; renderLayers(); return; }
+    if (d.mimg) { useImage(d.mimg); return; }
     if (d.addel) { const it0 = cmItem(cm.sel); addDesignEl(elementDef(d.addel), cm.secSel || (it0 && it0.section)); return; }
     if ('ehbg' in d) { patchItem(cmItem(cm.sel), { hoverBg: d.ehbg }); return; }
     if ('ehc' in d) { patchItem(cmItem(cm.sel), { hoverColor: d.ehc }); return; }
@@ -1816,6 +1891,14 @@
         showPane('props');
         break;
       case 'shortcuts': showShortcuts(); break;
+      case 'media-up': cmUpload((path) => { state.media = null; useImage(path); renderLayers(); }); break;
+      case 'preview': window.open(`/?hjdraft=1&nomodal=1#${cm.route}`, '_blank', 'noopener'); break;
+      case 'pos-inherit': {
+        const all = cmOverride(it).pos || {}; const from = curBp() === 't' ? all.d : all.t || all.d;
+        if (!from) { toast('The larger screen has no custom position for this element.'); break; }
+        savePos(cm.sel, curBp(), { ...from });
+        break;
+      }
       case 'el-dup': if (copySelected()) pasteEl(true); break;
       case 'el-copy': if (copySelected()) toast('Copied. Ctrl+V pastes it (also on another page).'); break;
       case 'el-del': deleteSelected(); break;
@@ -1830,7 +1913,7 @@
       case 'paste-style': if (cm.clip) patchItem(it, cm.clip); break;
       case 'rename-el': renameLayer(it.key, it.scope); break;
       case 'rename-sec': renameLayer(cm.secSel, Object.keys(GLOBAL_NAMES).includes(cm.secSel) ? 'global' : 'page'); break;
-      case 'reset-sec': patchSection(cm.secSel, { bg: null, color: null, pt: null, pb: null, minH: null, align: null, opacity: null, bgImage: null }); break;
+      case 'reset-sec': patchSection(cm.secSel, { grad: null, gradAngle: null, bg: null, color: null, pt: null, pb: null, minH: null, align: null, opacity: null, bgImage: null }); break;
       case 'ss-bgimg': pickImage((path) => patchSection(cm.secSel, { bgImage: path })); break;
       case 'ss-bgimg-clear': patchSection(cm.secSel, { bgImage: null }); break;
       case 'pick-image': pickImage((path) => patchItem(cmItem(cm.sel), { src: path })); break;
@@ -1961,6 +2044,12 @@
       e.preventDefault();
       cmKey(k, mod, e.shiftKey);
     }
+  });
+
+  // Media panel photos carry their path to the canvas (the canvas page reads it on drop)
+  document.addEventListener('dragstart', (e) => {
+    const m = e.target.closest && e.target.closest('[data-mimg]'); if (!m) return;
+    e.dataTransfer.setData('text/hj-img', m.dataset.mimg); e.dataTransfer.effectAllowed = 'copy';
   });
 
   // Drag and drop section reordering in Layers

@@ -199,7 +199,7 @@
     .seg button + button { border-left: 1px solid var(--line); }
     .seg button[aria-pressed="true"] { background: var(--c-brown); color: #fff; }
     .pv-stage { position: relative; overflow: hidden; padding: var(--s4); }
-    .pv-frame { display: block; border: 1px solid var(--line-strong); border-radius: var(--r); background: #fff; box-shadow: var(--shadow); transform-origin: top left; position: absolute; top: var(--s4); }
+    .pv-frame { display: block; border: 0; outline: 1px solid var(--line-strong); border-radius: var(--r); background: #fff; box-shadow: var(--shadow); transform-origin: top left; position: absolute; top: var(--s4); }
     .pv-loading { position: absolute; inset: var(--s4); z-index: 1; }
     .ws-switch { display: none; }
 
@@ -320,6 +320,10 @@
     .el-pv { display: block; flex: none; } .el-pv-t { font-style: normal; font-family: Georgia, serif; line-height: 1; font-size: 20px; }
     .frame-empty { width: 96px; height: 96px; flex: none; display: grid; place-items: center; border: 1px dashed var(--line-strong); border-radius: var(--r-sm); font-size: 12px; color: var(--muted); }
     .sw-pick { width: 30px; height: 30px; padding: 0; border: 1px solid var(--line-strong); border-radius: 50%; cursor: pointer; background: none; }
+    .ly-tabs { display: flex; margin-bottom: var(--s2); } .ly-tabs button { flex: 1; }
+    .md-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 6px; }
+    .md-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-sm); border: 1px solid var(--line); cursor: grab; background: var(--line); }
+    .md-grid img:hover { outline: 2px solid var(--accent, #A88462); outline-offset: 1px; }
     .kbd-t th { text-align: left; padding: 6px 10px 6px 0; white-space: nowrap; vertical-align: top; } .kbd-t td { padding: 6px 0; }
     .kbd-t kbd { font: 12px/1.4 ui-monospace, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; }
   </style>
@@ -401,6 +405,6 @@
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
   <script src="/admin-lib.js?v=4"></script>
-  <script src="/admin.js?v=21"></script>
+  <script src="/admin.js?v=24"></script>
 </body>
 </html>
