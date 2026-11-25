@@ -859,7 +859,7 @@
   VIEWS.page = async (arg) => {
     const { key, route, focus } = typeof arg === 'string' ? { key: arg, route: arg } : arg;
     await loadContent();
-    Object.assign(cm, { key, route, scan: null, sel: null, secSel: focus || null, open: focus ? { [focus]: true } : {}, undo: [], redo: [] });
+    Object.assign(cm, { key, route, scan: null, sel: null, secSel: focus || null, open: focus ? { [focus]: true } : {}, undo: [], redo: [], extra: new Set() });
     const name = key.startsWith('tpl:') ? (key === 'tpl:products' ? 'Product page template' : 'Category page template') :
       key.startsWith('p/') ? ((effective().pages[key] || {}).meta || {}).name || key : (STATIC_PAGES.find(([r]) => r === key) || [])[1] ||
       ((await categories()).find((c) => 'collections/' + c.id === key) || {}).name || key;
@@ -933,7 +933,7 @@
     if (!w || !w.__hjAdmin) return;
     w.__hjContentMode = true;
     w.__hjAdmin.setContent(cm.eff);
-    cm.scan = w.__hjAdmin.scan();
+    cm.scan = w.__hjAdmin.scan([...(cm.extra || [])]);
     renderLayers();
     if (!keepForm) renderProps();
     cmRefreshDirty();
@@ -1116,8 +1116,8 @@
     return layerName(s.key, 'page', s.custom ? typeName(customOf(s.key)) + (label ? ': ' + label : '') : label || 'Section ' + (n + 1));
   };
   const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'design' ? EL_TYPE[i.type] + ((designOf(i) || {}).shape ? ' · ' + designOf(i).shape : (designOf(i) || {}).icon ? ' · ' + designOf(i).icon : '') :
-    i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : i.kind === 'frame' ? 'Photo frame' : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
-  const KIND_ICON = { frame: '▢', text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
+    i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : i.kind === 'frame' ? 'Photo frame' : i.kind === 'box' ? i.label || 'Box' : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
+  const KIND_ICON = { box: '▭', frame: '▢', text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
 
   function renderMediaPanel() {
     const box = $('#st-layers');
@@ -1144,6 +1144,23 @@
     draft.image = path; draft.imageAlt = ''; draft.imageCaption = '';
     renderSlots(); onEdit();
     toast('Photo set as the main photo. Add its ALT text, then Save or Publish.');
+  }
+  // Gallery arrows: put both just outside (or back inside) the photo frame on the current screen size
+  function arrowPos(mode) {
+    const w = pvWin(); const keys = ['[data-hj-id="pdp-prev"]', '[data-hj-id="pdp-next"]'];
+    keys.forEach((k) => { if (!cmItem(k)) { const it = w.__hjAdmin.describe(k); if (it) { cm.scan.items.push(it); cm.extra.add(k); } } });
+    const R = w.__hjAdmin.rects(keys); const F = w.__hjAdmin.rects(['[data-hj-id="pdp-photo"]'])[0];
+    if (R.length < 2 || !F) { toast('This product has one photo, so it has no arrows. Preview a product with several photos.', true); return; }
+    const out = {};
+    R.forEach((r) => {
+      const prev = r.key.includes('prev');
+      out[r.key] = { x: mode === 'in' ? 0 : Math.round(r.tx + (prev ? F.left - 6 - (r.left + r.width) : F.left + F.width + 6 - r.left)) };
+    });
+    savePosMany(out, w.__hjAdmin.bp());
+    if (mode === 'out') {
+      const off = R.some((r) => (r.key.includes('prev') ? F.left - 6 - r.width < 0 : F.left + F.width + 6 + r.width > r.page));
+      if (off) toast('There is little room beside the photo on this screen: make the arrows smaller, or keep them inside here.');
+    }
   }
   function useImage(path) {
     const it = cmItem(cm.sel);
@@ -1198,9 +1215,11 @@
   }
 
   // ----- properties panel (page / section / element) -----
+  const NONE_OK = { 'data-ebg': 'No background', 'data-ebd': 'No border' };
   const PICK_FIELD = { 'data-swatch': 'color', 'data-ebg': 'bg', 'data-ebd': 'borderColor', 'data-ehbg': 'hoverBg', 'data-ehc': 'hoverColor' };
   const swatchRow = (attr, current) => `<div class="row-flex">${SWATCHES.map((c) => `<button type="button" class="sw ${current === c ? 'on' : ''}" style="background:${c}" ${attr}="${c}" aria-label="Colour ${c}"></button>`).join('')}
     <button type="button" class="sw ${!current ? 'on' : ''}" ${attr}="" aria-label="Default colour" title="Default">∅</button>
+    ${NONE_OK[attr] ? `<button type="button" class="sw ${current === 'none' ? 'on' : ''}" ${attr}="none" aria-label="${NONE_OK[attr]}" title="${NONE_OK[attr]}">⊘</button>` : ''}
     ${PICK_FIELD[attr] ? `<input type="color" class="sw-pick" data-cpick="${PICK_FIELD[attr]}" value="${/^#[0-9a-f]{6}$/i.test(current || '') ? current : '#a88462'}" aria-label="Any colour" title="Any colour">` : ''}</div>`;
   const numField = (id, label, attr, value, ph = 'Default', min = 0, max = 400, step = 1) =>
     `<div><label for="${id}">${label}</label><input id="${id}" ${attr} type="number" min="${min}" max="${max}" step="${step}" value="${value == null ? '' : esc(value)}" placeholder="${ph}"></div>`;
@@ -1379,10 +1398,17 @@
     };
     const elButtons = D ? `<div class="row-flex" style="margin-top:var(--s3)"><button class="btn btn-sm" data-cm="el-dup" title="Ctrl+D">Duplicate</button><button class="btn btn-sm" data-cm="el-copy" title="Ctrl+C">Copy</button>
         <button class="btn btn-sm btn-danger" data-cm="el-del" title="Delete">Delete</button></div>` : '';
-    let html = `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'frame' ? 'Photo frame' : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
+    const W = pvWin(); const chain = W && W.__hjAdmin.chain ? W.__hjAdmin.chain(it.key) : [];
+    const crumbs = `<nav class="el-path" aria-label="Select a parent">${it.scope === 'global' ? '' : `<button type="button" data-secsel="${esc(it.section)}">Section</button><span>›</span>`}${chain.map((c) => `<button type="button" data-pickel="${esc(c.key)}" title="Select this parent">${esc(c.label.slice(0, 26))}</button><span>›</span>`).join('')}<b>${esc((it.label || it.tag || '').slice(0, 26))}</b></nav>`;
+    let html = crumbs + `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'frame' ? 'Photo frame' : it.kind === 'box' ? esc(it.label || 'Box') : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
       <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
       ${tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
-    if (it.kind === 'frame' && !D) {
+    const isArrow = /pdp-(prev|next)/.test(it.key);
+    if (isArrow) html += group('Arrow position', `<div class="full row-flex"><button type="button" class="btn btn-sm" data-arrowpos="out">Outside the photo</button><button type="button" class="btn btn-sm" data-arrowpos="in">Inside the photo</button></div>
+        <p class="full help" style="margin:0">Moves both arrows on <b>${bpName[curBp()]}</b>. Or drag an arrow anywhere. To remove the circle: Background ⊘ and Border ⊘ below.</p>`);
+    if (it.kind === 'box') {
+      html += boxGroup('Fill, border & corners', true) + (it.tag === 'svg' ? group('Icon colour', `<div class="full">${swatchRow('data-swatch', o.color)}</div>`) : '') + effectsGroup;
+    } else if (it.kind === 'frame' && !D) {
       html += group('Photo frame', `
         <p class="full help" style="margin:0">Drag the frame's handles on the canvas to any width and height, or type them above (each screen size separately). The photo always fills the frame.</p>
         <div><label for="e-aspect">Proportions</label>${sel('e-aspect', 'data-e="aspect"', [['', 'Free (drag to any size)'], ['1 / 1', 'Lock 1:1 square'], ['4 / 5', 'Lock 4:5 portrait'], ['3 / 4', 'Lock 3:4'], ['2 / 3', 'Lock 2:3'], ['3 / 2', 'Lock 3:2'], ['16 / 9', 'Lock 16:9']], o.aspect || '')}</div>
@@ -1796,6 +1822,7 @@
       else if (pvWin() && pvWin().__hjAdmin) pvWin().__hjAdmin.setContent(effective()); // design / library previews
     }
     if (e.data.type === 'hj-content-select' && inStudio()) {
+      if (e.data.key && !cmItem(e.data.key) && e.data.item && e.data.item.key === e.data.key) { cm.scan.items.push(e.data.item); (cm.extra = cm.extra || new Set()).add(e.data.key); }
       if (e.data.key && cmItem(e.data.key)) selectElement(e.data.key, e.data.add);
       else if (e.data.section) selectSection(e.data.section);
     }
@@ -1827,7 +1854,7 @@
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-lytab],[data-mimg],[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
+    const t = e.target.closest('[data-pickel],[data-arrowpos],[data-lytab],[data-mimg],[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
     if (d.viewmode) { setViewMode(d.viewmode); return; }
@@ -1836,6 +1863,13 @@
     if (d.al) { doAlign(d.al); return; }
     if (d.zorder) { zOrder(d.zorder); return; }
     if (d.lytab) { cm.lyTab = d.lytab; renderLayers(); return; }
+    if (d.pickel) {
+      const w = pvWin(); const item = w && w.__hjAdmin.describe(d.pickel);
+      if (!item) { toast('That part is not on this page at this screen size.', true); return; }
+      if (!cmItem(item.key)) { cm.scan.items.push(item); cm.extra.add(item.key); }
+      selectElement(item.key, false, true); return;
+    }
+    if (d.arrowpos) { arrowPos(d.arrowpos); return; }
     if (d.mimg) { useImage(d.mimg); return; }
     if (d.addel) { const it0 = cmItem(cm.sel); addDesignEl(elementDef(d.addel), cm.secSel || (it0 && it0.section)); return; }
     if ('ehbg' in d) { patchItem(cmItem(cm.sel), { hoverBg: d.ehbg }); return; }

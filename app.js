@@ -1187,15 +1187,17 @@
     const many = shots.length > 1;
     const galleryHtml = shots.length ? `
           <div class="pdp-gallery" data-count="${shots.length}" data-hj-id="pdp-gallery">
+            <div class="pdp-stage-wrap">
             <figure class="pdp-stage" data-hj-id="pdp-photo" data-hj-frame>
               <button type="button" class="pdp-main" aria-label="View ${escHtml(p.name)} full screen">
                 <img class="pdp-main-img" src="${escHtml(shots[0].src)}" alt="${escHtml(shots[0].alt)}" decoding="async" fetchpriority="high" />
               </button>
-              ${many ? `<button type="button" class="pdp-nav pdp-prev" aria-label="Previous photo">‹</button>
-              <button type="button" class="pdp-nav pdp-next" aria-label="Next photo">›</button>
-              <span class="pdp-count" aria-hidden="true">1 / ${shots.length}</span>` : ''}
+              ${many ? `<span class="pdp-count" aria-hidden="true">1 / ${shots.length}</span>` : ''}
               <figcaption class="pdp-cap" ${shots[0].cap ? '' : 'hidden'}>${escHtml(shots[0].cap)}</figcaption>
             </figure>
+            ${many ? `<button type="button" class="pdp-nav pdp-prev" data-hj-id="pdp-prev" aria-label="Previous photo">‹</button>
+            <button type="button" class="pdp-nav pdp-next" data-hj-id="pdp-next" aria-label="Next photo">›</button>` : ''}
+            </div>
             ${many ? `<div class="pdp-thumbs" role="tablist" aria-label="${escHtml(p.name)} photos">
               ${shots.map((x, i) => `<button type="button" role="tab" class="pdp-thumb${i === 0 ? ' is-active' : ''}" aria-selected="${i === 0}" aria-label="Photo ${i + 1} of ${shots.length}" data-i="${i}"><img src="${escHtml(x.src)}" alt="" loading="lazy" decoding="async" /></button>`).join('')}
             </div>` : ''}
@@ -3832,7 +3834,9 @@
     if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
     if (o.color && HEX.test(o.color)) css.push('color:' + o.color);
     if (o.bg && HEX.test(o.bg)) css.push('background:' + o.bg);
+    if (o.bg === 'none') css.push('background:transparent');
     if (GRADS[o.grad]) css.push(gradCss(o.grad, o.gradAngle));
+    if (o.borderColor === 'none') css.push('border:0');
     if (o.borderColor && HEX.test(o.borderColor)) css.push('border:' + (o.borderWidth != null && o.borderWidth !== '' ? num(o.borderWidth, 20) : 1) + 'px solid ' + o.borderColor);
     if (o.shadow && SHADOWS[o.shadow]) css.push('box-shadow:' + SHADOWS[o.shadow]);
     if (o.opacity != null && o.opacity !== '') css.push('opacity:' + Math.max(0.05, Math.min(1, Number(o.opacity) || 1)));
@@ -4073,6 +4077,41 @@
       return rootSel + (parts.length ? ' > ' + parts.join(' > ') : '');
     };
     const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+    // Any element on the page can be picked (like a design app), not only the ones listed in Layers
+    const rootOf = (el) => {
+      const sec = el.closest('#app-view > [data-hj-sec]');
+      if (sec) return [sec, `[data-hj-sec="${sec.dataset.hjSec}"]`, 'page', sec.dataset.hjSec];
+      const g = GLOBAL_ROOTS.find((x) => el.closest(x));
+      return g ? [document.querySelector(g), g, 'global', g] : null;
+    };
+    const TAG_NAMES = { img: 'Image', svg: 'Icon', button: 'Button', a: 'Link', input: 'Input field', select: 'Dropdown', textarea: 'Text field', ul: 'List', ol: 'List',
+      li: 'List item', nav: 'Menu', figure: 'Figure', form: 'Form', label: 'Label', header: 'Header', footer: 'Footer', article: 'Card', aside: 'Side box', video: 'Video', iframe: 'Embed', picture: 'Image', hr: 'Divider' };
+    const elName = (el) => {
+      const tag = el.tagName.toLowerCase(); const cls = String(el.getAttribute('class') || '').split(' ').find((c) => c && !/^(is-|hj-|active)/.test(c));
+      if (TAG_NAMES[tag]) return TAG_NAMES[tag] + (cls && tag !== 'img' ? ' · ' + cls.replace(/[-_]+/g, ' ') : '');
+      return cls ? cls.replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase()) : 'Box';
+    };
+    function describeEl(el) {
+      const R = rootOf(el); if (!R || el === R[0]) return null;
+      const [root, rootSel, scope, section] = R;
+      const key = el.dataset.hjEdit || el.dataset.hjKey || pathFrom(el, root, rootSel);
+      const o = ORIG.get(el); const tag = (o ? o.tag : el.tagName).toLowerCase();
+      const isImg = tag === 'img';
+      const hasText = !isImg && tag !== 'svg' && (ownText(el) || (tag === 'a' && !!el.textContent.trim()));
+      const kind = isImg ? 'image' : el.hasAttribute('data-hj-frame') ? 'frame' : hasText ? (tag === 'a' ? 'link' : 'text') : 'box';
+      el.dataset.hjEdit = key;
+      return { key, scope, section, tag, kind, generic: true, label: elName(el),
+        text: hasText ? (o ? new DOMParser().parseFromString(o.html, 'text/html').body.textContent : el.textContent).trim().replace(/\s+/g, ' ') : '',
+        hasMarkup: hasText && el.children.length > 0, src: isImg ? (o ? o.src : el.getAttribute('src')) || '' : '', alt: isImg ? (o ? o.alt : el.getAttribute('alt')) || '' : '',
+        href: tag === 'a' ? (o ? o.href : el.getAttribute('href')) || '' : '' };
+    }
+    // What a click picks: Alt = exactly what is under the pointer; otherwise a frame, an already listed element, or the deepest element
+    function pickTarget(t, alt) {
+      if (!t || !t.closest) return null;
+      const svg = t.closest('svg'); if (svg) t = svg;
+      if (alt) return t;
+      return t.closest('[data-hj-frame]') || t.closest('[data-hj-edit]') || t;
+    }
     const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer, [data-hj-design], [data-hj-frame] *');
     window.__hjAdmin = {
       route: contentRoute,
@@ -4088,7 +4127,7 @@
         document.documentElement.classList.add('hj-editing');
         if (contentRoute().startsWith('p/')) handleRoute(); else applySiteContent(); // landing pages exist only once their draft arrives
       },
-      scan() {
+      scan(extraKeys) {
         const view = document.getElementById('app-view');
         const roots = [...[...view.children].map((s) => [s, `[data-hj-sec="${s.dataset.hjSec}"]`, 'page', s.dataset.hjSec]),
           ...GLOBAL_ROOTS.map((sel) => [document.querySelector(sel), sel, 'global', sel]).filter(([r]) => r)];
@@ -4128,10 +4167,29 @@
             el.dataset.hjEdit = key;
           });
         });
+        // elements picked on the canvas, and every element that has saved edits, are layers too
+        const listed = new Set(items.map((i) => i.key));
+        const layerKeys = Object.values((siteContent && siteContent.pages) || {}).flatMap((pg) => Object.keys(pg.items || {}));
+        [...(extraKeys || []), ...layerKeys].forEach((k) => {
+          if (listed.has(k)) return;
+          const el = findContentEl(k); const d = el && describeEl(el);
+          if (d && d.key === k) { items.push(d); listed.add(k); }
+        });
         const overflow = [...view.children, ...GLOBAL_ROOTS.map((s) => document.querySelector(s)).filter(Boolean)]
           .filter((s) => !s.hidden && s.scrollWidth > s.clientWidth + 2 && getComputedStyle(s).overflowX === 'visible').map((s) => s.dataset.hjSec || GLOBAL_ROOTS.find((g) => s.matches(g)));
         return { route: contentRoute(), title: document.title, sections, items, overflow, width: window.innerWidth, missing: MISSING_KEYS.slice(),
           h1: [...view.querySelectorAll('h1')].filter((h) => !h.closest('[hidden]')).length };
+      },
+      describe(key) { const el = findContentEl(key) || document.querySelector('[data-hj-edit="' + CSS.escape(key) + '"]'); return el ? describeEl(el) : null; },
+      // The element's parents up to its section, for the "select parent" path in the admin
+      chain(key) {
+        const el = findContentEl(key) || document.querySelector('[data-hj-edit="' + CSS.escape(key) + '"]'); const R = el && rootOf(el); if (!R) return [];
+        const out = [];
+        for (let p = el.parentElement; p && p !== R[0] && out.length < 6; p = p.parentElement) {
+          if (p.matches('.pdp-container, .container') && p.parentElement === R[0]) break;
+          out.unshift({ key: p.dataset.hjEdit || p.dataset.hjKey || pathFrom(p, R[0], R[1]), label: elName(p) });
+        }
+        return out;
       },
       highlight(key) {
         document.querySelectorAll('.hj-admin-hl').forEach((e) => { e.classList.remove('hj-admin-hl'); e.style.outline = ''; });
@@ -4147,15 +4205,32 @@
     };
     // Click an element in the preview to edit it; links do not navigate while editing
     document.addEventListener('click', (e) => {
-      if (!window.__hjContentMode) return;
-      const el = e.target.closest('[data-hj-edit]');
+      if (!window.__hjContentMode || e.target.closest('#hj-ed, #hj-hover')) return;
       const sec = e.target.closest('#app-view > [data-hj-sec]');
       const shared = GLOBAL_ROOTS.find((g) => e.target.closest(g));
-      if (!el && !sec && !shared && !e.target.closest('a')) return;
+      if (!sec && !shared && !e.target.closest('a')) return;
       e.preventDefault();
       e.stopPropagation();
-      window.parent.postMessage({ type: 'hj-content-select', key: el ? el.dataset.hjEdit : null, section: sec ? sec.dataset.hjSec : shared || null, add: e.shiftKey }, location.origin);
+      const t = pickTarget(e.target, e.altKey);
+      const item = t && !t.matches('#app-view > [data-hj-sec]') && !GLOBAL_ROOTS.some((g) => t.matches(g)) ? describeEl(t) : null;
+      window.parent.postMessage({ type: 'hj-content-select', key: item ? item.key : null, item, section: sec ? sec.dataset.hjSec : shared || null, add: e.shiftKey }, location.origin);
     }, true);
+    // Hover outline with the element's name, on whatever a click would pick
+    const hov = document.createElement('div');
+    hov.id = 'hj-hover';
+    hov.style.cssText = 'position:fixed;pointer-events:none;z-index:2147482999;outline:1px solid #7B61FF;outline-offset:0;display:none;font:11px/1.4 system-ui,sans-serif';
+    hov.innerHTML = '<span style="position:absolute;left:-1px;top:-19px;background:#7B61FF;color:#fff;padding:1px 6px;border-radius:3px 3px 3px 0;white-space:nowrap"></span>';
+    document.addEventListener('DOMContentLoaded', () => document.body.appendChild(hov));
+    let hovEl = null;
+    document.addEventListener('pointermove', (e) => {
+      if (!window.__hjContentMode || e.buttons) { hov.style.display = 'none'; return; }
+      const t = e.target.closest && !e.target.closest('#hj-ed') && (e.target.closest('#app-view') || GLOBAL_ROOTS.some((g) => e.target.closest(g))) ? pickTarget(e.target, e.altKey) : null;
+      if (!t || t.matches('#app-view > [data-hj-sec]')) { hov.style.display = 'none'; hovEl = null; return; }
+      if (t !== hovEl) { hovEl = t; hov.firstChild.textContent = elName(t) + (e.altKey ? '' : '  ·  Alt+click = inside'); }
+      const r = t.getBoundingClientRect();
+      Object.assign(hov.style, { display: 'block', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+      hov.firstChild.style.top = r.top < 20 ? (r.height + 1) + 'px' : '-19px';
+    }, { passive: true });
   }
 
   // ===== Canvas editor (admin preview only): select, drag, resize, rotate, smart guides, snapping, grid =====

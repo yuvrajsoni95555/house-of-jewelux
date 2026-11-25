@@ -6740,3 +6740,7 @@ img, video, canvas, svg {
 /* The photo frame (stage) holds the shape; the photo button fills it. Studio can resize / reshape the frame freely. */
 .pdp-stage { aspect-ratio: 1 / 1; max-width: 100%; }
 .pdp-stage .pdp-main { height: 100%; aspect-ratio: auto; }
+
+/* Gallery arrows sit beside the photo's clipping box (same look), so the Studio can drag them inside or outside the photo */
+.pdp-stage-wrap { position: relative; }
+.pdp-stage-wrap > .pdp-nav { z-index: 3; }
