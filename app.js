@@ -1176,7 +1176,7 @@
     const many = shots.length > 1;
     const galleryHtml = shots.length ? `
           <div class="pdp-gallery" data-count="${shots.length}" data-hj-id="pdp-gallery">
-            <figure class="pdp-stage">
+            <figure class="pdp-stage" data-hj-id="pdp-photo" data-hj-frame>
               <button type="button" class="pdp-main" aria-label="View ${escHtml(p.name)} full screen">
                 <img class="pdp-main-img" src="${escHtml(shots[0].src)}" alt="${escHtml(shots[0].alt)}" decoding="async" fetchpriority="high" />
               </button>
@@ -3802,6 +3802,7 @@
       if (p.w) d.push(`width:${clamp(p.w, 8, 4000)}px`);
       if (p.h) d.push(`height:${clamp(p.h, 8, 4000)}px`);
       if (p.z) d.push(`position:relative;z-index:${clamp(p.z, -50, 50)}`);
+      if (p.w && el.matches('.pdp-stage')) out.push(`@media ${BREAKPOINTS[bp]}{.pdp-container{--pdp-img:min(${clamp(p.w, 200, 1400)}px,62vw)!important}.pdp-container .pdp-gallery{max-width:none!important}}`);
       if (d.length) out.push(`@media ${BREAKPOINTS[bp]}{[data-hj-key="${CSS.escape(key)}"]{${d.join(';').split(';').map((x) => x + '!important').join(';')}}}`);
     });
     return out;
@@ -3934,6 +3935,7 @@
       DESIGN_RULES.push(`[data-hj-key="${k}"]{animation:${ANIMS[o.anim]} ${Math.max(0.1, Math.min(5, Number(o.animDur) || 0.8))}s ${EASES[o.animEase] || EASES.smooth} ${Math.max(0, Math.min(5, Number(o.animDelay) || 0))}s backwards!important}`);
       watchAnim(el, o.animOn === 'load');
     }
+    if (o.fit === 'contain' || o.fit === 'cover') DESIGN_RULES.push(`[data-hj-key="${k}"] img{object-fit:${o.fit}!important}`);
     DESIGN_RULES.push(...positionRules(o.__key, el, o.pos));
   }
 
@@ -4060,7 +4062,7 @@
       return rootSel + (parts.length ? ' > ' + parts.join(' > ') : '');
     };
     const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
-    const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer, [data-hj-design]');
+    const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer, [data-hj-design], [data-hj-frame] *');
     window.__hjAdmin = {
       route: contentRoute,
       setContent(c) {
@@ -4091,6 +4093,11 @@
           items.push({ key, scope, section, design: el.dataset.hjId.slice(3), type, tag: el.tagName.toLowerCase(), kind,
             text: kind !== 'design' ? (o ? new DOMParser().parseFromString(o.html, 'text/html').body.textContent : el.textContent).trim() : '', hasMarkup: false, src: '', alt: '',
             href: type === 'button' ? (o ? o.href : el.getAttribute('href')) || '' : '' });
+          el.dataset.hjEdit = key;
+        }));
+        roots.forEach(([root, rootSel, scope, section]) => root.querySelectorAll('[data-hj-frame]').forEach((el) => {
+          const key = el.dataset.hjKey || pathFrom(el, root, rootSel);
+          items.push({ key, scope, section, tag: el.tagName.toLowerCase(), kind: 'frame', text: '', hasMarkup: false, src: '', alt: '', href: '' });
           el.dataset.hjEdit = key;
         }));
         roots.forEach(([root, rootSel, scope, section]) => {
@@ -4343,6 +4350,7 @@
       layer.style.display = 'none'; const hit = document.elementFromPoint(x, y); layer.style.display = '';
       if (!hit) return null;
       const frame = hit.closest('.hj-el-frame'); if (frame) return { kind: 'frame', el: frame, key: frame.dataset.hjEdit };
+      const pf = hit.closest('[data-hj-frame]'); if (pf) return { kind: 'pframe', el: pf, key: pf.dataset.hjEdit };
       const img = hit.tagName === 'IMG' && hit.dataset.hjEdit ? hit : null; if (img) return { kind: 'img', el: img, key: img.dataset.hjEdit };
       const sec = hit.closest('#app-view > [data-hj-sec]') || GLOBAL_ROOTS.map((g) => hit.closest(g)).find(Boolean);
       return sec ? { kind: 'section', el: sec, section: sec.dataset.hjSec || GLOBAL_ROOTS.find((g) => sec.matches(g)) } : null;

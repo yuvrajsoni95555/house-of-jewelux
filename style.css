@@ -6736,3 +6736,7 @@ img, video, canvas, svg {
 .hj-el-button { display: inline-flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; }
 .hj-el-badge { display: inline-block; width: auto; padding: 0.35rem 0.85rem; border-radius: 999px; background: #5A1A2A; color: #F5EFE6;
   font: 600 0.75rem/1.2 var(--font-sans, system-ui, sans-serif); letter-spacing: 0.14em; text-transform: uppercase; text-align: center; }
+
+/* The photo frame (stage) holds the shape; the photo button fills it. Studio can resize / reshape the frame freely. */
+.pdp-stage { aspect-ratio: 1 / 1; max-width: 100%; }
+.pdp-stage .pdp-main { height: 100%; aspect-ratio: auto; }

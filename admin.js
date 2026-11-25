@@ -1109,8 +1109,8 @@
     return layerName(s.key, 'page', s.custom ? typeName(customOf(s.key)) + (label ? ': ' + label : '') : label || 'Section ' + (n + 1));
   };
   const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'design' ? EL_TYPE[i.type] + ((designOf(i) || {}).shape ? ' · ' + designOf(i).shape : (designOf(i) || {}).icon ? ' · ' + designOf(i).icon : '') :
-    i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
-  const KIND_ICON = { text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
+    i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : i.kind === 'frame' ? 'Photo frame' : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
+  const KIND_ICON = { frame: '▢', text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★', button: '⬭', badge: '◍' };
 
   function renderMediaPanel() {
     const box = $('#st-layers');
@@ -1124,6 +1124,19 @@
     box.innerHTML = tabs + `<button class="btn btn-sm btn-primary" data-cm="media-up" style="width:100%;margin:var(--s3) 0 var(--s2)">Upload image</button>
       <p class="help" style="margin:0 0 var(--s2)">Drag a photo onto a frame or image to replace it, or anywhere on a section to place it. Click a photo to use it for ${target}.</p>
       <div class="md-grid">${state.media.map((m) => `<img src="${esc(imgSrc(m.path))}" alt="${esc(m.name)}" title="${esc(m.name)}" loading="lazy" draggable="true" data-mimg="${esc(m.path)}">`).join('')}</div>`;
+  }
+  // A photo dropped on the product page's photo frame becomes that product's main photo, in the product editor (saved only when you save there)
+  async function addProductPhoto(path) {
+    const handle = String(cm.route || '').replace(/^products\//, '');
+    const prod = state.products.find((x) => x.handle === handle || x.id === handle);
+    if (!prod) { toast('Open a product page to add photos to it.', true); return; }
+    if (!confirm(`Make this photo the main photo of "${prod.name}"?\n\nThe product editor opens with it; nothing changes on the website until you save or publish the product there.`)) return;
+    await show('editor', prod.id);
+    if (!draft || draft.id !== prod.id) return;
+    if (draft.image && draft.image !== path) { draft.gallery.unshift(draft.image); draft.galleryAlt.unshift(draft.imageAlt || ''); draft.galleryCaption.unshift(draft.imageCaption || ''); }
+    draft.image = path; draft.imageAlt = ''; draft.imageCaption = '';
+    renderSlots(); onEdit();
+    toast('Photo set as the main photo. Add its ALT text, then Save or Publish.');
   }
   function useImage(path) {
     const it = cmItem(cm.sel);
@@ -1359,10 +1372,17 @@
     };
     const elButtons = D ? `<div class="row-flex" style="margin-top:var(--s3)"><button class="btn btn-sm" data-cm="el-dup" title="Ctrl+D">Duplicate</button><button class="btn btn-sm" data-cm="el-copy" title="Ctrl+C">Copy</button>
         <button class="btn btn-sm btn-danger" data-cm="el-del" title="Delete">Delete</button></div>` : '';
-    let html = `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
+    let html = `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'frame' ? 'Photo frame' : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
       <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
       ${tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
-    if (D && !['text', 'button', 'badge'].includes(D.type)) {
+    if (it.kind === 'frame' && !D) {
+      html += group('Photo frame', `
+        <p class="full help" style="margin:0">Drag the frame's handles on the canvas to any width and height, or type them above (each screen size separately). The photo always fills the frame.</p>
+        <div><label for="e-aspect">Proportions</label>${sel('e-aspect', 'data-e="aspect"', [['', 'Free (drag to any size)'], ['1 / 1', 'Lock 1:1 square'], ['4 / 5', 'Lock 4:5 portrait'], ['3 / 4', 'Lock 3:4'], ['2 / 3', 'Lock 2:3'], ['3 / 2', 'Lock 3:2'], ['16 / 9', 'Lock 16:9']], o.aspect || '')}</div>
+        <div><label for="e-fit">Photo in frame</label>${sel('e-fit', 'data-e="fit"', [['', 'Fill the frame (edges crop)'], ['contain', 'Show the whole photo']], o.fit || '')}</div>
+        ${isTemplate(cm.key) ? '<p class="full note small" style="margin:0">Applies to every product page. The photos themselves belong to each product: drop a photo on this frame to add it to the product shown, or change photos in <a href="#" data-go="products">Products</a>.</p>' : ''}`) +
+        boxGroup('Border, corners & shadow', true) + effectsGroup;
+    } else if (D && !['text', 'button', 'badge'].includes(D.type)) {
       html += (D.type === 'frame' && D.src ? adjustGroup() : '') + (D.type === 'line' || D.type === 'icon' ? '' : boxGroup(D.type === 'shape' ? 'Fill & border' : 'Border & effects', D.type === 'shape')) + effectsGroup;
     } else if (it.kind === 'image') {
       const [fx, fy] = (o.objectPosition || '50% 50%').split(' ').map((v) => parseInt(v, 10));
@@ -1437,7 +1457,7 @@
   // Save an element's position for one breakpoint (from a canvas drag, nudge or the number fields)
   function savePos(key, bp, pos, keepForm) {
     const it = cmItem(key); if (!it || !/^[dtm]$/.test(bp)) return;
-    if (pos.w != null && (designOf(it) || {}).aspect) pos = { ...pos, h: null };
+    if (pos.w != null && ((designOf(it) || {}).aspect || (it.kind === 'frame' && cmOverride(it).aspect))) pos = { ...pos, h: null };
     cmEdit(pageKeyFor(it.scope), (p) => {
       const o = { ...(p.items[key] || {}) };
       const all = { ...(o.pos || {}) };
@@ -1523,7 +1543,9 @@
       ['brightness', 'contrast', 'saturate'].forEach((k) => { if (f(k)) set(k, n(k), 100); });
       ['animDur', 'animDelay'].forEach((k) => { if (f(k)) set(k, n(k)); });
       ['flipH', 'flipV', 'italic'].forEach((k) => { if (f(k)) set(k, f(k).checked || null); });
-      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover', 'grad'].forEach((k) => { if (f(k)) set(k, f(k).value); });
+      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover', 'grad', 'fit'].forEach((k) => { if (f(k)) set(k, f(k).value); });
+      // choosing locked proportions drops the fixed height on this screen size, so the ratio takes effect
+      if (it.kind === 'frame' && o.aspect && o.pos && o.pos[curBp()] && o.pos[curBp()].h) { o.pos = { ...o.pos, [curBp()]: { ...o.pos[curBp()] } }; delete o.pos[curBp()].h; }
       if (f('gradAngle')) set('gradAngle', n('gradAngle'));
       if (f('visibility')) set('hidden', f('visibility').value === 'hidden' || null);
       if (Object.keys(o).length) p.items[it.key] = o; else delete p.items[it.key];
@@ -1792,6 +1814,7 @@
     if (e.data.type === 'hj-drop' && inStudio() && typeof e.data.src === 'string' && /^(images|brand-identity)\/[\w.\- ]+$/.test(e.data.src)) {
       const src = e.data.src;
       if (e.data.kind === 'frame' || e.data.kind === 'img') { const it = cmItem(e.data.key); if (it) { cm.sel = it.key; useImage(src); } }
+      else if (e.data.kind === 'pframe') addProductPhoto(src);
       else if (e.data.kind === 'section' && e.data.section) placeImage(src, e.data.section, Number(e.data.x), Number(e.data.y));
     }
   });
