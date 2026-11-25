@@ -32,6 +32,49 @@
       "names": {},
       "locked": [],
       "updatedAt": "2026-11-25T03:04:47.794Z"
+    },
+    "whats-new": {
+      "items": {},
+      "sectionStyle": {
+        "sec-1": {
+          "bg": "#D5C4AE"
+        }
+      },
+      "style": {},
+      "order": [],
+      "hidden": [],
+      "hideMobile": [],
+      "hideDesktop": [],
+      "custom": [],
+      "seo": {},
+      "names": {},
+      "locked": [],
+      "els": [],
+      "groups": [],
+      "updatedAt": "2026-11-25T20:00:14.707Z"
+    },
+    "*": {
+      "items": {
+        ".product-card > div:nth-of-type(1) > button:nth-of-type(1) > svg:nth-of-type(1)": {
+          "hidden": true
+        },
+        ".product-card > div:nth-of-type(1) > button:nth-of-type(1)": {
+          "hidden": true
+        }
+      },
+      "sectionStyle": {},
+      "style": {},
+      "order": [],
+      "hidden": [],
+      "hideMobile": [],
+      "hideDesktop": [],
+      "custom": [],
+      "seo": {},
+      "names": {},
+      "locked": [],
+      "els": [],
+      "groups": [],
+      "updatedAt": "2026-11-25T20:00:14.707Z"
     }
   }
 }
