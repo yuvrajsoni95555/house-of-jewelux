@@ -862,6 +862,10 @@
           <div class="ws-url"><div class="seg st-switch" role="group" aria-label="Show panel"><button type="button" data-spane="layers" aria-pressed="false">Layers</button><button type="button" data-spane="canvas" aria-pressed="true">Canvas</button><button type="button" data-spane="props" aria-pressed="false">Properties</button></div>
             <div class="seg" role="group" aria-label="Preview size">${dev(1440, 'Desktop')}${dev(1280, 'Laptop')}${dev(768, 'Tablet')}${dev(390, 'Mobile')}</div>
             <label class="row-flex small" style="margin:0;font-weight:400">Width <input id="pv-w" type="number" min="320" max="2560" step="10" value="${device}" style="width:90px;min-height:34px"></label>
+            <div class="seg" role="group" aria-label="Show version"><button type="button" data-viewmode="draft" aria-pressed="true" title="Your edits, including unpublished ones">Draft</button><button type="button" data-viewmode="live" aria-pressed="false" title="Exactly what the public website shows now">Live</button></div>
+            ${isTemplate(key) ? `<label class="row-flex small" style="margin:0;font-weight:400">Preview with <select id="tpl-prev" style="width:auto;min-height:34px;max-width:220px">${
+              (key === 'tpl:products' ? state.products.map((x) => ['products/' + (x.handle || x.id), x.name]) : (await categories()).map((c) => ['collections/' + c.id, c.name || c.id]))
+                .map(([r, n]) => `<option value="${esc(r)}" ${r === route ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></label>` : ''}
             <div class="seg" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out">−</button><button type="button" data-zoom="0" id="zoom-l" title="Fit">100%</button><button type="button" data-zoom="1" aria-label="Zoom in">+</button></div>
             <div class="seg" role="group" aria-label="Canvas helpers">${['grid:Grid', 'guides:Guides', 'snap:Snap'].map((x) => { const [k2, l] = x.split(':'); return `<button type="button" data-pref="${k2}" aria-pressed="${!!edPrefs[k2]}">${l}</button>`; }).join('')}</div>
             <details class="gridset"><summary class="btn btn-sm" aria-label="Grid settings">⚙</summary><div class="gridpop">
@@ -886,6 +890,13 @@
     cmRefreshDirty();
   };
 
+  function setViewMode(mode) {
+    cm.liveView = mode === 'live';
+    view.querySelectorAll('[data-viewmode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.viewmode === mode)));
+    $('#pv-stage').classList.toggle('is-live', cm.liveView);
+    cmSync();
+    if (cm.liveView) toast('Showing the published website. Switch back to Draft to edit.');
+  }
   function cmRefreshDirty() {
     if (!$('#ws-dirty')) return;
     const dirty = cmDirty();
@@ -899,7 +910,7 @@
   // Push the draft into the canvas, re-read the page, redraw layers + properties
   function cmSync(keepForm) {
     const w = pvWin();
-    cm.eff = effective();
+    cm.eff = cm.liveView ? clone(state.content) : effective();
     if (!w || !w.__hjAdmin) return;
     w.__hjContentMode = true;
     w.__hjAdmin.setContent(cm.eff);
@@ -921,6 +932,7 @@
 
   // Every change goes through here: undo snapshot, draft write, canvas sync
   function cmEdit(pageKey, fn, keepForm) {
+    if (cm.liveView) setViewMode('draft'); // editing always happens on the draft
     const d = readDraft();
     cm.undo.push(JSON.stringify(d)); if (cm.undo.length > 60) cm.undo.shift();
     cm.redo = [];
@@ -1005,6 +1017,8 @@
     }
     if (noAlt) warn.push(`${noAlt} image(s) have no ALT text.`);
     if (S.overflow && S.overflow.length) warn.push(`${S.overflow.length} section(s) overflow the screen at ${S.width}px wide.`);
+    const stale = (S.missing || []).filter((m) => m.layer === 'page' || (m.layer === 'template' && isTemplate(cm.key)));
+    if (stale.length) warn.push(`${stale.length} saved edit(s) no longer match anything on this page (the page layout changed).${isTemplate(cm.key) ? ' Some may only exist on other products.' : ''}`);
     const outline = S.items.filter((i) => /^h[1-6]$/.test(cmOverride(i).tag || i.tag) && i.scope === 'page');
     box.innerHTML = `<h3 class="pp-h">Page settings</h3>
       ${cm.key.startsWith('p/') ? group('Page', `<div class="full"><label for="pg-name">Page name</label><input id="pg-name" data-pg="name" value="${esc((P.meta || {}).name || '')}"></div>
@@ -1016,7 +1030,8 @@
         <div class="full"><div class="snippet"><div class="u">houseofjewelux.com › ${esc(cm.route)}</div><div class="t" id="seo-st"></div><div class="d" id="seo-sd"></div></div></div>
         <div class="full"><label>Heading outline</label><ul class="log">${outline.map((i) => { const t = cmOverride(i).tag || i.tag; return `<li class="small" style="padding-left:${(Number(t[1]) - 1) * 12}px"><span class="pill">${t.toUpperCase()}</span> ${esc((cmOverride(i).text || i.text).slice(0, 60))}</li>`; }).join('') || '<li class="small muted">No headings.</li>'}</ul></div>
         <p class="full help">Canonical, robots and Open Graph are set once for the whole site in Homepage SEO (the site is one page with #addresses, so per-page tags are not read by Google).</p>`)}
-      ${group('Checks', `<div class="full">${warn.length ? `<ul class="log">${warn.map((w) => `<li class="small">⚠ ${esc(w)}</li>`).join('')}</ul>` : '<p class="small" style="margin:0">✓ No problems found.</p>'}</div>`)}
+      ${group('Checks', `<div class="full">${warn.length ? `<ul class="log">${warn.map((w) => `<li class="small">⚠ ${esc(w)}</li>`).join('')}</ul>` : '<p class="small" style="margin:0">✓ No problems found.</p>'}
+        ${stale.length && !isTemplate(cm.key) ? '<button class="btn btn-sm" data-cm="drop-stale" style="margin-top:var(--s2)">Remove outdated edits</button>' : ''}</div>`)}
       ${group('Version history', '<div class="full" id="hist"><div class="skel" style="height:80px"></div></div>', false)}`;
     const upd = () => { const t = $('#seo-t'); if (!t) return; const d = $('#seo-d');
       $('#seo-tc').textContent = t.value.trim().length + ' / 60'; $('#seo-tc').classList.toggle('over', t.value.trim().length > 60);
@@ -1478,9 +1493,10 @@
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
+    const t = e.target.closest('[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
+    if (d.viewmode) { setViewMode(d.viewmode); return; }
     if (d.zoom != null) { zoom = d.zoom === '0' ? 1 : Math.min(4, Math.max(0.25, zoom * (d.zoom === '1' ? 1.25 : 0.8))); fitPreview(); return; }
     if (d.pref) { edPrefs[d.pref] = !edPrefs[d.pref]; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); t.setAttribute('aria-pressed', String(edPrefs[d.pref])); syncSelection(); return; }
     if (d.al) { doAlign(d.al); return; }
@@ -1555,6 +1571,12 @@
       case 'save-draft': toast('Draft saved in this browser (it also saves automatically). It is not on the website until you publish.'); break;
       case 'publish': cmPublish(t); break;
       case 'page-props': cm.sel = null; cm.multi = []; cm.secSel = null; renderLayers(); renderProps(); syncSelection(); showPane('props'); break;
+      case 'drop-stale': {
+        const gone = (cm.scan.missing || []).filter((m) => m.layer === 'page').map((m) => m.key);
+        if (!gone.length || !confirm(`Remove ${gone.length} edit(s) that no longer match anything on this page?`)) return;
+        cmEdit(cm.key, (pg) => { gone.forEach((k) => delete pg.items[k]); });
+        break;
+      }
       case 'clear-multi': cm.multi = []; renderProps(); syncSelection(); break;
       case 'reset-pos': { const o = cmOverride(it); const all = { ...(o.pos || {}) }; delete all[curBp()]; patchItem(it, { pos: Object.keys(all).length ? all : null }); break; }
       case 'reset-el': patchItem(it, Object.fromEntries(Object.keys(cmOverride(it)).map((k) => [k, null]))); break;
@@ -1671,6 +1693,7 @@
     if (t.matches('#st-props select[data-ss]')) patchSection(cm.secSel, { [t.dataset.ss]: t.value });
     if (t.matches('#st-props select[data-c]')) customUpdate(cm.secSel.replace('custom:', ''), { [t.dataset.c]: t.value });
     if (t.matches('select[data-lc]')) { const id = t.closest('[data-lib-id]').dataset.libId; libEdit((l) => { const x = l.find((y) => y.id === id); if (x) x[t.dataset.lc] = t.value; }); }
+    if (t.id === 'tpl-prev') { cm.route = t.value; cm.sel = null; cm.multi = []; const w = pvWin(); if (w) w.location.hash = t.value; setTimeout(cmSync, 900); return; }
     if (t.id === 'pv-w') { device = Math.min(2560, Math.max(320, Number(t.value) || 1280)); view.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.device) === device))); fitPreview(); setTimeout(() => inStudio() && cmSync(), 400); }
   });
   // Re-scan after a device change (overflow warnings depend on width)

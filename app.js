@@ -1059,6 +1059,25 @@
     g.querySelector('.pdp-main').addEventListener('click', () => openLightbox(shots, at, show));
   }
 
+  // Quantity, Add to Cart / Buy Now (main and sticky), and the sticky bar that appears only after the main buttons scroll away
+  function initPdpPurchase(root, p) {
+    const qtyIn = root.querySelector('.pdp-qty-input');
+    const qty = () => Math.max(1, Math.min(10, parseInt(qtyIn && qtyIn.value, 10) || 1));
+    root.querySelectorAll('.pdp-qty-btn').forEach((b) => b.addEventListener('click', () => { qtyIn.value = Math.max(1, Math.min(10, qty() + Number(b.dataset.q))); }));
+    if (qtyIn) qtyIn.addEventListener('change', () => { qtyIn.value = qty(); });
+    root.querySelectorAll('.pdp-add').forEach((b) => b.addEventListener('click', (e) => window.HJ.addToCart(p.id, qty(), e)));
+    root.querySelectorAll('.pdp-buynow').forEach((b) => b.addEventListener('click', () => window.HJ.buyNow(p.id, qty())));
+    const buy = root.querySelector('.pdp-buy');
+    const bar = root.querySelector('.pdp-sticky');
+    if (!buy || !bar || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(([e]) => {
+      const show = !e.isIntersecting && e.boundingClientRect.top < 0; // only after scrolling past, never before
+      bar.classList.toggle('is-visible', show);
+      bar.setAttribute('aria-hidden', String(!show));
+      bar.querySelectorAll('button').forEach((x) => { x.tabIndex = show ? 0 : -1; });
+    }).observe(buy);
+  }
+
   // Horizontal swipe on touch screens: dir -1 = previous, 1 = next
   function swipe(el, cb) {
     let x0 = null; let y0 = 0;
@@ -1118,8 +1137,16 @@
 
   // ==================== VIEW 3: PRODUCT DETAIL PAGE (1:1 WITH PALMONAS ATHENA SOLITAIRE PDP) ====================
   function renderPDP(container, identifier) {
-    const p = state.products.find(item => item.id === identifier || item.handle === identifier) || state.products[0];
-    if (!p) return; // products not loaded yet: loadProducts() re-runs the route when they arrive
+    if (!state.products.length) return; // products not loaded yet: loadProducts() re-runs the route when they arrive
+    const wanted = decodeURIComponent(identifier || '');
+    const p = state.products.find(item => item.id === wanted || item.handle === wanted);
+    if (!p) {
+      // Never show a different product for an unknown address (old or mistyped links)
+      setPageSeo('Product not found | House of Jewelux');
+      container.innerHTML = `<section class="container" style="padding:7rem 1.5rem;text-align:center"><h1 class="section-title">This piece could not be found</h1>
+        <p style="margin:1rem auto 2rem;max-width:520px">The link may be old or mistyped. Browse the collection to find it.</p><a class="btn-primary" href="#collections/all">View all jewellery</a></section>`;
+      return;
+    }
     const related = state.products.filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
     const isWishlisted = state.wishlist.includes(p.id);
     const abs = (src) => /^(https?:|blob:|data:)/.test(src) ? src : SITE_URL + '/' + String(src).replace(/^\//, '');
@@ -1148,7 +1175,7 @@
     addShot(p.hoverImage, p.hoverImageAlt, p.hoverImageCaption);
     const many = shots.length > 1;
     const galleryHtml = shots.length ? `
-          <div class="pdp-gallery" data-count="${shots.length}">
+          <div class="pdp-gallery" data-count="${shots.length}" data-hj-id="pdp-gallery">
             <figure class="pdp-stage">
               <button type="button" class="pdp-main" aria-label="View ${escHtml(p.name)} full screen">
                 <img class="pdp-main-img" src="${escHtml(shots[0].src)}" alt="${escHtml(shots[0].alt)}" decoding="async" fetchpriority="high" />
@@ -1164,177 +1191,100 @@
           </div>` : `
           <div class="pdp-gallery"><div class="pdp-stage pdp-empty"><span>Photographs of this piece are coming soon</span></div></div>`;
 
-    container.innerHTML = `
-      <div class="container pdp-container">
-        <div class="pdp-grid">
-          <!-- LEFT: main photo with a row of thumbnails underneath -->
-          ${galleryHtml}
+    // Only claims backed by this product's own data (no blanket "hallmarked / hypoallergenic" badges)
+    const short = (v) => String(v || '').split(' (')[0].trim();
+    const chips = [...new Set([p.purity, p.stone, p.cut].map(short).filter(Boolean))].slice(0, 3);
+    const catName = (state.categories.find((c) => c.id === p.category) || {}).name || p.category || '';
+    const specRows = [['Metal', p.metal], ['Purity', p.purity], ['Gemstone', p.stone], ['Cut', p.cut], ['Clarity', p.clarity], ['Dimensions', p.dimensions],
+      ['Weight', p.weight], ['Certificate', p.certificate], ...(p.specifications || []).map((x) => [x.label, x.value]), ['Reference', p.sku || p.id]]
+      .filter(([, v]) => v != null && String(v).trim());
+    const craft = [
+      p.metal && { icon: 'metal', title: 'Material & Finish', text: short(p.metal) },
+      (p.purity || p.certificate) && { icon: 'seal', title: 'Purity & Certification', text: short(p.purity || p.certificate) },
+      p.stone && { icon: 'gem', title: 'Gemstone', text: short(p.stone) },
+      { icon: 'truck', title: 'Insured Delivery', text: 'Fully insured, tracked shipping across India' }
+    ].filter(Boolean).slice(0, 4);
+    const ICONS = {
+      metal: '<path d="M4 15l8-11 8 11-8 5z"/><path d="M4 15h16"/>', seal: '<circle cx="12" cy="10" r="6"/><path d="M9 15l-2 6 5-3 5 3-2-6"/>',
+      gem: '<path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6"/>', truck: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>'
+    };
+    const hasRating = p.rating && p.reviewsCount;
+    const acc = (id, title, body, open) => `<details class="pdp-acc" data-hj-id="pdp-acc-${id}" ${open ? 'open' : ''}><summary>${title}</summary><div class="pdp-acc-body">${body}</div></details>`;
+    const inStock = !p.stockStatus || p.stockStatus === 'In Stock';
 
-          <!-- RIGHT: DETAILS & ACTIONS (MATCHING PALMONAS) -->
-          <div class="pdp-details-column">
-            <!-- Price Row at Top -->
-            <div class="pdp-top-price-row">
-              <div>
-                <span class="pdp-compare-price">${formatPrice(p.compareAtPrice)}</span>
-                <span class="pdp-current-price">${formatPrice(p.price)}</span>
-                <span class="pdp-discount-badge">${p.discountPercent}% OFF</span>
+    container.innerHTML = `
+      <div class="container pdp-container" data-hj-id="pdp">
+        <nav class="pdp-crumbs" aria-label="Breadcrumb" data-hj-id="pdp-crumbs"><a href="#home">Home</a><span aria-hidden="true">/</span><a href="#collections/${escHtml(p.category)}">${escHtml(catName)}</a><span aria-hidden="true">/</span><span aria-current="page">${escHtml(p.name)}</span></nav>
+        <div class="pdp-grid">
+          <div class="pdp-left" data-hj-id="pdp-left">
+            ${galleryHtml}
+            ${craft.length ? `<ul class="pdp-craft" data-hj-id="pdp-craft" aria-label="About this piece">
+              ${craft.map((c) => `<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">${ICONS[c.icon]}</svg>
+                <div><b>${escHtml(c.title)}</b><span>${escHtml(c.text)}</span></div></li>`).join('')}
+            </ul>` : ''}
+          </div>
+
+          <div class="pdp-details-column pdp-info" data-hj-id="pdp-info">
+            <p class="pdp-eyebrow" data-hj-id="pdp-eyebrow">${escHtml(catName)}${p.collection ? ' · ' + escHtml(String(p.collection).replace(/-/g, ' ')) : ''}</p>
+            <h1 class="pdp-title-h1" data-hj-id="pdp-title">${escHtml(p.name)}</h1>
+            ${hasRating ? `<div class="pdp-rating" data-hj-id="pdp-rating"><span class="pdp-stars" aria-hidden="true">★★★★★</span><b>${escHtml(p.rating)}</b><span>(${escHtml(p.reviewsCount)} reviews)</span></div>` : ''}
+            <div class="pdp-price-row" data-hj-id="pdp-price">
+              <span class="pdp-current-price">${formatPrice(p.price)}</span>
+              ${p.compareAtPrice && p.compareAtPrice > p.price ? `<span class="pdp-compare-price">${formatPrice(p.compareAtPrice)}</span><span class="pdp-discount-badge">${p.discountPercent || Math.round((1 - p.price / p.compareAtPrice) * 100)}% off</span>` : ''}
+            </div>
+            <div class="pdp-tax-line" data-hj-id="pdp-tax">Inclusive of all taxes</div>
+            ${chips.length ? `<ul class="pdp-chips" data-hj-id="pdp-chips">${chips.map((c) => `<li>${escHtml(c)}</li>`).join('')}</ul>` : ''}
+            ${p.description ? `<p class="pdp-intro" data-hj-id="pdp-intro">${escHtml(p.description)}</p>` : ''}
+            <p class="pdp-stock ${inStock ? 'is-in' : 'is-out'}" data-hj-id="pdp-stock">${escHtml(p.stockStatus || 'In Stock')}</p>
+
+            <div class="pdp-buy" data-hj-id="pdp-buy">
+              <div class="pdp-qty" role="group" aria-label="Quantity">
+                <button type="button" class="pdp-qty-btn" data-q="-1" aria-label="Decrease quantity">−</button>
+                <input class="pdp-qty-input" type="number" min="1" max="10" value="1" aria-label="Quantity" inputmode="numeric">
+                <button type="button" class="pdp-qty-btn" data-q="1" aria-label="Increase quantity">+</button>
               </div>
-              <button class="card-wishlist-btn ${isWishlisted ? 'active' : ''}" 
-                      style="position: static;" 
-                      onclick="window.HJ.toggleWishlist('${p.id}', event)" 
-                      aria-label="Save to Wishlist">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="${isWishlisted ? 'var(--color-accent-crimson)' : 'none'}" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 20.5L3.8 12.3C1.8 10.3 1.8 7.1 3.8 5.1C5.8 3.1 9 3.1 11 5.1L12 6.1L13 5.1C15 3.1 18.2 3.1 20.2 5.1C22.2 7.1 22.2 10.3 20.2 12.3L12 20.5Z"></path>
-                </svg>
+              <button type="button" class="pdp-add" data-hj-id="pdp-add" ${inStock || p.stockStatus === 'Made to Order' || p.stockStatus === 'Pre-order' ? '' : 'disabled'}>Add to Cart</button>
+              <button type="button" class="pdp-buynow" data-hj-id="pdp-buynow" ${p.stockStatus === 'Out of Stock' ? 'disabled' : ''}>Buy Now</button>
+              <button type="button" class="pdp-wish ${isWishlisted ? 'active' : ''}" data-hj-id="pdp-wish" aria-pressed="${isWishlisted}" onclick="window.HJ.toggleWishlist('${p.id}', event)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="${isWishlisted ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 20.5L3.8 12.3C1.8 10.3 1.8 7.1 3.8 5.1C5.8 3.1 9 3.1 11 5.1L12 6.1L13 5.1C15 3.1 18.2 3.1 20.2 5.1C22.2 7.1 22.2 10.3 20.2 12.3L12 20.5Z"></path></svg>
+                <span>${isWishlisted ? 'Saved to wishlist' : 'Add to wishlist'}</span>
               </button>
             </div>
 
-            <div class="pdp-tax-line">Inclusive of all taxes</div>
-
-            <h1 class="pdp-title-h1">${p.name}</h1>
-
-            <div class="pdp-rating-stars-line">
-              <span class="card-stars">★★★★★</span>
-              <span style="font-weight: 700; color: var(--color-deep-heritage-brown);">${p.rating || '4.9'}</span>
-              <span style="color: var(--color-stone-muted);">| ${p.reviewsCount || 108} Reviews</span>
-            </div>
-
-            <!-- Capsule Trust Pills (Truthful Material Specifications) -->
-            <div class="pdp-trust-capsules-row">
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <polygon points="12 2 14.5 9.5 22 12 14.5 14.5 12 22 9.5 14.5 2 12 9.5 9.5 12 2"></polygon>
-                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-                </svg>
-                Anti-Tarnish Barrier
-              </span>
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <path d="M12 2.5C12 2.5 5 11 5 15.5C5 19.1 8.1 22 12 22C15.9 22 19 15.5 19 15.5C19 11 12 2.5 12 2.5Z"></path>
-                  <path d="M12 18V13M10 15C10 15 11 13 12 13C13 13 14 15 14 15"></path>
-                </svg>
-                Hypoallergenic
-              </span>
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <path d="M3 18L4.5 7L9 11.5L12 5L15 11.5L19.5 7L21 18H3Z"></path>
-                  <circle cx="4.5" cy="6" r="1" fill="currentColor"></circle>
-                  <circle cx="12" cy="4" r="1" fill="currentColor"></circle>
-                  <circle cx="19.5" cy="6" r="1" fill="currentColor"></circle>
-                  <line x1="3" y1="18" x2="21" y2="18" stroke-width="1.5"></line>
-                </svg>
-                ${(p.materials && p.materials.includes('gold')) || p.primaryMaterial === 'gold' || p.isGold ? '18K Gold Micron Finish' : 'Liquid Rhodium Finish'}
-              </span>
-              <span class="trust-capsule">
-                <svg class="trust-pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                  <polygon points="12 3 21 19 3 19 12 3"></polygon>
-                  <text x="12" y="16.5" font-size="6.5" font-family="'Cinzel', serif" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">925</text>
-                </svg>
-                BIS 925 Hallmarked
-              </span>
-            </div>
-
-            <div class="pdp-urgency-note">
-              <svg class="urgency-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-                <path d="M12 2.5C12 2.5 8 7 8 11.5C8 14.5 10 17 12 17C14 17 16 14.5 16 11.5C16 7 12 2.5 12 2.5Z" fill="rgba(184, 151, 88, 0.25)"></path>
-                <path d="M5 17C5 17 6.5 21 12 21C17.5 21 19 17 19 17H5Z"></path>
-              </svg>
-              <span>84 clients acquired this piece in the last 7 days</span>
-            </div>
-
-            <!-- Limited Time Offers Box (Matching Palmonas) -->
-            <div class="pdp-limited-offer-card">
-              <div style="font-size: 0.8rem; font-weight: 700; color: var(--color-deep-heritage-brown); display: flex; align-items: center; gap: 0.5rem;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="color: var(--color-muted-gold);">
-                  <rect x="3" y="5" width="18" height="14" rx="1.5"></rect>
-                  <path d="M3 6L12 13L21 6"></path>
-                  <circle cx="12" cy="13" r="2" fill="currentColor"></circle>
-                </svg>
-                Limited Time Atelier Privileges
-              </div>
-              <div class="pdp-coupon-dashed">
-                <div>
-                  <div style="font-size: 0.8rem; font-weight: 700;">FIRSTLUX</div>
-                  <div style="font-size: 0.7rem; color: var(--color-taupe);">10% off your entire first acquisition</div>
-                </div>
-                <button class="btn-primary" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="window.HJ.applyCoupon('FIRSTLUX')">Apply</button>
-              </div>
-            </div>
-
-            <!-- Check Delivery (Matching Palmonas) -->
-            <div class="pdp-check-delivery-box">
-              <label>Check delivery</label>
+            <div class="pdp-check-delivery-box pdp-delivery" data-hj-id="pdp-delivery">
+              <label for="pdp-pincode-input">Check delivery</label>
               <div class="delivery-input-group">
-                <input type="text" id="pdp-pincode-input" placeholder="Enter pincode" value="${state.deliveryPincode}" maxlength="6" />
+                <input type="text" id="pdp-pincode-input" placeholder="Enter pincode" value="${state.deliveryPincode}" maxlength="6" inputmode="numeric" />
                 <button onclick="window.HJ.checkPincode()">Check</button>
               </div>
-              <div id="pincode-status" style="font-size: 0.75rem; color: #2E7D32; margin-top: 0.4rem;">
-                ✓ Armored Courier transit available to ${state.deliveryCity} (${state.deliveryPincode}) in 2 - 4 business days.
-              </div>
+              <div id="pincode-status" class="pdp-delivery-status">Insured delivery to ${escHtml(state.deliveryCity)} (${escHtml(state.deliveryPincode)}) in 2–4 business days.</div>
             </div>
 
-            <!-- Accordions (Matching Palmonas: Description, Specifications, Supplier Info, Return Policy) -->
-            <div class="pdp-accordion-item active">
-              <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
-                <span>Description</span>
-                <span>▾</span>
-              </div>
-              <div class="pdp-accordion-pane">
-                ${p.description}
-                <br><br>
-                Engineered with generational precision in our Jaipur atelier. Stamped with the official Bureau of Indian Standards (BIS) 925 Hallmark.
-              </div>
-            </div>
+            <div class="pdp-offer" data-hj-id="pdp-offer"><span><b>FIRSTLUX</b> · 10% off your first order</span><button type="button" onclick="window.HJ.applyCoupon('FIRSTLUX')">Apply</button></div>
 
-            <div class="pdp-accordion-item">
-              <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
-                <span>Specifications</span>
-                <span>▾</span>
-              </div>
-              <div class="pdp-accordion-pane">
-                <table class="specs-table">
-                  <tbody>
-                    ${(p.specifications || []).map(s => `
-                      <tr><td>${s.label}</td><td>${s.value}</td></tr>
-                    `).join('')}
-                    <tr><td>Gross Weight</td><td>${p.weight || '5.2g'}</td></tr>
-                    <tr><td>SKU Reference</td><td>${p.id}</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="pdp-accordion-item">
-              <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
-                <span>Supplier & Atelier Information</span>
-                <span>▾</span>
-              </div>
-              <div class="pdp-accordion-pane">
-                <strong>Manufactured By:</strong> House of Jewelux Creative Atelier, Jaipur, Rajasthan, India.<br>
-                <strong>Customer Grievance & Concierge:</strong> +91 63770 61020 | houseofjewelux@gmail.com
-              </div>
-            </div>
-
-            <div class="pdp-accordion-item">
-              <div class="pdp-accordion-title" onclick="this.parentElement.classList.toggle('active')">
-                <span>Return & Exchange Policy</span>
-                <span>▾</span>
-              </div>
-              <div class="pdp-accordion-pane">
-                Complimentary 14-day hassle-free return and exchange window. Free door-to-door insured courier pickup across all verified Indian PIN codes.
-              </div>
+            <div class="pdp-accs" data-hj-id="pdp-accs">
+              ${acc('description', 'Description', `<p>${escHtml(p.description || '')}</p>`, true)}
+              ${acc('specs', 'Material & Specifications', `<table class="specs-table"><tbody>${specRows.map(([k, v]) => `<tr><td>${escHtml(k)}</td><td>${escHtml(v)}</td></tr>`).join('')}</tbody></table>`)}
+              ${acc('craft', 'Craftsmanship', '<p>Designed and finished by hand at the House of Jewelux Creative Atelier in Jaipur, Rajasthan.</p>')}
+              ${acc('size', 'Size & Fit', `<p>${p.dimensions ? escHtml(p.dimensions) + '. ' : ''}See our <a href="#size-guide">size guide</a> or <a href="#contact">ask our concierge</a> for help choosing.</p>`)}
+              ${acc('care', 'Jewellery Care', '<p>Store each piece separately in its pouch, keep it away from perfume, water and chemicals, and wipe gently with a soft dry cloth. More in our <a href="#care-guide">care guide</a>.</p>')}
+              ${acc('shipping', 'Shipping & Delivery', '<p>Insured, tracked delivery across India. Delivery times depend on your pincode; check above.</p>')}
+              ${acc('returns', 'Returns & Exchange', '<p>Complimentary 14-day return and exchange window with free insured pickup across verified Indian pincodes. See the <a href="#returns">returns policy</a>.</p>')}
             </div>
           </div>
         </div>
 
-        <!-- STICKY BOTTOM ACTION BAR (MATCHING PALMONAS) -->
-        <div class="sticky-pdp-bar">
-          <button class="sticky-btn-buy" onclick="window.HJ.buyNow('${p.id}')">Buy Now</button>
-          <button class="sticky-btn-cart" onclick="window.HJ.addToCart('${p.id}', 1, event)">Add to Cart</button>
+        <!-- Compact purchase bar: shown only once the main buttons have scrolled out of view -->
+        <div class="pdp-sticky" data-hj-id="pdp-sticky" aria-hidden="true">
+          <img src="${escHtml(shots[0] ? shots[0].src : '')}" alt="" class="pdp-sticky-img" ${shots[0] ? '' : 'hidden'}>
+          <div class="pdp-sticky-txt"><b>${escHtml(p.name)}</b><span>${formatPrice(p.price)}</span></div>
+          <button type="button" class="pdp-buynow" tabindex="-1">Buy Now</button>
+          <button type="button" class="pdp-add" tabindex="-1">Add to Cart</button>
         </div>
       </div>
     `;
     initPdpGallery(container, shots);
+    initPdpPurchase(container, p);
   }
 
   // ==================== VIEW 4: CHECKOUT ====================
@@ -2771,7 +2721,7 @@
           price: prod.price,
           image: prod.image,
           handle: prod.handle,
-          metal: 'BIS 925 Rhodium Silver',
+          metal: String(prod.metal || '').split(' (')[0],
           quantity: qty
         });
       }
@@ -3015,8 +2965,8 @@
       }
     },
 
-    buyNow: function (productId) {
-      window.HJ.addToCart(productId, 1);
+    buyNow: function (productId, qty = 1) {
+      window.HJ.addToCart(productId, qty);
       window.HJ.closeCart();
       window.HJ.navigate('checkout');
     },
@@ -3768,7 +3718,8 @@
   const SAFE_HREF = /^(#|\/(?!\/)|https:\/\/|mailto:|tel:)/i;
   const HEX = /^#[0-9a-f]{6}$/i;
   const ORIG = new WeakMap();
-  let DESIGN_RULES = []; // rebuilt on every apply, written to <style id="hj-content-css">
+  let DESIGN_RULES = [];
+  let MISSING_KEYS = []; // saved edits whose element is not on this page (the page structure changed) // rebuilt on every apply, written to <style id="hj-content-css">
   const BODY_BG = document.body ? document.body.style.backgroundColor : '';
   let siteContent = { pages: {} };
   let adminDrivesContent = false; // in the admin preview the editor's draft wins over the published file
@@ -3965,9 +3916,11 @@
     document.body.style.backgroundColor = bg && HEX.test(bg) ? bg : BODY_BG;
     // 2) element overrides: find every element first, then change them (keys are paths in the original template)
     const jobs = [];
-    layers.forEach((p) => Object.entries(p.items || {}).forEach(([key, o]) => {
+    MISSING_KEYS = [];
+    layers.forEach((p, li) => Object.entries(p.items || {}).forEach(([key, o]) => {
       const el = findContentEl(key);
       if (el) { const j = jobs.find(([x]) => x === el); if (j) Object.assign(j[1], o); else jobs.push([el, { ...o, __key: key }]); }
+      else MISSING_KEYS.push({ key, layer: layers.length === 3 ? ['*', 'template', 'page'][li] : ['*', 'page'][li] });
     }));
     document.querySelectorAll('[data-hj-key]').forEach((el) => { if (!jobs.some(([j]) => j === el)) { restoreContentEl(el); el.removeAttribute('data-hj-key'); } });
     jobs.forEach(([el, o]) => applyContentItem(el, o));
@@ -3991,6 +3944,7 @@
     const pathFrom = (el, root, rootSel) => {
       const parts = [];
       for (let n = el; n && n !== root; n = n.parentElement) {
+        if (n.dataset && n.dataset.hjId) { rootSel = `[data-hj-id="${n.dataset.hjId}"]`; break; }
         const same = [...n.parentElement.children].filter((x) => x.tagName === n.tagName);
         parts.unshift(n.tagName.toLowerCase() + ':nth-of-type(' + (same.indexOf(n) + 1) + ')');
       }
@@ -4039,7 +3993,7 @@
         });
         const overflow = [...view.children, ...GLOBAL_ROOTS.map((s) => document.querySelector(s)).filter(Boolean)]
           .filter((s) => !s.hidden && s.scrollWidth > s.clientWidth + 2 && getComputedStyle(s).overflowX === 'visible').map((s) => s.dataset.hjSec || GLOBAL_ROOTS.find((g) => s.matches(g)));
-        return { route: contentRoute(), title: document.title, sections, items, overflow, width: window.innerWidth,
+        return { route: contentRoute(), title: document.title, sections, items, overflow, width: window.innerWidth, missing: MISSING_KEYS.slice(),
           h1: [...view.querySelectorAll('h1')].filter((h) => !h.closest('[hidden]')).length };
       },
       highlight(key) {

@@ -264,6 +264,9 @@
     details.pg .grid2 { margin-top: var(--s3); grid-template-columns: 1fr 1fr; gap: var(--s3); }
     .st-props .seg button { padding: 0 var(--s2); }
     .st-switch { display: none; }
+    .pv-stage.is-live { outline: 3px solid #3F6B4A; outline-offset: -3px; }
+    .pv-stage.is-live::before { content: 'LIVE WEBSITE: published version, edits hidden'; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 3;
+      background: #3F6B4A; color: #fff; font-size: .72rem; letter-spacing: .08em; padding: 3px 10px; border-radius: 99px; }
     .gridset { position: relative; } .gridset summary { list-style: none; min-height: 34px; } .gridset summary::-webkit-details-marker { display: none; }
     .gridpop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: 250px; display: grid; gap: var(--s2); padding: var(--s3); background: var(--surface);
       border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-lg); }
@@ -389,6 +392,6 @@
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
   <script src="/admin-lib.js?v=4"></script>
-  <script src="/admin.js?v=17"></script>
+  <script src="/admin.js?v=18"></script>
 </body>
 </html>
