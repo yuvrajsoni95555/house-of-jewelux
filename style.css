@@ -6727,18 +6727,12 @@ img, video, canvas, svg {
   .pdp-container .pdp-crumbs, .pdp-container .pdp-grid, .pdp-container .pdp-more { max-width: var(--pdp-w); margin-left: auto; margin-right: auto; }
 }
 .pdp-info .pdp-intro { font-size: 1rem; }
-.pdp-more { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(2rem, 5vw, 4.5rem);
+.pdp-more { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem);
   margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: clamp(2rem, 4vw, 3rem); border-top: 1px solid var(--color-warm-stone-light, #DFD0BE); }
 .pdp-more-h { margin: 0 0 1rem; font-family: var(--font-serif, Georgia, serif); font-weight: 500; font-size: clamp(1.15rem, 1.5vw, 1.4rem); letter-spacing: 0.02em; color: var(--color-espresso, #3A2418); }
-.pdp-specs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0 1.75rem; margin: 0; }
-.pdp-more-h2 { margin-top: 2.25rem; }
-.pdp-specs div { padding: 0.75rem 0; border-bottom: 1px solid rgba(213, 196, 174, 0.6); }
-.pdp-specs dt { font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted-gold-dark, #6B4A2E); }
-.pdp-specs dd { margin: 0.25rem 0 0; font-size: 0.95rem; line-height: 1.5; color: var(--color-espresso, #3A2418); }
 .pdp-more-p { margin: 0; max-width: 62ch; font-size: 0.98rem; line-height: 1.75; color: var(--color-stone-muted, #4A4A46); }
 .pdp-more .pdp-accs { margin-top: 0; }
 @media (max-width: 991px) { .pdp-more { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 560px) { .pdp-specs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; } }
 .hj-el-button { display: inline-flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; }
 .hj-el-badge { display: inline-block; width: auto; padding: 0.35rem 0.85rem; border-radius: 999px; background: #5A1A2A; color: #F5EFE6;
   font: 600 0.75rem/1.2 var(--font-sans, system-ui, sans-serif); letter-spacing: 0.14em; text-transform: uppercase; text-align: center; }

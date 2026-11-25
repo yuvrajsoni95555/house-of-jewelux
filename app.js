@@ -1195,9 +1195,6 @@
     const short = (v) => String(v || '').split(' (')[0].trim();
     const chips = [...new Set([p.purity, p.stone, p.cut].map(short).filter(Boolean))].slice(0, 3);
     const catName = (state.categories.find((c) => c.id === p.category) || {}).name || p.category || '';
-    const specRows = [['Metal', p.metal], ['Purity', p.purity], ['Gemstone', p.stone], ['Cut', p.cut], ['Clarity', p.clarity], ['Dimensions', p.dimensions],
-      ['Weight', p.weight], ['Certificate', p.certificate], ...(p.specifications || []).map((x) => [x.label, x.value]), ['Reference', p.sku || p.id]]
-      .filter(([, v]) => v != null && String(v).trim());
     const craft = [
       p.metal && { icon: 'metal', title: 'Material & Finish', text: short(p.metal) },
       (p.purity || p.certificate) && { icon: 'seal', title: 'Purity & Certification', text: short(p.purity || p.certificate) },
@@ -1268,8 +1265,8 @@
         <!-- Details across the full width, so neither column is left empty below the photos -->
         <section class="pdp-more" data-hj-id="pdp-more" aria-label="Product details">
           <div class="pdp-more-main" data-hj-id="pdp-more-main">
-            <h2 class="pdp-more-h">Material &amp; Specifications</h2>
-            <dl class="pdp-specs" data-hj-id="pdp-specs">${specRows.map(([k, v]) => `<div><dt>${escHtml(k)}</dt><dd>${escHtml(v)}</dd></div>`).join('')}</dl>
+            <h2 class="pdp-more-h">Craftsmanship</h2>
+            <p class="pdp-more-p" data-hj-id="pdp-craft-text">Designed and finished by hand at the House of Jewelux Creative Atelier in Jaipur, Rajasthan.</p>
           </div>
           <div class="pdp-more-side">
             <h2 class="pdp-more-h">Good to know</h2>
@@ -1279,8 +1276,6 @@
               ${acc('shipping', 'Shipping & Delivery', '<p>Insured, tracked delivery across India. Delivery times depend on your pincode; check above.</p>')}
               ${acc('returns', 'Returns & Exchange', '<p>Complimentary 14-day return and exchange window with free insured pickup across verified Indian pincodes. See the <a href="#returns">returns policy</a>.</p>')}
             </div>
-            <h2 class="pdp-more-h pdp-more-h2">Craftsmanship</h2>
-            <p class="pdp-more-p" data-hj-id="pdp-craft-text">Designed and finished by hand at the House of Jewelux Creative Atelier in Jaipur, Rajasthan.</p>
           </div>
         </section>
 
