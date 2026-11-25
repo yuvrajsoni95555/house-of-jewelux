@@ -1016,6 +1016,106 @@
     `;
   }
 
+  // ===== Product photo gallery: main photo, thumbnail row, hover zoom, swipe, keyboard, full-screen lightbox =====
+  function initPdpGallery(root, shots) {
+    const g = root.querySelector('.pdp-gallery');
+    if (!g || !shots.length) return;
+    const main = g.querySelector('.pdp-main-img');
+    const stage = g.querySelector('.pdp-stage');
+    const cap = g.querySelector('.pdp-cap');
+    const count = g.querySelector('.pdp-count');
+    const thumbs = [...g.querySelectorAll('.pdp-thumb')];
+    let at = 0;
+    const show = (i) => {
+      at = (i + shots.length) % shots.length;
+      const x = shots[at];
+      if (main.getAttribute('src') !== x.src) {
+        main.classList.add('is-loading');
+        main.onload = () => main.classList.remove('is-loading');
+        main.src = x.src;
+      }
+      main.alt = x.alt;
+      cap.textContent = x.cap; cap.hidden = !x.cap;
+      if (count) count.textContent = `${at + 1} / ${shots.length}`;
+      thumbs.forEach((t, n) => { t.classList.toggle('is-active', n === at); t.setAttribute('aria-selected', String(n === at)); });
+      if (thumbs[at]) thumbs[at].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+    };
+    main.addEventListener('error', () => main.classList.add('is-broken'));
+    thumbs.forEach((t) => t.addEventListener('click', () => show(Number(t.dataset.i))));
+    g.querySelector('.pdp-prev')?.addEventListener('click', () => show(at - 1));
+    g.querySelector('.pdp-next')?.addEventListener('click', () => show(at + 1));
+    g.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') { show(at - 1); e.preventDefault(); } if (e.key === 'ArrowRight') { show(at + 1); e.preventDefault(); } });
+    swipe(stage, (dir) => show(at + dir));
+    // Hover zoom only where there is a real mouse; touch devices use the lightbox
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const btn = g.querySelector('.pdp-main');
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        main.style.transformOrigin = `${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`;
+        main.classList.add('is-zoomed');
+      });
+      btn.addEventListener('mouseleave', () => main.classList.remove('is-zoomed'));
+    }
+    g.querySelector('.pdp-main').addEventListener('click', () => openLightbox(shots, at, show));
+  }
+
+  // Horizontal swipe on touch screens: dir -1 = previous, 1 = next
+  function swipe(el, cb) {
+    let x0 = null; let y0 = 0;
+    el.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    el.addEventListener('touchend', (e) => {
+      if (x0 == null) return;
+      const dx = e.changedTouches[0].clientX - x0; const dy = e.changedTouches[0].clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) cb(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  function openLightbox(shots, start, onChange) {
+    const back = document.activeElement;
+    const box = document.createElement('div');
+    box.className = 'hj-lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Product photos');
+    box.innerHTML = `<button type="button" class="hj-lb-close" aria-label="Close">×</button>
+      ${shots.length > 1 ? '<button type="button" class="hj-lb-nav hj-lb-prev" aria-label="Previous photo">‹</button><button type="button" class="hj-lb-nav hj-lb-next" aria-label="Next photo">›</button>' : ''}
+      <figure class="hj-lb-fig"><img class="hj-lb-img" alt="" /><figcaption class="hj-lb-cap"></figcaption></figure>
+      <span class="hj-lb-count" aria-live="polite"></span>`;
+    document.body.appendChild(box);
+    document.documentElement.classList.add('hj-lb-open');
+    const img = box.querySelector('.hj-lb-img');
+    let at = start;
+    const show = (i) => {
+      at = (i + shots.length) % shots.length;
+      img.src = shots[at].src; img.alt = shots[at].alt;
+      box.querySelector('.hj-lb-cap').textContent = shots[at].cap;
+      box.querySelector('.hj-lb-count').textContent = shots.length > 1 ? `${at + 1} / ${shots.length}` : '';
+    };
+    const close = () => {
+      document.removeEventListener('keydown', onKey);
+      box.remove();
+      document.documentElement.classList.remove('hj-lb-open');
+      onChange(at);
+      if (back && back.focus) back.focus();
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(at - 1);
+      if (e.key === 'ArrowRight') show(at + 1);
+      if (e.key === 'Tab') { e.preventDefault(); box.querySelector('.hj-lb-close').focus(); } // keep focus inside the dialog
+    };
+    document.addEventListener('keydown', onKey);
+    box.addEventListener('click', (e) => {
+      if (e.target.closest('.hj-lb-close') || e.target === box) close();
+      else if (e.target.closest('.hj-lb-prev')) show(at - 1);
+      else if (e.target.closest('.hj-lb-next')) show(at + 1);
+    });
+    swipe(box, (dir) => show(at + dir));
+    show(start);
+    box.querySelector('.hj-lb-close').focus();
+  }
+
   // ==================== VIEW 3: PRODUCT DETAIL PAGE (1:1 WITH PALMONAS ATHENA SOLITAIRE PDP) ====================
   function renderPDP(container, identifier) {
     const p = state.products.find(item => item.id === identifier || item.handle === identifier) || state.products[0];
@@ -1036,32 +1136,39 @@
       if (!/^(https?:|\/|blob:|data:)/.test(s)) s = '/' + s;
       return s;
     };
-    const img0 = normalizeImg(p.gallery && p.gallery[0] ? p.gallery[0] : (p.images && p.images[0] ? p.images[0] : p.image), '/images/authentic_solitaire_ring.jpg');
-    const img1 = normalizeImg(p.gallery && p.gallery[1] ? p.gallery[1] : (p.images && p.images[1] ? p.images[1] : (p.hoverImage || p.image)), '/images/authentic_diamond_ring_macro.jpg');
-    const img2 = normalizeImg(p.gallery && p.gallery[2] ? p.gallery[2] : (p.images && p.images[2] ? p.images[2] : p.image), '/images/authentic_chelsea_ring.jpg');
-    const img3 = normalizeImg(p.gallery && p.gallery[3] ? p.gallery[3] : (p.images && p.images[3] ? p.images[3] : (p.hoverImage || p.image)), '/images/authentic_rings_couple_hands.jpg');
+    // Gallery: only this product's own photos, cover first, then the gallery in the order set in the admin
+    const shots = [];
+    const addShot = (src, alt, cap) => {
+      if (!src) return;
+      const url = normalizeImg(src, src);
+      if (!shots.some((x) => x.src === url)) shots.push({ src: url, alt: alt || p.name, cap: cap || '' });
+    };
+    addShot(p.image, p.imageAlt, p.imageCaption);
+    (p.gallery || []).forEach((g, i) => addShot(g, (p.galleryAlt || [])[i], (p.galleryCaption || [])[i]));
+    addShot(p.hoverImage, p.hoverImageAlt, p.hoverImageCaption);
+    const many = shots.length > 1;
+    const galleryHtml = shots.length ? `
+          <div class="pdp-gallery" data-count="${shots.length}">
+            <figure class="pdp-stage">
+              <button type="button" class="pdp-main" aria-label="View ${escHtml(p.name)} full screen">
+                <img class="pdp-main-img" src="${escHtml(shots[0].src)}" alt="${escHtml(shots[0].alt)}" decoding="async" fetchpriority="high" />
+              </button>
+              ${many ? `<button type="button" class="pdp-nav pdp-prev" aria-label="Previous photo">‹</button>
+              <button type="button" class="pdp-nav pdp-next" aria-label="Next photo">›</button>
+              <span class="pdp-count" aria-hidden="true">1 / ${shots.length}</span>` : ''}
+              <figcaption class="pdp-cap" ${shots[0].cap ? '' : 'hidden'}>${escHtml(shots[0].cap)}</figcaption>
+            </figure>
+            ${many ? `<div class="pdp-thumbs" role="tablist" aria-label="${escHtml(p.name)} photos">
+              ${shots.map((x, i) => `<button type="button" role="tab" class="pdp-thumb${i === 0 ? ' is-active' : ''}" aria-selected="${i === 0}" aria-label="Photo ${i + 1} of ${shots.length}" data-i="${i}"><img src="${escHtml(x.src)}" alt="" loading="lazy" decoding="async" /></button>`).join('')}
+            </div>` : ''}
+          </div>` : `
+          <div class="pdp-gallery"><div class="pdp-stage pdp-empty"><span>Photographs of this piece are coming soon</span></div></div>`;
 
     container.innerHTML = `
       <div class="container pdp-container">
         <div class="pdp-grid">
-          <!-- LEFT: 2x2 IMAGE GALLERY (MATCHING PALMONAS ATHENA SOLITAIRE) -->
-          <div class="pdp-gallery-2x2">
-            <div class="pdp-gallery-item">
-              <img src="${img0}" alt="${(p.galleryAlt && p.galleryAlt[0]) || p.name + ' Studio View'}" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" />
-            </div>
-            <div class="pdp-gallery-item">
-              <img src="${img1}" alt="${(p.galleryAlt && p.galleryAlt[1]) || p.name + ' Model Profile'}" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" />
-            </div>
-            <div class="pdp-gallery-item">
-              <img src="${img2}" alt="${(p.galleryAlt && p.galleryAlt[2]) || p.name + ' Close-up'}" onerror="this.onerror=null; this.src='/images/authentic_chelsea_ring.jpg';" />
-            </div>
-            <div class="pdp-gallery-item">
-              <img src="${img3}" alt="${(p.galleryAlt && p.galleryAlt[3]) || p.name + ' Prongs & Setting'}" onerror="this.onerror=null; this.src='/images/authentic_rings_couple_hands.jpg';" />
-            </div>
-            <div style="grid-column: 1 / -1; font-size: 0.72rem; color: var(--color-taupe); text-align: center; padding-top: 0.25rem; letter-spacing: 0.04em;">
-              ✦ Authentic Studio Reference Photography • Jaipur Atelier Spec ${p.id} • Zero AI Imagery
-            </div>
-          </div>
+          <!-- LEFT: main photo with a row of thumbnails underneath -->
+          ${galleryHtml}
 
           <!-- RIGHT: DETAILS & ACTIONS (MATCHING PALMONAS) -->
           <div class="pdp-details-column">
@@ -1227,6 +1334,7 @@
         </div>
       </div>
     `;
+    initPdpGallery(container, shots);
   }
 
   // ==================== VIEW 4: CHECKOUT ====================

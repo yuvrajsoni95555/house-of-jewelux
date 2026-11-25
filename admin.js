@@ -278,6 +278,7 @@
     };
     if (!Array.isArray(draft.gallery)) draft.gallery = [];
     if (!Array.isArray(draft.galleryAlt)) draft.galleryAlt = [];
+    if (!Array.isArray(draft.galleryCaption)) draft.galleryCaption = [];
     const list = (k) => [...new Set(state.products.map((p) => p[k]).filter(Boolean))].map((v) => `<option value="${esc(v)}">`).join('');
     const txt = (k, label, opts = {}) => `<div class="${opts.full ? 'full' : ''}"><label for="f-${k}" class="${opts.req ? 'req' : ''}">${label}</label>
       <input id="f-${k}" data-f="${k}" value="${esc(draft[k] == null ? '' : draft[k])}" placeholder="${esc(opts.ph || '')}" ${opts.req ? 'required' : ''} ${opts.ro ? 'readonly' : ''}>${opts.help ? `<p class="help">${opts.help}</p>` : ''}</div>`;
@@ -331,7 +332,7 @@
             </div></section>
 
             <section role="tabpanel" id="panel-images" aria-labelledby="tab-images" class="hidden">
-              <p class="help" style="margin:0 0 var(--s3)">ALT text tells Google and screen readers what the photo shows. Describe the photo, e.g. "Silver solitaire ring with round moissanite, side view".</p>
+              <p class="help" style="margin:0 0 var(--s3)">The product page shows the <b>main photo</b> first, then the gallery in this order (drag the ⋮⋮ handle or use ↑ ↓ to reorder), then the hover photo if it is not already in the gallery. ALT text tells Google and screen readers what the photo shows, e.g. "Silver solitaire ring with round moissanite, side view". Captions appear under the photo on the product page.</p>
               <div id="slots"></div>
               <button type="button" class="drop" id="drop" data-action="add-gallery">Drop an image here or <u>choose a file</u> to add it to the gallery<br><span class="small">Resized to 1600px WebP before upload</span></button>
               <input id="file" type="file" accept="image/*" class="hidden">
@@ -451,28 +452,42 @@
   });
 
   function renderSlots() {
-    const slot = (key, label, src, alt, i) => `
-      <div class="slot ${src && !alt.trim() ? 'missing' : ''}">
-        <img src="${esc(imgSrc(src))}" alt="">
+    const slot = (key, label, src, alt, i, cap) => `
+      <div class="slot ${src && !alt.trim() ? 'missing' : ''}" ${i != null ? `draggable="true" data-gdrag="${i}"` : ''}>
+        <div style="position:relative">${i != null ? '<span class="grip" aria-hidden="true" title="Drag to reorder" style="position:absolute;left:-2px;top:-2px;background:var(--surface);border-radius:4px">⋮⋮</span>' : ''}<img src="${esc(imgSrc(src))}" alt=""></div>
         <div>
           <label for="alt-${key}">${label} — ALT text ${src && !alt.trim() ? '<span style="color:var(--bad)">(missing)</span>' : ''}</label>
           <input id="alt-${key}" data-alt="${key}" value="${esc(alt)}" placeholder="${src ? 'Describe this image' : 'Upload an image first'}" ${src ? '' : 'disabled'}>
+          <label for="cap-${key}" style="margin-top:var(--s2)">Caption (optional)</label>
+          <input id="cap-${key}" data-cap="${key}" value="${esc(cap || '')}" placeholder="e.g. Close-up of the temple motif" ${src ? '' : 'disabled'}>
           <p class="help" style="word-break:break-all">${esc(src || 'No image')}</p>
         </div>
         <div class="acts">
           <button class="btn btn-sm" type="button" data-upload="${key}">${src ? 'Replace' : 'Upload'}</button>
-          ${i != null ? `<button class="btn btn-sm" type="button" data-move="${i}:-1" ${i === 0 ? 'disabled' : ''} aria-label="Move gallery image ${i + 1} up">↑ Up</button>
+          ${i != null ? `<button class="btn btn-sm" type="button" data-mkmain="${i}" title="Use this photo as the main (cover) photo">★ Make main</button>
+            <button class="btn btn-sm" type="button" data-move="${i}:-1" ${i === 0 ? 'disabled' : ''} aria-label="Move gallery image ${i + 1} up">↑ Up</button>
             <button class="btn btn-sm" type="button" data-move="${i}:1" ${i === draft.gallery.length - 1 ? 'disabled' : ''} aria-label="Move gallery image ${i + 1} down">↓ Down</button>
             <button class="btn btn-sm btn-danger" type="button" data-remove="${i}">Remove</button>` : ''}
         </div>
       </div>`;
     $('#slots').innerHTML =
-      slot('image', 'Main image', draft.image, draft.imageAlt || '') +
-      slot('hoverImage', 'Hover image', draft.hoverImage, draft.hoverImageAlt || '') +
-      draft.gallery.map((src, i) => slot('gallery.' + i, 'Gallery ' + (i + 1), src, draft.galleryAlt[i] || '', i)).join('');
+      slot('image', 'Main photo (cover)', draft.image, draft.imageAlt || '', null, draft.imageCaption) +
+      slot('hoverImage', 'Hover photo (product cards)', draft.hoverImage, draft.hoverImageAlt || '', null, draft.hoverImageCaption) +
+      draft.gallery.map((src, i) => slot('gallery.' + i, 'Gallery ' + (i + 1), src, draft.galleryAlt[i] || '', i, draft.galleryCaption[i])).join('');
     if (baseline) onEdit();
   }
 
+  function setCaption(key, val) {
+    if (key === 'image') draft.imageCaption = val;
+    else if (key === 'hoverImage') draft.hoverImageCaption = val;
+    else draft.galleryCaption[Number(key.split('.')[1])] = val;
+  }
+  // Move gallery photo `from` to position `to`, keeping its ALT text and caption with it
+  function moveGallery(from, to) {
+    if (from === to || to < 0 || to >= draft.gallery.length) return;
+    [draft.gallery, draft.galleryAlt, draft.galleryCaption].forEach((arr) => { const [x] = arr.splice(from, 1); arr.splice(to, 0, x); });
+    renderSlots();
+  }
   function setAlt(key, val) {
     if (key === 'image') draft.imageAlt = val;
     else if (key === 'hoverImage') draft.hoverImageAlt = val;
@@ -539,6 +554,9 @@
       return i > 0 ? { label: l.slice(0, i).trim(), value: l.slice(i + 1).trim() } : { label: l, value: '' };
     });
     p.galleryAlt = p.gallery.map((_, i) => p.galleryAlt[i] || '');
+    p.galleryCaption = p.gallery.map((_, i) => (p.galleryCaption || [])[i] || '');
+    if (!p.galleryCaption.some(Boolean)) delete p.galleryCaption;
+    ['imageCaption', 'hoverImageCaption'].forEach((k) => { if (!p[k]) delete p[k]; });
     ['imageAlt', 'hoverImageAlt', 'compareAtPrice', 'badge', 'tag', 'seoTitle', 'seoDescription'].forEach((k) => { if (p[k] === '' || p[k] == null) delete p[k]; });
     if (!p.galleryAlt.some(Boolean)) delete p.galleryAlt;
     return p;
@@ -1742,10 +1760,11 @@
       const [i, dir] = d.move.split(':').map(Number);
       [draft.gallery[i], draft.gallery[i + dir]] = [draft.gallery[i + dir], draft.gallery[i]];
       [draft.galleryAlt[i], draft.galleryAlt[i + dir]] = [draft.galleryAlt[i + dir], draft.galleryAlt[i]];
+      [draft.galleryCaption[i], draft.galleryCaption[i + dir]] = [draft.galleryCaption[i + dir], draft.galleryCaption[i]];
       renderSlots();
     } else if (d.remove) {
       const i = Number(d.remove);
-      draft.gallery.splice(i, 1); draft.galleryAlt.splice(i, 1);
+      draft.gallery.splice(i, 1); draft.galleryAlt.splice(i, 1); draft.galleryCaption.splice(i, 1);
       renderSlots();
     } else if (d.action === 'new-product') show('editor');
     else if (d.action === 'add-gallery') { uploadKey = 'new'; $('#file').click(); }
@@ -1764,6 +1783,7 @@
   });
   document.addEventListener('input', (e) => {
     if (e.target.dataset.alt) setAlt(e.target.dataset.alt, e.target.value);
+    if (e.target.dataset.cap) setCaption(e.target.dataset.cap, e.target.value);
     if (e.target.closest('.ws-editor')) onEdit();
   });
   // Drag and drop an image onto the gallery drop zone
@@ -1787,6 +1807,33 @@
     busy(null, () => upload(f));
   });
   window.addEventListener('beforeunload', (e) => { if (editorDirty) e.preventDefault(); });
+
+  // Product photos: "Make main" swaps a gallery photo with the cover; drag ⋮⋮ to reorder the gallery
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-mkmain]');
+    if (!b || !draft) return;
+    const i = Number(b.dataset.mkmain);
+    [draft.image, draft.gallery[i]] = [draft.gallery[i], draft.image];
+    [draft.imageAlt, draft.galleryAlt[i]] = [draft.galleryAlt[i] || '', draft.imageAlt || ''];
+    [draft.imageCaption, draft.galleryCaption[i]] = [draft.galleryCaption[i] || '', draft.imageCaption || ''];
+    // Drop empty slots and repeats of the same photo (keep the first; the product page shows each photo once)
+    for (let n = draft.gallery.length - 1; n >= 0; n--) {
+      if (!draft.gallery[n] || draft.gallery.indexOf(draft.gallery[n]) !== n) { draft.gallery.splice(n, 1); draft.galleryAlt.splice(n, 1); draft.galleryCaption.splice(n, 1); }
+    }
+    renderSlots();
+    toast('Main photo changed. Save or publish to apply it on the website.');
+  });
+  let galleryDrag = null;
+  document.addEventListener('dragstart', (e) => { const sl = e.target.closest && e.target.closest('#slots [data-gdrag]'); if (sl) { galleryDrag = Number(sl.dataset.gdrag); e.dataTransfer.effectAllowed = 'move'; sl.style.opacity = '.5'; } });
+  document.addEventListener('dragend', (e) => { const sl = e.target.closest && e.target.closest('#slots [data-gdrag]'); if (sl) sl.style.opacity = ''; });
+  document.addEventListener('dragover', (e) => { if (galleryDrag != null && e.target.closest && e.target.closest('#slots [data-gdrag]')) e.preventDefault(); });
+  document.addEventListener('drop', (e) => {
+    const sl = galleryDrag != null && e.target.closest && e.target.closest('#slots [data-gdrag]');
+    if (!sl) return;
+    e.preventDefault();
+    const from = galleryDrag; galleryDrag = null;
+    moveGallery(from, Number(sl.dataset.gdrag));
+  });
 
   // ---------- start ----------
   if (state.token) signIn(state.token).catch((err) => { if (err.message !== 'Unauthorized') signOut(err.message); });
