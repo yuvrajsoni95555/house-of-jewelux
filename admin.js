@@ -747,7 +747,7 @@
     if (d.library) c.library = d.library;
     return c;
   };
-  const blankPage = () => ({ items: {}, sectionStyle: {}, style: {}, order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {}, names: {}, locked: [] });
+  const blankPage = () => ({ items: {}, sectionStyle: {}, style: {}, order: [], hidden: [], hideMobile: [], hideDesktop: [], custom: [], seo: {}, names: {}, locked: [], els: [], groups: [] });
   const isTemplate = (k) => String(k).startsWith('tpl:');
   const routeExists = (r) => r === '' || r === 'home' || STATIC_PAGES.some(([x]) => x === r) || /^collections\/[a-z0-9-]+$/.test(r) || /^p\/[a-z0-9-]+$/.test(r) ||
     (r.startsWith('products/') && state.products.some((p) => 'products/' + (p.handle || p.id) === r || 'products/' + p.id === r)) || ['appointment', 'track-order', 'gold', 'silver', 'diamond', 'gemstone'].includes(r);
@@ -859,6 +859,7 @@
           <div class="ws-title"><a class="btn btn-sm" href="#" data-go="studio" aria-label="Back to Design Studio">←</a>
             <h1>${esc(name)}</h1>${isTemplate(key) ? '<span class="pill">Template</span>' : ''}<span id="ws-dirty" class="pill dirty hidden">Unpublished changes</span></div>
           <div class="ws-actions">
+            <button class="btn btn-sm" data-cm="add-el-menu" title="Add text, frames, shapes, lines and icons">+ Element</button><button class="btn btn-sm" data-cm="shortcuts" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts">⌨</button>
             <button class="btn btn-sm" data-cm="undo" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button><button class="btn btn-sm" data-cm="redo" title="Redo (Ctrl+Y)" aria-label="Redo">↷</button>
             <button class="btn" data-cm="discard">Discard</button><button class="btn" data-cm="save-draft">Save draft</button><button class="btn btn-primary" data-cm="publish">Publish</button>
           </div>
@@ -951,14 +952,153 @@
     cmSync();
   }
 
+  // Design elements (page.els): frames, shapes, lines, icons and text boxes placed inside a section
+  const EL_TYPE = { frame: 'Frame', shape: 'Shape', line: 'Line', icon: 'Icon', text: 'Text box' };
+  const designOf = (it) => it && it.design ? (pageData(pageKeyFor(it.scope)).els || []).find((x) => x.id === it.design) : null;
+  const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+  const elKeyOf = (id) => `[data-hj-id="el-${id}"]`;
+  function patchEl(it, patch, keepForm) {
+    cmEdit(pageKeyFor(it.scope), (p) => {
+      const x = (p.els || []).find((y) => y.id === it.design); if (!x) return;
+      Object.assign(x, patch);
+      Object.keys(x).forEach((k) => { if (x[k] === '' || x[k] == null) delete x[k]; });
+    }, keepForm);
+  }
+  // Section a new element goes into: the selected section, else the selected element's section, else the first one
+  const targetSection = () => cm.secSel || (cmItem(cm.sel) || {}).section || (cm.scan.sections[0] || {}).key;
+  function addDesignEl(def, sec, item) {
+    sec = sec || targetSection();
+    if (!sec) { toast('Add a section to this page first.', true); return; }
+    const global = Object.keys(GLOBAL_NAMES).includes(sec);
+    const id = newId();
+    // Start in the middle of the part of the section that is on screen
+    const w = pvWin(); const host = w && (global ? w.document.querySelector(sec) : w.document.querySelector(`#app-view > [data-hj-sec="${w.CSS.escape(sec)}"]`));
+    const hr = host && host.getBoundingClientRect();
+    const r = hr && hr.width ? hr : { width: device, top: -400, height: 600 }; // the canvas is hidden on small admin screens: use the preview width
+    const ew = Math.min(def.w || 200, Math.max(40, r.width - 32));
+    const x = def.x != null ? def.x : Math.round((50 - (ew / 2) / Math.max(1, r.width) * 100) * 10) / 10;
+    const y = def.y != null ? def.y : Math.max(16, Math.min(Math.round(r.height - (def.h || 60) - 16), Math.round(-r.top + 120)));
+    const el = { ...def, id, sec, x, y, w: ew };
+    cmEdit(global ? '*' : cm.key, (p) => {
+      p.els = [...(p.els || []), el];
+      if (item) p.items[elKeyOf(id)] = clone(item);
+    });
+    selectElement(elKeyOf(id), false, true);
+    return id;
+  }
+  function deleteSelected() {
+    const keys = selKeys(); if (!keys.length) return;
+    const its = keys.map(cmItem).filter(Boolean);
+    const d = readDraft(); cm.undo.push(JSON.stringify(d)); cm.redo = [];
+    its.forEach((it) => {
+      const pk = pageKeyFor(it.scope);
+      if (!d.pages[pk]) d.pages[pk] = Object.assign(blankPage(), clone(state.content.pages[pk] || {}));
+      const P = d.pages[pk];
+      if (it.design) {
+        P.els = (P.els || []).filter((x) => x.id !== it.design);
+        delete P.items[it.key];
+        P.groups = (P.groups || []).map((g) => g.filter((k) => k !== it.key)).filter((g) => g.length > 1);
+        P.locked = (P.locked || []).filter((k) => k !== it.key);
+        if (P.names) delete P.names[it.key];
+      } else P.items[it.key] = { ...(P.items[it.key] || {}), hidden: true }; // the website's own elements are hidden, never removed
+    });
+    writeDraft(d);
+    cm.sel = null; cm.multi = [];
+    cmSync();
+    toast(its.some((i) => !i.design) ? 'Website elements are hidden (show them again from Layers). Undo brings everything back.' : 'Deleted. Undo (Ctrl+Z) brings it back.');
+  }
+  function copySelected() {
+    const it = cmItem(cm.sel); const el = designOf(it);
+    if (!el) { toast('Copy works on elements you added (frames, shapes, text boxes, lines, icons). For website text use Copy style.'); return false; }
+    cm.clipEl = { el: clone(el), item: clone(cmOverride(it)) };
+    return true;
+  }
+  function pasteEl(offset) {
+    if (!cm.clipEl) return;
+    const { el, item } = cm.clipEl;
+    const sec = cm.scan.sections.some((x) => x.key === el.sec) || Object.keys(GLOBAL_NAMES).includes(el.sec) ? el.sec : targetSection();
+    const { id, ...rest } = el; // eslint-disable-line no-unused-vars
+    addDesignEl({ ...rest, y: (Number(el.y) || 0) + (offset ? 24 : 0) }, sec, item);
+  }
+  function groupToggle() {
+    const keys = selKeys(); if (keys.length < 2) return;
+    const g = (pageData(cm.key).groups || []).find((x) => keys.every((k) => x.includes(k)));
+    cmEdit(cm.key, (p) => {
+      p.groups = (p.groups || []).map((x) => x.filter((k) => !keys.includes(k))).filter((x) => x.length > 1);
+      if (!g) p.groups.push(keys.slice());
+    });
+    toast(g ? 'Ungrouped.' : 'Grouped: clicking any of them on the canvas now selects and moves them together.');
+  }
+  function zOrder(dir) {
+    const it = cmItem(cm.sel); if (!it) return;
+    const z = (k) => ((((pageData(pageKeyFor(it.scope)).items || {})[k] || {}).pos || {})[curBp()] || {}).z || 0;
+    const sib = cm.scan.items.filter((i) => i.section === it.section).map((i) => z(i.key));
+    const next = dir === 'top' ? Math.max(0, ...sib) + 1 : dir === 'bottom' ? Math.min(0, ...sib) - 1 : z(it.key) + Number(dir);
+    savePos(cm.sel, curBp(), { z: Math.max(-50, Math.min(50, next)) });
+  }
+  // Keyboard shortcuts, typed in the admin or on the canvas (the canvas forwards them)
+  function cmKey(k, mod, shift) {
+    if (mod && k === 'z' && !shift) return undoRedo(cm.undo, cm.redo);
+    if (mod && (k === 'y' || (k === 'z' && shift))) return undoRedo(cm.redo, cm.undo);
+    if (mod && k === 'd') { if (copySelected()) pasteEl(true); return; }
+    if (mod && k === 'c') { if (copySelected()) toast('Copied. Ctrl+V pastes it (also on another page).'); return; }
+    if (mod && k === 'v') return pasteEl(true);
+    if (mod && k === 'g') return groupToggle();
+    if (k === 'delete' || k === 'backspace') return deleteSelected();
+    if (k === ']' || k === '[') return zOrder(k === ']' ? (shift ? 'top' : 1) : (shift ? 'bottom' : -1));
+    if (k === 'escape') { cm.sel = null; cm.multi = []; renderLayers(); renderProps(); syncSelection(); return; }
+    if (k === 'g') { edPrefs.grid = !edPrefs.grid; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); const b = view.querySelector('[data-pref="grid"]'); if (b) b.setAttribute('aria-pressed', String(edPrefs.grid)); syncSelection(); return; }
+    if (k === '?') showShortcuts();
+  }
+  function showShortcuts() {
+    const rows = [['Click', 'Select (a grouped element selects its whole group)'], ['Shift + click', 'Add to / remove from the selection'], ['Double-click text', 'Type directly on the canvas'],
+      ['Drag · handles', 'Move · resize · rotate (top handle)'], ['Shift while dragging', 'Straight moves, proportional resize'], ['Arrow keys', 'Nudge 1px (Shift = 10px)'],
+      ['Ctrl + Z / Ctrl + Y', 'Undo / redo'], ['Ctrl + C / Ctrl + V', 'Copy / paste an added element (works across pages)'], ['Ctrl + D', 'Duplicate'], ['Delete', 'Delete an added element (website elements are hidden)'],
+      ['Ctrl + G', 'Group / ungroup the selection'], [']  /  [', 'Bring forward / send backward (Shift = to front / to back)'], ['G', 'Grid on / off'], ['Esc', 'Clear the selection'], ['?', 'This list']];
+    $('#st-props').innerHTML = `<h3 class="pp-h">Keyboard shortcuts</h3><table class="kbd-t"><tbody>${rows.map(([a, b]) => `<tr><th><kbd>${esc(a)}</kbd></th><td class="small">${esc(b)}</td></tr>`).join('')}</tbody></table>`;
+    showPane('props');
+  }
+  const ELEMENT_MENU = [
+    ['Text', [['text:h2', 'Heading'], ['text:h3', 'Subheading'], ['text:p', 'Paragraph']]],
+    ['Frames (hold an image)', [['frame:rect', 'Rectangle'], ['frame:square', 'Square'], ['frame:rounded', 'Rounded'], ['frame:circle', 'Circle'], ['frame:oval', 'Oval'],
+      ['frame:portrait', 'Portrait 4:5'], ['frame:landscape', 'Landscape 16:9'], ['frame:arch', 'Arch'], ['frame:hexagon', 'Hexagon'], ['frame:diamond', 'Diamond']]],
+    ['Shapes', [['shape:rect', 'Rectangle'], ['shape:rounded', 'Rounded'], ['shape:circle', 'Circle'], ['shape:oval', 'Oval'], ['shape:triangle', 'Triangle'], ['shape:diamond', 'Diamond'],
+      ['shape:hexagon', 'Hexagon'], ['shape:pentagon', 'Pentagon'], ['shape:star', 'Star']]],
+    ['Lines & dividers', [['line:solid', 'Line'], ['line:dashed', 'Dashed'], ['line:dotted', 'Dotted'], ['line:double', 'Double'], ['line:end', 'Arrow'], ['line:both', 'Double arrow']]],
+    ['Icons', ['star', 'heart', 'gem', 'ring', 'crown', 'sparkle', 'gift', 'check', 'arrow', 'truck', 'shield', 'phone', 'mail', 'pin'].map((i) => ['icon:' + i, i[0].toUpperCase() + i.slice(1)])]
+  ];
+  function elPreview(code) {
+    const [type, v] = code.split(':');
+    const clip = { triangle: 'polygon(50% 0,100% 100%,0 100%)', diamond: 'polygon(50% 0,100% 50%,50% 100%,0 50%)', hexagon: 'polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)', pentagon: 'polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)', star: 'polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' }[v];
+    const rad = { rounded: '8px', circle: '50%', oval: '50%', arch: '99px 99px 0 0' }[v] || '0';
+    const wh = v === 'oval' ? 'width:40px;height:26px' : v === 'portrait' ? 'width:26px;height:32px' : v === 'landscape' ? 'width:40px;height:23px' : v === 'arch' ? 'width:26px;height:34px' : 'width:32px;height:32px';
+    if (type === 'text') return `<i class="el-pv-t" style="font-size:${v === 'h2' ? 20 : v === 'h3' ? 15 : 11}px">${v === 'p' ? 'Aa body' : 'Aa'}</i>`;
+    if (type === 'frame') return `<i class="el-pv" style="${wh};border-radius:${rad};${clip ? 'clip-path:' + clip : ''};background:repeating-linear-gradient(45deg,#e9dccb 0 5px,#f6efe6 5px 10px);outline:1px dashed #a88462"></i>`;
+    if (type === 'shape') return `<i class="el-pv" style="${wh};border-radius:${rad};${clip ? 'clip-path:' + clip : ''};background:#A88462"></i>`;
+    if (type === 'line') return `<i class="el-pv" style="width:40px;height:0;border-top:${v === 'double' ? '4px double' : '2px ' + (['dashed', 'dotted'].includes(v) ? v : 'solid')} #A88462"></i>`;
+    return `<i class="el-pv-t" style="color:#A88462">${{ star: '★', heart: '♥', gem: '◆', ring: '◯', crown: '♛', sparkle: '✦', gift: '🎁︎', check: '✓', arrow: '→', truck: '⛟', shield: '⛨', phone: '☏', mail: '✉', pin: '⌖' }[v] || '★'}</i>`;
+  }
+  function elementDef(code) {
+    const [type, v] = code.split(':');
+    if (type === 'text') return { type, tag: v, text: v === 'p' ? 'Add a little bit of body text' : v === 'h2' ? 'Add a heading' : 'Add a subheading', w: v === 'p' ? 360 : 440 };
+    if (type === 'frame') {
+      const ratio = { square: '1 / 1', circle: '1 / 1', portrait: '4 / 5', landscape: '16 / 9', hexagon: '1 / 1', diamond: '1 / 1' }[v] || '';
+      return { type, shape: v, w: v === 'landscape' ? 400 : 280, h: v === 'portrait' ? 350 : v === 'landscape' ? 225 : v === 'oval' ? 200 : v === 'arch' ? 360 : 280, aspect: ratio };
+    }
+    if (type === 'shape') return { type, shape: v, w: v === 'oval' ? 220 : 160, h: v === 'oval' ? 140 : 160 };
+    if (type === 'line') return { type, lineStyle: ['dashed', 'dotted', 'double'].includes(v) ? v : 'solid', arrow: ['end', 'both'].includes(v) ? v : 'none', thickness: v === 'double' ? 4 : 2, w: 260, h: 20 };
+    return { type: 'icon', icon: v, alt: v, w: 56, h: 56 };
+  }
+
   const customOf = (secKey) => (pageData(cm.key).custom || []).find((c) => c.id === String(secKey).replace('custom:', ''));
   const typeName = (c) => { if (!c) return 'Section'; const t = c.type === 'library' ? 'Library section' : (SECTION_TYPES.find(([x]) => x === c.type) || [, 'Section'])[1]; return t; };
   const secLabel = (s, n) => {
     const label = (s.label || '').trim().slice(0, 40);
     return layerName(s.key, 'page', s.custom ? typeName(customOf(s.key)) + (label ? ': ' + label : '') : label || 'Section ' + (n + 1));
   };
-  const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
-  const KIND_ICON = { text: 'T', link: '↗', image: '▣' };
+  const itemLabel = (i) => layerName(i.key, i.scope, i.kind === 'design' ? EL_TYPE[i.type] + ((designOf(i) || {}).shape ? ' · ' + designOf(i).shape : (designOf(i) || {}).icon ? ' · ' + designOf(i).icon : '') :
+    i.kind === 'image' ? 'Image' + (i.alt ? ': ' + i.alt : '') : (cmOverride(i).text != null ? cmOverride(i).text : i.text) || '(empty)');
+  const KIND_ICON = { text: 'T', link: '↗', image: '▣', frame: '▢', shape: '◆', line: '─', icon: '★' };
 
   function renderLayers() {
     const S = cm.scan; if (!S) return;
@@ -967,7 +1107,7 @@
     const row = (i) => {
       const o = cmOverride(i); const locked = isLocked(i.key, i.scope);
       return `<li class="ly-el ${cm.sel === i.key ? 'on' : ''}"><button type="button" class="ly-name" data-cmsel="${esc(i.key)}" ${locked ? 'aria-disabled="true"' : ''}>
-        <span class="ly-k">${i.tag === 'img' ? KIND_ICON.image : /^h[1-6]$/.test(o.tag || i.tag) ? (o.tag || i.tag).toUpperCase() : KIND_ICON[i.kind]}</span><span class="ly-t">${esc(itemLabel(i).slice(0, 60))}</span></button>
+        <span class="ly-k">${i.kind === 'design' ? KIND_ICON[i.type] : i.tag === 'img' ? KIND_ICON.image : /^h[1-6]$/.test(o.tag || i.tag) ? (o.tag || i.tag).toUpperCase() : KIND_ICON[i.kind]}</span><span class="ly-t">${(P.groups || []).some((g) => g.includes(i.key)) ? '<span title="Grouped">⧉ </span>' : ''}${esc(itemLabel(i).slice(0, 60))}</span></button>
         <button type="button" class="ly-ic" data-eltog="${esc(i.key)}" aria-label="${o.hidden ? 'Show' : 'Hide'} element" title="${o.hidden ? 'Show' : 'Hide'}">${o.hidden ? '◌' : '●'}</button>
         <button type="button" class="ly-ic" data-ellock="${esc(i.key)}" data-scope="${i.scope}" aria-label="${locked ? 'Unlock' : 'Lock'} element" title="${locked ? 'Unlock' : 'Lock'}">${locked ? '🔒' : '🔓'}</button></li>`;
     };
@@ -985,14 +1125,16 @@
       <button type="button" class="ly-page ${!cm.sel && !cm.secSel ? 'on' : ''}" data-cm="page-props">⚙ Page settings</button>
       <h4 class="ly-h">Sections</h4>
       <ol class="ly-list" id="cm-secs">${S.sections.map((s, n) => section(s.key, secLabel(s, n), 'page', n, s)).join('') || '<li class="small muted">This page has no sections yet.</li>'}</ol>
-      <button class="btn btn-sm" data-cm="add-section-menu" style="width:100%;margin-top:var(--s2)">+ Add section</button>
+      <div class="row-flex" style="margin-top:var(--s2)"><button class="btn btn-sm" data-cm="add-section-menu" style="flex:1">+ Section</button><button class="btn btn-sm btn-primary" data-cm="add-el-menu" style="flex:1">+ Element</button></div>
       <h4 class="ly-h">Shared on every page</h4>
       <ul class="ly-list">${Object.entries(GLOBAL_NAMES).map(([k, v]) => section(k, layerName(k, 'global', v), 'global')).join('')}</ul>`;
   }
 
   // ----- properties panel (page / section / element) -----
+  const PICK_FIELD = { 'data-swatch': 'color', 'data-ebg': 'bg', 'data-ebd': 'borderColor', 'data-ehbg': 'hoverBg', 'data-ehc': 'hoverColor' };
   const swatchRow = (attr, current) => `<div class="row-flex">${SWATCHES.map((c) => `<button type="button" class="sw ${current === c ? 'on' : ''}" style="background:${c}" ${attr}="${c}" aria-label="Colour ${c}"></button>`).join('')}
-    <button type="button" class="sw ${!current ? 'on' : ''}" ${attr}="" aria-label="Default colour" title="Default">∅</button></div>`;
+    <button type="button" class="sw ${!current ? 'on' : ''}" ${attr}="" aria-label="Default colour" title="Default">∅</button>
+    ${PICK_FIELD[attr] ? `<input type="color" class="sw-pick" data-cpick="${PICK_FIELD[attr]}" value="${/^#[0-9a-f]{6}$/i.test(current || '') ? current : '#a88462'}" aria-label="Any colour" title="Any colour">` : ''}</div>`;
   const numField = (id, label, attr, value, ph = 'Default', min = 0, max = 400, step = 1) =>
     `<div><label for="${id}">${label}</label><input id="${id}" ${attr} type="number" min="${min}" max="${max}" step="${step}" value="${value == null ? '' : esc(value)}" placeholder="${ph}"></div>`;
   const group = (title, body, open = true) => `<details class="pg" ${open ? 'open' : ''}><summary>${title}</summary><div class="grid2">${body}</div></details>`;
@@ -1095,6 +1237,7 @@
 
   function elementProps(box, it) {
     const o = cmOverride(it);
+    const D = designOf(it);
     const tpl = isTemplate(cm.key) && it.scope === 'page';
     const val = (k, def) => esc(o[k] != null ? o[k] : def == null ? '' : def);
     const sel = (id, attr, opts, cur) => `<select id="${id}" ${attr}>${opts.map(([v, l]) => `<option value="${v}" ${String(cur == null ? '' : cur) === v ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
@@ -1105,14 +1248,72 @@
       ${numField('p-x', 'X offset (px)', 'data-p="x"', P.x, '0', -3000, 3000)}${numField('p-y', 'Y offset (px)', 'data-p="y"', P.y, '0', -3000, 3000)}
       ${numField('p-w', 'Width (px)', 'data-p="w"', P.w, 'Auto', 8, 4000)}${numField('p-h', 'Height (px)', 'data-p="h"', P.h, 'Auto', 8, 4000)}
       ${numField('p-r', 'Rotation (°)', 'data-p="r"', P.r, '0', -360, 360)}
-      <div><label>Layer order</label><div class="row-flex"><button type="button" class="btn btn-sm" data-zorder="1" title="Bring forward">⬆ Forward</button><button type="button" class="btn btn-sm" data-zorder="-1" title="Send backward">⬇ Back</button></div><p class="help">z = ${P.z || 0}</p></div>
+      <div class="full"><label>Layer order <span class="small muted">(z = ${P.z || 0})</span></label><div class="row-flex"><button type="button" class="btn btn-sm" data-zorder="top" title="Bring to front (Shift+])">⤒ Front</button><button type="button" class="btn btn-sm" data-zorder="1" title="Bring forward (])">⬆ Forward</button><button type="button" class="btn btn-sm" data-zorder="-1" title="Send backward ([)">⬇ Backward</button><button type="button" class="btn btn-sm" data-zorder="bottom" title="Send to back (Shift+[)">⤓ Back</button></div></div>
       <div class="full row-flex"><button type="button" class="btn btn-sm" data-al="secc">Centre in section</button><button type="button" class="btn btn-sm" data-al="pagec">Centre on page</button>
         <button type="button" class="btn btn-sm" data-cm="reset-pos">Reset (this size)</button></div>
       <p class="full help" style="margin:0">Drag the element on the canvas, or use the handles to resize and rotate. Moves are an offset from its place in the layout, so the rest of the page keeps flowing.</p>`);
-    let html = `<h3 class="pp-h">${it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(it.tag)}</span></h3>
+    const range = (id, label, attr, v, min, max, step, unit) => `<div><label for="${id}">${label} <span class="small muted" data-rv="${id}">${v}${unit}</span></label><input id="${id}" ${attr} type="range" min="${min}" max="${max}" step="${step}" value="${v}" data-unit="${unit}"></div>`;
+    const adjustGroup = () => group('Adjust image', `
+        <p class="full help" style="margin:0">Presentation only: the original photo is not changed. Keep metal and stone colours true to the real piece.</p>
+        ${range('e-br', 'Brightness', 'data-e="brightness"', o.brightness != null ? o.brightness : 100, 50, 150, 1, '%')}${range('e-ct', 'Contrast', 'data-e="contrast"', o.contrast != null ? o.contrast : 100, 50, 150, 1, '%')}
+        ${range('e-sa', 'Saturation', 'data-e="saturate"', o.saturate != null ? o.saturate : 100, 0, 200, 1, '%')}
+        <div><label>Flip</label><label class="check"><input type="checkbox" data-e="flipH" ${o.flipH ? 'checked' : ''}> Horizontal</label><label class="check"><input type="checkbox" data-e="flipV" ${o.flipV ? 'checked' : ''}> Vertical</label></div>`, false);
+    const boxGroup = (title, open) => group(title, `
+        <div class="full"><label>${it.type === 'shape' ? 'Fill' : 'Background'}</label>${swatchRow('data-ebg', o.bg)}</div>
+        <div class="full"><label>Border colour</label>${swatchRow('data-ebd', o.borderColor)}</div>
+        ${numField('e-bw', 'Border width (px)', 'data-e="borderWidth"', o.borderWidth, '1', 0, 20)}${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 999)}
+        <div><label for="e-sh">Shadow</label>${sel('e-sh', 'data-e="shadow"', [['', 'Default'], ['none', 'None'], ['soft', 'Soft'], ['strong', 'Strong'], ['glow', 'Gold glow']], o.shadow || '')}</div>
+        ${numField('e-op', 'Opacity (0.05–1)', 'data-e="opacity"', o.opacity, '1', 0.05, 1, 0.05)}
+        ${it.type === 'text' ? numField('e-px', 'Padding left/right (px)', 'data-e="padX"', o.padX, '0', 0, 120) + numField('e-py', 'Padding top/bottom (px)', 'data-e="padY"', o.padY, '0', 0, 120) : ''}`, open);
+    const effectsGroup = group('Animation & hover', `
+        <div><label for="e-anim">Entrance</label>${sel('e-anim', 'data-e="anim"', [['', 'None'], ['fade', 'Fade in'], ['up', 'Slide up'], ['down', 'Slide down'], ['left', 'Slide from left'], ['right', 'Slide from right'], ['zoom', 'Scale in'], ['rotate', 'Rotate in']], o.anim || '')}</div>
+        <div><label for="e-aon">Starts</label>${sel('e-aon', 'data-e="animOn"', [['', 'When scrolled into view'], ['load', 'When the page opens']], o.animOn || '')}</div>
+        ${numField('e-adur', 'Duration (s)', 'data-e="animDur"', o.animDur, '0.8', 0.1, 5, 0.1)}${numField('e-adel', 'Delay (s)', 'data-e="animDelay"', o.animDelay, '0', 0, 5, 0.1)}
+        <div><label for="e-aease">Easing</label>${sel('e-aease', 'data-e="animEase"', [['', 'Smooth (luxury)'], ['ease', 'Ease out'], ['inout', 'Ease in-out'], ['linear', 'Linear']], o.animEase || '')}</div>
+        <div><label for="e-hov">On hover</label>${sel('e-hov', 'data-e="hover"', [['', 'Nothing'], ['lift', 'Lift'], ['grow', 'Grow'], ['glow', 'Gold glow'], ['dim', 'Dim']], o.hover || '')}</div>
+        <div class="full row-flex"><button type="button" class="btn btn-sm" data-cm="anim-preview" ${o.anim ? '' : 'disabled'}>▶ Preview animation</button></div>
+        <p class="full help" style="margin:0">Visitors who turn off motion in their device settings see no animation.</p>`, false);
+    const designGroup = () => {
+      if (!D) return '';
+      const de = (k) => esc(D[k] != null ? D[k] : '');
+      const dsel = (id, k, opts) => sel(id, `data-de="${k}"`, opts, D[k] || '');
+      if (D.type === 'frame') {
+        const fx = D.fx != null ? D.fx : 50; const fy = D.fy != null ? D.fy : 50; const z = D.zoom || 1;
+        return group('Frame', `
+          <div class="full row-flex" style="flex-wrap:nowrap;align-items:flex-start">${D.src ? `<img src="${esc(imgSrc(D.src))}" alt="" style="width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);object-position:${fx}% ${fy}%">` : '<div class="frame-empty">No image</div>'}
+            <div class="row-flex"><button class="btn btn-sm btn-primary" data-cm="frame-pick">${D.src ? 'Replace image' : 'Choose image'}</button><button class="btn btn-sm" data-cm="frame-upload">Upload</button>${D.src ? '<button class="btn btn-sm" data-cm="frame-clear">Remove</button>' : ''}</div></div>
+          ${D.src ? `<div class="full"><label class="req" for="d-alt">ALT text</label><input id="d-alt" data-de="alt" value="${de('alt')}" placeholder="Describe what the image shows"></div>
+          ${range('d-zoom', 'Zoom', 'data-de="zoom"', z, 1, 4, 0.05, '×')}<div></div>
+          ${range('d-fx', 'Focus left–right', 'data-de="fx"', fx, 0, 100, 1, '%')}${range('d-fy', 'Focus top–bottom', 'data-de="fy"', fy, 0, 100, 1, '%')}
+          <p class="full help" style="margin:0">Zoom and focus crop the image inside the frame. Replacing the image keeps the frame's size.</p>` : ''}
+          <div><label for="d-shape">Shape</label>${dsel('d-shape', 'shape', [['rect', 'Rectangle'], ['square', 'Square'], ['rounded', 'Rounded'], ['circle', 'Circle'], ['oval', 'Oval'], ['arch', 'Arch'], ['hexagon', 'Hexagon'], ['diamond', 'Diamond'], ['star', 'Star'], ['triangle', 'Triangle']])}</div>
+          <div><label for="d-asp">Proportions</label>${dsel('d-asp', 'aspect', [['', 'Free (unlocked)'], ['1 / 1', 'Locked 1:1'], ['4 / 5', 'Locked 4:5'], ['3 / 4', 'Locked 3:4'], ['2 / 3', 'Locked 2:3'], ['16 / 9', 'Locked 16:9'], ['3 / 2', 'Locked 3:2']])}</div>`);
+      }
+      if (D.type === 'shape') return group('Shape', `<div class="full"><label for="d-shape">Shape</label>${dsel('d-shape', 'shape', [['rect', 'Rectangle'], ['rounded', 'Rounded'], ['circle', 'Circle'], ['oval', 'Oval'], ['triangle', 'Triangle'], ['diamond', 'Diamond'], ['hexagon', 'Hexagon'], ['pentagon', 'Pentagon'], ['star', 'Star'], ['arch', 'Arch']])}</div>
+          <p class="full help" style="margin:0">Colour: Fill, below. Size and angle: drag the handles or use Position & size.</p>`);
+      if (D.type === 'line') return group('Line', `
+          ${numField('d-th', 'Thickness (px)', 'data-de="thickness"', D.thickness, '2', 1, 40)}
+          <div><label for="d-ls">Style</label>${dsel('d-ls', 'lineStyle', [['solid', 'Solid'], ['dashed', 'Dashed'], ['dotted', 'Dotted'], ['double', 'Double']])}</div>
+          <div><label for="d-ar">Ends</label>${dsel('d-ar', 'arrow', [['none', 'Plain'], ['end', 'Arrow at the end'], ['both', 'Arrows at both ends']])}</div>
+          <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>
+          <p class="full help" style="margin:0">Length = width. Direction = rotation (top handle; Shift snaps to 45°).</p>`);
+      if (D.type === 'icon') return group('Icon', `
+          <div><label for="d-ic">Icon</label>${dsel('d-ic', 'icon', ELEMENT_MENU[4][1].map(([c, n]) => [c.split(':')[1], n]))}</div>
+          ${numField('d-st', 'Line weight', 'data-de="stroke"', D.stroke, '1.5', 0.5, 4, 0.25)}
+          <div class="full"><label for="d-alt">Label for screen readers</label><input id="d-alt" data-de="alt" value="${de('alt')}"></div>
+          <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>`);
+      if (D.type === 'text') return group('Text box', `<div><label for="d-tag">Heading level (SEO)</label>${dsel('d-tag', 'tag', [['h1', 'H1'], ['h2', 'H2'], ['h3', 'H3'], ['h4', 'H4'], ['h5', 'H5'], ['h6', 'H6'], ['p', 'Paragraph']])}</div>
+          <p class="full help" style="margin:0">The level is for search engines and screen readers; the look comes from Typography.</p>`, false);
+      return '';
+    };
+    const elButtons = D ? `<div class="row-flex" style="margin-top:var(--s3)"><button class="btn btn-sm" data-cm="el-dup" title="Ctrl+D">Duplicate</button><button class="btn btn-sm" data-cm="el-copy" title="Ctrl+C">Copy</button>
+        <button class="btn btn-sm btn-danger" data-cm="el-del" title="Delete">Delete</button></div>` : '';
+    let html = `<h3 class="pp-h">${D ? EL_TYPE[D.type] : it.kind === 'image' ? 'Image' : isBtn ? 'Button / link' : /^h[1-6]$/.test(it.tag) ? 'Heading' : 'Text'} <span class="pill">${esc(D ? D.shape || D.icon || D.tag || D.lineStyle || '' : it.tag)}</span></h3>
       <p class="small muted" style="margin-top:-8px">${esc(it.scope === 'global' ? GLOBAL_NAMES[it.section] + ' · on every page' : 'In ' + secLabel(cm.scan.sections.find((s) => s.key === it.section) || { key: it.section, label: '' }, 0))}</p>
-      ${tpl ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup;
-    if (it.kind === 'image') {
+      ${tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
+    if (D && D.type !== 'text') {
+      html += (D.type === 'frame' && D.src ? adjustGroup() : '') + (D.type === 'line' || D.type === 'icon' ? '' : boxGroup(D.type === 'shape' ? 'Fill & border' : 'Border & effects', D.type === 'shape')) + effectsGroup;
+    } else if (it.kind === 'image') {
       const [fx, fy] = (o.objectPosition || '50% 50%').split(' ').map((v) => parseInt(v, 10));
       html += (tpl ? '' : group('Image', `
         <div class="full row-flex" style="flex-wrap:nowrap;align-items:flex-start"><img src="${esc(imgSrc(o.src || it.src))}" alt="" style="width:96px;height:96px;object-fit:cover;border-radius:var(--r-sm);background:var(--line);object-position:${fx}% ${fy}%">
@@ -1124,23 +1325,28 @@
         ${numField('e-mw', 'Width (% of space)', 'data-e="maxWidth"', o.maxWidth, '100', 10, 100)}
         <div><label for="e-fx">Focus left–right <span id="fxv">${fx}%</span></label><input id="e-fx" data-e="fx" type="range" min="0" max="100" value="${fx}"></div>
         <div><label for="e-fy">Focus top–bottom <span id="fyv">${fy}%</span></label><input id="e-fy" data-e="fy" type="range" min="0" max="100" value="${fy}"></div>
-        ${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 200)}`);
+        ${numField('e-rad', 'Corner radius (px)', 'data-e="radius"', o.radius, 'Default', 0, 200)}`) + adjustGroup() + effectsGroup;
     } else {
-      html += (tpl ? '' : group('Content', `
+      html += (tpl && !D ? '' : group('Content', `
         <div class="full"><label for="e-text">${isBtn ? 'Label' : 'Text'}</label><textarea id="e-text" data-e="text" rows="${it.text.length > 120 ? 5 : 2}">${val('text', it.text)}</textarea>
           ${it.hasMarkup ? '<p class="help">Has formatting inside (line breaks, icons); editing makes it plain text.</p>' : ''}</div>
         ${it.kind === 'link' ? `<div class="full"><label for="e-href">Destination</label><input id="e-href" data-e="href" list="dl-routes" value="${val('href', it.href)}" placeholder="#about or https://…"><p class="help" id="href-check"></p>
           <datalist id="dl-routes">${STATIC_PAGES.map(([r, n]) => `<option value="#${r}">${n}</option>`).join('')}</datalist></div>
           <div class="full"><label class="check"><input type="checkbox" data-e="newTab" ${o.newTab ? 'checked' : ''}> Open in a new tab</label></div>` : ''}
-        ${/^h[1-6]$/.test(it.tag) ? `<div><label for="e-tag">Heading level (SEO)</label>${sel('e-tag', 'data-e="tag"', [1, 2, 3, 4, 5, 6].map((n) => ['h' + n, 'H' + n]), o.tag || it.tag)}</div>` : ''}`)) +
+        ${/^h[1-6]$/.test(it.tag) && !D ? `<div><label for="e-tag">Heading level (SEO)</label>${sel('e-tag', 'data-e="tag"', [1, 2, 3, 4, 5, 6].map((n) => ['h' + n, 'H' + n]), o.tag || it.tag)}</div>` : ''}`)) +
       group('Typography', `
-        <div><label for="e-font">Font</label>${sel('e-font', 'data-e="font"', [['', 'Default'], ['display', 'Brand display'], ['serif', 'Serif'], ['sans', 'Sans-serif']], o.font || '')}</div>
+        <div><label for="e-font">Font</label>${sel('e-font', 'data-e="font"', [['', 'Default'], ['display', 'Lawrence (brand)'], ['cinzel', 'Cinzel'], ['cormorant', 'Cormorant Garamond'], ['playfair', 'Playfair Display'], ['serif', 'Site serif'], ['manrope', 'Manrope'], ['montserrat', 'Montserrat'], ['sans', 'Site sans-serif']], o.font || '')}</div>
         ${numField('e-size', 'Size (px)', 'data-e="size"', o.size, 'Default', 8, 160)}
         <div><label for="e-weight">Weight</label>${sel('e-weight', 'data-e="weight"', [['', 'Default'], ['300', 'Light'], ['400', 'Regular'], ['500', 'Medium'], ['600', 'Semibold'], ['700', 'Bold']], o.weight || '')}</div>
         ${numField('e-lh', 'Line height', 'data-e="lineHeight"', o.lineHeight, 'Default', 0.8, 4, 0.05)}
         ${numField('e-ls', 'Letter spacing (px)', 'data-e="letterSpacing"', o.letterSpacing, 'Default', -5, 20, 0.5)}
         <div><label>Align</label><div class="seg" role="group" aria-label="Text alignment">${[['', 'Auto'], ['left', 'Left'], ['center', 'Centre'], ['right', 'Right']].map(([v, l]) => `<button type="button" data-ealign="${v}" aria-pressed="${(o.align || '') === v}">${l}</button>`).join('')}</div></div>
-        <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>`) +
+        <div class="full"><label>Colour</label>${swatchRow('data-swatch', o.color)}</div>
+        <div class="full row-flex"><label class="check"><input type="checkbox" data-e="italic" ${o.italic ? 'checked' : ''}> <i>Italic</i></label>
+          ${sel('e-deco', 'data-e="deco" aria-label="Line"', [['', 'No line'], ['underline', 'Underline'], ['line-through', 'Strikethrough']], o.deco || '')}
+          ${sel('e-case', 'data-e="case" aria-label="Letter case"', [['', 'Case as typed'], ['uppercase', 'UPPERCASE'], ['lowercase', 'lowercase'], ['capitalize', 'Title Case']], o.case || '')}
+          ${sel('e-tsh', 'data-e="textShadow" aria-label="Text shadow"', [['', 'No text shadow'], ['soft', 'Soft shadow'], ['strong', 'Strong shadow'], ['glow', 'Glow']], o.textShadow || '')}</div>`) +
+      (D ? boxGroup('Box: background & border', false) : '') + effectsGroup +
       (isBtn ? group('Button design', `
         <div class="full"><label>Background</label>${swatchRow('data-ebg', o.bg)}</div>
         <div class="full"><label>Border colour</label>${swatchRow('data-ebd', o.borderColor)}</div>
@@ -1154,7 +1360,7 @@
     }
     html += group('Visibility', `<div class="full">${sel('e-vis', 'data-e="visibility"', [['all', 'Visible'], ['hidden', 'Hidden']], o.hidden ? 'hidden' : 'all')}</div>`, false) +
       `<div class="row-flex" style="margin-top:var(--s3)"><button class="btn btn-sm" data-cm="rename-el">Rename layer</button><button class="btn btn-sm" data-cm="copy-style">Copy style</button>
-        <button class="btn btn-sm" data-cm="paste-style" ${cm.clip ? '' : 'disabled'}>Paste style</button><button class="btn btn-sm" data-cm="reset-el">Restore original</button></div>`;
+        <button class="btn btn-sm" data-cm="paste-style" ${cm.clip ? '' : 'disabled'}>Paste style</button>${D ? '' : '<button class="btn btn-sm" data-cm="reset-el">Restore original</button>'}</div>` + elButtons;
     box.innerHTML = html;
     const chk = $('#href-check');
     if (chk) { const p = linkProblem($('#e-href').value.trim()); chk.textContent = p ? '⚠ ' + p : '✓ Link looks valid'; chk.style.color = p ? 'var(--bad)' : 'var(--ok)'; }
@@ -1171,12 +1377,15 @@
       ${group('Match', `<div class="full row-flex">${btn('matchw', 'Same width')}${btn('matchh', 'Same height')}${btn('matchs', 'Same size')}</div>
         <p class="full help" style="margin:0">Matches the first element you selected.</p>`)}
       ${group('Centre', `<div class="full row-flex">${btn('secc', 'Centre in section')}${btn('pagec', 'Centre on page')}</div>`)}
+      ${group('Group', `<div class="full row-flex"><button type="button" class="btn btn-sm" data-cm="group">${(pageData(cm.key).groups || []).some((g) => cm.multi.every((k) => g.includes(k))) ? 'Ungroup' : 'Group'} (Ctrl+G)</button>
+        <button type="button" class="btn btn-sm btn-danger" data-cm="el-del">Delete</button></div><p class="full help" style="margin:0">Drag any selected element on the canvas to move them all together.</p>`)}
       <button type="button" class="btn btn-sm" data-cm="clear-multi" style="margin-top:var(--s3)">Clear selection</button>`;
   }
 
   // Save an element's position for one breakpoint (from a canvas drag, nudge or the number fields)
   function savePos(key, bp, pos, keepForm) {
     const it = cmItem(key); if (!it || !/^[dtm]$/.test(bp)) return;
+    if (pos.w != null && (designOf(it) || {}).aspect) pos = { ...pos, h: null };
     cmEdit(pageKeyFor(it.scope), (p) => {
       const o = { ...(p.items[key] || {}) };
       const all = { ...(o.pos || {}) };
@@ -1218,10 +1427,15 @@
       S.forEach((r) => { if (hz) moveTo(r, at); else moveTo(r, null, at); at += (hz ? r.width : r.height) + gap; });
     }
     if (/^match/.test(kind)) R.forEach((r) => { if (r.key === first.key) return; out[r.key] = { ...(kind !== 'matchh' ? { w: Math.round(first.w) } : {}), ...(kind !== 'matchw' ? { h: Math.round(first.h) } : {}) }; });
+    savePosMany(out, bp);
+  }
+  function savePosMany(out, bp) {
+    if (!/^[dtm]$/.test(bp)) return;
     const d = readDraft();
     cm.undo.push(JSON.stringify(d)); cm.redo = [];
     Object.entries(out).forEach(([k, pos]) => {
-      const it = cmItem(k); const pk = pageKeyFor(it.scope);
+      const it = cmItem(k); if (!it) return;
+      const pk = pageKeyFor(it.scope);
       if (!d.pages[pk]) d.pages[pk] = Object.assign(blankPage(), clone(state.content.pages[pk] || {}));
       const o = { ...(d.pages[pk].items[k] || {}) }; o.pos = { ...(o.pos || {}) };
       const cur = { ...(o.pos[bp] || {}), ...pos };
@@ -1254,7 +1468,11 @@
       if (f('title')) set('title', f('title').value);
       if (f('aspect')) set('aspect', f('aspect').value);
       if (f('fx')) set('objectPosition', `${f('fx').value}% ${f('fy').value}%`, '50% 50%');
-      set('hidden', f('visibility').value === 'hidden' || null);
+      ['brightness', 'contrast', 'saturate'].forEach((k) => { if (f(k)) set(k, n(k), 100); });
+      ['animDur', 'animDelay'].forEach((k) => { if (f(k)) set(k, n(k)); });
+      ['flipH', 'flipV', 'italic'].forEach((k) => { if (f(k)) set(k, f(k).checked || null); });
+      ['deco', 'case', 'textShadow', 'anim', 'animOn', 'animEase', 'hover'].forEach((k) => { if (f(k)) set(k, f(k).value); });
+      if (f('visibility')) set('hidden', f('visibility').value === 'hidden' || null);
       if (Object.keys(o).length) p.items[it.key] = o; else delete p.items[it.key];
     }, true);
   }
@@ -1295,7 +1513,7 @@
     const ai = a.items || {}; const bi = b.items || {};
     new Set([...Object.keys(ai), ...Object.keys(bi)]).forEach((k) => { if (JSON.stringify(ai[k]) !== JSON.stringify(bi[k])) out.push((bi[k] ? (ai[k] ? 'Changed ' : 'Added ') : 'Removed ') + 'element ' + k.split(' > ').pop()); });
     const norm = (v) => (!v || (Array.isArray(v) ? !v.length : !Object.values(v).some(Boolean)) ? null : v);
-    const names = { order: 'section order', hidden: 'hidden sections', hideMobile: 'mobile-only hiding', hideDesktop: 'desktop-only hiding', custom: 'added sections', seo: 'SEO', sectionStyle: 'section design', style: 'page background', meta: 'page name' };
+    const names = { order: 'section order', hidden: 'hidden sections', hideMobile: 'mobile-only hiding', hideDesktop: 'desktop-only hiding', custom: 'added sections', els: 'design elements (frames, shapes, text, icons)', groups: 'element groups', seo: 'SEO', sectionStyle: 'section design', style: 'page background', meta: 'page name' };
     Object.keys(names).forEach((k) => { if (JSON.stringify(norm(a[k])) !== JSON.stringify(norm(b[k]))) out.push('Changed ' + names[k]); });
     return out;
   }
@@ -1319,7 +1537,7 @@
       keys.forEach((k) => {
         const p = d.pages[k];
         const empty = !Object.keys(p.items || {}).length && !Object.keys(p.sectionStyle || {}).length && !(p.style && p.style.bg) && !(p.order || []).length &&
-          !(p.hidden || []).length && !(p.hideMobile || []).length && !(p.hideDesktop || []).length && !(p.custom || []).length && !(p.seo && (p.seo.title || p.seo.description)) && !k.startsWith('p/');
+          !(p.hidden || []).length && !(p.hideMobile || []).length && !(p.hideDesktop || []).length && !(p.custom || []).length && !(p.els || []).length && !(p.seo && (p.seo.title || p.seo.description)) && !k.startsWith('p/');
         if (empty) delete next.pages[k]; else next.pages[k] = { ...p, updatedAt: new Date().toISOString() };
       });
       if (extra.includes('design')) next.design = d.design;
@@ -1393,6 +1611,7 @@
       Object.entries(content.pages).forEach(([r, p]) => {
         Object.values(p.items || {}).forEach((o) => { if (same(o.src)) uses.push('Page: #' + r); });
         Object.values(p.sectionStyle || {}).forEach((st) => { if (same(st.bgImage)) uses.push('Page: #' + r + ' (background)'); });
+        (p.els || []).forEach((x) => { if (same(x.src)) uses.push('Page: #' + r + ' (frame)'); });
         (p.custom || []).forEach((c) => { if (same(c.image)) uses.push('Page: #' + r + ' (section)'); });
       });
       (content.library || []).forEach((l) => { if (same(l.image)) uses.push('Library: ' + (l.heading || l.type)); });
@@ -1457,9 +1676,15 @@
   }
 
   // add = Shift+click: build a multi-selection for align / distribute
-  function selectElement(key, add) {
+  function selectElement(key, add, single) {
     const it = cmItem(key); if (!it) return;
     if (isLocked(key, it.scope) && !add) { toast('This layer is locked. Unlock it in Layers to edit it.'); return; }
+    const grp = !add && !single && (pageData(cm.key).groups || []).find((g) => g.includes(key));
+    if (grp && grp.filter(cmItem).length > 1) {
+      cm.multi = grp.filter(cmItem); cm.sel = key; cm.secSel = it.section; cm.open[it.section] = true;
+      hl(key); renderLayers(); renderProps(); syncSelection(); showPane('props');
+      return;
+    }
     if (add && cm.sel) {
       const set = new Set(cm.multi && cm.multi.length ? cm.multi : [cm.sel]);
       if (set.has(key)) set.delete(key); else set.add(key);
@@ -1493,23 +1718,27 @@
       else if (e.data.section) selectSection(e.data.section);
     }
     if (e.data.type === 'hj-pos' && inStudio()) savePos(e.data.key, e.data.bp, e.data.pos);
+    if (e.data.type === 'hj-pos-many' && inStudio() && Array.isArray(e.data.list)) savePosMany(Object.fromEntries(e.data.list.map((x) => [x.key, x.pos])), e.data.bp);
+    if (e.data.type === 'hj-text' && inStudio() && cmItem(e.data.key) && typeof e.data.text === 'string') patchItem(cmItem(e.data.key), { text: e.data.text.slice(0, 2000) });
+    if (e.data.type === 'hj-key' && inStudio()) cmKey(String(e.data.key), !!e.data.mod, !!e.data.shift);
   });
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
+    const t = e.target.closest('[data-addel],[data-viewmode],[data-zoom],[data-pref],[data-al],[data-zorder],[data-ehbg],[data-ehc],[data-group],[data-global],[data-studio],[data-cm],[data-cmsel],[data-secsel],[data-lyopen],[data-sectog],[data-eltog],[data-ellock],[data-spane],[data-swatch],[data-ebg],[data-ebd],[data-ealign],[data-ssbg],[data-sscolor],[data-pgbg],[data-addtype],[data-addlib],[data-pick],[data-vcompare],[data-vrestore],[data-mcopy],[data-mdel],[data-libdel]');
     if (!t) return;
     const d = t.dataset;
     if (d.viewmode) { setViewMode(d.viewmode); return; }
     if (d.zoom != null) { zoom = d.zoom === '0' ? 1 : Math.min(4, Math.max(0.25, zoom * (d.zoom === '1' ? 1.25 : 0.8))); fitPreview(); return; }
     if (d.pref) { edPrefs[d.pref] = !edPrefs[d.pref]; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); t.setAttribute('aria-pressed', String(edPrefs[d.pref])); syncSelection(); return; }
     if (d.al) { doAlign(d.al); return; }
-    if (d.zorder) { const o = cmOverride(cmItem(cm.sel)); const z = (((o.pos || {})[curBp()] || {}).z || 0) + Number(d.zorder); savePos(cm.sel, curBp(), { z }); return; }
+    if (d.zorder) { zOrder(d.zorder); return; }
+    if (d.addel) { const it0 = cmItem(cm.sel); addDesignEl(elementDef(d.addel), cm.secSel || (it0 && it0.section)); return; }
     if ('ehbg' in d) { patchItem(cmItem(cm.sel), { hoverBg: d.ehbg }); return; }
     if ('ehc' in d) { patchItem(cmItem(cm.sel), { hoverColor: d.ehc }); return; }
     if (d.group) { show('group', d.group); return; }
     if (d.global) { show('page', { key: 'home', route: 'home', focus: d.global }); return; }
     if (d.studio) { show('page', { key: d.studio, route: d.route }); return; }
-    if (d.cmsel) { selectElement(d.cmsel, e.shiftKey); return; }
+    if (d.cmsel) { selectElement(d.cmsel, e.shiftKey, true); return; }
     if (d.secsel) { if (e.detail === 2) { renameLayer(d.secsel, Object.keys(GLOBAL_NAMES).includes(d.secsel) ? 'global' : 'page'); return; } selectSection(d.secsel); return; }
     if (d.lyopen) { cm.open[d.lyopen] = !cm.open[d.lyopen]; renderLayers(); return; }
     if (d.sectog) { const k = d.sectog; cmEdit(cm.key, (p) => { p.hidden = (p.hidden || []).includes(k) ? p.hidden.filter((x) => x !== k) : [...(p.hidden || []), k]; }); return; }
@@ -1581,6 +1810,20 @@
         break;
       }
       case 'clear-multi': cm.multi = []; renderProps(); syncSelection(); break;
+      case 'add-el-menu':
+        $('#st-props').innerHTML = `<h3 class="pp-h">Add an element</h3><p class="help" style="margin-top:-6px">It goes into <b>${esc(secLabel(cm.scan.sections.find((x) => x.key === targetSection()) || { key: targetSection(), label: GLOBAL_NAMES[targetSection()] || '' }, 0))}</b>. Select another section first to put it there.</p>
+          ${ELEMENT_MENU.map(([title, list]) => `<h4 class="ly-h">${title}</h4><div class="el-grid">${list.map(([c, n]) => `<button type="button" class="el-tile" data-addel="${c}">${elPreview(c)}<span>${esc(n)}</span></button>`).join('')}</div>`).join('')}`;
+        showPane('props');
+        break;
+      case 'shortcuts': showShortcuts(); break;
+      case 'el-dup': if (copySelected()) pasteEl(true); break;
+      case 'el-copy': if (copySelected()) toast('Copied. Ctrl+V pastes it (also on another page).'); break;
+      case 'el-del': deleteSelected(); break;
+      case 'group': groupToggle(); break;
+      case 'anim-preview': { const w = pvWin(); if (w && w.__hjAdmin.replay) w.__hjAdmin.replay(cm.sel); break; }
+      case 'frame-pick': pickImage((path) => patchEl(it, { src: path, alt: designOf(it).alt || '' })); break;
+      case 'frame-upload': cmUpload((path) => patchEl(it, { src: path })); break;
+      case 'frame-clear': patchEl(it, { src: null, alt: null, zoom: null, fx: null, fy: null }); break;
       case 'reset-pos': { const o = cmOverride(it); const all = { ...(o.pos || {}) }; delete all[curBp()]; patchItem(it, { pos: Object.keys(all).length ? all : null }); break; }
       case 'reset-el': patchItem(it, Object.fromEntries(Object.keys(cmOverride(it)).map((k) => [k, null]))); break;
       case 'copy-style': { const o = cmOverride(it); cm.clip = Object.fromEntries(['font', 'size', 'weight', 'lineHeight', 'letterSpacing', 'align', 'color', 'bg', 'borderColor', 'radius', 'padX', 'padY'].filter((k) => k in o).map((k) => [k, o[k]])); toast('Style copied.'); renderProps(); break; }
@@ -1656,6 +1899,11 @@
       if (t.id === 'e-href') { const p = linkProblem(t.value.trim()); $('#href-check').textContent = p ? '⚠ ' + p : '✓ Link looks valid'; $('#href-check').style.color = p ? 'var(--bad)' : 'var(--ok)'; }
       clearTimeout(cmTimer); cmTimer = setTimeout(readElementForm, 250);
     }
+    if (t.matches('#st-props input[type=range]') && $(`[data-rv="${t.id}"]`)) $(`[data-rv="${t.id}"]`).textContent = t.value + (t.dataset.unit || '');
+    if (t.matches('#st-props [data-de]') && t.tagName === 'INPUT') {
+      const k = t.dataset.de; const it = cmItem(cm.sel);
+      clearTimeout(cmTimer); cmTimer = setTimeout(() => patchEl(it, { [k]: t.type === 'text' ? t.value : t.value === '' ? null : Number(t.value) }, true), 200);
+    }
     if (t.matches('#st-props [data-p]')) { const k = t.dataset.p; clearTimeout(cmTimer); cmTimer = setTimeout(() => savePos(cm.sel, curBp(), { [k]: t.value === '' ? null : Number(t.value) }, true), 250); }
     if (t.matches('[data-prefnum]')) { const v = Number(t.value); if (v >= Number(t.min) && v <= Number(t.max)) { edPrefs[t.dataset.prefnum] = v; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); syncSelection(); } }
     if (t.matches('#st-props [data-ss]')) { const k = t.dataset.ss; clearTimeout(cmTimer); cmTimer = setTimeout(() => { patchSectionKeep(cm.secSel, { [k]: t.value === '' ? null : Number(t.value) }); }, 300); }
@@ -1693,6 +1941,8 @@
       });
     }
     if (t.matches('#st-props select[data-e], #st-props input[type=checkbox][data-e]')) readElementForm();
+    if (t.matches('#st-props select[data-de]')) patchEl(cmItem(cm.sel), { [t.dataset.de]: t.value });
+    if (t.matches('#st-props [data-cpick]')) patchItem(cmItem(cm.sel), { [t.dataset.cpick]: t.value });
     if (t.matches('#st-props select[data-ss]')) patchSection(cm.secSel, { [t.dataset.ss]: t.value });
     if (t.matches('#st-props select[data-c]')) customUpdate(cm.secSel.replace('custom:', ''), { [t.dataset.c]: t.value });
     if (t.matches('select[data-lc]')) { const id = t.closest('[data-lib-id]').dataset.libId; libEdit((l) => { const x = l.find((y) => y.id === id); if (x) x[t.dataset.lc] = t.value; }); }
@@ -1704,14 +1954,13 @@
 
   // Undo / redo shortcuts (outside text fields, so typing keeps its own undo)
   document.addEventListener('keydown', (e) => {
-    if (inStudio() && !e.target.matches('input, textarea, select') && !e.ctrlKey && !e.metaKey) {
-      if (e.key === 'g' || e.key === 'G') { edPrefs.grid = !edPrefs.grid; localStorage.setItem(PREFS_KEY, JSON.stringify(edPrefs)); const b = view.querySelector('[data-pref="grid"]'); if (b) b.setAttribute('aria-pressed', String(edPrefs.grid)); syncSelection(); }
-      if (e.key === 'Escape' && (cm.sel || (cm.multi || []).length)) { cm.sel = null; cm.multi = []; renderLayers(); renderProps(); syncSelection(); }
+    if (!inStudio() || e.target.matches('input, textarea, select, [contenteditable]')) return;
+    const mod = e.ctrlKey || e.metaKey; const k = e.key.toLowerCase();
+    if ((mod && ['z', 'y', 'd', 'c', 'v', 'g'].includes(k)) || (!mod && ['delete', 'backspace', 'escape', '[', ']', 'g', '?'].includes(k))) {
+      if (!mod && k === 'escape' && !cm.sel && !(cm.multi || []).length) return;
+      e.preventDefault();
+      cmKey(k, mod, e.shiftKey);
     }
-    if (!inStudio() || !(e.ctrlKey || e.metaKey) || e.target.matches('input, textarea')) return;
-    const k = e.key.toLowerCase();
-    if (k === 'z' && !e.shiftKey) { e.preventDefault(); undoRedo(cm.undo, cm.redo); }
-    if (k === 'y' || (k === 'z' && e.shiftKey)) { e.preventDefault(); undoRedo(cm.redo, cm.undo); }
   });
 
   // Drag and drop section reordering in Layers

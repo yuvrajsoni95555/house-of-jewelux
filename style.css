@@ -6681,3 +6681,33 @@ img, video, canvas, svg {
   .pdp-sticky .pdp-add, .pdp-sticky .pdp-buynow { flex: 1; padding: 0 0.5rem; }
 }
 @media (prefers-reduced-motion: reduce) { .pdp-sticky, .pdp-acc summary::after { transition: none; } }
+
+/* ===================================================================
+   DESIGN STUDIO ELEMENTS (frames, shapes, lines, icons, text boxes added in the admin)
+   Position, size, colours and effects come from data/content.json as CSS rules.
+   =================================================================== */
+.hj-el-host { position: relative; overflow-x: clip; }
+.hj-el { position: absolute; z-index: 20; box-sizing: border-box; margin: 0; max-width: 100%; }
+.hj-el-text { color: inherit; line-height: 1.3; overflow-wrap: anywhere; }
+.hj-el-frame { overflow: hidden; background: rgba(168, 132, 98, 0.12); }
+.hj-el-frame img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.hj-el-ph { display: flex; align-items: center; justify-content: center; height: 100%; padding: 8px; border: 1px dashed rgba(168, 132, 98, 0.8);
+  box-sizing: border-box; font: 12px/1.3 system-ui, sans-serif; color: #6B4A2E; text-align: center; }
+.hj-el-shape { background: #A88462; }
+.hj-el-line { display: flex; align-items: center; color: #A88462; }
+.hj-el-stroke { flex: 1; }
+.hj-el-arrow { flex: none; width: 0; height: 0; border-left: 12px solid currentColor; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.hj-el-arrow.start { rotate: 180deg; }
+.hj-el-icon { color: #A88462; }
+.hj-el-icon svg { width: 100%; height: 100%; display: block; }
+
+@keyframes hj-a-fade { from { opacity: 0; } }
+@keyframes hj-a-up { from { opacity: 0; transform: translateY(36px); } }
+@keyframes hj-a-down { from { opacity: 0; transform: translateY(-36px); } }
+@keyframes hj-a-left { from { opacity: 0; transform: translateX(-48px); } }
+@keyframes hj-a-right { from { opacity: 0; transform: translateX(48px); } }
+@keyframes hj-a-zoom { from { opacity: 0; transform: scale(0.85); } }
+@keyframes hj-a-rotate { from { opacity: 0; transform: rotate(-10deg) scale(0.95); } }
+[data-hj-anim] { animation-play-state: paused !important; }
+[data-hj-anim].hj-in { animation-play-state: running !important; }
+@media (prefers-reduced-motion: reduce) { [data-hj-anim] { animation: none !important; } }

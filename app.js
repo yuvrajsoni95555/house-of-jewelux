@@ -3756,10 +3756,18 @@
       el = back;
     }
     el.innerHTML = o.html;
+    delete el.dataset.hjAnim; el.classList.remove('hj-in');
     ['src', 'alt', 'title', 'href', 'target', 'rel'].forEach((a) => { if (o[a] == null) el.removeAttribute(a); else el.setAttribute(a, o[a]); });
     return el;
   }
 
+  // Fonts the site already loads (index.html + style.css), so choosing one costs no extra download
+  const FONTS = { serif: 'var(--font-serif, Georgia, serif)', sans: 'var(--font-sans, system-ui, sans-serif)', display: "'Lawrence', Georgia, serif",
+    cinzel: "'Cinzel', Georgia, serif", cormorant: "'Cormorant Garamond', Georgia, serif", playfair: "'Playfair Display', Georgia, serif", manrope: "'Manrope', system-ui, sans-serif", montserrat: "'Montserrat', system-ui, sans-serif" };
+  const TEXT_SHADOWS = { none: 'none', soft: '0 2px 8px rgba(0,0,0,.25)', strong: '0 3px 14px rgba(0,0,0,.55)', glow: '0 0 14px rgba(232,211,184,.8)' };
+  const ANIMS = { fade: 'hj-a-fade', up: 'hj-a-up', down: 'hj-a-down', left: 'hj-a-left', right: 'hj-a-right', zoom: 'hj-a-zoom', rotate: 'hj-a-rotate' };
+  const EASES = { smooth: 'cubic-bezier(.16,1,.3,1)', ease: 'ease-out', inout: 'ease-in-out', linear: 'linear' };
+  const HOVERS = { lift: 'transform:translateY(-6px)', grow: 'transform:scale(1.05)', glow: 'box-shadow:0 0 26px rgba(168,132,98,.6)', dim: 'opacity:.78' };
   const SHADOWS = { none: 'none', soft: '0 6px 18px rgba(26,18,14,.12)', strong: '0 14px 36px rgba(26,18,14,.28)', glow: '0 0 22px rgba(168,132,98,.55)' };
   // Breakpoints for free positioning: each one is stored and applied on its own
   const BREAKPOINTS = { d: '(min-width:1025px)', t: '(min-width:768px) and (max-width:1024px)', m: '(max-width:767px)' };
@@ -3787,7 +3795,11 @@
     if (o.weight) css.push('font-weight:' + num(o.weight, 900));
     if (o.lineHeight) css.push('line-height:' + num(o.lineHeight, 4));
     if (o.letterSpacing != null && o.letterSpacing !== '') css.push('letter-spacing:' + Math.max(-5, Math.min(20, Number(o.letterSpacing) || 0)) + 'px');
-    if (o.font && /^(serif|sans|display)$/.test(o.font)) css.push('font-family:' + { serif: 'var(--font-serif, Georgia, serif)', sans: 'var(--font-sans, system-ui, sans-serif)', display: "'Lawrence', Georgia, serif" }[o.font]);
+    if (o.font && FONTS[o.font]) css.push('font-family:' + FONTS[o.font]);
+    if (o.italic) css.push('font-style:italic');
+    if (o.deco && /^(underline|line-through|none)$/.test(o.deco)) css.push('text-decoration:' + o.deco);
+    if (o.case && /^(uppercase|lowercase|capitalize|none)$/.test(o.case)) css.push('text-transform:' + o.case);
+    if (o.textShadow && TEXT_SHADOWS[o.textShadow]) css.push('text-shadow:' + TEXT_SHADOWS[o.textShadow]);
     if (o.align) css.push('text-align:' + ({ left: 'left', center: 'center', right: 'right' }[o.align] || 'inherit'));
     if (o.color && HEX.test(o.color)) css.push('color:' + o.color);
     if (o.bg && HEX.test(o.bg)) css.push('background:' + o.bg);
@@ -3800,8 +3812,64 @@
     if (o.objectPosition && /^\d{1,3}% \d{1,3}%$/.test(o.objectPosition)) css.push('object-position:' + o.objectPosition);
     if (o.aspect && /^\d+ \/ \d+$/.test(o.aspect)) css.push('aspect-ratio:' + o.aspect + ';object-fit:cover;height:auto');
     if (o.maxWidth) css.push('max-width:' + num(o.maxWidth, 100) + '%');
+    // Manual image adjustments only (never automatic): the original file is not changed
+    const filters = ['brightness', 'contrast', 'saturate'].filter((k) => o[k] != null && o[k] !== '' && Number(o[k]) !== 100).map((k) => `${k}(${num(o[k], 300)}%)`);
+    if (filters.length) css.push('filter:' + filters.join(' '));
+    if (o.flipH || o.flipV) css.push(`scale:${o.flipH ? -1 : 1} ${o.flipV ? -1 : 1}`);
     if (o.hidden) css.push('display:none');
     return css.join(';').split(';').filter(Boolean).map((d) => d + '!important').join(';');
+  }
+
+  // Entrance animations wait (paused) until the element scrolls into view; reduced-motion users get none (style.css)
+  const animIO = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((x) => { if (x.isIntersecting) { x.target.classList.add('hj-in'); animIO.unobserve(x.target); } }), { threshold: 0.12 }) : null;
+  function watchAnim(el, onLoad) {
+    if (!animIO || onLoad) requestAnimationFrame(() => el.classList.add('hj-in')); else animIO.observe(el);
+  }
+
+  // Design elements added in the Studio (frames, shapes, lines, icons, text boxes): page.els = [{ id, sec, type, x, y, w, h, ... }]
+  // Their styling, position per screen size, animation etc. live in page.items like any other element, under the key below.
+  const elKey = (id) => `[data-hj-id="el-${id}"]`;
+  const EL_CLIP = { triangle: 'polygon(50% 0,100% 100%,0 100%)', diamond: 'polygon(50% 0,100% 50%,50% 100%,0 50%)', hexagon: 'polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)',
+    star: 'polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)', pentagon: 'polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)' };
+  const EL_RADIUS = { rect: '0', square: '0', rounded: '18px', circle: '50%', oval: '50%', arch: '999px 999px 0 0', portrait: '0', landscape: '0' };
+  const EL_ICONS = {
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>', heart: '<path d="M12 20.5L3.8 12.3a5 5 0 017.2-7.2l1 1 1-1a5 5 0 017.2 7.2z"/>',
+    gem: '<path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6"/>', crown: '<path d="M3 18h18M4 18L3 7l5 4 4-6 4 6 5-4-1 11"/>',
+    sparkle: '<path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/>', ring: '<circle cx="12" cy="14" r="7"/><path d="M9 4h6l-3 3z"/>',
+    check: '<path d="M4 12l5 5L20 6"/>', arrow: '<path d="M4 12h16M14 6l6 6-6 6"/>', truck: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>',
+    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>', phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>', pin: '<path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+    gift: '<rect x="3" y="8" width="18" height="13"/><path d="M3 12h18M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zM12 8s2-5 4.5-3.5S15 8 12 8z"/>'
+  };
+  function designElHtml(e) {
+    const n = (v, lo, hi, d) => { const x = Number(v); return v !== '' && v != null && Number.isFinite(x) ? Math.max(lo, Math.min(hi, x)) : d; };
+    const id = String(e.id).replace(/[^a-z0-9-]/gi, '');
+    // A locked ratio (frames) replaces the height, so resizing the width keeps the proportions
+    const ratio = e.type === 'frame' && /^\d{1,2} \/ \d{1,2}$/.test(e.aspect || '') ? e.aspect : '';
+    const bw = n(e.w, 4, 4000, 200);
+    // The left edge never pushes the box past the section's right edge, so a desktop placement still fits on a phone
+    let st = `left:max(0px,min(${n(e.x, -50, 150, 10)}%,calc(100% - ${bw}px)));top:${n(e.y, -3000, 8000, 40)}px;width:${bw}px` + (e.type === 'text' ? '' : ratio ? `;aspect-ratio:${ratio}` : `;height:${n(e.h, 1, 4000, 200)}px`);
+    const attrs = (cls, extra = '') => `class="hj-el hj-el-${cls}" data-hj-design="1" data-hj-id="el-${id}" ${extra}`;
+    if (e.type === 'text') {
+      const tag = /^(h[1-6]|p)$/.test(e.tag) ? e.tag : 'p';
+      return `<${tag} ${attrs('text')} style="${st}">${escHtml(e.text || 'Your text')}</${tag}>`;
+    }
+    if (e.type === 'frame' || e.type === 'shape') {
+      st += e.shape && EL_CLIP[e.shape] ? `;clip-path:${EL_CLIP[e.shape]}` : `;border-radius:${EL_RADIUS[e.shape] || '0'}`;
+    }
+    if (e.type === 'frame') {
+      const fx = n(e.fx, 0, 100, 50); const fy = n(e.fy, 0, 100, 50); const z = n(e.zoom, 1, 4, 1);
+      const ok = e.src && /^(\/?images\/|\/?brand-identity\/|https:\/\/)/.test(e.src);
+      return `<div ${attrs('frame')} style="${st}">${ok ? `<img src="${escHtml(imgUrl(e.src))}" alt="${escHtml(e.alt || '')}" loading="lazy" draggable="false"
+        style="object-position:${fx}% ${fy}%;transform-origin:${fx}% ${fy}%;transform:scale(${z})">` : '<span class="hj-el-ph">Frame: choose an image</span>'}</div>`;
+    }
+    if (e.type === 'shape') return `<div ${attrs('shape', 'aria-hidden="true"')} style="${st}"></div>`;
+    if (e.type === 'line') {
+      const t = n(e.thickness, 1, 40, 2); const ls = /^(solid|dashed|dotted|double)$/.test(e.lineStyle) ? e.lineStyle : 'solid';
+      return `<div ${attrs('line', 'aria-hidden="true"')} style="${st}">${e.arrow === 'both' ? '<span class="hj-el-arrow start"></span>' : ''}<span class="hj-el-stroke" style="border-top:${t}px ${ls} currentColor"></span>${e.arrow === 'end' || e.arrow === 'both' ? '<span class="hj-el-arrow"></span>' : ''}</div>`;
+    }
+    if (e.type === 'icon') return `<div ${attrs('icon', `role="img" aria-label="${escHtml(e.alt || e.icon || 'icon')}"`)} style="${st}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${n(e.stroke, 0.5, 4, 1.5)}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${EL_ICONS[e.icon] || EL_ICONS.star}</svg></div>`;
+    return '';
   }
 
   function applyContentItem(el, o) {
@@ -3834,7 +3902,17 @@
     const hover = [];
     if (o.hoverBg && HEX.test(o.hoverBg)) hover.push('background:' + o.hoverBg + '!important');
     if (o.hoverColor && HEX.test(o.hoverColor)) hover.push('color:' + o.hoverColor + '!important');
-    if (hover.length) DESIGN_RULES.push(`[data-hj-key="${CSS.escape(o.__key)}"]:hover{${hover.join(';')}}`);
+    const k = CSS.escape(o.__key);
+    if (HOVERS[o.hover]) {
+      hover.push(HOVERS[o.hover] + '!important');
+      DESIGN_RULES.push(`[data-hj-key="${k}"]{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,opacity .35s,background .25s,color .25s!important}`);
+    }
+    if (hover.length) DESIGN_RULES.push(`[data-hj-key="${k}"]:hover{${hover.join(';')}}`);
+    if (ANIMS[o.anim]) {
+      el.dataset.hjAnim = o.anim;
+      DESIGN_RULES.push(`[data-hj-key="${k}"]{animation:${ANIMS[o.anim]} ${Math.max(0.1, Math.min(5, Number(o.animDur) || 0.8))}s ${EASES[o.animEase] || EASES.smooth} ${Math.max(0, Math.min(5, Number(o.animDelay) || 0))}s backwards!important}`);
+      watchAnim(el, o.animOn === 'load');
+    }
     DESIGN_RULES.push(...positionRules(o.__key, el, o.pos));
   }
 
@@ -3910,6 +3988,15 @@
       const secStyle = { ...(tplPage.sectionStyle || {}), ...(page.sectionStyle || {}) };
       all.forEach((s) => { s.hidden = hidden.includes(s.dataset.hjSec); applySectionStyle(`#app-view > [data-hj-sec="${CSS.escape(s.dataset.hjSec)}"]`, secStyle[s.dataset.hjSec]); });
     }
+    // 1b) design elements, placed inside their section (sections that are not positioned become the reference box)
+    document.querySelectorAll('[data-hj-design]').forEach((x) => x.remove());
+    document.querySelectorAll('.hj-el-host').forEach((x) => x.classList.remove('hj-el-host'));
+    layers.forEach((p) => (p.els || []).forEach((e) => {
+      const host = GLOBAL_ROOTS.includes(e.sec) ? document.querySelector(e.sec) : view && view.querySelector(`:scope > [data-hj-sec="${CSS.escape(String(e.sec))}"]`);
+      if (!host || !e.id) return;
+      if (getComputedStyle(host).position === 'static') host.classList.add('hj-el-host');
+      host.insertAdjacentHTML('beforeend', designElHtml(e));
+    }));
     const sharedStyle = layers[0].sectionStyle || {};
     GLOBAL_ROOTS.forEach((sel) => applySectionStyle(sel, sharedStyle[sel]));
     const bg = (page.style && page.style.bg) || (tplPage.style && tplPage.style.bg);
@@ -3951,7 +4038,7 @@
       return rootSel + (parts.length ? ' > ' + parts.join(' > ') : '');
     };
     const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
-    const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer');
+    const skip = (el) => el.closest('.product-card, svg, script, style, [aria-hidden="true"], [data-hj-custom], input, select, textarea, .slide-drawer, [data-hj-design]');
     window.__hjAdmin = {
       route: contentRoute,
       setContent(c) {
@@ -3974,6 +4061,14 @@
           label: ((s.querySelector('h1,h2,h3') || {}).textContent || '').trim() || s.getAttribute('aria-label') ||
             String(s.id || s.className || 'Section').split(' ')[0].replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase()) }));
         const items = [];
+        roots.forEach(([root, , scope, section]) => root.querySelectorAll(':scope > [data-hj-design]').forEach((el) => {
+          const key = el.dataset.hjKey || `[data-hj-id="${el.dataset.hjId}"]`;
+          const type = el.className.match(/hj-el-(\w+)/)[1];
+          const o = ORIG.get(el);
+          items.push({ key, scope, section, design: el.dataset.hjId.slice(3), type, tag: el.tagName.toLowerCase(), kind: type === 'text' ? 'text' : 'design',
+            text: type === 'text' ? (o ? new DOMParser().parseFromString(o.html, 'text/html').body.textContent : el.textContent).trim() : '', hasMarkup: false, src: '', alt: '', href: '' });
+          el.dataset.hjEdit = key;
+        }));
         roots.forEach(([root, rootSel, scope, section]) => {
           if (root.dataset.hjCustom) return;
           root.querySelectorAll(TEXT_TAGS + ',img').forEach((el) => {
@@ -4120,7 +4215,14 @@
 
     layer.addEventListener('pointerdown', (e) => {
       const box = e.target.closest('.box');
-      if (!box || box.classList.contains('multi') || box.classList.contains('locked')) return;
+      if (!box || box.classList.contains('locked')) return;
+      if (box.classList.contains('multi')) {
+        // Several elements (a group or a Shift selection) move together; unlocked ones only
+        e.preventDefault();
+        const items = ED.keys.filter((k) => !ED.locked.includes(k)).map((k) => { const el = elOf(k); if (!visible(el)) return null; const [tx, ty] = translateOf(el); return { k, el, tx, ty }; }).filter(Boolean);
+        ED.drag = { mode: 'many', items, mx: e.clientX, my: e.clientY, out: null };
+        return;
+      }
       e.preventDefault();
       const k = box.dataset.key; const el = elOf(k);
       const r = el.getBoundingClientRect(); const [tx, ty] = translateOf(el);
@@ -4133,6 +4235,14 @@
     window.addEventListener('pointermove', (e) => {
       const D = ED.drag; if (!D) return;
       let dx = e.clientX - D.mx; let dy = e.clientY - D.my;
+      if (D.mode === 'many') {
+        // shortcut: no snapping while moving several elements; align them with the Align buttons afterwards
+        if (e.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0; }
+        D.out = D.items.map((it) => ({ key: it.k, pos: { x: Math.round(it.tx + dx), y: Math.round(it.ty + dy) } }));
+        dragCss.textContent = D.out.map((o) => `html [data-hj-key="${CSS.escape(o.key)}"],html [data-hj-edit="${CSS.escape(o.key)}"]{translate:${o.pos.x}px ${o.pos.y}px!important}`).join('\n');
+        draw();
+        return;
+      }
       const guides = [];
       const { sec, xs, ys, others } = D.t;
       if (D.mode === 'move') {
@@ -4191,8 +4301,43 @@
     window.addEventListener('pointerup', () => {
       const D = ED.drag; ED.drag = null;
       if (!D) return;
+      if (D.mode === 'many') { if (D.out) window.parent.postMessage({ type: 'hj-pos-many', bp: bpNow(), list: D.out }, location.origin); else draw(); return; }
       if (D.out) window.parent.postMessage({ type: 'hj-pos', key: D.k, bp: bpNow(), pos: D.out }, location.origin);
       else draw();
+    });
+
+    // Double-click a text element on the canvas to type into it; Enter or clicking away saves, Esc cancels
+    layer.addEventListener('dblclick', (e) => {
+      const box = e.target.closest('.box');
+      if (!box || box.classList.contains('locked')) return;
+      const el = elOf(box.dataset.key);
+      if (!el || el.tagName === 'IMG' || el.children.length || !el.textContent.trim()) return;
+      const before = el.textContent;
+      ED.editing = el;
+      layer.style.display = 'none';
+      el.contentEditable = 'plaintext-only';
+      el.focus();
+      document.getSelection().selectAllChildren(el);
+      const done = (save) => {
+        el.removeEventListener('blur', onBlur); el.removeEventListener('keydown', onKey);
+        el.contentEditable = 'false'; el.removeAttribute('contenteditable'); ED.editing = null; layer.style.display = '';
+        const text = el.textContent.replace(/\s+/g, ' ').trim();
+        if (save && text && text !== before.trim()) window.parent.postMessage({ type: 'hj-text', key: box.dataset.key, text }, location.origin);
+        else { el.textContent = before; draw(); }
+      };
+      const onBlur = () => done(true);
+      const onKey = (k) => { if (k.key === 'Enter' && !k.shiftKey) { k.preventDefault(); done(true); } if (k.key === 'Escape') { k.preventDefault(); done(false); } k.stopPropagation(); };
+      el.addEventListener('blur', onBlur); el.addEventListener('keydown', onKey);
+    });
+
+    // Editor shortcuts typed while the canvas has focus are handled by the admin, exactly like when its own panels have focus
+    document.addEventListener('keydown', (e) => {
+      if (!window.__hjContentMode || ED.editing || e.target.closest('input, textarea, select, [contenteditable]')) return;
+      const mod = e.ctrlKey || e.metaKey; const k = e.key.toLowerCase();
+      if ((mod && ['z', 'y', 'd', 'c', 'v', 'g'].includes(k)) || (!mod && ['delete', 'backspace', 'escape', '[', ']', 'g', '?'].includes(k))) {
+        e.preventDefault();
+        window.parent.postMessage({ type: 'hj-key', key: k, mod, shift: e.shiftKey }, location.origin);
+      }
     });
 
     // Arrow keys nudge the selection (Shift = 10px)
@@ -4217,6 +4362,8 @@
 
     Object.assign(window.__hjAdmin, {
       bp: bpNow,
+      // Replay an element's entrance animation so it can be checked before saving
+      replay(key) { const el = elOf(key); if (!el) return; el.classList.remove('hj-in'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; requestAnimationFrame(() => el.classList.add('hj-in')); },
       select(keys, locked) { ED.keys = (keys || []).filter(Boolean); ED.locked = locked || []; dragCss.textContent = ''; draw(); },
       prefs(p) { Object.assign(ED.prefs, p || {}); draw(); },
       // Geometry for align / distribute / centre, measured on the live page
