@@ -233,7 +233,7 @@
     } else if (route === 'faq') {
       renderFAQPage(appView);
     } else if (['shipping', 'shipping-policy', 'returns', 'returns-policy', 'exchange', 'exchange-policy', 'cancellation', 'cancellation-policy', 'privacy', 'privacy-policy', 'terms', 'terms-conditions', 'cookies', 'cookie-policy', 'care-guide', 'jewellery-care', 'size-guide', 'warranty'].includes(route)) {
-      const normalizedKey = route.replace('-policy', '').replace('-conditions', '').replace('jewellery-', '');
+      const normalizedKey = route.replace('-policy', '').replace('-conditions', '').replace('jewellery-', '').replace('-guide', ''); // care-guide -> care, size-guide -> size
       renderPolicyPage(appView, normalizedKey);
     } else if (route.startsWith('p/')) {
       // Studio landing page: only its custom sections (added by applySiteContent); unknown slugs say so
@@ -330,7 +330,7 @@
             <img class="product-card-img main-img" src="${mainImg}" alt="${p.imageAlt || p.name}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
             <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.hoverImageAlt || p.name + ' - Atelier Detail'}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
           </a>
-          <span class="card-badge" style="border-radius: 9999px; font-size: 0.65rem; padding: 0.25rem 0.65rem; background: rgba(255, 253, 246, 0.95); color: var(--color-espresso); font-weight: 700; border: 1px solid rgba(47,36,26,0.08);">${badgeText}</span>
+          <span class="card-badge" style="border-radius: 9999px; font-size: 0.72rem; padding: 0.25rem 0.7rem; background: rgba(255, 253, 246, 0.95); color: var(--color-espresso); font-weight: 700; border: 1px solid rgba(47,36,26,0.08);">${badgeText}</span>
           <button class="card-wishlist-btn ${isWished ? 'active' : ''}" 
                   onclick="window.HJ.toggleWishlist('${p.id}', event)" 
                   aria-label="Save to Wishlist"
@@ -1292,7 +1292,7 @@
     if (state.cart.length === 0) {
       container.innerHTML = `
         <div class="container" style="padding: 5rem 0; text-align: center;">
-          <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1rem;">Your Shopping Bag is Empty</h2>
+          <h1 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1rem;">Your Shopping Bag is Empty</h1>
           <a href="#collections/all" class="btn-primary">Browse Catalogue</a>
         </div>
       `;
@@ -1464,7 +1464,7 @@
           <div class="checkout-form-box" style="background: var(--color-warm-ivory); border: 1px solid rgba(184, 151, 88, 0.3); border-radius: 12px; padding: 2.5rem 2rem;">
             <div style="text-align: center; margin-bottom: 2rem;">
               <span class="hero-badge-pill" style="margin-bottom: 0.5rem; display: inline-block;">Private Client Access</span>
-              <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-deep-heritage-brown); margin: 0 0 0.5rem;">Client Sign In</h2>
+              <h1 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-deep-heritage-brown); margin: 0 0 0.5rem;">Client Sign In</h1>
               <p style="font-size: 0.85rem; color: var(--color-stone-muted); margin: 0;">Access your acquisition history, private atelier suite, and certified BIS records.</p>
             </div>
 
@@ -2232,7 +2232,7 @@
       <section style="background: var(--color-warm-ivory); padding: 4rem 0 1rem;">
         <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
           <span class="hero-badge-pill about-story-reveal" style="display: inline-block; margin-bottom: 0.75rem;">Maison FAQ</span>
-          <h2 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Frequently Asked Questions</h2>
+          <h1 class="section-title about-story-reveal" style="margin-bottom: 1rem;">Frequently Asked Questions</h1>
           <div class="section-divider about-story-reveal" style="margin-bottom: 0.75rem;"><span class="section-divider-gem"></span></div>
           <p style="font-size: 0.9rem; color: var(--color-stone-muted); line-height: 1.8;">
             Everything you need to know about acquiring from House of Jewelux — hallmarking, shipping, care, and bespoke commissions.
@@ -2503,7 +2503,7 @@
         <section style="padding: 5rem 0 6rem;">
           <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
             <div style="font-size: 4rem; margin-bottom: 1.5rem;">🛍️</div>
-            <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Your Shopping Bag is Empty</h2>
+            <h1 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Your Shopping Bag is Empty</h1>
             <p style="color: var(--color-stone-muted); margin-bottom: 2rem;">No creations in your bag yet. Explore our atelier collections.</p>
             <a href="#collections/all" class="btn-primary">Browse Collections</a>
           </div>
@@ -2523,7 +2523,7 @@
             
             <!-- Cart Items -->
             <div>
-              <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Shopping Bag</h2>
+              <h1 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Shopping Bag</h1>
               ${state.cart.map(item => `
                 <div style="display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--color-warm-stone-light);">
                   <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-antique-white);" />
@@ -2573,7 +2573,7 @@
         <section style="padding: 5rem 0 6rem;">
           <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
             <div style="font-size: 4rem; margin-bottom: 1.5rem;">💖</div>
-            <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Your Wishlist is Empty</h2>
+            <h1 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--color-deep-heritage-brown);">Your Wishlist is Empty</h1>
             <p style="color: var(--color-stone-muted); margin-bottom: 2rem;">Save your favourite creations by tapping the heart on any product card.</p>
             <a href="#collections/all" class="btn-primary">Browse Collections</a>
           </div>
@@ -2587,7 +2587,7 @@
     container.innerHTML = `
       <section style="padding: 3rem 0 6rem;">
         <div class="container">
-          <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Saved Creations</h2>
+          <h1 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-deep-heritage-brown);">Saved Creations</h1>
           <div class="products-grid motion-stagger">
             ${wishlistProducts.map(p => renderProductCard(p)).join('')}
           </div>

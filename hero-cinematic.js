@@ -275,12 +275,12 @@
         <!-- ==================== SCENE 01: THE ATMOSPHERIC PRELUDE ==================== -->
         <div class="cinematic-scene active" data-scene="1">
           <div class="scene-content-center parallax-plane" data-depth="0.03" style="text-align: center; max-width: 800px; padding: 1.5rem 1rem 0.5rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 1rem;">
-            <div class="hero-brand-center-lockup">
+            <h1 class="hero-brand-center-lockup" style="margin:0;font-size:inherit;line-height:0">
               <picture>
                 <source srcset="/brand-identity/house_of_jewelux_official_logo.webp" type="image/webp">
                 <img src="/brand-identity/house_of_jewelux_official_logo.png" alt="House of Jewelux — Where Elegance Becomes Eternal" class="hero-brand-official-logo" width="380" height="372" fetchpriority="high" />
               </picture>
-            </div>
+            </h1>
           </div>
           <div class="hero-scene-cta">
             <a href="#collections/all" class="btn-gold hero-cta-btn">

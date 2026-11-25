@@ -5391,7 +5391,7 @@ img {
   color: #D5C4AE;
   padding: 0.35rem 0.8rem;
   border-radius: 9999px;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -6177,6 +6177,19 @@ img, video, canvas, svg {
   }
 }
 
+/* Hero fits the first screen from 992px up (laptops, landscape tablets): logo + CTA above the fold */
+@media (min-width: 992px) {
+  .cinematic-hero-viewport {
+    height: calc(100vh - 110px) !important;
+    min-height: 540px !important; /* was 700-720px: taller than a 730px laptop screen, pushing the CTA below the fold */
+    max-height: 960px !important;
+  }
+  .hero-brand-official-logo {
+    max-height: max(220px, calc(100vh - 430px)) !important;
+    width: auto !important;
+  }
+}
+
 /* --- 4. COMPUTER & DESKTOP (1025px and up) --- */
 @media (min-width: 1025px) {
   .site-header {
@@ -6185,12 +6198,6 @@ img, video, canvas, svg {
 
   .container {
     max-width: 1320px !important;
-  }
-
-  .cinematic-hero-viewport {
-    height: calc(100vh - 110px) !important;
-    min-height: 720px !important;
-    max-height: 960px !important;
   }
 
   .jewellery-trio-stage {
