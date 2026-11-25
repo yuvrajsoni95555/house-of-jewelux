@@ -1336,13 +1336,10 @@
     const out = {};
     R.forEach((r) => {
       const prev = r.key.includes('prev');
-      out[r.key] = { x: mode === 'in' ? 0 : Math.round(r.tx + (prev ? F.left - 6 - (r.left + r.width) : F.left + F.width + 6 - r.left)) };
+      // the arrows sit outside the photo by default; "inside" moves them 12px in from the photo's edges
+      out[r.key] = { x: mode === 'out' ? 0 : Math.round(r.tx + (prev ? F.left + 12 - r.left : F.left + F.width - 12 - (r.left + r.width))) };
     });
     savePosMany(out, w.__hjAdmin.bp());
-    if (mode === 'out') {
-      const off = R.some((r) => (r.key.includes('prev') ? F.left - 6 - r.width < 0 : F.left + F.width + 6 + r.width > r.page));
-      if (off) toast('There is little room beside the photo on this screen: make the arrows smaller, or keep them inside here.');
-    }
   }
   function useImage(path) {
     const it = cmItem(cm.sel);
@@ -1609,7 +1606,7 @@
       ${it.repeat ? '<p class="note small">Product card design: changes here apply to <b>every product card on the whole website</b> (shop, categories, wishlist, search). Names, prices and photos come from each product.</p>' : tpl && !D ? '<p class="note small">Template: text, images and links here come from each product or category, so only styling and visibility can change.</p>' : ''}` + posGroup + designGroup();
     const isArrow = /pdp-(prev|next)/.test(it.key);
     if (isArrow) html += group('Arrow position', `<div class="full row-flex"><button type="button" class="btn btn-sm" data-arrowpos="out">Outside the photo</button><button type="button" class="btn btn-sm" data-arrowpos="in">Inside the photo</button></div>
-        <p class="full help" style="margin:0">Moves both arrows on <b>${bpName[curBp()]}</b>. Or drag an arrow anywhere. To remove the circle: Background ⊘ and Border ⊘ below.</p>`);
+        <p class="full help" style="margin:0">Moves both arrows on <b>${bpName[curBp()]}</b>. Or drag an arrow anywhere. For a circle behind them: Background and corner radius below.</p>`);
     if (it.kind === 'box') {
       html += boxGroup('Fill, border & corners', true) + (it.tag === 'svg' ? group('Icon colour', `<div class="full">${swatchRow('data-swatch', o.color)}</div>`) : '') + effectsGroup;
     } else if (it.kind === 'frame' && !D) {
