@@ -23,6 +23,8 @@
   const table = (cols, rows, empty) => rows.length
     ? `<div class="table-wrap"><table><thead><tr>${cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`
     : `<div class="panel"><p class="muted" style="margin:0">${esc(empty)}</p></div>`;
+  // Heading and its list in one box (an empty list shows the message inside the same box)
+  const tableT = (title, cols, rows, empty) => `<div class="panel" style="margin-top:16px"><h3>${title}</h3>${rows.length ? table(cols, rows, empty) : `<p class="muted" style="margin:0">${esc(empty)}</p>`}</div>`;
   const notConfigured = (name, needs) => `<div class="panel"><h3>${esc(name)} <span class="pill draft">Not configured</span></h3><p class="muted" style="margin:0">${esc(needs)}</p></div>`;
   function toast(msg, bad) {
     const t = $('#toast'); if (!t) return;
@@ -98,7 +100,7 @@
       `<div class="cards">${card(money(m.totalRevenue), 'Revenue (paid orders)', 'biz-finance')}${card(m.paidOrders, 'Paid orders', 'biz-orders')}
         ${card(m.totalOrders, 'All orders', 'biz-orders')}${card(m.pendingVerification, 'Awaiting payment', 'biz-orders')}
         ${card(m.totalCustomers, 'Customers', 'biz-customers')}${card(m.totalProducts, 'Products', 'products')}</div>
-      <div class="dash"><div><div class="panel"><h3>Recent orders</h3></div>${table(ORDER_COLS, orders.slice(0, 8).map(orderRow), 'No orders yet. They appear here as soon as a customer checks out.')}</div>
+      <div class="dash"><div>${tableT('Recent orders', ORDER_COLS, orders.slice(0, 8).map(orderRow), 'No orders yet. They appear here as soon as a customer checks out.')}</div>
         <div><div class="panel"><h3>System</h3><ul class="log">
           <li>Database: <b>${esc(health.database && health.database.status)}</b></li>
           <li>Online payment (Razorpay): ${health.paymentGateway.configured ? '<span class="pill published">Connected</span>' : '<span class="pill draft">Not configured</span>'}</li>
@@ -167,8 +169,8 @@
     const moving = orders.filter((o) => o.orderStatus === 'Shipped');
     view().innerHTML = head('Shipping', 'Paid orders waiting to be packed and sent, and parcels on the way.') +
       `<div class="cards">${card(ready.length, 'To pack & ship')}${card(moving.length, 'On the way')}${card(orders.filter((o) => o.orderStatus === 'Delivered').length, 'Delivered')}</div>
-      <div class="panel"><h3>To pack &amp; ship</h3></div>${table(ORDER_COLS, ready.map(orderRow), 'Nothing to ship right now.')}
-      <div class="panel" style="margin-top:16px"><h3>On the way</h3></div>${table(ORDER_COLS, moving.map(orderRow), 'No parcels on the way.')}
+      ${tableT('To pack &amp; ship', ORDER_COLS, ready.map(orderRow), 'Nothing to ship right now.')}
+      ${tableT('On the way', ORDER_COLS, moving.map(orderRow), 'No parcels on the way.')}
       <div style="margin-top:16px">${notConfigured('Courier booking & live tracking', 'Needs a Shiprocket / Delhivery / Blue Dart account and API key. Until then, add the courier and tracking number on each order by hand.')}</div>`;
   });
 
@@ -179,7 +181,7 @@
     view().innerHTML = head('Finance & payments', 'Money received and waiting, from real orders.', '<button class="btn" id="fin-csv">Export payments CSV</button>') +
       `<div class="cards">${card(money(sum((o) => o.paymentStatus === 'Paid')), 'Received')}${card(money(sum((o) => ['Pending', 'Awaiting payment'].includes(o.paymentStatus))), 'Waiting for payment')}
         ${card(money(sum((o) => o.paymentStatus === 'Refunded')), 'Refunded')}${card(paid.length ? money(Math.round(sum((o) => o.paymentStatus === 'Paid') / paid.length)) : '—', 'Average paid order')}</div>
-      <div class="panel"><h3>Paid orders</h3></div>${table(ORDER_COLS, paid.map(orderRow), 'No payments received yet.')}
+      ${tableT('Paid orders', ORDER_COLS, paid.map(orderRow), 'No payments received yet.')}
       <div style="margin-top:16px">${notConfigured('GST invoices & accounting', 'Needs your GSTIN and the invoice format from your chartered accountant before invoices can be generated.')}</div>`;
     $('#fin-csv').addEventListener('click', () => csv('payments.csv', [['Order', 'Date', 'Customer', 'Amount', 'Payment', 'Method', 'Razorpay ID']]
       .concat(orders.map((o) => [o.orderId, o.orderDate, o.customer && o.customer.name, total(o), o.paymentStatus, o.paymentMethod, o.razorpayPaymentId]))));
@@ -192,7 +194,7 @@
     const by = {}; P.forEach((p) => { const k = p.stockStatus || 'In Stock'; by[k] = (by[k] || 0) + 1; });
     view().innerHTML = head('Inventory', 'Stock status of every product. Change stock on the product page.') +
       `<div class="cards">${Object.entries(by).map(([k, n]) => card(n, k, 'products')).join('')}${card(P.filter((p) => p.status === 'draft').length, 'Hidden (draft)', 'products')}</div>
-      <div class="panel"><h3>Out of stock</h3></div>${table(['Product', 'SKU', 'Category', 'Price'], out.map((p) => `<tr class="row" data-edit="${esc(p.id)}"><td><b>${esc(p.name)}</b></td><td>${esc(p.sku || '—')}</td><td>${esc(p.category || '')}</td><td>${money(p.price)}</td></tr>`), 'All products are in stock.')}
+      ${tableT('Out of stock', ['Product', 'SKU', 'Category', 'Price'], out.map((p) => `<tr class="row" data-edit="${esc(p.id)}"><td><b>${esc(p.name)}</b></td><td>${esc(p.sku || '—')}</td><td>${esc(p.category || '')}</td><td>${money(p.price)}</td></tr>`), 'All products are in stock.')}
       <div style="margin-top:16px">${notConfigured('Stock quantities, suppliers & barcodes', 'Today each product is In stock / Out of stock. Counting units (auto-reduce on sale) is the next step and needs a quantity for every product.')}</div>`;
   };
 
@@ -201,8 +203,8 @@
     const C = Object.values(coupons || {});
     view().innerHTML = head('Marketing', 'Newsletter subscribers and discount codes.', '<button class="btn" id="sub-csv">Export subscribers</button>') +
       `<div class="cards">${card(items.length, 'Newsletter subscribers')}${card(C.length, 'Discount codes')}</div>
-      <div class="panel"><h3>Discount codes</h3></div>${table(['Code', 'Discount'], C.map((c) => `<tr><td><b>${esc(c.code)}</b></td><td>${c.discountPercent ? esc(c.discountPercent) + '%' : money(c.flatDiscountINR)}</td></tr>`), 'No discount codes.')}
-      <div class="panel" style="margin-top:16px"><h3>Subscribers</h3></div>${table(['Email', 'Source', 'Date'], items.map((s) => `<tr><td>${esc(s.email)}</td><td>${esc(s.source || '')}</td><td>${esc(date(s.subscribedAt))}</td></tr>`), 'No subscribers yet.')}
+      ${tableT('Discount codes', ['Code', 'Discount'], C.map((c) => `<tr><td><b>${esc(c.code)}</b></td><td>${c.discountPercent ? esc(c.discountPercent) + '%' : money(c.flatDiscountINR)}</td></tr>`), 'No discount codes.')}
+      ${tableT('Subscribers', ['Email', 'Source', 'Date'], items.map((s) => `<tr><td>${esc(s.email)}</td><td>${esc(s.source || '')}</td><td>${esc(date(s.subscribedAt))}</td></tr>`), 'No subscribers yet.')}
       <div style="margin-top:16px">${notConfigured('Email campaigns', 'Needs an email service (e.g. Brevo, Mailchimp) account and API key.')}${notConfigured('Meta & Google Ads', 'Needs your ad accounts and a budget you approve. No money is ever spent automatically.')}</div>`;
     $('#sub-csv').addEventListener('click', () => csv('subscribers.csv', [['Email', 'Source', 'Date']].concat(items.map((s) => [s.email, s.source, s.subscribedAt]))));
   });
@@ -213,8 +215,8 @@
     const B = custom.items || [];
     view().innerHTML = head('Support & requests', 'Appointment bookings and custom jewellery requests from the website.') +
       `<div class="cards">${card(A.length, 'Appointments')}${card(B.length, 'Custom requests')}</div>
-      <div class="panel"><h3>Custom jewellery requests</h3></div>${table(['Request', 'Customer', 'Wants', 'Budget'], B.map((r) => `<tr><td><b>${esc(r.id)}</b><br><span class="small muted">${esc(date(r.createdAt))}</span></td><td>${esc(r.fullName)}<br><span class="small muted">${esc(r.phone || '')} ${esc(r.email || '')}</span></td><td>${esc([r.jewelleryType, r.metalPreference].filter(Boolean).join(', '))}<br><span class="small muted">${esc((r.description || '').slice(0, 120))}</span></td><td>${esc(r.budgetBand || '')}</td></tr>`), 'No custom requests yet.')}
-      <div class="panel" style="margin-top:16px"><h3>Appointments</h3></div>${table(['Booking', 'Client', 'When', 'Type'], A.map((r) => `<tr><td><b>${esc(r.id)}</b></td><td>${esc(r.name)}<br><span class="small muted">${esc(r.phone || '')} ${esc(r.email || '')}</span></td><td>${esc([r.date, r.time].filter(Boolean).join(' '))}</td><td>${esc(r.type || r.service || '')}</td></tr>`), 'No appointments yet.')}`;
+      ${tableT('Custom jewellery requests', ['Request', 'Customer', 'Wants', 'Budget'], B.map((r) => `<tr><td><b>${esc(r.id)}</b><br><span class="small muted">${esc(date(r.createdAt))}</span></td><td>${esc(r.fullName)}<br><span class="small muted">${esc(r.phone || '')} ${esc(r.email || '')}</span></td><td>${esc([r.jewelleryType, r.metalPreference].filter(Boolean).join(', '))}<br><span class="small muted">${esc((r.description || '').slice(0, 120))}</span></td><td>${esc(r.budgetBand || '')}</td></tr>`), 'No custom requests yet.')}
+      ${tableT('Appointments', ['Booking', 'Client', 'When', 'Type'], A.map((r) => `<tr><td><b>${esc(r.id)}</b></td><td>${esc(r.name)}<br><span class="small muted">${esc(r.phone || '')} ${esc(r.email || '')}</span></td><td>${esc([r.date, r.time].filter(Boolean).join(' '))}</td><td>${esc(r.type || r.service || '')}</td></tr>`), 'No appointments yet.')}`;
   });
 
   VIEWS['biz-reports'] = guarded('biz-reports', async () => {
@@ -227,7 +229,7 @@
     const months = Object.entries(byMonth).sort(); const max = Math.max(1, ...months.map((m) => m[1]));
     view().innerHTML = head('Reports', 'Sales from paid orders only.') +
       `<div class="dash"><div class="panel"><h3>Sales by month</h3>${months.length ? `<div class="bars">${months.map(([m, v]) => `<div class="bar" style="text-transform:none"><span>${esc(m)}</span><div class="track"><div class="fill" style="width:${(v / max) * 100}%"></div></div><b style="width:auto">${money(v)}</b></div>`).join('')}</div>` : '<p class="muted" style="margin:0">No paid orders yet.</p>'}</div>
-      <div><div class="panel"><h3>Best sellers</h3></div>${table(['Product', 'Sold', 'Sales'], Object.entries(byProduct).sort((a, b) => b[1].sum - a[1].sum).slice(0, 10).map(([n, p]) => `<tr><td><b>${esc(n)}</b></td><td>${p.qty}</td><td>${money(p.sum)}</td></tr>`), 'No sales yet.')}</div></div>
+      <div>${tableT('Best sellers', ['Product', 'Sold', 'Sales'], Object.entries(byProduct).sort((a, b) => b[1].sum - a[1].sum).slice(0, 10).map(([n, p]) => `<tr><td><b>${esc(n)}</b></td><td>${p.qty}</td><td>${money(p.sum)}</td></tr>`), 'No sales yet.')}</div></div>
       <div style="margin-top:16px">${notConfigured('Website visitors (Google Analytics 4)', 'Needs a GA4 property. Visitors, traffic sources and conversion rate appear here once it is connected.')}</div>`;
   });
 
