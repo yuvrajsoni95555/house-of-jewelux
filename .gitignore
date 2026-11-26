@@ -12,3 +12,6 @@ data/backups/
 backup_original/
 pepite_*
 reference_screenshots/
+
+# private records from the local API server (orders, customers, payments)
+.localdata/

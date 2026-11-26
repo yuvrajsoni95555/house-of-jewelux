@@ -34,7 +34,7 @@ class RazorpayService {
   async createOrder({ amountInPaise, currency = 'INR', receipt, notes = {} }) {
     if (!this.isConfigured()) {
       // In development or when credentials are not yet configured, return mock order descriptor for tests
-      if (process.env.NODE_ENV === 'test' || !this.keyId) {
+      if (process.env.NODE_ENV === 'test') { // automated tests only: never fake a payment order anywhere else
         return {
           id: `order_test_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
           entity: 'order',
@@ -113,7 +113,8 @@ class RazorpayService {
       return false;
     }
 
-    const secret = this.keySecret || 'test_secret_for_signature_verification';
+    const secret = this.keySecret || (process.env.NODE_ENV === 'test' ? 'test_secret_for_signature_verification' : '');
+    if (!secret) return false;
     const expected = crypto
       .createHmac('sha256', secret)
       .update(`${razorpayOrderId}|${razorpayPaymentId}`)

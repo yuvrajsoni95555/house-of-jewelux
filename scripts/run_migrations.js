@@ -20,7 +20,7 @@ async function runMigrations() {
   const isSupabase = dbUrl.includes('supabase.co') || dbUrl.includes('pooler.supabase.com');
   const pool = new Pool({
     connectionString: dbUrl,
-    ssl: isSupabase || process.env.NODE_ENV === 'production'
+    ssl: isSupabase || /sslmode=require|neon\.tech|prisma\.io/.test(dbUrl) || process.env.NODE_ENV === 'production'
       ? { rejectUnauthorized: false }
       : false
   });

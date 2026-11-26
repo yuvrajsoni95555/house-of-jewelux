@@ -5,31 +5,17 @@
 
 const crypto = require('crypto');
 const db = require('../db');
-const config = require('../config');
+const adminAuth = require('../middleware/adminAuth');
 
 const adminLogin = (req, res) => {
+  if (!adminAuth.enabled()) {
+    return res.status(503).json({ success: false, error: 'Admin login is not set up on the server (ADMIN_SECRET_PIN, SESSION_SECRET).' });
+  }
   const { pin } = req.body || {};
-  if (!pin) {
-    return res.status(401).json({ success: false, error: 'Atelier Master PIN required' });
+  if (!adminAuth.pinMatches(pin)) {
+    return res.status(401).json({ success: false, error: 'Invalid PIN' });
   }
-
-  const validPins = [config.adminPin, '2026', '1122'].filter(Boolean);
-  const isValid = validPins.some(p => {
-    try {
-      const bufA = Buffer.from(String(pin), 'utf8');
-      const bufB = Buffer.from(String(p), 'utf8');
-      if (bufA.length !== bufB.length) return false;
-      return crypto.timingSafeEqual(bufA, bufB);
-    } catch {
-      return false;
-    }
-  });
-
-  if (isValid) {
-    res.json({ success: true, message: 'Admin authorized' });
-  } else {
-    res.status(401).json({ success: false, error: 'Invalid Atelier Master PIN' });
-  }
+  res.json({ success: true, token: adminAuth.issueToken(), expiresInHours: 12 });
 };
 
 const getOverview = async (req, res, next) => {
@@ -39,7 +25,7 @@ const getOverview = async (req, res, next) => {
     const customers = await db.customers.getAll();
 
     const totalRevenue = orders.reduce((sum, o) => sum + ((o.pricing && o.pricing.grandTotal) || 0), 0);
-    const pendingOrders = orders.filter(o => o.orderStatus === 'Pending Verification').length;
+    const pendingOrders = orders.filter(o => ['Payment pending', 'Awaiting payment'].includes(o.orderStatus)).length;
 
     res.json({
       success: true,

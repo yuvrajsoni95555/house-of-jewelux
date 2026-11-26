@@ -8,8 +8,8 @@ authorAvatar: /images/house_of_jewelux_official_logo.png
 authorBio: The design and care team at our Jaipur atelier, writing about the pieces we make and how to live with them.
 category: Style Guide
 tags: [rings, sizing, buying guide, gifting]
-coverImage: /images/authentic_rings_couple_hands.jpg
-coverAlt: A couple holding hands, one of them wearing a ring
+coverImage: /images/authentic_chelsea_ring.jpg
+coverAlt: A hand wearing a solitaire ring
 featured: false
 draft: false
 ---

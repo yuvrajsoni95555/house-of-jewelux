@@ -4,6 +4,7 @@
  */
 
 const express = require('express');
+const { requireAdmin } = require('../middleware/adminAuth');
 const router = express.Router();
 
 const productController = require('../controllers/productController');
@@ -42,7 +43,7 @@ router.get('/categories', productController.getCategories);
 // 2. Cart & Orders
 router.post('/cart/validate', orderController.validateCart);
 router.post('/orders', orderController.createOrder);
-router.get('/orders/:orderId', orderController.getOrderById);
+router.get('/orders/:orderId', requireAdmin, orderController.getOrderById);
 router.post('/orders/track', orderController.trackOrder);
 
 // 2b. Razorpay Payment Gateway Integration
@@ -58,14 +59,14 @@ router.post('/auth/recover-password', authController.recoverPassword);
 
 // 4. Appointments & Concierge
 router.post('/appointments', appointmentController.createAppointment);
-router.get('/appointments', appointmentController.getAppointments);
+router.get('/appointments', requireAdmin, appointmentController.getAppointments);
 
 // 5. Admin & Atelier Controls
 router.post('/admin/login', adminController.adminLogin);
-router.get('/admin/overview', adminController.getOverview);
-router.patch('/admin/orders/:orderId', adminController.updateOrder);
-router.patch('/admin/products/:productId', adminController.updateProduct);
-router.post('/admin/editor-save', adminController.editorSave);
+router.get('/admin/overview', requireAdmin, adminController.getOverview);
+router.patch('/admin/orders/:orderId', requireAdmin, adminController.updateOrder);
+router.patch('/admin/products/:productId', requireAdmin, adminController.updateProduct);
+router.post('/admin/editor-save', requireAdmin, adminController.editorSave);
 router.post('/custom-order', adminController.customOrder);
 
 // 6. Circle Newsletter

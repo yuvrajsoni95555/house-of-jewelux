@@ -10,6 +10,7 @@ const config = require('../config');
 
 let pool = null;
 let isPostgresActive = false;
+const IS_DEPLOYED = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
 
 // Initialize PostgreSQL pool if DATABASE_URL or SUPABASE_DATABASE_URL is provided
 const dbUrl = process.env.DATABASE_URL || process.env.SUPABASE_DATABASE_URL;
@@ -19,7 +20,7 @@ if (dbUrl) {
     const isSupabase = dbUrl.includes('supabase.co') || dbUrl.includes('pooler.supabase.com');
     pool = new Pool({
       connectionString: dbUrl,
-      ssl: isSupabase || process.env.NODE_ENV === 'production'
+      ssl: isSupabase || /sslmode=require|neon\.tech|prisma\.io/.test(dbUrl) || process.env.NODE_ENV === 'production'
         ? { rejectUnauthorized: false }
         : false,
       max: parseInt(process.env.DB_POOL_MAX || '10', 10),
@@ -41,6 +42,13 @@ if (dbUrl) {
 } else {
   console.log('✦ [DATABASE] Running in resilient JSON storage mode (set DATABASE_URL to enable PostgreSQL / Supabase)');
 }
+
+// Where private records live without Postgres: local development only (.localdata/, never committed).
+// With Postgres they are not mirrored anywhere; deployed without a database, saving them is refused.
+const dbMissing = () => Object.assign(new Error('Database is not configured'), { status: 503, userMessage: 'Our order system is not available right now. Please contact our concierge.' });
+const local = isPostgresActive ? { readJSON: (f, d = []) => d, writeJSON: () => true }
+  : IS_DEPLOYED ? { readJSON: () => { throw dbMissing(); }, writeJSON: () => { throw dbMissing(); } }
+    : { readJSON: jsonDb.readPrivate, writeJSON: jsonDb.writePrivate };
 
 /**
  * Execute raw SQL query with parameters (when PG is active)
@@ -110,10 +118,19 @@ const orders = {
           customer: { name: r.customer_name, email: r.customer_email, phone: r.customer_phone }
         }));
       } catch (err) {
-        console.warn('[DB FALLBACK] orders.getAll failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    return jsonDb.readJSON('orders.json');
+    return local.readJSON('orders.json');
+  },
+
+  async getByRazorpayOrderId(razorpayOrderId) {
+    if (!razorpayOrderId) return null;
+    if (isPostgresActive && pool) {
+      const res = await query(`SELECT order_id as "orderId" FROM orders WHERE razorpay_order_id = $1 LIMIT 1`, [razorpayOrderId]);
+      return res.rows.length ? orders.getById(res.rows[0].orderId) : null;
+    }
+    return local.readJSON('orders.json').find((o) => o.razorpayOrderId === razorpayOrderId) || null;
   },
 
   async getById(orderId) {
@@ -138,10 +155,10 @@ const orders = {
         }
         return null;
       } catch (err) {
-        console.warn('[DB FALLBACK] orders.getById failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const all = jsonDb.readJSON('orders.json');
+    const all = local.readJSON('orders.json');
     return all.find(o => o.orderId && o.orderId.toLowerCase() === orderId.toLowerCase()) || null;
   },
 
@@ -168,20 +185,20 @@ const orders = {
             orderData.razorpayOrderId || null,
             orderData.razorpayPaymentId || null,
             orderData.razorpaySignature || null,
-            orderData.orderStatus || 'Confirmed by Jaipur Atelier',
+            orderData.orderStatus || 'Payment pending',
             orderData.trackingNumber || null,
-            orderData.estimatedDelivery || '3 - 5 Business Days via Sequel Secure Logistics',
+            orderData.estimatedDelivery || null,
             orderData.orderDate || new Date().toISOString()
           ]
         );
       } catch (err) {
-        console.warn('[DB FALLBACK] orders.create failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
     // Always maintain JSON sync as immediate local audit
-    const all = jsonDb.readJSON('orders.json');
+    const all = local.readJSON('orders.json');
     all.unshift(orderData);
-    jsonDb.writeJSON('orders.json', all);
+    local.writeJSON('orders.json', all);
     return orderData;
   },
 
@@ -220,11 +237,12 @@ const orders = {
             values
           );
         }
+        return await orders.getById(orderId);
       } catch (err) {
-        console.warn('[DB FALLBACK] orders.update failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const all = jsonDb.readJSON('orders.json');
+    const all = local.readJSON('orders.json');
     const idx = all.findIndex(o => o.orderId && o.orderId.toLowerCase() === orderId.toLowerCase());
     if (idx !== -1) {
       if (updates.orderStatus) all[idx].orderStatus = updates.orderStatus;
@@ -236,7 +254,7 @@ const orders = {
       if (updates.trackingNumber) all[idx].trackingNumber = updates.trackingNumber;
       if (updates.razorpayPaymentId) all[idx].razorpayPaymentId = updates.razorpayPaymentId;
       if (updates.razorpaySignature) all[idx].razorpaySignature = updates.razorpaySignature;
-      jsonDb.writeJSON('orders.json', all);
+      local.writeJSON('orders.json', all);
       return all[idx];
     }
     return null;
@@ -271,11 +289,11 @@ const orders = {
           };
         }
       } catch (err) {
-        console.warn('[DB FALLBACK] orders.findByQuery failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
 
-    const all = jsonDb.readJSON('orders.json');
+    const all = local.readJSON('orders.json');
     return all.find(o => 
       (o.orderId && o.orderId.toUpperCase() === clean) ||
       (o.trackingNumber && o.trackingNumber.toUpperCase() === clean) ||
@@ -310,14 +328,14 @@ const payments = {
           ]
         );
       } catch (err) {
-        console.warn('[DB FALLBACK] payments.record failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
     // Also record in jsonDb
-    const list = jsonDb.readJSON('payments.json', []);
+    const list = local.readJSON('payments.json', []);
     if (!list.find(p => p.gatewayPaymentId === paymentData.gatewayPaymentId)) {
       list.unshift({ ...paymentData, recordedAt: new Date().toISOString() });
-      jsonDb.writeJSON('payments.json', list);
+      local.writeJSON('payments.json', list);
     }
     return paymentData;
   },
@@ -332,10 +350,10 @@ const payments = {
         );
         if (res.rows.length > 0) return true;
       } catch (err) {
-        console.warn('[DB FALLBACK] payments.isDuplicate failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const list = jsonDb.readJSON('payments.json', []);
+    const list = local.readJSON('payments.json', []);
     return list.some(p => p.gatewayPaymentId === gatewayPaymentId);
   }
 };
@@ -353,10 +371,10 @@ const customers = {
         );
         if (res.rows.length > 0) return res.rows[0];
       } catch (err) {
-        console.warn('[DB FALLBACK] customers.getByEmail failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const all = jsonDb.readJSON('customers.json');
+    const all = local.readJSON('customers.json');
     return all.find(c => c.email && c.email.toLowerCase() === clean) || null;
   },
 
@@ -378,12 +396,12 @@ const customers = {
           ]
         );
       } catch (err) {
-        console.warn('[DB FALLBACK] customers.create failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const all = jsonDb.readJSON('customers.json');
+    const all = local.readJSON('customers.json');
     all.push(customerData);
-    jsonDb.writeJSON('customers.json', all);
+    local.writeJSON('customers.json', all);
     return customerData;
   },
 
@@ -395,10 +413,10 @@ const customers = {
         );
         return res.rows;
       } catch (err) {
-        console.warn('[DB FALLBACK] customers.getAll failed in PG, falling back to JSON:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    return jsonDb.readJSON('customers.json');
+    return local.readJSON('customers.json');
   }
 };
 
@@ -425,12 +443,12 @@ const appointments = {
           ]
         );
       } catch (err) {
-        console.warn('[DB FALLBACK] appointments.create failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const list = jsonDb.readJSON('appointments.json');
+    const list = local.readJSON('appointments.json');
     list.unshift(data);
-    jsonDb.writeJSON('appointments.json', list);
+    local.writeJSON('appointments.json', list);
     return data;
   },
 
@@ -445,10 +463,10 @@ const appointments = {
         );
         return res.rows;
       } catch (err) {
-        console.warn('[DB FALLBACK] appointments.getAll failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    return jsonDb.readJSON('appointments.json');
+    return local.readJSON('appointments.json');
   }
 };
 
@@ -475,12 +493,12 @@ const customOrders = {
           ]
         );
       } catch (err) {
-        console.warn('[DB FALLBACK] customOrders.create failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const list = jsonDb.readJSON('custom_orders.json');
+    const list = local.readJSON('custom_orders.json');
     list.unshift(data);
-    jsonDb.writeJSON('custom_orders.json', list);
+    local.writeJSON('custom_orders.json', list);
     return data;
   },
 
@@ -495,10 +513,10 @@ const customOrders = {
         );
         return res.rows;
       } catch (err) {
-        console.warn('[DB FALLBACK] customOrders.getAll failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    return jsonDb.readJSON('custom_orders.json');
+    return local.readJSON('custom_orders.json');
   }
 };
 
@@ -514,13 +532,13 @@ const subscribers = {
           [clean, source]
         );
       } catch (err) {
-        console.warn('[DB FALLBACK] subscribers.add failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    const list = jsonDb.readJSON('subscribers.json');
+    const list = local.readJSON('subscribers.json');
     if (!list.find(s => (typeof s === 'string' ? s : s.email) === clean)) {
       list.push({ email: clean, subscribedAt: new Date().toISOString(), source });
-      jsonDb.writeJSON('subscribers.json', list);
+      local.writeJSON('subscribers.json', list);
     }
     return { email: clean, status: 'subscribed' };
   },
@@ -531,10 +549,10 @@ const subscribers = {
         const res = await query(`SELECT email, source, status, subscribed_at as "subscribedAt" FROM subscribers`);
         return res.rows;
       } catch (err) {
-        console.warn('[DB FALLBACK] subscribers.getAll failed in PG:', err.message);
+        throw err; // no JSON fallback once Postgres is configured
       }
     }
-    return jsonDb.readJSON('subscribers.json');
+    return local.readJSON('subscribers.json');
   }
 };
 

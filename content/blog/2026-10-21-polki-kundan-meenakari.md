@@ -8,8 +8,8 @@ authorAvatar: /images/house_of_jewelux_official_logo.png
 authorBio: The design and care team at our Jaipur atelier, writing about the pieces we make and how to live with them.
 category: Craft & Heritage
 tags: [polki, kundan, meenakari, techniques, jaipur, heritage]
-coverImage: /images/authentic_festive_bridal.jpg
-coverAlt: A gold maang tikka set with coloured stones and a fringe of small gold drops
+coverImage: /images/user_royal_nakshi_necklace.jpg
+coverAlt: A gold necklace with green beads and a pendant set with red stones, on a display bust
 featured: false
 draft: false
 ---

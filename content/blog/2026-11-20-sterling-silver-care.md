@@ -8,8 +8,8 @@ authorAvatar: /images/house_of_jewelux_official_logo.png
 authorBio: The design and care team at our Jaipur atelier, writing about the pieces we make and how to live with them.
 category: Jewellery Care
 tags: [silver, care, cleaning, tarnish]
-coverImage: /images/authentic_emerald_ring.jpg
-coverAlt: A halo ring with a white metal band resting on a dark velvet stand
+coverImage: /images/authentic_solitaire_ring.jpg
+coverAlt: An emerald cocktail ring set in white metal, resting on dark wood
 featured: true
 draft: false
 ---

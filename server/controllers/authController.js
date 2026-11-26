@@ -120,11 +120,11 @@ const recoverPassword = async (req, res, next) => {
     const cleanEmail = email.trim().toLowerCase();
     const found = await db.customers.getByEmail(cleanEmail);
 
+    // No email service is connected yet, so nothing is sent; the same answer either way (no account lookup leak)
+    void found;
     res.json({
       success: true,
-      message: found 
-        ? `A secure password reset link has been dispatched to ${cleanEmail}. Please check your inbox.`
-        : `If an account is associated with ${cleanEmail}, password reset instructions have been dispatched.`
+      message: 'Password reset by email is not available yet. Please contact our concierge at houseofjewelux@gmail.com or +91 63770 61020.'
     });
   } catch (err) {
     next(err);

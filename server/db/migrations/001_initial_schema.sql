@@ -72,10 +72,10 @@ CREATE TABLE IF NOT EXISTS orders (
     razorpay_order_id VARCHAR(100),
     razorpay_payment_id VARCHAR(100),
     razorpay_signature VARCHAR(255),
-    order_status VARCHAR(100) NOT NULL DEFAULT 'Confirmed by Jaipur Atelier',
+    order_status VARCHAR(100) NOT NULL DEFAULT 'Payment pending',
     tracking_number VARCHAR(100),
-    courier_partner VARCHAR(255) DEFAULT 'Sequel Secure Armored Logistics',
-    estimated_delivery VARCHAR(255) DEFAULT '3 - 5 Business Days via Sequel Secure Logistics',
+    courier_partner VARCHAR(255),
+    estimated_delivery VARCHAR(255),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );

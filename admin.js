@@ -1915,6 +1915,7 @@
     const files = (await gh(`/repos/${REPO}/contents/images?ref=${BRANCH}`)).filter((f) => f.type === 'file' && /\.(jpe?g|png|webp|avif|svg)$/i.test(f.name));
     const code = (await Promise.all(['/app.js', '/index.html', '/style.css'].map((u) => fetch(u, { cache: 'no-cache' }).then((r) => r.text()).catch(() => '')))).join('\n');
     const content = effective();
+    const blogPosts = await fetch('/data/blog.json', { cache: 'no-cache' }).then((r) => r.json()).then((j) => j.posts || []).catch(() => []);
     state.media = files.map((f) => {
       const path = 'images/' + f.name;
       const uses = [];
@@ -1927,6 +1928,7 @@
         (p.custom || []).forEach((c) => { if (same(c.image)) uses.push('Page: #' + r + ' (section)'); });
       });
       (content.library || []).forEach((l) => { if (same(l.image)) uses.push('Library: ' + (l.heading || l.type)); });
+      blogPosts.forEach((b) => { if (same(b.coverImage)) uses.push('Blog: ' + b.title); });
       if (code.includes(f.name)) uses.push('Website design (code)');
       return { path, name: f.name, size: f.size, sha: f.sha, uses: [...new Set(uses)] };
     });

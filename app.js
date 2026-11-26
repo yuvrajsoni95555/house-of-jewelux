@@ -86,6 +86,8 @@
 
   const SITE_URL = 'https://houseofjewelux.com';
   const DEFAULT_SEO = { title: document.title, desc: (document.querySelector('meta[name="description"]') || {}).content || '' };
+  // Where the order/payment API runs: <meta name="hj-api" content="https://…"> in index.html (empty = same site, e.g. local server)
+  const API_BASE = String((document.querySelector('meta[name="hj-api"]') || {}).content || '').replace(/\/+$/, '');
   const IS_ADMIN_PREVIEW = window.parent !== window && new URLSearchParams(location.search).has('hjpreview');
   // Phones and tablets draw their scrollbar over the page; a desktop browser takes ~15px for it, which would make the
   // Studio canvas narrower than the real device. So the canvas hides it below laptop width.
@@ -102,7 +104,7 @@
   async function loadProducts() {
     const cacheBust = 'v=20261123_prod_v23';
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch(API_BASE + '/api/products');
       if (res.ok) {
         const data = await res.json();
         if (data && data.success && data.products) {
@@ -130,7 +132,7 @@
 
     // Load rich categories
     try {
-      const catRes = await fetch('/api/categories');
+      const catRes = await fetch(API_BASE + '/api/categories');
       if (catRes.ok) {
         const catData = await catRes.json();
         if (catData && catData.success && catData.categories) {
@@ -2479,7 +2481,7 @@
           const submitCustom = async () => {
             let successMsg = 'Your bespoke commission has been submitted. Master Goldsmith Yuvraj Soni will review your design within 24 hours.';
             try {
-              const res = await fetch('/api/custom-order', {
+              const res = await fetch(API_BASE + '/api/custom-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -3034,7 +3036,7 @@
 
       try {
         // 1. Create server-side payment order
-        const createRes = await fetch('/api/payment/create-order', {
+        const createRes = await fetch(API_BASE + '/api/payment/create-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -3077,7 +3079,7 @@
             handler: async function (response) {
               // 3. Verify Payment Signature Server-Side
               try {
-                const verifyRes = await fetch('/api/payment/verify', {
+                const verifyRes = await fetch(API_BASE + '/api/payment/verify', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
@@ -3140,7 +3142,7 @@
         }
 
         // Direct bank transfer or test mode fallback
-        const orderRes = await fetch('/api/orders', {
+        const orderRes = await fetch(API_BASE + '/api/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -3241,7 +3243,7 @@
       }
 
       try {
-        const res = await fetch('/api/newsletter', {
+        const res = await fetch(API_BASE + '/api/newsletter', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email })
@@ -3381,7 +3383,7 @@
       const password = formData.get('password') || '';
 
       try {
-        const res = await fetch('/api/auth/login', {
+        const res = await fetch(API_BASE + '/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
@@ -3456,7 +3458,7 @@
 
       let apptId = `HJ-APT-${Math.floor(100000 + Math.random() * 900000)}`;
       try {
-        const res = await fetch('/api/appointments', {
+        const res = await fetch(API_BASE + '/api/appointments', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -3621,7 +3623,7 @@
 
       let order = null;
       try {
-        const res = await fetch('/api/orders/track', {
+        const res = await fetch(API_BASE + '/api/orders/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: val, orderId: val })

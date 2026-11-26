@@ -42,19 +42,22 @@ function writeJSON(filename, data) {
   }
 }
 
-// Auto-seed required files if missing
-['orders.json', 'customers.json', 'custom_orders.json', 'subscribers.json', 'appointments.json'].forEach(f => {
-  try {
-    if (!fs.existsSync(path.join(config.dataDir, f))) {
-      writeJSON(f, []);
-    }
-  } catch (e) {
-    // Graceful for serverless
-  }
-});
+// Private records (orders, customers, payments, appointments, subscribers) in local development only.
+// They live in .localdata/ (git-ignored): the data/ folder is published with the public website.
+const PRIVATE_DIR = path.join(config.rootDir, '.localdata');
+function readPrivate(filename, defaultVal = []) {
+  try { return JSON.parse(fs.readFileSync(path.join(PRIVATE_DIR, filename), 'utf8')); } catch (e) { return defaultVal; }
+}
+function writePrivate(filename, data) {
+  fs.mkdirSync(PRIVATE_DIR, { recursive: true });
+  fs.writeFileSync(path.join(PRIVATE_DIR, filename), JSON.stringify(data, null, 2), 'utf8');
+  return true;
+}
 
 module.exports = {
   readJSON,
   writeJSON,
+  readPrivate,
+  writePrivate,
   DATA_DIR: config.dataDir
 };

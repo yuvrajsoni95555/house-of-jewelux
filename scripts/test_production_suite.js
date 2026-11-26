@@ -8,6 +8,10 @@
  * 5. Security headers, CORS, health endpoint, and rate limiter
  */
 
+// Test settings first, before the app reads its config (test mode keeps records in .localdata/)
+process.env.NODE_ENV = 'test';
+process.env.ADMIN_SECRET_PIN = 'test-pin-482913';
+process.env.SESSION_SECRET = 'test-session-secret-' + Date.now();
 require('dotenv').config();
 const http = require('http');
 const crypto = require('crypto');
@@ -224,8 +228,21 @@ async function runTests() {
     });
 
     assert(verifyRes.status === 201 && verifyRes.body.success, 'POST /api/payment/verify confirms payment and creates order');
-    assert(verifyRes.body.order.paymentStatus === 'Paid & Verified via Razorpay', 'Order marked Paid & Verified via Razorpay');
-    assert(verifyRes.body.trackingNumber, `Tracking number generated: ${verifyRes.body.trackingNumber}`);
+    assert(verifyRes.body.order.paymentStatus === 'Paid', 'Order marked Paid after the signature checks out');
+    assert(verifyRes.body.order.pricing.grandTotal === createOrderRes.body.pricing.grandTotal, 'Paid amount comes from the saved server-side order');
+    assert(verifyRes.body.trackingNumber === null, 'No tracking number invented before the order ships');
+
+    // Security: a payment without a valid signature must never confirm an order
+    const second = await makeRequest('/api/payment/create-order', 'POST', { items: cartItems, customer: { name: 'X', email: testEmail } });
+    const noSig = await makeRequest('/api/payment/verify', 'POST', { razorpay_order_id: second.body.razorpayOrderId, razorpay_payment_id: 'pay_nosig_1' });
+    assert(noSig.status === 400, 'Payment without a signature is rejected (400)');
+    const forged = await makeRequest('/api/payment/verify', 'POST', { razorpay_order_id: second.body.razorpayOrderId, razorpay_payment_id: 'pay_forged_1', razorpay_signature: 'f'.repeat(64) });
+    assert(forged.status === 400, 'Payment with a forged signature is rejected (400)');
+    const unknownSig = crypto.createHmac('sha256', testSecret).update('order_unknown|pay_x').digest('hex');
+    const unknown = await makeRequest('/api/payment/verify', 'POST', { razorpay_order_id: 'order_unknown', razorpay_payment_id: 'pay_x', razorpay_signature: unknownSig });
+    assert(unknown.status === 404, 'Signed payment for an order we never created is rejected (404)');
+    const hook = await makeRequest('/api/payment/webhook', 'POST', { event: 'payment.captured', payload: { payment: { entity: { id: 'pay_hook', order_id: second.body.razorpayOrderId } } } });
+    assert(hook.status === 503 || hook.status === 400, 'Unsigned webhook cannot mark orders paid');
 
     // Test Duplicate / Replay Payment Prevention
     const duplicateVerifyRes = await makeRequest('/api/payment/verify', 'POST', {
@@ -248,27 +265,34 @@ async function runTests() {
     });
     assert(codOrderRes.status === 400, 'Direct COD order submission strictly rejected with 400 Bad Request');
     assert(codOrderRes.body.error && codOrderRes.body.error.includes('disabled'), 'COD rejection error explains policy');
+    const bankOrder = await makeRequest('/api/orders', 'POST', {
+      customer: { name: 'Test', email: testEmail, phone: '9999999999' },
+      shippingAddress: { addressLine: 'Street', city: 'City', pincode: '302001' },
+      items: cartItems,
+      paymentMethod: 'bank_transfer'
+    });
+    assert(bankOrder.status === 201 && bankOrder.body.order.paymentStatus === 'Awaiting payment', 'Order without online payment waits for payment (never marked paid)');
+    assert(/^HJ-[0-9A-Z]+-[0-9A-F]{6}$/.test(bankOrder.body.orderId), `Order ID is not guessable (${bankOrder.body.orderId})`);
 
     // ---------------------------------------------------------------
     // GROUP 7: Order Retrieval & Tracking Telemetry
     // ---------------------------------------------------------------
     console.log('\n--- 7. Order Retrieval & Tracking Telemetry ---');
     const confirmedOrderId = verifyRes.body.orderId;
-    const getOrderRes = await makeRequest(`/api/orders/${confirmedOrderId}`);
-    assert(getOrderRes.status === 200 && getOrderRes.body.success, `GET /api/orders/${confirmedOrderId} retrieves order`);
+    const anonOrder = await makeRequest(`/api/orders/${confirmedOrderId}`);
+    assert(anonOrder.status === 401, 'Full order details (address, phone) need admin sign-in');
+    const tokenRes = await makeRequest('/api/admin/login', 'POST', { pin: process.env.ADMIN_SECRET_PIN });
+    const auth = { Authorization: `Bearer ${tokenRes.body.token}` };
+    const getOrderRes = await makeRequest(`/api/orders/${confirmedOrderId}`, 'GET', null, auth);
+    assert(getOrderRes.status === 200 && getOrderRes.body.success, `GET /api/orders/${confirmedOrderId} retrieves order for the admin`);
 
     // Track by Order ID
     const trackRes = await makeRequest('/api/orders/track', 'POST', {
       orderId: confirmedOrderId
     });
     assert(trackRes.status === 200 && trackRes.body.success, 'POST /api/orders/track locates consignment');
-    assert(trackRes.body.order.courierPartner.includes('Sequel'), 'Courier partner reported as Sequel Armored Logistics');
-
-    // Track by Tracking Number
-    const trackByNumberRes = await makeRequest('/api/orders/track', 'POST', {
-      query: verifyRes.body.trackingNumber
-    });
-    assert(trackByNumberRes.status === 200 && trackByNumberRes.body.success, 'Tracking by consignment number succeeds');
+    assert(!trackRes.body.order.customer && !trackRes.body.order.shippingAddress, 'Public tracking shows no name, phone or address');
+    assert(trackRes.body.order.courierPartner === null, 'No courier is claimed before shipping');
 
     // ---------------------------------------------------------------
     // GROUP 8: Concierge Appointments, Bespoke & Newsletter
@@ -283,6 +307,8 @@ async function runTests() {
       notes: 'Bridal jewellery sizing and diamond consultation'
     });
     assert(apptRes.status === 201 && apptRes.body.success, 'POST /api/appointments reserves private suite');
+    const apptList = await makeRequest('/api/appointments');
+    assert(apptList.status === 401, 'Appointment list (names, phones) needs admin sign-in');
 
     const bespokeRes = await makeRequest('/api/custom-order', 'POST', {
       fullName: 'Maharaja Padmanabh',
@@ -304,14 +330,22 @@ async function runTests() {
     // GROUP 9: Admin Authentication & Telemetry Overview
     // ---------------------------------------------------------------
     console.log('\n--- 9. Admin Authentication & Atelier Overview ---');
-    const adminLoginRes = await makeRequest('/api/admin/login', 'POST', { pin: '1926' });
-    assert(adminLoginRes.status === 200 && adminLoginRes.body.success, 'POST /api/admin/login authorizes with master PIN');
+    const adminLoginRes = await makeRequest('/api/admin/login', 'POST', { pin: process.env.ADMIN_SECRET_PIN });
+    assert(adminLoginRes.status === 200 && adminLoginRes.body.token, 'POST /api/admin/login returns a session token');
+    for (const oldPin of ['1926', '2026', '1122']) {
+      const r = await makeRequest('/api/admin/login', 'POST', { pin: oldPin });
+      assert(r.status === 401, `Old built-in PIN ${oldPin} no longer works`);
+    }
 
     const adminWrongLogin = await makeRequest('/api/admin/login', 'POST', { pin: '999999' });
     assert(adminWrongLogin.status === 401, 'POST /api/admin/login rejects invalid PIN with 401');
 
-    const overviewRes = await makeRequest('/api/admin/overview');
+    const overviewAnon = await makeRequest('/api/admin/overview');
+    assert(overviewAnon.status === 401, 'Admin overview needs sign-in');
+    const overviewRes = await makeRequest('/api/admin/overview', 'GET', null, { Authorization: `Bearer ${adminLoginRes.body.token}` });
     assert(overviewRes.status === 200 && overviewRes.body.metrics, 'GET /api/admin/overview delivers business telemetry');
+    const fakeToken = await makeRequest('/api/admin/overview', 'GET', null, { Authorization: 'Bearer abc.def' });
+    assert(fakeToken.status === 401, 'Made-up admin token is rejected');
 
   } catch (err) {
     console.error('Fatal test error:', err);
