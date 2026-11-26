@@ -8,8 +8,8 @@ authorAvatar: /images/house_of_jewelux_official_logo.png
 authorBio: The design and care team at our Jaipur atelier, writing about the pieces we make and how to live with them.
 category: Jewellery Care
 tags: [gemstones, emerald, ruby, sapphire, pearls, care]
-coverImage: /images/user_royal_ruby_jhumkas.jpg
-coverAlt: A woman holding a pair of jhumka earrings set with red stones and pearl drops
+coverImage: /images/authentic_polki_craft.jpg
+coverAlt: A pair of blue gemstone drop earrings resting on a large green leaf
 featured: false
 draft: false
 ---
