@@ -146,7 +146,7 @@
   document.querySelectorAll('[data-toggle-pw]').forEach((b) => { b.innerHTML = EYE; });
 
   // ---------- Views ----------
-  const VIEWS = {};
+  const VIEWS = Object.assign({}, window.HJ_EXTRA_VIEWS); // Business sections from admin-ops.js
 
   VIEWS.dashboard = async () => {
     if (!state.html) await loadHtml();

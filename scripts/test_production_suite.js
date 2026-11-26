@@ -347,6 +347,21 @@ async function runTests() {
     const fakeToken = await makeRequest('/api/admin/overview', 'GET', null, { Authorization: 'Bearer abc.def' });
     assert(fakeToken.status === 401, 'Made-up admin token is rejected');
 
+    // Admin panel lists and order updates
+    const adminAuthHdr = { Authorization: `Bearer ${adminLoginRes.body.token}` };
+    for (const p of ['orders', 'customers', 'subscribers', 'custom-orders']) {
+      assert((await makeRequest(`/api/admin/${p}`)).status === 401, `GET /api/admin/${p} needs sign-in`);
+      const r = await makeRequest(`/api/admin/${p}`, 'GET', null, adminAuthHdr);
+      assert(r.status === 200 && Array.isArray(r.body.items), `GET /api/admin/${p} lists items for the admin`);
+    }
+    const custList = await makeRequest('/api/admin/customers', 'GET', null, adminAuthHdr);
+    assert(!JSON.stringify(custList.body).includes('passwordHash'), 'Customer list never includes password hashes');
+    const badStatus = await makeRequest(`/api/admin/orders/${confirmedOrderId}`, 'PATCH', { orderStatus: 'Teleported' }, adminAuthHdr);
+    assert(badStatus.status === 400, 'Unknown order status is rejected');
+    const shipRes = await makeRequest(`/api/admin/orders/${confirmedOrderId}`, 'PATCH', { orderStatus: 'Shipped', trackingNumber: 'TRK123', courierPartner: 'Delhivery' }, adminAuthHdr);
+    assert(shipRes.status === 200 && shipRes.body.order.orderStatus === 'Shipped' && shipRes.body.order.courierPartner === 'Delhivery', 'Admin can mark an order shipped with courier and tracking');
+    assert(overviewRes.body.metrics.paidOrders >= 0, 'Overview reports paid orders separately');
+
   } catch (err) {
     console.error('Fatal test error:', err);
     failed++;

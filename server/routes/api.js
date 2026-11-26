@@ -64,7 +64,11 @@ router.get('/appointments', requireAdmin, appointmentController.getAppointments)
 // 5. Admin & Atelier Controls
 router.post('/admin/login', adminController.adminLogin);
 router.get('/admin/overview', requireAdmin, adminController.getOverview);
+router.get('/admin/orders', requireAdmin, adminController.listOrders);
 router.patch('/admin/orders/:orderId', requireAdmin, adminController.updateOrder);
+router.get('/admin/customers', requireAdmin, adminController.listCustomers);
+router.get('/admin/subscribers', requireAdmin, adminController.listSubscribers);
+router.get('/admin/custom-orders', requireAdmin, adminController.listCustomOrders);
 router.patch('/admin/products/:productId', requireAdmin, adminController.updateProduct);
 router.post('/admin/editor-save', requireAdmin, adminController.editorSave);
 router.post('/custom-order', adminController.customOrder);

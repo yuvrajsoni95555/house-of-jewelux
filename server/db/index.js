@@ -109,7 +109,7 @@ const orders = {
                   payment_method as "paymentMethod", payment_status as "paymentStatus",
                   razorpay_order_id as "razorpayOrderId", razorpay_payment_id as "razorpayPaymentId",
                   order_status as "orderStatus", tracking_number as "trackingNumber",
-                  estimated_delivery as "estimatedDelivery", created_at as "orderDate"
+                  estimated_delivery as "estimatedDelivery", courier_partner as "courierPartner", created_at as "orderDate"
            FROM orders ORDER BY created_at DESC LIMIT $1`,
           [limit]
         );
@@ -142,7 +142,7 @@ const orders = {
                   payment_method as "paymentMethod", payment_status as "paymentStatus",
                   razorpay_order_id as "razorpayOrderId", razorpay_payment_id as "razorpayPaymentId",
                   order_status as "orderStatus", tracking_number as "trackingNumber",
-                  estimated_delivery as "estimatedDelivery", created_at as "orderDate"
+                  estimated_delivery as "estimatedDelivery", courier_partner as "courierPartner", created_at as "orderDate"
            FROM orders WHERE LOWER(order_id) = LOWER($1) LIMIT 1`,
           [orderId]
         );
@@ -221,6 +221,14 @@ const orders = {
           fields.push(`tracking_number = $${idx++}`);
           values.push(updates.trackingNumber);
         }
+        if (updates.courierPartner) {
+          fields.push(`courier_partner = $${idx++}`);
+          values.push(updates.courierPartner);
+        }
+        if (updates.estimatedDelivery) {
+          fields.push(`estimated_delivery = $${idx++}`);
+          values.push(updates.estimatedDelivery);
+        }
         if (updates.razorpayPaymentId) {
           fields.push(`razorpay_payment_id = $${idx++}`);
           values.push(updates.razorpayPaymentId);
@@ -252,6 +260,8 @@ const orders = {
         all[idx].paymentStatus = updates.paymentStatus;
       }
       if (updates.trackingNumber) all[idx].trackingNumber = updates.trackingNumber;
+      if (updates.courierPartner) all[idx].courierPartner = updates.courierPartner;
+      if (updates.estimatedDelivery) all[idx].estimatedDelivery = updates.estimatedDelivery;
       if (updates.razorpayPaymentId) all[idx].razorpayPaymentId = updates.razorpayPaymentId;
       if (updates.razorpaySignature) all[idx].razorpaySignature = updates.razorpaySignature;
       local.writeJSON('orders.json', all);
@@ -272,7 +282,7 @@ const orders = {
                   shipping_address as "shippingAddress", items, pricing, 
                   payment_method as "paymentMethod", payment_status as "paymentStatus",
                   order_status as "orderStatus", tracking_number as "trackingNumber",
-                  estimated_delivery as "estimatedDelivery", created_at as "orderDate"
+                  estimated_delivery as "estimatedDelivery", courier_partner as "courierPartner", created_at as "orderDate"
            FROM orders 
            WHERE UPPER(order_id) = $1 
               OR UPPER(tracking_number) = $1 

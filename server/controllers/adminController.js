@@ -24,7 +24,9 @@ const getOverview = async (req, res, next) => {
     const products = db.readJSON('products.json');
     const customers = await db.customers.getAll();
 
-    const totalRevenue = orders.reduce((sum, o) => sum + ((o.pricing && o.pricing.grandTotal) || 0), 0);
+    // Revenue counts paid orders only; unpaid checkouts are not sales
+    const paid = orders.filter(o => o.paymentStatus === 'Paid');
+    const totalRevenue = paid.reduce((sum, o) => sum + ((o.pricing && o.pricing.grandTotal) || 0), 0);
     const pendingOrders = orders.filter(o => ['Payment pending', 'Awaiting payment'].includes(o.orderStatus)).length;
 
     res.json({
@@ -32,6 +34,7 @@ const getOverview = async (req, res, next) => {
       metrics: {
         totalRevenue,
         totalOrders: orders.length,
+        paidOrders: paid.length,
         pendingVerification: pendingOrders,
         totalProducts: products.length,
         totalCustomers: customers.length
@@ -43,13 +46,25 @@ const getOverview = async (req, res, next) => {
   }
 };
 
+const ORDER_STATUSES = ['Payment pending', 'Awaiting payment', 'Confirmed', 'Processing', 'Ready to ship', 'Shipped', 'Delivered', 'Cancelled', 'Returned', 'Refunded'];
+const PAYMENT_STATUSES = ['Pending', 'Awaiting payment', 'Paid', 'Failed', 'Refunded'];
+const text = (v, max) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : undefined);
+
 const updateOrder = async (req, res, next) => {
   try {
-    const { orderStatus, paymentStatus, trackingNumber } = req.body;
+    const { orderStatus, paymentStatus } = req.body || {};
+    if (orderStatus !== undefined && !ORDER_STATUSES.includes(orderStatus)) {
+      return res.status(400).json({ success: false, error: 'Unknown order status' });
+    }
+    if (paymentStatus !== undefined && !PAYMENT_STATUSES.includes(paymentStatus)) {
+      return res.status(400).json({ success: false, error: 'Unknown payment status' });
+    }
     const updated = await db.orders.update(req.params.orderId, {
       orderStatus,
       paymentStatus,
-      trackingNumber
+      trackingNumber: text(req.body.trackingNumber, 100),
+      courierPartner: text(req.body.courierPartner, 100),
+      estimatedDelivery: text(req.body.estimatedDelivery, 100)
     });
 
     if (!updated) {
@@ -155,7 +170,22 @@ const customOrder = async (req, res, next) => {
   }
 };
 
+// Read-only lists for the admin panel (admin token required, see routes/api.js)
+const list = (load) => async (req, res, next) => {
+  try { res.json({ success: true, items: await load(req) }); } catch (err) { next(err); }
+};
+const listOrders = list((req) => db.orders.getAll(Math.min(500, parseInt(req.query.limit, 10) || 200)));
+// Never send password hashes to the browser
+const listCustomers = list(async () => (await db.customers.getAll()).map(({ id, name, email, phone, createdAt }) => ({ id, name, email, phone, createdAt })));
+const listSubscribers = list(() => db.subscribers.getAll());
+const listCustomOrders = list(() => db.customOrders.getAll());
+
 module.exports = {
+  ORDER_STATUSES,
+  listOrders,
+  listCustomers,
+  listSubscribers,
+  listCustomOrders,
   adminLogin,
   getOverview,
   updateOrder,
