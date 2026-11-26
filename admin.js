@@ -164,12 +164,12 @@
     const byCat = {};
     P.forEach((p) => { byCat[p.category || 'other'] = (byCat[p.category || 'other'] || 0) + 1; });
     const maxCat = Math.max(1, ...Object.values(byCat));
-    let commits = [];
-    try { commits = await gh(`/repos/${REPO}/commits?sha=${BRANCH}&per_page=6`); } catch (e) { /* activity is optional */ }
     const card = (num, label, go) => `<button class="card" data-go="${go}"><div class="num">${num}</div><div class="lbl">${label}</div></button>`;
     view.innerHTML = `
       <div class="page-head"><div><h1>Dashboard</h1><p>Your catalogue and website health at a glance.</p></div>
         <button class="btn btn-primary" data-action="new-product">+ Add product</button></div>
+      <div id="biz-dash"></div>
+      <h3>Catalogue &amp; website</h3>
       <div class="cards">
         ${card(P.length, 'Total products', 'products')}
         ${card(P.length - drafts, 'Published', 'products')}
@@ -182,9 +182,6 @@
           <div class="panel"><h3>Products by category</h3>
             <div class="bars">${Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([c, n]) =>
               `<div class="bar"><span>${esc(c)}</span><div class="track"><div class="fill" style="width:${(n / maxCat) * 100}%"></div></div><b>${n}</b></div>`).join('')}</div>
-          </div>
-          <div class="panel"><h3>Recent changes</h3>
-            <ul class="log">${commits.map((c) => `<li><b>${esc(c.commit.message.split('\n')[0])}</b><br><span class="small muted">${esc(new Date(c.commit.author.date).toLocaleString('en-IN'))}</span></li>`).join('') || '<li class="muted">No activity available.</li>'}</ul>
           </div>
         </div>
         <div>
@@ -205,8 +202,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <p class="note small">Orders, revenue, customers and traffic are not shown: the website is a static site with no server to record them yet.</p>`;
+      </div>`;
+    if (window.HJ_DASH) window.HJ_DASH($('#biz-dash')); // orders, customers and alerts from admin-ops.js
   };
 
   VIEWS.products = async () => {

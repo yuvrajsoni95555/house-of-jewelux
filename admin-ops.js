@@ -233,15 +233,21 @@
       <div style="margin-top:16px">${notConfigured('Website visitors (Google Analytics 4)', 'Needs a GA4 property. Visitors, traffic sources and conversion rate appear here once it is connected.')}</div>`;
   });
 
-  VIEWS['biz-alerts'] = guarded('biz-alerts', async () => {
-    const [orders, P] = await Promise.all([getOrders(), getProducts()]);
+  // [type, message, orderId, productId] for everything that needs the owner's attention
+  function alertsFor(orders, P) {
     const day = 864e5; const now = Date.now();
     const alerts = [];
-    orders.filter((o) => o.paymentStatus === 'Paid' && TO_SHIP.includes(o.orderStatus)).forEach((o) => alerts.push(['Ship', `Paid order ${o.orderId} is waiting to be shipped`, o.orderId]));
+    orders.filter((o) => o.paymentStatus === 'Paid' && TO_SHIP.includes(o.orderStatus)).forEach((o) => alerts.push(['Ship', `Paid order ${o.orderId} (${(o.customer && o.customer.name) || 'customer'}) is waiting to be shipped`, o.orderId]));
     orders.filter((o) => ['Pending', 'Awaiting payment'].includes(o.paymentStatus) && now - new Date(o.orderDate) > day && !/cancel/i.test(o.orderStatus)).forEach((o) => alerts.push(['Payment', `Order ${o.orderId} has waited more than a day for payment`, o.orderId]));
     P.filter((p) => p.stockStatus === 'Out of Stock' && p.status !== 'draft').forEach((p) => alerts.push(['Stock', `${p.name} is out of stock but still shown on the website`, null, p.id]));
+    return alerts;
+  }
+  const alertRow = ([t, msg, oid, pid]) => `<tr class="row" ${oid ? `data-view="biz-order" data-arg="${esc(oid)}"` : `data-edit="${esc(pid)}"`}><td>${pill(t)}</td><td>${esc(msg)}</td></tr>`;
+
+  VIEWS['biz-alerts'] = guarded('biz-alerts', async () => {
+    const [orders, P] = await Promise.all([getOrders(), getProducts()]);
     view().innerHTML = head('Notifications', 'Things that need your attention, worked out from real orders and products.') +
-      table(['Type', 'What'], alerts.map(([t, msg, oid, pid]) => `<tr class="row" ${oid ? `data-view="biz-order" data-arg="${esc(oid)}"` : `data-edit="${esc(pid)}"`}><td>${pill(t)}</td><td>${esc(msg)}</td></tr>`), 'All clear. Nothing needs your attention.') +
+      table(['Type', 'What'], alertsFor(orders, P).map(alertRow), 'All clear. Nothing needs your attention.') +
       `<div style="margin-top:16px">${notConfigured('Email / WhatsApp / push alerts', 'Needs an email or WhatsApp Business account. Until then, alerts show only here.')}</div>`;
   });
 
@@ -262,6 +268,77 @@
       ${notConfigured('Multiple staff accounts & roles', 'Today there is one owner login. Staff accounts with limited access are a later step.')}`;
     const b = $('#pin-out'); if (b) b.addEventListener('click', () => { sessionStorage.removeItem(TOKEN_KEY); VIEWS['biz-settings'](); toast('Signed out of business sections'); });
   };
+
+  // ---------- Business block at the top of the main Dashboard ----------
+  const sameDay = (d, ref) => new Date(d).toDateString() === ref.toDateString();
+  const sameMonth = (d, ref) => { const x = new Date(d); return x.getFullYear() === ref.getFullYear() && x.getMonth() === ref.getMonth(); };
+  const waLink = (phone) => { const d = String(phone || '').replace(/\D/g, '').replace(/^0+/, ''); return d.length >= 10 ? `https://wa.me/${d.length === 10 ? '91' + d : d}` : ''; };
+
+  async function dashBlock(el) {
+    if (!el) return;
+    if (!sessionStorage.getItem(TOKEN_KEY)) {
+      el.innerHTML = `<form class="panel" id="dash-pin"><h3>Orders &amp; customers</h3>
+        <p class="muted" style="margin-top:0">Enter your admin PIN to see today's orders, who bought what, payments and what needs your attention.</p>
+        <div class="toolbar" style="margin:0"><input id="dash-pin-in" type="password" autocomplete="current-password" placeholder="Admin PIN" aria-label="Admin PIN" required>
+        <button class="btn btn-primary" type="submit">Show orders</button></div><p id="dash-pin-err" class="errors hidden" role="alert"></p></form>`;
+      $('#dash-pin').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try { sessionStorage.setItem(TOKEN_KEY, (await api('/admin/login', { method: 'POST', body: { pin: $('#dash-pin-in').value } })).token); dashBlock(el); }
+        catch (x) { const er = $('#dash-pin-err'); er.textContent = x.message; er.classList.remove('hidden'); }
+      });
+      return;
+    }
+    el.innerHTML = '<div class="skel" style="height:120px;margin-bottom:16px"></div>';
+    let orders, customers, appts, custom, P;
+    try {
+      [orders, { items: customers }, appts, { items: custom }, P] = await Promise.all([getOrders(), api('/admin/customers'), api('/appointments'), api('/admin/custom-orders'), getProducts()]);
+    } catch (e) {
+      if (e.needPin) return dashBlock(el);
+      el.innerHTML = `<div class="panel"><h3>Orders &amp; customers</h3><p class="errors" style="margin:0">${esc(e.message)}</p></div>`;
+      return;
+    }
+    const now = new Date();
+    const paid = orders.filter((o) => o.paymentStatus === 'Paid');
+    const sumOf = (list) => list.reduce((n, o) => n + total(o), 0);
+    const toShip = paid.filter((o) => TO_SHIP.includes(o.orderStatus));
+    const waiting = orders.filter((o) => ['Pending', 'Awaiting payment'].includes(o.paymentStatus) && !/cancel/i.test(o.orderStatus));
+    const best = {};
+    paid.filter((o) => sameMonth(o.orderDate, now)).forEach((o) => (o.items || []).forEach((i) => { const b = best[i.name] || (best[i.name] = { qty: 0, sum: 0 }); b.qty += Number(i.quantity) || 0; b.sum += Number(i.itemTotal) || 0; }));
+    const requests = (appts.appointments || []).map((a) => ({ when: a.createdAt || a.date, what: 'Appointment', who: a.name, detail: [a.date, a.time].filter(Boolean).join(' '), phone: a.phone, go: 'biz-support' }))
+      .concat((custom || []).map((r) => ({ when: r.createdAt, what: 'Custom piece', who: r.fullName, detail: [r.jewelleryType, r.budgetBand].filter(Boolean).join(', '), phone: r.phone, go: 'biz-support' })))
+      .sort((a, b) => new Date(b.when || 0) - new Date(a.when || 0)).slice(0, 5);
+    const alerts = alertsFor(orders, P);
+    const orderLine = (o) => {
+      const c = o.customer || {}; const wa = waLink(c.phone);
+      return `<tr class="row" data-view="biz-order" data-arg="${esc(o.orderId)}"><td><b>${esc(c.name || '—')}</b><br><span class="small muted">${esc([o.shippingAddress && o.shippingAddress.city, date(o.orderDate)].filter(Boolean).join(' · '))}</span></td>
+        <td class="small">${esc((o.items || []).map((i) => `${i.name} ×${i.quantity}`).join(', '))}</td><td><b>${money(total(o))}</b></td>
+        <td>${pill(o.paymentStatus)}${o.orderStatus !== o.paymentStatus ? ' ' + pill(o.orderStatus) : ''}</td>
+        <td>${wa ? `<a class="btn btn-sm" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>` : ''}</td></tr>`;
+    };
+    el.innerHTML = `<h3>Today &amp; this month</h3><div class="cards">
+        ${card(orders.filter((o) => sameDay(o.orderDate, now)).length, "Today's orders", 'biz-orders')}
+        ${card(money(sumOf(paid.filter((o) => sameDay(o.orderDate, now)))), "Today's sales (paid)", 'biz-finance')}
+        ${card(money(sumOf(paid.filter((o) => sameMonth(o.orderDate, now)))), "This month's sales", 'biz-reports')}
+        ${card(toShip.length, 'To pack & ship', 'biz-shipping')}
+        ${card(waiting.length, 'Waiting for payment', 'biz-orders')}
+        ${card(customers.filter((c) => sameMonth(c.createdAt, now)).length, 'New customers this month', 'biz-customers')}</div>
+      <div class="dash"><div>
+        <div class="panel"><h3>Latest orders <button class="btn btn-sm" data-view="biz-orders" style="float:right">All orders</button></h3>
+          ${orders.length ? table(['Customer', 'Items', 'Total', 'Status', ''], orders.slice(0, 8).map(orderLine), '') : '<p class="muted" style="margin:0">No orders yet. New orders appear here the moment a customer checks out.</p>'}</div>
+        <div class="panel"><h3>New requests <button class="btn btn-sm" data-view="biz-support" style="float:right">All requests</button></h3>
+          ${requests.length ? `<ul class="log">${requests.map((r) => `<li>${pill(r.what)} <b>${esc(r.who || '—')}</b> <span class="small muted">${esc(r.detail)}</span>${waLink(r.phone) ? ` · <a href="${waLink(r.phone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}</li>`).join('')}</ul>` : '<p class="muted" style="margin:0">No appointments or custom requests yet.</p>'}</div>
+      </div><div>
+        <div class="panel"><h3>Needs your attention</h3>
+          ${alerts.length ? `<div class="table-wrap"><table><tbody>${alerts.slice(0, 6).map(alertRow).join('')}</tbody></table></div>${alerts.length > 6 ? `<p class="small" style="margin-bottom:0"><a href="#" data-view="biz-alerts">See all ${alerts.length}</a></p>` : ''}` : '<p class="muted" style="margin:0">All clear. Nothing needs your attention.</p>'}</div>
+        <div class="panel"><h3>Best sellers this month</h3>
+          ${Object.keys(best).length ? `<ul class="log">${Object.entries(best).sort((a, b) => b[1].sum - a[1].sum).slice(0, 5).map(([n, b]) => `<li><b>${esc(n)}</b> <span class="small muted">${b.qty} sold · ${money(b.sum)}</span></li>`).join('')}</ul>` : '<p class="muted" style="margin:0">No paid sales this month yet.</p>'}</div>
+        <div class="panel"><h3>Money</h3><ul class="log">
+          <li>Received (all time): <b>${money(sumOf(paid))}</b></li>
+          <li>Waiting for payment: <b>${money(sumOf(waiting))}</b></li>
+          <li>Average paid order: <b>${paid.length ? money(Math.round(sumOf(paid) / paid.length)) : '—'}</b></li></ul></div>
+      </div></div>`;
+  }
+  window.HJ_DASH = dashBlock;
 
   window.HJ_EXTRA_VIEWS = VIEWS;
 
@@ -293,7 +370,9 @@
   document.addEventListener('click', (e) => {
     const t = e.target.closest('[data-view="biz-order"][data-arg]');
     if (!t) return;
-    e.preventDefault(); e.stopImmediatePropagation();
+    e.stopImmediatePropagation();
+    if (e.target.closest('a[href]')) return; // a WhatsApp link inside the row opens normally
+    e.preventDefault();
     document.querySelectorAll('.side nav button').forEach((b) => { if (b.dataset.view === 'biz-orders') b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     VIEWS['biz-order'](t.dataset.arg);
   }, true);
