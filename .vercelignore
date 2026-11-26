@@ -1,0 +1,12 @@
+# Vercel hosts only the API; the website stays on GitHub Pages. Upload nothing else (keeps private/untracked files off Vercel).
+/*
+!api
+!server
+!package.json
+!package-lock.json
+!vercel.json
+!data
+data/*
+!data/products.json
+!data/categories.json
+!data/coupons.json

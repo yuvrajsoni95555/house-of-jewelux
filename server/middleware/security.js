@@ -26,7 +26,7 @@ function securityHeaders(req, res, next) {
     "font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:",
     "img-src 'self' data: blob: https:",
     "frame-src 'self' https://api.razorpay.com https://checkout.razorpay.com",
-    "connect-src 'self' https://api.razorpay.com https://checkout.razorpay.com https://lumberjack.razorpay.com https://*.supabase.co https://api.github.com"
+    "connect-src 'self' https://api.razorpay.com https://checkout.razorpay.com https://lumberjack.razorpay.com https://*.supabase.co https://api.github.com https://houseofjewelux.vercel.app"
   ].join('; ');
 
   res.setHeader('Content-Security-Policy', csp);
