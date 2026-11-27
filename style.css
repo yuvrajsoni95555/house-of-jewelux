@@ -4082,18 +4082,33 @@ img {
 
 @media (max-width: 768px) {
   .hero-hud-bottom-left {
-    left: 1.25rem !important;
-    bottom: 1.25rem !important;
+    left: 0.85rem !important;
+    bottom: 1.2rem !important;
     z-index: 24 !important;
+  }
+  .chapter-active-label {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.12em !important;
+  }
+  .chapter-indicator-dot {
+    width: 20px !important;
+    height: 4px !important;
+  }
+  .chapter-indicator-dot.active {
+    width: 32px !important;
   }
   .hero-scroll-prompt {
     left: auto !important;
-    right: 1.25rem !important;
+    right: 0.85rem !important;
     transform: none !important;
-    bottom: 1.25rem !important;
+    bottom: 1.2rem !important;
     z-index: 24 !important;
     align-items: flex-end !important;
-    animation: bounceDownRight 2.2s infinite ease-in-out !important;
+  }
+  .hero-scroll-prompt span {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.1em !important;
+    white-space: nowrap !important;
   }
 }
 
