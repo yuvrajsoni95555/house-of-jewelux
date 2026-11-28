@@ -87,3 +87,30 @@ Then a final checklist and a local preview, and I wait for your OK to publish.
 1. Use the current 50 products: Silver has all 50, and Gold shows "coming soon" until solid gold pieces are added.
 2. Intro: shorten it to 1.5 s, make it skippable, and show it once per session.
 3. Everyday Essentials: pieces under ₹15,000.
+
+## 7. Build and test report (28 Nov 2026, local, not published)
+
+**Built**
+1. **Store switch** (Silver | Gold pill): on every page, made of real links. It highlights the store you are in, including the store of the product you are viewing, and remembers it while you browse. It stays at the top of the screen when the header hides, including on phones. The pill slides with a soft shimmer; Silver pages fade into cool white and grey, Gold pages into warm ivory and beige.
+2. **Silver landing:** a 3-banner slider (fade, arrows, dots, pauses on hover; placeholder banners in `data/stores.json → banners`), Bestsellers and New arrivals rows, intro text, filters and sort. **Gold:** "coming soon" with links to gold-plated silver and a consultation.
+3. **Categories:** Rings, Earrings, Necklaces & Pendants, Bracelets, Brooches, Everyday Essentials (under ₹15,000: 14 pieces), Gifting (every piece, cheapest first) and Shop by Price (menu links). Anklets appear automatically when a product's type is "anklets".
+4. **50 real product pages** at `/products/<name>/`. Each has its own title (the admin SEO title wins), description, one canonical, a breadcrumb (Home › Silver Jewellery › Earrings › Product) and Product + BreadcrumbList schema (price in INR, availability; no ratings). Every product lives in one store. Old `#products/…` links still open the product. Site links now point to the real pages.
+5. **Intro text** of 102–123 words for the Silver landing, each Silver category and the Gold landing, written from real product facts, in `data/stores.json` (`intro`, `intros`), for your review.
+6. **Speed**
+   - Products and categories now load from the site's own files instead of waiting for the order server. That server's copy also went stale after admin edits.
+   - 24 WebP copies of product, banner and large homepage photos: 8.2 MB → 3.3 MB. The JPG originals are kept.
+   - Correction: the "12-second intro" in section 4 was a measuring error (the browser pane was hidden, which delays painting). The homepage intro was not changed.
+7. **Search** shows only the store you are in, with a one-tap "search all stores".
+
+**Test loop (all passed)**
+- **Static check of 67 pages:** each has 1 title, 1 description and 1 canonical (equal to its own address) and 1 H1; no broken internal links or images; Silver pages list only silver, Gold pages list no silver; all 67 sitemap addresses have a page, with no `#` addresses and no duplicates.
+- **Browser, desktop (1024 / 1366 / 1440 px):** slider, rows, filters, price and finish links, mega menus (they open over the switch), product page breadcrumb, old `#products` link, search scoped to the store and "search all", add to bag, wishlist, checkout page.
+- **Browser, phone (375 px):** no sideways scroll; the switch stays visible after scrolling; Filters panel; menu groups.
+- **Server tests:** 69/69. **Admin checks:** pass.
+- **Not measured:** the official PageSpeed score (not available to me today). Run https://pagespeed.web.dev/ after publishing.
+
+**Final checklist before publishing**
+- [ ] Read the intro texts (`data/stores.json`) and change anything you want.
+- [ ] Replace the 3 Silver banner photos and captions if you like (`data/stores.json → banners`).
+- [ ] Add real solid gold products in admin when ready (metal must say gold, without silver, 925 or plated), then run `node scripts/build_blog.js` for their pages.
+- [ ] After publishing: submit `sitemap.xml` in Google Search Console and run PageSpeed.

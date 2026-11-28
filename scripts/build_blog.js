@@ -186,17 +186,21 @@ for (const p of posts) {
   }));
 }
 
-// ---------- storefront pages: /silver-jewellery/, /gold-plated-jewellery/ and one page per category (data/stores.json) ----------
+// ---------- storefront pages: /silver-jewellery/, /gold-jewellery/, one page per category, one page per product (data/stores.json) ----------
 const storeCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8'));
 const products = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'products.json'), 'utf8')).filter((p) => p.status !== 'draft');
 // same rules as app.js: Silver = every 925 silver piece (rhodium or gold-plated), Gold = solid gold only
 const isSilver = (p) => /silver|925/i.test(p.metal || '');
 const isSolidGold = (p) => /gold/i.test(p.metal || '') && !isSilver(p) && !/plated|vermeil/i.test(p.metal || '');
+// same rule as app.js inCategory: by product type, by price (Everyday Essentials) or every piece (Gifting)
+const inCategory = (c, p) => (c.all ? true : c.maxPrice ? p.price < c.maxPrice : (c.types || [c.id]).includes(p.category));
+const productUrl = (p) => `${SITE}/products/${p.handle || p.id}/`;
+const paras = (t) => (t ? t.split(/\n\n+/).map((x) => `<p>${esc(x)}</p>`).join('') : '');
 const storeUrls = [];
 const money = (n) => '₹' + Number(n).toLocaleString('en-IN');
 for (const s of storeCfg.stores) {
   const items = products.filter((p) => (s.finish === 'gold' ? isSolidGold(p) : isSilver(p)));
-  const pages = [{ cat: null, list: items }].concat(storeCfg.categories.map((c) => ({ cat: c, list: items.filter((p) => p.category === c.id) })).filter((x) => x.list.length));
+  const pages = [{ cat: null, list: items }].concat(storeCfg.categories.map((c) => ({ cat: c, list: items.filter((p) => inCategory(c, p)) })).filter((x) => x.list.length));
   for (const { cat, list } of pages) {
     const rel = `${s.slug}/${cat ? cat.id + '/' : ''}`;
     const url = `${SITE}/${rel}`;
@@ -205,13 +209,41 @@ for (const s of storeCfg.stores) {
     write(`${rel}index.html`, page({
       title: cat ? `${name} | House of Jewelux` : s.seoTitle, desc: cat ? `${name}: ${s.tagline}` : s.seoDesc, url, image: s.hero, type: 'website',
       ld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name, url, description: s.tagline,
-        mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.name, url: `${SITE}/#products/${p.handle || p.id}` })) } },
+        mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.name, url: productUrl(p) })) } },
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: u })) }],
-      body: `<section class="container blog-pre"><p>${crumbs.map(([n, u]) => `<a href="${u.replace(SITE, '')}">${esc(n)}</a>`).join(' / ')}</p><h1>${esc(name)}</h1><p>${esc(s.tagline)}</p>${list.length ? '' : `<p>${esc(s.comingSoon || '')}</p>`}<ul>${list.map((p) => `<li><a href="/#products/${esc(p.handle || p.id)}">${esc(p.name)}</a> ${money(p.price)} · ${esc(p.metal)}</li>`).join('')}</ul></section>`
+      body: `<section class="container blog-pre"><p>${crumbs.map(([n, u]) => `<a href="${u.replace(SITE, '')}">${esc(n)}</a>`).join(' / ')}</p><h1>${esc(name)}</h1><p>${esc(s.tagline)}</p>${paras(cat ? (s.intros || {})[cat.id] : s.intro)}${list.length ? '' : `<p>${esc(s.comingSoon || '')}</p>`}<ul>${list.map((p) => `<li><a href="/products/${esc(p.handle || p.id)}/">${esc(p.name)}</a> ${money(p.price)} · ${esc(p.metal)}</li>`).join('')}</ul></section>`
     }));
     storeUrls.push({ loc: url, pri: cat ? '0.7' : '0.8' });
   }
 }
+// Product pages /products/<handle>/: one canonical address per product, in the one store its metal belongs to
+const typeCats = storeCfg.categories.filter((c) => !c.all && !c.maxPrice);
+const productDirs = new Set();
+for (const p of products) {
+  const s = storeCfg.stores.find((x) => (x.finish === 'gold' ? isSolidGold(p) : isSilver(p)));
+  const cat = typeCats.find((c) => inCategory(c, p));
+  const handle = p.handle || p.id;
+  const url = productUrl(p);
+  const desc = String(p.description || '').replace(/\s+/g, ' ').trim();
+  const shortDesc = desc.length > 155 ? desc.slice(0, 152).replace(/\s+\S*$/, '') + '…' : desc;
+  const crumbs = [['Home', SITE + '/']].concat(s ? [[s.name, `${SITE}/${s.slug}/`]] : [], s && cat ? [[cat.name, `${SITE}/${s.slug}/${cat.id}/`]] : [], [[p.name, url]]);
+  const images = [p.image].concat(p.gallery || []).filter(Boolean).slice(0, 6).map(abs);
+  productDirs.add(handle);
+  write(`products/${handle}/index.html`, page({
+    title: p.seoTitle || `${p.name} | House of Jewelux`, desc: p.seoDescription || shortDesc || `${p.name} in ${p.metal}.`, url, image: p.image, type: 'product', // the admin's SEO fields win, as in app.js
+    ld: [{ '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: desc, sku: p.sku || undefined, image: images, material: p.metal || undefined,
+      brand: { '@type': 'Brand', name: 'House of Jewelux' },
+      offers: { '@type': 'Offer', url, priceCurrency: 'INR', price: p.price, itemCondition: 'https://schema.org/NewCondition',
+        availability: 'https://schema.org/' + ({ 'Out of Stock': 'OutOfStock', 'Pre-order': 'PreOrder', 'Made to Order': 'MadeToOrder' }[p.stockStatus] || 'InStock') } },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: u })) }],
+    body: `<article class="container blog-pre"><p>${crumbs.map(([n, u]) => `<a href="${u.replace(SITE, '')}">${esc(n)}</a>`).join(' / ')}</p><h1>${esc(p.name)}</h1><img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.name)}"><p>${money(p.price)} · ${esc(p.metal)}${p.stone ? ' · ' + esc(p.stone) : ''}</p><p>${esc(desc)}</p></article>`
+  }));
+  storeUrls.push({ loc: url, pri: '0.6' });
+}
+// remove pages of products that were deleted or became drafts (only inside the generated products/ folder)
+const prodRoot = path.join(ROOT, 'products');
+fs.readdirSync(prodRoot, { withFileTypes: true }).filter((d) => d.isDirectory() && !productDirs.has(d.name)).forEach((d) => fs.rmSync(path.join(prodRoot, d.name), { recursive: true, force: true }));
+
 // /gold-plated-jewellery/ (an earlier address) now opens Silver with the gold-plated finish selected
 write('gold-plated-jewellery/index.html', `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Gold-plated silver | House of Jewelux</title><meta name="robots" content="noindex"><link rel="canonical" href="${SITE}/silver-jewellery/"><meta http-equiv="refresh" content="0; url=/silver-jewellery/?finish=gold-plated"></head><body><a href="/silver-jewellery/?finish=gold-plated">Gold-plated silver</a></body></html>
 `);
@@ -235,6 +267,8 @@ ${posts.map((p) => `<item><title>${esc(p.title)}</title><link>${SITE}/blog/${p.s
 const smPath = path.join(ROOT, 'sitemap.xml');
 if (fs.existsSync(smPath)) {
   let sm = fs.readFileSync(smPath, 'utf8').replace(/\s*<!-- blog:start -->[\s\S]*?<!-- blog:end -->/, '').replace(/\s*<!-- stores:start -->[\s\S]*?<!-- stores:end -->/, '');
+  // '#' addresses are one page to Google (everything after # is ignored); the real /products/ and store pages replace them
+  sm = sm.replace(/\s*<url>\s*<loc>[^<]*#[^<]*<\/loc>[\s\S]*?<\/url>/g, '');
   const today = new Date().toISOString().slice(0, 10);
   sm = sm.replace(/\s*<\/urlset>\s*$/, `\n  <!-- stores:start -->\n${storeUrls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${u.pri}</priority>\n  </url>`).join('\n')}\n  <!-- stores:end -->\n</urlset>\n`);
   const urls = [{ loc: SITE + '/blog/', lastmod: posts[0] ? posts[0].updated : new Date().toISOString().slice(0, 10), pri: '0.7' }, ...posts.map((p) => ({ loc: `${SITE}/blog/${p.slug}/`, lastmod: p.updated, pri: '0.6' }))];

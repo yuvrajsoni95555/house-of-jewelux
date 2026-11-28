@@ -8,8 +8,41 @@
       "tagline": "BIS hallmarked 925 sterling silver, in a rhodium or gold-plated finish.",
       "seoTitle": "Silver Jewellery: 925 Sterling Silver | House of Jewelux",
       "seoDesc": "Shop BIS hallmarked 925 sterling silver necklaces, earrings, rings, bracelets and brooches in a rhodium or gold-plated finish, handcrafted in Jaipur.",
-      "hero": "images/authentic_solitaire_ring.jpg",
-      "promo": "images/authentic_diamond_choker.jpg"
+      "hero": "images/authentic_solitaire_ring.webp",
+      "promo": "images/authentic_diamond_choker.webp",
+      "banners": [
+        {
+          "image": "images/authentic_solitaire_ring.webp",
+          "alt": "925 silver solitaire ring with a pavé halo",
+          "caption": "Rings in 925 sterling silver",
+          "cta": "Shop rings",
+          "link": "/silver-jewellery/rings/"
+        },
+        {
+          "image": "images/authentic_diamond_choker.webp",
+          "alt": "925 silver necklace set with sparkling stones",
+          "caption": "Necklaces & pendants",
+          "cta": "Shop necklaces",
+          "link": "/silver-jewellery/necklaces/"
+        },
+        {
+          "image": "images/authentic_earrings_macro.webp",
+          "alt": "Close-up of 925 silver earrings",
+          "caption": "Everyday essentials under ₹15,000",
+          "cta": "Shop essentials",
+          "link": "/silver-jewellery/everyday-essentials/"
+        }
+      ],
+      "intro": "Our silver jewellery is made in BIS hallmarked 925 sterling silver: 92.5% pure silver, stamped and certified. Most pieces have a rhodium finish, a thin coat of a platinum-family metal that gives a bright white shine and helps slow tarnish. Others are gold-plated, for the warmth of gold on a silver core; choose Gold-plated under Finish to see only those.\n\nEvery piece is designed and finished in our Jaipur atelier and set with moissanite, lab-grown diamonds, pearls or coloured stones. Browse rings, earrings, necklaces and pendants, bracelets and brooches, or start with Everyday Essentials, our pieces under ₹15,000. Each product page lists the metal, stones, weight and size, so you know exactly what you are buying before you add it to your bag.",
+      "intros": {
+        "rings": "Our silver rings are cast in BIS hallmarked 925 sterling silver and finished either in bright rhodium or in gold plating. You will find solitaire-style rings set with moissanite or lab-grown diamonds, halo rings, and slimmer bands that sit comfortably for everyday wear.\n\nEach product page gives the stone, its cut and the ring's weight, so you can compare pieces side by side. Not sure of your size? Our ring size guide on the blog shows how to measure at home with a strip of paper or a ring you already own. Rhodium-finished silver keeps its shine with simple care: store each ring on its own, keep it away from perfume and chlorine, and wipe it with a soft cloth after wearing.",
+        "earrings": "Our silver earrings are made in BIS hallmarked 925 sterling silver, in a rhodium or gold-plated finish. The range runs from small studs you can wear all day to drops and statement earrings for weddings and evenings, set with moissanite, lab-grown diamonds, pearls or coloured stones.\n\nSterling silver is a good choice for sensitive ears, and every pair lists its metal, stones and weight on the product page. To keep earrings bright, put them on after perfume and make-up, store pairs separately so stones do not scratch each other, and wipe them with a soft, dry cloth. Filter by price, stone or finish to find the pair that suits the occasion.",
+        "necklaces": "Our silver necklaces and pendants are crafted in BIS hallmarked 925 sterling silver, in a bright rhodium finish or with gold plating. Choose from fine everyday chains with a single pendant, layered looks, and fuller chokers and statement necklaces for festive and bridal wear, set with moissanite, lab-grown diamonds, pearls or coloured stones.\n\nEvery product page lists the size, weight and stones so you can picture the fit before you buy. For layering ideas, see our guide to layering necklaces on the blog. Fasten clasps before storing, keep each necklace flat or hung on its own to stop chains tangling, and wipe it with a soft cloth after wearing to keep the shine.",
+        "bracelets": "Our silver bracelets are made in BIS hallmarked 925 sterling silver, finished in rhodium or gold plating. The range includes tennis-style bracelets set with rows of moissanite or lab-grown diamonds, linked and chain bracelets, and cuffs that stack well with a watch.\n\nEach product page gives the size and weight, so you can choose the right fit for your wrist. Bracelets meet more knocks than any other jewellery, so take them off for workouts, washing up and swimming, and store them flat in a soft pouch. A quick wipe with a soft, dry cloth after wearing keeps rhodium-finished silver bright for years.",
+        "brooches": "Our silver brooches are handcrafted in BIS hallmarked 925 sterling silver, many in a gold-plated finish, and set with moissanite, lab-grown diamonds, pearls, enamel or coloured stones. Designs draw on birds, flowers, animals and temple motifs, and work as well on a sherwani or bandhgala as on a saree, blazer or coat.\n\nEach product page lists the size, weight and stones, and the pin fitting is designed to hold securely on heavier fabrics. Pin brooches through a double layer of cloth where you can, close the clasp fully, and store each piece in its own pouch so the pin and stones stay protected. A brooch also makes a lasting gift for weddings and festive occasions.",
+        "everyday-essentials": "Everyday Essentials brings together our silver pieces under ₹15,000: easy rings, earrings and necklaces that suit daily wear, the office and small celebrations. Every piece is BIS hallmarked 925 sterling silver, finished in rhodium or gold plating, and set with the same moissanite, lab-grown diamonds and stones as our wider range.\n\nThis edit updates on its own as prices change, so it always shows what is available below ₹15,000 today. Wear these pieces often; silver looks its best when it is worn. Keep them away from perfume, chlorine and harsh soaps, store them separately, and wipe them with a soft cloth to keep their shine. Each product page lists the metal, stones, size and weight.",
+        "gifting": "Gifting shows every piece in our silver store, sorted from the lowest price up, so you can start with your budget and choose from there. Every gift is BIS hallmarked 925 sterling silver, in a rhodium or gold-plated finish, and made in our Jaipur atelier.\n\nOrders from ₹2,500 ship free and insured across India. Use the price filter to stay within a budget, or the collection filter for themes such as bridal, nature-inspired or everyday luxury. Each product page lists the metal, stones, size and weight, so you can be sure of what you are giving. For birthdays, anniversaries and weddings, rings, earrings and pendants are the gifts our clients choose most."
+      }
     },
     {
       "slug": "gold-jewellery",
@@ -20,19 +53,76 @@
       "comingSoon": "Our solid gold collection is being crafted in the atelier. Until it arrives, explore our gold-plated 925 silver, or book a consultation for a gold piece made for you.",
       "seoTitle": "Gold Jewellery | House of Jewelux",
       "seoDesc": "Solid gold jewellery from the House of Jewelux atelier in Jaipur. Book a private consultation for a gold piece made for you.",
-      "hero": "images/user_floral_diamond_earrings.jpg",
-      "promo": "images/user_falcon_brooch_royal_gold.jpg"
+      "hero": "images/user_floral_diamond_earrings.webp",
+      "promo": "images/user_falcon_brooch_royal_gold.webp",
+      "banners": [],
+      "intro": "Our gold store is for solid gold jewellery only, kept separate from our silver so that every piece is described exactly as it is. The first solid gold pieces are being made in our Jaipur atelier and will appear here, with their purity, weight and price, as soon as they are ready.\n\nUntil then, you can book a private consultation to discuss a gold piece made for you, or explore our gold-plated 925 silver, which has the warmth of gold on a hallmarked silver core. Gold-plated pieces always live in the silver store and are clearly labelled, so you will never mistake plating for solid gold."
     }
   ],
   "categories": [
-    { "id": "necklaces", "name": "Necklaces" },
-    { "id": "earrings", "name": "Earrings" },
-    { "id": "rings", "name": "Rings" },
-    { "id": "bracelets", "name": "Bracelets" },
-    { "id": "brooches", "name": "Brooches" }
+    {
+      "id": "rings",
+      "name": "Rings",
+      "types": [
+        "rings"
+      ]
+    },
+    {
+      "id": "earrings",
+      "name": "Earrings",
+      "types": [
+        "earrings"
+      ]
+    },
+    {
+      "id": "necklaces",
+      "name": "Necklaces & Pendants",
+      "types": [
+        "necklaces",
+        "pendants"
+      ]
+    },
+    {
+      "id": "bracelets",
+      "name": "Bracelets",
+      "types": [
+        "bracelets",
+        "bangles"
+      ]
+    },
+    {
+      "id": "anklets",
+      "name": "Anklets",
+      "types": [
+        "anklets"
+      ]
+    },
+    {
+      "id": "brooches",
+      "name": "Brooches",
+      "types": [
+        "brooches"
+      ]
+    },
+    {
+      "id": "everyday-essentials",
+      "name": "Everyday Essentials",
+      "maxPrice": 15000
+    },
+    {
+      "id": "gifting",
+      "name": "Gifting",
+      "all": true
+    }
   ],
   "finishes": [
-    { "id": "rhodium", "name": "Silver (rhodium)" },
-    { "id": "gold-plated", "name": "Gold-plated" }
+    {
+      "id": "rhodium",
+      "name": "Silver (rhodium)"
+    },
+    {
+      "id": "gold-plated",
+      "name": "Gold-plated"
+    }
   ]
 }

@@ -105,17 +105,8 @@
 
   async function loadProducts() {
     const cacheBust = 'v=20261123_prod_v23';
-    try {
-      const res = await fetch(API_BASE + '/api/products');
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.success && data.products) {
-          state.products = data.products.filter(p => p.status !== 'draft');
-        }
-      }
-    } catch (err) {
-      console.warn('API fetch failed, trying static products file', err);
-    }
+    // Products and categories come from the site's own data files: the admin saves there, so they are always current,
+    // and the page does not wait for the order server (whose copy only updates when it is redeployed).
 
     if (!state.products || state.products.length === 0) {
       try {
@@ -132,35 +123,20 @@
       }
     }
 
-    // Load rich categories
     try {
-      const catRes = await fetch(API_BASE + '/api/categories');
-      if (catRes.ok) {
-        const catData = await catRes.json();
-        if (catData && catData.success && catData.categories) {
-          state.categories = Array.isArray(catData.categories) ? catData.categories : (catData.categories.categories || []);
-        }
+      let staticCat = await fetch('/data/categories.json?' + cacheBust, { cache: 'no-cache' });
+      if (!staticCat.ok) {
+        staticCat = await fetch('./data/categories.json?' + cacheBust);
       }
-    } catch (e) {
-      console.warn('API categories fetch failed, falling back to static file', e);
+      if (staticCat.ok) {
+        const scData = await staticCat.json();
+        state.categories = Array.isArray(scData) ? scData : (scData.categories || []);
+      }
+    } catch (err) {
+      console.warn('Static categories fetch failed', err);
     }
 
-    if (!state.categories || state.categories.length === 0) {
-      try {
-        let staticCat = await fetch('/data/categories.json?' + cacheBust);
-        if (!staticCat.ok) {
-          staticCat = await fetch('./data/categories.json?' + cacheBust);
-        }
-        if (staticCat.ok) {
-          const scData = await staticCat.json();
-          state.categories = Array.isArray(scData) ? scData : (scData.categories || []);
-        }
-      } catch (err) {
-        console.warn('Static categories fetch failed', err);
-      }
-    }
-
-    // Silver and Gold-Plated storefronts (names, SEO, banners) from data/stores.json
+    // Silver and Gold storefronts (names, SEO, banners, categories) from data/stores.json
     try { const r = await fetch('/data/stores.json?' + cacheBust, { cache: 'no-cache' }); if (r.ok) state.stores = await r.json(); } catch (err) { console.warn('Stores fetch failed', err); }
 
     handleRoute();
@@ -204,9 +180,12 @@
     if (route === 'home' || route === '') {
       renderHomePage(appView);
     } else if (storeRoute) {
-      // ?finish=gold-plated (menu links) and the old /gold-plated-jewellery/ address open Silver with the gold-plated finish selected
-      const qFinish = new URLSearchParams(location.search).get('finish') || (/^\/?gold-plated-jewellery/.test(route) ? 'gold-plated' : null);
-      if (qFinish !== null && storeRoute.store.finish === 'silver') { state.storeFilters.finish = qFinish; history.replaceState(null, '', '/silver-jewellery/' + (storeRoute.cat ? storeRoute.cat + '/' : '') + location.hash); }
+      // ?finish= and ?price= (menu links) pre-select a filter; the old /gold-plated-jewellery/ address opens Silver with Gold-plated selected
+      const q = new URLSearchParams(location.search);
+      const qFinish = q.get('finish') || (/^\/?gold-plated-jewellery/.test(route) ? 'gold-plated' : null);
+      if (qFinish !== null && storeRoute.store.finish === 'silver') state.storeFilters.finish = qFinish;
+      if (q.get('price') !== null) state.storeFilters.price = q.get('price');
+      if (qFinish !== null || q.get('price') !== null) history.replaceState(null, '', '/' + storeRoute.store.slug + '/' + (storeRoute.cat ? storeRoute.cat + '/' : '') + location.hash);
       renderStorePage(appView, storeRoute.store, storeRoute.cat);
     } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/') || ['gold', 'silver', 'diamond', 'gemstone', 'gold-category', 'silver-category', 'diamond-category', 'gemstone-category'].includes(route)) {
       let colId = 'all';
@@ -286,6 +265,15 @@
       }, 60);
     }
 
+    // Store switch: the store you are in (store page, or the metal of the product you are viewing) is highlighted and remembered
+    const prodRoute = route.match(/^\/?products\/([^/]+)/);
+    const prodHere = prodRoute && state.products.find((p) => p.handle === prodRoute[1] || p.id === prodRoute[1]);
+    const storeHere = storeRoute ? storeRoute.store.finish : prodHere ? (isSolidGold(prodHere) ? 'gold' : isSilver(prodHere) ? 'silver' : '') : '';
+    if (storeHere) sessionStorage.setItem('hj_store', storeHere);
+    const activeStore = storeHere || sessionStorage.getItem('hj_store') || '';
+    document.body.dataset.store = activeStore;
+    document.querySelectorAll('.store-switch a').forEach((a) => { if (a.dataset.store === activeStore) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+
     // Update Active Navigation Pill & Account State
     document.querySelectorAll('.floating-nav-link').forEach(link => {
       const href = link.getAttribute('href') || '';
@@ -358,7 +346,7 @@
     return `
       <div class="product-card" data-product-id="${p.id}">
         <div class="product-card-media" style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #FAF7F2;">
-          <a href="#products/${p.handle || p.id}" class="card-img-wrap" aria-label="${p.name}" style="display: block; position: relative; width: 100%; height: 100%; aspect-ratio: 1/1; overflow: hidden;">
+          <a href="/products/${p.handle || p.id}/" class="card-img-wrap" aria-label="${p.name}" style="display: block; position: relative; width: 100%; height: 100%; aspect-ratio: 1/1; overflow: hidden;">
             <img class="product-card-img main-img" src="${mainImg}" alt="${p.imageAlt || p.name}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_solitaire_ring.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
             <img class="product-card-img hover-img card-img-hover" src="${hoverImg}" alt="${p.hoverImageAlt || p.name + ' - Atelier Detail'}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/images/authentic_diamond_ring_macro.jpg';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" />
           </a>
@@ -375,7 +363,7 @@
         <div class="product-card-body" style="padding: 1.25rem 1.15rem 1.35rem;">
           <div class="card-cat-line" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-stone-muted); font-weight: 600;">${p.category || 'Fine Jewellery'}</div>
           <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
-            <a href="#products/${p.handle || p.id}">${p.name}</a>
+            <a href="/products/${p.handle || p.id}/">${p.name}</a>
           </h3>
           <div class="card-price-row" style="display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.85rem;">
             <span class="card-price-current" style="font-size: 1.1rem; font-weight: 700; color: var(--color-espresso);">${formatPrice(p.price)}</span>
@@ -497,7 +485,7 @@
             <!-- PILLAR 1: HERITAGE CRAFTSMANSHIP -->
             <a href="#craftsmanship" class="material-pillar-card" aria-label="Heritage Craftsmanship — Rooted in tradition, refined through artistry.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_heritage_craft_temple.jpg" alt="Heritage Craftsmanship — Rooted in tradition, refined through artistry." loading="lazy" decoding="async" />
+                <img class="material-pillar-img" src="images/pillar_heritage_craft_temple.webp" alt="Heritage Craftsmanship — Rooted in tradition, refined through artistry." loading="lazy" decoding="async" />
                 <span class="material-pillar-badge">✦ Pillar 01</span>
               </div>
               <div class="material-pillar-body">
@@ -545,7 +533,7 @@
             <!-- PILLAR 3: CONTEMPORARY INDIAN LUXURY -->
             <a href="#collections/all" class="material-pillar-card" aria-label="Contemporary Indian Luxury — Indian soul, international elegance.">
               <div class="material-pillar-img-wrap">
-                <img class="material-pillar-img" src="images/pillar_contemporary_luxury.jpg" alt="Contemporary Indian Luxury — Indian soul, international elegance." loading="lazy" decoding="async" />
+                <img class="material-pillar-img" src="images/pillar_contemporary_luxury.webp" alt="Contemporary Indian Luxury — Indian soul, international elegance." loading="lazy" decoding="async" />
                 <span class="material-pillar-badge">✦ Pillar 03</span>
               </div>
               <div class="material-pillar-body">
@@ -862,6 +850,8 @@
   const isGoldPlated = (p) => isSilver(p) && Boolean(p.isGold || /gold/i.test(p.metal || ''));
   const storeItems = (store) => state.products.filter((p) => p.status !== 'draft' && (store.finish === 'gold' ? isSolidGold(p) : isSilver(p)));
   const FINISHES = { rhodium: (p) => !isGoldPlated(p), 'gold-plated': isGoldPlated };
+  // A store category (data/stores.json) matches by product type, by price (Everyday Essentials) or takes every piece (Gifting)
+  const inCategory = (c, p) => (c.all ? true : c.maxPrice ? p.price < c.maxPrice : (c.types || [c.id]).includes(p.category));
   // Old links (#collections/gold, #silver …) open the matching store; /gold-plated-jewellery/ became Silver › Gold-plated
   const STORE_ALIASES = { gold: 'gold-jewellery', 'gold-category': 'gold-jewellery', 'collections/gold': 'gold-jewellery', 'collections/gold-category': 'gold-jewellery',
     silver: 'silver-jewellery', 'silver-category': 'silver-jewellery', 'collections/silver': 'silver-jewellery', 'collections/silver-category': 'silver-jewellery', 'gold-plated-jewellery': 'silver-jewellery' };
@@ -880,7 +870,8 @@
     const f = state.storeFilters;
     const cats = state.stores.categories;
     const all = storeItems(store);
-    const inCat = catId ? all.filter((p) => p.category === catId) : all;
+    const cat = state.stores.categories.find((c) => c.id === catId);
+    const inCat = cat ? all.filter((p) => inCategory(cat, p)) : all;
     const band = PRICES.find((b) => b[0] === f.price);
     const stone = STONES.find((s) => s[0] === f.stone);
     const finish = store.finish === 'silver' && FINISHES[f.finish];
@@ -889,7 +880,6 @@
     else if (f.sort === 'price_desc') items = [...items].sort((a, b) => b.price - a.price);
     else if (f.sort === 'new') items = [...items].sort((a, b) => Number(!!b.isNew) - Number(!!a.isNew));
     else if (f.sort === 'bestselling') items = [...items].sort((a, b) => Number(b.badge === 'Bestseller') - Number(a.badge === 'Bestseller'));
-    const cat = cats.find((c) => c.id === catId);
     const other = state.stores.stores.find((s) => s !== store);
     const base = `/${store.slug}/`;
     const title = cat ? `${store.menu} ${cat.name}` : store.name;
@@ -903,24 +893,36 @@
         .map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: 'https://houseofjewelux.com' + b.url }))
     });
 
+    // Helpful intro text per store and category (data/stores.json: intro, intros[categoryId]); blank paragraphs split it
+    const intro = cat ? (store.intros || {})[cat.id] : store.intro;
+    if (catId === 'gifting' && f.sort === 'featured') items = [...items].sort((a, b) => a.price - b.price); // gifts read best by budget
+    // Store landing pages show the store's banners as a fading slider; category pages keep one banner
+    const banners = !cat && all.length ? (store.banners || []) : [];
     const shellTop = `
       <div class="store store-${escHtml(store.finish)}">
-      <section class="collection-hero-wide store-hero">
-        <img class="collection-hero-bg" src="${escHtml(store.hero)}" alt="${escHtml(store.name)}" />
+      <section class="collection-hero-wide store-hero ${banners.length ? 'store-slider' : ''}" ${banners.length ? `aria-roledescription="carousel" aria-label="${escHtml(store.name)} highlights"` : ''}>
+        ${banners.length ? banners.map((b, i) => `<img class="collection-hero-bg store-slide ${i ? '' : 'is-active'}" src="${escHtml(b.image)}" alt="${escHtml(b.alt || '')}" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async" />`).join('')
+          : `<img class="collection-hero-bg" src="${escHtml(store.hero)}" alt="${escHtml(store.name)}" />`}
         <div class="collection-hero-overlay"></div>
         <div class="container" style="position: relative; z-index: 3;">
           <div class="collection-hero-text">
             <nav class="store-crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> ${cat ? `<a href="${base}">${escHtml(store.name)}</a> <span aria-hidden="true">/</span> <span aria-current="page">${escHtml(cat.name)}</span>` : `<span aria-current="page">${escHtml(store.name)}</span>`}</nav>
             <h1 class="collection-hero-title">${escHtml(title)}</h1>
             <p class="collection-hero-sub">${escHtml(store.tagline)}</p>
+            ${banners.map((b, i) => `<p class="store-slide-cap" ${i ? 'hidden' : ''}>${escHtml(b.caption || '')} <a href="${escHtml(b.link || base)}">${escHtml(b.cta || 'Shop now')} →</a></p>`).join('')}
           </div>
         </div>
+        ${banners.length > 1 ? `<button type="button" class="store-slide-arrow prev" aria-label="Previous banner">‹</button><button type="button" class="store-slide-arrow next" aria-label="Next banner">›</button>
+        <div class="store-slide-dots">${banners.map((b, i) => `<button type="button" aria-label="Show banner ${i + 1}" aria-current="${i ? 'false' : 'true'}"></button>`).join('')}</div>` : ''}
       </section>
       <div class="container">
         <nav class="store-cats" aria-label="${escHtml(store.name)} categories">
           <a href="${base}" class="store-cat ${catId ? '' : 'active'}" ${catId ? '' : 'aria-current="page"'}>All <span>${all.length}</span></a>
-          ${cats.map((c) => { const n = all.filter((p) => p.category === c.id).length; return n ? `<a href="${base}${c.id}/" class="store-cat ${c.id === catId ? 'active' : ''}" ${c.id === catId ? 'aria-current="page"' : ''}>${escHtml(c.name)} <span>${n}</span></a>` : ''; }).join('')}
+          ${cats.map((c) => { const n = all.filter((p) => inCategory(c, p)).length; return n ? `<a href="${base}${c.id}/" class="store-cat ${c.id === catId ? 'active' : ''}" ${c.id === catId ? 'aria-current="page"' : ''}>${escHtml(c.name)} <span>${n}</span></a>` : ''; }).join('')}
         </nav>
+        ${intro ? `<div class="store-intro">${intro.split(/\n\n+/).map((para) => `<p>${escHtml(para)}</p>`).join('')}</div>` : ''}
+        ${!cat ? [['Bestsellers', all.filter((p) => p.badge === 'Bestseller')], ['New arrivals', all.filter((p) => p.isNew && p.badge !== 'Bestseller')]]
+          .filter(([, list]) => list.length).map(([h, list]) => `<section class="store-row" aria-label="${h}"><h2 class="store-row-title">${h}</h2><div class="products-grid">${list.slice(0, 4).map(renderProductCard).join('')}</div></section>`).join('') : ''}
         <div class="collection-main-layout">`;
     // The same filters render in the desktop sidebar and the mobile "Filters" panel
     const filtersHtml = `${store.finish === 'silver' ? `
@@ -932,7 +934,7 @@
               ${pill(!f.stone, 'All stones', set('stone', ''))}${STONES.filter((s) => inCat.some((p) => s[2].test(p.stone || ''))).map((s) => pill(f.stone === s[0], s[1], set('stone', s[0]))).join('')}</div></div>
             <div class="filter-group"><div class="filter-group-title">Collection</div><div class="filter-pills-row">
               ${pill(!f.tag, 'All collections', set('tag', ''))}${Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([t]) => pill(f.tag === t, tagName(t), set('tag', t))).join('')}</div></div>
-            ${store.finish === 'gold' ? `<p class="store-switch">Prefer silver with a gold finish? <a href="/silver-jewellery/?finish=gold-plated">Shop gold-plated silver →</a></p>` : other ? `<p class="store-switch">Looking for solid gold? <a href="/${other.slug}/">Shop ${escHtml(other.name)} →</a></p>` : ''}`;
+            ${store.finish === 'gold' ? `<p class="store-cross">Prefer silver with a gold finish? <a href="/silver-jewellery/?finish=gold-plated">Shop gold-plated silver →</a></p>` : other ? `<p class="store-cross">Looking for solid gold? <a href="/${other.slug}/">Shop ${escHtml(other.name)} →</a></p>` : ''}`;
     const activeCount = [store.finish === 'silver' && f.finish, f.price, f.stone, f.tag].filter(Boolean).length;
     if (!all.length) {
       container.innerHTML = `${shellTop.replace(/<nav class="store-cats"[\s\S]*?<\/nav>/, '')}</div>
@@ -959,6 +961,51 @@
         </div>
       </div>
       </div>`;
+    initStoreSlider(container);
+  }
+
+  // Store switch stays just under the header, and at the top of the screen when the header scrolls away or hides
+  (function keepStoreSwitchInView() {
+    const sw = document.querySelector('.store-switch');
+    const hd = document.querySelector('.site-header');
+    if (!sw || !hd) return;
+    let raf = 0;
+    const place = () => { raf = 0; sw.style.top = Math.max(8, Math.round(hd.getBoundingClientRect().bottom + 10)) + 'px'; };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(place); };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    hd.addEventListener('transitionend', queue);
+    if (window.ResizeObserver) new ResizeObserver(queue).observe(hd);
+    place();
+  })();
+
+  // Banner slider: gentle fade, arrows, dots, pauses on hover/focus, no autoplay with reduced motion
+  let storeSliderTimer = null;
+  function initStoreSlider(root) {
+    clearInterval(storeSliderTimer);
+    const sl = root.querySelector('.store-slider');
+    if (!sl) return;
+    const slides = [...sl.querySelectorAll('.store-slide')];
+    const caps = [...sl.querySelectorAll('.store-slide-cap')];
+    const dots = [...sl.querySelectorAll('.store-slide-dots button')];
+    let at = 0;
+    const show = (i) => {
+      at = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => s.classList.toggle('is-active', k === at));
+      caps.forEach((c, k) => { c.hidden = k !== at; });
+      dots.forEach((d, k) => d.setAttribute('aria-current', String(k === at)));
+    };
+    const stop = () => clearInterval(storeSliderTimer);
+    const play = () => { stop(); if (slides.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) storeSliderTimer = setInterval(() => { if (!document.body.contains(sl)) stop(); else show(at + 1); }, 5500); };
+    const prev = sl.querySelector('.store-slide-arrow.prev');
+    const next = sl.querySelector('.store-slide-arrow.next');
+    if (prev) prev.addEventListener('click', () => { show(at - 1); play(); });
+    if (next) next.addEventListener('click', () => { show(at + 1); play(); });
+    dots.forEach((d, k) => d.addEventListener('click', () => { show(k); play(); }));
+    sl.addEventListener('mouseenter', stop);
+    sl.addEventListener('mouseleave', play);
+    sl.addEventListener('focusin', stop);
+    play();
   }
 
   function renderCollectionPage(container, collectionId) {
@@ -1275,7 +1322,7 @@
     setPageSeo(p.seoTitle || `${p.name} | House of Jewelux`, p.seoDescription || p.description, {
       '@context': 'https://schema.org', '@type': 'Product', name: p.name, sku: p.sku || p.id, description: p.seoDescription || p.description,
       image: [p.image, ...(p.gallery || [])].filter(Boolean).map(abs), brand: { '@type': 'Brand', name: 'House of Jewelux' },
-      offers: { '@type': 'Offer', price: p.price, priceCurrency: 'INR', url: `${SITE_URL}/#products/${p.handle || p.id}`,
+      offers: { '@type': 'Offer', price: p.price, priceCurrency: 'INR', url: `${SITE_URL}/products/${p.handle || p.id}/`,
         availability: 'https://schema.org/' + (AVAILABILITY[p.stockStatus] || 'InStock') }
     });
 
@@ -1318,6 +1365,9 @@
     const short = (v) => String(v || '').split(' (')[0].trim();
     const chips = [...new Set([p.purity, p.stone, p.cut].map(short).filter(Boolean))].slice(0, 3);
     const catName = (state.categories.find((c) => c.id === p.category) || {}).name || p.category || '';
+    // Breadcrumb Home › Store › Category › Product, in the one store this metal belongs to
+    const pdpStore = (state.stores.stores || []).find((st) => (st.finish === 'gold' ? isSolidGold(p) : isSilver(p)));
+    const pdpCat = state.stores.categories.find((c) => !c.all && !c.maxPrice && inCategory(c, p));
     const craft = [
       p.metal && { icon: 'metal', title: 'Material & Finish', text: short(p.metal) },
       (p.purity || p.certificate) && { icon: 'seal', title: 'Purity & Certification', text: short(p.purity || p.certificate) },
@@ -1335,7 +1385,7 @@
 
     container.innerHTML = `
       <div class="container pdp-container" data-hj-id="pdp">
-        <nav class="pdp-crumbs" aria-label="Breadcrumb" data-hj-id="pdp-crumbs"><a href="#home">Home</a><span aria-hidden="true">/</span><a href="#collections/${escHtml(p.category)}">${escHtml(catName)}</a><span aria-hidden="true">/</span><span aria-current="page">${escHtml(p.name)}</span></nav>
+        <nav class="pdp-crumbs" aria-label="Breadcrumb" data-hj-id="pdp-crumbs"><a href="/">Home</a><span aria-hidden="true">/</span>${pdpStore ? `<a href="/${pdpStore.slug}/">${escHtml(pdpStore.name)}</a><span aria-hidden="true">/</span>` : ''}<a href="${pdpStore && pdpCat ? `/${pdpStore.slug}/${pdpCat.id}/` : `#collections/${escHtml(p.category)}`}">${escHtml(pdpCat ? pdpCat.name : catName)}</a><span aria-hidden="true">/</span><span aria-current="page">${escHtml(p.name)}</span></nav>
         <div class="pdp-grid">
           <div class="pdp-left" data-hj-id="pdp-left">
             ${galleryHtml}
@@ -2181,7 +2231,7 @@
         <div class="cart-item-row">
           <img class="cart-item-img" src="${item.image}" alt="${item.name}" />
           <div class="cart-item-info">
-            <a href="#products/${item.handle || item.id}" onclick="window.HJ.closeCart()" class="cart-item-name">${item.name}</a>
+            <a href="/products/${item.handle || item.id}/" onclick="window.HJ.closeCart()" class="cart-item-name">${item.name}</a>
             <div class="cart-item-variant">${item.metal || '925 Silver'}</div>
             <div class="qty-control-row">
               <button class="qty-btn" onclick="window.HJ.updateCartQty('${item.id}', -1)">-</button>
@@ -2657,7 +2707,7 @@
                 <div style="display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--color-warm-stone-light);">
                   <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-antique-white);" />
                   <div>
-                    <a href="#products/${item.handle || item.id}" style="font-family: var(--font-serif); font-size: 1rem; font-weight: 600; color: var(--color-deep-heritage-brown); text-decoration: none;">${item.name}</a>
+                    <a href="/products/${item.handle || item.id}/" style="font-family: var(--font-serif); font-size: 1rem; font-weight: 600; color: var(--color-deep-heritage-brown); text-decoration: none;">${item.name}</a>
                     <div style="font-size: 0.75rem; color: var(--color-stone-muted); margin-top: 0.25rem;">${item.metal || 'BIS 925 Silver'} • Qty: ${item.quantity}</div>
                   </div>
                   <div style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--color-deep-heritage-brown);">
@@ -3312,12 +3362,17 @@
         resultsContainer.innerHTML = '<p style="color: var(--color-taupe); text-align: center; padding: 2rem;">Type at least 2 letters to search...</p>';
         return;
       }
-      const matches = state.products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)).slice(0, 6);
-      resultsContainer.innerHTML = matches.map(p => `
+      // Results follow the store you are in (Silver or Gold); one tap searches every store
+      const storeNow = state.searchAllStores ? '' : document.body.dataset.store;
+      const inStore = storeNow === 'gold' ? isSolidGold : storeNow === 'silver' ? isSilver : () => true;
+      const found = state.products.filter(p => [p.name, p.category, p.metal, p.stone].join(' ').toLowerCase().includes(q));
+      const matches = found.filter(inStore).slice(0, 6);
+      const scope = storeNow ? `<p style="font-size: 0.78rem; color: var(--color-taupe); margin: 0 0 0.5rem;">Searching ${storeNow === 'gold' ? 'Gold' : 'Silver'} · <button type="button" style="background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer;" onclick="window.HJ.searchAllStores()">search all stores (${found.length})</button></p>` : '';
+      resultsContainer.innerHTML = scope + (matches.length ? '' : '<p style="color: var(--color-taupe); text-align: center; padding: 1.5rem;">No pieces found here.</p>') + matches.map(p => `
         <div style="display: flex; gap: 1rem; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border-light);">
           <img src="${p.image}" alt="${p.name}" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;" />
           <div style="flex-grow: 1;">
-            <a href="#products/${p.handle || p.id}" onclick="window.HJ.closeCart()" style="font-size: 0.85rem; font-weight: 600;">${p.name}</a>
+            <a href="/products/${p.handle || p.id}/" onclick="window.HJ.closeCart()" style="font-size: 0.85rem; font-weight: 600;">${p.name}</a>
             <div style="font-size: 0.75rem; color: var(--color-taupe);">${formatPrice(p.price)}</div>
           </div>
           <button class="btn-primary" style="padding: 0.35rem 0.75rem; font-size: 0.7rem;" onclick="window.HJ.addToCart('${p.id}', 1)">Add</button>
@@ -3325,6 +3380,7 @@
       `).join('');
     },
 
+    searchAllStores: function () { state.searchAllStores = true; window.HJ.liveSearch((document.getElementById('live-search-input') || {}).value); state.searchAllStores = false; },
     setSort: function (val) { state.activeFilters.sort = val; handleRoute(); },
     setPriceRange: function (min, max) { state.activeFilters.minPrice = min; state.activeFilters.maxPrice = max; handleRoute(); },
     toggleMetalFilter: function (metal, isChecked) { state.activeFilters.metal = isChecked ? metal : ''; handleRoute(); },
