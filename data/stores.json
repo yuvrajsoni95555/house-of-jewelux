@@ -5,20 +5,21 @@
       "finish": "silver",
       "name": "Silver Jewellery",
       "menu": "Silver",
-      "tagline": "BIS hallmarked 925 sterling silver with an anti-tarnish rhodium finish.",
+      "tagline": "BIS hallmarked 925 sterling silver, in a rhodium or gold-plated finish.",
       "seoTitle": "Silver Jewellery: 925 Sterling Silver | House of Jewelux",
-      "seoDesc": "Shop BIS hallmarked 925 sterling silver necklaces, earrings, rings, bracelets and brooches with an anti-tarnish rhodium finish, handcrafted in Jaipur.",
+      "seoDesc": "Shop BIS hallmarked 925 sterling silver necklaces, earrings, rings, bracelets and brooches in a rhodium or gold-plated finish, handcrafted in Jaipur.",
       "hero": "images/authentic_solitaire_ring.jpg",
       "promo": "images/authentic_diamond_choker.jpg"
     },
     {
-      "slug": "gold-plated-jewellery",
+      "slug": "gold-jewellery",
       "finish": "gold",
-      "name": "Gold-Plated Silver",
-      "menu": "Gold-Plated",
-      "tagline": "925 sterling silver with a micron gold plating: the warmth of gold on a silver core. Not solid gold.",
-      "seoTitle": "Gold-Plated Silver Jewellery | House of Jewelux",
-      "seoDesc": "Shop gold-plated 925 sterling silver jewellery: necklaces, earrings, rings, bracelets and brooches with micron gold plating over a hallmarked silver core.",
+      "name": "Gold Jewellery",
+      "menu": "Gold",
+      "tagline": "Solid gold jewellery from our Jaipur atelier.",
+      "comingSoon": "Our solid gold collection is being crafted in the atelier. Until it arrives, explore our gold-plated 925 silver, or book a consultation for a gold piece made for you.",
+      "seoTitle": "Gold Jewellery | House of Jewelux",
+      "seoDesc": "Solid gold jewellery from the House of Jewelux atelier in Jaipur. Book a private consultation for a gold piece made for you.",
       "hero": "images/user_floral_diamond_earrings.jpg",
       "promo": "images/user_falcon_brooch_royal_gold.jpg"
     }
@@ -29,5 +30,9 @@
     { "id": "rings", "name": "Rings" },
     { "id": "bracelets", "name": "Bracelets" },
     { "id": "brooches", "name": "Brooches" }
+  ],
+  "finishes": [
+    { "id": "rhodium", "name": "Silver (rhodium)" },
+    { "id": "gold-plated", "name": "Gold-plated" }
   ]
 }

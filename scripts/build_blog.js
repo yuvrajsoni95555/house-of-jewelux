@@ -189,11 +189,13 @@ for (const p of posts) {
 // ---------- storefront pages: /silver-jewellery/, /gold-plated-jewellery/ and one page per category (data/stores.json) ----------
 const storeCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8'));
 const products = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'products.json'), 'utf8')).filter((p) => p.status !== 'draft');
-const goldPlated = (p) => Boolean(p.isGold || /gold/i.test(p.metal || '')); // same rule as app.js isGoldPlated
+// same rules as app.js: Silver = every 925 silver piece (rhodium or gold-plated), Gold = solid gold only
+const isSilver = (p) => /silver|925/i.test(p.metal || '');
+const isSolidGold = (p) => /gold/i.test(p.metal || '') && !isSilver(p) && !/plated|vermeil/i.test(p.metal || '');
 const storeUrls = [];
 const money = (n) => '₹' + Number(n).toLocaleString('en-IN');
 for (const s of storeCfg.stores) {
-  const items = products.filter((p) => (s.finish === 'gold' ? goldPlated(p) : !goldPlated(p)));
+  const items = products.filter((p) => (s.finish === 'gold' ? isSolidGold(p) : isSilver(p)));
   const pages = [{ cat: null, list: items }].concat(storeCfg.categories.map((c) => ({ cat: c, list: items.filter((p) => p.category === c.id) })).filter((x) => x.list.length));
   for (const { cat, list } of pages) {
     const rel = `${s.slug}/${cat ? cat.id + '/' : ''}`;
@@ -205,13 +207,14 @@ for (const s of storeCfg.stores) {
       ld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name, url, description: s.tagline,
         mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.name, url: `${SITE}/#products/${p.handle || p.id}` })) } },
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: u })) }],
-      body: `<section class="container blog-pre"><p>${crumbs.map(([n, u]) => `<a href="${u.replace(SITE, '')}">${esc(n)}</a>`).join(' / ')}</p><h1>${esc(name)}</h1><p>${esc(s.tagline)}</p><ul>${list.map((p) => `<li><a href="/#products/${esc(p.handle || p.id)}">${esc(p.name)}</a> ${money(p.price)} · ${esc(p.metal)}</li>`).join('')}</ul></section>`
+      body: `<section class="container blog-pre"><p>${crumbs.map(([n, u]) => `<a href="${u.replace(SITE, '')}">${esc(n)}</a>`).join(' / ')}</p><h1>${esc(name)}</h1><p>${esc(s.tagline)}</p>${list.length ? '' : `<p>${esc(s.comingSoon || '')}</p>`}<ul>${list.map((p) => `<li><a href="/#products/${esc(p.handle || p.id)}">${esc(p.name)}</a> ${money(p.price)} · ${esc(p.metal)}</li>`).join('')}</ul></section>`
     }));
     storeUrls.push({ loc: url, pri: cat ? '0.7' : '0.8' });
   }
 }
-// /gold-jewellery/ (the address in the brief) points to the gold-plated store: the pieces are gold-plated silver, not solid gold
-write('gold-jewellery/index.html', `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Gold-Plated Silver | House of Jewelux</title><meta name="robots" content="noindex"><link rel="canonical" href="${SITE}/gold-plated-jewellery/"><meta http-equiv="refresh" content="0; url=/gold-plated-jewellery/"></head><body><a href="/gold-plated-jewellery/">Gold-Plated Silver</a></body></html>\n`);
+// /gold-plated-jewellery/ (an earlier address) now opens Silver with the gold-plated finish selected
+write('gold-plated-jewellery/index.html', `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Gold-plated silver | House of Jewelux</title><meta name="robots" content="noindex"><link rel="canonical" href="${SITE}/silver-jewellery/"><meta http-equiv="refresh" content="0; url=/silver-jewellery/?finish=gold-plated"></head><body><a href="/silver-jewellery/?finish=gold-plated">Gold-plated silver</a></body></html>
+`);
 
 // ---------- 404.html: GitHub Pages serves it for unknown addresses, so a mistyped /blog/<slug>/ shows "Article not found" ----------
 write('404.html', shell

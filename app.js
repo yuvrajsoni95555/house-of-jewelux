@@ -44,7 +44,7 @@
       sort: 'popular'
     },
     stores: { stores: [], categories: [] },
-    storeFilters: { price: '', stone: '', tag: '', sort: 'featured' }
+    storeFilters: { finish: '', price: '', stone: '', tag: '', sort: 'featured' }
   };
 
   function formatPrice(amountINR) {
@@ -161,7 +161,7 @@
     }
 
     // Silver and Gold-Plated storefronts (names, SEO, banners) from data/stores.json
-    try { const r = await fetch('/data/stores.json?' + cacheBust); if (r.ok) state.stores = await r.json(); } catch (err) { console.warn('Stores fetch failed', err); }
+    try { const r = await fetch('/data/stores.json?' + cacheBust, { cache: 'no-cache' }); if (r.ok) state.stores = await r.json(); } catch (err) { console.warn('Stores fetch failed', err); }
 
     handleRoute();
     if (IS_ADMIN_PREVIEW) window.parent.postMessage({ type: 'hj-preview-ready' }, location.origin);
@@ -204,6 +204,9 @@
     if (route === 'home' || route === '') {
       renderHomePage(appView);
     } else if (storeRoute) {
+      // ?finish=gold-plated (menu links) and the old /gold-plated-jewellery/ address open Silver with the gold-plated finish selected
+      const qFinish = new URLSearchParams(location.search).get('finish') || (/^\/?gold-plated-jewellery/.test(route) ? 'gold-plated' : null);
+      if (qFinish !== null && storeRoute.store.finish === 'silver') { state.storeFilters.finish = qFinish; history.replaceState(null, '', '/silver-jewellery/' + (storeRoute.cat ? storeRoute.cat + '/' : '') + location.hash); }
       renderStorePage(appView, storeRoute.store, storeRoute.cat);
     } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/') || ['gold', 'silver', 'diamond', 'gemstone', 'gold-category', 'silver-category', 'diamond-category', 'gemstone-category'].includes(route)) {
       let colId = 'all';
@@ -852,12 +855,16 @@
   }
 
   // ==================== VIEW 2: COLLECTION PAGE (1:1 WITH PALMONAS /collections/earrings) ====================
-  // ==================== SILVER & GOLD-PLATED STOREFRONTS (/silver-jewellery/<category>/, /gold-plated-jewellery/<category>/) ====================
-  const isGoldPlated = (p) => Boolean(p.isGold || /gold/i.test(p.metal || ''));
-  const storeItems = (store) => state.products.filter((p) => p.status !== 'draft' && (store.finish === 'gold' ? isGoldPlated(p) : !isGoldPlated(p)));
-  // Old links (#collections/gold, #silver …) and the /gold-jewellery/ address open the matching store
-  const STORE_ALIASES = { gold: 'gold-plated-jewellery', 'gold-category': 'gold-plated-jewellery', 'collections/gold': 'gold-plated-jewellery', 'collections/gold-category': 'gold-plated-jewellery', 'gold-jewellery': 'gold-plated-jewellery',
-    silver: 'silver-jewellery', 'silver-category': 'silver-jewellery', 'collections/silver': 'silver-jewellery', 'collections/silver-category': 'silver-jewellery' };
+  // ==================== SILVER & GOLD STOREFRONTS (/silver-jewellery/<category>/, /gold-jewellery/<category>/) ====================
+  // Silver = every 925 silver piece (rhodium or gold-plated); Gold = solid gold only. Gold-plated silver is a finish inside Silver.
+  const isSilver = (p) => /silver|925/i.test(p.metal || '');
+  const isSolidGold = (p) => /gold/i.test(p.metal || '') && !isSilver(p) && !/plated|vermeil/i.test(p.metal || '');
+  const isGoldPlated = (p) => isSilver(p) && Boolean(p.isGold || /gold/i.test(p.metal || ''));
+  const storeItems = (store) => state.products.filter((p) => p.status !== 'draft' && (store.finish === 'gold' ? isSolidGold(p) : isSilver(p)));
+  const FINISHES = { rhodium: (p) => !isGoldPlated(p), 'gold-plated': isGoldPlated };
+  // Old links (#collections/gold, #silver …) open the matching store; /gold-plated-jewellery/ became Silver › Gold-plated
+  const STORE_ALIASES = { gold: 'gold-jewellery', 'gold-category': 'gold-jewellery', 'collections/gold': 'gold-jewellery', 'collections/gold-category': 'gold-jewellery',
+    silver: 'silver-jewellery', 'silver-category': 'silver-jewellery', 'collections/silver': 'silver-jewellery', 'collections/silver-category': 'silver-jewellery', 'gold-plated-jewellery': 'silver-jewellery' };
   function storeFromRoute(route) {
     const r = String(route || '').replace(/^\//, '').replace(/\/(index\.html)?$/, '');
     const [first, cat] = (STORE_ALIASES[r] || r).split('/');
@@ -876,7 +883,8 @@
     const inCat = catId ? all.filter((p) => p.category === catId) : all;
     const band = PRICES.find((b) => b[0] === f.price);
     const stone = STONES.find((s) => s[0] === f.stone);
-    let items = inCat.filter((p) => (!band || (p.price >= band[2] && p.price < band[3])) && (!stone || stone[2].test(p.stone || '')) && (!f.tag || (p.collections || []).includes(f.tag)));
+    const finish = store.finish === 'silver' && FINISHES[f.finish];
+    let items = inCat.filter((p) => (!finish || finish(p)) && (!band || (p.price >= band[2] && p.price < band[3])) && (!stone || stone[2].test(p.stone || '')) && (!f.tag || (p.collections || []).includes(f.tag)));
     if (f.sort === 'price_asc') items = [...items].sort((a, b) => a.price - b.price);
     else if (f.sort === 'price_desc') items = [...items].sort((a, b) => b.price - a.price);
     else if (f.sort === 'new') items = [...items].sort((a, b) => Number(!!b.isNew) - Number(!!a.isNew));
@@ -915,15 +923,24 @@
         </nav>
         <div class="collection-main-layout">`;
     // The same filters render in the desktop sidebar and the mobile "Filters" panel
-    const filtersHtml = `
+    const filtersHtml = `${store.finish === 'silver' ? `
+            <div class="filter-group"><div class="filter-group-title">Finish</div><div class="filter-pills-row">
+              ${pill(!f.finish, 'All finishes', set('finish', ''))}${(state.stores.finishes || []).map((x) => pill(f.finish === x.id, `${x.name} (${inCat.filter(FINISHES[x.id] || (() => false)).length})`, set('finish', x.id))).join('')}</div></div>` : ''}
             <div class="filter-group"><div class="filter-group-title">Price</div><div class="filter-pills-row">
               ${pill(!f.price, 'All prices', set('price', ''))}${PRICES.map((b) => pill(f.price === b[0], b[1], set('price', b[0]))).join('')}</div></div>
             <div class="filter-group"><div class="filter-group-title">Stone</div><div class="filter-pills-row">
               ${pill(!f.stone, 'All stones', set('stone', ''))}${STONES.filter((s) => inCat.some((p) => s[2].test(p.stone || ''))).map((s) => pill(f.stone === s[0], s[1], set('stone', s[0]))).join('')}</div></div>
             <div class="filter-group"><div class="filter-group-title">Collection</div><div class="filter-pills-row">
               ${pill(!f.tag, 'All collections', set('tag', ''))}${Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([t]) => pill(f.tag === t, tagName(t), set('tag', t))).join('')}</div></div>
-            ${other ? `<p class="store-switch">Looking for ${store.finish === 'gold' ? 'a silver finish' : 'the warmth of gold'}? <a href="/${other.slug}/${catId ? catId + '/' : ''}">Shop ${escHtml(other.name)} →</a></p>` : ''}`;
-    const activeCount = [f.price, f.stone, f.tag].filter(Boolean).length;
+            ${store.finish === 'gold' ? `<p class="store-switch">Prefer silver with a gold finish? <a href="/silver-jewellery/?finish=gold-plated">Shop gold-plated silver →</a></p>` : other ? `<p class="store-switch">Looking for solid gold? <a href="/${other.slug}/">Shop ${escHtml(other.name)} →</a></p>` : ''}`;
+    const activeCount = [store.finish === 'silver' && f.finish, f.price, f.stone, f.tag].filter(Boolean).length;
+    if (!all.length) {
+      container.innerHTML = `${shellTop.replace(/<nav class="store-cats"[\s\S]*?<\/nav>/, '')}</div>
+        <div class="store-soon"><p>${escHtml(store.comingSoon || 'New pieces are on their way.')}</p>
+          <p><a class="btn-primary" href="/silver-jewellery/?finish=gold-plated">Shop gold-plated silver</a> <a class="btn-gold" href="#appointment">Book a consultation</a></p></div>
+        </div></div>`;
+      return;
+    }
     container.innerHTML = `${shellTop}
           <aside class="filters-sidebar" aria-label="Filters">${filtersHtml}</aside>
           <div class="products-grid-column">
@@ -1758,7 +1775,7 @@
               <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.12); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-size: 1.5rem;">Au</div>
               <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Gold-Plated Silver</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">18K gold finish and vermeil over BIS 925 silver. Royal haute joaillerie treatments, champagne gold plating, and micron-thick luxury finishes.</p>
-              <a href="#collections/gold-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Gold Collection ↗</a>
+              <a href="/silver-jewellery/?finish=gold-plated" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Gold-Plated Silver ↗</a>
             </div>
 
             <!-- Diamond -->
@@ -3312,7 +3329,7 @@
     setPriceRange: function (min, max) { state.activeFilters.minPrice = min; state.activeFilters.maxPrice = max; handleRoute(); },
     toggleMetalFilter: function (metal, isChecked) { state.activeFilters.metal = isChecked ? metal : ''; handleRoute(); },
     setStoreFilter: function (key, val) { state.storeFilters[key] = val; const y = window.scrollY; handleRoute(); window.scrollTo(0, y); },
-    clearStoreFilters: function () { state.storeFilters = { price: '', stone: '', tag: '', sort: 'featured' }; handleRoute(); },
+    clearStoreFilters: function () { state.storeFilters = { finish: '', price: '', stone: '', tag: '', sort: 'featured' }; handleRoute(); },
     clearFilters: function () { state.activeFilters = { category: 'all', metal: '', minPrice: 0, maxPrice: 200000, sort: 'popular' }; handleRoute(); },
 
     subscribeNewsletter: async function (e) {

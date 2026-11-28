@@ -67,13 +67,13 @@ HOUSE OF JEWELUX
 
 ## 6. Status (28 Nov 2026)
 
-Owner decisions: second store = **Gold-Plated Silver**; sample ratings **hidden**.
+Owner decisions: like GIVA, **Gold** is its own section for solid gold only (coming soon: no solid gold products yet) and **Silver** holds every 925 silver piece, with **Gold-plated** as a finish option inside Silver; sample ratings **hidden**.
 
 **Phase A done (local, waiting for "Push to main"):**
-- `/silver-jewellery/` (33 pieces) and `/gold-plated-jewellery/` (17 pieces), each with category pages (necklaces, earrings, rings, bracelets, brooches): 12 real pages with their own title, description, canonical, breadcrumb and CollectionPage/ItemList data; added to `sitemap.xml`.
+- `/silver-jewellery/` (all 50 pieces, finish filter: rhodium 33 / gold-plated 17) with category pages, and `/gold-jewellery/` (solid gold only; shows "coming soon" until a solid gold product is added): 7 real pages with their own title, description, canonical, breadcrumb and CollectionPage/ItemList data; added to `sitemap.xml`. New gold products appear automatically when their metal says gold and not silver/925/plated; then re-run `node scripts/build_blog.js` for their SEO pages.
 - Filters: price, stone (moissanite, diamond, pearl, emerald/sapphire/ruby, from each product's own stone text), collection; sort: featured, new, bestselling, price. Mobile gets a "Filters" panel.
-- Header mega menus: Silver, Gold-Plated, Collections, Our Story (+ Journal link). Mobile menu: expandable Silver, Gold-Plated, Collections groups.
-- Old links (`#collections/gold`, `#collections/silver`, `/gold-jewellery/`) open the new stores.
+- Header mega menus: Gold, Silver (with Shop by finish), Collections, Our Story (+ Journal link). Mobile menu: expandable Gold, Silver, Collections groups.
+- Old links: `#collections/silver` opens Silver, `#collections/gold` opens Gold, `/gold-plated-jewellery/` opens Silver with Gold-plated selected.
 - Honesty fixes: "Gold Jewellery (18K & 22K)" and "forged in 18K and 22K gold" → Gold-Plated Silver; "Certified VVS1" diamond claim removed; non-working Occasion filter buttons removed; sample star ratings and the rating sort hidden.
 
 **Still to do:** Phase B (collections directory pages, Gifts after recipient/occasion fields), C (support/about/policy pages on real URLs, HTML sitemap), D (account order history, admin Navigation editor), E (full responsive report).

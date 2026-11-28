@@ -6955,7 +6955,10 @@ img, video, canvas, svg {
 @media (prefers-reduced-motion: reduce) { .blog-card-link, .blog-card-img img { transition: none; } .blog-card-link:hover { transform: none; } }
 
 /* ===== Header mega menus (Silver, Gold-Plated, Collections, Our Story) ===== */
-.floating-nav-links .has-mega { position: relative; }
+/* Wide panels centre under the whole nav, so a menu near the edge never runs off screen; the small Our Story panel stays under its link */
+.floating-nav-links { position: relative; }
+.floating-nav-links .has-mega { position: static; }
+.floating-nav-links .has-mega.mega-small { position: relative; }
 .mega-panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translate(-50%, 6px); z-index: 60; display: flex; gap: 2rem; padding: 1.5rem 1.75rem;
   background: #FFFDF8; border: 1px solid rgba(58, 36, 24, 0.1); border-radius: 18px; box-shadow: 0 22px 48px rgba(26, 18, 14, 0.16);
   opacity: 0; visibility: hidden; transition: opacity .18s ease, transform .18s ease, visibility 0s .18s; }
@@ -7008,3 +7011,8 @@ img, video, canvas, svg {
 .store-mfilters[open] summary::after { content: '−'; }
 .store-mfilters .filter-group { padding: .75rem 0; }
 @media (max-width: 991px) { .store-mfilters { display: block; } }
+.store-soon { max-width: 640px; margin: 3rem auto 4rem; padding: 2rem 1.5rem; text-align: center; border-radius: 18px; background: #FBF3E4; color: #5C1A2B; line-height: 1.7; }
+.store-soon p:last-child { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; margin: 1.25rem 0 0; }
+.mega-soon { font-style: normal; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-muted-gold); margin-left: .35rem; }
+@media (max-width: 1180px) { .mega-promo { display: none; } .mega-panel { gap: 1.5rem; padding: 1.25rem 1.5rem; } }
+.mega-panel { max-width: calc(100vw - 2rem); }
