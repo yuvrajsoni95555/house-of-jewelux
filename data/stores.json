@@ -1,0 +1,33 @@
+{
+  "stores": [
+    {
+      "slug": "silver-jewellery",
+      "finish": "silver",
+      "name": "Silver Jewellery",
+      "menu": "Silver",
+      "tagline": "BIS hallmarked 925 sterling silver with an anti-tarnish rhodium finish.",
+      "seoTitle": "Silver Jewellery: 925 Sterling Silver | House of Jewelux",
+      "seoDesc": "Shop BIS hallmarked 925 sterling silver necklaces, earrings, rings, bracelets and brooches with an anti-tarnish rhodium finish, handcrafted in Jaipur.",
+      "hero": "images/authentic_solitaire_ring.jpg",
+      "promo": "images/authentic_diamond_choker.jpg"
+    },
+    {
+      "slug": "gold-plated-jewellery",
+      "finish": "gold",
+      "name": "Gold-Plated Silver",
+      "menu": "Gold-Plated",
+      "tagline": "925 sterling silver with a micron gold plating: the warmth of gold on a silver core. Not solid gold.",
+      "seoTitle": "Gold-Plated Silver Jewellery | House of Jewelux",
+      "seoDesc": "Shop gold-plated 925 sterling silver jewellery: necklaces, earrings, rings, bracelets and brooches with micron gold plating over a hallmarked silver core.",
+      "hero": "images/user_floral_diamond_earrings.jpg",
+      "promo": "images/user_falcon_brooch_royal_gold.jpg"
+    }
+  ],
+  "categories": [
+    { "id": "necklaces", "name": "Necklaces" },
+    { "id": "earrings", "name": "Earrings" },
+    { "id": "rings", "name": "Rings" },
+    { "id": "bracelets", "name": "Bracelets" },
+    { "id": "brooches", "name": "Brooches" }
+  ]
+}

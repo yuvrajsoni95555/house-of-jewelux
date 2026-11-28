@@ -42,7 +42,9 @@
       minPrice: 0,
       maxPrice: 200000,
       sort: 'popular'
-    }
+    },
+    stores: { stores: [], categories: [] },
+    storeFilters: { price: '', stone: '', tag: '', sort: 'featured' }
   };
 
   function formatPrice(amountINR) {
@@ -158,6 +160,9 @@
       }
     }
 
+    // Silver and Gold-Plated storefronts (names, SEO, banners) from data/stores.json
+    try { const r = await fetch('/data/stores.json?' + cacheBust); if (r.ok) state.stores = await r.json(); } catch (err) { console.warn('Stores fetch failed', err); }
+
     handleRoute();
     if (IS_ADMIN_PREVIEW) window.parent.postMessage({ type: 'hj-preview-ready' }, location.origin);
   }
@@ -195,8 +200,11 @@
     const appView = document.getElementById('app-view');
     if (!appView) return;
 
+    const storeRoute = storeFromRoute(route);
     if (route === 'home' || route === '') {
       renderHomePage(appView);
+    } else if (storeRoute) {
+      renderStorePage(appView, storeRoute.store, storeRoute.cat);
     } else if (route === 'collections' || route === 'shop' || route === 'all' || route.startsWith('collections/') || ['gold', 'silver', 'diamond', 'gemstone', 'gold-category', 'silver-category', 'diamond-category', 'gemstone-category'].includes(route)) {
       let colId = 'all';
       if (route.startsWith('collections/')) {
@@ -290,6 +298,10 @@
         isActive = true;
       } else if (cleanHref === 'about' && route === 'about') {
         isActive = true;
+      } else if (storeRoute && href === '/' + storeRoute.store.slug + '/') {
+        isActive = true;
+      } else if (href === '/blog/' && /^blog(\/|$)/.test(route)) {
+        isActive = true;
       }
       if (isActive) {
         link.classList.add('active');
@@ -308,6 +320,8 @@
       } else if (cleanHref === 'collections/gold' && (route === 'collections/gold' || route === 'gold' || route === 'gold-category')) {
         isActive = true;
       } else if (cleanHref === 'collections/silver' && (route === 'collections/silver' || route === 'silver' || route === 'silver-category')) {
+        isActive = true;
+      } else if (storeRoute && cleanHref === 'collections/' + (storeRoute.store.finish === 'gold' ? 'gold' : 'silver')) {
         isActive = true;
       }
       if (isActive) {
@@ -360,11 +374,6 @@
           <h3 class="card-title" style="margin: 0.4rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3;">
             <a href="#products/${p.handle || p.id}">${p.name}</a>
           </h3>
-          <div class="card-rating-row" style="margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--color-stone-muted);">
-            <span style="color: var(--color-muted-gold);">★</span>
-            <span style="font-weight: 600; color: var(--color-espresso);">${p.rating || '4.9'}</span>
-            <span style="color: var(--color-stone-muted); font-size: 0.75rem;">(${p.reviewCount || '28'})</span>
-          </div>
           <div class="card-price-row" style="display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.85rem;">
             <span class="card-price-current" style="font-size: 1.1rem; font-weight: 700; color: var(--color-espresso);">${formatPrice(p.price)}</span>
             ${(p.compareAtPrice || p.originalPrice) ? `<span class="card-price-original" style="font-size: 0.82rem; color: var(--color-stone-subtle); text-decoration: line-through;">${formatPrice(p.compareAtPrice || p.originalPrice)}</span>` : ''}
@@ -843,6 +852,98 @@
   }
 
   // ==================== VIEW 2: COLLECTION PAGE (1:1 WITH PALMONAS /collections/earrings) ====================
+  // ==================== SILVER & GOLD-PLATED STOREFRONTS (/silver-jewellery/<category>/, /gold-plated-jewellery/<category>/) ====================
+  const isGoldPlated = (p) => Boolean(p.isGold || /gold/i.test(p.metal || ''));
+  const storeItems = (store) => state.products.filter((p) => p.status !== 'draft' && (store.finish === 'gold' ? isGoldPlated(p) : !isGoldPlated(p)));
+  // Old links (#collections/gold, #silver …) and the /gold-jewellery/ address open the matching store
+  const STORE_ALIASES = { gold: 'gold-plated-jewellery', 'gold-category': 'gold-plated-jewellery', 'collections/gold': 'gold-plated-jewellery', 'collections/gold-category': 'gold-plated-jewellery', 'gold-jewellery': 'gold-plated-jewellery',
+    silver: 'silver-jewellery', 'silver-category': 'silver-jewellery', 'collections/silver': 'silver-jewellery', 'collections/silver-category': 'silver-jewellery' };
+  function storeFromRoute(route) {
+    const r = String(route || '').replace(/^\//, '').replace(/\/(index\.html)?$/, '');
+    const [first, cat] = (STORE_ALIASES[r] || r).split('/');
+    const store = (state.stores.stores || []).find((s) => s.slug === (STORE_ALIASES[first] || first));
+    if (!store) return null;
+    if (cat && !state.stores.categories.some((c) => c.id === cat)) return null;
+    return { store, cat: cat || '' };
+  }
+  const STONES = [['moissanite', 'Moissanite', /moissanite/i], ['diamond', 'Diamond', /diamond/i], ['pearl', 'Pearl', /pearl/i], ['colour', 'Emerald, sapphire & ruby', /emerald|sapphire|ruby/i]];
+  const PRICES = [['under-15000', 'Under ₹15,000', 0, 15000], ['15000-25000', '₹15,000 – ₹25,000', 15000, 25000], ['25000-50000', '₹25,000 – ₹50,000', 25000, 50000], ['over-50000', '₹50,000+', 50000, Infinity]];
+
+  function renderStorePage(container, store, catId) {
+    const f = state.storeFilters;
+    const cats = state.stores.categories;
+    const all = storeItems(store);
+    const inCat = catId ? all.filter((p) => p.category === catId) : all;
+    const band = PRICES.find((b) => b[0] === f.price);
+    const stone = STONES.find((s) => s[0] === f.stone);
+    let items = inCat.filter((p) => (!band || (p.price >= band[2] && p.price < band[3])) && (!stone || stone[2].test(p.stone || '')) && (!f.tag || (p.collections || []).includes(f.tag)));
+    if (f.sort === 'price_asc') items = [...items].sort((a, b) => a.price - b.price);
+    else if (f.sort === 'price_desc') items = [...items].sort((a, b) => b.price - a.price);
+    else if (f.sort === 'new') items = [...items].sort((a, b) => Number(!!b.isNew) - Number(!!a.isNew));
+    else if (f.sort === 'bestselling') items = [...items].sort((a, b) => Number(b.badge === 'Bestseller') - Number(a.badge === 'Bestseller'));
+    const cat = cats.find((c) => c.id === catId);
+    const other = state.stores.stores.find((s) => s !== store);
+    const base = `/${store.slug}/`;
+    const title = cat ? `${store.menu} ${cat.name}` : store.name;
+    const tagCounts = {};
+    inCat.forEach((p) => (p.collections || []).forEach((t) => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+    const tagName = (t) => (state.categories.find((c) => c.id === t) || {}).name || (t.charAt(0).toUpperCase() + t.slice(1)).replace(/-/g, ' ');
+    const pill = (on, label, js) => `<button type="button" class="filter-pill ${on ? 'active' : ''}" onclick="${js}">${escHtml(label)}</button>`;
+    const set = (k, v) => `window.HJ.setStoreFilter('${k}','${v}')`;
+    setPageSeo(cat ? `${title} | House of Jewelux` : store.seoTitle, cat ? `${title}: ${store.tagline}` : store.seoDesc, {
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ name: 'Home', url: '/' }, { name: store.name, url: base }].concat(cat ? [{ name: cat.name, url: `${base}${cat.id}/` }] : [])
+        .map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: 'https://houseofjewelux.com' + b.url }))
+    });
+
+    const shellTop = `
+      <div class="store store-${escHtml(store.finish)}">
+      <section class="collection-hero-wide store-hero">
+        <img class="collection-hero-bg" src="${escHtml(store.hero)}" alt="${escHtml(store.name)}" />
+        <div class="collection-hero-overlay"></div>
+        <div class="container" style="position: relative; z-index: 3;">
+          <div class="collection-hero-text">
+            <nav class="store-crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> ${cat ? `<a href="${base}">${escHtml(store.name)}</a> <span aria-hidden="true">/</span> <span aria-current="page">${escHtml(cat.name)}</span>` : `<span aria-current="page">${escHtml(store.name)}</span>`}</nav>
+            <h1 class="collection-hero-title">${escHtml(title)}</h1>
+            <p class="collection-hero-sub">${escHtml(store.tagline)}</p>
+          </div>
+        </div>
+      </section>
+      <div class="container">
+        <nav class="store-cats" aria-label="${escHtml(store.name)} categories">
+          <a href="${base}" class="store-cat ${catId ? '' : 'active'}" ${catId ? '' : 'aria-current="page"'}>All <span>${all.length}</span></a>
+          ${cats.map((c) => { const n = all.filter((p) => p.category === c.id).length; return n ? `<a href="${base}${c.id}/" class="store-cat ${c.id === catId ? 'active' : ''}" ${c.id === catId ? 'aria-current="page"' : ''}>${escHtml(c.name)} <span>${n}</span></a>` : ''; }).join('')}
+        </nav>
+        <div class="collection-main-layout">`;
+    // The same filters render in the desktop sidebar and the mobile "Filters" panel
+    const filtersHtml = `
+            <div class="filter-group"><div class="filter-group-title">Price</div><div class="filter-pills-row">
+              ${pill(!f.price, 'All prices', set('price', ''))}${PRICES.map((b) => pill(f.price === b[0], b[1], set('price', b[0]))).join('')}</div></div>
+            <div class="filter-group"><div class="filter-group-title">Stone</div><div class="filter-pills-row">
+              ${pill(!f.stone, 'All stones', set('stone', ''))}${STONES.filter((s) => inCat.some((p) => s[2].test(p.stone || ''))).map((s) => pill(f.stone === s[0], s[1], set('stone', s[0]))).join('')}</div></div>
+            <div class="filter-group"><div class="filter-group-title">Collection</div><div class="filter-pills-row">
+              ${pill(!f.tag, 'All collections', set('tag', ''))}${Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([t]) => pill(f.tag === t, tagName(t), set('tag', t))).join('')}</div></div>
+            ${other ? `<p class="store-switch">Looking for ${store.finish === 'gold' ? 'a silver finish' : 'the warmth of gold'}? <a href="/${other.slug}/${catId ? catId + '/' : ''}">Shop ${escHtml(other.name)} →</a></p>` : ''}`;
+    const activeCount = [f.price, f.stone, f.tag].filter(Boolean).length;
+    container.innerHTML = `${shellTop}
+          <aside class="filters-sidebar" aria-label="Filters">${filtersHtml}</aside>
+          <div class="products-grid-column">
+            <details class="store-mfilters" ${activeCount ? "open" : ""}><summary>Filters${activeCount ? ` (${activeCount})` : ""}</summary>${filtersHtml}</details>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+              <span style="font-size: 0.85rem; color: var(--color-stone-muted); font-weight: 500;">Showing <strong>${items.length}</strong> of ${inCat.length} pieces</span>
+              <label class="sr-only" for="store-sort">Sort by</label>
+              <select id="store-sort" class="sort-select" onchange="window.HJ.setStoreFilter('sort', this.value)">
+                ${[['featured', 'Sort by: Featured'], ['new', 'New arrivals'], ['bestselling', 'Bestselling'], ['price_asc', 'Price: Low to High'], ['price_desc', 'Price: High to Low']].map(([v, l]) => `<option value="${v}" ${f.sort === v ? 'selected' : ''}>${l}</option>`).join('')}
+              </select>
+            </div>
+            <div class="products-grid motion-stagger">
+              ${items.length ? items.map(renderProductCard).join('') : `<div style="grid-column: 1 / -1; padding: 4rem 1rem; text-align: center; color: var(--color-taupe);">${inCat.length ? 'No pieces match these filters.' : 'No pieces in this category yet.'}<br><button class="btn-primary" style="margin-top: 1rem;" onclick="window.HJ.clearStoreFilters()">Clear filters</button></div>`}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>`;
+  }
+
   function renderCollectionPage(container, collectionId) {
     let filtered = [...state.products];
     let title = "The Complete Haute Joaillerie Vault";
@@ -863,7 +964,7 @@
       } else if (['diamond', 'diamond-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('diamond')) || p.primaryMaterial === 'diamond' || (p.stone && (p.stone.toLowerCase().includes('diamond') || p.stone.toLowerCase().includes('moissanite'))));
         title = "Diamond Jewellery Collection";
-        subtitle = "Certified VVS1 Solitaires & Pavé Brilliants • Hearts & Arrows Precision (45 Pieces)";
+        subtitle = "Moissanite, lab diamonds and diamond accents set in 925 sterling silver";
         heroImg = "images/authentic_diamond_choker.jpg";
       } else if (['gemstone', 'gemstone-category'].includes(collectionId)) {
         filtered = filtered.filter(p => (p.materials && p.materials.includes('gemstone')) || p.primaryMaterial === 'gemstone' || (p.stone && (p.stone.toLowerCase().includes('emerald') || p.stone.toLowerCase().includes('sapphire') || p.stone.toLowerCase().includes('pearl') || p.stone.toLowerCase().includes('polki'))));
@@ -955,7 +1056,7 @@
               <div class="filter-pills-row">
                 <button class="filter-pill ${collectionId === 'silver-category' || collectionId === 'gold-category' || collectionId === 'diamond-category' ? '' : (collectionId === 'all' || !collectionId) ? 'active' : ''}" onclick="window.HJ.navigate('collections/all')">All Materials</button>
                 <button class="filter-pill ${collectionId === 'silver-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/silver-category')">Silver Jewellery</button>
-                <button class="filter-pill ${collectionId === 'gold-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/gold-category')">Gold Jewellery</button>
+                <button class="filter-pill ${collectionId === 'gold-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/gold-category')">Gold-Plated Silver</button>
                 <button class="filter-pill ${collectionId === 'diamond-category' ? 'active' : ''}" onclick="window.HJ.navigate('collections/diamond-category')">Diamond Jewellery</button>
               </div>
             </div>
@@ -985,17 +1086,6 @@
               </div>
             </div>
 
-            <!-- Occasion Pills -->
-            <div class="filter-group">
-              <div class="filter-group-title">Occasion</div>
-              <div class="filter-pills-row">
-                <button class="filter-pill">Daily Poise</button>
-                <button class="filter-pill">Wedding Gala</button>
-                <button class="filter-pill">Atelier Evening</button>
-                <button class="filter-pill">Heirloom Gifting</button>
-              </div>
-            </div>
-
             <!-- Price Bands -->
             <div class="filter-group">
               <div class="filter-group-title">Price Filter</div>
@@ -1016,7 +1106,6 @@
                 <option value="popular" ${state.activeFilters.sort === 'popular' ? 'selected' : ''}>Sort By: Popular</option>
                 <option value="price_asc" ${state.activeFilters.sort === 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
                 <option value="price_desc" ${state.activeFilters.sort === 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
-                <option value="rating" ${state.activeFilters.sort === 'rating' ? 'selected' : ''}>Customer Rating</option>
               </select>
             </div>
             <main class="products-grid motion-stagger">
@@ -1222,7 +1311,8 @@
       metal: '<path d="M4 15l8-11 8 11-8 5z"/><path d="M4 15h16"/>', seal: '<circle cx="12" cy="10" r="6"/><path d="M9 15l-2 6 5-3 5 3-2-6"/>',
       gem: '<path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6"/>', truck: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>'
     };
-    const hasRating = p.rating && p.reviewsCount;
+    // Star ratings show only once they come from real customer reviews (today's numbers are samples)
+    const hasRating = p.reviewsVerified && p.rating && p.reviewsCount;
     const acc = (id, title, body, open) => `<details class="pdp-acc" data-hj-id="pdp-acc-${id}" ${open ? 'open' : ''}><summary>${title}</summary><div class="pdp-acc-body">${body}</div></details>`;
     const inStock = !p.stockStatus || p.stockStatus === 'In Stock';
 
@@ -1666,7 +1756,7 @@
             <!-- Gold -->
             <div class="pepite-story-card about-story-reveal" style="border: 1px solid rgba(184,151,88,0.15);">
               <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(184,151,88,0.12); border: 1px solid var(--color-muted-gold-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--color-muted-gold); font-size: 1.5rem;">Au</div>
-              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Gold Jewellery</h3>
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-deep-heritage-brown); margin-bottom: 0.75rem;">Gold-Plated Silver</h3>
               <p style="font-size: 0.88rem; color: var(--color-stone-muted); line-height: 1.75; margin-bottom: 1rem;">18K gold finish and vermeil over BIS 925 silver. Royal haute joaillerie treatments, champagne gold plating, and micron-thick luxury finishes.</p>
               <a href="#collections/gold-category" class="btn-gold" style="padding: 0.65rem 1.4rem; font-size: 0.75rem;">Explore Gold Collection ↗</a>
             </div>
@@ -3221,6 +3311,8 @@
     setSort: function (val) { state.activeFilters.sort = val; handleRoute(); },
     setPriceRange: function (min, max) { state.activeFilters.minPrice = min; state.activeFilters.maxPrice = max; handleRoute(); },
     toggleMetalFilter: function (metal, isChecked) { state.activeFilters.metal = isChecked ? metal : ''; handleRoute(); },
+    setStoreFilter: function (key, val) { state.storeFilters[key] = val; const y = window.scrollY; handleRoute(); window.scrollTo(0, y); },
+    clearStoreFilters: function () { state.storeFilters = { price: '', stone: '', tag: '', sort: 'featured' }; handleRoute(); },
     clearFilters: function () { state.activeFilters = { category: 'all', metal: '', minPrice: 0, maxPrice: 200000, sort: 'popular' }; handleRoute(); },
 
     subscribeNewsletter: async function (e) {

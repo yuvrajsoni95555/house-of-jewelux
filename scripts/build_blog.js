@@ -186,6 +186,33 @@ for (const p of posts) {
   }));
 }
 
+// ---------- storefront pages: /silver-jewellery/, /gold-plated-jewellery/ and one page per category (data/stores.json) ----------
+const storeCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8'));
+const products = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'products.json'), 'utf8')).filter((p) => p.status !== 'draft');
+const goldPlated = (p) => Boolean(p.isGold || /gold/i.test(p.metal || '')); // same rule as app.js isGoldPlated
+const storeUrls = [];
+const money = (n) => '₹' + Number(n).toLocaleString('en-IN');
+for (const s of storeCfg.stores) {
+  const items = products.filter((p) => (s.finish === 'gold' ? goldPlated(p) : !goldPlated(p)));
+  const pages = [{ cat: null, list: items }].concat(storeCfg.categories.map((c) => ({ cat: c, list: items.filter((p) => p.category === c.id) })).filter((x) => x.list.length));
+  for (const { cat, list } of pages) {
+    const rel = `${s.slug}/${cat ? cat.id + '/' : ''}`;
+    const url = `${SITE}/${rel}`;
+    const name = cat ? `${s.menu} ${cat.name}` : s.name;
+    const crumbs = [['Home', SITE + '/'], [s.name, `${SITE}/${s.slug}/`]].concat(cat ? [[cat.name, url]] : []);
+    write(`${rel}index.html`, page({
+      title: cat ? `${name} | House of Jewelux` : s.seoTitle, desc: cat ? `${name}: ${s.tagline}` : s.seoDesc, url, image: s.hero, type: 'website',
+      ld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name, url, description: s.tagline,
+        mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.name, url: `${SITE}/#products/${p.handle || p.id}` })) } },
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: u })) }],
+      body: `<section class="container blog-pre"><p>${crumbs.map(([n, u]) => `<a href="${u.replace(SITE, '')}">${esc(n)}</a>`).join(' / ')}</p><h1>${esc(name)}</h1><p>${esc(s.tagline)}</p><ul>${list.map((p) => `<li><a href="/#products/${esc(p.handle || p.id)}">${esc(p.name)}</a> ${money(p.price)} · ${esc(p.metal)}</li>`).join('')}</ul></section>`
+    }));
+    storeUrls.push({ loc: url, pri: cat ? '0.7' : '0.8' });
+  }
+}
+// /gold-jewellery/ (the address in the brief) points to the gold-plated store: the pieces are gold-plated silver, not solid gold
+write('gold-jewellery/index.html', `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Gold-Plated Silver | House of Jewelux</title><meta name="robots" content="noindex"><link rel="canonical" href="${SITE}/gold-plated-jewellery/"><meta http-equiv="refresh" content="0; url=/gold-plated-jewellery/"></head><body><a href="/gold-plated-jewellery/">Gold-Plated Silver</a></body></html>\n`);
+
 // ---------- 404.html: GitHub Pages serves it for unknown addresses, so a mistyped /blog/<slug>/ shows "Article not found" ----------
 write('404.html', shell
   .replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n  <base href="/">\n  <meta name="robots" content="noindex">')
@@ -204,11 +231,13 @@ ${posts.map((p) => `<item><title>${esc(p.title)}</title><link>${SITE}/blog/${p.s
 // ---------- sitemap: the blog block between markers is rebuilt, the rest is kept ----------
 const smPath = path.join(ROOT, 'sitemap.xml');
 if (fs.existsSync(smPath)) {
-  let sm = fs.readFileSync(smPath, 'utf8').replace(/\s*<!-- blog:start -->[\s\S]*?<!-- blog:end -->/, '');
+  let sm = fs.readFileSync(smPath, 'utf8').replace(/\s*<!-- blog:start -->[\s\S]*?<!-- blog:end -->/, '').replace(/\s*<!-- stores:start -->[\s\S]*?<!-- stores:end -->/, '');
+  const today = new Date().toISOString().slice(0, 10);
+  sm = sm.replace(/\s*<\/urlset>\s*$/, `\n  <!-- stores:start -->\n${storeUrls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${u.pri}</priority>\n  </url>`).join('\n')}\n  <!-- stores:end -->\n</urlset>\n`);
   const urls = [{ loc: SITE + '/blog/', lastmod: posts[0] ? posts[0].updated : new Date().toISOString().slice(0, 10), pri: '0.7' }, ...posts.map((p) => ({ loc: `${SITE}/blog/${p.slug}/`, lastmod: p.updated, pri: '0.6' }))];
   const block = `\n  <!-- blog:start -->\n${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${u.pri}</priority>\n  </url>`).join('\n')}\n  <!-- blog:end -->`;
   sm = sm.replace(/\s*<\/urlset>\s*$/, `${block}\n</urlset>\n`);
   fs.writeFileSync(smPath, sm);
 }
 
-console.log(`blog: ${posts.length} posts → data/blog.json, blog/index.html, ${posts.length} post pages, blog/rss.xml, sitemap.xml`);
+console.log(`blog: ${posts.length} posts → data/blog.json, blog/index.html, ${posts.length} post pages, blog/rss.xml; stores: ${storeUrls.length} pages; sitemap.xml`);

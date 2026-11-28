@@ -93,7 +93,7 @@
   <link rel="icon" type="image/svg+xml" href="/brand-identity/svg/jewelux-logo-monogram-emblem.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/brand-identity/apple-touch-icon.png">
   <base href="/">
-  <link rel="stylesheet" href="/style.css?v=20261126_blog2">
+  <link rel="stylesheet" href="/style.css?v=20261128_stores2">
   <style id="bulletproof-luxury-footer-styles">
     /* High-Priority Ultra-Luxurious Footer Styles - Mapped to Brand Swatches */
     #app-view {
@@ -480,10 +480,36 @@
       <nav aria-label="Main Navigation">
         <ul class="floating-nav-links">
           <li><a href="#collections/new-arrivals" class="floating-nav-link" style="color: var(--color-royal-lac);">What's New ✦</a></li>
-          <li><a href="#collections/gold" class="floating-nav-link" style="color: var(--color-antique-gold); font-weight: 700;">Gold</a></li>
-          <li><a href="#collections/silver" class="floating-nav-link" style="color: var(--color-espresso); font-weight: 700;">Silver</a></li>
-          <li><a href="#craftsmanship" class="floating-nav-link">Craftsmanship</a></li>
-          <li><a href="#about" class="floating-nav-link">About Us</a></li>
+          <li class="has-mega"><a href="/silver-jewellery/" class="floating-nav-link" style="color: var(--color-espresso); font-weight: 700;" aria-haspopup="true">Silver</a>
+            <div class="mega-panel" aria-label="Silver jewellery menu">
+              <div class="mega-col"><p class="mega-head">Shop silver</p>
+                <a href="/silver-jewellery/">All silver jewellery</a><a href="/silver-jewellery/necklaces/">Necklaces</a><a href="/silver-jewellery/earrings/">Earrings</a><a href="/silver-jewellery/rings/">Rings</a><a href="/silver-jewellery/bracelets/">Bracelets</a><a href="/silver-jewellery/brooches/">Brooches</a></div>
+              <div class="mega-col"><p class="mega-head">Discover</p>
+                <a href="#collections/new-arrivals">New arrivals</a><a href="#collections/best-sellers">Bestsellers</a><a href="#collections/fine-jewellery">Fine jewellery</a><a href="#collections/everyday-luxury">Everyday luxury</a><a href="/blog/sterling-silver-care-at-home/">Silver care guide</a></div>
+              <a class="mega-promo" href="/silver-jewellery/"><img src="images/authentic_diamond_choker.jpg" alt="Silver necklace with sparkling stones" loading="lazy" decoding="async"><span>925 sterling silver, rhodium finish</span></a>
+            </div></li>
+          <li class="has-mega"><a href="/gold-plated-jewellery/" class="floating-nav-link" style="color: var(--color-antique-gold); font-weight: 700;" aria-haspopup="true">Gold-Plated</a>
+            <div class="mega-panel" aria-label="Gold-plated silver menu">
+              <div class="mega-col"><p class="mega-head">Shop gold-plated silver</p>
+                <a href="/gold-plated-jewellery/">All gold-plated jewellery</a><a href="/gold-plated-jewellery/necklaces/">Necklaces</a><a href="/gold-plated-jewellery/earrings/">Earrings</a><a href="/gold-plated-jewellery/rings/">Rings</a><a href="/gold-plated-jewellery/bracelets/">Bracelets</a><a href="/gold-plated-jewellery/brooches/">Brooches</a></div>
+              <div class="mega-col"><p class="mega-head">Discover</p>
+                <a href="#collections/temple-jewellery">Temple jewellery</a><a href="#collections/heritage-jewellery">Heritage</a><a href="#collections/bridal-jewellery">Bridal</a><a href="#collections/traditional-jewellery">Traditional</a><a href="/blog/temple-jewellery-story/">The story of temple jewellery</a></div>
+              <a class="mega-promo" href="/gold-plated-jewellery/"><img src="images/user_falcon_brooch_royal_gold.jpg" alt="Gold-plated falcon brooch" loading="lazy" decoding="async"><span>Micron gold plating on 925 silver</span></a>
+            </div></li>
+          <li class="has-mega"><a href="#collections/all" class="floating-nav-link" aria-haspopup="true">Collections</a>
+            <div class="mega-panel" aria-label="Collections menu">
+              <div class="mega-col"><p class="mega-head">Edits</p>
+                <a href="#collections/all">All jewellery</a><a href="#collections/new-arrivals">New arrivals</a><a href="#collections/best-sellers">Bestsellers</a><a href="#collections/festive-edit">Festive edit</a></div>
+              <div class="mega-col"><p class="mega-head">Collections</p>
+                <a href="#collections/fine-jewellery">Fine jewellery</a><a href="#collections/bridal-jewellery">Bridal</a><a href="#collections/temple-jewellery">Temple</a><a href="#collections/traditional-jewellery">Traditional</a><a href="#collections/everyday-luxury">Everyday luxury</a></div>
+              <div class="mega-col"><p class="mega-head">Inspired by</p>
+                <a href="#collections/nature-inspired">Nature</a><a href="#collections/floral-botanical">Floral</a><a href="#collections/modern-art">Modern art</a><a href="#collections/statement-jewellery">Statement</a><a href="#collections/architectural-jewellery">Architectural</a></div>
+            </div></li>
+          <li class="has-mega mega-small"><a href="#about" class="floating-nav-link" aria-haspopup="true">Our Story</a>
+            <div class="mega-panel" aria-label="Our story menu">
+              <div class="mega-col"><a href="#about">About House of Jewelux</a><a href="#craftsmanship">Craftsmanship</a><a href="#custom-order">Custom jewellery</a><a href="#appointment">Book an appointment</a><a href="#contact">Contact us</a></div>
+            </div></li>
+          <li><a href="/blog/" class="floating-nav-link">Journal</a></li>
         </ul>
       </nav>
 
@@ -632,39 +658,22 @@
       <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem;">
         <li><a href="#collections/all" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--color-antique-gold);">✦ All Fine Jewellery (50 Pieces)</a></li>
         
-        <!-- Precious Materials -->
-        <li style="border-top: 1px solid var(--color-border-light); padding-top: 0.75rem;">
-          <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-taupe); margin-bottom: 0.5rem;">Precious Materials</div>
-          <div style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 0.5rem;">
-            <a href="#collections/gold" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: #6B4A2E;">✦ Gold Jewellery (18K & 22K)</a>
-            <a href="#collections/silver" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: #3A2418;">✦ Silver Jewellery (Solid BIS 925)</a>
-            <a href="#collections/diamond" onclick="window.HJ.closeCart()" style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: #1A120E;">✦ Diamond & Gemstone Jewellery</a>
-          </div>
+        <!-- Shop: expandable Silver, Gold-Plated and Collections groups -->
+        <li style="border-top: 1px solid var(--color-border-light); padding-top: 0.5rem;">
+          <details class="mob-group">
+            <summary>Silver Jewellery</summary>
+            <div class="mob-links"><a href="/silver-jewellery/">All silver</a><a href="/silver-jewellery/necklaces/">Necklaces</a><a href="/silver-jewellery/earrings/">Earrings</a><a href="/silver-jewellery/rings/">Rings</a><a href="/silver-jewellery/bracelets/">Bracelets</a><a href="/silver-jewellery/brooches/">Brooches</a></div>
+          </details>
+          <details class="mob-group">
+            <summary>Gold-Plated Silver</summary>
+            <div class="mob-links"><a href="/gold-plated-jewellery/">All gold-plated</a><a href="/gold-plated-jewellery/necklaces/">Necklaces</a><a href="/gold-plated-jewellery/earrings/">Earrings</a><a href="/gold-plated-jewellery/rings/">Rings</a><a href="/gold-plated-jewellery/bracelets/">Bracelets</a><a href="/gold-plated-jewellery/brooches/">Brooches</a></div>
+          </details>
+          <details class="mob-group">
+            <summary>Collections</summary>
+            <div class="mob-links"><a href="#collections/new-arrivals" onclick="window.HJ.closeCart()">New arrivals</a><a href="#collections/best-sellers" onclick="window.HJ.closeCart()">Bestsellers</a><a href="#collections/fine-jewellery" onclick="window.HJ.closeCart()">Fine jewellery</a><a href="#collections/bridal-jewellery" onclick="window.HJ.closeCart()">Bridal</a><a href="#collections/temple-jewellery" onclick="window.HJ.closeCart()">Temple Nakshi heritage</a><a href="#collections/everyday-luxury" onclick="window.HJ.closeCart()">Everyday luxury</a><a href="#collections/nature-inspired" onclick="window.HJ.closeCart()">Nature &amp; wildlife</a><a href="#collections/modern-art" onclick="window.HJ.closeCart()">Modern art &amp; sculptural</a><a href="#collections/diamond" onclick="window.HJ.closeCart()">Diamond &amp; gemstone</a></div>
+          </details>
         </li>
-
-        <!-- Jewellery Types -->
-        <li style="border-top: 1px solid var(--color-border-light); padding-top: 0.75rem;">
-          <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-taupe); margin-bottom: 0.5rem;">Jewellery Types</div>
-          <div style="display: flex; flex-direction: column; gap: 0.45rem; padding-left: 0.5rem;">
-            <a href="#collections/necklaces" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Necklaces & Chokers</a>
-            <a href="#collections/earrings" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Earrings & Studs</a>
-            <a href="#collections/rings" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Rings & Solitaires</a>
-            <a href="#collections/bracelets" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Bracelets & Cuffs</a>
-            <a href="#collections/brooches" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Royal Brooches & Pins</a>
-          </div>
-        </li>
-
-        <!-- Design Collections -->
-        <li style="border-top: 1px solid var(--color-border-light); padding-top: 0.75rem;">
-          <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-taupe); margin-bottom: 0.5rem;">Curated Collections</div>
-          <div style="display: flex; flex-direction: column; gap: 0.45rem; padding-left: 0.5rem;">
-            <a href="#collections/temple-jewellery" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Temple Nakshi Heritage</a>
-            <a href="#collections/nature-inspired" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Nature & Wildlife Edit</a>
-            <a href="#collections/modern-art" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Modern Art & Sculptural</a>
-            <a href="#collections/bridal-jewellery" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Bridal & Ceremonial</a>
-            <a href="#collections/everyday-luxury" onclick="window.HJ.closeCart()" style="font-size: 0.9rem; color: var(--color-charcoal);">Everyday Luxury</a>
-          </div>
-        </li>
+        <li><a href="/blog/">Journal</a></li>
 
         <li style="border-top: 1px solid var(--color-border-light); padding-top: 1rem;"><a href="#about" onclick="window.HJ.closeCart()">About The Maison</a></li>
         <li><a href="#craftsmanship" onclick="window.HJ.closeCart()">Jaipur Goldsmithing & Craft</a></li>
@@ -834,7 +843,7 @@
         <circle cx="12" cy="12" r="4.5" stroke-dasharray="1 2"></circle>
         <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
       </svg>
-      <span>Gold</span>
+      <span>Gold-Plated</span>
     </a>
     <a href="javascript:void(0)" onclick="window.HJ.openCart()" class="mobile-bottom-tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
@@ -850,8 +859,8 @@
   <script src="/vendor/ScrollTrigger.min.js" defer></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
   <script src="/motion-engine.js?v=20261123_hero_mobile_v34" defer></script>
-  <script src="/hero-cinematic.js?v=20261125_h1" defer></script>
-  <script src="/app.js?v=20261126_api" defer></script>
+  <script src="/hero-cinematic.js?v=20261128_hero_precision_v1" defer></script>
+  <script src="/app.js?v=20261128_stores2" defer></script>
   <script src="/visual-editor.js?v=20261123_hero_mobile_v34" defer></script>
 
   <!-- ==================== APPOINTMENT BOOKING MODAL (JAIPUR JEWELS) ==================== -->
